@@ -1,0 +1,17 @@
+{
+  "name": "com.worldsystem",
+  "description": "\u7b80\u5355\u6613\u7528\u7684\u9ad8\u6027\u80fd\u5929\u6c14\u7cfb\u7edf",
+  "version": "0.1.2",
+  "unity": "2022.3",
+  "displayName": "WorldSystem",
+  "author": {
+    "name": "OccaSoftware",
+    "email": "1991997034@qq.com",
+    "url": ""
+  },
+  "dependencies": {
+    "com.unity.render-pipelines.universal": "14.0.7",
+    "com.unity.visualeffectgraph": "14.0.7",
+    "com.unity.mathematics": "1.2.6"
+  }
+}

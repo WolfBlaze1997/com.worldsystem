@@ -1,0 +1,756 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69b8a94e4a66400794a67846e7e81235, type: 3}
+  m_Name: "Preset_\u9634\u5929_01"
+  m_EditorClassIdentifier: 
+  sustainedTime: 10
+  varyingTime: 8
+  sustainedTimeCache: 10
+  varyingTimeCache: 8
+  backgroundProperty:
+    skyMesh: {fileID: 4300000, guid: 3ec8d1078f11f6147bb9cb75cf18150d, type: 2}
+    backgroundShader: {fileID: 4800000, guid: 67f4e0ff7e5a88441ae4f52664bb1c79, type: 3}
+    backgroundMaterial: {fileID: 0}
+  StarProperty:
+    starMesh: {fileID: 0}
+    starShader: {fileID: 4800000, guid: 72fdf5ab94348ed40b501f5e219caa8b, type: 3}
+    starMaterial: {fileID: 0}
+    starTexture: {fileID: 2800000, guid: 098deac9ca9c2bf40b32ff016481f6ba, type: 3}
+    count: 10000
+    size: 1.8
+    automaticColor: 1
+    automaticBrightness: 1
+    starColor: {r: 1, g: 1, b: 1, a: 1}
+    dayBrightness: 0
+    brightness: 1.5
+    flickerFrequency: 10
+    flickerStrength: 0.25
+    initialSeed: 1
+    inclination: 0
+  celestialBodyList:
+  - type: 0
+    objectColor:
+      serializedVersion: 2
+      key0: {r: 0, g: 0, b: 0, a: 1}
+      key1: {r: 0, g: 0, b: 0, a: 1}
+      key2: {r: 2, g: 0.62676096, b: 0.40837693, a: 0}
+      key3: {r: 15.813398, g: 6.5392747, b: 0, a: 0}
+      key4: {r: 23.96863, g: 23.96863, b: 23.96863, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 26214
+      ctime2: 32768
+      ctime3: 45875
+      ctime4: 65535
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_ColorSpace: -1
+      m_NumColorKeys: 5
+      m_NumAlphaKeys: 2
+    GeocentricTheory: {fileID: 0}
+    skyObjectMesh: {fileID: 0}
+    shader: {fileID: 4800000, guid: 4375f0d845556cc48ace0ae72d7a7fce, type: 3}
+    material: {fileID: 0}
+    angularDiameterDegrees:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.4
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.5
+        value: 4.000286
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 2
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    texture: {fileID: 2800000, guid: c508a5444c3ef8046b47fc6105ff6703, type: 3}
+    sortOrder: 5
+    orbitOffsetP: 0
+    orientationOffset: 3.86
+    inclinationOffset: 0
+    positionIsStatic: 0
+    falloff:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.4
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.5
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    useLight: 1
+    lightingColorMask:
+      serializedVersion: 2
+      key0: {r: 0, g: 0, b: 0, a: 1}
+      key1: {r: 0, g: 0, b: 0, a: 1}
+      key2: {r: 1, g: 1, b: 1, a: 0}
+      key3: {r: 1, g: 1, b: 1, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 26214
+      ctime2: 32768
+      ctime3: 65535
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_ColorSpace: 0
+      m_NumColorKeys: 4
+      m_NumAlphaKeys: 2
+    colorTemperatureCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 3503.253
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.45
+        value: 3503.253
+        inSlope: 0
+        outSlope: 11.394306
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 0.14066054
+        outWeight: 1
+      - serializedVersion: 3
+        time: 0.64236957
+        value: 3928.1863
+        inSlope: 7337.2285
+        outSlope: 7337.2285
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.15445782
+        outWeight: 0.12889403
+      - serializedVersion: 3
+        time: 0.85039866
+        value: 5681.2617
+        inSlope: 5377.4453
+        outSlope: 5377.4453
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.17920797
+      - serializedVersion: 3
+        time: 1
+        value: 6000
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    intensityCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.4559871
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.71643275
+        value: 0.24450573
+        inSlope: 3.0402102
+        outSlope: 3.0402102
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.062085528
+        outWeight: 0.038822323
+      - serializedVersion: 3
+        time: 1
+        value: 0.4940459
+        inSlope: 0.113242544
+        outSlope: 0.113242544
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.017970616
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    lightComponent: {fileID: 0}
+  - type: 1
+    objectColor:
+      serializedVersion: 2
+      key0: {r: 0, g: 0, b: 0, a: 1}
+      key1: {r: 0, g: 0, b: 0, a: 1}
+      key2: {r: 2.1185477, g: 2.1185477, b: 2.1185477, a: 0}
+      key3: {r: 2.2380004, g: 2.5310774, b: 3.0000005, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 26214
+      ctime2: 32768
+      ctime3: 65535
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_ColorSpace: -1
+      m_NumColorKeys: 4
+      m_NumAlphaKeys: 2
+    GeocentricTheory: {fileID: 0}
+    skyObjectMesh: {fileID: 0}
+    shader: {fileID: 4800000, guid: 4375f0d845556cc48ace0ae72d7a7fce, type: 3}
+    material: {fileID: 0}
+    angularDiameterDegrees:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.4
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.5
+        value: 4.765511
+        inSlope: 0.7266668
+        outSlope: 0.7266668
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.11003256
+      - serializedVersion: 3
+        time: 1
+        value: 4.225935
+        inSlope: -2.5270474
+        outSlope: -2.5270474
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.083075285
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    texture: {fileID: 2800000, guid: 77dcb98de76bfe246b49722abd85eff7, type: 3}
+    sortOrder: 4
+    orbitOffsetP: 0
+    orientationOffset: 0
+    inclinationOffset: 0
+    positionIsStatic: 0
+    falloff:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    useLight: 1
+    lightingColorMask:
+      serializedVersion: 2
+      key0: {r: 0, g: 0, b: 0, a: 1}
+      key1: {r: 0, g: 0, b: 0, a: 1}
+      key2: {r: 0.35, g: 0.35, b: 0.35, a: 0}
+      key3: {r: 1, g: 1, b: 1, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 26214
+      ctime2: 32768
+      ctime3: 65535
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 2
+      m_ColorSpace: 0
+      m_NumColorKeys: 4
+      m_NumAlphaKeys: 2
+    colorTemperatureCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 6000
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.16610365
+      - serializedVersion: 3
+        time: 0.4
+        value: 6000
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.4909853
+        value: 7135.762
+        inSlope: 11988.648
+        outSlope: 11988.648
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.10252269
+      - serializedVersion: 3
+        time: 0.617421
+        value: 8147.3276
+        inSlope: 3546.781
+        outSlope: 3546.781
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.27702248
+        outWeight: 0.074588925
+      - serializedVersion: 3
+        time: 1
+        value: 8500
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    intensityCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.4
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.7815228
+      - serializedVersion: 3
+        time: 0.5
+        value: 0.04979015
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.0580186
+      - serializedVersion: 3
+        time: 1
+        value: 0.04979015
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.11080867
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    lightComponent: {fileID: 0}
+  atmosphereProperty:
+    mesh: {fileID: 4300000, guid: 3ec8d1078f11f6147bb9cb75cf18150d, type: 2}
+    shader: {fileID: 4800000, guid: fa859031ab5153345a9e3ced9695a29d, type: 3}
+    material: {fileID: 0}
+    atmosphereBlendShader: {fileID: 4800000, guid: 1afe8fbe76cdae54abde0ad17f3e123d,
+      type: 3}
+    atmosphereBlendMaterial: {fileID: 0}
+    dayPeriodsList:
+    - description: Night End
+      startTime: 5
+      skyColor: {r: 0.087921575, g: 0.09854732, b: 0.14901961, a: 1}
+      equatorColor: {r: 0.022588236, g: 0.022588236, b: 0.03137255, a: 1}
+      groundColor: {r: 0.009411765, g: 0.009411765, b: 0.011764706, a: 1}
+    - description: Dawn
+      startTime: 7
+      skyColor: {r: 0.16690196, g: 0.16690196, b: 0.29803923, a: 1}
+      equatorColor: {r: 0.6, g: 0.4423077, b: 0.354, a: 1}
+      groundColor: {r: 0.034615386, g: 0.025, b: 0.05, a: 1}
+    - description: Day
+      startTime: 9
+      skyColor: {r: 0.1365098, g: 0.15548235, b: 0.23137255, a: 1}
+      equatorColor: {r: 0.5089888, g: 0.5595506, b: 0.6, a: 1}
+      groundColor: {r: 0.07, g: 0.060000002, b: 0.05, a: 1}
+    - description: Day
+      startTime: 12
+      skyColor: {r: 0.15937498, g: 0.19999991, b: 0.4, a: 1}
+      equatorColor: {r: 0.6313726, g: 0.6691176, b: 0.7, a: 1}
+      groundColor: {r: 0.07952941, g: 0.07952941, b: 0.101960786, a: 1}
+    - description: Day End
+      startTime: 16
+      skyColor: {r: 0.13552941, g: 0.16026887, b: 0.2509804, a: 1}
+      equatorColor: {r: 0.2784314, g: 0.3137255, b: 0.34901962, a: 1}
+      groundColor: {r: 0.07, g: 0.060000002, b: 0.05, a: 1}
+    - description: Evening
+      startTime: 17
+      skyColor: {r: 0.16607845, g: 0.16607845, b: 0.3019608, a: 1}
+      equatorColor: {r: 0.65882355, g: 0.4956863, b: 0.39529413, a: 1}
+      groundColor: {r: 0.036, g: 0.026, b: 0.05, a: 1}
+    - description: Night
+      startTime: 19
+      skyColor: {r: 0.087921575, g: 0.095890865, b: 0.14901961, a: 1}
+      equatorColor: {r: 0.022588236, g: 0.022588236, b: 0.03137255, a: 1}
+      groundColor: {r: 0.009134057, g: 0.009134057, b: 0.011612245, a: 1}
+    - description: Day
+      startTime: 24
+      skyColor: {r: 0.099215694, g: 0.11815689, b: 0.18039216, a: 1}
+      equatorColor: {r: 0.01372549, g: 0.01372549, b: 0.019607844, a: 1}
+      groundColor: {r: 0.0062499996, g: 0.0062499996, b: 0.01, a: 1}
+    currentAtmosphereColor:
+      skyColor: {r: 0.05220392, g: 0.087397516, b: 0.26101962, a: 0.52}
+      equatorColor: {r: 0.33279997, g: 0.3784784, b: 0.41599998, a: 0.52}
+      groundColor: {r: 0.030588234, g: 0.031335946, b: 0.053019606, a: 0.52}
+    environmentLightingExposure: 1
+    environmentLightingSaturation: 1
+    currentCloudiness: 0.6
+    currentPrecipitation: 0
+    useAtmosphereMap: 1
+    useAtmosphereBlend: 1
+    start: 1000
+    end: 20000
+  cloudProperty:
+    VolumeCloud_BaseTex_Shader: {fileID: 4800000, guid: 97d206b1e14db664391cac55c77549be,
+      type: 3}
+    VolumeCloud_BaseTex_Material: {fileID: 0}
+    _Render_MaxRenderDistance: 20000
+    _Modeling_Amount_CloudAmount: 1
+    _Modeling_Amount_UseFarOverlay: 0
+    _Modeling_Amount_OverlayStartDistance: 20000
+    _Modeling_Amount_OverlayCloudAmount: 0.8
+    _Modeling_ShapeBase_Octaves: 3
+    _Modeling_ShapeBase_Gain: 0.7
+    _Modeling_ShapeBase_Freq: 2
+    _Modeling_ShapeBase_Scale: 5
+    _MotionBase_DynamicVector: {x: 0.26885587, y: 0.1964626}
+    _MotionBase_Direction: 0
+    _MotionBase_Speed: 0.1
+    _MotionBase_UseDirectionRandom: 1
+    _MotionBase_DirectionRandomRange: 60
+    _MotionBase_DirectionRandomFreq: 12
+    VolumeCloud_DitherDepth_Shader: {fileID: 0}
+    VolumeCloud_DitherDepth_Material: {fileID: 0}
+    VolumeCloud_Main_Shader: {fileID: 4800000, guid: 432b92588026cab47a32165d32858d5d,
+      type: 3}
+    VolumeCloud_Main_Material: {fileID: 0}
+    VolumeCloud_Reproject_Shader: {fileID: 0}
+    VolumeCloud_Reproject_Material: {fileID: 0}
+    VolumeCloud_UpScale_Shader: {fileID: 0}
+    VolumeCloud_UpScale_Material: {fileID: 0}
+    VolumeCloud_Merge_Shader: {fileID: 4800000, guid: 9914dd63eb059c4449eb83909a19bc0f,
+      type: 3}
+    VolumeCloud_Merge_Material: {fileID: 0}
+    Halton: {fileID: 2800000, guid: f1b67ef7748382f43a9dc9818f00c831, type: 3}
+    _Render_CoarseSteps: 32
+    _Render_DetailSteps: 16
+    _Render_BlueNoiseArray: {fileID: 0}
+    _Render_BlueNoise: 1
+    _Render_MipmapDistance: {x: 4000, y: 8000}
+    _Render_DepthOptions: 0
+    _Render_UseReprojection: 0
+    _Render_UseTemporalAA: 0
+    _Render_TemporalAAFactor: 0.03
+    _Render_ResolutionOptions: 0
+    _Modeling_Position_RadiusPreset: 6
+    _Modeling_Position_PlanetRadius: 78
+    _Modeling_Position_CloudHeight: 800
+    _Modeling_Position_CloudThickness: 3800
+    _Modeling_ShapeDetail_NoiseTexture3D: {fileID: 11700000, guid: 86cf7d681999abd45a0011b72550dc47,
+      type: 2}
+    _Modeling_ShapeDetail_Type: 1
+    _Modeling_ShapeDetail_Quality: 1
+    _Modeling_ShapeDetail_Scale: {x: 4, y: 6, z: 4}
+    _MotionBase_UseDynamicCloud: 1
+    _MotionDetail_DynamicVector: {x: 0.9186338, y: -0.4771067, z: 1.3040348}
+    _MotionDetail_Direction: {x: 0, y: 0}
+    _MotionDetail_Speed: 0.5
+    _MotionDetail_UseRandomDirection: 1
+    _MotionDetail_DirectionRandomRange: {x: 40, y: 20}
+    _MotionDetail_DirectionRandomFreq: 12
+    _Lighting_AlbedoColor: {r: 1, g: 0.964, b: 0.92, a: 1}
+    _Lighting_LightColorFilter: {r: 1, g: 1, b: 1, a: 1}
+    _Lighting_ExtinctionCoeff: 10
+    _Lighting_DensityInfluence: 0.8
+    _Lighting_HeightDensityInfluence: 1
+    _Lighting_CheapAmbient: 1
+    _Lighting_AmbientExposure: 0.2
+    _Lighting_UseAtmosphereVisibilityOverlay: 1
+    _Lighting_AtmosphereVisibility: 15000
+    _Lighting_HGStrength: 1
+    _Lighting_HGEccentricityForward: 0.6
+    _Lighting_HGEccentricityBackward: -0.2
+    _Lighting_MaxLightingDistance: 100
+    _Lighting_ShadingStrengthFalloff: 0.3
+    _Lighting_ScatterMultiplier: 90
+    _Lighting_ScatterStrength: 0.9
+    CloudShadows_TemporalAA_Shader: {fileID: 4800000, guid: a1425819257a09445b311356840c92fa,
+      type: 3}
+    CloudShadows_TemporalAA_Material: {fileID: 0}
+    CloudShadows_ScreenShadow_Shader: {fileID: 4800000, guid: c1b138b1ed949f148a31472a5bb12df0,
+      type: 3}
+    CloudShadows_ScreenShadow_Material: {fileID: 0}
+    CloudShadows_ToScreen_Shader: {fileID: 4800000, guid: 7d0c5edf145208d46a24c3df4128bc93,
+      type: 3}
+    CloudShadows_ToScreen_Material: {fileID: 0}
+    _Shadow_UseCastShadow: 1
+    _Shadow_Distance: 10000
+    _Shadow_Strength:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.78998977
+        value: 0.2583218
+        inSlope: 6.5544667
+        outSlope: 6.5544667
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.091696925
+        outWeight: 0.060387436
+      - serializedVersion: 3
+        time: 0.85853344
+        value: 0.49103975
+        inSlope: 0.34444147
+        outSlope: 0.34444147
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.28151315
+      - serializedVersion: 3
+        time: 1
+        value: 0.50450635
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    _Shadow_Resolution: 512
+    _Shadow_UseShadowTaa: 1
+  windZoneProperty:
+    dynamicDirection: 1
+    directionVaryingFreq: 12
+    dynamicSpeed: 1
+    SpeedVaryingFreq: 3
+    minSpeed: 0.5
+    maxSpeed: 2
+    vfxModifier: 1
+    windZone: {fileID: 0}
+  useOcclusion: 1
+  effectRadius: 40
+  rainEffectProperty:
+    rainRadius: 40
+    rainPrecipitation: 0
+    rainSize: 0.01
+    rainDropLength: 10
+  snowEffectProperty:
+    snowRadius: 40
+    snowPrecipitation: 0
+    snowSize: 2
+  lightningEffectProperty:
+    prefab: {fileID: 5925228745392595290, guid: fe10b194253e1ee4a837ebdd03273df1,
+      type: 3}
+    mainCamera: {fileID: 0}
+    lightningLit: {fileID: 0}
+    lightningDataObjectArray:
+    - {fileID: 0}
+    - {fileID: 0}
+    lightningLifetimeArray:
+    - -Infinity
+    - -Infinity
+    lightningLightStrength: 2
+    lightningLength: 2000
+    lightningMinLifetime: 0.5
+    lightningMaxLifetime: 1
+    lightningSpawnRate: 0
+  occlusionRenderer: {fileID: 0}

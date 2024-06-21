@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 432b92588026cab47a32165d32858d5d
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _Render_BlueNoiseArray: {fileID: 18700000, guid: 0fb26fb45ea19cc4cb31a9d72337ec56,
+      type: 2}
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
