@@ -1,6 +1,6 @@
 {
     "name": "WorldSystem.Editor",
-    "rootNamespace": "",
+    "rootNamespace": "WorldSystem.Editor",
     "references": [],
     "includePlatforms": [
         "Editor"

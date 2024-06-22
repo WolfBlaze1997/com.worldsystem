@@ -425,9 +425,9 @@ namespace WorldSystem.Runtime
         
         public void RenderCloudMap()
         {
-            if (Time.renderedFrameCount % 6 != 0 && Time.renderedFrameCount > 2
+            if (!_render && Time.renderedFrameCount > 2
 #if UNITY_EDITOR  
-                && Application.isPlaying
+                         && Application.isPlaying
 #endif
                )
             {
@@ -456,8 +456,8 @@ namespace WorldSystem.Runtime
         ///  - 可以将每个天气状态下的所有参数打包成一个个常量缓冲区,然后只需要向 GUP 传递当前天气 和 下一个天气, 在着色器中完成插值, 就可以极大降低
         ///  - 植物可以使用 Graphics.DrawMeshInstancedIndirect + structBuffer 实现每个实例的精细化变形, 将blender中顶点的偏移记录成数组, 使用JSON传输到unity
         ///  - 大气 天空颜色 赤道颜色 地面颜色 一天的昼夜变化可以生成 Lut表
-        ///
-        ///
+        ///  - 使用第二个摄像机 和 摄像机运动矢量 来优化云渲染
+        ///  - 时间调整只允许向前 不允许向后 添加一个重置按钮归零时间
 
         #region 字段
         
@@ -1044,8 +1044,9 @@ namespace WorldSystem.Runtime
         }
 #endif
 
-        private bool frameSkip = true;
+        private bool _frameSkip = false;
         private int _frameCount;
+        private bool _render;
 #if UNITY_EDITOR
         private void Update()
         {
@@ -1054,11 +1055,12 @@ namespace WorldSystem.Runtime
         }
         private void FixedUpdate()
         {
-            frameSkip = !frameSkip; if (frameSkip) return;
             if (Time.frameCount == _frameCount) return;
+            _render = true;
+            _frameSkip = !_frameSkip; if (_frameSkip) return;
 
             UpdateFunc();
-
+            
             _frameCount = Time.frameCount;
         }
 #else
@@ -1195,12 +1197,14 @@ namespace WorldSystem.Runtime
         public void RenderVolumeCloud(CommandBuffer cmd, ref RenderingData renderingData)
         {
             var source = renderingData.cameraData.renderer.cameraColorTargetHandle;
-            if (Time.renderedFrameCount % 6 != 1 && Time.renderedFrameCount > 2
+            
+            if (!_render && Time.renderedFrameCount > 2
 #if UNITY_EDITOR  
-                && Application.isPlaying
+                             && Application.isPlaying
 #endif
-                )
+               )
             {
+                
                 cmd.SetGlobalTexture(_ScreenTexture, source);
                 //合并输出到摄像机颜色
                 cmd.SetRenderTarget(_mergeRT);
@@ -1208,10 +1212,11 @@ namespace WorldSystem.Runtime
                 Blitter.BlitCameraTexture(cmd, _mergeRT, source);
                 return;
             }
-            if (!isActiveAndEnabled || property._Modeling_Amount_CloudAmount < 0.25f) return;
-
             
-
+            if (!isActiveAndEnabled || property._Modeling_Amount_CloudAmount < 0.25f) return;
+            
+            _render = false;
+            
             var cloudScale = Scale.Full;
             if (property._Render_UseReprojection) cloudScale++;
             if (property._Render_ResolutionOptions == ResolutionOptions.Half) cloudScale++;
@@ -1616,9 +1621,9 @@ namespace WorldSystem.Runtime
         public void RenderVolumeCloudShadow(CommandBuffer cmd, ref RenderingData renderingData)
         {
             RTHandle source = renderingData.cameraData.renderer.cameraColorTargetHandle;
-            if (Time.renderedFrameCount % 6 != 2 && Time.renderedFrameCount > 2
+            if (!_render && Time.renderedFrameCount > 2
 #if UNITY_EDITOR  
-                                                 && Application.isPlaying
+                         && Application.isPlaying
 #endif
                )
             {

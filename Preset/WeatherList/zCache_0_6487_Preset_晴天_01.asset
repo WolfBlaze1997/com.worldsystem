@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69b8a94e4a66400794a67846e7e81235, type: 3}
   m_Name: "zCache_0_6487_Preset_\u6674\u5929_01"
   m_EditorClassIdentifier: 
-  sustainedTime: 10
-  varyingTime: 8
+  sustainedTime: 0
+  varyingTime: 5.9738216
   sustainedTimeCache: 10
   varyingTimeCache: 8
   backgroundProperty:
@@ -585,9 +585,9 @@ MonoBehaviour:
       equatorColor: {r: 0.01076923, g: 0.01076923, b: 0.02, a: 1}
       groundColor: {r: 0.0062499996, g: 0.0062499996, b: 0.01, a: 1}
     currentAtmosphereColor:
-      skyColor: {r: 0.07911617, g: 0.12262321, b: 0.321147, a: 1}
-      equatorColor: {r: 0.56333333, g: 0.659281, b: 0.73333335, a: 1}
-      groundColor: {r: 0.06627451, g: 0.060087148, b: 0.067320265, a: 1}
+      skyColor: {r: 0.06313726, g: 0.08854249, b: 0.18039216, a: 1}
+      equatorColor: {r: 0.01076923, g: 0.01076923, b: 0.02, a: 1}
+      groundColor: {r: 0.0062499996, g: 0.0062499996, b: 0.01, a: 1}
     currentCloudiness: 0
     currentPrecipitation: 0
     useAtmosphereMap: 1
@@ -607,7 +607,7 @@ MonoBehaviour:
     _Modeling_ShapeBase_Gain: 0.7
     _Modeling_ShapeBase_Freq: 2
     _Modeling_ShapeBase_Scale: 5
-    _MotionBase_DynamicVector: {x: 0, y: 0.33600935}
+    _MotionBase_DynamicVector: {x: -0.21037225, y: 0.2353453}
     _MotionBase_Direction: 0
     _MotionBase_Speed: 0.4
     _MotionBase_UseDirectionRandom: 1
@@ -647,7 +647,7 @@ MonoBehaviour:
     _Modeling_ShapeDetail_Quality: 1
     _Modeling_ShapeDetail_Scale: {x: 8, y: 8, z: 8}
     _MotionBase_UseDynamicCloud: 1
-    _MotionDetail_DynamicVector: {x: 0, y: 0, z: 2.1000583}
+    _MotionDetail_DynamicVector: {x: -0.038433436, y: -0.22215043, z: 1.562136}
     _MotionDetail_Direction: {x: 0, y: 0}
     _MotionDetail_Speed: 2.5
     _MotionDetail_UseRandomDirection: 1

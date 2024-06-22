@@ -299,6 +299,7 @@ namespace WorldSystem.Runtime
         
         private bool frameSkip = true;
         private int _frameCount;
+        private bool _render;
 #if UNITY_EDITOR
         private void Update()
         {
@@ -307,9 +308,10 @@ namespace WorldSystem.Runtime
         }
         private void FixedUpdate()
         {
-            frameSkip = !frameSkip; if (frameSkip) return;
             if (Time.frameCount == _frameCount) return;
-
+            _render = true;
+            frameSkip = !frameSkip; if (frameSkip) return;
+            
             UpdateFunc();
 
             _frameCount = Time.frameCount;
@@ -430,9 +432,9 @@ namespace WorldSystem.Runtime
         public void RenderAtmosphereMap(CommandBuffer cmd, ref RenderingData renderingData)
         {
             
-            if (Time.renderedFrameCount % 6 != 3 && Time.renderedFrameCount > 2
+            if (!_render && Time.renderedFrameCount > 2
 #if UNITY_EDITOR  
-                                                 && Application.isPlaying
+                        && Application.isPlaying
 #endif
                )
             {
@@ -462,9 +464,9 @@ namespace WorldSystem.Runtime
         {
             RTHandle source = renderingData.cameraData.renderer.cameraColorTargetHandle;
             
-            if (Time.renderedFrameCount % 6 != 3 && Time.renderedFrameCount > 2
+            if (!_render && Time.renderedFrameCount > 2
 #if UNITY_EDITOR  
-                                                 && Application.isPlaying
+                        && Application.isPlaying
 #endif
                )
             {

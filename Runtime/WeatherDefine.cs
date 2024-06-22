@@ -69,8 +69,8 @@ namespace WorldSystem.Runtime
 #endif
                     //一旦设置Active, 说明必定退出插值了, 将CelestialBody.useLerp 设置为false
                     CelestialBody.useLerp = false;
+                    _singleExecute = true;
                 }
-                
             }
         }
 
@@ -396,6 +396,7 @@ namespace WorldSystem.Runtime
             
         }
 
+        private static bool _singleExecute = true;
         //动态属性
         public void SetupLerpProperty_CelestialBodyManager(WeatherDefine weatherDefine, float lerpCoeff)
         {
@@ -406,28 +407,22 @@ namespace WorldSystem.Runtime
             
             for (int i = 0; i < celestialBodyList.Count; i++)
             {
-                //输入下一个天气的动态属性
-                // if (!WorldManager.Instance.celestialBodyManager.property.celestialBodyList[i].property.objectColor
-                //         .Equals(weatherDefine.celestialBodyList[i].objectColor))
+                //只执行一次
+                if (_singleExecute)
+                {
+                    //输入下一个天气的动态属性
                     WorldManager.Instance.celestialBodyManager.property.celestialBodyList[i].property.objectColor =
                         weatherDefine.celestialBodyList[i].objectColor;
-                // if (!WorldManager.Instance.celestialBodyManager.property.celestialBodyList[i].property.falloff
-                //         .Equals(weatherDefine.celestialBodyList[i].falloff))
                     WorldManager.Instance.celestialBodyManager.property.celestialBodyList[i].property.falloff =
                         weatherDefine.celestialBodyList[i].falloff;
-                // if (!WorldManager.Instance.celestialBodyManager.property.celestialBodyList[i].property.lightingColorMask
-                //         .Equals(weatherDefine.celestialBodyList[i].lightingColorMask))
                     WorldManager.Instance.celestialBodyManager.property.celestialBodyList[i].property.lightingColorMask =
                         weatherDefine.celestialBodyList[i].lightingColorMask;
-                // if (!WorldManager.Instance.celestialBodyManager.property.celestialBodyList[i].property.colorTemperatureCurve
-                //         .Equals(weatherDefine.celestialBodyList[i].colorTemperatureCurve))
                     WorldManager.Instance.celestialBodyManager.property.celestialBodyList[i].property.colorTemperatureCurve =
                         weatherDefine.celestialBodyList[i].colorTemperatureCurve;
-                // if (!WorldManager.Instance.celestialBodyManager.property.celestialBodyList[i].property.intensityCurve
-                //         .Equals(weatherDefine.celestialBodyList[i].intensityCurve))
                     WorldManager.Instance.celestialBodyManager.property.celestialBodyList[i].property.intensityCurve =
                         weatherDefine.celestialBodyList[i].intensityCurve;
-                
+                }
+
                 //根据昼夜和两个天气之间进行插值
                 var curveTime = WorldManager.Instance.celestialBodyManager.property.celestialBodyList[i].curveTime;
                 
@@ -446,8 +441,8 @@ namespace WorldSystem.Runtime
                 WorldManager.Instance.celestialBodyManager.property.celestialBodyList[i].intensityCurveEvaluate = 
                     math.lerp(celestialBodyList[i].intensityCurve.Evaluate(curveTime),
                         weatherDefine.celestialBodyList[i].intensityCurve.Evaluate(curveTime), lerpCoeff);
-                
             }
+            _singleExecute = false;
         }
         
     }
