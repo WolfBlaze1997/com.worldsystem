@@ -725,7 +725,7 @@ namespace WorldSystem.Runtime
                 VARIABLE.cloudProperty.VolumeCloud_UpScale_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_UpScale_Material;
                 // VARIABLE.cloudProperty.VolumeCloud_Merge_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_Merge_Shader;
                 // VARIABLE.cloudProperty.VolumeCloud_Merge_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_Merge_Material;
-                VARIABLE.cloudProperty.Halton = WorldManager.Instance.volumeCloudOptimizeModule.property.Halton;
+                // VARIABLE.cloudProperty.Halton = WorldManager.Instance.volumeCloudOptimizeModule.property.Halton;
                 VARIABLE.cloudProperty._Modeling_ShapeDetail_NoiseTexture3D = WorldManager.Instance.volumeCloudOptimizeModule.property._Modeling_ShapeDetail_NoiseTexture3D;
                 VARIABLE.cloudProperty._MotionBase_DynamicVector = WorldManager.Instance.volumeCloudOptimizeModule.property._MotionBase_DynamicVector;
                 VARIABLE.cloudProperty._MotionDetail_DynamicVector = WorldManager.Instance.volumeCloudOptimizeModule.property._MotionDetail_DynamicVector;

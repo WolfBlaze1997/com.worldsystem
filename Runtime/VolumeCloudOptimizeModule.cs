@@ -501,10 +501,10 @@ namespace WorldSystem.Runtime
             [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
             public Material VolumeCloud_CoreBlitWithAlpha_Material;
             
-            [FoldoutGroup("配置")] [LabelText("Halton")]
-            [ReadOnly] [PropertyOrder(-20)]
-            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            public Texture2D Halton;
+            // [FoldoutGroup("配置")] [LabelText("Halton")]
+            // [ReadOnly] [PropertyOrder(-20)]
+            // [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
+            // public Texture2D Halton;
 
             [FoldoutGroup("渲染")] [LabelText("粗略步进")] 
             [GUIColor(0.7f, 0.7f, 1f)] [PropertyOrder(-10)] 
@@ -753,7 +753,7 @@ namespace WorldSystem.Runtime
             // Shader.SetGlobalFloat(_UseDepth, (int)property._Render_DepthOptions);
             Shader.SetGlobalFloat(_UseReprojection, property._Render_UseReprojection ? 1 : 0);
             Shader.SetGlobalFloat(_UseDownscaledDepth, (int)property._Render_ResolutionOptions);
-            Shader.SetGlobalTexture(_Halton_23_Sequence, property.Halton);
+            // Shader.SetGlobalTexture(_Halton_23_Sequence, property.Halton);
             Shader.SetGlobalFloat(_Modeling_Position_PlanetRadius_ID, property._Modeling_Position_PlanetRadius);
             Shader.SetGlobalTexture(_Modeling_ShapeDetail_NoiseTexture3D_ID, property._Modeling_ShapeDetail_NoiseTexture3D);
             Shader.SetGlobalFloat(_Lighting_CheapAmbient_ID, property._Lighting_CheapAmbient ? 1 : 0);
@@ -791,7 +791,7 @@ namespace WorldSystem.Runtime
         private readonly int _Render_BlueNoiseArray_ID = Shader.PropertyToID("_Render_BlueNoiseArray");
         private readonly int _Render_BlueNoiseArrayIndices_ID = Shader.PropertyToID("_Render_BlueNoiseArrayIndices");
         private readonly int _Modeling_ShapeDetail_NoiseTexture3D_ID = Shader.PropertyToID("_Modeling_ShapeDetail_NoiseTexture3D");
-        private readonly int _Halton_23_Sequence = Shader.PropertyToID("_Halton_23_Sequence");
+        // private readonly int _Halton_23_Sequence = Shader.PropertyToID("_Halton_23_Sequence");
         private readonly int _Lighting_CheapAmbient_ID = Shader.PropertyToID("_Lighting_CheapAmbient");
         private readonly int _Lighting_AmbientExposure_ID = Shader.PropertyToID("_Lighting_AmbientExposure");
         private readonly int _Render_BlueNoise_ID = Shader.PropertyToID("_Render_BlueNoise");
@@ -835,8 +835,8 @@ namespace WorldSystem.Runtime
             if (property.VolumeCloud_CoreBlitWithAlpha_Shader == null)
                 property.VolumeCloud_CoreBlitWithAlpha_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/CoreBlitWithAlpha.shader");
             
-            if (property.Halton == null)
-                property.Halton = AssetDatabase.LoadAssetAtPath<Texture2D>("Packages/com.worldsystem/Textures/Noise Textures/HaltonSequence/Halton_23_Sequence.png");
+            // if (property.Halton == null)
+            //     property.Halton = AssetDatabase.LoadAssetAtPath<Texture2D>("Packages/com.worldsystem/Textures/Noise Textures/HaltonSequence/Halton_23_Sequence.png");
             if (property._Render_BlueNoiseArray == null)
                 property._Render_BlueNoiseArray = AssetDatabase.LoadAssetAtPath<Texture2DArray>("Packages/com.worldsystem/Textures/Noise Textures/BlueNoise/_Render_BlueNoiseArray.asset");
 
@@ -859,8 +859,8 @@ namespace WorldSystem.Runtime
                 Resources.UnloadAsset(property.VolumeCloud_Main_Shader);
             if (property.VolumeCloud_CoreBlitWithAlpha_Shader != null)
                 Resources.UnloadAsset(property.VolumeCloud_CoreBlitWithAlpha_Shader);
-            if (property.Halton != null)
-                Resources.UnloadAsset(property.Halton);
+            // if (property.Halton != null)
+            //     Resources.UnloadAsset(property.Halton);
             if (property._Render_BlueNoiseArray != null)
                 Resources.UnloadAsset(property._Render_BlueNoiseArray);
             
@@ -998,17 +998,18 @@ namespace WorldSystem.Runtime
         {
             if (Time.frameCount == _frameID) return;
             
-            
             //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
-            _updateCount++;
             if (_updateCount % 1 == 0)
             {
                 _RenderCloudMap = true;
                 _RenderVolumeCloud = true;
                 // _RenderVolumeCloudShadow = true;
             }
-            if(_updateCount % 2 == 0)
+            if (_updateCount % 2 == 0)
+            {
                 UpdateFunc();
+            }
+            _updateCount++;
             
             
             _frameID = Time.frameCount;
@@ -1016,13 +1017,23 @@ namespace WorldSystem.Runtime
 #else
         private void FixedUpdate()
         {
-            if (Time.frameCount == _frameCount) return;
-            _render = true;
-            _frameSkip = !_frameSkip; if (_frameSkip) return;
-
-            UpdateFunc();
+            if (Time.frameCount == _frameID) return;
             
-            _frameCount = Time.frameCount;
+            //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
+            if (_updateCount % 1 == 0)
+            {
+                _RenderCloudMap = true;
+                _RenderVolumeCloud = true;
+                // _RenderVolumeCloudShadow = true;
+            }
+            if (_updateCount % 2 == 0)
+            {
+                UpdateFunc();
+            }
+            _updateCount++;
+            
+            
+            _frameID = Time.frameCount;
         }
 #endif
         private void UpdateFunc()

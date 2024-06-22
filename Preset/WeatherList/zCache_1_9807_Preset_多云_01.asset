@@ -607,7 +607,7 @@ MonoBehaviour:
     _Modeling_ShapeBase_Gain: 0.5
     _Modeling_ShapeBase_Freq: 2
     _Modeling_ShapeBase_Scale: 5
-    _MotionBase_DynamicVector: {x: 0.2476094, y: 0.1803707}
+    _MotionBase_DynamicVector: {x: 0, y: 0.31100458}
     _MotionBase_Direction: 0
     _MotionBase_Speed: 0.25
     _MotionBase_UseDirectionRandom: 1
@@ -624,9 +624,8 @@ MonoBehaviour:
     VolumeCloud_UpScale_Material: {fileID: 0}
     VolumeCloud_CoreBlitWithAlpha_Shader: {fileID: 0}
     VolumeCloud_CoreBlitWithAlpha_Material: {fileID: 0}
-    Halton: {fileID: 2800000, guid: f1b67ef7748382f43a9dc9818f00c831, type: 3}
     _Render_CoarseSteps: 32
-    _Render_DetailSteps: 16
+    _Render_DetailSteps: 32
     _Render_BlueNoiseArray: {fileID: 0}
     _Render_BlueNoise: 1
     _Render_MipmapDistance: {x: 4000, y: 8000}
@@ -644,7 +643,7 @@ MonoBehaviour:
     _Modeling_ShapeDetail_Quality: 1
     _Modeling_ShapeDetail_Scale: {x: 5.11, y: 5.11, z: 5.11}
     _MotionBase_UseDynamicCloud: 1
-    _MotionDetail_DynamicVector: {x: 0.44345048, y: 0.10187524, z: 1.4625571}
+    _MotionDetail_DynamicVector: {x: 0, y: 0, z: 1.555023}
     _MotionDetail_Direction: {x: 0, y: 0}
     _MotionDetail_Speed: 1.25
     _MotionDetail_UseRandomDirection: 1
@@ -697,7 +696,7 @@ MonoBehaviour:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.78998977
-        value: 0.2512324
+        value: 0.2583218
         inSlope: 6.5544667
         outSlope: 6.5544667
         tangentMode: 0
@@ -706,7 +705,7 @@ MonoBehaviour:
         outWeight: 0.060387436
       - serializedVersion: 3
         time: 0.85853344
-        value: 0.48395038
+        value: 0.49103975
         inSlope: 0.34444147
         outSlope: 0.34444147
         tangentMode: 0
@@ -715,7 +714,7 @@ MonoBehaviour:
         outWeight: 0.28151315
       - serializedVersion: 3
         time: 1
-        value: 0.5
+        value: 0.50450635
         inSlope: 0
         outSlope: 0
         tangentMode: 0

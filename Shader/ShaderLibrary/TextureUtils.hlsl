@@ -11,7 +11,7 @@
 
 float _CLOUD_RENDER_SCALE;
 
-Texture2D _Halton_23_Sequence;
+// Texture2D _Halton_23_Sequence;
 float4 _Halton_23_Sequence_TexelSize;
 SamplerState altos_linear_clamp_sampler;
 SamplerState altos_linear_repeat_sampler;
@@ -60,10 +60,10 @@ int GetPixelIndexConstrained(float2 uv, int2 size, int2 domain)
 	return ind;
 }
 
-float2 GetHaltonFromTexture(int index)
-{
-	return _Halton_23_Sequence.Load(int3(index % _Halton_23_Sequence_TexelSize.z, 0, 0)).rg;
-}
+// float2 GetHaltonFromTexture(int index)
+// {
+// 	return _Halton_23_Sequence.Load(int3(index % _Halton_23_Sequence_TexelSize.z, 0, 0)).rg;
+// }
 
 float Halton(int base, int index)
 {
