@@ -152,8 +152,8 @@ namespace WorldSystem.Runtime
 #endif
         
         
-        private bool frameSkip = true;
-        private int _frameCount;
+        private int _frameID;
+        private int _updateCount;
 #if UNITY_EDITOR
         private void Update()
         {
@@ -162,22 +162,30 @@ namespace WorldSystem.Runtime
         }
         private void FixedUpdate()
         {
-            frameSkip = !frameSkip; if (frameSkip) return;
-            if (Time.frameCount == _frameCount) return;
-
-            UpdateFunc();
-
-            _frameCount = Time.frameCount;
+            if (Time.frameCount == _frameID) return;
+            
+            //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
+            if (_updateCount % 2 == 0)
+            {
+                UpdateFunc();
+            }
+            _updateCount++;
+            
+            _frameID = Time.frameCount;
         }
 #else
         private void FixedUpdate()
         {
-            frameSkip = !frameSkip; if (frameSkip) return;
-            if (Time.frameCount == _frameCount) return;
-
-            UpdateFunc();
-
-            _frameCount = Time.frameCount;
+            if (Time.frameCount == _frameID) return;
+            
+            //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
+            if (_updateCount % 2 == 0)
+            {
+                UpdateFunc();
+            }
+            _updateCount++;
+            
+            _frameID = Time.frameCount;
         }
 #endif
         private void UpdateFunc()

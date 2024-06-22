@@ -585,9 +585,9 @@ MonoBehaviour:
       equatorColor: {r: 0.01076923, g: 0.01076923, b: 0.02, a: 1}
       groundColor: {r: 0.0062499996, g: 0.0062499996, b: 0.01, a: 1}
     currentAtmosphereColor:
-      skyColor: {r: 0.07911617, g: 0.12262321, b: 0.321147, a: 1}
-      equatorColor: {r: 0.56333333, g: 0.659281, b: 0.73333335, a: 1}
-      groundColor: {r: 0.06627451, g: 0.060087148, b: 0.067320265, a: 1}
+      skyColor: {r: 0.07645667, g: 0.11694209, b: 0.29854524, a: 1}
+      equatorColor: {r: 0.55375, g: 0.6507107, b: 0.725, a: 1}
+      groundColor: {r: 0.06720588, g: 0.06006536, b: 0.062990196, a: 1}
     currentCloudiness: 0
     currentPrecipitation: 0
     useAtmosphereMap: 1
@@ -607,7 +607,7 @@ MonoBehaviour:
     _Modeling_ShapeBase_Gain: 0.7
     _Modeling_ShapeBase_Freq: 2
     _Modeling_ShapeBase_Scale: 5
-    _MotionBase_DynamicVector: {x: 0, y: 0.31100458}
+    _MotionBase_DynamicVector: {x: -0.3764894, y: 0.18620574}
     _MotionBase_Direction: 0
     _MotionBase_Speed: 0.4
     _MotionBase_UseDirectionRandom: 1
@@ -643,7 +643,7 @@ MonoBehaviour:
     _Modeling_ShapeDetail_Quality: 1
     _Modeling_ShapeDetail_Scale: {x: 8, y: 8, z: 8}
     _MotionBase_UseDynamicCloud: 1
-    _MotionDetail_DynamicVector: {x: 0, y: 0, z: 1.555023}
+    _MotionDetail_DynamicVector: {x: -2.0641673, y: -0.11307673, z: 0.36993057}
     _MotionDetail_Direction: {x: 0, y: 0}
     _MotionDetail_Speed: 2.5
     _MotionDetail_UseRandomDirection: 1

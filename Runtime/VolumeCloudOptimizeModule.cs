@@ -1011,7 +1011,6 @@ namespace WorldSystem.Runtime
             }
             _updateCount++;
             
-            
             _frameID = Time.frameCount;
         }
 #else
@@ -1031,7 +1030,6 @@ namespace WorldSystem.Runtime
                 UpdateFunc();
             }
             _updateCount++;
-            
             
             _frameID = Time.frameCount;
         }

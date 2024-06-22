@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
+#if UNITY_EDITOR
 using Sirenix.Utilities.Editor;
+#endif
 using Unity.Mathematics;
 using UnityEngine;
-#if UNITY_EDITOR
-#endif
 
 namespace WorldSystem.Runtime
 {

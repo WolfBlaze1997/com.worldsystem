@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
+#if UNITY_EDITOR
 using Sirenix.Utilities.Editor;
+#endif
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-#if UNITY_EDITOR
-#endif
 
 namespace WorldSystem.Runtime
 {
@@ -297,9 +297,8 @@ namespace WorldSystem.Runtime
 #endif
 
         
-        private bool frameSkip = true;
-        private int _frameCount;
-        private bool _render;
+        private int _frameID;
+        private int _updateCount;
 #if UNITY_EDITOR
         private void Update()
         {
@@ -308,23 +307,42 @@ namespace WorldSystem.Runtime
         }
         private void FixedUpdate()
         {
-            if (Time.frameCount == _frameCount) return;
-            _render = true;
-            frameSkip = !frameSkip; if (frameSkip) return;
+            if (Time.frameCount == _frameID) return;
             
-            UpdateFunc();
-
-            _frameCount = Time.frameCount;
+            //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
+            if (_updateCount % 1 == 0)
+            {
+                _RenderAtmosphereMap = true;
+                _RenderAtmosphereBlend = true;
+            }
+            if (_updateCount % 2 == 0)
+            {
+                UpdateFunc();
+            }
+            _updateCount++;
+            
+            
+            _frameID = Time.frameCount;
         }
 #else
         private void FixedUpdate()
         {
-            frameSkip = !frameSkip; if (frameSkip) return;
-            if (Time.frameCount == _frameCount) return;
-
-            UpdateFunc();
-
-            _frameCount = Time.frameCount;
+            if (Time.frameCount == _frameID) return;
+            
+            //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
+            if (_updateCount % 1 == 0)
+            {
+                _RenderAtmosphereMap = true;
+                _RenderAtmosphereBlend = true;
+            }
+            if (_updateCount % 2 == 0)
+            {
+                UpdateFunc();
+            }
+            _updateCount++;
+            
+            
+            _frameID = Time.frameCount;
         }
 #endif
         private void UpdateFunc()
@@ -427,12 +445,14 @@ namespace WorldSystem.Runtime
             //渲染大气
             cmd.DrawMesh(property.mesh, _transformMatrix, property.material, 0,0);
         }
-        private Matrix4x4 _transformMatrix = Matrix4x4.identity;
         
+        
+        private Matrix4x4 _transformMatrix = Matrix4x4.identity;
+        private bool _RenderAtmosphereMap;
         public void RenderAtmosphereMap(CommandBuffer cmd, ref RenderingData renderingData)
         {
             
-            if (!_render && Time.renderedFrameCount > 2
+            if (!_RenderAtmosphereMap && Time.renderedFrameCount > 2
 #if UNITY_EDITOR  
                         && Application.isPlaying
 #endif
@@ -440,8 +460,8 @@ namespace WorldSystem.Runtime
             {
                 return;
             }
-            
             if (!property.useAtmosphereMap || !isActiveAndEnabled) return;
+            _RenderAtmosphereMap = false;
             
             //配置RT
             RenderTextureDescriptor atmosphereMapDescriptor = new RenderTextureDescriptor(
@@ -459,22 +479,22 @@ namespace WorldSystem.Runtime
         }
         private RTHandle _atmosphereMapRT;
         private readonly int _SkyTexture = Shader.PropertyToID("_SkyTexture");
-        
+        private bool _RenderAtmosphereBlend;
         public void RenderAtmosphereBlend(CommandBuffer cmd, ref RenderingData renderingData)
         {
             RTHandle source = renderingData.cameraData.renderer.cameraColorTargetHandle;
             
-            if (!_render && Time.renderedFrameCount > 2
+            if (!_RenderAtmosphereBlend && Time.renderedFrameCount > 2
 #if UNITY_EDITOR  
-                        && Application.isPlaying
+                                        && Application.isPlaying
 #endif
                )
             {
                 Blitter.BlitCameraTexture(cmd, _atmosphereBlendRT, source);
                 return;
             }
-            
             if (!property.useAtmosphereBlend || !isActiveAndEnabled) return;
+            _RenderAtmosphereBlend = false;
             
             //配置RT
             RenderTextureDescriptor rtDescriptor = new RenderTextureDescriptor(
