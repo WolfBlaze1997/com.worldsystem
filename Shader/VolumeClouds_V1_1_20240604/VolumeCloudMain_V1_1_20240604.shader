@@ -25,14 +25,14 @@ Shader "Hidden/WorldSystem/RenderCloudsOptimize_V1_1_20240604"
             
             int _UseDownscaledDepth;
             int _UseReprojection;
-            int _UseDepth;
+            // int _UseDepth;
             
             #include "VolumeCloudMainPass_V1_1_20240604.hlsl"
             
             float4 Fragment(Varyings input) : SV_Target
             {
                 UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
-                return SampleClouds(input.texcoord, _UseDownscaledDepth, _UseReprojection, _UseDepth).color;
+                return SampleClouds(input.texcoord, _UseDownscaledDepth, _UseReprojection, 0).color;
                 
             }
             ENDHLSL

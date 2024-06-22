@@ -18,7 +18,7 @@ SamplerState altos_linear_repeat_sampler;
 SamplerState altos_point_repeat_sampler;
 SamplerState altos_point_clamp_sampler;
 uint _FrameId;
-Texture2D _DitheredDepthTexture;
+// Texture2D _DitheredDepthTexture;
 float4 _RenderTextureDimensions; // x = 1/width, y = 1/height, z = width, w = height
 float4 _RenderScale; // x = scale, y = rcp(scale)
 

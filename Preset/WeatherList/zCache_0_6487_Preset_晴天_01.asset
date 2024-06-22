@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69b8a94e4a66400794a67846e7e81235, type: 3}
   m_Name: "zCache_0_6487_Preset_\u6674\u5929_01"
   m_EditorClassIdentifier: 
-  sustainedTime: 0
-  varyingTime: 5.9738216
+  sustainedTime: 10
+  varyingTime: 8
   sustainedTimeCache: 10
   varyingTimeCache: 8
   backgroundProperty:
@@ -585,9 +585,9 @@ MonoBehaviour:
       equatorColor: {r: 0.01076923, g: 0.01076923, b: 0.02, a: 1}
       groundColor: {r: 0.0062499996, g: 0.0062499996, b: 0.01, a: 1}
     currentAtmosphereColor:
-      skyColor: {r: 0.06313726, g: 0.08854249, b: 0.18039216, a: 1}
-      equatorColor: {r: 0.01076923, g: 0.01076923, b: 0.02, a: 1}
-      groundColor: {r: 0.0062499996, g: 0.0062499996, b: 0.01, a: 1}
+      skyColor: {r: 0.07911617, g: 0.12262321, b: 0.321147, a: 1}
+      equatorColor: {r: 0.56333333, g: 0.659281, b: 0.73333335, a: 1}
+      groundColor: {r: 0.06627451, g: 0.060087148, b: 0.067320265, a: 1}
     currentCloudiness: 0
     currentPrecipitation: 0
     useAtmosphereMap: 1
@@ -607,14 +607,12 @@ MonoBehaviour:
     _Modeling_ShapeBase_Gain: 0.7
     _Modeling_ShapeBase_Freq: 2
     _Modeling_ShapeBase_Scale: 5
-    _MotionBase_DynamicVector: {x: -0.21037225, y: 0.2353453}
+    _MotionBase_DynamicVector: {x: -0.13712014, y: 0.50428265}
     _MotionBase_Direction: 0
     _MotionBase_Speed: 0.4
     _MotionBase_UseDirectionRandom: 1
     _MotionBase_DirectionRandomRange: 60
     _MotionBase_DirectionRandomFreq: 12
-    VolumeCloud_DitherDepth_Shader: {fileID: 0}
-    VolumeCloud_DitherDepth_Material: {fileID: 0}
     VolumeCloud_Main_Shader: {fileID: 4800000, guid: 432b92588026cab47a32165d32858d5d,
       type: 3}
     VolumeCloud_Main_Material: {fileID: 0}
@@ -623,16 +621,14 @@ MonoBehaviour:
     VolumeCloud_UpScale_Shader: {fileID: 4800000, guid: df91bbd96c908d946821b77b67664860,
       type: 3}
     VolumeCloud_UpScale_Material: {fileID: 0}
-    VolumeCloud_Merge_Shader: {fileID: 4800000, guid: 9914dd63eb059c4449eb83909a19bc0f,
-      type: 3}
-    VolumeCloud_Merge_Material: {fileID: 0}
+    VolumeCloud_CoreBlitWithAlpha_Shader: {fileID: 0}
+    VolumeCloud_CoreBlitWithAlpha_Material: {fileID: 0}
     Halton: {fileID: 2800000, guid: f1b67ef7748382f43a9dc9818f00c831, type: 3}
     _Render_CoarseSteps: 32
     _Render_DetailSteps: 32
     _Render_BlueNoiseArray: {fileID: 0}
     _Render_BlueNoise: 1
     _Render_MipmapDistance: {x: 4000, y: 8000}
-    _Render_DepthOptions: 0
     _Render_UseReprojection: 0
     _Render_UseTemporalAA: 1
     _Render_TemporalAAFactor: 0.03
@@ -647,7 +643,7 @@ MonoBehaviour:
     _Modeling_ShapeDetail_Quality: 1
     _Modeling_ShapeDetail_Scale: {x: 8, y: 8, z: 8}
     _MotionBase_UseDynamicCloud: 1
-    _MotionDetail_DynamicVector: {x: -0.038433436, y: -0.22215043, z: 1.562136}
+    _MotionDetail_DynamicVector: {x: 0.05076636, y: 0.90536296, z: 3.1378057}
     _MotionDetail_Direction: {x: 0, y: 0}
     _MotionDetail_Speed: 2.5
     _MotionDetail_UseRandomDirection: 1
@@ -669,16 +665,13 @@ MonoBehaviour:
     _Lighting_ShadingStrengthFalloff: 0.2
     _Lighting_ScatterMultiplier: 100
     _Lighting_ScatterStrength: 0.85
-    CloudShadows_TemporalAA_Shader: {fileID: 4800000, guid: a1425819257a09445b311356840c92fa,
-      type: 3}
+    CloudShadows_TemporalAA_Shader: {fileID: 0}
     CloudShadows_TemporalAA_Material: {fileID: 0}
-    CloudShadows_ScreenShadow_Shader: {fileID: 4800000, guid: c1b138b1ed949f148a31472a5bb12df0,
-      type: 3}
+    CloudShadows_ScreenShadow_Shader: {fileID: 0}
     CloudShadows_ScreenShadow_Material: {fileID: 0}
-    CloudShadows_ToScreen_Shader: {fileID: 4800000, guid: 7d0c5edf145208d46a24c3df4128bc93,
-      type: 3}
+    CloudShadows_ToScreen_Shader: {fileID: 0}
     CloudShadows_ToScreen_Material: {fileID: 0}
-    _Shadow_UseCastShadow: 1
+    _Shadow_UseCastShadow: 0
     _Shadow_Distance: 10000
     _Shadow_Strength:
       serializedVersion: 2

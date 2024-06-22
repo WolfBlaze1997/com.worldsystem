@@ -56,12 +56,7 @@ namespace WorldSystem.Runtime
             Custom
         }
 
-        public enum DepthCullOptions
-        {
-            AlwaysRenderBehindGeometry,
-            RespectGeometry
-        }
-
+        
         public enum ResolutionOptions
         {
             Full,
@@ -422,19 +417,20 @@ namespace WorldSystem.Runtime
 
 
         #region 渲染函数
-        
+
+        private bool _RenderCloudMap;
         public void RenderCloudMap()
         {
-            if (!_render && Time.renderedFrameCount > 2
+            if (!_RenderCloudMap && Time.renderedFrameCount > 2
 #if UNITY_EDITOR  
-                         && Application.isPlaying
+                                 && Application.isPlaying
 #endif
                )
             {
                 return;
             }
             if (!isActiveAndEnabled || property._Modeling_Amount_CloudAmount < 0.25f) return;
-            
+            _RenderCloudMap = false;
             
             //渲染云图
             Graphics.Blit(null, CloudBaseTexRT, property.VolumeCloud_BaseTex_Material, 0);
@@ -465,16 +461,6 @@ namespace WorldSystem.Runtime
         public partial class Property
         {
             [Title("体积云")]
-            [FoldoutGroup("配置")] [LabelText("抖动深度着色器")]
-            [ReadOnly] [PropertyOrder(-20)]
-            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            public Shader VolumeCloud_DitherDepth_Shader;
-
-            [FoldoutGroup("配置")] [LabelText("抖动深度材质")]
-            [ReadOnly] [PropertyOrder(-20)]
-            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            public Material VolumeCloud_DitherDepth_Material;
-
             [FoldoutGroup("配置")] [LabelText("体积云着色器")]
             [ReadOnly] [PropertyOrder(-20)]
             [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
@@ -504,17 +490,17 @@ namespace WorldSystem.Runtime
             [ReadOnly] [PropertyOrder(-20)]
             [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
             public Material VolumeCloud_UpScale_Material;
-
+            
             [FoldoutGroup("配置")] [LabelText("合并着色器")]
             [ReadOnly] [PropertyOrder(-20)]
             [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            public Shader VolumeCloud_Merge_Shader;
-
+            public Shader VolumeCloud_CoreBlitWithAlpha_Shader;
+            
             [FoldoutGroup("配置")] [LabelText("合并材质")]
             [ReadOnly] [PropertyOrder(-20)]
             [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            public Material VolumeCloud_Merge_Material;
-
+            public Material VolumeCloud_CoreBlitWithAlpha_Material;
+            
             [FoldoutGroup("配置")] [LabelText("Halton")]
             [ReadOnly] [PropertyOrder(-20)]
             [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
@@ -540,11 +526,7 @@ namespace WorldSystem.Runtime
             [FoldoutGroup("渲染")] [LabelText("Mipmap距离")] 
             [GUIColor(0.7f, 0.7f, 1f)] [PropertyOrder(-10)] 
             public Vector2 _Render_MipmapDistance = new Vector2(4000, 8000);
-
-            [FoldoutGroup("渲染")] [LabelText("深度选项")] 
-            [GUIColor(0, 1, 0)] [PropertyOrder(-10)]
-            public DepthCullOptions _Render_DepthOptions = DepthCullOptions.RespectGeometry;
-
+            
             [FoldoutGroup("渲染")] [LabelText("使用重投影")] 
             [GUIColor(0, 1, 0)] [PropertyOrder(-10)]
             public bool _Render_UseReprojection = false;
@@ -768,7 +750,7 @@ namespace WorldSystem.Runtime
             Shader.SetGlobalTexture(_Render_BlueNoiseArray_ID, property._Render_BlueNoiseArray);
             Shader.SetGlobalFloat(_Render_BlueNoise_ID, property._Render_BlueNoise);
             Shader.SetGlobalVector(_Render_MipmapDistance_ID, property._Render_MipmapDistance);
-            Shader.SetGlobalFloat(_UseDepth, (int)property._Render_DepthOptions);
+            // Shader.SetGlobalFloat(_UseDepth, (int)property._Render_DepthOptions);
             Shader.SetGlobalFloat(_UseReprojection, property._Render_UseReprojection ? 1 : 0);
             Shader.SetGlobalFloat(_UseDownscaledDepth, (int)property._Render_ResolutionOptions);
             Shader.SetGlobalTexture(_Halton_23_Sequence, property.Halton);
@@ -804,13 +786,11 @@ namespace WorldSystem.Runtime
             Shader.SetGlobalFloat(_Lighting_ScatterMultiplier_ID, property._Lighting_ScatterMultiplier);
             Shader.SetGlobalFloat(_Lighting_ScatterStrength_ID, property._Lighting_ScatterStrength);
         }
-
-        private readonly int _altos_CloudTexture = Shader.PropertyToID("_altos_CloudTexture");
+        
         private readonly int _ScreenTexture = Shader.PropertyToID("_ScreenTexture");
         private readonly int _Render_BlueNoiseArray_ID = Shader.PropertyToID("_Render_BlueNoiseArray");
         private readonly int _Render_BlueNoiseArrayIndices_ID = Shader.PropertyToID("_Render_BlueNoiseArrayIndices");
         private readonly int _Modeling_ShapeDetail_NoiseTexture3D_ID = Shader.PropertyToID("_Modeling_ShapeDetail_NoiseTexture3D");
-        private readonly int _DitheredDepthTexture = Shader.PropertyToID("_DitheredDepthTexture");
         private readonly int _Halton_23_Sequence = Shader.PropertyToID("_Halton_23_Sequence");
         private readonly int _Lighting_CheapAmbient_ID = Shader.PropertyToID("_Lighting_CheapAmbient");
         private readonly int _Lighting_AmbientExposure_ID = Shader.PropertyToID("_Lighting_AmbientExposure");
@@ -832,7 +812,6 @@ namespace WorldSystem.Runtime
         private readonly int _Lighting_ScatterStrength_ID = Shader.PropertyToID("_Lighting_ScatterStrength");
         private readonly int _Lighting_ShadingStrengthFalloff_ID = Shader.PropertyToID("_Lighting_ShadingStrengthFalloff");
         private readonly int _ShadowPass = Shader.PropertyToID("_ShadowPass");
-        private readonly int _UseDepth = Shader.PropertyToID("_UseDepth");
         private readonly int _UseDownscaledDepth = Shader.PropertyToID("_UseDownscaledDepth");
         private readonly int _UseReprojection = Shader.PropertyToID("_UseReprojection");
         private readonly int _Lighting_AlbedoColor_ID = Shader.PropertyToID("_Lighting_AlbedoColor");
@@ -852,20 +831,21 @@ namespace WorldSystem.Runtime
 #if UNITY_EDITOR
 
             if (property.VolumeCloud_Main_Shader == null)
-                property.VolumeCloud_Main_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem//Shader/VolumeClouds_V1_1_20240604/VolumeCloudMain_V1_1_20240604.shader");
-            if (property.VolumeCloud_Merge_Shader == null)
-                property.VolumeCloud_Merge_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem//Shader/VolumeClouds_V1_1_20240604/VolumeCloudMerge_V1_1_20240604.shader");
+                property.VolumeCloud_Main_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/VolumeCloudMain_V1_1_20240604.shader");
+            if (property.VolumeCloud_CoreBlitWithAlpha_Shader == null)
+                property.VolumeCloud_CoreBlitWithAlpha_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/CoreBlitWithAlpha.shader");
+            
             if (property.Halton == null)
-                property.Halton = AssetDatabase.LoadAssetAtPath<Texture2D>("Packages/com.worldsystem//Textures/Noise Textures/HaltonSequence/Halton_23_Sequence.png");
+                property.Halton = AssetDatabase.LoadAssetAtPath<Texture2D>("Packages/com.worldsystem/Textures/Noise Textures/HaltonSequence/Halton_23_Sequence.png");
             if (property._Render_BlueNoiseArray == null)
-                property._Render_BlueNoiseArray = AssetDatabase.LoadAssetAtPath<Texture2DArray>("Packages/com.worldsystem//Textures/Noise Textures/BlueNoise/_Render_BlueNoiseArray.asset");
+                property._Render_BlueNoiseArray = AssetDatabase.LoadAssetAtPath<Texture2DArray>("Packages/com.worldsystem/Textures/Noise Textures/BlueNoise/_Render_BlueNoiseArray.asset");
 
 #endif
 
             if (property.VolumeCloud_Main_Material == null)
                 property.VolumeCloud_Main_Material = CoreUtils.CreateEngineMaterial(property.VolumeCloud_Main_Shader);
-            if (property.VolumeCloud_Merge_Material == null)
-                property.VolumeCloud_Merge_Material = CoreUtils.CreateEngineMaterial(property.VolumeCloud_Merge_Shader);
+            if (property.VolumeCloud_CoreBlitWithAlpha_Material == null)
+                property.VolumeCloud_CoreBlitWithAlpha_Material = CoreUtils.CreateEngineMaterial(property.VolumeCloud_CoreBlitWithAlpha_Shader);
 
             OnEnable_CloudMap();
             OnEnable_VolumeCloudShadow();
@@ -877,8 +857,8 @@ namespace WorldSystem.Runtime
         {
             if (property.VolumeCloud_Main_Shader != null)
                 Resources.UnloadAsset(property.VolumeCloud_Main_Shader);
-            if (property.VolumeCloud_Merge_Shader != null)
-                Resources.UnloadAsset(property.VolumeCloud_Merge_Shader);
+            if (property.VolumeCloud_CoreBlitWithAlpha_Shader != null)
+                Resources.UnloadAsset(property.VolumeCloud_CoreBlitWithAlpha_Shader);
             if (property.Halton != null)
                 Resources.UnloadAsset(property.Halton);
             if (property._Render_BlueNoiseArray != null)
@@ -886,13 +866,9 @@ namespace WorldSystem.Runtime
             
             if (property.VolumeCloud_Main_Material != null)
                 CoreUtils.Destroy(property.VolumeCloud_Main_Material);
-            if (property.VolumeCloud_Merge_Material != null)
-                CoreUtils.Destroy(property.VolumeCloud_Merge_Material);
+            if (property.VolumeCloud_CoreBlitWithAlpha_Material != null)
+                CoreUtils.Destroy(property.VolumeCloud_CoreBlitWithAlpha_Material);
             
-            if (property.VolumeCloud_DitherDepth_Shader != null)
-                Resources.UnloadAsset(property.VolumeCloud_DitherDepth_Shader);
-            if (property.VolumeCloud_DitherDepth_Material != null)
-                CoreUtils.Destroy(property.VolumeCloud_DitherDepth_Material);
             if (property.VolumeCloud_Reproject_Shader != null)
                 Resources.UnloadAsset(property.VolumeCloud_Reproject_Shader);
             if (property.VolumeCloud_Reproject_Material != null)
@@ -903,26 +879,20 @@ namespace WorldSystem.Runtime
                 CoreUtils.Destroy(property.VolumeCloud_UpScale_Material);
 
             _volumeCloudRT?.Release();
-            _mergeRT?.Release();
-            _ditherDepthRT?.Release();
             _reprojectionRT?.Release();
             _upScaleHalfRT?.Release();
 
             property._Render_BlueNoiseArray = null;
             property.VolumeCloud_Main_Shader = null;
             property.VolumeCloud_Main_Material = null;
-            property.VolumeCloud_Merge_Shader = null;
-            property.VolumeCloud_Merge_Material = null;
-            property.VolumeCloud_DitherDepth_Shader = null;
-            property.VolumeCloud_DitherDepth_Material = null;
+            property.VolumeCloud_CoreBlitWithAlpha_Shader = null;
+            property.VolumeCloud_CoreBlitWithAlpha_Material = null;
             property.VolumeCloud_Reproject_Shader = null;
             property.VolumeCloud_Reproject_Material = null;
             property.VolumeCloud_UpScale_Shader = null;
             property.VolumeCloud_UpScale_Material = null;
 
             _volumeCloudRT = null;
-            _mergeRT = null;
-            _ditherDepthRT = null;
             _reprojectionRT = null;
             _upScaleHalfRT = null;
 
@@ -936,35 +906,6 @@ namespace WorldSystem.Runtime
             
             property._Modeling_ShapeDetail_NoiseTexture3D = LoadVolumeTexture(property._Modeling_ShapeDetail_Type, property._Modeling_ShapeDetail_Quality, property._Modeling_ShapeDetail_NoiseTexture3D);
             property._Modeling_Position_PlanetRadius = GetRadiusFromCelestialBodySelection(property._Modeling_Position_RadiusPreset, property._Modeling_Position_PlanetRadius);
-
-            // 当半分辨率渲染且支持几何深度时, 需要缩小深度
-            if (property._Render_ResolutionOptions == ResolutionOptions.Half &&
-                property._Render_DepthOptions == DepthCullOptions.RespectGeometry)
-            {
-#if UNITY_EDITOR
-                if (property.VolumeCloud_DitherDepth_Shader == null)
-                    property.VolumeCloud_DitherDepth_Shader =
-                        AssetDatabase.LoadAssetAtPath<Shader>(
-                            "Packages/com.worldsystem//Shader/VolumeClouds_V1_1_20240604/VolumeCloudDitherDepth_V1_1_20240604.shader");
-#endif
-                if (property.VolumeCloud_DitherDepth_Material == null)
-                    property.VolumeCloud_DitherDepth_Material =
-                        CoreUtils.CreateEngineMaterial(property.VolumeCloud_DitherDepth_Shader);
-            }
-            else
-            {
-                if (property.VolumeCloud_DitherDepth_Shader != null)
-                    Resources.UnloadAsset(property.VolumeCloud_DitherDepth_Shader);
-                if (property.VolumeCloud_DitherDepth_Material != null)
-                    CoreUtils.Destroy(property.VolumeCloud_DitherDepth_Material);
-
-                _ditherDepthRT?.Release();
-
-                property.VolumeCloud_DitherDepth_Shader = null;
-                property.VolumeCloud_DitherDepth_Material = null;
-                _ditherDepthRT = null;
-            }
-
             
             //重投影
             if (property._Render_UseReprojection)
@@ -1044,9 +985,9 @@ namespace WorldSystem.Runtime
         }
 #endif
 
-        private bool _frameSkip = false;
-        private int _frameCount;
-        private bool _render;
+
+        private int _frameID;
+        private int _updateCount;
 #if UNITY_EDITOR
         private void Update()
         {
@@ -1055,22 +996,32 @@ namespace WorldSystem.Runtime
         }
         private void FixedUpdate()
         {
+            if (Time.frameCount == _frameID) return;
+            
+            
+            //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
+            _updateCount++;
+            if (_updateCount % 1 == 0)
+            {
+                _RenderCloudMap = true;
+                _RenderVolumeCloud = true;
+                // _RenderVolumeCloudShadow = true;
+            }
+            if(_updateCount % 2 == 0)
+                UpdateFunc();
+            
+            
+            _frameID = Time.frameCount;
+        }
+#else
+        private void FixedUpdate()
+        {
             if (Time.frameCount == _frameCount) return;
             _render = true;
             _frameSkip = !_frameSkip; if (_frameSkip) return;
 
             UpdateFunc();
             
-            _frameCount = Time.frameCount;
-        }
-#else
-        private void FixedUpdate()
-        {
-            frameSkip = !frameSkip; if (frameSkip) return;
-            if (Time.frameCount == _frameCount) return;
-
-            UpdateFunc();
-
             _frameCount = Time.frameCount;
         }
 #endif
@@ -1193,55 +1144,31 @@ namespace WorldSystem.Runtime
 
 
         #region 渲染函数
-
+        private bool _RenderVolumeCloud;
         public void RenderVolumeCloud(CommandBuffer cmd, ref RenderingData renderingData)
         {
             var source = renderingData.cameraData.renderer.cameraColorTargetHandle;
             
-            if (!_render && Time.renderedFrameCount > 2
+            if (!_RenderVolumeCloud && Time.renderedFrameCount > 2
 #if UNITY_EDITOR  
                              && Application.isPlaying
 #endif
                )
             {
-                
-                cmd.SetGlobalTexture(_ScreenTexture, source);
-                //合并输出到摄像机颜色
-                cmd.SetRenderTarget(_mergeRT);
-                Blitter.BlitTexture(cmd, new Vector4(1, 1, 0, 0), property.VolumeCloud_Merge_Material, 0);
-                Blitter.BlitCameraTexture(cmd, _mergeRT, source);
+                Blitter.BlitCameraTexture(cmd, _activeTarget, source, property.VolumeCloud_CoreBlitWithAlpha_Material,0);
                 return;
             }
             
             if (!isActiveAndEnabled || property._Modeling_Amount_CloudAmount < 0.25f) return;
             
-            _render = false;
+            _RenderVolumeCloud = false;
             
             var cloudScale = Scale.Full;
             if (property._Render_UseReprojection) cloudScale++;
             if (property._Render_ResolutionOptions == ResolutionOptions.Half) cloudScale++;
 
             TemporalAATools.StartTAA(cmd, renderingData);
-
-            // SetupDynamicProperty_VolumeCloud(cmd);
-
-            // 当半分辨率渲染且支持几何深度时, 需要缩小深度
-            if (property._Render_ResolutionOptions == ResolutionOptions.Half &&
-                property._Render_DepthOptions == DepthCullOptions.RespectGeometry)
-            {
-                RenderingUtils.ReAllocateIfNeeded(ref _ditherDepthRT,
-                    new RenderTextureDescriptor(
-                        renderingData.cameraData.cameraTargetDescriptor.width >> 1,
-                        renderingData.cameraData.cameraTargetDescriptor.height >> 1,
-                        RenderTextureFormat.RFloat),
-                    name: "DitherDepthRT");
-
-                cmd.SetRenderTarget(_ditherDepthRT);
-                Blitter.BlitTexture(cmd, new Vector4(1, 1, 0, 0), property.VolumeCloud_DitherDepth_Material, 0);
-                cmd.SetGlobalTexture(_DitheredDepthTexture, _ditherDepthRT);
-                _activeTarget = _ditherDepthRT;
-            }
-
+            
             //绘制体积云
             //输入全局着色器参数
             {
@@ -1317,38 +1244,17 @@ namespace WorldSystem.Runtime
             }
             else
             {
-                RenderingUtils.ReAllocateIfNeeded(ref TemporalAATools.PreviousRT, _activeTarget.rt.descriptor,
-                    name: "PreviousRT");
+                RenderingUtils.ReAllocateIfNeeded(ref TemporalAATools.PreviousRT, _activeTarget.rt.descriptor, name: "PreviousRT");
                 cmd.CopyTexture(_activeTarget, TemporalAATools.PreviousRT);
             }
-
-            //合并
-            {
-                RenderingUtils.ReAllocateIfNeeded(ref _mergeRT,
-                    new RenderTextureDescriptor(
-                        renderingData.cameraData.cameraTargetDescriptor.width,
-                        renderingData.cameraData.cameraTargetDescriptor.height,
-                        source.rt.format),
-                    name: "MergeRT");
-
-                //输出全局着色器参数
-                cmd.SetGlobalTexture(_altos_CloudTexture, _activeTarget);
-                cmd.SetGlobalTexture(_ScreenTexture, source);
-
-                //合并输出到摄像机颜色
-                cmd.SetRenderTarget(_mergeRT);
-
-                Blitter.BlitTexture(cmd, new Vector4(1, 1, 0, 0), property.VolumeCloud_Merge_Material, 0);
-                Blitter.BlitCameraTexture(cmd, _mergeRT, source);
-            }
+            
+            Blitter.BlitCameraTexture(cmd, _activeTarget, source, property.VolumeCloud_CoreBlitWithAlpha_Material,0);
         }
         private readonly int _PreviousFrame = Shader.PropertyToID("_PreviousFrame");
         private readonly int _CurrentFrame = Shader.PropertyToID("_CurrentFrame");
-        private RTHandle _ditherDepthRT;
         private RTHandle _volumeCloudRT;
         private RTHandle _reprojectionRT;
         private RTHandle _upScaleHalfRT;
-        private RTHandle _mergeRT;
         private RTHandle _activeTarget;
 
         #endregion
@@ -1616,24 +1522,28 @@ namespace WorldSystem.Runtime
             
             return false;
         }
-        
-        
+
+        // private bool _RenderVolumeCloudShadow;
         public void RenderVolumeCloudShadow(CommandBuffer cmd, ref RenderingData renderingData)
         {
-            RTHandle source = renderingData.cameraData.renderer.cameraColorTargetHandle;
-            if (!_render && Time.renderedFrameCount > 2
-#if UNITY_EDITOR  
-                         && Application.isPlaying
-#endif
-               )
-            {
-                Blitter.BlitCameraTexture(cmd, mergeRT, source);
-                return;
-            }
-            
             if (IsDisableVolumeCloudShadow(out _)) return;
+            RTHandle source = renderingData.cameraData.renderer.cameraColorTargetHandle;
             
-            //拿到屏幕颜色
+//             if (!_RenderVolumeCloudShadow && Time.renderedFrameCount > 2
+// #if UNITY_EDITOR  
+//                                           && Application.isPlaying
+// #endif
+//                )
+//             {
+//                 
+//                 cmd.SetGlobalTexture(_ScreenTexture, source);
+//                 //将屏幕空间阴影合并输出到摄像机
+//                 cmd.SetRenderTarget(mergeRT);
+//                 Blitter.BlitTexture(cmd, new Vector4(1, 1, 0, 0), property.CloudShadows_ToScreen_Material, 0);
+//                 Blitter.BlitCameraTexture(cmd, mergeRT, source);
+//                 return;
+//             }
+//             _RenderVolumeCloudShadow = false;
 
             //分配动态分辨率RT
             RenderTextureDescriptor ssrtDescriptor = new RenderTextureDescriptor(

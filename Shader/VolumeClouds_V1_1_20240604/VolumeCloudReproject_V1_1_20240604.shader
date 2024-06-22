@@ -30,7 +30,7 @@ Shader "Hidden/WorldSystem/ReprojectOptimize_V1_1_20240604"
             Texture2D _PreviousFrame;
 
             int _IsFirstFrame;
-            int _UseDepth;
+            // int _UseDepth;
             float _CloudTextureRenderScale;
 
             /////////////////////////////
@@ -63,7 +63,7 @@ Shader "Hidden/WorldSystem/ReprojectOptimize_V1_1_20240604"
                 // We sample the full screen in the first frame so that screenshots and other instant effects work OK.
                 if(_IsFirstFrame == 1)
                 {
-                    return SampleClouds(input.texcoord, 0, 0, _UseDepth).color;
+                    return SampleClouds(input.texcoord, 0, 0, 0).color;
                 }
 
 
@@ -161,7 +161,7 @@ Shader "Hidden/WorldSystem/ReprojectOptimize_V1_1_20240604"
 
                 // If we don't have a valid historical UV, sample the clouds again.
                 // If we don't have a good depth reference, sample the clouds again.
-                return SampleClouds(input.texcoord, 0, 0, _UseDepth).color;
+                return SampleClouds(input.texcoord, 0, 0, 0).color;
             }
             ENDHLSL
         }

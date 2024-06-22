@@ -630,10 +630,10 @@ FragmentOutput SampleClouds(float2 UV, int useDownscaledDepth, int useReprojecti
         {
             depthRaw = SampleSceneDepth(UV);
         }
-        else
-        {
-            depthRaw = _DitheredDepthTexture.SampleLevel(altos_point_clamp_sampler, UV, 0).r;
-        }
+        // else
+        // {
+        //     depthRaw = _DitheredDepthTexture.SampleLevel(altos_point_clamp_sampler, UV, 0).r;
+        // }
         
         depth01 = Linear01Depth(depthRaw, _ZBufferParams);
         if (depth01 < 1.0)

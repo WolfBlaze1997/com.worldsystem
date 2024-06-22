@@ -499,7 +499,7 @@ namespace WorldSystem.Runtime
         {
             public SkyRenderPass()
             {
-                renderPassEvent = RenderPassEvent.BeforeRenderingPrePasses;
+                renderPassEvent = RenderPassEvent.BeforeRenderingOpaques;
             }
             
             public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
@@ -548,7 +548,7 @@ namespace WorldSystem.Runtime
         {
             public VolumeCloudOptimizeRenderPass()
             {
-                renderPassEvent = RenderPassEvent.BeforeRenderingTransparents;
+                renderPassEvent = RenderPassEvent.BeforeRenderingOpaques;
             }
 
             public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)

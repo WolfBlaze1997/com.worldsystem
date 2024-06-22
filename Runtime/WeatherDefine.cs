@@ -630,7 +630,7 @@ namespace WorldSystem.Runtime
             WorldManager.Instance.volumeCloudOptimizeModule.property._Render_DetailSteps = cloudProperty._Render_DetailSteps;
             WorldManager.Instance.volumeCloudOptimizeModule.property._Render_BlueNoise = cloudProperty._Render_BlueNoise;
             WorldManager.Instance.volumeCloudOptimizeModule.property._Render_MipmapDistance = cloudProperty._Render_MipmapDistance;
-            WorldManager.Instance.volumeCloudOptimizeModule.property._Render_DepthOptions = cloudProperty._Render_DepthOptions;
+            // WorldManager.Instance.volumeCloudOptimizeModule.property._Render_DepthOptions = cloudProperty._Render_DepthOptions;
             WorldManager.Instance.volumeCloudOptimizeModule.property._Render_UseReprojection = cloudProperty._Render_UseReprojection;
             WorldManager.Instance.volumeCloudOptimizeModule.property._Render_UseTemporalAA = cloudProperty._Render_UseTemporalAA;
             WorldManager.Instance.volumeCloudOptimizeModule.property._Render_TemporalAAFactor = cloudProperty._Render_TemporalAAFactor;
@@ -715,16 +715,16 @@ namespace WorldSystem.Runtime
             {
                 VARIABLE.cloudProperty.VolumeCloud_BaseTex_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_BaseTex_Shader;
                 VARIABLE.cloudProperty.VolumeCloud_BaseTex_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_BaseTex_Material;
-                VARIABLE.cloudProperty.VolumeCloud_DitherDepth_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_DitherDepth_Shader;
-                VARIABLE.cloudProperty.VolumeCloud_DitherDepth_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_DitherDepth_Material;
+                // VARIABLE.cloudProperty.VolumeCloud_DitherDepth_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_DitherDepth_Shader;
+                // VARIABLE.cloudProperty.VolumeCloud_DitherDepth_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_DitherDepth_Material;
                 VARIABLE.cloudProperty.VolumeCloud_Main_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_Main_Shader;
                 VARIABLE.cloudProperty.VolumeCloud_Main_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_Main_Material;
                 VARIABLE.cloudProperty.VolumeCloud_Reproject_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_Reproject_Shader;
                 VARIABLE.cloudProperty.VolumeCloud_Reproject_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_Reproject_Material;
                 VARIABLE.cloudProperty.VolumeCloud_UpScale_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_UpScale_Shader;
                 VARIABLE.cloudProperty.VolumeCloud_UpScale_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_UpScale_Material;
-                VARIABLE.cloudProperty.VolumeCloud_Merge_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_Merge_Shader;
-                VARIABLE.cloudProperty.VolumeCloud_Merge_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_Merge_Material;
+                // VARIABLE.cloudProperty.VolumeCloud_Merge_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_Merge_Shader;
+                // VARIABLE.cloudProperty.VolumeCloud_Merge_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_Merge_Material;
                 VARIABLE.cloudProperty.Halton = WorldManager.Instance.volumeCloudOptimizeModule.property.Halton;
                 VARIABLE.cloudProperty._Modeling_ShapeDetail_NoiseTexture3D = WorldManager.Instance.volumeCloudOptimizeModule.property._Modeling_ShapeDetail_NoiseTexture3D;
                 VARIABLE.cloudProperty._MotionBase_DynamicVector = WorldManager.Instance.volumeCloudOptimizeModule.property._MotionBase_DynamicVector;
@@ -751,7 +751,7 @@ namespace WorldSystem.Runtime
             item.cloudProperty._Render_DetailSteps = cloudProperty._Render_DetailSteps;
             item.cloudProperty._Render_BlueNoise = cloudProperty._Render_BlueNoise;
             item.cloudProperty._Render_MipmapDistance = cloudProperty._Render_MipmapDistance;
-            item.cloudProperty._Render_DepthOptions = cloudProperty._Render_DepthOptions;
+            // item.cloudProperty._Render_DepthOptions = cloudProperty._Render_DepthOptions;
             item.cloudProperty._Render_UseReprojection = cloudProperty._Render_UseReprojection;
             item.cloudProperty._Render_UseTemporalAA = cloudProperty._Render_UseTemporalAA;
             item.cloudProperty._Render_TemporalAAFactor = cloudProperty._Render_TemporalAAFactor;
