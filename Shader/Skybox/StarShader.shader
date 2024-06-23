@@ -8,7 +8,7 @@ Shader "Hidden/WorldSystem/Sky/StarShader"
             Name "Star Shader"
             Tags { "LightMode" = "Altos" }
             Cull Off
-            Blend One One
+            Blend OneMinusDstAlpha One
             ZWrite Off
             ZTest Always
             ZClip False
@@ -80,7 +80,7 @@ Shader "Hidden/WorldSystem/Sky/StarShader"
                 float starFlickerFrequency = _FlickerFrequency * (altos_StarBuffer[instanceID].id + 1.0);
                 float starFlickerStrength = _FlickerStrength;
 
-                float3 positionWS = TransformObjectToWorld(positionOS);
+                float3 positionWS = _WorldSpaceCameraPos - TransformObjectToWorld(positionOS);
                 float horizon = abs(normalize(positionWS).y);
                 horizon = lerp(2.0, 1.0, horizon);
 

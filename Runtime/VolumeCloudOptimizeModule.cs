@@ -1024,7 +1024,7 @@ namespace WorldSystem.Runtime
             {
                 UpdateFunc();
             }
-            if (_updateCount % 4 == 0)
+            if (_updateCount % 1 == 0)
             {
                 _RenderVolumeCloud = true;
             }
@@ -1179,28 +1179,24 @@ namespace WorldSystem.Runtime
             TemporalAATools.StartTAA(cmd, renderingData);
             var source = renderingData.cameraData.renderer.cameraColorTargetHandle;
             
-            //使用缓存的渲染结果并FixupLate
-            if (!_RenderVolumeCloud && Time.renderedFrameCount > 2
-#if UNITY_EDITOR  
-                             && Application.isPlaying
-#endif
-               )
-            {
-                cmd.SetGlobalTexture(_ActiveTarget,_activeTarget);
-                
-                RenderingUtils.ReAllocateIfNeeded(ref _fixupLateRT, _activeTarget.rt.descriptor, name: "FixupLateRT");
-                cmd.SetRenderTarget(_fixupLateRT);
-                Blitter.BlitTexture(cmd, new Vector4(1,1,0,0), property.VolumeCloud_FixupLate_Material,0);
-                cmd.CopyTexture(_fixupLateRT, _activeTarget);
-
-                // RenderingUtils.ReAllocateIfNeeded(ref PreviousRT,currentRT.rt.descriptor, name: "PreviousRT");
-                // if (TaaRT == null)
-                // {
-                    cmd.CopyTexture(_fixupLateRT, TemporalAATools.PreviousRT);
-                // }
-                Blitter.BlitCameraTexture(cmd, _fixupLateRT, source, property.VolumeCloud_CoreBlitWithAlpha_Material,0);
-                return;
-            }
+//             //使用缓存的渲染结果并FixupLate
+//             if (!_RenderVolumeCloud && Time.renderedFrameCount > 2
+// #if UNITY_EDITOR  
+//                              && Application.isPlaying
+// #endif
+//                )
+//             {
+//                 cmd.SetGlobalTexture(_ActiveTarget,_activeTarget);
+//                 
+//                 RenderingUtils.ReAllocateIfNeeded(ref _fixupLateRT, _activeTarget.rt.descriptor, name: "FixupLateRT");
+//                 cmd.SetRenderTarget(_fixupLateRT);
+//                 Blitter.BlitTexture(cmd, new Vector4(1,1,0,0), property.VolumeCloud_FixupLate_Material,0);
+//                 cmd.CopyTexture(_fixupLateRT, _activeTarget);
+//                 
+//                 cmd.CopyTexture(_fixupLateRT, TemporalAATools.PreviousRT);
+//                 Blitter.BlitCameraTexture(cmd, _fixupLateRT, source, property.VolumeCloud_CoreBlitWithAlpha_Material,0);
+//                 return;
+//             }
             if (!isActiveAndEnabled || property._Modeling_Amount_CloudAmount < 0.25f) return;
             _RenderVolumeCloud = false;
             
@@ -1227,9 +1223,11 @@ namespace WorldSystem.Runtime
                     _volumeCloudRT.GetScaledSize().y));
                 cmd.SetGlobalFloat(_ShadowPass, 0);
                 //渲染体积云
-                cmd.SetRenderTarget(_volumeCloudRT);
+                // cmd.SetRenderTarget(_volumeCloudRT);
+                cmd.SetRenderTarget(WorldManager.Instance?.universeBackgroundModule?.skyRT);
                 Blitter.BlitTexture(cmd, new Vector4(1f, 1f, 0f, 0f), property.VolumeCloud_Main_Material, 0);
-                _activeTarget = _volumeCloudRT;
+                // _activeTarget = _volumeCloudRT;
+                _activeTarget = WorldManager.Instance?.universeBackgroundModule?.skyRT;
             }
 
             //重投影
@@ -1290,7 +1288,7 @@ namespace WorldSystem.Runtime
                 cmd.CopyTexture(_activeTarget, TemporalAATools.PreviousRT);
             }
             
-            Blitter.BlitCameraTexture(cmd, _activeTarget, source, property.VolumeCloud_CoreBlitWithAlpha_Material,0);
+            // Blitter.BlitCameraTexture(cmd, _activeTarget, source, property.VolumeCloud_CoreBlitWithAlpha_Material,0);
         }
         private readonly int _PreviousFrame = Shader.PropertyToID("_PreviousFrame");
         private readonly int _CurrentFrame = Shader.PropertyToID("_CurrentFrame");
@@ -1300,7 +1298,7 @@ namespace WorldSystem.Runtime
         private RTHandle _reprojectionRT;
         private RTHandle _upScaleHalfRT;
         private RTHandle _activeTarget;
-        private RTHandle _fixupLateRTCache;
+        // private RTHandle _fixupLateRTCache;
         private RTHandle _fixupLateRT;
 
         #endregion

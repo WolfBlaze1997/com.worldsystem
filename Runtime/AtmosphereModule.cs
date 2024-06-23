@@ -447,19 +447,20 @@ namespace WorldSystem.Runtime
         }
         
         
+        
         private Matrix4x4 _transformMatrix = Matrix4x4.identity;
         private bool _RenderAtmosphereMap;
         public void RenderAtmosphereMap(CommandBuffer cmd, ref RenderingData renderingData)
         {
             
-            if (!_RenderAtmosphereMap && Time.renderedFrameCount > 2
-#if UNITY_EDITOR  
-                        && Application.isPlaying
-#endif
-               )
-            {
-                return;
-            }
+//             if (!_RenderAtmosphereMap && Time.renderedFrameCount > 2
+// #if UNITY_EDITOR  
+//                         && Application.isPlaying
+// #endif
+//                )
+//             {
+//                 return;
+//             }
             if (!property.useAtmosphereMap || !isActiveAndEnabled) return;
             _RenderAtmosphereMap = false;
             

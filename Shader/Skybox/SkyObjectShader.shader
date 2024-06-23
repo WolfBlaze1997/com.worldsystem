@@ -14,7 +14,7 @@ Shader "Hidden/WorldSystem/Sky/SkyObjectShader"
             Tags { "LightMode" = "Altos"}
 
             Cull Off
-            Blend SrcAlpha OneMinusSrcAlpha
+            Blend OneMinusDstAlpha One
             ZTest LEqual
             ZWrite Off
             

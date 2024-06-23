@@ -10,6 +10,7 @@ Shader "Hidden/WorldSystem/RenderCloudsOptimize_V1_1_20240604"
         ZWrite Off
         Cull Off
         ZTest Always
+        Blend One OneMinusSrcAlpha, One Zero
         
         Pass
         {

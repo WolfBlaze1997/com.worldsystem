@@ -39,6 +39,9 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "宇宙背景模块已开启"), GUIColor(0.3f, 1f, 0.3f)]
         private void UniverseBackgroundModuleToggle_Off()
         {
+            this.starModuleToggle = false;
+            this.celestialBodyManagerToggle = false;
+            this.atmosphereModuleToggle = false;
             this.universeBackgroundModuleToggle = false;
             OnValidate();
         }
@@ -68,6 +71,7 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "星星模块已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
         private void StarModuleToggle_On()
         {
+            this.universeBackgroundModuleToggle = true;
             this.starModuleToggle = true;
             OnValidate();
         }
@@ -88,6 +92,7 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "星体模块已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
         private void CelestialBodyModuleToggle_On()
         {
+            this.universeBackgroundModuleToggle = true;
             this.celestialBodyManagerToggle = true;
             OnValidate();
         }
@@ -108,6 +113,7 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "大气模块已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
         private void AtmosphereModuleToggle_On()
         {
+            this.universeBackgroundModuleToggle = true;
             this.atmosphereModuleToggle = true;
             OnValidate();
         }
@@ -512,17 +518,18 @@ namespace WorldSystem.Runtime
                 //渲染背景
                 WorldManager.Instance?.universeBackgroundModule?.RenderBackground(cmd, ref renderingData);
                 
-                //渲染星星
-                WorldManager.Instance?.starModule?.RenderStar(cmd, ref renderingData);
-                
-                //渲染星体
-                WorldManager.Instance?.celestialBodyManager?.RenderCelestialBodyList(cmd,ref renderingData);
-
                 //渲染大气,绘制大气图
                 WorldManager.Instance?.atmosphereModule?.RenderAtmosphere(cmd, ref renderingData);
                 WorldManager.Instance?.atmosphereModule?.RenderAtmosphereMap(cmd, ref renderingData);
                 
+                //体积云
                 WorldManager.Instance?.volumeCloudOptimizeModule?.RenderVolumeCloud(cmd,ref renderingData);
+                
+                //我们这里将星星和星体放在后面渲染,使用特别的方式正确混合,这是因为,大气体积云我们可以降低分辨率渲染,而星星星体为保持清晰度不可降低分辨率
+                //渲染星星
+                WorldManager.Instance?.starModule?.RenderStar(cmd, ref renderingData);
+                //渲染星体
+                WorldManager.Instance?.celestialBodyManager?.RenderCelestialBodyList(cmd,ref renderingData);
                 
                 context.ExecuteCommandBuffer(cmd);
                 CommandBufferPool.Release(cmd);

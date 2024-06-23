@@ -2,6 +2,7 @@
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
@@ -73,11 +74,20 @@ namespace WorldSystem.Runtime
         {
             if (!isActiveAndEnabled)
                 return;
+            RenderingUtils.ReAllocateIfNeeded(ref skyRT, new RenderTextureDescriptor(
+                renderingData.cameraData.cameraTargetDescriptor.width >> 1,
+                renderingData.cameraData.cameraTargetDescriptor.height >> 1,
+                RenderTextureFormat.ARGBHalf), name: "SkyRT");
+            
+            cmd.SetRenderTarget(skyRT);
             Matrix4x4 m = Matrix4x4.identity;
             m.SetTRS(renderingData.cameraData.worldSpaceCameraPos, Quaternion.identity,
                 Vector3.one * renderingData.cameraData.camera.farClipPlane);
             cmd.DrawMesh(property.skyMesh, m, property.backgroundMaterial, 0);
         }
+
+        public RTHandle skyRT;
+
         #endregion
     }
 }
