@@ -359,7 +359,7 @@ namespace WorldSystem.Runtime
             atmosphereBlendPass ??= new AtmosphereBlendPass();
             
             volumeCloudOptimizeShadowRenderPass ??= new VolumeCloudOptimizeShadowRenderPass();
-            volumeCloudOptimizeRenderPass ??= new VolumeCloudOptimizeRenderPass();
+            // volumeCloudOptimizeRenderPass ??= new VolumeCloudOptimizeRenderPass();
           
             OnValidate();
             
@@ -381,7 +381,7 @@ namespace WorldSystem.Runtime
             skyRenderPass = null;
             atmosphereBlendPass = null;
             volumeCloudOptimizeShadowRenderPass = null;
-            volumeCloudOptimizeRenderPass = null;
+            // volumeCloudOptimizeRenderPass = null;
             
             timModuleToggle = false;
             universeBackgroundModuleToggle = false;
@@ -445,16 +445,15 @@ namespace WorldSystem.Runtime
             scriptableRenderer.EnqueuePass(skyRenderPass);
             scriptableRenderer.EnqueuePass(volumeCloudOptimizeShadowRenderPass);
             scriptableRenderer.EnqueuePass(atmosphereBlendPass);
-            scriptableRenderer.EnqueuePass(volumeCloudOptimizeRenderPass);
-            
-            
+            // scriptableRenderer.EnqueuePass(volumeCloudOptimizeRenderPass);
         }
+        
         private SkyRenderPass skyRenderPass;
+        // private VolumeCloudOptimizeRenderPass volumeCloudOptimizeRenderPass;
+        private VolumeCloudOptimizeShadowRenderPass volumeCloudOptimizeShadowRenderPass;
+        
         private AtmosphereBlendPass atmosphereBlendPass;
         
-        private VolumeCloudOptimizeRenderPass volumeCloudOptimizeRenderPass;
-        private VolumeCloudOptimizeShadowRenderPass volumeCloudOptimizeShadowRenderPass;
-
         private T AppendOrDestroyModule<T>(bool moduleToggle, bool useChildObject = false, Vector3 offset = default) where T : MonoBehaviour
         {
             if (moduleToggle)
@@ -501,6 +500,10 @@ namespace WorldSystem.Runtime
             {
                 renderPassEvent = RenderPassEvent.BeforeRenderingOpaques;
             }
+            public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
+            {
+                WorldManager.Instance?.volumeCloudOptimizeModule?.RenderCloudMap();
+            }
             
             public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
             {
@@ -519,11 +522,35 @@ namespace WorldSystem.Runtime
                 WorldManager.Instance?.atmosphereModule?.RenderAtmosphere(cmd, ref renderingData);
                 WorldManager.Instance?.atmosphereModule?.RenderAtmosphereMap(cmd, ref renderingData);
                 
+                WorldManager.Instance?.volumeCloudOptimizeModule?.RenderVolumeCloud(cmd,ref renderingData);
+                
                 context.ExecuteCommandBuffer(cmd);
                 CommandBufferPool.Release(cmd);
             }
             
         }
+        // private class VolumeCloudOptimizeRenderPass : ScriptableRenderPass
+        // {
+        //     public VolumeCloudOptimizeRenderPass()
+        //     {
+        //         renderPassEvent = RenderPassEvent.BeforeRenderingOpaques;
+        //     }
+        //
+        //     public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
+        //     {
+        //         WorldManager.Instance?.volumeCloudOptimizeModule?.RenderCloudMap();
+        //     }
+        //         
+        //     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
+        //     {
+        //         CommandBuffer cmd = CommandBufferPool.Get("Test: VolumeCloudOptimizeRender");
+        //         
+        //         WorldManager.Instance?.volumeCloudOptimizeModule?.RenderVolumeCloud(cmd,ref renderingData);
+        //         context.ExecuteCommandBuffer(cmd);
+        //         CommandBufferPool.Release(cmd);
+        //     }
+        // }
+        
         
         private class AtmosphereBlendPass : ScriptableRenderPass
         {
@@ -544,26 +571,7 @@ namespace WorldSystem.Runtime
             }
         }
         
-        private class VolumeCloudOptimizeRenderPass : ScriptableRenderPass
-        {
-            public VolumeCloudOptimizeRenderPass()
-            {
-                renderPassEvent = RenderPassEvent.BeforeRenderingOpaques;
-            }
-
-            public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
-            {
-                WorldManager.Instance?.volumeCloudOptimizeModule?.RenderCloudMap();
-            }
-                
-            public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
-            {
-                CommandBuffer cmd = CommandBufferPool.Get("Test: VolumeCloudOptimizeRender");
-                WorldManager.Instance?.volumeCloudOptimizeModule?.RenderVolumeCloud(cmd,ref renderingData);
-                context.ExecuteCommandBuffer(cmd);
-                CommandBufferPool.Release(cmd);
-            }
-        }
+        
         private class VolumeCloudOptimizeShadowRenderPass : ScriptableRenderPass
         {
             public VolumeCloudOptimizeShadowRenderPass()

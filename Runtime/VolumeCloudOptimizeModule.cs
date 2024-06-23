@@ -1024,7 +1024,7 @@ namespace WorldSystem.Runtime
             {
                 UpdateFunc();
             }
-            if (_updateCount % 3 == 1)
+            if (_updateCount % 4 == 0)
             {
                 _RenderVolumeCloud = true;
             }

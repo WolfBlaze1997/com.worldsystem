@@ -22,9 +22,9 @@ MonoBehaviour:
     backgroundMaterial: {fileID: 0}
   StarProperty:
     starMesh: {fileID: 0}
-    starShader: {fileID: 4800000, guid: 72fdf5ab94348ed40b501f5e219caa8b, type: 3}
+    starShader: {fileID: 0}
     starMaterial: {fileID: 0}
-    starTexture: {fileID: 2800000, guid: 098deac9ca9c2bf40b32ff016481f6ba, type: 3}
+    starTexture: {fileID: 0}
     count: 10000
     size: 1.8
     automaticColor: 1
@@ -537,11 +537,10 @@ MonoBehaviour:
       m_RotationOrder: 4
     lightComponent: {fileID: 0}
   atmosphereProperty:
-    mesh: {fileID: 4300000, guid: 3ec8d1078f11f6147bb9cb75cf18150d, type: 2}
-    shader: {fileID: 4800000, guid: fa859031ab5153345a9e3ced9695a29d, type: 3}
+    mesh: {fileID: 0}
+    shader: {fileID: 0}
     material: {fileID: 0}
-    atmosphereBlendShader: {fileID: 4800000, guid: 1afe8fbe76cdae54abde0ad17f3e123d,
-      type: 3}
+    atmosphereBlendShader: {fileID: 0}
     atmosphereBlendMaterial: {fileID: 0}
     dayPeriodsList:
     - description: Night End
@@ -607,7 +606,7 @@ MonoBehaviour:
     _Modeling_ShapeBase_Gain: 0.5
     _Modeling_ShapeBase_Freq: 2
     _Modeling_ShapeBase_Scale: 5
-    _MotionBase_DynamicVector: {x: 0, y: 0.5364722}
+    _MotionBase_DynamicVector: {x: -0.056153968, y: 0.3233364}
     _MotionBase_Direction: 0
     _MotionBase_Speed: 0.25
     _MotionBase_UseDirectionRandom: 1
@@ -644,7 +643,7 @@ MonoBehaviour:
     _Modeling_ShapeDetail_Quality: 1
     _Modeling_ShapeDetail_Scale: {x: 5.11, y: 5.11, z: 5.11}
     _MotionBase_UseDynamicCloud: 1
-    _MotionDetail_DynamicVector: {x: 0, y: 0, z: 3.352951}
+    _MotionDetail_DynamicVector: {x: -0.0007243889, y: 0.15150657, z: 1.6338719}
     _MotionDetail_Direction: {x: 0, y: 0}
     _MotionDetail_Speed: 1.25
     _MotionDetail_UseRandomDirection: 1

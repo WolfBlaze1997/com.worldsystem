@@ -943,7 +943,7 @@ namespace WorldSystem.Runtime
 
 
 #if UNITY_EDITOR
-        [ShowIf("@WorldManager.Instance?.weatherEffectModule?.rainEnable")]
+        [ShowIf("@WorldManager.Instance?.weatherEffectModule?.rainEnable && WorldManager.Instance?.weatherEffectModuleToggle")]
         [HorizontalGroup("天气系统/天气效果模块/Split01")]
         [VerticalGroup("天气系统/天气效果模块/Split01/01")]
         [Button(ButtonSizes.Medium, Name = "雨模块已开启"), GUIColor(0.5f, 0.5f, 1f)]
@@ -953,7 +953,7 @@ namespace WorldSystem.Runtime
             WorldManager.Instance?.weatherEffectModule?.RainToggle_Off();
         }
     
-        [HideIf("@WorldManager.Instance?.weatherEffectModule?.rainEnable")]
+        [HideIf("@WorldManager.Instance?.weatherEffectModule?.rainEnable || !WorldManager.Instance?.weatherEffectModuleToggle")]
         [VerticalGroup("天气系统/天气效果模块/Split01/01")]
         [Button(ButtonSizes.Medium, Name = "雨模块已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
         [EnableIf("isActive")]
@@ -962,7 +962,7 @@ namespace WorldSystem.Runtime
             WorldManager.Instance?.weatherEffectModule?.RainToggle_On();
         }
     
-        [ShowIf("@WorldManager.Instance?.weatherEffectModule?.snowEnable")]
+        [ShowIf("@WorldManager.Instance?.weatherEffectModule?.snowEnable && WorldManager.Instance?.weatherEffectModuleToggle")]
         [VerticalGroup("天气系统/天气效果模块/Split01/02")]
         [Button(ButtonSizes.Medium, Name = "雪模块已开启"), GUIColor(0.5f, 0.5f, 1f)]
         [EnableIf("isActive")] 
@@ -971,7 +971,7 @@ namespace WorldSystem.Runtime
             WorldManager.Instance?.weatherEffectModule?.SnowToggle_Off();
         }
     
-        [HideIf("@WorldManager.Instance?.weatherEffectModule?.snowEnable")]
+        [HideIf("@WorldManager.Instance?.weatherEffectModule?.snowEnable || !WorldManager.Instance?.weatherEffectModuleToggle")]
         [VerticalGroup("天气系统/天气效果模块/Split01/02")]
         [Button(ButtonSizes.Medium, Name = "雪模块已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
         [EnableIf("isActive")] 
@@ -980,7 +980,7 @@ namespace WorldSystem.Runtime
             WorldManager.Instance?.weatherEffectModule?.SnowToggle_On();
         }
     
-        [ShowIf("@WorldManager.Instance?.weatherEffectModule?.lightningEnable")]
+        [ShowIf("@WorldManager.Instance?.weatherEffectModule?.lightningEnable && WorldManager.Instance?.weatherEffectModuleToggle")]
         [VerticalGroup("天气系统/天气效果模块/Split01/03")]
         [Button(ButtonSizes.Medium, Name = "闪电模块已开启"), GUIColor(0.5f, 0.5f, 1f)]
         [EnableIf("isActive")]
@@ -989,7 +989,7 @@ namespace WorldSystem.Runtime
             WorldManager.Instance?.weatherEffectModule?.LightningToggle_Off();
         }
     
-        [HideIf("@WorldManager.Instance?.weatherEffectModule?.lightningEnable")]
+        [HideIf("@WorldManager.Instance?.weatherEffectModule?.lightningEnable || !WorldManager.Instance?.weatherEffectModuleToggle")]
         [VerticalGroup("天气系统/天气效果模块/Split01/03")]
         [Button(ButtonSizes.Medium, Name = "闪电模块已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
         [EnableIf("isActive")]
