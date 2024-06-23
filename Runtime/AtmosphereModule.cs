@@ -484,17 +484,17 @@ namespace WorldSystem.Runtime
         {
             RTHandle source = renderingData.cameraData.renderer.cameraColorTargetHandle;
             
-            if (!_RenderAtmosphereBlend && Time.renderedFrameCount > 2
-#if UNITY_EDITOR  
-                                        && Application.isPlaying
-#endif
-               )
-            {
-                Blitter.BlitCameraTexture(cmd, _atmosphereBlendRT, source);
-                return;
-            }
+//             if (!_RenderAtmosphereBlend && Time.renderedFrameCount > 2
+// #if UNITY_EDITOR  
+//                                         && Application.isPlaying
+// #endif
+//                )
+//             {
+//                 Blitter.BlitCameraTexture(cmd, _atmosphereBlendRT, source);
+//                 return;
+//             }
             if (!property.useAtmosphereBlend || !isActiveAndEnabled) return;
-            _RenderAtmosphereBlend = false;
+            // _RenderAtmosphereBlend = false;
             
             //配置RT
             RenderTextureDescriptor rtDescriptor = new RenderTextureDescriptor(

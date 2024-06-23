@@ -491,6 +491,18 @@ namespace WorldSystem.Runtime
             [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
             public Material VolumeCloud_UpScale_Material;
             
+            [FoldoutGroup("配置")] [LabelText("修正延迟着色器")]
+            [ReadOnly] [PropertyOrder(-20)]
+            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
+            public Shader VolumeCloud_FixupLate_Shader;
+
+            [FoldoutGroup("配置")] [LabelText("修正延迟材质")]
+            [ReadOnly] [PropertyOrder(-20)]
+            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
+            public Material VolumeCloud_FixupLate_Material;
+
+
+            
             [FoldoutGroup("配置")] [LabelText("合并着色器")]
             [ReadOnly] [PropertyOrder(-20)]
             [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
@@ -834,9 +846,9 @@ namespace WorldSystem.Runtime
                 property.VolumeCloud_Main_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/VolumeCloudMain_V1_1_20240604.shader");
             if (property.VolumeCloud_CoreBlitWithAlpha_Shader == null)
                 property.VolumeCloud_CoreBlitWithAlpha_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/CoreBlitWithAlpha.shader");
-            
-            // if (property.Halton == null)
-            //     property.Halton = AssetDatabase.LoadAssetAtPath<Texture2D>("Packages/com.worldsystem/Textures/Noise Textures/HaltonSequence/Halton_23_Sequence.png");
+            if (property.VolumeCloud_FixupLate_Shader == null)
+                property.VolumeCloud_FixupLate_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/FixupLate.shader");
+
             if (property._Render_BlueNoiseArray == null)
                 property._Render_BlueNoiseArray = AssetDatabase.LoadAssetAtPath<Texture2DArray>("Packages/com.worldsystem/Textures/Noise Textures/BlueNoise/_Render_BlueNoiseArray.asset");
 
@@ -846,7 +858,9 @@ namespace WorldSystem.Runtime
                 property.VolumeCloud_Main_Material = CoreUtils.CreateEngineMaterial(property.VolumeCloud_Main_Shader);
             if (property.VolumeCloud_CoreBlitWithAlpha_Material == null)
                 property.VolumeCloud_CoreBlitWithAlpha_Material = CoreUtils.CreateEngineMaterial(property.VolumeCloud_CoreBlitWithAlpha_Shader);
-
+            if (property.VolumeCloud_FixupLate_Material == null)
+                property.VolumeCloud_FixupLate_Material = CoreUtils.CreateEngineMaterial(property.VolumeCloud_FixupLate_Shader);
+            
             OnEnable_CloudMap();
             OnEnable_VolumeCloudShadow();
 
@@ -859,8 +873,8 @@ namespace WorldSystem.Runtime
                 Resources.UnloadAsset(property.VolumeCloud_Main_Shader);
             if (property.VolumeCloud_CoreBlitWithAlpha_Shader != null)
                 Resources.UnloadAsset(property.VolumeCloud_CoreBlitWithAlpha_Shader);
-            // if (property.Halton != null)
-            //     Resources.UnloadAsset(property.Halton);
+            if(property.VolumeCloud_FixupLate_Shader != null)
+                Resources.UnloadAsset(property.VolumeCloud_FixupLate_Shader);
             if (property._Render_BlueNoiseArray != null)
                 Resources.UnloadAsset(property._Render_BlueNoiseArray);
             
@@ -868,6 +882,8 @@ namespace WorldSystem.Runtime
                 CoreUtils.Destroy(property.VolumeCloud_Main_Material);
             if (property.VolumeCloud_CoreBlitWithAlpha_Material != null)
                 CoreUtils.Destroy(property.VolumeCloud_CoreBlitWithAlpha_Material);
+            if (property.VolumeCloud_FixupLate_Material != null)
+                CoreUtils.Destroy(property.VolumeCloud_FixupLate_Material);
             
             if (property.VolumeCloud_Reproject_Shader != null)
                 Resources.UnloadAsset(property.VolumeCloud_Reproject_Shader);
@@ -1002,12 +1018,15 @@ namespace WorldSystem.Runtime
             if (_updateCount % 1 == 0)
             {
                 _RenderCloudMap = true;
-                _RenderVolumeCloud = true;
                 // _RenderVolumeCloudShadow = true;
             }
             if (_updateCount % 2 == 0)
             {
                 UpdateFunc();
+            }
+            if (_updateCount % 3 == 1)
+            {
+                _RenderVolumeCloud = true;
             }
             _updateCount++;
             
@@ -1022,8 +1041,8 @@ namespace WorldSystem.Runtime
             if (_updateCount % 1 == 0)
             {
                 _RenderCloudMap = true;
-                _RenderVolumeCloud = true;
                 // _RenderVolumeCloudShadow = true;
+                _RenderVolumeCloud = true;
             }
             if (_updateCount % 2 == 0)
             {
@@ -1156,27 +1175,40 @@ namespace WorldSystem.Runtime
         private bool _RenderVolumeCloud;
         public void RenderVolumeCloud(CommandBuffer cmd, ref RenderingData renderingData)
         {
+            
+            TemporalAATools.StartTAA(cmd, renderingData);
             var source = renderingData.cameraData.renderer.cameraColorTargetHandle;
             
+            //使用缓存的渲染结果并FixupLate
             if (!_RenderVolumeCloud && Time.renderedFrameCount > 2
 #if UNITY_EDITOR  
                              && Application.isPlaying
 #endif
                )
             {
-                Blitter.BlitCameraTexture(cmd, _activeTarget, source, property.VolumeCloud_CoreBlitWithAlpha_Material,0);
+                cmd.SetGlobalTexture(_ActiveTarget,_activeTarget);
+                
+                RenderingUtils.ReAllocateIfNeeded(ref _fixupLateRT, _activeTarget.rt.descriptor, name: "FixupLateRT");
+                cmd.SetRenderTarget(_fixupLateRT);
+                Blitter.BlitTexture(cmd, new Vector4(1,1,0,0), property.VolumeCloud_FixupLate_Material,0);
+                cmd.CopyTexture(_fixupLateRT, _activeTarget);
+
+                // RenderingUtils.ReAllocateIfNeeded(ref PreviousRT,currentRT.rt.descriptor, name: "PreviousRT");
+                // if (TaaRT == null)
+                // {
+                    cmd.CopyTexture(_fixupLateRT, TemporalAATools.PreviousRT);
+                // }
+                Blitter.BlitCameraTexture(cmd, _fixupLateRT, source, property.VolumeCloud_CoreBlitWithAlpha_Material,0);
                 return;
             }
-            
             if (!isActiveAndEnabled || property._Modeling_Amount_CloudAmount < 0.25f) return;
-            
             _RenderVolumeCloud = false;
+            
+            
             
             var cloudScale = Scale.Full;
             if (property._Render_UseReprojection) cloudScale++;
             if (property._Render_ResolutionOptions == ResolutionOptions.Half) cloudScale++;
-
-            TemporalAATools.StartTAA(cmd, renderingData);
             
             //绘制体积云
             //输入全局着色器参数
@@ -1246,6 +1278,7 @@ namespace WorldSystem.Runtime
                 _activeTarget = _upScaleHalfRT;
             }
 
+            
             //TAA
             if (property._Render_UseTemporalAA)
             {
@@ -1261,10 +1294,14 @@ namespace WorldSystem.Runtime
         }
         private readonly int _PreviousFrame = Shader.PropertyToID("_PreviousFrame");
         private readonly int _CurrentFrame = Shader.PropertyToID("_CurrentFrame");
+        private readonly int _ActiveTarget = Shader.PropertyToID("_ActiveTarget");
+
         private RTHandle _volumeCloudRT;
         private RTHandle _reprojectionRT;
         private RTHandle _upScaleHalfRT;
         private RTHandle _activeTarget;
+        private RTHandle _fixupLateRTCache;
+        private RTHandle _fixupLateRT;
 
         #endregion
     }
