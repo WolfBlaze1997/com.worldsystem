@@ -112,6 +112,7 @@ namespace WorldSystem.Runtime
             WeatherDefine[] allWeatherDefine = Resources.FindObjectsOfTypeAll<WeatherDefine>();
             foreach (var item in allWeatherDefine)
             {
+                UniformStaticProperty_UniverseBackgroundModule(item);
                 UniformStaticProperty_StarModule(item);
                 UniformStaticProperty_CelestialBodyManager(item);
                 UniformStaticProperty_AtmosphereModule(item);
@@ -169,7 +170,8 @@ namespace WorldSystem.Runtime
         {
             if (WorldManager.Instance?.universeBackgroundModule is null)
                 return;
-            
+            WorldManager.Instance.universeBackgroundModule.property._Render_ResolutionOptions = backgroundProperty._Render_ResolutionOptions;
+            WorldManager.Instance.universeBackgroundModule.property._Render_TemporalAAFactor = backgroundProperty._Render_TemporalAAFactor;
 #if UNITY_EDITOR
             //仅显示信息
             WeatherDefine[] weatherDefineAll = Resources.FindObjectsOfTypeAll<WeatherDefine>();
@@ -178,10 +180,18 @@ namespace WorldSystem.Runtime
                 VARIABLE.backgroundProperty.skyMesh = WorldManager.Instance.universeBackgroundModule.property.skyMesh;
                 VARIABLE.backgroundProperty.backgroundShader = WorldManager.Instance.universeBackgroundModule.property.backgroundShader;
                 VARIABLE.backgroundProperty.backgroundMaterial = WorldManager.Instance.universeBackgroundModule.property.backgroundMaterial;
-                
+                VARIABLE.backgroundProperty.TaaShader = WorldManager.Instance.universeBackgroundModule.property.TaaShader;
+                VARIABLE.backgroundProperty.TaaMaterial = WorldManager.Instance.universeBackgroundModule.property.TaaMaterial;
+
             }
 #endif
-
+        }
+        public void UniformStaticProperty_UniverseBackgroundModule(WeatherDefine item)
+        {
+            if (WorldManager.Instance?.universeBackgroundModule is null)
+                return;
+            item.backgroundProperty._Render_ResolutionOptions = backgroundProperty._Render_ResolutionOptions;
+            item.backgroundProperty._Render_TemporalAAFactor = backgroundProperty._Render_TemporalAAFactor;
         }
         
     }
@@ -517,7 +527,7 @@ namespace WorldSystem.Runtime
             // atmosphereProperty.LimitProperty();
             WorldManager.Instance.atmosphereModule.property.dayPeriodsList =
                 new List<AtmosphereModule.DayPeriods>(atmosphereProperty.dayPeriodsList);
-            WorldManager.Instance.atmosphereModule.property.useAtmosphereMap = atmosphereProperty.useAtmosphereMap;
+            // WorldManager.Instance.atmosphereModule.property.useAtmosphereMap = atmosphereProperty.useAtmosphereMap;
             WorldManager.Instance.atmosphereModule.property.useAtmosphereBlend = atmosphereProperty.useAtmosphereBlend;
             WorldManager.Instance.atmosphereModule.property.start = atmosphereProperty.start;
             WorldManager.Instance.atmosphereModule.property.end = atmosphereProperty.end;
@@ -575,7 +585,7 @@ namespace WorldSystem.Runtime
                 item.atmosphereProperty.dayPeriodsList[i] = itemDayPeriods;
             }
 
-            item.atmosphereProperty.useAtmosphereMap = atmosphereProperty.useAtmosphereMap;
+            // item.atmosphereProperty.useAtmosphereMap = atmosphereProperty.useAtmosphereMap;
             item.atmosphereProperty.useAtmosphereBlend = atmosphereProperty.useAtmosphereBlend;
         }
 
@@ -631,10 +641,10 @@ namespace WorldSystem.Runtime
             WorldManager.Instance.volumeCloudOptimizeModule.property._Render_BlueNoise = cloudProperty._Render_BlueNoise;
             WorldManager.Instance.volumeCloudOptimizeModule.property._Render_MipmapDistance = cloudProperty._Render_MipmapDistance;
             // WorldManager.Instance.volumeCloudOptimizeModule.property._Render_DepthOptions = cloudProperty._Render_DepthOptions;
-            WorldManager.Instance.volumeCloudOptimizeModule.property._Render_UseReprojection = cloudProperty._Render_UseReprojection;
-            WorldManager.Instance.volumeCloudOptimizeModule.property._Render_UseTemporalAA = cloudProperty._Render_UseTemporalAA;
-            WorldManager.Instance.volumeCloudOptimizeModule.property._Render_TemporalAAFactor = cloudProperty._Render_TemporalAAFactor;
-            WorldManager.Instance.volumeCloudOptimizeModule.property._Render_ResolutionOptions = cloudProperty._Render_ResolutionOptions;
+            // WorldManager.Instance.volumeCloudOptimizeModule.property._Render_UseReprojection = cloudProperty._Render_UseReprojection;
+            // WorldManager.Instance.volumeCloudOptimizeModule.property._Render_UseTemporalAA = cloudProperty._Render_UseTemporalAA;
+            // WorldManager.Instance.volumeCloudOptimizeModule.property._Render_TemporalAAFactor = cloudProperty._Render_TemporalAAFactor;
+            // WorldManager.Instance.volumeCloudOptimizeModule.property._Render_ResolutionOptions = cloudProperty._Render_ResolutionOptions;
             WorldManager.Instance.volumeCloudOptimizeModule.property._Modeling_Amount_CloudAmount = cloudProperty._Modeling_Amount_CloudAmount;
             WorldManager.Instance.volumeCloudOptimizeModule.property._Modeling_Amount_UseFarOverlay =
                 cloudProperty._Modeling_Amount_UseFarOverlay;
@@ -719,10 +729,10 @@ namespace WorldSystem.Runtime
                 // VARIABLE.cloudProperty.VolumeCloud_DitherDepth_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_DitherDepth_Material;
                 VARIABLE.cloudProperty.VolumeCloud_Main_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_Main_Shader;
                 VARIABLE.cloudProperty.VolumeCloud_Main_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_Main_Material;
-                VARIABLE.cloudProperty.VolumeCloud_Reproject_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_Reproject_Shader;
-                VARIABLE.cloudProperty.VolumeCloud_Reproject_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_Reproject_Material;
-                VARIABLE.cloudProperty.VolumeCloud_UpScale_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_UpScale_Shader;
-                VARIABLE.cloudProperty.VolumeCloud_UpScale_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_UpScale_Material;
+                // VARIABLE.cloudProperty.VolumeCloud_Reproject_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_Reproject_Shader;
+                // VARIABLE.cloudProperty.VolumeCloud_Reproject_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_Reproject_Material;
+                // VARIABLE.cloudProperty.VolumeCloud_UpScale_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_UpScale_Shader;
+                // VARIABLE.cloudProperty.VolumeCloud_UpScale_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_UpScale_Material;
                 // VARIABLE.cloudProperty.VolumeCloud_Merge_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_Merge_Shader;
                 // VARIABLE.cloudProperty.VolumeCloud_Merge_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_Merge_Material;
                 // VARIABLE.cloudProperty.Halton = WorldManager.Instance.volumeCloudOptimizeModule.property.Halton;
@@ -752,10 +762,10 @@ namespace WorldSystem.Runtime
             item.cloudProperty._Render_BlueNoise = cloudProperty._Render_BlueNoise;
             item.cloudProperty._Render_MipmapDistance = cloudProperty._Render_MipmapDistance;
             // item.cloudProperty._Render_DepthOptions = cloudProperty._Render_DepthOptions;
-            item.cloudProperty._Render_UseReprojection = cloudProperty._Render_UseReprojection;
-            item.cloudProperty._Render_UseTemporalAA = cloudProperty._Render_UseTemporalAA;
-            item.cloudProperty._Render_TemporalAAFactor = cloudProperty._Render_TemporalAAFactor;
-            item.cloudProperty._Render_ResolutionOptions = cloudProperty._Render_ResolutionOptions;
+            // item.cloudProperty._Render_UseReprojection = cloudProperty._Render_UseReprojection;
+            // item.cloudProperty._Render_UseTemporalAA = cloudProperty._Render_UseTemporalAA;
+            // item.cloudProperty._Render_TemporalAAFactor = cloudProperty._Render_TemporalAAFactor;
+            // item.cloudProperty._Render_ResolutionOptions = cloudProperty._Render_ResolutionOptions;
             item.cloudProperty._Modeling_Amount_UseFarOverlay = cloudProperty._Modeling_Amount_UseFarOverlay;
             item.cloudProperty._Modeling_ShapeBase_Octaves = cloudProperty._Modeling_ShapeBase_Octaves;
             item.cloudProperty._Modeling_ShapeBase_Freq = cloudProperty._Modeling_ShapeBase_Freq;

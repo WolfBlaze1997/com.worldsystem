@@ -365,8 +365,8 @@ namespace WorldSystem.Runtime
             {
                 variable?.RenderCelestialBody(cmd, ref renderingData);
             }
-            if(TemporalAATools.TaaRT != null)
-                Blitter.BlitCameraTexture(cmd,TemporalAATools.TaaRT, renderingData.cameraData.renderer.cameraColorTargetHandle);
+            // if(TemporalAATools.TaaRT != null)
+            //     Blitter.BlitCameraTexture(cmd,TemporalAATools.TaaRT, renderingData.cameraData.renderer.cameraColorTargetHandle);
         }
         
         

@@ -19,7 +19,7 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "时间模块已开启"), GUIColor(0.3f, 1f, 0.3f)]
         private void TimModuleToggle_Off()
         {
-            this.timModuleToggle = false;
+            timModuleToggle = false;
             OnValidate();
         }
         [PropertyOrder(-100)]
@@ -28,7 +28,7 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "时间模块已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
         private void TimModuleToggle_On()
         {
-            this.timModuleToggle = true;
+            timModuleToggle = true;
             OnValidate();
         }
 
@@ -39,10 +39,10 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "宇宙背景模块已开启"), GUIColor(0.3f, 1f, 0.3f)]
         private void UniverseBackgroundModuleToggle_Off()
         {
-            this.starModuleToggle = false;
-            this.celestialBodyManagerToggle = false;
-            this.atmosphereModuleToggle = false;
-            this.universeBackgroundModuleToggle = false;
+            starModuleToggle = false;
+            celestialBodyManagerToggle = false;
+            atmosphereModuleToggle = false;
+            universeBackgroundModuleToggle = false;
             OnValidate();
         }
         [PropertyOrder(-100)]
@@ -51,7 +51,7 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "宇宙背景模块已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
         private void UniverseBackgroundModuleToggle_On()
         {
-            this.universeBackgroundModuleToggle = true;
+            universeBackgroundModuleToggle = true;
             OnValidate();
         }
         
@@ -62,7 +62,7 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "星星模块已开启"), GUIColor(0.3f, 1f, 0.3f)]
         private void StarModuleToggle_Off()
         {
-            this.starModuleToggle = false;
+            starModuleToggle = false;
             OnValidate();
         }
         [PropertyOrder(-100)]
@@ -71,8 +71,8 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "星星模块已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
         private void StarModuleToggle_On()
         {
-            this.universeBackgroundModuleToggle = true;
-            this.starModuleToggle = true;
+            universeBackgroundModuleToggle = true;
+            starModuleToggle = true;
             OnValidate();
         }
 
@@ -83,7 +83,7 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "星体模块已开启"), GUIColor(0.3f, 1f, 0.3f)]
         private void CelestialBodyModuleToggle_Off()
         {
-            this.celestialBodyManagerToggle = false;
+            celestialBodyManagerToggle = false;
             OnValidate();
         }
         [PropertyOrder(-100)]
@@ -92,8 +92,8 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "星体模块已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
         private void CelestialBodyModuleToggle_On()
         {
-            this.universeBackgroundModuleToggle = true;
-            this.celestialBodyManagerToggle = true;
+            universeBackgroundModuleToggle = true;
+            celestialBodyManagerToggle = true;
             OnValidate();
         }
 
@@ -104,7 +104,7 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "大气模块已开启"), GUIColor(0.3f, 1f, 0.3f)]
         private void AtmosphereModuleToggle_Off()
         {
-            this.atmosphereModuleToggle = false;
+            atmosphereModuleToggle = false;
             OnValidate();
         }
         [PropertyOrder(-100)]
@@ -113,8 +113,8 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "大气模块已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
         private void AtmosphereModuleToggle_On()
         {
-            this.universeBackgroundModuleToggle = true;
-            this.atmosphereModuleToggle = true;
+            universeBackgroundModuleToggle = true;
+            atmosphereModuleToggle = true;
             OnValidate();
         }
         
@@ -126,7 +126,7 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "简化体积云_V1_1_20240604已开启"), GUIColor(0.3f, 1f, 0.3f)]
         private void VolumeCloudOptimizeModuleToggle_Off()
         {
-            this.volumeCloudOptimizeModuleToggle = false;
+            volumeCloudOptimizeModuleToggle = false;
             OnValidate();
         }
         [PropertyOrder(-100)]
@@ -135,7 +135,7 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "简化体积云_V1_1_20240604已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
         private void VolumeCloudOptimizeModuleToggle_On()
         {
-            this.volumeCloudOptimizeModuleToggle = true;
+            volumeCloudOptimizeModuleToggle = true;
             OnValidate();
         }
         
@@ -146,7 +146,7 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "风区模块已开启"), GUIColor(0.3f, 1f, 0.3f)]
         private void WindZoneModuleToggle_Off()
         {
-            this.windZoneModuleToggle = false;
+            windZoneModuleToggle = false;
             OnValidate();
         }
         [PropertyOrder(-100)]
@@ -155,7 +155,7 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "风区模块已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
         private void WindZoneModuleToggle_On()
         {
-            this.windZoneModuleToggle = true;
+            windZoneModuleToggle = true;
             OnValidate();
         }
         
@@ -166,7 +166,7 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "天气效果模块已开启"), GUIColor(0.3f, 1f, 0.3f)]
         private void WeatherEffectModuleToggle_Off()
         {
-            this.weatherEffectModuleToggle = false;
+            weatherEffectModuleToggle = false;
             OnValidate();
         }
         [PropertyOrder(-100)]
@@ -175,7 +175,7 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "天气效果模块已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
         private void WeatherEffectModuleToggle_On()
         {
-            this.weatherEffectModuleToggle = true;
+            weatherEffectModuleToggle = true;
             OnValidate();
         }
         
@@ -187,7 +187,7 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "天气系统模块已开启"), GUIColor(0.3f, 1f, 0.3f)]
         private void WeatherSystemModuleToggle_Off()
         {
-            this.weatherSystemModuleToggle = false;
+            weatherSystemModuleToggle = false;
             OnValidate();
         }
         [PropertyOrder(-100)]
@@ -196,7 +196,7 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "天气系统模块已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
         private void WeatherSystemModuleToggle_On()
         {
-            this.weatherSystemModuleToggle = true;
+            weatherSystemModuleToggle = true;
             OnValidate();
         }
         
@@ -209,7 +209,7 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "FPS模块已开启"), GUIColor(0.3f, 1f, 0.3f)]
         private void FpsDisplayModuleToggle_Off()
         {
-            this.fpsDisplayModuleToggle = false;
+            fpsDisplayModuleToggle = false;
             OnValidate();
         }
         [PropertyOrder(-100)]
@@ -218,7 +218,7 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "FPS模块已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
         private void FpsDisplayModuleToggle_On()
         {
-            this.fpsDisplayModuleToggle = true;
+            fpsDisplayModuleToggle = true;
             OnValidate();
         }
         
@@ -357,7 +357,7 @@ namespace WorldSystem.Runtime
                 Instance = this;
             if (Instance != null && Instance != this)
             {
-                CoreUtils.Destroy(this.gameObject);
+                CoreUtils.Destroy(gameObject);
                 Debug.Log("世界管理器只能有一个!");
             }
             
@@ -431,13 +431,43 @@ namespace WorldSystem.Runtime
         }
         #endregion
 
+        
+        private int _frameID;
+        private int _updateCount;
 #if UNITY_EDITOR
         private void Update()
         {
             transform.rotation = Quaternion.identity;
             transform.localScale = Vector3.one;
+            
+            if (Application.isPlaying) return;
+            
         }
+        private void FixedUpdate()
+        {
+            if (Time.frameCount == _frameID) return;
+            
+            
+            //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
+            if (_updateCount % 4 == 0)
+            {
+                _Render_Atmosphere_VolumeCloud = true;
+            }
+            if (_updateCount % 4 == 1)
+            {
+                _Render_Taa_Star_CelestialBody = true;
+            }
+            _updateCount++;
+            
+            
+            _frameID = Time.frameCount;
+        }
+#else
+
 #endif
+        
+        
+
         private void AddRenderPasses(ScriptableRenderContext context,Camera cam)
         {
             if (cam.cameraType != CameraType.Game &&
@@ -451,14 +481,7 @@ namespace WorldSystem.Runtime
             scriptableRenderer.EnqueuePass(skyRenderPass);
             scriptableRenderer.EnqueuePass(volumeCloudOptimizeShadowRenderPass);
             scriptableRenderer.EnqueuePass(atmosphereBlendPass);
-            // scriptableRenderer.EnqueuePass(volumeCloudOptimizeRenderPass);
         }
-        
-        private SkyRenderPass skyRenderPass;
-        // private VolumeCloudOptimizeRenderPass volumeCloudOptimizeRenderPass;
-        private VolumeCloudOptimizeShadowRenderPass volumeCloudOptimizeShadowRenderPass;
-        
-        private AtmosphereBlendPass atmosphereBlendPass;
         
         private T AppendOrDestroyModule<T>(bool moduleToggle, bool useChildObject = false, Vector3 offset = default) where T : MonoBehaviour
         {
@@ -475,30 +498,31 @@ namespace WorldSystem.Runtime
                     child.name = strings[^1];
                     return child.AddComponent<T>();
                 }
-                else
-                {
-                    if (gameObject.GetComponent<T>() != null)
-                        return gameObject.GetComponent<T>();
-                    return gameObject.AddComponent<T>();
-                }
+
+                if (gameObject.GetComponent<T>() != null)
+                    return gameObject.GetComponent<T>();
+                return gameObject.AddComponent<T>();
             }
-            else
+
+            if (useChildObject)
             {
-                if (useChildObject)
-                {
-                    if(gameObject.GetComponentInChildren<T>() != null)
-                        CoreUtils.Destroy(gameObject.GetComponentInChildren<T>().gameObject);
-                    return null;
-                }
-                else
-                {
-                    if(gameObject.GetComponent<T>() != null)
-                        CoreUtils.Destroy(gameObject.GetComponent<T>());
-                    return null;
-                }
+                if(gameObject.GetComponentInChildren<T>() != null)
+                    CoreUtils.Destroy(gameObject.GetComponentInChildren<T>().gameObject);
+                return null;
             }
+
+            if(gameObject.GetComponent<T>() != null)
+                CoreUtils.Destroy(gameObject.GetComponent<T>());
+            return null;
         }
+
         
+        private SkyRenderPass skyRenderPass;
+        private VolumeCloudOptimizeShadowRenderPass volumeCloudOptimizeShadowRenderPass;
+        private AtmosphereBlendPass atmosphereBlendPass;
+
+        private static bool _Render_Atmosphere_VolumeCloud;
+        private static bool _Render_Taa_Star_CelestialBody;
         
         private class SkyRenderPass : ScriptableRenderPass
         {
@@ -508,56 +532,67 @@ namespace WorldSystem.Runtime
             }
             public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
             {
-                WorldManager.Instance?.volumeCloudOptimizeModule?.RenderCloudMap();
+                Instance?.volumeCloudOptimizeModule?.RenderCloudMap();
             }
             
             public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
             {
+                Instance.universeBackgroundModule.SetupTaaMatrices(renderingData);
+
+                if (Instance?.universeBackgroundModule is null) return;
+                var source = renderingData.cameraData.renderer.cameraColorTargetHandle;
                 CommandBuffer cmd = CommandBufferPool.Get("Test: SkyRender");
-                
-                //渲染背景
-                WorldManager.Instance?.universeBackgroundModule?.RenderBackground(cmd, ref renderingData);
-                
-                //渲染大气,绘制大气图
-                WorldManager.Instance?.atmosphereModule?.RenderAtmosphere(cmd, ref renderingData);
-                WorldManager.Instance?.atmosphereModule?.RenderAtmosphereMap(cmd, ref renderingData);
-                
-                //体积云
-                WorldManager.Instance?.volumeCloudOptimizeModule?.RenderVolumeCloud(cmd,ref renderingData);
-                
-                //我们这里将星星和星体放在后面渲染,使用特别的方式正确混合,这是因为,大气体积云我们可以降低分辨率渲染,而星星星体为保持清晰度不可降低分辨率
-                //渲染星星
-                WorldManager.Instance?.starModule?.RenderStar(cmd, ref renderingData);
-                //渲染星体
-                WorldManager.Instance?.celestialBodyManager?.RenderCelestialBodyList(cmd,ref renderingData);
-                
+
+                if (_Render_Atmosphere_VolumeCloud || Time.frameCount < 2 
+#if UNITY_EDITOR                 
+                    || !Application.isPlaying
+#endif
+                    )
+                {
+                    _Render_Atmosphere_VolumeCloud = false;
+                    //渲染背景
+                    _ActiveRT = Instance.universeBackgroundModule.RenderBackground(cmd, ref renderingData);
+                    //渲染大气
+                    Instance?.atmosphereModule?.RenderAtmosphere(cmd, ref renderingData, _ActiveRT);
+                    //体积云
+                    Instance?.volumeCloudOptimizeModule?.RenderVolumeCloud(cmd,ref renderingData, _ActiveRT);
+
+               
+                    if (_Render_Taa_Star_CelestialBody || Time.frameCount < 2
+    #if UNITY_EDITOR
+                        || !Application.isPlaying
+    #endif
+                       )
+                    {
+                        Debug.Log(_Render_Atmosphere_VolumeCloud + "     " + _Render_Taa_Star_CelestialBody);
+                        _Render_Taa_Star_CelestialBody = false;
+                        var TaaDescriptor = new RenderTextureDescriptor(source.rt.descriptor.width,
+                            source.rt.descriptor.height, RenderTextureFormat.ARGBHalf);
+                        _ActiveRT = Instance.universeBackgroundModule.RenderUpScaleAndTaa_1(cmd, ref renderingData, _ActiveRT, TaaDescriptor);
+                        _ActiveRT = Instance.universeBackgroundModule.RenderUpScaleAndTaa_2(cmd, _ActiveRT, TaaDescriptor);
+                        //我们这里将星星和星体放在后面渲染,使用特别的方式正确混合,这是因为,大气体积云我们可以降低分辨率渲染,而星星星体为保持清晰度不可降低分辨率
+                        //渲染星星
+                        Instance?.starModule?.RenderStar(cmd, ref renderingData);
+                        //渲染星体
+                        Instance?.celestialBodyManager?.RenderCelestialBodyList(cmd, ref renderingData);
+                    }
+                    
+                    
+                }
+                else
+                {
+                    _ActiveRT = Instance?.volumeCloudOptimizeModule?.RenderFixupLate(cmd,ref renderingData, _ActiveRT);
+                }
+
+
+
+                //输出到Camera
+                Blitter.BlitCameraTexture(cmd, _ActiveRT, source);
                 context.ExecuteCommandBuffer(cmd);
                 CommandBufferPool.Release(cmd);
             }
-            
+            private RTHandle _ActiveRT;
         }
-        // private class VolumeCloudOptimizeRenderPass : ScriptableRenderPass
-        // {
-        //     public VolumeCloudOptimizeRenderPass()
-        //     {
-        //         renderPassEvent = RenderPassEvent.BeforeRenderingOpaques;
-        //     }
-        //
-        //     public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
-        //     {
-        //         WorldManager.Instance?.volumeCloudOptimizeModule?.RenderCloudMap();
-        //     }
-        //         
-        //     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
-        //     {
-        //         CommandBuffer cmd = CommandBufferPool.Get("Test: VolumeCloudOptimizeRender");
-        //         
-        //         WorldManager.Instance?.volumeCloudOptimizeModule?.RenderVolumeCloud(cmd,ref renderingData);
-        //         context.ExecuteCommandBuffer(cmd);
-        //         CommandBufferPool.Release(cmd);
-        //     }
-        // }
-        
         
         private class AtmosphereBlendPass : ScriptableRenderPass
         {
@@ -571,13 +606,12 @@ namespace WorldSystem.Runtime
             {
                 CommandBuffer cmd = CommandBufferPool.Get("Test: AtmosphereBlend");
                 
-                WorldManager.Instance?.atmosphereModule?.RenderAtmosphereBlend(cmd, ref renderingData);
+                Instance?.atmosphereModule?.RenderAtmosphereBlend(cmd, ref renderingData);
                 
                 context.ExecuteCommandBuffer(cmd);
                 CommandBufferPool.Release(cmd);
             }
         }
-        
         
         private class VolumeCloudOptimizeShadowRenderPass : ScriptableRenderPass
         {
@@ -590,7 +624,7 @@ namespace WorldSystem.Runtime
             {
                 CommandBuffer cmd = CommandBufferPool.Get("Test: VolumeCloudOptimizeShadowRender");
                     
-                WorldManager.Instance?.volumeCloudOptimizeModule?.RenderVolumeCloudShadow(cmd,ref renderingData);
+                Instance?.volumeCloudOptimizeModule?.RenderVolumeCloudShadow(cmd,ref renderingData);
                     
                 context.ExecuteCommandBuffer(cmd);
                 CommandBufferPool.Release(cmd);

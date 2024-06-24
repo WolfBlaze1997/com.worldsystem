@@ -175,11 +175,7 @@ namespace WorldSystem.Runtime
             [ReadOnly]
             [ShowIf("@WorldManager.Instance?.atmosphereModule?.hideFlags == HideFlags.None")]
             public float currentPrecipitation;
-
-            [FoldoutGroup("大气混合")] [LabelText("渲染大气图")]
-            [GUIColor(0.3f, 1f, 0.3f)]
-            public bool useAtmosphereMap = true;
-
+            
             [FoldoutGroup("大气混合")][LabelText("使用大气混合")] 
             [GUIColor(0.3f, 1f, 0.3f)]
             public bool useAtmosphereBlend = true;
@@ -205,16 +201,7 @@ namespace WorldSystem.Runtime
 
         private void SetupStaticProperty()
         {
-
-            if (property.useAtmosphereMap)
-            {
-                Shader.SetGlobalInt(_HasSkyTexture, 1);
-            }
-            else
-            {
-                Shader.SetGlobalInt(_HasSkyTexture, 0);
-                Shader.SetGlobalTexture(_SkyTexture, Texture2D.linearGrayTexture);
-            }
+            Shader.SetGlobalInt(_HasSkyTexture, 1);
         }
         private readonly int _HasSkyTexture = Shader.PropertyToID("_HasSkyTexture");
 
@@ -266,7 +253,7 @@ namespace WorldSystem.Runtime
             if(property.atmosphereBlendMaterial != null)
                 CoreUtils.Destroy(property.atmosphereBlendMaterial);
             
-            _atmosphereMapRT?.Release();
+            _atmosphereMixRT?.Release();
             _atmosphereBlendRT?.Release();
 
             property.mesh = null;
@@ -275,7 +262,7 @@ namespace WorldSystem.Runtime
             property.atmosphereBlendShader = null;
             property.atmosphereBlendMaterial = null;
             _atmosphereBlendRT = null;
-            _atmosphereMapRT = null;
+            _atmosphereMixRT = null;
             
             OnValidate();
         }
@@ -312,7 +299,6 @@ namespace WorldSystem.Runtime
             //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
             if (_updateCount % 1 == 0)
             {
-                _RenderAtmosphereMap = true;
                 _RenderAtmosphereBlend = true;
             }
             if (_updateCount % 2 == 0)
@@ -434,52 +420,28 @@ namespace WorldSystem.Runtime
         
         #region 渲染函数
         
-        public void RenderAtmosphere(CommandBuffer cmd, ref RenderingData renderingData)
+        public void RenderAtmosphere(CommandBuffer cmd, ref RenderingData renderingData, RTHandle activeRT)
         {
             if (!isActiveAndEnabled) return;
             
             //设置矩阵
-            _transformMatrix.SetTRS(renderingData.cameraData.camera.transform.position, Quaternion.identity,
+            var transformMatrix = Matrix4x4.identity;
+            transformMatrix.SetTRS(renderingData.cameraData.camera.transform.position, Quaternion.identity,
                     Vector3.one * renderingData.cameraData.camera.farClipPlane);
-
             //渲染大气
-            cmd.DrawMesh(property.mesh, _transformMatrix, property.material, 0,0);
+            cmd.DrawMesh(property.mesh, transformMatrix, property.material, 0,0);
+            
+            //渲染大气后立即将其复制到 _atmosphereMixRT 由于之后的大气混合
+            RenderingUtils.ReAllocateIfNeeded(ref _atmosphereMixRT, activeRT.rt.descriptor, name: "AtmosphereMap");
+            cmd.CopyTexture(activeRT, _atmosphereMixRT);
+            cmd.SetGlobalTexture(_SkyTexture, _atmosphereMixRT);
+            
         }
-        
-        
-        
-        private Matrix4x4 _transformMatrix = Matrix4x4.identity;
-        private bool _RenderAtmosphereMap;
-        public void RenderAtmosphereMap(CommandBuffer cmd, ref RenderingData renderingData)
-        {
-            
-//             if (!_RenderAtmosphereMap && Time.renderedFrameCount > 2
-// #if UNITY_EDITOR  
-//                         && Application.isPlaying
-// #endif
-//                )
-//             {
-//                 return;
-//             }
-            if (!property.useAtmosphereMap || !isActiveAndEnabled) return;
-            _RenderAtmosphereMap = false;
-            
-            //配置RT
-            RenderTextureDescriptor atmosphereMapDescriptor = new RenderTextureDescriptor(
-                renderingData.cameraData.cameraTargetDescriptor.height >> 3,
-                renderingData.cameraData.cameraTargetDescriptor.height >> 3,
-                RenderTextureFormat.DefaultHDR);
-            RenderingUtils.ReAllocateIfNeeded(ref _atmosphereMapRT, atmosphereMapDescriptor, name: "AtmosphereMap");
-            
-            //渲染大气图
-            cmd.SetRenderTarget(_atmosphereMapRT);
-            cmd.DrawMesh(property.mesh, _transformMatrix, property.material, 0, 1);
-
-            //输出大气图为全局参数
-            cmd.SetGlobalTexture(_SkyTexture, _atmosphereMapRT);
-        }
-        private RTHandle _atmosphereMapRT;
+        private RTHandle _atmosphereMixRT;
         private readonly int _SkyTexture = Shader.PropertyToID("_SkyTexture");
+
+        
+        
         private bool _RenderAtmosphereBlend;
         public void RenderAtmosphereBlend(CommandBuffer cmd, ref RenderingData renderingData)
         {

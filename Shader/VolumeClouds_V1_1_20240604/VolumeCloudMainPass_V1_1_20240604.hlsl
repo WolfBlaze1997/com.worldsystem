@@ -26,7 +26,7 @@ float3 _ZenithColor;
 float3 _HorizonColor;
 
 Texture2D _SkyTexture;
-int _HasSkyTexture;
+// int _HasSkyTexture;
 
 float3 _ShadowCasterCameraForward;
 float3 _ShadowCasterCameraUp;
@@ -590,7 +590,8 @@ FragmentOutput SampleClouds(float2 UV, int useDownscaledDepth, int useReprojecti
     
     StaticMaterialData materialData = Setup(UV);
     
-    if (_HasSkyTexture && _ShadowPass == 0)
+    // if (_HasSkyTexture && _ShadowPass == 0)
+    if (_ShadowPass == 0)
     {
         materialData.fogColor = _SkyTexture.SampleLevel(altos_linear_clamp_sampler, materialData.uv, 0).rgb;
     }
