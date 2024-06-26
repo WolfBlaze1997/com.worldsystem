@@ -45,6 +45,26 @@ namespace WorldSystem.Runtime
             [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
             public Material TaaMaterial;
             
+            [FoldoutGroup("配置")] [LabelText("修正延迟着色器")]
+            [ReadOnly] [PropertyOrder(-20)]
+            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
+            public Shader VolumeCloud_FixupLate_Shader;
+
+            [FoldoutGroup("配置")] [LabelText("修正延迟材质")]
+            [ReadOnly] [PropertyOrder(-20)]
+            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
+            public Material VolumeCloud_FixupLate_Material;
+            
+            [FoldoutGroup("配置")] [LabelText("修正延迟块移着色器")]
+            [ReadOnly] [PropertyOrder(-20)]
+            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
+            public Shader VolumeCloud_FixupLateBlit_Shader;
+
+            [FoldoutGroup("配置")] [LabelText("修正延迟块移材质")]
+            [ReadOnly] [PropertyOrder(-20)]
+            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
+            public Material VolumeCloud_FixupLateBlit_Material;
+            
             [LabelText("分辨率选项")] 
             [GUIColor(0, 1, 0)] [PropertyOrder(-10)]
             public Scale _Render_ResolutionOptions = Scale.Full;
@@ -84,9 +104,17 @@ namespace WorldSystem.Runtime
                     AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/Skybox/BackgroundShader.shader");
             if(property.TaaShader == null) 
                 property.TaaShader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/ShaderLibrary/TemporalAA.shader");
+            if (property.VolumeCloud_FixupLate_Shader == null)
+                property.VolumeCloud_FixupLate_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/FixupLate.shader");
+            if (property.VolumeCloud_FixupLateBlit_Shader == null)
+                property.VolumeCloud_FixupLateBlit_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/FixupLateBlit.shader");
 #endif
             if (property.backgroundMaterial == null) property.backgroundMaterial = CoreUtils.CreateEngineMaterial(property.backgroundShader);
             if (property.TaaMaterial == null) property.TaaMaterial = CoreUtils.CreateEngineMaterial(property.TaaShader);
+            if (property.VolumeCloud_FixupLate_Material == null)
+                property.VolumeCloud_FixupLate_Material = CoreUtils.CreateEngineMaterial(property.VolumeCloud_FixupLate_Shader);
+            if (property.VolumeCloud_FixupLateBlit_Material == null)
+                property.VolumeCloud_FixupLateBlit_Material = CoreUtils.CreateEngineMaterial(property.VolumeCloud_FixupLateBlit_Shader);
             OnValidate();
         }
         
@@ -103,6 +131,18 @@ namespace WorldSystem.Runtime
                 CoreUtils.Destroy(property.TaaMaterial);
             if (property.backgroundMaterial != null)
                 CoreUtils.Destroy(property.backgroundMaterial);
+            
+            if(property.VolumeCloud_FixupLate_Shader != null)
+                Resources.UnloadAsset(property.VolumeCloud_FixupLate_Shader);
+            if (property.VolumeCloud_FixupLate_Material != null)
+                CoreUtils.Destroy(property.VolumeCloud_FixupLate_Material);
+            if(property.VolumeCloud_FixupLateBlit_Shader != null)
+                Resources.UnloadAsset(property.VolumeCloud_FixupLateBlit_Shader);
+            if (property.VolumeCloud_FixupLateBlit_Material != null)
+                CoreUtils.Destroy(property.VolumeCloud_FixupLateBlit_Material);
+            
+            property.VolumeCloud_FixupLate_Shader = null;
+            property.VolumeCloud_FixupLate_Material = null;
             PreviousRT?.Release();
             PreviousRT = null;
             skyRT?.Release();
@@ -118,7 +158,7 @@ namespace WorldSystem.Runtime
             TaaRT2 = null;
         }
 
-        private void OnValidate()
+        public void OnValidate()
         {
             SetupstaticProperty();
             if (property._Render_ResolutionOptions == Scale.Full)
@@ -166,19 +206,61 @@ namespace WorldSystem.Runtime
             return skyRT;
         }
         
-        private static readonly int _PrevViewProjM = Shader.PropertyToID("_PrevViewProjM");
-        private static readonly int _ViewProjM = Shader.PropertyToID("_ViewProjM");
-        private static readonly int _InverseViewProjM = Shader.PropertyToID("_InverseViewProjM");
+        
+
+        public void SetupTaaMatrices(CommandBuffer cmd, RenderingData renderingData)
+        {
+            //设置TAA需要的矩阵信息
+            if(viewProjection != Matrix4x4.identity)
+                prevViewProjection = viewProjection;
+            else
+                prevViewProjection = Matrix4x4.identity;
+            viewProjection = GL.GetGPUProjectionMatrix(renderingData.cameraData.camera.nonJitteredProjectionMatrix, true)
+                             * renderingData.cameraData.camera.worldToCameraMatrix;
+            inverseViewProjection = viewProjection.inverse;
+            
+            cmd.SetGlobalMatrix(_PrevViewProjM, prevViewProjection);
+            cmd.SetGlobalMatrix(_ViewProjM, viewProjection);
+            cmd.SetGlobalMatrix(_InverseViewProjM, inverseViewProjection);
+        }
+        private readonly int _PrevViewProjM = Shader.PropertyToID("_PrevViewProjM");
+        private readonly int _ViewProjM = Shader.PropertyToID("_ViewProjM");
+        private readonly int _InverseViewProjM = Shader.PropertyToID("_InverseViewProjM");
         private Matrix4x4 viewProjection;
         private Matrix4x4 prevViewProjection;
         private Matrix4x4 inverseViewProjection;
+        
+        public void SetupTaaMatrices_PerFrame(CommandBuffer cmd, RenderingData renderingData)
+        {
+            //设置TAA需要的矩阵信息
+            if(viewProjection_PerFrame != Matrix4x4.identity)
+                prevViewProjection_PerFrame = viewProjection_PerFrame;
+            else
+                prevViewProjection_PerFrame = Matrix4x4.identity;
+            viewProjection_PerFrame = GL.GetGPUProjectionMatrix(renderingData.cameraData.camera.nonJitteredProjectionMatrix, true)
+                                      * renderingData.cameraData.camera.worldToCameraMatrix;
+            inverseViewProjection_PerFrame = viewProjection_PerFrame.inverse;
+            
+            cmd.SetGlobalMatrix(_PrevViewProjM_PerFrame, prevViewProjection_PerFrame);
+            cmd.SetGlobalMatrix(_ViewProjM_PerFrame, viewProjection_PerFrame);
+            cmd.SetGlobalMatrix(_InverseViewProjM_PerFrame, inverseViewProjection_PerFrame);
+        }
+        private readonly int _PrevViewProjM_PerFrame = Shader.PropertyToID("_PrevViewProjM_PerFrame");
+        private readonly int _ViewProjM_PerFrame = Shader.PropertyToID("_ViewProjM_PerFrame");
+        private readonly int _InverseViewProjM_PerFrame = Shader.PropertyToID("_InverseViewProjM_PerFrame");
+        private Matrix4x4 viewProjection_PerFrame;
+        private Matrix4x4 prevViewProjection_PerFrame;
+        private Matrix4x4 inverseViewProjection_PerFrame;
+        
         public RTHandle RenderUpScaleAndTaa_1(CommandBuffer cmd, ref RenderingData  renderingData, RTHandle currentRT, RenderTextureDescriptor taaRTDescriptor)
         {
             if (property._Render_ResolutionOptions == Scale.Full) 
                 return currentRT;
-            
-            
-            if (PreviousRT == null)
+
+            SetupTaaMatrices(cmd, renderingData);
+            if (PreviousRT == null || 
+                PreviousRT.rt.descriptor.height != taaRTDescriptor.height || 
+                PreviousRT.rt.descriptor.width != taaRTDescriptor.width)
             {
                 if(property._Render_ResolutionOptions == Scale.Half)
                     RenderingUtils.ReAllocateIfNeeded(ref PreviousRT, taaRTDescriptor, name: "PreviousRT");
@@ -199,36 +281,20 @@ namespace WorldSystem.Runtime
             
             return TaaRT1;
         }
-
-        public void SetupTaaMatrices(RenderingData renderingData)
-        {
-            //设置TAA需要的矩阵信息
-            if(viewProjection != Matrix4x4.identity)
-                prevViewProjection = viewProjection;
-            else
-                prevViewProjection = Matrix4x4.identity;
-            viewProjection = GL.GetGPUProjectionMatrix(renderingData.cameraData.camera.nonJitteredProjectionMatrix, true)
-                             * renderingData.cameraData.camera.worldToCameraMatrix;
-            inverseViewProjection = viewProjection.inverse;
-            
-            Shader.SetGlobalMatrix(_PrevViewProjM, prevViewProjection);
-            Shader.SetGlobalMatrix(_ViewProjM, viewProjection);
-            Shader.SetGlobalMatrix(_InverseViewProjM, inverseViewProjection);
-        }
-
+        
         public RTHandle RenderUpScaleAndTaa_2(CommandBuffer cmd, RTHandle currentRT, RenderTextureDescriptor taaRTDescriptor)
         {
             if (property._Render_ResolutionOptions != Scale.Quarter) 
                 return currentRT;
-            if (PreviousRT == null)
+            
+            if (PreviousRT == null || 
+                PreviousRT.rt.descriptor.height != taaRTDescriptor.height || 
+                PreviousRT.rt.descriptor.width != taaRTDescriptor.width)
             {
                 RenderingUtils.ReAllocateIfNeeded(ref PreviousRT, taaRTDescriptor, name: "PreviousRT");
                 cmd.SetGlobalTexture(_PREVIOUS_TAA_CLOUD_RESULTS, currentRT);
             }
-            // else
-            // {
-            //     cmd.SetGlobalTexture(_PREVIOUS_TAA_CLOUD_RESULTS, PreviousRT);
-            // }
+
             cmd.SetGlobalTexture(_CURRENT_TAA_FRAME, currentRT);
             
             RenderingUtils.ReAllocateIfNeeded(ref TaaRT2, taaRTDescriptor, name: "TaaRT2");
@@ -242,11 +308,29 @@ namespace WorldSystem.Runtime
         private static int _CURRENT_TAA_FRAME = Shader.PropertyToID("_CURRENT_TAA_FRAME");
         private static int _PREVIOUS_TAA_CLOUD_RESULTS = Shader.PropertyToID("_PREVIOUS_TAA_CLOUD_RESULTS");
         private static int _TAA_BLEND_FACTOR = Shader.PropertyToID("_TAA_BLEND_FACTOR");
-        public  RTHandle TaaRT1;
-        public  RTHandle TaaRT2;
-        public  RTHandle PreviousRT;
+        public RTHandle TaaRT1;
+        public RTHandle TaaRT2;
+        public RTHandle PreviousRT;
         public RTHandle skyRT;
 
+        
+        public RTHandle RenderFixupLate(CommandBuffer cmd, ref RenderingData renderingData, RTHandle activeRT)
+        {
+            RenderingUtils.ReAllocateIfNeeded(ref _fixupLateRTCache, activeRT.rt.descriptor, name: "FixupLateRTCache", wrapMode: TextureWrapMode.MirrorOnce);
+            cmd.CopyTexture(activeRT,_fixupLateRTCache);
+            cmd.SetGlobalTexture("_ActiveTarget",_fixupLateRTCache);
+            cmd.SetRenderTarget(activeRT);
+            Blitter.BlitTexture(cmd,new Vector4(1,1,0,0),property.VolumeCloud_FixupLate_Material,0);
+            return activeRT;
+        }
+        public void RenderFixupLateBlit(CommandBuffer cmd, RTHandle SrcRT, RTHandle DstRT)
+        {
+            cmd.SetGlobalTexture("_FixupLateTarget",SrcRT);
+            Blitter.BlitCameraTexture(cmd, SrcRT, DstRT,property.VolumeCloud_FixupLateBlit_Material,0);
+        }
+        
+        public RTHandle _fixupLateRTCache;
+        
         #endregion
     }
 }

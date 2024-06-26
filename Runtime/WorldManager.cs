@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -290,7 +293,7 @@ namespace WorldSystem.Runtime
         /// 备忘录!
         /// 1- UI改进,需要将部分模块聚合成一个模块,子模块用蓝色标识
         /// 2- 注意CPU时间, 将最大可能改为异步执行
-        ///
+        /// 3- 以当前天空盒渲染循环所需的 FrameCount 来决定下一个天空盒渲染循环将分散到N帧, 如果在N帧还未渲染完成,则等待渲染完成在发出渲染命令(会重新计算分散的N帧数)
 
         #region 字段
         public static WorldManager Instance { get; set; }
@@ -348,10 +351,13 @@ namespace WorldSystem.Runtime
         public FPSDisplayModule fpsDisplayModule;
         
         #endregion
+
+        [HideInInspector]public static Camera mainCamera;
         
         #region 事件函数
         private void OnEnable()
         {
+            mainCamera = Camera.main;
             gameObject.name = "WorldManager";
             if (Instance == null)
                 Instance = this;
@@ -363,19 +369,23 @@ namespace WorldSystem.Runtime
             
             skyRenderPass ??= new SkyRenderPass();
             atmosphereBlendPass ??= new AtmosphereBlendPass();
-            
             volumeCloudOptimizeShadowRenderPass ??= new VolumeCloudOptimizeShadowRenderPass();
-            // volumeCloudOptimizeRenderPass ??= new VolumeCloudOptimizeRenderPass();
-          
+            
             OnValidate();
             
             RenderPipelineManager.beginCameraRendering -= AddRenderPasses;
             RenderPipelineManager.beginCameraRendering += AddRenderPasses;
+            
+            RenderPipelineManager.endContextRendering -= OnEndContextRendering;
+            RenderPipelineManager.endContextRendering += OnEndContextRendering;
         }
 
         private void OnDisable()
-        { 
+        {
+            mainCamera = null;
             RenderPipelineManager.beginCameraRendering -= AddRenderPasses;
+            
+            RenderPipelineManager.endContextRendering -= OnEndContextRendering;
         }
 
         private void OnDestroy()
@@ -431,6 +441,10 @@ namespace WorldSystem.Runtime
         }
         #endregion
 
+        private void OnEndContextRendering(ScriptableRenderContext scriptableRenderContext, List<Camera> cameras)
+        {
+            _Render_Atmosphere_VolumeCloud = false;
+        }
         
         private int _frameID;
         private int _updateCount;
@@ -439,35 +453,34 @@ namespace WorldSystem.Runtime
         {
             transform.rotation = Quaternion.identity;
             transform.localScale = Vector3.one;
-            
             if (Application.isPlaying) return;
-            
         }
         private void FixedUpdate()
         {
             if (Time.frameCount == _frameID) return;
             
-            
             //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
-            if (_updateCount % 4 == 0)
-            {
-                _Render_Atmosphere_VolumeCloud = true;
-            }
-            if (_updateCount % 4 == 1)
-            {
-                _Render_Taa_Star_CelestialBody = true;
-            }
+            _Render_Atmosphere_VolumeCloud = _updateCount % 2 == 0;
+
             _updateCount++;
-            
             
             _frameID = Time.frameCount;
         }
 #else
+        private void FixedUpdate()
+        {
+            if (Time.frameCount == _frameID) return;
+            
+            //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
+            _Render_Atmosphere_VolumeCloud = _updateCount % 2 == 0;
 
+            _updateCount++;
+            
+            _frameID = Time.frameCount;
+        }
 #endif
         
         
-
         private void AddRenderPasses(ScriptableRenderContext context,Camera cam)
         {
             if (cam.cameraType != CameraType.Game &&
@@ -522,7 +535,6 @@ namespace WorldSystem.Runtime
         private AtmosphereBlendPass atmosphereBlendPass;
 
         private static bool _Render_Atmosphere_VolumeCloud;
-        private static bool _Render_Taa_Star_CelestialBody;
         
         private class SkyRenderPass : ScriptableRenderPass
         {
@@ -532,62 +544,70 @@ namespace WorldSystem.Runtime
             }
             public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
             {
+                if (renderingData.cameraData.camera.name != "ExpandCamera") return;
+                
                 Instance?.volumeCloudOptimizeModule?.RenderCloudMap();
             }
-            
+
+
             public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
             {
-                Instance.universeBackgroundModule.SetupTaaMatrices(renderingData);
-
-                if (Instance?.universeBackgroundModule is null) return;
-                var source = renderingData.cameraData.renderer.cameraColorTargetHandle;
+                if (Instance?.universeBackgroundModule is null || 
+                    (renderingData.cameraData.camera.name != "ExpandCamera" && renderingData.cameraData.camera != mainCamera)) 
+                    return;
+                
                 CommandBuffer cmd = CommandBufferPool.Get("Test: SkyRender");
+                
+//                 if ((_Render_Atmosphere_VolumeCloud || Time.frameCount < 2
+// #if UNITY_EDITOR
+//                                                    || !Application.isPlaying
+// #endif
+//                     ) && renderingData.cameraData.camera.name == "ExpandCamera")
 
-                if (_Render_Atmosphere_VolumeCloud || Time.frameCount < 2 
-#if UNITY_EDITOR                 
-                    || !Application.isPlaying
-#endif
-                    )
+                if (renderingData.cameraData.camera.name == "ExpandCamera")
                 {
-                    _Render_Atmosphere_VolumeCloud = false;
-                    //渲染背景
-                    _ActiveRT = Instance.universeBackgroundModule.RenderBackground(cmd, ref renderingData);
-                    //渲染大气
-                    Instance?.atmosphereModule?.RenderAtmosphere(cmd, ref renderingData, _ActiveRT);
-                    //体积云
-                    Instance?.volumeCloudOptimizeModule?.RenderVolumeCloud(cmd,ref renderingData, _ActiveRT);
+                    
+                    var frustumHeight1 = 2.0f * renderingData.cameraData.camera.farClipPlane * 
+                                        Mathf.Tan(renderingData.cameraData.camera.fieldOfView * 0.5f * Mathf.Deg2Rad);
+                    var frustumHeight2 = 2.0f * mainCamera.farClipPlane * 
+                                        Mathf.Tan(mainCamera.fieldOfView * 0.5f * Mathf.Deg2Rad);
+                    Shader.SetGlobalFloat("_FOVScale", frustumHeight2 / frustumHeight1);
 
-               
-                    if (_Render_Taa_Star_CelestialBody || Time.frameCount < 2
-    #if UNITY_EDITOR
-                        || !Application.isPlaying
-    #endif
-                       )
+                    
+                    Instance.universeBackgroundModule.SetupTaaMatrices_PerFrame(cmd, renderingData);
+
+                    if (_Render_Atmosphere_VolumeCloud)
                     {
-                        Debug.Log(_Render_Atmosphere_VolumeCloud + "     " + _Render_Taa_Star_CelestialBody);
-                        _Render_Taa_Star_CelestialBody = false;
-                        var TaaDescriptor = new RenderTextureDescriptor(source.rt.descriptor.width,
-                            source.rt.descriptor.height, RenderTextureFormat.ARGBHalf);
+                        //渲染背景
+                        _ActiveRT = Instance.universeBackgroundModule.RenderBackground(cmd, ref renderingData);
+                        //渲染大气
+                        Instance.atmosphereModule?.RenderAtmosphere(cmd, ref renderingData, _ActiveRT);
+                        //体积云
+                        Instance.volumeCloudOptimizeModule?.RenderVolumeCloud(cmd, ref renderingData, _ActiveRT);
+                        
+                        var TaaDescriptor = new RenderTextureDescriptor(renderingData.cameraData.cameraTargetDescriptor.width,
+                            renderingData.cameraData.cameraTargetDescriptor.height, RenderTextureFormat.ARGBHalf);
                         _ActiveRT = Instance.universeBackgroundModule.RenderUpScaleAndTaa_1(cmd, ref renderingData, _ActiveRT, TaaDescriptor);
                         _ActiveRT = Instance.universeBackgroundModule.RenderUpScaleAndTaa_2(cmd, _ActiveRT, TaaDescriptor);
+                            
                         //我们这里将星星和星体放在后面渲染,使用特别的方式正确混合,这是因为,大气体积云我们可以降低分辨率渲染,而星星星体为保持清晰度不可降低分辨率
                         //渲染星星
-                        Instance?.starModule?.RenderStar(cmd, ref renderingData);
+                        Instance.starModule?.RenderStar(cmd, ref renderingData);
                         //渲染星体
-                        Instance?.celestialBodyManager?.RenderCelestialBodyList(cmd, ref renderingData);
+                        Instance.celestialBodyManager?.RenderCelestialBodyList(cmd, ref renderingData);
                     }
-                    
-                    
+                    else
+                    {
+                        if (_ActiveRT != null)
+                            _ActiveRT = Instance.universeBackgroundModule?.RenderFixupLate(cmd, ref renderingData, _ActiveRT);
+                    }
                 }
                 else
                 {
-                    _ActiveRT = Instance?.volumeCloudOptimizeModule?.RenderFixupLate(cmd,ref renderingData, _ActiveRT);
+                    if(_ActiveRT != null) 
+                        Instance.universeBackgroundModule.RenderFixupLateBlit(cmd, _ActiveRT, renderingData.cameraData.renderer.cameraColorTargetHandle);
                 }
-
-
-
-                //输出到Camera
-                Blitter.BlitCameraTexture(cmd, _ActiveRT, source);
+                
                 context.ExecuteCommandBuffer(cmd);
                 CommandBufferPool.Release(cmd);
             }
@@ -605,11 +625,15 @@ namespace WorldSystem.Runtime
             public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
             {
                 CommandBuffer cmd = CommandBufferPool.Get("Test: AtmosphereBlend");
+
+                if (renderingData.cameraData.camera.name != "ExpandCamera")
+                {
+                    Instance?.atmosphereModule?.RenderAtmosphereBlend(cmd, ref renderingData);
+
+                    context.ExecuteCommandBuffer(cmd);
+                    CommandBufferPool.Release(cmd);
+                }
                 
-                Instance?.atmosphereModule?.RenderAtmosphereBlend(cmd, ref renderingData);
-                
-                context.ExecuteCommandBuffer(cmd);
-                CommandBufferPool.Release(cmd);
             }
         }
         

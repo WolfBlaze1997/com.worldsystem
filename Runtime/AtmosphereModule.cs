@@ -318,7 +318,6 @@ namespace WorldSystem.Runtime
             //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
             if (_updateCount % 1 == 0)
             {
-                _RenderAtmosphereMap = true;
                 _RenderAtmosphereBlend = true;
             }
             if (_updateCount % 2 == 0)
@@ -464,9 +463,7 @@ namespace WorldSystem.Runtime
                 renderingData.cameraData.cameraTargetDescriptor.width,
                 renderingData.cameraData.cameraTargetDescriptor.height,
                 colorFormat: RenderTextureFormat.DefaultHDR);
-            RenderingUtils.ReAllocateIfNeeded(ref _atmosphereBlendRT, rtDescriptor);
-
-            
+            RenderingUtils.ReAllocateIfNeeded(ref _atmosphereBlendRT, rtDescriptor, name: "AtmosphereBlendRT");
             
             cmd.SetGlobalTexture(_ScreenTexture, source);
             cmd.SetRenderTarget(_atmosphereBlendRT);

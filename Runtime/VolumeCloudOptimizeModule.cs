@@ -471,16 +471,6 @@ namespace WorldSystem.Runtime
             [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
             public Material VolumeCloud_Main_Material;
             
-            [FoldoutGroup("配置")] [LabelText("修正延迟着色器")]
-            [ReadOnly] [PropertyOrder(-20)]
-            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            public Shader VolumeCloud_FixupLate_Shader;
-
-            [FoldoutGroup("配置")] [LabelText("修正延迟材质")]
-            [ReadOnly] [PropertyOrder(-20)]
-            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            public Material VolumeCloud_FixupLate_Material;
-            
             [FoldoutGroup("渲染")] [LabelText("粗略步进")] 
             [GUIColor(0.7f, 0.7f, 1f)] [PropertyOrder(-10)] 
             public int _Render_CoarseSteps = 32;
@@ -770,8 +760,6 @@ namespace WorldSystem.Runtime
 
             if (property.VolumeCloud_Main_Shader == null)
                 property.VolumeCloud_Main_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/VolumeCloudMain_V1_1_20240604.shader");
-            if (property.VolumeCloud_FixupLate_Shader == null)
-                property.VolumeCloud_FixupLate_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/FixupLate.shader");
 
             if (property._Render_BlueNoiseArray == null)
                 property._Render_BlueNoiseArray = AssetDatabase.LoadAssetAtPath<Texture2DArray>("Packages/com.worldsystem/Textures/Noise Textures/BlueNoise/_Render_BlueNoiseArray.asset");
@@ -780,8 +768,7 @@ namespace WorldSystem.Runtime
 
             if (property.VolumeCloud_Main_Material == null)
                 property.VolumeCloud_Main_Material = CoreUtils.CreateEngineMaterial(property.VolumeCloud_Main_Shader);
-            if (property.VolumeCloud_FixupLate_Material == null)
-                property.VolumeCloud_FixupLate_Material = CoreUtils.CreateEngineMaterial(property.VolumeCloud_FixupLate_Shader);
+            
             
             OnEnable_CloudMap();
             OnEnable_VolumeCloudShadow();
@@ -792,15 +779,12 @@ namespace WorldSystem.Runtime
         {
             if (property.VolumeCloud_Main_Shader != null)
                 Resources.UnloadAsset(property.VolumeCloud_Main_Shader);
-            if(property.VolumeCloud_FixupLate_Shader != null)
-                Resources.UnloadAsset(property.VolumeCloud_FixupLate_Shader);
             if (property._Render_BlueNoiseArray != null)
                 Resources.UnloadAsset(property._Render_BlueNoiseArray);
             
             if (property.VolumeCloud_Main_Material != null)
                 CoreUtils.Destroy(property.VolumeCloud_Main_Material);
-            if (property.VolumeCloud_FixupLate_Material != null)
-                CoreUtils.Destroy(property.VolumeCloud_FixupLate_Material);
+            
             
             property._Render_BlueNoiseArray = null;
             property.VolumeCloud_Main_Shader = null;
@@ -849,14 +833,11 @@ namespace WorldSystem.Runtime
             {
                 _RenderCloudMap = true;
                 // _RenderVolumeCloudShadow = true;
+                _RenderVolumeCloud = true;
             }
             if (_updateCount % 2 == 0)
             {
                 UpdateFunc();
-            }
-            if (_updateCount % 1 == 0)
-            {
-                _RenderVolumeCloud = true;
             }
             _updateCount++;
             
@@ -1015,21 +996,7 @@ namespace WorldSystem.Runtime
                 
             Blitter.BlitTexture(cmd, new Vector4(1f, 1f, 0f, 0f), property.VolumeCloud_Main_Material, 0);
         }
-
-        public RTHandle RenderFixupLate(CommandBuffer cmd, ref RenderingData renderingData, RTHandle activeRT)
-        {
-            RenderingUtils.ReAllocateIfNeeded(ref _fixupLateRTCache, activeRT.rt.descriptor, name: "FixupLateRTCache");
-            
-            // cmd.CopyTexture(_fixupLateRTCache,activeRT);
-            cmd.CopyTexture(activeRT,_fixupLateRTCache);
-            cmd.SetGlobalTexture("_ActiveTarget",_fixupLateRTCache);
-            cmd.SetRenderTarget(activeRT);
-            Blitter.BlitTexture(cmd,new Vector4(1,1,0,0),property.VolumeCloud_FixupLate_Material,0);
-            return activeRT;
-        }
-
-        private RTHandle _fixupLateRTCache;
-
+        
         #endregion
     }
 

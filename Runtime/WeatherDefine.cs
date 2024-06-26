@@ -172,6 +172,7 @@ namespace WorldSystem.Runtime
                 return;
             WorldManager.Instance.universeBackgroundModule.property._Render_ResolutionOptions = backgroundProperty._Render_ResolutionOptions;
             WorldManager.Instance.universeBackgroundModule.property._Render_TemporalAAFactor = backgroundProperty._Render_TemporalAAFactor;
+            WorldManager.Instance.universeBackgroundModule.OnValidate();
 #if UNITY_EDITOR
             //仅显示信息
             WeatherDefine[] weatherDefineAll = Resources.FindObjectsOfTypeAll<WeatherDefine>();
