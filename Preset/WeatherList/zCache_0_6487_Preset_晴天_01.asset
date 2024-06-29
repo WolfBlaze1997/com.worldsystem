@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69b8a94e4a66400794a67846e7e81235, type: 3}
   m_Name: "zCache_0_6487_Preset_\u6674\u5929_01"
   m_EditorClassIdentifier: 
-  sustainedTime: 9.055782
+  sustainedTime: 2.92
   varyingTime: 8
   sustainedTimeCache: 10
   varyingTimeCache: 8
@@ -26,7 +26,7 @@ MonoBehaviour:
     VolumeCloud_FixupLate_Material: {fileID: 0}
     VolumeCloud_FixupLateBlit_Shader: {fileID: 0}
     VolumeCloud_FixupLateBlit_Material: {fileID: 0}
-    _Render_ResolutionOptions: 0
+    _Render_ResolutionOptions: 2
     _Render_TemporalAAFactor: 0
   StarProperty:
     starMesh: {fileID: 0}
@@ -593,9 +593,9 @@ MonoBehaviour:
       equatorColor: {r: 0.01076923, g: 0.01076923, b: 0.02, a: 1}
       groundColor: {r: 0.0062499996, g: 0.0062499996, b: 0.01, a: 1}
     currentAtmosphereColor:
-      skyColor: {r: 0.09073368, g: 0.103459, b: 0.27194974, a: 1}
-      equatorColor: {r: 0.569625, g: 0.47067183, b: 0.42016402, a: 1}
-      groundColor: {r: 0.048946153, g: 0.039175, b: 0.05, a: 1}
+      skyColor: {r: 0.08718027, g: 0.10289055, b: 0.26537004, a: 1}
+      equatorColor: {r: 0.5625, g: 0.49531245, b: 0.46484372, a: 1}
+      groundColor: {r: 0.052307695, g: 0.0425, b: 0.05, a: 1}
     currentCloudiness: 0
     currentPrecipitation: 0
     useAtmosphereBlend: 1
@@ -638,7 +638,7 @@ MonoBehaviour:
     _Modeling_ShapeDetail_Quality: 1
     _Modeling_ShapeDetail_Scale: {x: 8, y: 8, z: 8}
     _MotionBase_UseDynamicCloud: 1
-    _MotionDetail_DynamicVector: {x: 0, y: 0, z: 3.26635}
+    _MotionDetail_DynamicVector: {x: 0, y: 0, z: 4.7500377}
     _MotionDetail_Direction: {x: 0, y: 0}
     _MotionDetail_Speed: 2.5
     _MotionDetail_UseRandomDirection: 1

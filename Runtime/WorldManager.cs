@@ -529,13 +529,13 @@ namespace WorldSystem.Runtime
             return null;
         }
 
-        
+
         private SkyRenderPass skyRenderPass;
         private VolumeCloudOptimizeShadowRenderPass volumeCloudOptimizeShadowRenderPass;
         private AtmosphereBlendPass atmosphereBlendPass;
 
-        private static bool _Render_Atmosphere_VolumeCloud;
         
+        private static bool _Render_Atmosphere_VolumeCloud;
         private class SkyRenderPass : ScriptableRenderPass
         {
             public SkyRenderPass()
@@ -544,71 +544,72 @@ namespace WorldSystem.Runtime
             }
             public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
             {
-                if (renderingData.cameraData.camera.name != "ExpandCamera") return;
-                
-                Instance?.volumeCloudOptimizeModule?.RenderCloudMap();
+                if (_Render_Atmosphere_VolumeCloud)
+                    Instance?.volumeCloudOptimizeModule?.RenderCloudMap();
             }
-
 
             public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
             {
-                if (Instance?.universeBackgroundModule is null || 
-                    (renderingData.cameraData.camera.name != "ExpandCamera" && renderingData.cameraData.camera != mainCamera)) 
+                if (Instance?.universeBackgroundModule is null) 
                     return;
                 
                 CommandBuffer cmd = CommandBufferPool.Get("Test: SkyRender");
+                var dataCamera = renderingData.cameraData.camera;
+
+
+                float cameraAspect = dataCamera.pixelRect.width / dataCamera.pixelRect.height;
+                var projectionMatrix = Matrix4x4.Perspective(Instance.universeBackgroundModule.FOV, cameraAspect, dataCamera.nearClipPlane, dataCamera.farClipPlane);
+                projectionMatrix = GL.GetGPUProjectionMatrix(projectionMatrix, true);
+                RenderingUtils.SetViewAndProjectionMatrices(cmd,dataCamera.worldToCameraMatrix, projectionMatrix, false);
+                Matrix4x4 projectionMatrix_Inv = projectionMatrix.inverse;
                 
-//                 if ((_Render_Atmosphere_VolumeCloud || Time.frameCount < 2
-// #if UNITY_EDITOR
-//                                                    || !Application.isPlaying
-// #endif
-//                     ) && renderingData.cameraData.camera.name == "ExpandCamera")
+                cmd.SetGlobalMatrix("unity_CameraInvProjection_fov", projectionMatrix_Inv);
+                
+                
+                Instance.universeBackgroundModule.SetupTaaMatrices_PerFrame(cmd, renderingData,mainCamera.worldToCameraMatrix, projectionMatrix);
 
-                if (renderingData.cameraData.camera.name == "ExpandCamera")
+                if (_Render_Atmosphere_VolumeCloud)
                 {
-                    
-                    var frustumHeight1 = 2.0f * renderingData.cameraData.camera.farClipPlane * 
-                                        Mathf.Tan(renderingData.cameraData.camera.fieldOfView * 0.5f * Mathf.Deg2Rad);
-                    var frustumHeight2 = 2.0f * mainCamera.farClipPlane * 
-                                        Mathf.Tan(mainCamera.fieldOfView * 0.5f * Mathf.Deg2Rad);
-                    Shader.SetGlobalFloat("_FOVScale", frustumHeight2 / frustumHeight1);
+                    //渲染背景
+                    _ActiveRT = Instance.universeBackgroundModule.RenderBackground(cmd, ref renderingData);
+                    //渲染大气
+                    Instance.atmosphereModule?.RenderAtmosphere(cmd, ref renderingData, _ActiveRT);
+                    //体积云
+                    Instance.volumeCloudOptimizeModule?.RenderVolumeCloud(cmd, ref renderingData, _ActiveRT);
 
+                    var TaaDescriptor = new RenderTextureDescriptor(renderingData.cameraData.cameraTargetDescriptor.width,
+                        renderingData.cameraData.cameraTargetDescriptor.height, RenderTextureFormat.ARGBHalf);
+                    _ActiveRT = Instance.universeBackgroundModule.RenderUpScaleAndTaa_1(cmd, ref renderingData, _ActiveRT, TaaDescriptor,mainCamera.worldToCameraMatrix, projectionMatrix);
+                    _ActiveRT = Instance.universeBackgroundModule.RenderUpScaleAndTaa_2(cmd, _ActiveRT, TaaDescriptor);
                     
-                    Instance.universeBackgroundModule.SetupTaaMatrices_PerFrame(cmd, renderingData);
-
-                    if (_Render_Atmosphere_VolumeCloud)
-                    {
-                        //渲染背景
-                        _ActiveRT = Instance.universeBackgroundModule.RenderBackground(cmd, ref renderingData);
-                        //渲染大气
-                        Instance.atmosphereModule?.RenderAtmosphere(cmd, ref renderingData, _ActiveRT);
-                        //体积云
-                        Instance.volumeCloudOptimizeModule?.RenderVolumeCloud(cmd, ref renderingData, _ActiveRT);
-                        
-                        var TaaDescriptor = new RenderTextureDescriptor(renderingData.cameraData.cameraTargetDescriptor.width,
-                            renderingData.cameraData.cameraTargetDescriptor.height, RenderTextureFormat.ARGBHalf);
-                        _ActiveRT = Instance.universeBackgroundModule.RenderUpScaleAndTaa_1(cmd, ref renderingData, _ActiveRT, TaaDescriptor);
-                        _ActiveRT = Instance.universeBackgroundModule.RenderUpScaleAndTaa_2(cmd, _ActiveRT, TaaDescriptor);
-                            
-                        //我们这里将星星和星体放在后面渲染,使用特别的方式正确混合,这是因为,大气体积云我们可以降低分辨率渲染,而星星星体为保持清晰度不可降低分辨率
-                        //渲染星星
-                        Instance.starModule?.RenderStar(cmd, ref renderingData);
-                        //渲染星体
-                        Instance.celestialBodyManager?.RenderCelestialBodyList(cmd, ref renderingData);
-                    }
-                    else
-                    {
-                        if (_ActiveRT != null)
-                            _ActiveRT = Instance.universeBackgroundModule?.RenderFixupLate(cmd, ref renderingData, _ActiveRT);
-                    }
+                    
+                    //我们这里将星星和星体放在后面渲染,使用特别的方式正确混合,这是因为,大气体积云我们可以降低分辨率渲染,而星星星体为保持清晰度不可降低分辨率
+                    //渲染星星
+                    Instance.starModule?.RenderStar(cmd, ref renderingData);
+                    //渲染星体
+                    Instance.celestialBodyManager?.RenderCelestialBodyList(cmd, ref renderingData);
                 }
                 else
                 {
-                    if(_ActiveRT != null) 
-                        Instance.universeBackgroundModule.RenderFixupLateBlit(cmd, _ActiveRT, renderingData.cameraData.renderer.cameraColorTargetHandle);
+                    if (_ActiveRT != null)
+                        _ActiveRT = Instance.universeBackgroundModule?.RenderFixupLate(cmd, ref renderingData, _ActiveRT);
                 }
                 
+                projectionMatrix = GL.GetGPUProjectionMatrix(mainCamera.projectionMatrix, true); 
+                RenderingUtils.SetViewAndProjectionMatrices(cmd,  mainCamera.worldToCameraMatrix, projectionMatrix, false); 
                 context.ExecuteCommandBuffer(cmd);
+                cmd.Clear();
+                
+                
+                
+                //修正视野范围
+                if(_ActiveRT != null) 
+                    Instance.universeBackgroundModule.RenderFixupLateBlit(cmd,ref renderingData ,_ActiveRT, renderingData.cameraData.renderer.cameraColorTargetHandle);
+                    
+                    
+                
+                context.ExecuteCommandBuffer(cmd);
+                cmd.Clear();
                 CommandBufferPool.Release(cmd);
             }
             private RTHandle _ActiveRT;

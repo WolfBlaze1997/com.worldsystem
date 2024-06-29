@@ -418,19 +418,11 @@ namespace WorldSystem.Runtime
 
         #region 渲染函数
 
-        private bool _RenderCloudMap;
+        // private bool _RenderCloudMap;
         public void RenderCloudMap()
         {
-            if (!_RenderCloudMap && Time.renderedFrameCount > 2
-#if UNITY_EDITOR  
-                                 && Application.isPlaying
-#endif
-               )
-            {
-                return;
-            }
             if (!isActiveAndEnabled || property._Modeling_Amount_CloudAmount < 0.25f) return;
-            _RenderCloudMap = false;
+            // _RenderCloudMap = false;
             
             //渲染云图
             Graphics.Blit(null, CloudBaseTexRT, property.VolumeCloud_BaseTex_Material, 0);
@@ -831,7 +823,7 @@ namespace WorldSystem.Runtime
             //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
             if (_updateCount % 1 == 0)
             {
-                _RenderCloudMap = true;
+                // _RenderCloudMap = true;
                 // _RenderVolumeCloudShadow = true;
                 _RenderVolumeCloud = true;
             }
@@ -851,7 +843,7 @@ namespace WorldSystem.Runtime
             //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
             if (_updateCount % 1 == 0)
             {
-                _RenderCloudMap = true;
+                // _RenderCloudMap = true;
                 // _RenderVolumeCloudShadow = true;
                 _RenderVolumeCloud = true;
             }

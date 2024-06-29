@@ -208,15 +208,17 @@ namespace WorldSystem.Runtime
         
         
 
-        public void SetupTaaMatrices(CommandBuffer cmd, RenderingData renderingData)
+        public void SetupTaaMatrices(CommandBuffer cmd, RenderingData renderingData,Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix)
         {
             //设置TAA需要的矩阵信息
             if(viewProjection != Matrix4x4.identity)
                 prevViewProjection = viewProjection;
             else
                 prevViewProjection = Matrix4x4.identity;
-            viewProjection = GL.GetGPUProjectionMatrix(renderingData.cameraData.camera.nonJitteredProjectionMatrix, true)
-                             * renderingData.cameraData.camera.worldToCameraMatrix;
+            // viewProjection = GL.GetGPUProjectionMatrix(renderingData.cameraData.camera.nonJitteredProjectionMatrix, true)
+            //                  * renderingData.cameraData.camera.worldToCameraMatrix;
+            viewProjection = projectionMatrix * viewMatrix;
+            
             inverseViewProjection = viewProjection.inverse;
             
             cmd.SetGlobalMatrix(_PrevViewProjM, prevViewProjection);
@@ -230,7 +232,7 @@ namespace WorldSystem.Runtime
         private Matrix4x4 prevViewProjection;
         private Matrix4x4 inverseViewProjection;
         
-        public void SetupTaaMatrices_PerFrame(CommandBuffer cmd, RenderingData renderingData)
+        public void SetupTaaMatrices_PerFrame(CommandBuffer cmd, RenderingData renderingData,Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix)
         {
             //设置TAA需要的矩阵信息
             if(viewProjection_PerFrame != Matrix4x4.identity)
@@ -239,6 +241,9 @@ namespace WorldSystem.Runtime
                 prevViewProjection_PerFrame = Matrix4x4.identity;
             viewProjection_PerFrame = GL.GetGPUProjectionMatrix(renderingData.cameraData.camera.nonJitteredProjectionMatrix, true)
                                       * renderingData.cameraData.camera.worldToCameraMatrix;
+
+            viewProjection_PerFrame = projectionMatrix * renderingData.cameraData.camera.worldToCameraMatrix;
+            
             inverseViewProjection_PerFrame = viewProjection_PerFrame.inverse;
             
             cmd.SetGlobalMatrix(_PrevViewProjM_PerFrame, prevViewProjection_PerFrame);
@@ -252,12 +257,12 @@ namespace WorldSystem.Runtime
         private Matrix4x4 prevViewProjection_PerFrame;
         private Matrix4x4 inverseViewProjection_PerFrame;
         
-        public RTHandle RenderUpScaleAndTaa_1(CommandBuffer cmd, ref RenderingData  renderingData, RTHandle currentRT, RenderTextureDescriptor taaRTDescriptor)
+        public RTHandle RenderUpScaleAndTaa_1(CommandBuffer cmd, ref RenderingData  renderingData, RTHandle currentRT, RenderTextureDescriptor taaRTDescriptor, Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix)
         {
             if (property._Render_ResolutionOptions == Scale.Full) 
                 return currentRT;
 
-            SetupTaaMatrices(cmd, renderingData);
+            SetupTaaMatrices(cmd, renderingData, viewMatrix, projectionMatrix);
             if (PreviousRT == null || 
                 PreviousRT.rt.descriptor.height != taaRTDescriptor.height || 
                 PreviousRT.rt.descriptor.width != taaRTDescriptor.width)
@@ -314,6 +319,8 @@ namespace WorldSystem.Runtime
         public RTHandle skyRT;
 
         
+        public float FOV = 90;
+
         public RTHandle RenderFixupLate(CommandBuffer cmd, ref RenderingData renderingData, RTHandle activeRT)
         {
             RenderingUtils.ReAllocateIfNeeded(ref _fixupLateRTCache, activeRT.rt.descriptor, name: "FixupLateRTCache", wrapMode: TextureWrapMode.MirrorOnce);
@@ -323,14 +330,20 @@ namespace WorldSystem.Runtime
             Blitter.BlitTexture(cmd,new Vector4(1,1,0,0),property.VolumeCloud_FixupLate_Material,0);
             return activeRT;
         }
-        public void RenderFixupLateBlit(CommandBuffer cmd, RTHandle SrcRT, RTHandle DstRT)
-        {
-            cmd.SetGlobalTexture("_FixupLateTarget",SrcRT);
-            Blitter.BlitCameraTexture(cmd, SrcRT, DstRT,property.VolumeCloud_FixupLateBlit_Material,0);
-        }
-        
         public RTHandle _fixupLateRTCache;
         
+        public void RenderFixupLateBlit(CommandBuffer cmd, ref RenderingData renderingData, RTHandle SrcRT, RTHandle DstRT)
+        {
+            var dataCamera = renderingData.cameraData.camera;
+            var frustumHeight1 = 2.0f * dataCamera.farClipPlane * Mathf.Tan(FOV * 0.5f * Mathf.Deg2Rad);
+            var frustumHeight2 = 2.0f * dataCamera.farClipPlane * Mathf.Tan(dataCamera.fieldOfView * 0.5f * Mathf.Deg2Rad);
+            Shader.SetGlobalFloat(FOVScale, frustumHeight2 / frustumHeight1);
+            cmd.SetGlobalTexture(FixupLateTarget,SrcRT);
+            Blitter.BlitCameraTexture(cmd, SrcRT, DstRT,property.VolumeCloud_FixupLateBlit_Material,0);
+        }
+        private static readonly int FOVScale = Shader.PropertyToID("_FOVScale");
+        private static readonly int FixupLateTarget = Shader.PropertyToID("_FixupLateTarget");
+
         #endregion
     }
 }

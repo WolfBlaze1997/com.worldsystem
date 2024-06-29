@@ -46,7 +46,14 @@ Shader "Unlit/FixupLate"
 
                 return velocity * 0.5;
             }
-
+            bool IsUVInRange01(float2 UV)
+            {
+	            if (UV.x <= 0.0 || UV.x >= 1.0 || UV.y <= 0.0 || UV.y >= 1.0)
+	            {
+		            return false;
+	            }
+	            return true;
+            }
 
             
             float _FOVScale;

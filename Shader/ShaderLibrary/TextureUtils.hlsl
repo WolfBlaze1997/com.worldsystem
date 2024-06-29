@@ -23,11 +23,14 @@ float4 _RenderTextureDimensions; // x = 1/width, y = 1/height, z = width, w = he
 float4 _RenderScale; // x = scale, y = rcp(scale)
 
 
-
+float4x4 unity_CameraInvProjection_fov;
 
 void GetWSRayDirectionFromUV(float2 uv, out float3 rayDirection, out float viewLength)
 {
-	float3 viewVector = mul(unity_CameraInvProjection, float4(uv * 2 - 1, 0.0, -1)).xyz;
+	// float3 viewVector = mul(unity_CameraInvProjection, float4(uv * 2 - 1, 0.0, -1)).xyz;
+	float3 viewVector = mul(unity_CameraInvProjection_fov, float4(uv * 2 - 1, 0.0, -1)).xyz;
+	viewVector.y = -viewVector.y;
+
 	viewVector = mul(unity_CameraToWorld, float4(viewVector, 0.0)).xyz;
 	viewLength = length(viewVector);
 	rayDirection = viewVector / viewLength;
