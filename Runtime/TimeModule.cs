@@ -152,38 +152,27 @@ namespace WorldSystem.Runtime
         {
             LimitProperty();
         }
-        
+
+        [HideInInspector] public bool _Update;
+        private float _previousTime;
         private void Update()
         {
+            if (!_Update) return;
+            
+            float deltaTime = _previousTime == 0 ? 0 : Time.time - _previousTime;
+            _previousTime = Time.time;
             float dayNightCycleDuration = dayNightCycleDurationMinute / 60;
             if (dayNightCycleDuration > 0f && useDayNightCycle)
             {
                 const float CONVERSION_FACTOR = 24f * 1f / 3600f;
-                float t = Time.deltaTime * CONVERSION_FACTOR / dayNightCycleDuration;
+                float t = deltaTime * CONVERSION_FACTOR / dayNightCycleDuration;
                 initTime.Hour += t;
             }
 
             timeString = ConvertDecimalHoursToDateTimeString(initTime.Hour);
-
-
-            //使用一秒60帧的标准更新
-            bool newFrame;
-            if (Application.isPlaying)
-            {
-                newFrame = FrameCount != Time.frameCount;
-                FrameCount = Time.frameCount;
-            }
-            else
-            {
-                newFrame = (Time.realtimeSinceStartup - ManagedTime) > 0.0166f;
-                if (newFrame)
-                    FrameCount++;
-            }
-            if (newFrame)
-            {
-                ManagedTime = Time.realtimeSinceStartup;
-            }
-
+            
+            FrameCount++;
+            
             SetupDynamicProperty();
         }
         

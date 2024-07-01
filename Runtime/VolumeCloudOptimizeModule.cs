@@ -417,12 +417,10 @@ namespace WorldSystem.Runtime
 
 
         #region 渲染函数
-
-        // private bool _RenderCloudMap;
+        
         public void RenderCloudMap()
         {
             if (!isActiveAndEnabled || property._Modeling_Amount_CloudAmount < 0.25f) return;
-            // _RenderCloudMap = false;
             
             //渲染云图
             Graphics.Blit(null, CloudBaseTexRT, property.VolumeCloud_BaseTex_Material, 0);
@@ -806,58 +804,12 @@ namespace WorldSystem.Runtime
             WorldManager.Instance?.weatherSystemModule?.weatherList?.SetupPropertyFromActive();
         }
 #endif
-
-
-        private int _frameID;
-        private int _updateCount;
-#if UNITY_EDITOR
+        
+        public bool _Update;
         private void Update()
         {
-            if (Application.isPlaying) return;
-            UpdateFunc();
-        }
-        private void FixedUpdate()
-        {
-            if (Time.frameCount == _frameID) return;
+            if (!_Update) return;
             
-            //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
-            if (_updateCount % 1 == 0)
-            {
-                // _RenderCloudMap = true;
-                // _RenderVolumeCloudShadow = true;
-                _RenderVolumeCloud = true;
-            }
-            if (_updateCount % 2 == 0)
-            {
-                UpdateFunc();
-            }
-            _updateCount++;
-            
-            _frameID = Time.frameCount;
-        }
-#else
-        private void FixedUpdate()
-        {
-            if (Time.frameCount == _frameID) return;
-            
-            //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
-            if (_updateCount % 1 == 0)
-            {
-                // _RenderCloudMap = true;
-                // _RenderVolumeCloudShadow = true;
-                _RenderVolumeCloud = true;
-            }
-            if (_updateCount % 2 == 0)
-            {
-                UpdateFunc();
-            }
-            _updateCount++;
-            
-            _frameID = Time.frameCount;
-        }
-#endif
-        private void UpdateFunc()
-        {
             UpdatePositions();
             SetupDynamicProperty_VolumeCloud();
 
@@ -975,7 +927,6 @@ namespace WorldSystem.Runtime
 
 
         #region 渲染函数
-        private bool _RenderVolumeCloud;
         public void RenderVolumeCloud(CommandBuffer cmd, ref RenderingData renderingData, RTHandle activeRT)
         {
             //绘制体积云

@@ -254,14 +254,14 @@ namespace WorldSystem.Runtime
                 CoreUtils.Destroy(property.atmosphereBlendMaterial);
             
             _atmosphereMixRT?.Release();
-            _atmosphereBlendRT?.Release();
+            // _atmosphereBlendRT?.Release();
 
             property.mesh = null;
             property.shader = null;
             property.material = null;
             property.atmosphereBlendShader = null;
             property.atmosphereBlendMaterial = null;
-            _atmosphereBlendRT = null;
+            // _atmosphereBlendRT = null;
             _atmosphereMixRT = null;
             
             OnValidate();
@@ -282,63 +282,18 @@ namespace WorldSystem.Runtime
             WorldManager.Instance?.weatherSystemModule?.weatherList?.SetupPropertyFromActive();
         }
 #endif
-
         
-        private int _frameID;
-        private int _updateCount;
-#if UNITY_EDITOR
+        public bool _Update;
         private void Update()
         {
-            if (Application.isPlaying) return;
-            UpdateFunc();
-        }
-        private void FixedUpdate()
-        {
-            if (Time.frameCount == _frameID) return;
+            if (!_Update) return;
             
-            //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
-            if (_updateCount % 1 == 0)
-            {
-                _RenderAtmosphereBlend = true;
-            }
-            if (_updateCount % 2 == 0)
-            {
-                UpdateFunc();
-            }
-            _updateCount++;
-            
-            
-            _frameID = Time.frameCount;
-        }
-#else
-        private void FixedUpdate()
-        {
-            if (Time.frameCount == _frameID) return;
-            
-            //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
-            if (_updateCount % 1 == 0)
-            {
-                _RenderAtmosphereBlend = true;
-            }
-            if (_updateCount % 2 == 0)
-            {
-                UpdateFunc();
-            }
-            _updateCount++;
-            
-            
-            _frameID = Time.frameCount;
-        }
-#endif
-        private void UpdateFunc()
-        {
             if (property.dayPeriodsList.Count == 0 || property.dayPeriodsList == null) return;
-
             UpdatePeriod();
             UpdateAtmosphereColor();
-            
             SetupDynamicProperty();
         }
+
         private int _currentPeriod = 0;
         private int _nextPeriod = 0;
         private void UpdatePeriod()
@@ -440,38 +395,24 @@ namespace WorldSystem.Runtime
         private readonly int _SkyTexture = Shader.PropertyToID("_SkyTexture");
 
         
-        
-        private bool _RenderAtmosphereBlend;
         public void RenderAtmosphereBlend(CommandBuffer cmd, ref RenderingData renderingData)
         {
             RTHandle source = renderingData.cameraData.renderer.cameraColorTargetHandle;
-            
-//             if (!_RenderAtmosphereBlend && Time.renderedFrameCount > 2
-// #if UNITY_EDITOR  
-//                                         && Application.isPlaying
-// #endif
-//                )
-//             {
-//                 Blitter.BlitCameraTexture(cmd, _atmosphereBlendRT, source);
-//                 return;
-//             }
             if (!property.useAtmosphereBlend || !isActiveAndEnabled) return;
-            // _RenderAtmosphereBlend = false;
             
-            //配置RT
-            RenderTextureDescriptor rtDescriptor = new RenderTextureDescriptor(
-                renderingData.cameraData.cameraTargetDescriptor.width,
-                renderingData.cameraData.cameraTargetDescriptor.height,
-                colorFormat: RenderTextureFormat.DefaultHDR);
-            RenderingUtils.ReAllocateIfNeeded(ref _atmosphereBlendRT, rtDescriptor, name: "AtmosphereBlendRT");
+            // //配置RT
+            // RenderTextureDescriptor rtDescriptor = new RenderTextureDescriptor(
+            //     renderingData.cameraData.cameraTargetDescriptor.width,
+            //     renderingData.cameraData.cameraTargetDescriptor.height,
+            //     colorFormat: RenderTextureFormat.DefaultHDR);
+            // RenderingUtils.ReAllocateIfNeeded(ref _atmosphereBlendRT, rtDescriptor, name: "AtmosphereBlendRT");
             
-            cmd.SetGlobalTexture(_ScreenTexture, source);
-            cmd.SetRenderTarget(_atmosphereBlendRT);
+            cmd.SetRenderTarget(source);
             Blitter.BlitTexture(cmd,new Vector4(1,1,0,0), property.atmosphereBlendMaterial,0);
-            Blitter.BlitCameraTexture(cmd, _atmosphereBlendRT, source);
         }
-        private RTHandle _atmosphereBlendRT;
-        private readonly int _ScreenTexture = Shader.PropertyToID("_ScreenTexture");
+
+        // public RTHandle _atmosphereBlendRT;
+        // private readonly int _ScreenTexture = Shader.PropertyToID("_ScreenTexture");
         
         #endregion
         

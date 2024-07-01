@@ -358,46 +358,27 @@ namespace WorldSystem.Runtime
             
             SetupStaticProperty();
         }
-
-
-        private int _frameID;
-        private int _updateCount;
-#if UNITY_EDITOR
+        
         private void Update()
         {
-            if (Application.isPlaying) return;
-            UpdateFunc();
-        }
-        private void FixedUpdate()
-        {
-            if (Time.frameCount == _frameID) return;
+            if (!(WorldManager.Instance?.celestialBodyManager?._Update ?? false)) return;
             
-            //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
-            if (_updateCount % 2 == 0)
+            UpdateRotations();
+            UpdateLightProperties();
+
+            if (!useLerp)
             {
-                UpdateFunc();
+                objectColorEvaluate = property.objectColor.Evaluate(curveTime);
+                falloffEvaluate = property.falloff.Evaluate(curveTime);
+                lightingColorMaskEvaluate = property.lightingColorMask.Evaluate(curveTime);
+                colorTemperatureCurveEvaluate = property.colorTemperatureCurve.Evaluate(curveTime);
+                intensityCurveEvaluate = property.intensityCurve.Evaluate(curveTime);
             }
-            _updateCount++;
+            angularDiameterDegreesEvaluate = property.angularDiameterDegrees.Evaluate(curveTime);
             
-            
-            _frameID = Time.frameCount;
+            SetupDynamicProperty();
         }
-#else
-        private void FixedUpdate()
-        {
-            if (Time.frameCount == _frameID) return;
-            
-            //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
-            if (_updateCount % 2 == 0)
-            {
-                UpdateFunc();
-            }
-            _updateCount++;
-            
-            
-            _frameID = Time.frameCount;
-        }
-#endif
+        
         private void UpdateRotations()
         {
             Quaternion a = Quaternion.Euler(-property.inclinationOffset, 0, 0);
@@ -431,24 +412,6 @@ namespace WorldSystem.Runtime
             property.lightComponent.colorTemperature = colorTemperatureCurveEvaluate;
         }
 
-        void UpdateFunc()
-        {
-            UpdateRotations();
-            UpdateLightProperties();
-
-            if (!useLerp)
-            {
-                objectColorEvaluate = property.objectColor.Evaluate(curveTime);
-                falloffEvaluate = property.falloff.Evaluate(curveTime);
-                lightingColorMaskEvaluate = property.lightingColorMask.Evaluate(curveTime);
-                colorTemperatureCurveEvaluate = property.colorTemperatureCurve.Evaluate(curveTime);
-                intensityCurveEvaluate = property.intensityCurve.Evaluate(curveTime);
-            }
-            angularDiameterDegreesEvaluate = property.angularDiameterDegrees.Evaluate(curveTime);
-            
-            SetupDynamicProperty();
-        }
-        
         #endregion
 
         

@@ -172,6 +172,10 @@ namespace WorldSystem.Runtime
                 return;
             WorldManager.Instance.universeBackgroundModule.property._Render_ResolutionOptions = backgroundProperty._Render_ResolutionOptions;
             WorldManager.Instance.universeBackgroundModule.property._Render_TemporalAAFactor = backgroundProperty._Render_TemporalAAFactor;
+            WorldManager.Instance.universeBackgroundModule.property._Render_UseAsyncRender = backgroundProperty._Render_UseAsyncRender;
+            WorldManager.Instance.universeBackgroundModule.property._Render_AsyncFOV = backgroundProperty._Render_AsyncFOV;
+            WorldManager.Instance.universeBackgroundModule.property._Render_AsyncUpdateRate = backgroundProperty._Render_AsyncUpdateRate;
+
             WorldManager.Instance.universeBackgroundModule.OnValidate();
 #if UNITY_EDITOR
             //仅显示信息
@@ -193,6 +197,9 @@ namespace WorldSystem.Runtime
                 return;
             item.backgroundProperty._Render_ResolutionOptions = backgroundProperty._Render_ResolutionOptions;
             item.backgroundProperty._Render_TemporalAAFactor = backgroundProperty._Render_TemporalAAFactor;
+            item.backgroundProperty._Render_UseAsyncRender = backgroundProperty._Render_UseAsyncRender;
+            item.backgroundProperty._Render_AsyncFOV = backgroundProperty._Render_AsyncFOV;
+            item.backgroundProperty._Render_AsyncUpdateRate = backgroundProperty._Render_AsyncUpdateRate;
         }
         
     }

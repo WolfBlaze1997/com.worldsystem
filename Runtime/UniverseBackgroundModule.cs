@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.Serialization;
 
 namespace WorldSystem.Runtime
 {
@@ -74,10 +75,27 @@ namespace WorldSystem.Runtime
             [ShowIf("@_Render_ResolutionOptions != Scale.Full")]
             public float _Render_TemporalAAFactor = 0f;
             
+            [LabelText("使用异步渲染")]
+            [GUIColor(0.7f, 0.7f, 1f)]
+            public bool _Render_UseAsyncRender = true;
+            
+            [LabelText("    异步更新率(fps/s)")]
+            [GUIColor(0.7f, 0.7f, 1f)]
+            public AsyncUpdateRate _Render_AsyncUpdateRate = AsyncUpdateRate.Fps20;
+            
+            [LabelText("    扩大的视野")]
+            [GUIColor(0.7f, 0.7f, 1f)]
+            [ShowIf("_Render_UseAsyncRender")]
+            public float _Render_AsyncFOV = 90;
+            
         }
         [HideLabel]
         public Property property = new();
         
+        public enum AsyncUpdateRate
+        {
+            Fps60 = 60,Fps50 = 50,Fps40 = 40,Fps30 = 30,Fps20 = 20,Fps10 = 10
+        }
         
         
         #endregion
@@ -153,9 +171,10 @@ namespace WorldSystem.Runtime
             property.TaaShader = null;
             property.TaaMaterial = null;
             TaaRT1?.Release();
-            TaaRT2?.Release();
             TaaRT1 = null;
-            TaaRT2 = null;
+            
+            _fixupLateRTCache?.Release();
+            _fixupLateRTCache = null;
         }
 
         public void OnValidate()
@@ -166,16 +185,20 @@ namespace WorldSystem.Runtime
                 PreviousRT?.Release();
                 PreviousRT = null;
                 TaaRT1?.Release();
-                TaaRT2?.Release();
                 TaaRT1 = null;
-                TaaRT2 = null;
             }
-            if (property._Render_ResolutionOptions == Scale.Half)
+
+            if (property._Render_UseAsyncRender)
             {
-                TaaRT2?.Release();
-                TaaRT2 = null;
+                if (_fixupLateRTCache == null)
+                    _fixupLateRTCache = RTHandles.Alloc(1, 1);
             }
-                
+            else
+            {
+                _fixupLateRTCache?.Release();
+                _fixupLateRTCache = null;
+            }
+
         }
 
 #if UNITY_EDITOR
@@ -207,16 +230,13 @@ namespace WorldSystem.Runtime
         }
         
         
-
-        public void SetupTaaMatrices(CommandBuffer cmd, RenderingData renderingData,Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix)
+        public void SetupTaaMatrices(CommandBuffer cmd,Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix)
         {
             //设置TAA需要的矩阵信息
             if(viewProjection != Matrix4x4.identity)
                 prevViewProjection = viewProjection;
             else
                 prevViewProjection = Matrix4x4.identity;
-            // viewProjection = GL.GetGPUProjectionMatrix(renderingData.cameraData.camera.nonJitteredProjectionMatrix, true)
-            //                  * renderingData.cameraData.camera.worldToCameraMatrix;
             viewProjection = projectionMatrix * viewMatrix;
             
             inverseViewProjection = viewProjection.inverse;
@@ -232,17 +252,15 @@ namespace WorldSystem.Runtime
         private Matrix4x4 prevViewProjection;
         private Matrix4x4 inverseViewProjection;
         
-        public void SetupTaaMatrices_PerFrame(CommandBuffer cmd, RenderingData renderingData,Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix)
+        public void SetupTaaMatrices_PerFrame(CommandBuffer cmd,Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix)
         {
             //设置TAA需要的矩阵信息
             if(viewProjection_PerFrame != Matrix4x4.identity)
                 prevViewProjection_PerFrame = viewProjection_PerFrame;
             else
                 prevViewProjection_PerFrame = Matrix4x4.identity;
-            viewProjection_PerFrame = GL.GetGPUProjectionMatrix(renderingData.cameraData.camera.nonJitteredProjectionMatrix, true)
-                                      * renderingData.cameraData.camera.worldToCameraMatrix;
 
-            viewProjection_PerFrame = projectionMatrix * renderingData.cameraData.camera.worldToCameraMatrix;
+            viewProjection_PerFrame = projectionMatrix * viewMatrix;
             
             inverseViewProjection_PerFrame = viewProjection_PerFrame.inverse;
             
@@ -257,18 +275,20 @@ namespace WorldSystem.Runtime
         private Matrix4x4 prevViewProjection_PerFrame;
         private Matrix4x4 inverseViewProjection_PerFrame;
         
-        public RTHandle RenderUpScaleAndTaa_1(CommandBuffer cmd, ref RenderingData  renderingData, RTHandle currentRT, RenderTextureDescriptor taaRTDescriptor, Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix)
+        public RTHandle RenderUpScaleAndTaa_1(CommandBuffer cmd,ref RenderingData renderingData, RTHandle currentRT, Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix)
         {
             if (property._Render_ResolutionOptions == Scale.Full) 
                 return currentRT;
 
-            SetupTaaMatrices(cmd, renderingData, viewMatrix, projectionMatrix);
+            var TaaDescriptor = new RenderTextureDescriptor(renderingData.cameraData.cameraTargetDescriptor.width,
+                renderingData.cameraData.cameraTargetDescriptor.height, currentRT.rt.descriptor.colorFormat);
+            
+            SetupTaaMatrices(cmd, viewMatrix, projectionMatrix);
             if (PreviousRT == null || 
-                PreviousRT.rt.descriptor.height != taaRTDescriptor.height || 
-                PreviousRT.rt.descriptor.width != taaRTDescriptor.width)
+                PreviousRT.rt.descriptor.height != TaaDescriptor.height || 
+                PreviousRT.rt.descriptor.width != TaaDescriptor.width)
             {
-                if(property._Render_ResolutionOptions == Scale.Half)
-                    RenderingUtils.ReAllocateIfNeeded(ref PreviousRT, taaRTDescriptor, name: "PreviousRT");
+                RenderingUtils.ReAllocateIfNeeded(ref PreviousRT, TaaDescriptor, name: "PreviousRT");
                 cmd.SetGlobalTexture(_PREVIOUS_TAA_CLOUD_RESULTS, currentRT);
             }
             else
@@ -277,51 +297,24 @@ namespace WorldSystem.Runtime
             }
             cmd.SetGlobalTexture(_CURRENT_TAA_FRAME, currentRT);
             
-            RenderingUtils.ReAllocateIfNeeded(ref TaaRT1, taaRTDescriptor, name: "TaaRT1");
+            RenderingUtils.ReAllocateIfNeeded(ref TaaRT1, TaaDescriptor, name: "TaaRT1");
             cmd.SetRenderTarget(TaaRT1);
             Blitter.BlitTexture(cmd, new Vector4(1,1,0,0), property.TaaMaterial, 0);
             
-            if(property._Render_ResolutionOptions == Scale.Half)
-                cmd.CopyTexture(TaaRT1, PreviousRT);
+            cmd.CopyTexture(TaaRT1, PreviousRT);
             
             return TaaRT1;
         }
-        
-        public RTHandle RenderUpScaleAndTaa_2(CommandBuffer cmd, RTHandle currentRT, RenderTextureDescriptor taaRTDescriptor)
-        {
-            if (property._Render_ResolutionOptions != Scale.Quarter) 
-                return currentRT;
-            
-            if (PreviousRT == null || 
-                PreviousRT.rt.descriptor.height != taaRTDescriptor.height || 
-                PreviousRT.rt.descriptor.width != taaRTDescriptor.width)
-            {
-                RenderingUtils.ReAllocateIfNeeded(ref PreviousRT, taaRTDescriptor, name: "PreviousRT");
-                cmd.SetGlobalTexture(_PREVIOUS_TAA_CLOUD_RESULTS, currentRT);
-            }
 
-            cmd.SetGlobalTexture(_CURRENT_TAA_FRAME, currentRT);
-            
-            RenderingUtils.ReAllocateIfNeeded(ref TaaRT2, taaRTDescriptor, name: "TaaRT2");
-            cmd.SetRenderTarget(TaaRT2);
-            Blitter.BlitTexture(cmd, new Vector4(1,1,0,0), property.TaaMaterial, 0);
-            
-            cmd.CopyTexture(TaaRT2, PreviousRT);
-            
-            return TaaRT2;
-        }
         private static int _CURRENT_TAA_FRAME = Shader.PropertyToID("_CURRENT_TAA_FRAME");
         private static int _PREVIOUS_TAA_CLOUD_RESULTS = Shader.PropertyToID("_PREVIOUS_TAA_CLOUD_RESULTS");
         private static int _TAA_BLEND_FACTOR = Shader.PropertyToID("_TAA_BLEND_FACTOR");
         public RTHandle TaaRT1;
-        public RTHandle TaaRT2;
         public RTHandle PreviousRT;
         public RTHandle skyRT;
 
         
-        public float FOV = 90;
-
-        public RTHandle RenderFixupLate(CommandBuffer cmd, ref RenderingData renderingData, RTHandle activeRT)
+        public RTHandle RenderFixupLate(CommandBuffer cmd, RTHandle activeRT)
         {
             RenderingUtils.ReAllocateIfNeeded(ref _fixupLateRTCache, activeRT.rt.descriptor, name: "FixupLateRTCache", wrapMode: TextureWrapMode.MirrorOnce);
             cmd.CopyTexture(activeRT,_fixupLateRTCache);
@@ -335,7 +328,7 @@ namespace WorldSystem.Runtime
         public void RenderFixupLateBlit(CommandBuffer cmd, ref RenderingData renderingData, RTHandle SrcRT, RTHandle DstRT)
         {
             var dataCamera = renderingData.cameraData.camera;
-            var frustumHeight1 = 2.0f * dataCamera.farClipPlane * Mathf.Tan(FOV * 0.5f * Mathf.Deg2Rad);
+            var frustumHeight1 = 2.0f * dataCamera.farClipPlane * Mathf.Tan(property._Render_AsyncFOV * 0.5f * Mathf.Deg2Rad);
             var frustumHeight2 = 2.0f * dataCamera.farClipPlane * Mathf.Tan(dataCamera.fieldOfView * 0.5f * Mathf.Deg2Rad);
             Shader.SetGlobalFloat(FOVScale, frustumHeight2 / frustumHeight1);
             cmd.SetGlobalTexture(FixupLateTarget,SrcRT);

@@ -334,54 +334,14 @@ namespace WorldSystem.Runtime
             //设置静态全局参数
             SetupStaticProperty();
         }
-
-
-
         
-        private int _frameID;
-        private int _updateCount;
-#if UNITY_EDITOR
+        public bool _Update;
         private void Update()
         {
-            if (Application.isPlaying) return;
-            UpdateFunc();
-        }
-        private void FixedUpdate()
-        {
-            if (Time.frameCount == _frameID) return;
-            
-            //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
-            if (_updateCount % 2 == 0)
-            {
-                UpdateFunc();
-            }
-            _updateCount++;
-            
-            
-            _frameID = Time.frameCount;
-        }
-#else
-        private void FixedUpdate()
-        {
-            if (Time.frameCount == _frameID) return;
-            
-            //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
-            if (_updateCount % 2 == 0)
-            {
-                UpdateFunc();
-            }
-            _updateCount++;
-            
-            
-            _frameID = Time.frameCount;
-        }
-#endif
-        
-        private void UpdateFunc()
-        {
+            if (!_Update) return;
+
             SetupDynamicProperty();
         }
-        
 
         #endregion
         

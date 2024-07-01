@@ -227,49 +227,12 @@ namespace WorldSystem.Runtime
         }
         
         
-        
-        private int _frameID;
-        private int _updateCount;
-#if UNITY_EDITOR
-        private void Update()
-        {
-            if (Application.isPlaying) return;
-            UpdateFunc();
-            property.lightningLit.hideFlags = gameObject.hideFlags;
-
-        }
-        private void FixedUpdate()
-        {
-            if (Time.frameCount == _frameID) return;
-            
-            //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
-            if (_updateCount % 2 == 0)
-            {
-                UpdateFunc();
-                property.lightningLit.hideFlags = gameObject.hideFlags;
-            }
-            _updateCount++;
-            
-            _frameID = Time.frameCount;
-        }
-#else
-        private void FixedUpdate()
-        {
-            if (Time.frameCount == _frameID) return;
-            
-            //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
-            if (_updateCount % 2 == 0)
-            {
-                UpdateFunc();
-            }
-            _updateCount++;
-            
-            _frameID = Time.frameCount;
-        }
-#endif
+        [HideInInspector] public bool _Update;
         private float _previousTime;
-        void UpdateFunc()
+        void Update()
         {
+            if (!_Update) return;
+
             //根据SpawnRate决定启用或禁用
             if (property.lightningSpawnRate > 0.1) 
                 m_VisualEffect.enabled = true;

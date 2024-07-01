@@ -42,9 +42,10 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "宇宙背景模块已开启"), GUIColor(0.3f, 1f, 0.3f)]
         private void UniverseBackgroundModuleToggle_Off()
         {
-            starModuleToggle = false;
-            celestialBodyManagerToggle = false;
-            atmosphereModuleToggle = false;
+            StarModuleToggle_Off();
+            CelestialBodyModuleToggle_Off();
+            AtmosphereModuleToggle_Off();
+            VolumeCloudOptimizeModuleToggle_Off();
             universeBackgroundModuleToggle = false;
             OnValidate();
         }
@@ -74,7 +75,7 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "星星模块已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
         private void StarModuleToggle_On()
         {
-            universeBackgroundModuleToggle = true;
+            UniverseBackgroundModuleToggle_On();
             starModuleToggle = true;
             OnValidate();
         }
@@ -95,7 +96,7 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "星体模块已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
         private void CelestialBodyModuleToggle_On()
         {
-            universeBackgroundModuleToggle = true;
+            UniverseBackgroundModuleToggle_On();
             celestialBodyManagerToggle = true;
             OnValidate();
         }
@@ -116,7 +117,7 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "大气模块已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
         private void AtmosphereModuleToggle_On()
         {
-            universeBackgroundModuleToggle = true;
+            UniverseBackgroundModuleToggle_On();
             atmosphereModuleToggle = true;
             OnValidate();
         }
@@ -138,6 +139,7 @@ namespace WorldSystem.Runtime
         [Button(ButtonSizes.Large, Name = "简化体积云_V1_1_20240604已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
         private void VolumeCloudOptimizeModuleToggle_On()
         {
+            UniverseBackgroundModuleToggle_On();
             volumeCloudOptimizeModuleToggle = true;
             OnValidate();
         }
@@ -375,17 +377,12 @@ namespace WorldSystem.Runtime
             
             RenderPipelineManager.beginCameraRendering -= AddRenderPasses;
             RenderPipelineManager.beginCameraRendering += AddRenderPasses;
-            
-            RenderPipelineManager.endContextRendering -= OnEndContextRendering;
-            RenderPipelineManager.endContextRendering += OnEndContextRendering;
         }
 
         private void OnDisable()
         {
             mainCamera = null;
             RenderPipelineManager.beginCameraRendering -= AddRenderPasses;
-            
-            RenderPipelineManager.endContextRendering -= OnEndContextRendering;
         }
 
         private void OnDestroy()
@@ -397,7 +394,6 @@ namespace WorldSystem.Runtime
             skyRenderPass = null;
             atmosphereBlendPass = null;
             volumeCloudOptimizeShadowRenderPass = null;
-            // volumeCloudOptimizeRenderPass = null;
             
             timModuleToggle = false;
             universeBackgroundModuleToggle = false;
@@ -441,45 +437,52 @@ namespace WorldSystem.Runtime
         }
         #endregion
 
-        private void OnEndContextRendering(ScriptableRenderContext scriptableRenderContext, List<Camera> cameras)
-        {
-            _Render_Atmosphere_VolumeCloud = false;
-        }
-        
-        private int _frameID;
-        private int _updateCount;
-#if UNITY_EDITOR
+        private float _timeCount;
+        private static bool _Update;
         private void Update()
         {
+#if UNITY_EDITOR
             transform.rotation = Quaternion.identity;
             transform.localScale = Vector3.one;
-            if (Application.isPlaying) return;
-        }
-        private void FixedUpdate()
-        {
-            if (Time.frameCount == _frameID) return;
-            
-            //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
-            _Render_Atmosphere_VolumeCloud = _updateCount % 2 == 0;
-
-            _updateCount++;
-            
-            _frameID = Time.frameCount;
-        }
-#else
-        private void FixedUpdate()
-        {
-            if (Time.frameCount == _frameID) return;
-            
-            //分帧器,将不同的操作分散到不同的帧,提高帧率稳定性
-            _Render_Atmosphere_VolumeCloud = _updateCount % 2 == 0;
-
-            _updateCount++;
-            
-            _frameID = Time.frameCount;
-        }
+            Application.targetFrameRate = 60;
 #endif
-        
+            
+            _timeCount += Time.deltaTime;
+            if (_timeCount >= 1f / (float)Instance.universeBackgroundModule.property._Render_AsyncUpdateRate || 
+                !Instance.universeBackgroundModule.property._Render_UseAsyncRender)
+            {
+                _Update = true;
+                _timeCount = 0;
+            }
+            else
+            {
+                _Update = false;
+            }
+            
+            if (Instance.timeModule is not null)
+                Instance.timeModule._Update = _Update;
+            if (Instance.starModule is not null)
+                Instance.starModule._Update = _Update;
+            if(Instance.celestialBodyManager is not null)
+                Instance.celestialBodyManager._Update = _Update;
+            if (Instance.atmosphereModule is not null)
+                Instance.atmosphereModule._Update = _Update;
+            if (Instance.volumeCloudOptimizeModule is not null)
+                Instance.volumeCloudOptimizeModule._Update = _Update;
+            if (Instance.windZoneModule is not null)
+                Instance.windZoneModule._Update = _Update;
+            if (Instance.weatherEffectModule is not null)
+                Instance.weatherEffectModule._Update = _Update;
+            if(Instance.weatherEffectModule?.rainEffect is not null)
+                Instance.weatherEffectModule.rainEffect._Update = _Update;
+            if(Instance.weatherEffectModule?.snowEffect is not null)
+                Instance.weatherEffectModule.snowEffect._Update = _Update;
+            if(Instance.weatherEffectModule?.lightningEffect is not null)
+                Instance.weatherEffectModule.lightningEffect._Update = _Update;
+            if (Instance.weatherSystemModule is not null)
+                Instance.weatherSystemModule._Update = _Update;
+        }
+
         
         private void AddRenderPasses(ScriptableRenderContext context,Camera cam)
         {
@@ -495,6 +498,7 @@ namespace WorldSystem.Runtime
             scriptableRenderer.EnqueuePass(volumeCloudOptimizeShadowRenderPass);
             scriptableRenderer.EnqueuePass(atmosphereBlendPass);
         }
+        
         
         private T AppendOrDestroyModule<T>(bool moduleToggle, bool useChildObject = false, Vector3 offset = default) where T : MonoBehaviour
         {
@@ -535,7 +539,6 @@ namespace WorldSystem.Runtime
         private AtmosphereBlendPass atmosphereBlendPass;
 
         
-        private static bool _Render_Atmosphere_VolumeCloud;
         private class SkyRenderPass : ScriptableRenderPass
         {
             public SkyRenderPass()
@@ -544,7 +547,7 @@ namespace WorldSystem.Runtime
             }
             public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
             {
-                if (_Render_Atmosphere_VolumeCloud)
+                if (_Update)
                     Instance?.volumeCloudOptimizeModule?.RenderCloudMap();
             }
 
@@ -556,19 +559,58 @@ namespace WorldSystem.Runtime
                 CommandBuffer cmd = CommandBufferPool.Get("Test: SkyRender");
                 var dataCamera = renderingData.cameraData.camera;
 
+                if (Instance.universeBackgroundModule.property._Render_UseAsyncRender)
+                {
+                    //修改矩阵以扩大视野
+                    float cameraAspect = dataCamera.pixelRect.width / dataCamera.pixelRect.height;
+                    var projectionMatrix = Matrix4x4.Perspective(Instance.universeBackgroundModule.property._Render_AsyncFOV, cameraAspect, dataCamera.nearClipPlane, dataCamera.farClipPlane);
+                    projectionMatrix = GL.GetGPUProjectionMatrix(projectionMatrix, true);
+                    RenderingUtils.SetViewAndProjectionMatrices(cmd,dataCamera.worldToCameraMatrix, projectionMatrix, false);
+                    //更改矩阵之后,也需要更新逆矩阵
+                    Matrix4x4 projectionMatrix_Inv = projectionMatrix.inverse;
+                    cmd.SetGlobalMatrix("unity_MatrixInvP", projectionMatrix_Inv);
+                    
+                    Instance.universeBackgroundModule.SetupTaaMatrices_PerFrame(cmd,dataCamera.worldToCameraMatrix, projectionMatrix);
+                    if (_Update)
+                    {
+                        _Update = false;
+                        //渲染背景
+                        _ActiveRT = Instance.universeBackgroundModule.RenderBackground(cmd, ref renderingData);
+                        //渲染大气
+                        Instance.atmosphereModule?.RenderAtmosphere(cmd, ref renderingData, _ActiveRT);
+                        //体积云
+                        Instance.volumeCloudOptimizeModule?.RenderVolumeCloud(cmd, ref renderingData, _ActiveRT);
 
-                float cameraAspect = dataCamera.pixelRect.width / dataCamera.pixelRect.height;
-                var projectionMatrix = Matrix4x4.Perspective(Instance.universeBackgroundModule.FOV, cameraAspect, dataCamera.nearClipPlane, dataCamera.farClipPlane);
-                projectionMatrix = GL.GetGPUProjectionMatrix(projectionMatrix, true);
-                RenderingUtils.SetViewAndProjectionMatrices(cmd,dataCamera.worldToCameraMatrix, projectionMatrix, false);
-                Matrix4x4 projectionMatrix_Inv = projectionMatrix.inverse;
-                
-                cmd.SetGlobalMatrix("unity_CameraInvProjection_fov", projectionMatrix_Inv);
-                
-                
-                Instance.universeBackgroundModule.SetupTaaMatrices_PerFrame(cmd, renderingData,mainCamera.worldToCameraMatrix, projectionMatrix);
-
-                if (_Render_Atmosphere_VolumeCloud)
+                        _ActiveRT = Instance.universeBackgroundModule.RenderUpScaleAndTaa_1(cmd,ref renderingData, _ActiveRT,dataCamera.worldToCameraMatrix, projectionMatrix);
+                        
+                        //我们这里将星星和星体放在后面渲染,使用特别的方式正确混合,这是因为,大气体积云我们可以降低分辨率渲染,而星星星体为保持清晰度不可降低分辨率
+                        //渲染星星
+                        Instance.starModule?.RenderStar(cmd, ref renderingData);
+                        //渲染星体
+                        Instance.celestialBodyManager?.RenderCelestialBodyList(cmd, ref renderingData);
+                    }
+                    else
+                    {
+                        if (_ActiveRT != null)
+                            _ActiveRT = Instance.universeBackgroundModule?.RenderFixupLate(cmd, _ActiveRT);
+                    }
+                    
+                    //恢复矩阵
+                    projectionMatrix = GL.GetGPUProjectionMatrix(dataCamera.projectionMatrix, true); 
+                    RenderingUtils.SetViewAndProjectionMatrices(cmd,  dataCamera.worldToCameraMatrix, projectionMatrix, false); 
+                    projectionMatrix_Inv = projectionMatrix.inverse;
+                    //恢复逆矩阵
+                    cmd.SetGlobalMatrix("unity_MatrixInvP", projectionMatrix_Inv);
+                    context.ExecuteCommandBuffer(cmd);
+                    cmd.Clear();
+                    
+                    //修正视野范围
+                    if(_ActiveRT != null) 
+                        Instance.universeBackgroundModule.RenderFixupLateBlit(cmd,ref renderingData ,_ActiveRT, renderingData.cameraData.renderer.cameraColorTargetHandle);
+                    context.ExecuteCommandBuffer(cmd);
+                    cmd.Clear();
+                }
+                else
                 {
                     //渲染背景
                     _ActiveRT = Instance.universeBackgroundModule.RenderBackground(cmd, ref renderingData);
@@ -577,39 +619,18 @@ namespace WorldSystem.Runtime
                     //体积云
                     Instance.volumeCloudOptimizeModule?.RenderVolumeCloud(cmd, ref renderingData, _ActiveRT);
 
-                    var TaaDescriptor = new RenderTextureDescriptor(renderingData.cameraData.cameraTargetDescriptor.width,
-                        renderingData.cameraData.cameraTargetDescriptor.height, RenderTextureFormat.ARGBHalf);
-                    _ActiveRT = Instance.universeBackgroundModule.RenderUpScaleAndTaa_1(cmd, ref renderingData, _ActiveRT, TaaDescriptor,mainCamera.worldToCameraMatrix, projectionMatrix);
-                    _ActiveRT = Instance.universeBackgroundModule.RenderUpScaleAndTaa_2(cmd, _ActiveRT, TaaDescriptor);
-                    
-                    
+                    _ActiveRT = Instance.universeBackgroundModule.RenderUpScaleAndTaa_1(cmd,ref renderingData, _ActiveRT, dataCamera.worldToCameraMatrix, dataCamera.projectionMatrix);
+                        
                     //我们这里将星星和星体放在后面渲染,使用特别的方式正确混合,这是因为,大气体积云我们可以降低分辨率渲染,而星星星体为保持清晰度不可降低分辨率
                     //渲染星星
                     Instance.starModule?.RenderStar(cmd, ref renderingData);
                     //渲染星体
                     Instance.celestialBodyManager?.RenderCelestialBodyList(cmd, ref renderingData);
-                }
-                else
-                {
-                    if (_ActiveRT != null)
-                        _ActiveRT = Instance.universeBackgroundModule?.RenderFixupLate(cmd, ref renderingData, _ActiveRT);
+                    Blitter.BlitCameraTexture(cmd, _ActiveRT, renderingData.cameraData.renderer.cameraColorTargetHandle);
+                    context.ExecuteCommandBuffer(cmd);
+                    cmd.Clear();
                 }
                 
-                projectionMatrix = GL.GetGPUProjectionMatrix(mainCamera.projectionMatrix, true); 
-                RenderingUtils.SetViewAndProjectionMatrices(cmd,  mainCamera.worldToCameraMatrix, projectionMatrix, false); 
-                context.ExecuteCommandBuffer(cmd);
-                cmd.Clear();
-                
-                
-                
-                //修正视野范围
-                if(_ActiveRT != null) 
-                    Instance.universeBackgroundModule.RenderFixupLateBlit(cmd,ref renderingData ,_ActiveRT, renderingData.cameraData.renderer.cameraColorTargetHandle);
-                    
-                    
-                
-                context.ExecuteCommandBuffer(cmd);
-                cmd.Clear();
                 CommandBufferPool.Release(cmd);
             }
             private RTHandle _ActiveRT;
@@ -617,24 +638,20 @@ namespace WorldSystem.Runtime
         
         private class AtmosphereBlendPass : ScriptableRenderPass
         {
-
             public AtmosphereBlendPass()
             {
-                renderPassEvent = RenderPassEvent.AfterRenderingOpaques;
+                renderPassEvent = RenderPassEvent.BeforeRenderingPostProcessing;
             }
             
             public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
             {
                 CommandBuffer cmd = CommandBufferPool.Get("Test: AtmosphereBlend");
-
-                if (renderingData.cameraData.camera.name != "ExpandCamera")
-                {
-                    Instance?.atmosphereModule?.RenderAtmosphereBlend(cmd, ref renderingData);
-
-                    context.ExecuteCommandBuffer(cmd);
-                    CommandBufferPool.Release(cmd);
-                }
+                if (Instance.atmosphereModule is null) return;
                 
+                Instance.atmosphereModule.RenderAtmosphereBlend(cmd, ref renderingData);
+                
+                context.ExecuteCommandBuffer(cmd);
+                CommandBufferPool.Release(cmd);
             }
         }
         

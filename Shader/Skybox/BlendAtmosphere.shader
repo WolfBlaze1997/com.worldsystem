@@ -10,6 +10,7 @@ Shader "Hidden/OccaSoftware/Altos/BlendAtmosphere"
         Pass
         {
             Name "Blend Atmosphere"
+            Blend OneMinusSrcAlpha SrcAlpha
             
             HLSLPROGRAM
             #pragma vertex Vert
@@ -19,18 +20,16 @@ Shader "Hidden/OccaSoftware/Altos/BlendAtmosphere"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl"
             #include "Packages/com.unity.render-pipelines.core/Runtime/Utilities/Blit.hlsl"
             #include "Packages/com.worldsystem//Shader/ShaderLibrary/TextureUtils.hlsl"
-
-            Texture2D _ScreenTexture;
+            
             float _BlendStart;
             float _Density;
             Texture2D _SkyTexture;
 
 
-            float3 Fragment(Varyings input) : SV_Target
+            float4 Fragment(Varyings input) : SV_Target
             {
                 UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
                 
-                float3 screenColor = _ScreenTexture.SampleLevel(altos_point_clamp_sampler, input.texcoord, 0).rgb;
                 float3 skyColor = _SkyTexture.SampleLevel(altos_linear_clamp_sampler, input.texcoord, 0).rgb;
                 float rawDepth = SampleSceneDepth(input.texcoord);
                 float eyeDepth = LinearEyeDepth(rawDepth, _ZBufferParams);
@@ -41,9 +40,9 @@ Shader "Hidden/OccaSoftware/Altos/BlendAtmosphere"
                 float ex = saturate(1.0f / exp(d));
                 if (depth01 >= 1.0)
                 {
-                    return screenColor;
+                    return half4(0,0,0,1);
                 }
-                return lerp(skyColor, screenColor, ex);
+                return half4(skyColor,ex);
             }
             ENDHLSL
         }
