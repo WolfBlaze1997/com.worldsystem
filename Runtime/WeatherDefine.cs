@@ -175,6 +175,7 @@ namespace WorldSystem.Runtime
             WorldManager.Instance.universeBackgroundModule.property._Render_UseAsyncRender = backgroundProperty._Render_UseAsyncRender;
             WorldManager.Instance.universeBackgroundModule.property._Render_AsyncFOV = backgroundProperty._Render_AsyncFOV;
             WorldManager.Instance.universeBackgroundModule.property._Render_AsyncUpdateRate = backgroundProperty._Render_AsyncUpdateRate;
+            WorldManager.Instance.universeBackgroundModule.property._Render_TargetFps = backgroundProperty._Render_TargetFps;
 
             WorldManager.Instance.universeBackgroundModule.OnValidate();
 #if UNITY_EDITOR
@@ -200,6 +201,7 @@ namespace WorldSystem.Runtime
             item.backgroundProperty._Render_UseAsyncRender = backgroundProperty._Render_UseAsyncRender;
             item.backgroundProperty._Render_AsyncFOV = backgroundProperty._Render_AsyncFOV;
             item.backgroundProperty._Render_AsyncUpdateRate = backgroundProperty._Render_AsyncUpdateRate;
+            item.backgroundProperty._Render_TargetFps = backgroundProperty._Render_TargetFps;
         }
         
     }

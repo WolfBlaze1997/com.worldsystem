@@ -66,6 +66,26 @@ namespace WorldSystem.Runtime
             [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
             public Material VolumeCloud_FixupLateBlit_Material;
             
+            // [FoldoutGroup("配置")] [LabelText("运动矢量累加着色器")]
+            // [ReadOnly] [PropertyOrder(-20)]
+            // [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
+            // public Shader _MotionVectorAdd_Shader;
+            //
+            // [FoldoutGroup("配置")] [LabelText("运动矢量累加材质")]
+            // [ReadOnly] [PropertyOrder(-20)]
+            // [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
+            // public Material _MotionVectorAdd_Material;
+            //
+            // [FoldoutGroup("配置")] [LabelText("修正分帧延迟着色器")]
+            // [ReadOnly] [PropertyOrder(-20)]
+            // [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
+            // public Shader _FixupLateSplitFrame_Shader;
+            //
+            // [FoldoutGroup("配置")] [LabelText("修正分帧延材质")]
+            // [ReadOnly] [PropertyOrder(-20)]
+            // [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
+            // public Material _FixupLateSplitFrame_Material;
+            
             [LabelText("分辨率选项")] 
             [GUIColor(0, 1, 0)] [PropertyOrder(-10)]
             public Scale _Render_ResolutionOptions = Scale.Full;
@@ -75,12 +95,17 @@ namespace WorldSystem.Runtime
             [ShowIf("@_Render_ResolutionOptions != Scale.Full")]
             public float _Render_TemporalAAFactor = 0f;
             
-            [LabelText("使用异步渲染")]
+            [LabelText("目标帧率")]
+            [GUIColor(0.7f, 0.7f, 1f)]
+            public TargetFps _Render_TargetFps = TargetFps.TargetFps120;
+            
+            [LabelText("使用异步分帧渲染")]
             [GUIColor(0.7f, 0.7f, 1f)]
             public bool _Render_UseAsyncRender = true;
             
             [LabelText("    异步更新率(fps/s)")]
             [GUIColor(0.7f, 0.7f, 1f)]
+            [ShowIf("_Render_UseAsyncRender")]
             public AsyncUpdateRate _Render_AsyncUpdateRate = AsyncUpdateRate.Fps20;
             
             [LabelText("    扩大的视野")]
@@ -88,15 +113,22 @@ namespace WorldSystem.Runtime
             [ShowIf("_Render_UseAsyncRender")]
             public float _Render_AsyncFOV = 90;
             
+            // [LabelText("使用分帧渲染")]
+            // [GUIColor(0.7f, 0.7f, 1f)]
+            // public bool _Render_UseSplitFrameRender = true;
         }
         [HideLabel]
         public Property property = new();
-        
+        [Serializable]
         public enum AsyncUpdateRate
         {
             Fps60 = 60,Fps50 = 50,Fps40 = 40,Fps30 = 30,Fps20 = 20,Fps10 = 10
         }
-        
+        [Serializable]
+        public enum TargetFps
+        {
+            TargetFpsUnLimit = -1,TargetFps240 = 240,TargetFps180 = 180,TargetFps144 = 144,TargetFps120 = 120,TargetFps90 = 90,TargetFps60 = 60,TargetFps30 = 30
+        }
         
         #endregion
 
@@ -126,6 +158,11 @@ namespace WorldSystem.Runtime
                 property.VolumeCloud_FixupLate_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/FixupLate.shader");
             if (property.VolumeCloud_FixupLateBlit_Shader == null)
                 property.VolumeCloud_FixupLateBlit_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/FixupLateBlit.shader");
+            // if (property._MotionVectorAdd_Shader == null)
+            //     property._MotionVectorAdd_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/ShaderLibrary/MotionVectorAdd.shader");
+            // if (property._FixupLateSplitFrame_Shader == null)
+            //     property._FixupLateSplitFrame_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/FixupLateSplitFrame.shader");
+
 #endif
             if (property.backgroundMaterial == null) property.backgroundMaterial = CoreUtils.CreateEngineMaterial(property.backgroundShader);
             if (property.TaaMaterial == null) property.TaaMaterial = CoreUtils.CreateEngineMaterial(property.TaaShader);
@@ -133,6 +170,11 @@ namespace WorldSystem.Runtime
                 property.VolumeCloud_FixupLate_Material = CoreUtils.CreateEngineMaterial(property.VolumeCloud_FixupLate_Shader);
             if (property.VolumeCloud_FixupLateBlit_Material == null)
                 property.VolumeCloud_FixupLateBlit_Material = CoreUtils.CreateEngineMaterial(property.VolumeCloud_FixupLateBlit_Shader);
+            // if (property._MotionVectorAdd_Material == null)
+            //     property._MotionVectorAdd_Material = CoreUtils.CreateEngineMaterial(property._MotionVectorAdd_Shader);
+            // if (property._FixupLateSplitFrame_Material == null)
+            //     property._FixupLateSplitFrame_Material = CoreUtils.CreateEngineMaterial(property._FixupLateSplitFrame_Shader);
+            
             OnValidate();
         }
         
@@ -159,6 +201,20 @@ namespace WorldSystem.Runtime
             if (property.VolumeCloud_FixupLateBlit_Material != null)
                 CoreUtils.Destroy(property.VolumeCloud_FixupLateBlit_Material);
             
+            // if(property._MotionVectorAdd_Shader != null)
+            //     Resources.UnloadAsset(property._MotionVectorAdd_Shader);
+            // if (property._MotionVectorAdd_Material != null)
+            //     CoreUtils.Destroy(property._MotionVectorAdd_Material);
+            //
+            // if(property._FixupLateSplitFrame_Shader != null)
+            //     Resources.UnloadAsset(property._FixupLateSplitFrame_Shader);
+            // if (property._FixupLateSplitFrame_Material != null)
+            //     CoreUtils.Destroy(property._FixupLateSplitFrame_Material);
+            //
+            // property._FixupLateSplitFrame_Shader = null;
+            // property._FixupLateSplitFrame_Material = null;
+            // property._MotionVectorAdd_Shader = null;
+            // property._MotionVectorAdd_Material = null;
             property.VolumeCloud_FixupLate_Shader = null;
             property.VolumeCloud_FixupLate_Material = null;
             PreviousRT?.Release();
@@ -199,6 +255,8 @@ namespace WorldSystem.Runtime
                 _fixupLateRTCache = null;
             }
 
+            Application.targetFrameRate = (int)property._Render_TargetFps;
+            
         }
 
 #if UNITY_EDITOR
@@ -212,23 +270,60 @@ namespace WorldSystem.Runtime
 
 
         #region 渲染函数
-        public RTHandle RenderBackground(CommandBuffer cmd, ref RenderingData renderingData)
+        public RTHandle RenderBackground(CommandBuffer cmd, ref RenderingData renderingData, RTHandle dstRT)
         {
-            RenderingUtils.ReAllocateIfNeeded(ref skyRT, 
-                new RenderTextureDescriptor(
-                    renderingData.cameraData.cameraTargetDescriptor.width >> (int)property._Render_ResolutionOptions,
-                    renderingData.cameraData.cameraTargetDescriptor.height >> (int)property._Render_ResolutionOptions,
-                    RenderTextureFormat.ARGBHalf), 
-                name: "SkyRT");
-            cmd.SetRenderTarget(skyRT);
+            // if (property._Render_UseSplitFrameRender)
+            // {
+            //     RenderingUtils.ReAllocateIfNeeded(ref splitFrameRT, 
+            //         new RenderTextureDescriptor(
+            //             renderingData.cameraData.cameraTargetDescriptor.width >> (int)property._Render_ResolutionOptions,
+            //             renderingData.cameraData.cameraTargetDescriptor.height >> (int)property._Render_ResolutionOptions,
+            //             RenderTextureFormat.ARGBHalf), 
+            //         name: "SplitFrameRT");
+            //     cmd.SetRenderTarget(splitFrameRT);
+            // }
+            // else
+            // {
+            //     RenderingUtils.ReAllocateIfNeeded(ref skyRT, 
+            //         new RenderTextureDescriptor(
+            //             renderingData.cameraData.cameraTargetDescriptor.width >> (int)property._Render_ResolutionOptions,
+            //             renderingData.cameraData.cameraTargetDescriptor.height >> (int)property._Render_ResolutionOptions,
+            //             RenderTextureFormat.ARGBHalf), 
+            //         name: "SkyRT");
+            //     cmd.SetRenderTarget(skyRT);
+            // }
             
+            cmd.SetRenderTarget(dstRT);
             Matrix4x4 m = Matrix4x4.identity;
             m.SetTRS(renderingData.cameraData.worldSpaceCameraPos, Quaternion.identity,
                 Vector3.one * renderingData.cameraData.camera.farClipPlane);
             cmd.DrawMesh(property.skyMesh, m, property.backgroundMaterial, 0);
-            return skyRT;
+            
+            return dstRT;
         }
-        
+        public RTHandle skyRT;
+        public RTHandle splitFrameRT;
+
+        public RTHandle motionVectorAddRT;
+        // public void RenderMotionVectorAdd(CommandBuffer cmd, ref RenderingData renderingData)
+        // {
+        //     if (skyRT == null) return;
+        //     RenderingUtils.ReAllocateIfNeeded(ref motionVectorAddRT, skyRT.rt.descriptor, name: "MotionVectorCacheRT");
+        //     cmd.SetRenderTarget(motionVectorAddRT);
+        //     Blitter.BlitTexture(cmd, new Vector4(1,1,0,0), property._MotionVectorAdd_Material,0);
+        //     
+        //     RenderingUtils.ReAllocateIfNeeded(ref previousMotionVectorRT, skyRT.rt.descriptor, name: "PreviousMotionVectorRT");
+        //     cmd.CopyTexture(motionVectorAddRT, previousMotionVectorRT);
+        //     cmd.SetGlobalTexture("_PreviousMotionVector", previousMotionVectorRT);
+        // }
+        // public RTHandle previousMotionVectorRT;
+        //
+        // public void RenderFixupLateSplitFrame(CommandBuffer cmd, ref RenderingData renderingData, RTHandle srcRT, RTHandle dstRT)
+        // {
+        //     cmd.SetGlobalTexture("_SplitFrameRT", splitFrameRT);
+        //     cmd.SetGlobalTexture("_MotionVectorAdd", motionVectorAddRT);
+        //     Blitter.BlitCameraTexture(cmd,srcRT,dstRT,property._FixupLateSplitFrame_Material,0);
+        // }
         
         public void SetupTaaMatrices(CommandBuffer cmd,Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix)
         {
@@ -275,13 +370,19 @@ namespace WorldSystem.Runtime
         private Matrix4x4 prevViewProjection_PerFrame;
         private Matrix4x4 inverseViewProjection_PerFrame;
         
-        public RTHandle RenderUpScaleAndTaa_1(CommandBuffer cmd,ref RenderingData renderingData, RTHandle currentRT, Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix)
+        public RTHandle RenderUpScaleAndTaa_1(CommandBuffer cmd,ref RenderingData renderingData, RTHandle currentRT, Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix, int splitFrameCount)
         {
             if (property._Render_ResolutionOptions == Scale.Full) 
                 return currentRT;
 
             var TaaDescriptor = new RenderTextureDescriptor(renderingData.cameraData.cameraTargetDescriptor.width,
                 renderingData.cameraData.cameraTargetDescriptor.height, currentRT.rt.descriptor.colorFormat);
+            
+            if (property._Render_UseAsyncRender)
+            {
+                float width = renderingData.cameraData.cameraTargetDescriptor.width / 2f;
+                cmd.EnableScissorRect(new Rect(splitFrameCount * width, 0, width, renderingData.cameraData.cameraTargetDescriptor.height));
+            }
             
             SetupTaaMatrices(cmd, viewMatrix, projectionMatrix);
             if (PreviousRT == null || 
@@ -311,7 +412,6 @@ namespace WorldSystem.Runtime
         private static int _TAA_BLEND_FACTOR = Shader.PropertyToID("_TAA_BLEND_FACTOR");
         public RTHandle TaaRT1;
         public RTHandle PreviousRT;
-        public RTHandle skyRT;
 
         
         public RTHandle RenderFixupLate(CommandBuffer cmd, RTHandle activeRT)
@@ -330,7 +430,7 @@ namespace WorldSystem.Runtime
             var dataCamera = renderingData.cameraData.camera;
             var frustumHeight1 = 2.0f * dataCamera.farClipPlane * Mathf.Tan(property._Render_AsyncFOV * 0.5f * Mathf.Deg2Rad);
             var frustumHeight2 = 2.0f * dataCamera.farClipPlane * Mathf.Tan(dataCamera.fieldOfView * 0.5f * Mathf.Deg2Rad);
-            Shader.SetGlobalFloat(FOVScale, frustumHeight2 / frustumHeight1);
+            cmd.SetGlobalFloat(FOVScale, frustumHeight2 / frustumHeight1);
             cmd.SetGlobalTexture(FixupLateTarget,SrcRT);
             Blitter.BlitCameraTexture(cmd, SrcRT, DstRT,property.VolumeCloud_FixupLateBlit_Material,0);
         }

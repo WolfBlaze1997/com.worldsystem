@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69b8a94e4a66400794a67846e7e81235, type: 3}
   m_Name: "zCache_1_9807_Preset_\u591A\u4E91_01"
   m_EditorClassIdentifier: 
-  sustainedTime: 10
+  sustainedTime: 8.632378
   varyingTime: 5
   sustainedTimeCache: 10
   varyingTimeCache: 5
@@ -26,8 +26,9 @@ MonoBehaviour:
     VolumeCloud_FixupLate_Material: {fileID: 0}
     VolumeCloud_FixupLateBlit_Shader: {fileID: 0}
     VolumeCloud_FixupLateBlit_Material: {fileID: 0}
-    _Render_ResolutionOptions: 1
+    _Render_ResolutionOptions: 2
     _Render_TemporalAAFactor: 0
+    _Render_TargetFps: 180
     _Render_UseAsyncRender: 1
     _Render_AsyncUpdateRate: 20
     _Render_AsyncFOV: 80
@@ -596,9 +597,9 @@ MonoBehaviour:
       equatorColor: {r: 0.01076923, g: 0.01076923, b: 0.02, a: 1}
       groundColor: {r: 0.0062499996, g: 0.0062499996, b: 0.01, a: 1}
     currentAtmosphereColor:
-      skyColor: {r: 0.08718027, g: 0.10289055, b: 0.26537004, a: 1}
-      equatorColor: {r: 0.5625, g: 0.49531245, b: 0.46484372, a: 1}
-      groundColor: {r: 0.052307695, g: 0.0425, b: 0.05, a: 1}
+      skyColor: {r: 0.09020582, g: 0.14631248, b: 0.41539228, a: 1}
+      equatorColor: {r: 0.60329413, g: 0.6950175, b: 0.7680819, a: 1}
+      groundColor: {r: 0.06239085, g: 0.060177993, b: 0.08537588, a: 1}
     currentCloudiness: 0
     currentPrecipitation: 0
     useAtmosphereBlend: 1
@@ -617,7 +618,7 @@ MonoBehaviour:
     _Modeling_ShapeBase_Gain: 0.5
     _Modeling_ShapeBase_Freq: 2
     _Modeling_ShapeBase_Scale: 5
-    _MotionBase_DynamicVector: {x: -0.1334376, y: 0.21141051}
+    _MotionBase_DynamicVector: {x: 0, y: 0.25}
     _MotionBase_Direction: 0
     _MotionBase_Speed: 0.25
     _MotionBase_UseDirectionRandom: 1
@@ -641,7 +642,7 @@ MonoBehaviour:
     _Modeling_ShapeDetail_Quality: 1
     _Modeling_ShapeDetail_Scale: {x: 5.11, y: 5.11, z: 5.11}
     _MotionBase_UseDynamicCloud: 1
-    _MotionDetail_DynamicVector: {x: 0.07098491, y: 1.4025962, z: 2.0682564}
+    _MotionDetail_DynamicVector: {x: 0, y: 0, z: 1.25}
     _MotionDetail_Direction: {x: 0, y: 0}
     _MotionDetail_Speed: 1.25
     _MotionDetail_UseRandomDirection: 1

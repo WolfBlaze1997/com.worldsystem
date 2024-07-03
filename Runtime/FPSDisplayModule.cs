@@ -16,7 +16,7 @@ namespace WorldSystem.Runtime
 
         private void OnEnable()
         {
-            Application.targetFrameRate = 2000;
+            // Application.targetFrameRate = 2000;
             // Debug.Log("XXXQQQ");
             StartFPS = true;
             _ = GetFPS();

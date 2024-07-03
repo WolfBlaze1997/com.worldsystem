@@ -254,14 +254,12 @@ namespace WorldSystem.Runtime
                 CoreUtils.Destroy(property.atmosphereBlendMaterial);
             
             _atmosphereMixRT?.Release();
-            // _atmosphereBlendRT?.Release();
 
             property.mesh = null;
             property.shader = null;
             property.material = null;
             property.atmosphereBlendShader = null;
             property.atmosphereBlendMaterial = null;
-            // _atmosphereBlendRT = null;
             _atmosphereMixRT = null;
             
             OnValidate();
@@ -283,7 +281,7 @@ namespace WorldSystem.Runtime
         }
 #endif
         
-        public bool _Update;
+        [HideInInspector] public bool _Update;
         private void Update()
         {
             if (!_Update) return;
@@ -348,22 +346,6 @@ namespace WorldSystem.Runtime
             RenderSettings.ambientSkyColor = property.currentAtmosphereColor.skyColor;
             RenderSettings.ambientEquatorColor = property.currentAtmosphereColor.equatorColor;
             RenderSettings.ambientGroundColor = property.currentAtmosphereColor.groundColor;
-            
-
-            //根据参数修饰大气颜色
-            // float exposure = property.environmentLightingExposure;
-            // property.currentCloudiness = WorldManager.Instance?.volumeCloudOptimizeModule?.property._Modeling_Amount_CloudAmount ?? 0;
-            // property.currentPrecipitation = Math.Max(WorldManager.Instance?.weatherEffectModule?.rainEffect?.property.rainPrecipitation ?? 0,
-            //                                 WorldManager.Instance?.weatherEffectModule?.snowEffect?.property.snowPrecipitation ?? 0);
-            // exposure *= (1.0f - Mathf.Max(property.currentPrecipitation, property.currentCloudiness) * 0.8f);
-            // property.currentAtmosphereColor.skyColor =
-            //     Exposure(Saturation(property.currentAtmosphereColor.skyColor, property.environmentLightingSaturation), exposure);
-            // property.currentAtmosphereColor.equatorColor =
-            //     Exposure(Saturation(property.currentAtmosphereColor.equatorColor, property.environmentLightingSaturation), exposure);
-            // property.currentAtmosphereColor.groundColor =
-            //     Exposure(Saturation(property.currentAtmosphereColor.groundColor, property.environmentLightingSaturation), exposure);
-
-            
         }
 
         
@@ -399,20 +381,9 @@ namespace WorldSystem.Runtime
         {
             RTHandle source = renderingData.cameraData.renderer.cameraColorTargetHandle;
             if (!property.useAtmosphereBlend || !isActiveAndEnabled) return;
-            
-            // //配置RT
-            // RenderTextureDescriptor rtDescriptor = new RenderTextureDescriptor(
-            //     renderingData.cameraData.cameraTargetDescriptor.width,
-            //     renderingData.cameraData.cameraTargetDescriptor.height,
-            //     colorFormat: RenderTextureFormat.DefaultHDR);
-            // RenderingUtils.ReAllocateIfNeeded(ref _atmosphereBlendRT, rtDescriptor, name: "AtmosphereBlendRT");
-            
             cmd.SetRenderTarget(source);
             Blitter.BlitTexture(cmd,new Vector4(1,1,0,0), property.atmosphereBlendMaterial,0);
         }
-
-        // public RTHandle _atmosphereBlendRT;
-        // private readonly int _ScreenTexture = Shader.PropertyToID("_ScreenTexture");
         
         #endregion
         

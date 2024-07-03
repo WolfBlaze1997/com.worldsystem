@@ -335,7 +335,7 @@ namespace WorldSystem.Runtime
             SetupStaticProperty();
         }
         
-        public bool _Update;
+        [HideInInspector] public bool _Update;
         private void Update()
         {
             if (!_Update) return;

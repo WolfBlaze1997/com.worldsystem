@@ -805,7 +805,7 @@ namespace WorldSystem.Runtime
         }
 #endif
         
-        public bool _Update;
+        [HideInInspector] public bool _Update;
         private void Update()
         {
             if (!_Update) return;
