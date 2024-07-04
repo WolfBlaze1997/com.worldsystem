@@ -1,15 +1,19 @@
 ﻿using Sirenix.OdinInspector;
 using Unity.Mathematics;
 using UnityEngine;
-
+using UnityEditor;
 namespace WorldSystem.Runtime
 {
     [ExecuteAlways]
-    public class WeatherSystemModule : BaseModule
+    public class WeatherListModule : BaseModule
     {
         
+#if UNITY_EDITOR
+        [ToggleLeft][LabelText(" \u261a 修改天气列表参数后请点击此处刷新序列化数据")]
+        public bool RefreshSerializeData;
+#endif
+        
         [InlineEditor(InlineEditorObjectFieldModes.Foldout)][Title("$info")][HideLabel]
-        // [LabelText("天气列表资产")]
         public WeatherList weatherList;
         
 #if UNITY_EDITOR
@@ -30,7 +34,7 @@ namespace WorldSystem.Runtime
             
             if (WorldManager.Instance?.timeModule is null || weatherList?.list is null || weatherList?.list?.Count == 0
 #if UNITY_EDITOR
-                || (weatherList?.weatherDefineNew?.IsActive ?? false)
+                || (weatherList?.SelectedWeatherDefine?.IsActive ?? false)
 #endif
                 ) return;
             
@@ -96,12 +100,56 @@ namespace WorldSystem.Runtime
             if(weatherList != null && weatherList.list.Count != 0)
                 info = "激活的索引: " + i + "    激活的天气: " + weatherList.list[i].name
                     + "    当前天气列表的总时间: " + math.trunc(totalTime/24) + "天/" + WorldManager.Instance.timeModule.HoursToTimeString(totalTime);
+            
 #endif
             
             previousTime = WorldManager.Instance.timeModule.initTime.Hour;
         }
 
         
+        private void OnEnable()
+        {
+#if UNITY_EDITOR
+            if (weatherList == null)
+                weatherList =
+                    AssetDatabase.LoadAssetAtPath<WeatherList>(
+                        "Packages/com.worldsystem/Preset/WeatherList/PresetWeatherList.asset");
+#endif
+            if (weatherList != null)
+                weatherList.ResetWeatherListTime();
+        }
+        private void OnDestroy()
+        {
+            if (weatherList != null)
+            {
+                weatherList.ResetWeatherListTime();
+                Resources.UnloadAsset(weatherList);
+            }
+            weatherList = null;
+        }
+        
+        
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (RefreshSerializeData)
+            {
+                RefreshSerializeData = false;
+                // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
+                Debug.Log("已刷新序列化数据");
+            }
+        }
+#endif
+
+
+// #if UNITY_EDITOR
+//         private void InvokeRefreshSerializeDataOff()
+//         {
+//             RefreshSerializeData = false;
+//             Debug.Log("已刷新序列化数据");
+//         }
+// #endif
+
         
         #endregion
 

@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Sirenix.OdinInspector;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace WorldSystem.Runtime
@@ -13,11 +14,11 @@ namespace WorldSystem.Runtime
         public int size = 36;
         [LabelText("频率")]
         public int freq = 100;
-
+        [LabelText("居中")]
+        public bool Centered = false;
+        
         private void OnEnable()
         {
-            // Application.targetFrameRate = 2000;
-            // Debug.Log("XXXQQQ");
             StartFPS = true;
             _ = GetFPS();
         }
@@ -45,7 +46,12 @@ namespace WorldSystem.Runtime
 
         void OnGUI()
         {
-            Rect rect = new Rect(0, 0, Screen.width, Screen.height * 2 / size);
+            Rect rect;
+            if(Centered)
+                rect = new Rect(Screen.width / 2f, 0, Screen.width, Screen.height * 2f / size);
+            else
+                rect = new Rect(0, 0, Screen.width, Screen.height * 2f / size);
+            
             GUI.Label(rect, _text, GetGUIStyle());
         }
 
@@ -62,13 +68,20 @@ namespace WorldSystem.Runtime
         }
 
         private bool StartFPS = false;
+        
+        // [Button(name: "开始/暂停")]
+        // private void FPS()
+        // {
+        //     StartFPS = !StartFPS;
+        //     _ = GetFPS();
+        // }
+        
+        private float _AverageFps;
+        private float _TotalFps;
+        private float _MaxFps;
+        private float _MinFps;
+        private int _FrameCount;
 
-        [Button(name: "开始/暂停")]
-        private void FPS()
-        {
-            StartFPS = !StartFPS;
-            _ = GetFPS();
-        }
         private async Task GetFPS()
         {
             if (!StartFPS)
@@ -78,12 +91,44 @@ namespace WorldSystem.Runtime
             }
             await Task.Delay(freq);
             {
+                _FrameCount++;
                 float fps = 1.0f / deltaTime;
                 float ms = deltaTime * 1000.0f;
-                _text = string.Format("{0:0} FPS | {1:0.000} ms", fps, ms);
+                _TotalFps += fps;
+                _AverageFps = _TotalFps / _FrameCount;
+
+                if (_FrameCount == 1)
+                    _MaxFps = fps;
+                else
+                    _MaxFps = Math.Max(_MaxFps, fps);
+
+                //正确的最小帧率需要预热
+                if (_FrameCount < 28)
+                {
+                    _MinFps = math.INFINITY;
+                }
+                else
+                {
+                    if(_FrameCount == 28)
+                        _MinFps = fps;
+                    else
+                    {
+                        if(fps > _AverageFps * 0.1f)
+                            _MinFps = Math.Min(_MinFps, fps);
+                    }
+                }
+                
+                _text = string.Format("{0:0} FPS | {1:0.000} ms" +
+                                      "\n平均帧率: {2:0}" +
+                                      "\n最大帧率: {3:0}" +
+                                      "\n最小帧率: {4:0}", 
+                    fps, ms, _AverageFps, _MaxFps, _MinFps);
+                
                 _ = GetFPS();
             }
+
         }
+        
         
     }
 }

@@ -283,11 +283,11 @@ namespace WorldSystem.Runtime
 #if UNITY_EDITOR
             if (property.starShader == null)
                 property.starShader =
-                    AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem//Shader/Skybox/StarShader.shader");
+                    AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/Skybox/StarShader.shader");
             if (property.starTexture == null)
                 property.starTexture =
                     AssetDatabase.LoadAssetAtPath<Texture2D>(
-                        "Packages/com.worldsystem//Textures/Stars/star-texture-2@64px.png");
+                        "Packages/com.worldsystem/Textures/Stars/star-texture-2@64px.png");
 #endif
             if (property.starMesh == null) property.starMesh = HelpFunc.CreateQuad();
             if (property.starMaterial == null) property.starMaterial = CoreUtils.CreateEngineMaterial(property.starShader);
@@ -320,7 +320,7 @@ namespace WorldSystem.Runtime
 #if UNITY_EDITOR
         private void Start()
         {
-            WorldManager.Instance?.weatherSystemModule?.weatherList?.SetupPropertyFromActive();
+            WorldManager.Instance?.weatherListModule?.weatherList?.SetupPropertyFromActive();
         }
 #endif
         

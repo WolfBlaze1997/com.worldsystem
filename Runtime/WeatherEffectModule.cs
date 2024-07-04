@@ -27,7 +27,7 @@ namespace WorldSystem.Runtime
         [ShowIf("rainEnable")]
         [HorizontalGroup("Split")]
         [VerticalGroup("Split/01")]
-        [Button(ButtonSizes.Medium, Name = "雨模块已开启"), GUIColor(0.5f, 0.5f, 1f)]
+        [Button(ButtonSizes.Medium, Name = "雨模块"), GUIColor(0.5f, 0.5f, 1f)]
         public void RainToggle_Off()
         {
             rainEnable = false;
@@ -36,7 +36,7 @@ namespace WorldSystem.Runtime
         [PropertyOrder(-100)]
         [HideIf("rainEnable")]
         [VerticalGroup("Split/01")]
-        [Button(ButtonSizes.Medium, Name = "雨模块已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
+        [Button(ButtonSizes.Medium, Name = "雨模块"), GUIColor(0.5f, 0.2f, 0.2f)]
         public void RainToggle_On()
         {
             rainEnable = true;
@@ -46,7 +46,7 @@ namespace WorldSystem.Runtime
         [PropertyOrder(-100)]
         [ShowIf("snowEnable")]
         [VerticalGroup("Split/02")]
-        [Button(ButtonSizes.Medium, Name = "雪模块已开启"), GUIColor(0.5f, 0.5f, 1f)]
+        [Button(ButtonSizes.Medium, Name = "雪模块"), GUIColor(0.5f, 0.5f, 1f)]
         public void SnowToggle_Off()
         {
             snowEnable = false;
@@ -55,7 +55,7 @@ namespace WorldSystem.Runtime
         [PropertyOrder(-100)]
         [HideIf("snowEnable")]
         [VerticalGroup("Split/02")]
-        [Button(ButtonSizes.Medium, Name = "雪模块已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
+        [Button(ButtonSizes.Medium, Name = "雪模块"), GUIColor(0.5f, 0.2f, 0.2f)]
         public void SnowToggle_On()
         {
             snowEnable = true;
@@ -65,7 +65,7 @@ namespace WorldSystem.Runtime
         [PropertyOrder(-100)]
         [ShowIf("lightningEnable")]
         [VerticalGroup("Split/03")]
-        [Button(ButtonSizes.Medium, Name = "闪电模块已开启"), GUIColor(0.5f, 0.5f, 1f)]
+        [Button(ButtonSizes.Medium, Name = "闪电模块"), GUIColor(0.5f, 0.5f, 1f)]
         public void LightningToggle_Off()
         {
             lightningEnable = false;
@@ -74,7 +74,7 @@ namespace WorldSystem.Runtime
         [PropertyOrder(-100)]
         [HideIf("lightningEnable")]
         [VerticalGroup("Split/03")]
-        [Button(ButtonSizes.Medium, Name = "闪电模块已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
+        [Button(ButtonSizes.Medium, Name = "闪电模块"), GUIColor(0.5f, 0.2f, 0.2f)]
         public void LightningToggle_On()
         {
             lightningEnable = true;
