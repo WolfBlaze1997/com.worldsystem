@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf83795128af58548beb207067018948, type: 3}
-  m_Name: New Weather List
+  m_Name: PresetWeatherList
   m_EditorClassIdentifier: 
-  weatherDefineNew: {fileID: 11400000, guid: dcbb648e9dda6964d88767260bdf39af, type: 2}
+  SelectedWeatherDefine: {fileID: 11400000, guid: 885dd84f715f571498d3a7cd950b6a86,
+    type: 2}
   list:
   - {fileID: 11400000, guid: df3876dc66406354a804ddf122eb9cc2, type: 2}
   - {fileID: 11400000, guid: 4e06e02ee293f0f4286b1306775ba639, type: 2}

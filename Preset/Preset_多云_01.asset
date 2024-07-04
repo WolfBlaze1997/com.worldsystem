@@ -20,6 +20,18 @@ MonoBehaviour:
     skyMesh: {fileID: 4300000, guid: 3ec8d1078f11f6147bb9cb75cf18150d, type: 2}
     backgroundShader: {fileID: 4800000, guid: 67f4e0ff7e5a88441ae4f52664bb1c79, type: 3}
     backgroundMaterial: {fileID: 0}
+    TaaShader: {fileID: 4800000, guid: b9197ee2061afb84cb58c1d854bea3ca, type: 3}
+    TaaMaterial: {fileID: 0}
+    VolumeCloud_FixupLate_Shader: {fileID: 0}
+    VolumeCloud_FixupLate_Material: {fileID: 0}
+    VolumeCloud_FixupLateBlit_Shader: {fileID: 0}
+    VolumeCloud_FixupLateBlit_Material: {fileID: 0}
+    _Render_ResolutionOptions: 0
+    _Render_TemporalAAFactor: 0
+    _Render_TargetFps: 120
+    _Render_UseAsyncRender: 1
+    _Render_AsyncUpdateRate: 20
+    _Render_AsyncFOV: 90
   StarProperty:
     starMesh: {fileID: 0}
     starShader: {fileID: 4800000, guid: 72fdf5ab94348ed40b501f5e219caa8b, type: 3}
@@ -30,7 +42,6 @@ MonoBehaviour:
     automaticColor: 1
     automaticBrightness: 1
     starColor: {r: 1, g: 1, b: 1, a: 1}
-    dayBrightness: 0
     brightness: 1.5
     flickerFrequency: 10
     flickerStrength: 0.25
@@ -586,14 +597,11 @@ MonoBehaviour:
       equatorColor: {r: 0.01076923, g: 0.01076923, b: 0.02, a: 1}
       groundColor: {r: 0.0062499996, g: 0.0062499996, b: 0.01, a: 1}
     currentAtmosphereColor:
-      skyColor: {r: 0.019102314, g: 0.021023236, b: 0.032668073, a: 0.19999999}
-      equatorColor: {r: 0.014693525, g: 0.012323028, b: 0.012521514, a: 0.19999999}
-      groundColor: {r: 0.0023667659, g: 0.0021819582, b: 0.0030878223, a: 0.19999999}
-    environmentLightingExposure: 1
-    environmentLightingSaturation: 1
-    currentCloudiness: 1
-    currentPrecipitation: 0.49979556
-    useAtmosphereMap: 1
+      skyColor: {r: 0.099940926, g: 0.16638961, b: 0.49314216, a: 1}
+      equatorColor: {r: 0.627345, g: 0.7133489, b: 0.7842157, a: 1}
+      groundColor: {r: 0.059214707, g: 0.060252286, b: 0.10014215, a: 1}
+    currentCloudiness: 0
+    currentPrecipitation: 0
     useAtmosphereBlend: 1
     start: 1000
     end: 20000
@@ -610,35 +618,20 @@ MonoBehaviour:
     _Modeling_ShapeBase_Gain: 0.5
     _Modeling_ShapeBase_Freq: 2.2
     _Modeling_ShapeBase_Scale: 5
-    _MotionBase_DynamicVector: {x: -0.059611, y: 0.037693873}
+    _MotionBase_DynamicVector: {x: 0.006132737, y: 0.32657745}
     _MotionBase_Direction: 0
     _MotionBase_Speed: 0.25
     _MotionBase_UseDirectionRandom: 1
     _MotionBase_DirectionRandomRange: 60
     _MotionBase_DirectionRandomFreq: 12
-    VolumeCloud_DitherDepth_Shader: {fileID: 0}
-    VolumeCloud_DitherDepth_Material: {fileID: 0}
     VolumeCloud_Main_Shader: {fileID: 4800000, guid: 432b92588026cab47a32165d32858d5d,
       type: 3}
     VolumeCloud_Main_Material: {fileID: 0}
-    VolumeCloud_Reproject_Shader: {fileID: 0}
-    VolumeCloud_Reproject_Material: {fileID: 0}
-    VolumeCloud_UpScale_Shader: {fileID: 0}
-    VolumeCloud_UpScale_Material: {fileID: 0}
-    VolumeCloud_Merge_Shader: {fileID: 4800000, guid: 9914dd63eb059c4449eb83909a19bc0f,
-      type: 3}
-    VolumeCloud_Merge_Material: {fileID: 0}
-    Halton: {fileID: 2800000, guid: f1b67ef7748382f43a9dc9818f00c831, type: 3}
     _Render_CoarseSteps: 32
     _Render_DetailSteps: 16
     _Render_BlueNoiseArray: {fileID: 0}
     _Render_BlueNoise: 1
     _Render_MipmapDistance: {x: 4000, y: 8000}
-    _Render_DepthOptions: 0
-    _Render_UseReprojection: 0
-    _Render_UseTemporalAA: 0
-    _Render_TemporalAAFactor: 0.03
-    _Render_ResolutionOptions: 0
     _Modeling_Position_RadiusPreset: 6
     _Modeling_Position_PlanetRadius: 78
     _Modeling_Position_CloudHeight: 600
@@ -649,7 +642,7 @@ MonoBehaviour:
     _Modeling_ShapeDetail_Quality: 1
     _Modeling_ShapeDetail_Scale: {x: 5.11, y: 5.11, z: 5.11}
     _MotionBase_UseDynamicCloud: 1
-    _MotionDetail_DynamicVector: {x: -0.32499748, y: -0.12540163, z: 0.054850217}
+    _MotionDetail_DynamicVector: {x: 0.8252719, y: -0.26241648, z: 1.384675}
     _MotionDetail_Direction: {x: 0, y: 0}
     _MotionDetail_Speed: 1.25
     _MotionDetail_UseRandomDirection: 1
@@ -744,7 +737,7 @@ MonoBehaviour:
     maxSpeed: 2
     vfxModifier: 1
     windZone: {fileID: 0}
-  useOcclusion: 1
+  useOcclusion: 0
   effectRadius: 40
   rainEffectProperty:
     rainRadius: 40

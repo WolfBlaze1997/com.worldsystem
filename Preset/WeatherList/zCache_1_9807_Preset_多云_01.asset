@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69b8a94e4a66400794a67846e7e81235, type: 3}
   m_Name: "zCache_1_9807_Preset_\u591A\u4E91_01"
   m_EditorClassIdentifier: 
-  sustainedTime: 8.632378
+  sustainedTime: 10
   varyingTime: 5
   sustainedTimeCache: 10
   varyingTimeCache: 5
@@ -26,12 +26,12 @@ MonoBehaviour:
     VolumeCloud_FixupLate_Material: {fileID: 0}
     VolumeCloud_FixupLateBlit_Shader: {fileID: 0}
     VolumeCloud_FixupLateBlit_Material: {fileID: 0}
-    _Render_ResolutionOptions: 2
+    _Render_ResolutionOptions: 1
     _Render_TemporalAAFactor: 0
-    _Render_TargetFps: 180
+    _Render_TargetFps: -1
     _Render_UseAsyncRender: 1
     _Render_AsyncUpdateRate: 20
-    _Render_AsyncFOV: 80
+    _Render_AsyncFOV: 90
   StarProperty:
     starMesh: {fileID: 0}
     starShader: {fileID: 4800000, guid: 72fdf5ab94348ed40b501f5e219caa8b, type: 3}
@@ -106,7 +106,7 @@ MonoBehaviour:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.5
-        value: 4
+        value: 4.000286
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -127,8 +127,8 @@ MonoBehaviour:
       m_RotationOrder: 4
     texture: {fileID: 2800000, guid: c508a5444c3ef8046b47fc6105ff6703, type: 3}
     sortOrder: 5
-    orbitOffsetP: 355.8
-    orientationOffset: 0
+    orbitOffsetP: 0
+    orientationOffset: 3.86
     inclinationOffset: 0
     positionIsStatic: 0
     falloff:
@@ -597,9 +597,9 @@ MonoBehaviour:
       equatorColor: {r: 0.01076923, g: 0.01076923, b: 0.02, a: 1}
       groundColor: {r: 0.0062499996, g: 0.0062499996, b: 0.01, a: 1}
     currentAtmosphereColor:
-      skyColor: {r: 0.09020582, g: 0.14631248, b: 0.41539228, a: 1}
-      equatorColor: {r: 0.60329413, g: 0.6950175, b: 0.7680819, a: 1}
-      groundColor: {r: 0.06239085, g: 0.060177993, b: 0.08537588, a: 1}
+      skyColor: {r: 0.07911617, g: 0.12262321, b: 0.321147, a: 1}
+      equatorColor: {r: 0.56333333, g: 0.659281, b: 0.73333335, a: 1}
+      groundColor: {r: 0.06627451, g: 0.060087148, b: 0.067320265, a: 1}
     currentCloudiness: 0
     currentPrecipitation: 0
     useAtmosphereBlend: 1
@@ -616,9 +616,9 @@ MonoBehaviour:
     _Modeling_Amount_OverlayCloudAmount: 0.8
     _Modeling_ShapeBase_Octaves: 3
     _Modeling_ShapeBase_Gain: 0.5
-    _Modeling_ShapeBase_Freq: 2
+    _Modeling_ShapeBase_Freq: 2.2
     _Modeling_ShapeBase_Scale: 5
-    _MotionBase_DynamicVector: {x: 0, y: 0.25}
+    _MotionBase_DynamicVector: {x: 0, y: 0.26884666}
     _MotionBase_Direction: 0
     _MotionBase_Speed: 0.25
     _MotionBase_UseDirectionRandom: 1
@@ -642,7 +642,7 @@ MonoBehaviour:
     _Modeling_ShapeDetail_Quality: 1
     _Modeling_ShapeDetail_Scale: {x: 5.11, y: 5.11, z: 5.11}
     _MotionBase_UseDynamicCloud: 1
-    _MotionDetail_DynamicVector: {x: 0, y: 0, z: 1.25}
+    _MotionDetail_DynamicVector: {x: 0, y: 0, z: 1.3442333}
     _MotionDetail_Direction: {x: 0, y: 0}
     _MotionDetail_Speed: 1.25
     _MotionDetail_UseRandomDirection: 1
@@ -664,13 +664,16 @@ MonoBehaviour:
     _Lighting_ShadingStrengthFalloff: 0.2
     _Lighting_ScatterMultiplier: 100
     _Lighting_ScatterStrength: 0.9
-    CloudShadows_TemporalAA_Shader: {fileID: 0}
+    CloudShadows_TemporalAA_Shader: {fileID: 4800000, guid: a1425819257a09445b311356840c92fa,
+      type: 3}
     CloudShadows_TemporalAA_Material: {fileID: 0}
-    CloudShadows_ScreenShadow_Shader: {fileID: 0}
+    CloudShadows_ScreenShadow_Shader: {fileID: 4800000, guid: c1b138b1ed949f148a31472a5bb12df0,
+      type: 3}
     CloudShadows_ScreenShadow_Material: {fileID: 0}
-    CloudShadows_ToScreen_Shader: {fileID: 0}
+    CloudShadows_ToScreen_Shader: {fileID: 4800000, guid: 7d0c5edf145208d46a24c3df4128bc93,
+      type: 3}
     CloudShadows_ToScreen_Material: {fileID: 0}
-    _Shadow_UseCastShadow: 0
+    _Shadow_UseCastShadow: 1
     _Shadow_Distance: 10000
     _Shadow_Strength:
       serializedVersion: 2
@@ -727,9 +730,9 @@ MonoBehaviour:
     _Shadow_UseShadowTaa: 1
   windZoneProperty:
     dynamicDirection: 1
-    directionVaryingFreq: 12
+    directionVaryingFreq: 3
     dynamicSpeed: 1
-    SpeedVaryingFreq: 3
+    SpeedVaryingFreq: 12
     minSpeed: 0.5
     maxSpeed: 2
     vfxModifier: 1
@@ -756,9 +759,9 @@ MonoBehaviour:
     lightningLifetimeArray:
     - -Infinity
     - -Infinity
-    lightningLightStrength: 1
+    lightningLightStrength: 2
     lightningLength: 2000
-    lightningMinLifetime: 0.3
-    lightningMaxLifetime: 0.8
+    lightningMinLifetime: 0.5
+    lightningMaxLifetime: 1
     lightningSpawnRate: 0
   occlusionRenderer: {fileID: 0}

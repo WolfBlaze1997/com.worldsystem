@@ -277,7 +277,7 @@ namespace WorldSystem.Runtime
 #if UNITY_EDITOR
         private void Start()
         {
-            WorldManager.Instance?.weatherSystemModule?.weatherList?.SetupPropertyFromActive();
+            WorldManager.Instance?.weatherListModule?.weatherList?.SetupPropertyFromActive();
         }
 #endif
         

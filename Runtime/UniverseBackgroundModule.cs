@@ -111,7 +111,7 @@ namespace WorldSystem.Runtime
             [LabelText("    扩大的视野")]
             [GUIColor(0.7f, 0.7f, 1f)]
             [ShowIf("_Render_UseAsyncRender")]
-            public float _Render_AsyncFOV = 90;
+            public float _Render_AsyncFOV = 80;
             
             // [LabelText("使用分帧渲染")]
             // [GUIColor(0.7f, 0.7f, 1f)]
@@ -262,7 +262,7 @@ namespace WorldSystem.Runtime
 #if UNITY_EDITOR
         private void Start()
         {
-            WorldManager.Instance?.weatherSystemModule?.weatherList?.SetupPropertyFromActive();
+            WorldManager.Instance?.weatherListModule?.weatherList?.SetupPropertyFromActive();
         }
 #endif
         
@@ -304,7 +304,7 @@ namespace WorldSystem.Runtime
         public RTHandle skyRT;
         public RTHandle splitFrameRT;
 
-        public RTHandle motionVectorAddRT;
+        // public RTHandle motionVectorAddRT;
         // public void RenderMotionVectorAdd(CommandBuffer cmd, ref RenderingData renderingData)
         // {
         //     if (skyRT == null) return;
