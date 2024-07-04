@@ -28,7 +28,7 @@ namespace WorldSystem.Runtime
             get => isActive;
             set
             {
-                List<WeatherDefine> weatherDefineList = WorldManager.Instance?.weatherSystemModule?.weatherList?.list;
+                List<WeatherDefine> weatherDefineList = WorldManager.Instance?.weatherListModule?.weatherList?.list;
 #if UNITY_EDITOR
                 // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
                 WeatherDefine[] weatherDefineAll = Resources.FindObjectsOfTypeAll<WeatherDefine>();
@@ -64,7 +64,7 @@ namespace WorldSystem.Runtime
                     //如果实例位于天气队列中,且处于激活状态,则设置索引
                     if (weatherDefineList != null && weatherDefineList.Contains(this))
                     {
-                        WorldManager.Instance.weatherSystemModule.i = weatherDefineList.IndexOf(this);
+                        WorldManager.Instance.weatherListModule.i = weatherDefineList.IndexOf(this);
                     }
 #endif
                     //一旦设置Active, 说明必定退出插值了, 将CelestialBody.useLerp 设置为false
@@ -160,8 +160,8 @@ namespace WorldSystem.Runtime
     /// </summary>
     public partial class WeatherDefine
     {
-        [FoldoutGroup("天气系统")]
-        [FoldoutGroup("天气系统/宇宙背景模块")] [HideLabel]
+        [FoldoutGroup("昼夜与天气")]
+        [FoldoutGroup("昼夜与天气/渲染设置与背景")] [HideLabel]
         [EnableIf("isActive")] [ShowIf("@WorldManager.Instance?.universeBackgroundModuleToggle")]
         public UniverseBackgroundModule.Property backgroundProperty = new();
         
@@ -213,7 +213,7 @@ namespace WorldSystem.Runtime
     public partial class WeatherDefine
     {
         
-        [FoldoutGroup("天气系统/星星模块")][HideLabel]
+        [FoldoutGroup("昼夜与天气/星星模块")][HideLabel]
         [EnableIf("isActive")] [ShowIf("@WorldManager.Instance?.starModuleToggle")]
         public StarModule.Property StarProperty = new();
         
@@ -279,12 +279,12 @@ namespace WorldSystem.Runtime
     {
         #region 字段
         
-        [FoldoutGroup("天气系统/星体模块")][LabelText("星体列表")]
+        [FoldoutGroup("昼夜与天气/星体模块")][LabelText("星体列表")]
         [ListDrawerSettings(CustomAddFunction = "CreateCelestialBody", CustomRemoveIndexFunction = "DestroyCelestialBody",OnTitleBarGUI = "DrawRefreshButton")]
         [EnableIf("isActive")] [ShowIf("@WorldManager.Instance?.celestialBodyManagerToggle")]
         public List<CelestialBody.Property> celestialBodyList;
         
-        [FoldoutGroup("天气系统/星体模块")][LabelText("星体数量限制")]
+        [FoldoutGroup("昼夜与天气/星体模块")][LabelText("星体数量限制")]
         [ShowInInspector][DisableInInlineEditors][ShowIf("@WorldManager.Instance?.celestialBodyManagerToggle")]
         private int maxCelestialBodyCount = 4;
         
@@ -398,7 +398,7 @@ namespace WorldSystem.Runtime
                 if(item.celestialBodyList.Count > celestialBodyList.Count)
                     item.celestialBodyList.RemoveAt(item.celestialBodyList.Count - 1);
                 if (item.celestialBodyList.Count < celestialBodyList.Count)
-                    item.celestialBodyList.Add(new CelestialBody.Property());;
+                    item.celestialBodyList.Add(new CelestialBody.Property());
             }
 
             for (var i = 0; i < item.celestialBodyList.Count; i++)
@@ -524,7 +524,7 @@ namespace WorldSystem.Runtime
             
         }
         
-        [FoldoutGroup("天气系统/大气模块")][HideLabel]
+        [FoldoutGroup("昼夜与天气/大气模块")][HideLabel]
         [EnableIf("isActive")] [ShowIf("@WorldManager.Instance?.atmosphereModuleToggle")]
         public AtmosphereModuleProperty atmosphereProperty = new();
         
@@ -633,7 +633,7 @@ namespace WorldSystem.Runtime
     {
         #region 体积云模块
 
-        [FoldoutGroup("天气系统/体积云模块")] [HideLabel]
+        [FoldoutGroup("昼夜与天气/体积云模块")] [HideLabel]
         [EnableIf("isActive")] [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModuleToggle")]
         public VolumeCloudOptimizeModule.Property cloudProperty = new();
         
@@ -893,13 +893,13 @@ namespace WorldSystem.Runtime
 
 
     /// <summary>
-    /// 风区模块
+    /// 风场模块
     /// </summary>
     public partial class WeatherDefine
     {
-        #region 风区模块
+        #region 风场模块
         
-        [FoldoutGroup("天气系统/风区模块")] [HideLabel]
+        [FoldoutGroup("昼夜与天气/风场模块")] [HideLabel]
         [EnableIf("isActive")] [ShowIf("@WorldManager.Instance?.windZoneModuleToggle")]
         public WindZoneModule.Property windZoneProperty = new();
 
@@ -955,18 +955,18 @@ namespace WorldSystem.Runtime
     
     
     /// <summary>
-    /// 天气效果模块
+    /// 天气特效模块
     /// </summary>
     public partial class WeatherDefine
     {
-        #region 天气效果模块
+        #region 天气特效模块
 
 
 #if UNITY_EDITOR
         [ShowIf("@WorldManager.Instance?.weatherEffectModule?.rainEnable && WorldManager.Instance?.weatherEffectModuleToggle")]
-        [HorizontalGroup("天气系统/天气效果模块/Split01")]
-        [VerticalGroup("天气系统/天气效果模块/Split01/01")]
-        [Button(ButtonSizes.Medium, Name = "雨模块已开启"), GUIColor(0.5f, 0.5f, 1f)]
+        [HorizontalGroup("昼夜与天气/天气特效模块/Split01")]
+        [VerticalGroup("昼夜与天气/天气特效模块/Split01/01")]
+        [Button(ButtonSizes.Medium, Name = "雨模块"), GUIColor(0.5f, 0.5f, 1f)]
         [EnableIf("isActive")]
         public void RainToggle_Off()
         {
@@ -974,8 +974,8 @@ namespace WorldSystem.Runtime
         }
     
         [HideIf("@WorldManager.Instance?.weatherEffectModule?.rainEnable || !WorldManager.Instance?.weatherEffectModuleToggle")]
-        [VerticalGroup("天气系统/天气效果模块/Split01/01")]
-        [Button(ButtonSizes.Medium, Name = "雨模块已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
+        [VerticalGroup("昼夜与天气/天气特效模块/Split01/01")]
+        [Button(ButtonSizes.Medium, Name = "雨模块"), GUIColor(0.5f, 0.2f, 0.2f)]
         [EnableIf("isActive")]
         public void RainToggle_On()
         {
@@ -983,8 +983,8 @@ namespace WorldSystem.Runtime
         }
     
         [ShowIf("@WorldManager.Instance?.weatherEffectModule?.snowEnable && WorldManager.Instance?.weatherEffectModuleToggle")]
-        [VerticalGroup("天气系统/天气效果模块/Split01/02")]
-        [Button(ButtonSizes.Medium, Name = "雪模块已开启"), GUIColor(0.5f, 0.5f, 1f)]
+        [VerticalGroup("昼夜与天气/天气特效模块/Split01/02")]
+        [Button(ButtonSizes.Medium, Name = "雪模块"), GUIColor(0.5f, 0.5f, 1f)]
         [EnableIf("isActive")] 
         public void SnowToggle_Off()
         {
@@ -992,8 +992,8 @@ namespace WorldSystem.Runtime
         }
     
         [HideIf("@WorldManager.Instance?.weatherEffectModule?.snowEnable || !WorldManager.Instance?.weatherEffectModuleToggle")]
-        [VerticalGroup("天气系统/天气效果模块/Split01/02")]
-        [Button(ButtonSizes.Medium, Name = "雪模块已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
+        [VerticalGroup("昼夜与天气/天气特效模块/Split01/02")]
+        [Button(ButtonSizes.Medium, Name = "雪模块"), GUIColor(0.5f, 0.2f, 0.2f)]
         [EnableIf("isActive")] 
         public void SnowToggle_On()
         {
@@ -1001,8 +1001,8 @@ namespace WorldSystem.Runtime
         }
     
         [ShowIf("@WorldManager.Instance?.weatherEffectModule?.lightningEnable && WorldManager.Instance?.weatherEffectModuleToggle")]
-        [VerticalGroup("天气系统/天气效果模块/Split01/03")]
-        [Button(ButtonSizes.Medium, Name = "闪电模块已开启"), GUIColor(0.5f, 0.5f, 1f)]
+        [VerticalGroup("昼夜与天气/天气特效模块/Split01/03")]
+        [Button(ButtonSizes.Medium, Name = "闪电模块"), GUIColor(0.5f, 0.5f, 1f)]
         [EnableIf("isActive")]
         public void LightningToggle_Off()
         {
@@ -1010,8 +1010,8 @@ namespace WorldSystem.Runtime
         }
     
         [HideIf("@WorldManager.Instance?.weatherEffectModule?.lightningEnable || !WorldManager.Instance?.weatherEffectModuleToggle")]
-        [VerticalGroup("天气系统/天气效果模块/Split01/03")]
-        [Button(ButtonSizes.Medium, Name = "闪电模块已关闭"), GUIColor(0.5f, 0.2f, 0.2f)]
+        [VerticalGroup("昼夜与天气/天气特效模块/Split01/03")]
+        [Button(ButtonSizes.Medium, Name = "闪电模块"), GUIColor(0.5f, 0.2f, 0.2f)]
         [EnableIf("isActive")]
         public void LightningToggle_On()
         {
@@ -1021,31 +1021,31 @@ namespace WorldSystem.Runtime
     
         
         
-        [PropertyOrder(1)] [FoldoutGroup("天气系统/天气效果模块")] [LabelText("使用遮蔽")] [GUIColor(0, 1, 0)]
+        [PropertyOrder(1)] [FoldoutGroup("昼夜与天气/天气特效模块")] [LabelText("使用遮蔽")] [GUIColor(0, 1, 0)]
         [EnableIf("isActive")] [ShowIf("@WorldManager.Instance?.weatherEffectModuleToggle")]
         public bool useOcclusion;
     
-        [PropertyOrder(1)] [FoldoutGroup("天气系统/天气效果模块")] [LabelText("范围半径")] [GUIColor(0.7f, 0.7f, 1f)]
+        [PropertyOrder(1)] [FoldoutGroup("昼夜与天气/天气特效模块")] [LabelText("范围半径")] [GUIColor(0.7f, 0.7f, 1f)]
         [EnableIf("isActive")] [ShowIf("@WorldManager.Instance?.weatherEffectModuleToggle")]
         public float effectRadius = 40;
     
         [PropertyOrder(1)]
-        [FoldoutGroup("天气系统/天气效果模块/雨")][HideLabel]
+        [FoldoutGroup("昼夜与天气/天气特效模块/雨")][HideLabel]
         [EnableIf("isActive")][ShowIf("@WorldManager.Instance?.weatherEffectModule?.rainEnable")]
         public VFXRainEffect.Property rainEffectProperty = new();
     
         [PropertyOrder(1)]
-        [FoldoutGroup("天气系统/天气效果模块/雪")][HideLabel]
+        [FoldoutGroup("昼夜与天气/天气特效模块/雪")][HideLabel]
         [EnableIf("isActive")][ShowIf("@WorldManager.Instance?.weatherEffectModule?.snowEnable")]
         public VFXSnowEffect.Property snowEffectProperty = new();
     
         [PropertyOrder(1)]
-        [FoldoutGroup("天气系统/天气效果模块/闪电")][HideLabel]
+        [FoldoutGroup("昼夜与天气/天气特效模块/闪电")][HideLabel]
         [EnableIf("isActive")][ShowIf("@WorldManager.Instance?.weatherEffectModule?.lightningEnable")]
         public VFXLightningEffect.Property lightningEffectProperty = new();
     
         [PropertyOrder(1)]
-        [FoldoutGroup("天气系统/天气效果模块/遮蔽渲染器")]
+        [FoldoutGroup("昼夜与天气/天气特效模块/遮蔽渲染器")]
         [InlineEditor(InlineEditorObjectFieldModes.CompletelyHidden)]
         [EnableIf("isActive")][ShowIf("@WorldManager.Instance?.weatherEffectModule?.useOcclusion")]
         public OcclusionRenderer occlusionRenderer;

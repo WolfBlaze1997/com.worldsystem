@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Sirenix.OdinInspector;
+#if UNITY_EDITOR
+using Sirenix.Utilities.Editor;
+#endif
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = System.Random;
 
 namespace WorldSystem.Runtime
@@ -14,11 +18,13 @@ namespace WorldSystem.Runtime
     {
         
 #if UNITY_EDITOR
-        [InlineEditor][LabelText("选择天气")]
-        public WeatherDefine weatherDefineNew;
+        [InlineEditor][LabelText("选中天气")]
+        public WeatherDefine SelectedWeatherDefine;
 #endif
         
-        [InlineEditor][ListDrawerSettings(HideAddButton = false,CustomAddFunction = "AddWeatherDefine", CustomRemoveElementFunction = "RemoveWeatherDefine")][LabelText("天气列表")]
+        [InlineEditor]
+        [ListDrawerSettings(HideAddButton = false,CustomAddFunction = "AddWeatherDefine", CustomRemoveElementFunction = "RemoveWeatherDefine",OnTitleBarGUI = "DrawRefreshButton")]
+        [LabelText("天气列表")]
         public List<WeatherDefine> list;
         
         
@@ -26,13 +32,13 @@ namespace WorldSystem.Runtime
         
         private void AddWeatherDefine()
         {
-            if (weatherDefineNew == null)
+            if (SelectedWeatherDefine == null)
             {
                 Debug.Log("请设置选择天气!将会把选择天气的拷贝添加到天气列表!");
                 return;
             }
-            WeatherDefine weatherDefineCopy = Instantiate(weatherDefineNew);
-            weatherDefineCopy.name = "zCache_" + list.Count + "_" + GetRandom16BitNumber() + "_" + weatherDefineNew.name;
+            WeatherDefine weatherDefineCopy = Instantiate(SelectedWeatherDefine);
+            weatherDefineCopy.name = "zCache_" + list.Count + "_" + GetRandom16BitNumber() + "_" + SelectedWeatherDefine.name;
             AssetDatabase.CreateAsset(weatherDefineCopy, 
                 Regex.Replace(AssetDatabase.GetAssetPath(this),@"/([^/]+?\.asset)$", "/")
                                                          + weatherDefineCopy.name + ".asset");
@@ -44,6 +50,14 @@ namespace WorldSystem.Runtime
             list.Remove(index);
             AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(index));
         }
+
+        private void DrawRefreshButton()
+        {
+            if (SirenixEditorGUI.ToolbarButton(EditorIcons.Refresh))
+            {
+                ResetWeatherListTime();
+            }
+        }
         
         private void OnValidate()
         {
@@ -53,16 +67,12 @@ namespace WorldSystem.Runtime
                 AssetDatabase.RenameAsset(AssetDatabase.GetAssetPath(VARIABLE), nameNew);
             }
         }
-
+        
         public void SetupPropertyFromActive()
         {
             list?.Find(o => o.IsActive == true)?.SetupProperty();
-            if(weatherDefineNew?.IsActive ?? false) weatherDefineNew.SetupProperty();
+            if(SelectedWeatherDefine?.IsActive ?? false) SelectedWeatherDefine.SetupProperty();
         }
-        
-#endif
-        
-        
         public string GetRandom16BitNumber()  
         {  
             // 假设我们想要一个4位的十六进制数（即一个介于0x0000和0xFFFF之间的数）  
@@ -81,7 +91,18 @@ namespace WorldSystem.Runtime
             string hexNumber = randomInt.ToString("X" + numHexDigits).ToUpper(); // 使用ToUpper()转换为大写  
             return hexNumber;
         } 
+#endif
+        
+        
+        public void ResetWeatherListTime()
+        {
+            foreach (var VARIABLE in list)
+            {
+                VARIABLE.sustainedTime = VARIABLE.sustainedTimeCache;
+                VARIABLE.varyingTime = VARIABLE.varyingTimeCache;
+            }
+        }
+        
         
     }
-
 }
