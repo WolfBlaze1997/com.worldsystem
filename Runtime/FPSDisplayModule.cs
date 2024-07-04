@@ -69,6 +69,13 @@ namespace WorldSystem.Runtime
 
         private bool StartFPS = false;
         
+        // [Button(name: "开始/暂停")]
+        // private void FPS()
+        // {
+        //     StartFPS = !StartFPS;
+        //     _ = GetFPS();
+        // }
+        
         private float _AverageFps;
         private float _TotalFps;
         private float _MaxFps;
@@ -121,6 +128,7 @@ namespace WorldSystem.Runtime
             }
 
         }
+        
         
     }
 }
