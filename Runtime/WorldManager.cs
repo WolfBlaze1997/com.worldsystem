@@ -598,13 +598,12 @@ namespace WorldSystem.Runtime
                         float Width = renderTargetRect.width / 2;
                         Rect currentRect = new Rect(_SplitFrameCount * Width, 0, Width, renderTargetRect.height);
                         cmd.EnableScissorRect(currentRect);
-
                         
                         //渲染天空盒内容到分帧缓存RT
                         //渲染背景
                         _ActiveRT = Instance.universeBackgroundModule.RenderBackground(cmd, ref renderingData, Instance.universeBackgroundModule.skyRT);
                         //渲染大气
-                        Instance.atmosphereModule?.RenderAtmosphere(cmd, ref renderingData, _ActiveRT);
+                        Instance.atmosphereModule?.RenderAtmosphere(cmd, ref renderingData, _ActiveRT, currentRect);
                         //体积云
                         Instance.volumeCloudOptimizeModule?.RenderVolumeCloud(cmd, ref renderingData, _ActiveRT);
                         
