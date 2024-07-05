@@ -594,8 +594,7 @@ namespace WorldSystem.Runtime
                 itemDayPeriods.startTime = atmosphereProperty.dayPeriodsList[i].startTime;
                 item.atmosphereProperty.dayPeriodsList[i] = itemDayPeriods;
             }
-
-            // item.atmosphereProperty.useAtmosphereMap = atmosphereProperty.useAtmosphereMap;
+            
             item.atmosphereProperty.useAtmosphereBlend = atmosphereProperty.useAtmosphereBlend;
         }
 
@@ -650,11 +649,6 @@ namespace WorldSystem.Runtime
             WorldManager.Instance.volumeCloudOptimizeModule.property._Render_DetailSteps = cloudProperty._Render_DetailSteps;
             WorldManager.Instance.volumeCloudOptimizeModule.property._Render_BlueNoise = cloudProperty._Render_BlueNoise;
             WorldManager.Instance.volumeCloudOptimizeModule.property._Render_MipmapDistance = cloudProperty._Render_MipmapDistance;
-            // WorldManager.Instance.volumeCloudOptimizeModule.property._Render_DepthOptions = cloudProperty._Render_DepthOptions;
-            // WorldManager.Instance.volumeCloudOptimizeModule.property._Render_UseReprojection = cloudProperty._Render_UseReprojection;
-            // WorldManager.Instance.volumeCloudOptimizeModule.property._Render_UseTemporalAA = cloudProperty._Render_UseTemporalAA;
-            // WorldManager.Instance.volumeCloudOptimizeModule.property._Render_TemporalAAFactor = cloudProperty._Render_TemporalAAFactor;
-            // WorldManager.Instance.volumeCloudOptimizeModule.property._Render_ResolutionOptions = cloudProperty._Render_ResolutionOptions;
             WorldManager.Instance.volumeCloudOptimizeModule.property._Modeling_Amount_CloudAmount = cloudProperty._Modeling_Amount_CloudAmount;
             WorldManager.Instance.volumeCloudOptimizeModule.property._Modeling_Amount_UseFarOverlay =
                 cloudProperty._Modeling_Amount_UseFarOverlay;
@@ -735,17 +729,8 @@ namespace WorldSystem.Runtime
             {
                 VARIABLE.cloudProperty.VolumeCloud_BaseTex_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_BaseTex_Shader;
                 VARIABLE.cloudProperty.VolumeCloud_BaseTex_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_BaseTex_Material;
-                // VARIABLE.cloudProperty.VolumeCloud_DitherDepth_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_DitherDepth_Shader;
-                // VARIABLE.cloudProperty.VolumeCloud_DitherDepth_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_DitherDepth_Material;
                 VARIABLE.cloudProperty.VolumeCloud_Main_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_Main_Shader;
                 VARIABLE.cloudProperty.VolumeCloud_Main_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_Main_Material;
-                // VARIABLE.cloudProperty.VolumeCloud_Reproject_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_Reproject_Shader;
-                // VARIABLE.cloudProperty.VolumeCloud_Reproject_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_Reproject_Material;
-                // VARIABLE.cloudProperty.VolumeCloud_UpScale_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_UpScale_Shader;
-                // VARIABLE.cloudProperty.VolumeCloud_UpScale_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_UpScale_Material;
-                // VARIABLE.cloudProperty.VolumeCloud_Merge_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_Merge_Shader;
-                // VARIABLE.cloudProperty.VolumeCloud_Merge_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.VolumeCloud_Merge_Material;
-                // VARIABLE.cloudProperty.Halton = WorldManager.Instance.volumeCloudOptimizeModule.property.Halton;
                 VARIABLE.cloudProperty._Modeling_ShapeDetail_NoiseTexture3D = WorldManager.Instance.volumeCloudOptimizeModule.property._Modeling_ShapeDetail_NoiseTexture3D;
                 VARIABLE.cloudProperty._MotionBase_DynamicVector = WorldManager.Instance.volumeCloudOptimizeModule.property._MotionBase_DynamicVector;
                 VARIABLE.cloudProperty._MotionDetail_DynamicVector = WorldManager.Instance.volumeCloudOptimizeModule.property._MotionDetail_DynamicVector;
@@ -753,8 +738,6 @@ namespace WorldSystem.Runtime
                 VARIABLE.cloudProperty.CloudShadows_TemporalAA_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.CloudShadows_TemporalAA_Material;
                 VARIABLE.cloudProperty.CloudShadows_ScreenShadow_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.CloudShadows_ScreenShadow_Shader;
                 VARIABLE.cloudProperty.CloudShadows_ScreenShadow_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.CloudShadows_ScreenShadow_Material;
-                // VARIABLE.cloudProperty.CloudShadows_ToScreen_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.CloudShadows_ToScreen_Shader;
-                // VARIABLE.cloudProperty.CloudShadows_ToScreen_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.CloudShadows_ToScreen_Material;
                 
                 if (VARIABLE.cloudProperty._Modeling_Position_RadiusPreset != VolumeCloudOptimizeModule.CelestialBodySelection.Custom)
                     VARIABLE.cloudProperty._Modeling_Position_PlanetRadius = WorldManager.Instance.volumeCloudOptimizeModule.property._Modeling_Position_PlanetRadius;
@@ -771,11 +754,6 @@ namespace WorldSystem.Runtime
             item.cloudProperty._Render_DetailSteps = cloudProperty._Render_DetailSteps;
             item.cloudProperty._Render_BlueNoise = cloudProperty._Render_BlueNoise;
             item.cloudProperty._Render_MipmapDistance = cloudProperty._Render_MipmapDistance;
-            // item.cloudProperty._Render_DepthOptions = cloudProperty._Render_DepthOptions;
-            // item.cloudProperty._Render_UseReprojection = cloudProperty._Render_UseReprojection;
-            // item.cloudProperty._Render_UseTemporalAA = cloudProperty._Render_UseTemporalAA;
-            // item.cloudProperty._Render_TemporalAAFactor = cloudProperty._Render_TemporalAAFactor;
-            // item.cloudProperty._Render_ResolutionOptions = cloudProperty._Render_ResolutionOptions;
             item.cloudProperty._Modeling_Amount_UseFarOverlay = cloudProperty._Modeling_Amount_UseFarOverlay;
             item.cloudProperty._Modeling_ShapeBase_Octaves = cloudProperty._Modeling_ShapeBase_Octaves;
             item.cloudProperty._Modeling_ShapeBase_Freq = cloudProperty._Modeling_ShapeBase_Freq;
@@ -808,9 +786,6 @@ namespace WorldSystem.Runtime
         {
             if (WorldManager.Instance?.volumeCloudOptimizeModule is null)
                 return;
-            // WorldManager.Instance.volumeCloudOptimizeModule.property._Render_DetailSteps =
-            //     (int)math.lerp(cloudProperty._Render_DetailSteps, weatherDefine.cloudProperty._Render_DetailSteps, lerpCoeff);
-
             WorldManager.Instance.volumeCloudOptimizeModule.property._Modeling_Amount_CloudAmount =
                 math.lerp(cloudProperty._Modeling_Amount_CloudAmount, weatherDefine.cloudProperty._Modeling_Amount_CloudAmount, lerpCoeff);
 
@@ -824,9 +799,6 @@ namespace WorldSystem.Runtime
 
             WorldManager.Instance.volumeCloudOptimizeModule.property._Modeling_ShapeBase_Gain =
                 math.lerp(cloudProperty._Modeling_ShapeBase_Gain, weatherDefine.cloudProperty._Modeling_ShapeBase_Gain, lerpCoeff);
-
-            // WorldManager.Instance.volumeCloudOptimizeModule.property._Modeling_ShapeBase_Freq =
-            //     math.lerp(cloudProperty._Modeling_ShapeBase_Freq, weatherDefine.cloudProperty._Modeling_ShapeBase_Freq, lerpCoeff);
 
             WorldManager.Instance.volumeCloudOptimizeModule.property._Modeling_ShapeBase_Scale =
                 math.lerp(cloudProperty._Modeling_ShapeBase_Scale, weatherDefine.cloudProperty._Modeling_ShapeBase_Scale, lerpCoeff);
