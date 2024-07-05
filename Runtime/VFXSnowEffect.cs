@@ -14,13 +14,13 @@ namespace WorldSystem.Runtime
         [Serializable]
         public class Property
         {
-            [LabelText("范围半径")][GUIColor(0.7f,0.7f,0.7f)][DisableInEditorMode]
+            [LabelText("范围半径")][GUIColor(0.7f,0.7f,0.7f)][ReadOnly]
             public float snowRadius = 40;
 
-            [LabelText("降水量")][GUIColor(1f,0.7f,0.7f,0.7f)]
+            [LabelText("降水量")][GUIColor(1f,0.7f,0.7f)]
             public float snowPrecipitation;
 
-            [LabelText("粒子大小")][GUIColor(1f,0.7f,0.7f,0.7f)]
+            [LabelText("粒子大小")][GUIColor(1f,0.7f,0.7f)]
             public float snowSize = 2;
 
             public void LimitProperty()
