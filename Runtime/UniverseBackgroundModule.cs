@@ -1,5 +1,6 @@
 ﻿using System;
 using Sirenix.OdinInspector;
+using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
@@ -22,8 +23,8 @@ namespace WorldSystem.Runtime
             Half,
             Quarter
         }
-        
-        
+
+
         [Serializable]
         public class Property
         {
@@ -66,6 +67,17 @@ namespace WorldSystem.Runtime
             [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
             public Material VolumeCloud_FixupLateBlit_Material;
             
+            // [FoldoutGroup("配置")] [LabelText("修正分裂着色器")]
+            // [ReadOnly] [PropertyOrder(-20)]
+            // [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
+            // public Shader VolumeCloud_FixupSplit_Shader;
+            //
+            // [FoldoutGroup("配置")] [LabelText("修正分裂移材质")]
+            // [ReadOnly] [PropertyOrder(-20)]
+            // [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
+            // public Material VolumeCloud_FixupSplit_Material;
+            
+            
             [LabelText("分辨率选项")] 
             [GUIColor(0, 1, 0)] [PropertyOrder(-10)]
             public Scale _Render_ResolutionOptions = Scale.Full;
@@ -82,6 +94,10 @@ namespace WorldSystem.Runtime
             [LabelText("使用异步分帧渲染")]
             [GUIColor(0.7f, 0.7f, 1f)]
             public bool _Render_UseAsyncRender = true;
+            
+            // [LabelText("    分帧")]
+            // [GUIColor(0.7f, 0.7f, 1f)][PropertyRange(2,8)]
+            // public int _Render_SplitFrameNumber = 2;
             
             [LabelText("    异步更新率(fps/s)")]
             [GUIColor(0.7f, 0.7f, 1f)]
@@ -168,6 +184,14 @@ namespace WorldSystem.Runtime
             if (property.VolumeCloud_FixupLateBlit_Material != null)
                 CoreUtils.Destroy(property.VolumeCloud_FixupLateBlit_Material);
             
+            // if (property.VolumeCloud_FixupSplit_Shader != null)
+            //     Resources.UnloadAsset(property.VolumeCloud_FixupSplit_Shader);
+            // if (property.VolumeCloud_FixupSplit_Material != null)
+            //     CoreUtils.Destroy(property.VolumeCloud_FixupSplit_Material);
+            // property.VolumeCloud_FixupSplit_Shader = null;
+            // property.VolumeCloud_FixupSplit_Material = null;
+            
+            
             property.VolumeCloud_FixupLate_Shader = null;
             property.VolumeCloud_FixupLate_Material = null;
             PreviousRT?.Release();
@@ -199,7 +223,29 @@ namespace WorldSystem.Runtime
                 splitFrameRT?.Release();
                 splitFrameRT = null;
             }
+
             
+            // if (property._Render_SplitFrameNumber != 2)
+            // {
+            //     if (property.VolumeCloud_FixupSplit_Shader == null)
+            //         property.VolumeCloud_FixupSplit_Shader =
+            //             AssetDatabase.LoadAssetAtPath<Shader>(
+            //                 "Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/FixupSplit.shader");
+            //     if (property.VolumeCloud_FixupSplit_Material == null)
+            //         property.VolumeCloud_FixupSplit_Material =
+            //             CoreUtils.CreateEngineMaterial(property.VolumeCloud_FixupSplit_Shader);
+            // }
+            // else
+            // {
+            //     if (property.VolumeCloud_FixupSplit_Shader != null)
+            //         Resources.UnloadAsset(property.VolumeCloud_FixupSplit_Shader);
+            //     if (property.VolumeCloud_FixupSplit_Material != null)
+            //         CoreUtils.Destroy(property.VolumeCloud_FixupSplit_Material);
+            //     property.VolumeCloud_FixupSplit_Shader = null;
+            //     property.VolumeCloud_FixupSplit_Material = null;
+            // }
+            
+
             Application.targetFrameRate = (int)property._Render_TargetFps;
             
         }
@@ -327,6 +373,34 @@ namespace WorldSystem.Runtime
             RenderTexture.ReleaseTemporary(TemporaryRT);
             return activeRT;
         }
+        
+        
+        
+        // public RTHandle RenderFixupSplit(CommandBuffer cmd, RTHandle activeRT, Matrix4x4 previousViewMatrix,Matrix4x4 currentViewMatrix, Matrix4x4 projectionMatrix)
+        // {
+        //     SetupSplitFixupMatrices(cmd, previousViewMatrix, currentViewMatrix,projectionMatrix);
+        //     RenderTexture TemporaryRT =  RenderTexture.GetTemporary(activeRT.rt.descriptor);
+        //     cmd.CopyTexture(activeRT,TemporaryRT);
+        //     cmd.SetGlobalTexture("_ActiveTarget_FixupSplit",TemporaryRT);
+        //     cmd.SetRenderTarget(activeRT);
+        //     Blitter.BlitTexture(cmd,new Vector4(1,1,0,0),property.VolumeCloud_FixupSplit_Material,0);
+        //     RenderTexture.ReleaseTemporary(TemporaryRT);
+        //     return activeRT;
+        // }
+        // public void SetupSplitFixupMatrices(CommandBuffer cmd,Matrix4x4 previousViewMatrix,Matrix4x4 currentViewMatrix, Matrix4x4 projectionMatrix)
+        // {
+        //     cmd.SetGlobalMatrix(_PrevViewProjM_SplitFixup, previousViewMatrix * projectionMatrix);
+        //     Matrix4x4 ViewProjM = currentViewMatrix * projectionMatrix;
+        //     cmd.SetGlobalMatrix(_ViewProjM_SplitFixup, ViewProjM);
+        //     cmd.SetGlobalMatrix(_InverseViewProjM_SplitFixup, ViewProjM.inverse);
+        // }
+        // private readonly int _PrevViewProjM_SplitFixup = Shader.PropertyToID("_PrevViewProjM_SplitFixup");
+        // private readonly int _ViewProjM_SplitFixup = Shader.PropertyToID("_ViewProjM_SplitFixup");
+        // private readonly int _InverseViewProjM_SplitFixup = Shader.PropertyToID("_InverseViewProjM_SplitFixup");
+
+        
+        
+        
         
         public void RenderFixupLateBlit(CommandBuffer cmd, ref RenderingData renderingData, RTHandle SrcRT, RTHandle DstRT)
         {

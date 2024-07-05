@@ -618,7 +618,7 @@ MonoBehaviour:
     _Modeling_ShapeBase_Gain: 0.5
     _Modeling_ShapeBase_Freq: 2
     _Modeling_ShapeBase_Scale: 5
-    _MotionBase_DynamicVector: {x: 0, y: 0.33758682}
+    _MotionBase_DynamicVector: {x: 0, y: 0.2816789}
     _MotionBase_Direction: 0
     _MotionBase_Speed: 0.25
     _MotionBase_UseDirectionRandom: 1
@@ -642,7 +642,7 @@ MonoBehaviour:
     _Modeling_ShapeDetail_Quality: 1
     _Modeling_ShapeDetail_Scale: {x: 5.11, y: 5.11, z: 5.11}
     _MotionBase_UseDynamicCloud: 1
-    _MotionDetail_DynamicVector: {x: 0, y: 0, z: 1.6879342}
+    _MotionDetail_DynamicVector: {x: 0, y: 0, z: 1.4083945}
     _MotionDetail_Direction: {x: 0, y: 0}
     _MotionDetail_Speed: 1.25
     _MotionDetail_UseRandomDirection: 1
@@ -752,8 +752,8 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     lightningLifetimeArray:
-    - -Infinity
-    - -Infinity
+    - 0.62264764
+    - 0.3372081
     lightningLightStrength: 1
     lightningLength: 2000
     lightningMinLifetime: 0.3
