@@ -128,45 +128,45 @@ namespace WorldSystem.Runtime
             [ShowIf("@WorldManager.Instance?.starModule?.hideFlags == HideFlags.None")]
             public Texture2D starTexture;
 
-            [FoldoutGroup("数量与大小")] [LabelText("星星计数")]
+            [TitleGroup("数量与大小")] [LabelText("星星计数")]
             [GUIColor(0.7f,0.7f,1f)]
             public int count = 20000;
 
-            [FoldoutGroup("数量与大小")] [LabelText("星星大小")]
+            [TitleGroup("数量与大小")] [LabelText("星星大小")]
             [GUIColor(1f,0.7f,0.7f)]
             public float size = 1;
 
-            [FoldoutGroup("颜色与亮度")] [LabelText("自动亮度")] 
+            [TitleGroup("颜色与亮度")] [LabelText("自动亮度")] 
             [Tooltip("自动为每颗星星指定一种颜色,这些颜色是基于对可见恒星的科学测量")]
             [GUIColor(0.7f,0.7f,1f)]
             public bool automaticColor = true;
 
-            [FoldoutGroup("颜色与亮度")] [LabelText("自动颜色")] 
+            [TitleGroup("颜色与亮度")] [LabelText("自动颜色")] 
             [Tooltip("自动为每颗星星指定亮度,这些亮度值是基于对可见恒星的科学测量")]
             [GUIColor(0.7f,0.7f,1f)]
             public bool automaticBrightness = true;
 
-            [FoldoutGroup("颜色与亮度")] [LabelText("星星颜色")] [ColorUsage(false, true)]
+            [TitleGroup("颜色与亮度")] [LabelText("星星颜色")] [ColorUsage(false, true)]
             [GUIColor(0.7f,0.7f,1f)]
             public Color starColor = Color.white;
 
-            [FoldoutGroup("颜色与亮度")] [LabelText("亮度")]
+            [TitleGroup("颜色与亮度")] [LabelText("亮度")]
             [GUIColor(1f,0.7f,0.7f)]
             public float brightness = 1;
 
-            [FoldoutGroup("闪烁")] [LabelText("闪烁频率")]
+            [TitleGroup("闪烁")] [LabelText("闪烁频率")]
             [GUIColor(0.7f,0.7f,1f)]
             public float flickerFrequency = 20;
 
-            [FoldoutGroup("闪烁")] [LabelText("闪烁强度")]
+            [TitleGroup("闪烁")] [LabelText("闪烁强度")]
             [GUIColor(0.7f,0.7f,1f)]
             public float flickerStrength = 0.1f;
 
-            [FoldoutGroup("位置")] [LabelText("随机种")]
+            [TitleGroup("位置")] [LabelText("随机种")]
             [GUIColor(0.7f,0.7f,1f)]
             public int initialSeed = 1; //随机器种子
 
-            [FoldoutGroup("位置")] [LabelText("倾斜度")]
+            [TitleGroup("位置")] [LabelText("倾斜度")]
             [GUIColor(0.7f,0.7f,1f)]
             public float inclination;
 
