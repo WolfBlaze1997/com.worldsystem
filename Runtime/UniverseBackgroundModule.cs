@@ -144,19 +144,21 @@ namespace WorldSystem.Runtime
             if (property.backgroundShader == null)
                 property.backgroundShader =
                     AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/Skybox/BackgroundShader.shader");
-            if(property.TaaShader == null) 
-                property.TaaShader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/ShaderLibrary/TemporalAA.shader");
-            if (property.VolumeCloud_FixupLate_Shader == null)
-                property.VolumeCloud_FixupLate_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/FixupLate.shader");
-            if (property.VolumeCloud_FixupLateBlit_Shader == null)
-                property.VolumeCloud_FixupLateBlit_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/FixupLateBlit.shader");
+            // if(property.TaaShader == null) 
+            //     property.TaaShader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/ShaderLibrary/TemporalAA.shader");
+            
+            // if (property.VolumeCloud_FixupLate_Shader == null)
+            //     property.VolumeCloud_FixupLate_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/FixupLate.shader");
+            // if (property.VolumeCloud_FixupLateBlit_Shader == null)
+            //     property.VolumeCloud_FixupLateBlit_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/FixupLateBlit.shader");
 #endif
             if (property.backgroundMaterial == null) property.backgroundMaterial = CoreUtils.CreateEngineMaterial(property.backgroundShader);
-            if (property.TaaMaterial == null) property.TaaMaterial = CoreUtils.CreateEngineMaterial(property.TaaShader);
-            if (property.VolumeCloud_FixupLate_Material == null)
-                property.VolumeCloud_FixupLate_Material = CoreUtils.CreateEngineMaterial(property.VolumeCloud_FixupLate_Shader);
-            if (property.VolumeCloud_FixupLateBlit_Material == null)
-                property.VolumeCloud_FixupLateBlit_Material = CoreUtils.CreateEngineMaterial(property.VolumeCloud_FixupLateBlit_Shader);
+            // if (property.TaaMaterial == null) property.TaaMaterial = CoreUtils.CreateEngineMaterial(property.TaaShader);
+            
+            // if (property.VolumeCloud_FixupLate_Material == null)
+            //     property.VolumeCloud_FixupLate_Material = CoreUtils.CreateEngineMaterial(property.VolumeCloud_FixupLate_Shader);
+            // if (property.VolumeCloud_FixupLateBlit_Material == null)
+            //     property.VolumeCloud_FixupLateBlit_Material = CoreUtils.CreateEngineMaterial(property.VolumeCloud_FixupLateBlit_Shader);
             
             OnValidate();
         }
@@ -167,11 +169,6 @@ namespace WorldSystem.Runtime
                 Resources.UnloadAsset(property.skyMesh);
             if (property.backgroundShader != null)
                 Resources.UnloadAsset(property.backgroundShader);
-            if(property.TaaShader != null)
-                Resources.UnloadAsset(property.TaaShader);
-            
-            if(property.TaaMaterial != null)
-                CoreUtils.Destroy(property.TaaMaterial);
             if (property.backgroundMaterial != null)
                 CoreUtils.Destroy(property.backgroundMaterial);
             
@@ -191,9 +188,10 @@ namespace WorldSystem.Runtime
             // property.VolumeCloud_FixupSplit_Shader = null;
             // property.VolumeCloud_FixupSplit_Material = null;
             
-            
             property.VolumeCloud_FixupLate_Shader = null;
             property.VolumeCloud_FixupLate_Material = null;
+            property.VolumeCloud_FixupLateBlit_Shader = null;
+            property.VolumeCloud_FixupLateBlit_Material = null;
             PreviousRT?.Release();
             PreviousRT = null;
             skyRT?.Release();
@@ -201,8 +199,6 @@ namespace WorldSystem.Runtime
             property.skyMesh = null;
             property.backgroundShader = null;
             property.backgroundMaterial = null;
-            property.TaaShader = null;
-            property.TaaMaterial = null;
             TaaRT1?.Release();
             TaaRT1 = null;
         }
@@ -210,21 +206,70 @@ namespace WorldSystem.Runtime
         public void OnValidate()
         {
             SetupstaticProperty();
-            if (property._Render_ResolutionOptions == Scale.Full)
+
+            if (property._Render_ResolutionOptions != Scale.Full)
             {
+#if UNITY_EDITOR
+                if (property.TaaShader == null)
+                    property.TaaShader =
+                        AssetDatabase.LoadAssetAtPath<Shader>(
+                            "Packages/com.worldsystem/Shader/ShaderLibrary/TemporalAA.shader");
+#endif
+                if (property.TaaMaterial == null)
+                    property.TaaMaterial = CoreUtils.CreateEngineMaterial(property.TaaShader);
+            }
+            else
+            {
+                if(property.TaaShader != null)
+                    Resources.UnloadAsset(property.TaaShader);
+                if(property.TaaMaterial != null)
+                    CoreUtils.Destroy(property.TaaMaterial);
+                property.TaaShader = null;
+                property.TaaMaterial = null;
                 PreviousRT?.Release();
                 PreviousRT = null;
                 TaaRT1?.Release();
                 TaaRT1 = null;
             }
 
-            if (!property._Render_UseAsyncRender)
+            if (property._Render_UseAsyncRender)
+            {
+#if UNITY_EDITOR
+                if (property.VolumeCloud_FixupLate_Shader == null)
+                    property.VolumeCloud_FixupLate_Shader =
+                        AssetDatabase.LoadAssetAtPath<Shader>(
+                            "Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/FixupLate.shader");
+                if (property.VolumeCloud_FixupLateBlit_Shader == null)
+                    property.VolumeCloud_FixupLateBlit_Shader =
+                        AssetDatabase.LoadAssetAtPath<Shader>(
+                            "Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/FixupLateBlit.shader");
+#endif
+                if (property.VolumeCloud_FixupLate_Material == null)
+                    property.VolumeCloud_FixupLate_Material =
+                        CoreUtils.CreateEngineMaterial(property.VolumeCloud_FixupLate_Shader);
+                if (property.VolumeCloud_FixupLateBlit_Material == null)
+                    property.VolumeCloud_FixupLateBlit_Material =
+                        CoreUtils.CreateEngineMaterial(property.VolumeCloud_FixupLateBlit_Shader);
+            }
+            else
             {
                 splitFrameRT?.Release();
                 splitFrameRT = null;
+                if (property.VolumeCloud_FixupLate_Shader != null)
+                    Resources.UnloadAsset(property.VolumeCloud_FixupLate_Shader);
+                if (property.VolumeCloud_FixupLate_Material != null)
+                    CoreUtils.Destroy(property.VolumeCloud_FixupLate_Material);
+                if (property.VolumeCloud_FixupLateBlit_Shader != null)
+                    Resources.UnloadAsset(property.VolumeCloud_FixupLateBlit_Shader);
+                if (property.VolumeCloud_FixupLateBlit_Material != null)
+                    CoreUtils.Destroy(property.VolumeCloud_FixupLateBlit_Material);
+                property.VolumeCloud_FixupLate_Shader = null;
+                property.VolumeCloud_FixupLate_Material = null;
+                property.VolumeCloud_FixupLateBlit_Shader = null;
+                property.VolumeCloud_FixupLateBlit_Material = null;
             }
 
-            
+
             // if (property._Render_SplitFrameNumber != 2)
             // {
             //     if (property.VolumeCloud_FixupSplit_Shader == null)
@@ -398,9 +443,6 @@ namespace WorldSystem.Runtime
         // private readonly int _ViewProjM_SplitFixup = Shader.PropertyToID("_ViewProjM_SplitFixup");
         // private readonly int _InverseViewProjM_SplitFixup = Shader.PropertyToID("_InverseViewProjM_SplitFixup");
 
-        
-        
-        
         
         public void RenderFixupLateBlit(CommandBuffer cmd, ref RenderingData renderingData, RTHandle SrcRT, RTHandle DstRT)
         {

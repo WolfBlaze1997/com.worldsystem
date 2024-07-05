@@ -26,13 +26,10 @@ MonoBehaviour:
     VolumeCloud_FixupLate_Material: {fileID: 0}
     VolumeCloud_FixupLateBlit_Shader: {fileID: 0}
     VolumeCloud_FixupLateBlit_Material: {fileID: 0}
-    VolumeCloud_FixupSplit_Shader: {fileID: 0}
-    VolumeCloud_FixupSplit_Material: {fileID: 0}
     _Render_ResolutionOptions: 1
     _Render_TemporalAAFactor: 0
     _Render_TargetFps: -1
     _Render_UseAsyncRender: 1
-    _Render_SplitFrameNumber: 3
     _Render_AsyncUpdateRate: 20
     _Render_AsyncFOV: 80
   StarProperty:
@@ -621,7 +618,7 @@ MonoBehaviour:
     _Modeling_ShapeBase_Gain: 0.7
     _Modeling_ShapeBase_Freq: 2
     _Modeling_ShapeBase_Scale: 5
-    _MotionBase_DynamicVector: {x: 0, y: 0.29414797}
+    _MotionBase_DynamicVector: {x: 0.2654917, y: 0.2083786}
     _MotionBase_Direction: 0
     _MotionBase_Speed: 0.25
     _MotionBase_UseDirectionRandom: 1
@@ -645,7 +642,7 @@ MonoBehaviour:
     _Modeling_ShapeDetail_Quality: 1
     _Modeling_ShapeDetail_Scale: {x: 8, y: 8, z: 8}
     _MotionBase_UseDynamicCloud: 1
-    _MotionDetail_DynamicVector: {x: 0, y: 0, z: 1.4707398}
+    _MotionDetail_DynamicVector: {x: -0.37795195, y: -1.3478663, z: 3.0710187}
     _MotionDetail_Direction: {x: 0, y: 0}
     _MotionDetail_Speed: 2.5
     _MotionDetail_UseRandomDirection: 1
@@ -755,8 +752,8 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     lightningLifetimeArray:
-    - 0.7507587
-    - 0.37245953
+    - -Infinity
+    - -Infinity
     lightningLightStrength: 1
     lightningLength: 2000
     lightningMinLifetime: 0.3
