@@ -5,14 +5,15 @@ Shader "Hidden/WorldSystem/ScreenShadowsOptimize_V1_1_20240604"
     {
         Tags { "RenderType"="Opaque" "RenderPipeline" = "UniversalPipeline"}
         Cull Off
-        Blend Off
+//        Blend Off
         ZWrite Off
         ZTest Always
+        Blend DstColor Zero
+//        BlendOp Multiply
         
         Pass
         {
             Name "ScreenShadows"
-
             HLSLPROGRAM
             
             #pragma vertex Vert

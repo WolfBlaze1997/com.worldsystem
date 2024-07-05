@@ -664,13 +664,16 @@ MonoBehaviour:
     _Lighting_ShadingStrengthFalloff: 0.2
     _Lighting_ScatterMultiplier: 100
     _Lighting_ScatterStrength: 0.85
-    CloudShadows_TemporalAA_Shader: {fileID: 0}
+    CloudShadows_TemporalAA_Shader: {fileID: 4800000, guid: a1425819257a09445b311356840c92fa,
+      type: 3}
     CloudShadows_TemporalAA_Material: {fileID: 0}
-    CloudShadows_ScreenShadow_Shader: {fileID: 0}
+    CloudShadows_ScreenShadow_Shader: {fileID: 4800000, guid: c1b138b1ed949f148a31472a5bb12df0,
+      type: 3}
     CloudShadows_ScreenShadow_Material: {fileID: 0}
-    CloudShadows_ToScreen_Shader: {fileID: 0}
+    CloudShadows_ToScreen_Shader: {fileID: 4800000, guid: 7d0c5edf145208d46a24c3df4128bc93,
+      type: 3}
     CloudShadows_ToScreen_Material: {fileID: 0}
-    _Shadow_UseCastShadow: 0
+    _Shadow_UseCastShadow: 1
     _Shadow_Distance: 10000
     _Shadow_Strength:
       serializedVersion: 2
