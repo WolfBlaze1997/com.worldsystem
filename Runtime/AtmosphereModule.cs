@@ -356,7 +356,7 @@ namespace WorldSystem.Runtime
         
         #region 渲染函数
         
-        public void RenderAtmosphere(CommandBuffer cmd, ref RenderingData renderingData, RTHandle activeRT)
+        public void RenderAtmosphere(CommandBuffer cmd, ref RenderingData renderingData, RTHandle activeRT, Rect renderRect)
         {
             if (!isActiveAndEnabled) return;
             
@@ -367,13 +367,31 @@ namespace WorldSystem.Runtime
             //渲染大气
             cmd.DrawMesh(property.mesh, transformMatrix, property.material, 0,0);
             
-            //渲染大气后立即将其复制到 _atmosphereMixRT 由于之后的大气混合
-            RenderingUtils.ReAllocateIfNeeded(ref _atmosphereMixRT, activeRT.rt.descriptor, name: "AtmosphereMap");
-            cmd.CopyTexture(activeRT, _atmosphereMixRT);
+            if (!property.useAtmosphereBlend) return;
+            RenderingUtils.ReAllocateIfNeeded(ref _atmosphereMixRT, activeRT.rt.descriptor, name: "AtmosphereMix");
+            cmd.CopyTexture(activeRT, 0,0, (int)renderRect.x, (int)renderRect.y, (int)renderRect.width, (int)renderRect.height, 
+                _atmosphereMixRT,0,0, (int)renderRect.x, (int)renderRect.y);
             cmd.SetGlobalTexture(_SkyTexture, _atmosphereMixRT);
-            
         }
-        private RTHandle _atmosphereMixRT;
+        public void RenderAtmosphere(CommandBuffer cmd, ref RenderingData renderingData, RTHandle activeRT)
+        {
+            if (!isActiveAndEnabled) return;
+            
+            //设置矩阵
+            var transformMatrix = Matrix4x4.identity;
+            transformMatrix.SetTRS(renderingData.cameraData.camera.transform.position, Quaternion.identity,
+                Vector3.one * renderingData.cameraData.camera.farClipPlane);
+            //渲染大气
+            cmd.DrawMesh(property.mesh, transformMatrix, property.material, 0,0);
+            
+            if (!property.useAtmosphereBlend) return;
+            RenderingUtils.ReAllocateIfNeeded(ref _atmosphereMixRT, activeRT.rt.descriptor, name: "AtmosphereMix");
+            cmd.CopyTexture(activeRT,_atmosphereMixRT);
+            cmd.SetGlobalTexture(_SkyTexture, _atmosphereMixRT);
+        }
+        
+        
+        public RTHandle _atmosphereMixRT;
         private readonly int _SkyTexture = Shader.PropertyToID("_SkyTexture");
 
         

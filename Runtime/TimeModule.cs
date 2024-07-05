@@ -87,7 +87,7 @@ namespace WorldSystem.Runtime
         public bool useDayNightCycle;
 
         //分钟为单位
-        [LabelText("昼夜循环(分钟)")] [Unit(Units.Minute)] [EnableIf("useDayNightCycle")]
+        [LabelText("    昼夜循环(分钟)")] [Unit(Units.Minute)] 
         public float dayNightCycleDurationMinute = 20;
         
         public float CurrentTime
