@@ -977,7 +977,7 @@ namespace WorldSystem.Runtime
             
             [FoldoutGroup("阴影")] [LabelText("开启阴影铸造")] 
             [GUIColor(0.3f, 1f, 0.3f)]
-            public bool _Shadow_UseCastShadow = true;
+            public bool _Shadow_UseCastShadow = false;
 
             [FoldoutGroup("阴影")] [LabelText("阴影距离")] [MinValue(0)]
             [GUIColor(0.7f, 0.7f, 1f)]

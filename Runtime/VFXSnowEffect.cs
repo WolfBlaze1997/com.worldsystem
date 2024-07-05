@@ -69,7 +69,7 @@ namespace WorldSystem.Runtime
             {
                 snowEffect = gameObject.AddComponent<VisualEffect>();
 #if UNITY_EDITOR
-                snowEffect.visualEffectAsset = AssetDatabase.LoadAssetAtPath<VisualEffectAsset>("Packages/com.worldsystem//Visual Effects/Snow.vfx");
+                snowEffect.visualEffectAsset = AssetDatabase.LoadAssetAtPath<VisualEffectAsset>("Packages/com.worldsystem/Visual Effects/Snow.vfx");
 #endif
             }
             else

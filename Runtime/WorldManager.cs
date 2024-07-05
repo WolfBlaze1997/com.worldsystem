@@ -277,7 +277,7 @@ namespace WorldSystem.Runtime
 
         private void OnDrawGizmos()
         {
-            Gizmos.DrawIcon(transform.position, "Packages/com.worldsystem//Textures/Icon/day-night-icon.png");
+            Gizmos.DrawIcon(transform.position, "Packages/com.worldsystem/Textures/Icon/day-night-icon.png");
 
             if (transform.childCount > 0)
                 BroadcastMessage("DrawGizmos");
