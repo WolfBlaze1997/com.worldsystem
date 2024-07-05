@@ -68,15 +68,15 @@ namespace WorldSystem.Runtime
             DrawDirectLine(iconColor);
             if (property.type == ObjectType.Sun)
             {
-                Gizmos.DrawIcon(transform.position, "Packages/com.worldsystem//Textures/Icon/sun-icon.png", true, iconColor);
+                Gizmos.DrawIcon(transform.position, "Packages/com.worldsystem/Textures/Icon/sun-icon.png", true, iconColor);
             }
             if (property.type == ObjectType.Moon)
             {
-                Gizmos.DrawIcon(transform.position, "Packages/com.worldsystem//Textures/Icon/moon-icon.png", true, iconColor);
+                Gizmos.DrawIcon(transform.position, "Packages/com.worldsystem/Textures/Icon/moon-icon.png", true, iconColor);
             }
             if (property.type == ObjectType.Other)
             {
-                Gizmos.DrawIcon(transform.position, "Packages/com.worldsystem//Textures/Icon/other-icon.png",true, iconColor);
+                Gizmos.DrawIcon(transform.position, "Packages/com.worldsystem/Textures/Icon/other-icon.png",true, iconColor);
             }
             
             Color Cache = Handles.color;
