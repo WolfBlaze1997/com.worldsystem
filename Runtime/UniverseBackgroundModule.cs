@@ -229,8 +229,8 @@ namespace WorldSystem.Runtime
             TaaRT1?.Release();
             TaaRT1 = null;
             
-            _fixupLateRTCache?.Release();
-            _fixupLateRTCache = null;
+            // _fixupLateRTCache?.Release();
+            // _fixupLateRTCache = null;
         }
 
         public void OnValidate()
@@ -244,17 +244,12 @@ namespace WorldSystem.Runtime
                 TaaRT1 = null;
             }
 
-            if (property._Render_UseAsyncRender)
+            if (!property._Render_UseAsyncRender)
             {
-                if (_fixupLateRTCache == null)
-                    _fixupLateRTCache = RTHandles.Alloc(1, 1);
+                splitFrameRT?.Release();
+                splitFrameRT = null;
             }
-            else
-            {
-                _fixupLateRTCache?.Release();
-                _fixupLateRTCache = null;
-            }
-
+            
             Application.targetFrameRate = (int)property._Render_TargetFps;
             
         }
@@ -416,14 +411,16 @@ namespace WorldSystem.Runtime
         
         public RTHandle RenderFixupLate(CommandBuffer cmd, RTHandle activeRT)
         {
-            RenderingUtils.ReAllocateIfNeeded(ref _fixupLateRTCache, activeRT.rt.descriptor, name: "FixupLateRTCache", wrapMode: TextureWrapMode.MirrorOnce);
-            cmd.CopyTexture(activeRT,_fixupLateRTCache);
-            cmd.SetGlobalTexture("_ActiveTarget",_fixupLateRTCache);
+            // RenderingUtils.ReAllocateIfNeeded(ref _fixupLateRTCache, activeRT.rt.descriptor, name: "FixupLateRTCache", wrapMode: TextureWrapMode.MirrorOnce);
+            RenderTexture TemporaryRT =  RenderTexture.GetTemporary(activeRT.rt.descriptor);
+            cmd.CopyTexture(activeRT,TemporaryRT);
+            cmd.SetGlobalTexture("_ActiveTarget",TemporaryRT);
             cmd.SetRenderTarget(activeRT);
             Blitter.BlitTexture(cmd,new Vector4(1,1,0,0),property.VolumeCloud_FixupLate_Material,0);
+            RenderTexture.ReleaseTemporary(TemporaryRT);
             return activeRT;
         }
-        public RTHandle _fixupLateRTCache;
+        // public RTHandle _fixupLateRTCache;
         
         public void RenderFixupLateBlit(CommandBuffer cmd, ref RenderingData renderingData, RTHandle SrcRT, RTHandle DstRT)
         {
