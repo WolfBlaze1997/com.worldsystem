@@ -15,7 +15,7 @@ namespace WorldSystem.Runtime
         [Serializable]
         public class Property
         {
-            [LabelText("范围半径")][GUIColor(0.7f,0.7f,0.7f)][DisableInEditorMode]
+            [LabelText("范围半径")][GUIColor(0.7f,0.7f,0.7f)][ReadOnly]
             public float rainRadius = 40;
 
             [LabelText("降水量")][GUIColor(1f,0.7f,0.7f)]
