@@ -142,14 +142,7 @@ namespace WorldSystem.Runtime
 #endif
 
 
-// #if UNITY_EDITOR
-//         private void InvokeRefreshSerializeDataOff()
-//         {
-//             RefreshSerializeData = false;
-//             Debug.Log("已刷新序列化数据");
-//         }
-// #endif
-
+        
         
         #endregion
 

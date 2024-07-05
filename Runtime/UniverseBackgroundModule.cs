@@ -66,26 +66,6 @@ namespace WorldSystem.Runtime
             [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
             public Material VolumeCloud_FixupLateBlit_Material;
             
-            // [FoldoutGroup("配置")] [LabelText("运动矢量累加着色器")]
-            // [ReadOnly] [PropertyOrder(-20)]
-            // [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            // public Shader _MotionVectorAdd_Shader;
-            //
-            // [FoldoutGroup("配置")] [LabelText("运动矢量累加材质")]
-            // [ReadOnly] [PropertyOrder(-20)]
-            // [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            // public Material _MotionVectorAdd_Material;
-            //
-            // [FoldoutGroup("配置")] [LabelText("修正分帧延迟着色器")]
-            // [ReadOnly] [PropertyOrder(-20)]
-            // [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            // public Shader _FixupLateSplitFrame_Shader;
-            //
-            // [FoldoutGroup("配置")] [LabelText("修正分帧延材质")]
-            // [ReadOnly] [PropertyOrder(-20)]
-            // [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            // public Material _FixupLateSplitFrame_Material;
-            
             [LabelText("分辨率选项")] 
             [GUIColor(0, 1, 0)] [PropertyOrder(-10)]
             public Scale _Render_ResolutionOptions = Scale.Full;
@@ -112,10 +92,6 @@ namespace WorldSystem.Runtime
             [GUIColor(0.7f, 0.7f, 1f)]
             [ShowIf("_Render_UseAsyncRender")]
             public float _Render_AsyncFOV = 80;
-            
-            // [LabelText("使用分帧渲染")]
-            // [GUIColor(0.7f, 0.7f, 1f)]
-            // public bool _Render_UseSplitFrameRender = true;
         }
         [HideLabel]
         public Property property = new();
@@ -158,11 +134,6 @@ namespace WorldSystem.Runtime
                 property.VolumeCloud_FixupLate_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/FixupLate.shader");
             if (property.VolumeCloud_FixupLateBlit_Shader == null)
                 property.VolumeCloud_FixupLateBlit_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/FixupLateBlit.shader");
-            // if (property._MotionVectorAdd_Shader == null)
-            //     property._MotionVectorAdd_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/ShaderLibrary/MotionVectorAdd.shader");
-            // if (property._FixupLateSplitFrame_Shader == null)
-            //     property._FixupLateSplitFrame_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/FixupLateSplitFrame.shader");
-
 #endif
             if (property.backgroundMaterial == null) property.backgroundMaterial = CoreUtils.CreateEngineMaterial(property.backgroundShader);
             if (property.TaaMaterial == null) property.TaaMaterial = CoreUtils.CreateEngineMaterial(property.TaaShader);
@@ -170,10 +141,6 @@ namespace WorldSystem.Runtime
                 property.VolumeCloud_FixupLate_Material = CoreUtils.CreateEngineMaterial(property.VolumeCloud_FixupLate_Shader);
             if (property.VolumeCloud_FixupLateBlit_Material == null)
                 property.VolumeCloud_FixupLateBlit_Material = CoreUtils.CreateEngineMaterial(property.VolumeCloud_FixupLateBlit_Shader);
-            // if (property._MotionVectorAdd_Material == null)
-            //     property._MotionVectorAdd_Material = CoreUtils.CreateEngineMaterial(property._MotionVectorAdd_Shader);
-            // if (property._FixupLateSplitFrame_Material == null)
-            //     property._FixupLateSplitFrame_Material = CoreUtils.CreateEngineMaterial(property._FixupLateSplitFrame_Shader);
             
             OnValidate();
         }
@@ -201,20 +168,6 @@ namespace WorldSystem.Runtime
             if (property.VolumeCloud_FixupLateBlit_Material != null)
                 CoreUtils.Destroy(property.VolumeCloud_FixupLateBlit_Material);
             
-            // if(property._MotionVectorAdd_Shader != null)
-            //     Resources.UnloadAsset(property._MotionVectorAdd_Shader);
-            // if (property._MotionVectorAdd_Material != null)
-            //     CoreUtils.Destroy(property._MotionVectorAdd_Material);
-            //
-            // if(property._FixupLateSplitFrame_Shader != null)
-            //     Resources.UnloadAsset(property._FixupLateSplitFrame_Shader);
-            // if (property._FixupLateSplitFrame_Material != null)
-            //     CoreUtils.Destroy(property._FixupLateSplitFrame_Material);
-            //
-            // property._FixupLateSplitFrame_Shader = null;
-            // property._FixupLateSplitFrame_Material = null;
-            // property._MotionVectorAdd_Shader = null;
-            // property._MotionVectorAdd_Material = null;
             property.VolumeCloud_FixupLate_Shader = null;
             property.VolumeCloud_FixupLate_Material = null;
             PreviousRT?.Release();
@@ -228,9 +181,6 @@ namespace WorldSystem.Runtime
             property.TaaMaterial = null;
             TaaRT1?.Release();
             TaaRT1 = null;
-            
-            // _fixupLateRTCache?.Release();
-            // _fixupLateRTCache = null;
         }
 
         public void OnValidate()
@@ -267,27 +217,6 @@ namespace WorldSystem.Runtime
         #region 渲染函数
         public RTHandle RenderBackground(CommandBuffer cmd, ref RenderingData renderingData, RTHandle dstRT)
         {
-            // if (property._Render_UseSplitFrameRender)
-            // {
-            //     RenderingUtils.ReAllocateIfNeeded(ref splitFrameRT, 
-            //         new RenderTextureDescriptor(
-            //             renderingData.cameraData.cameraTargetDescriptor.width >> (int)property._Render_ResolutionOptions,
-            //             renderingData.cameraData.cameraTargetDescriptor.height >> (int)property._Render_ResolutionOptions,
-            //             RenderTextureFormat.ARGBHalf), 
-            //         name: "SplitFrameRT");
-            //     cmd.SetRenderTarget(splitFrameRT);
-            // }
-            // else
-            // {
-            //     RenderingUtils.ReAllocateIfNeeded(ref skyRT, 
-            //         new RenderTextureDescriptor(
-            //             renderingData.cameraData.cameraTargetDescriptor.width >> (int)property._Render_ResolutionOptions,
-            //             renderingData.cameraData.cameraTargetDescriptor.height >> (int)property._Render_ResolutionOptions,
-            //             RenderTextureFormat.ARGBHalf), 
-            //         name: "SkyRT");
-            //     cmd.SetRenderTarget(skyRT);
-            // }
-            
             cmd.SetRenderTarget(dstRT);
             Matrix4x4 m = Matrix4x4.identity;
             m.SetTRS(renderingData.cameraData.worldSpaceCameraPos, Quaternion.identity,
@@ -298,27 +227,6 @@ namespace WorldSystem.Runtime
         }
         public RTHandle skyRT;
         public RTHandle splitFrameRT;
-
-        // public RTHandle motionVectorAddRT;
-        // public void RenderMotionVectorAdd(CommandBuffer cmd, ref RenderingData renderingData)
-        // {
-        //     if (skyRT == null) return;
-        //     RenderingUtils.ReAllocateIfNeeded(ref motionVectorAddRT, skyRT.rt.descriptor, name: "MotionVectorCacheRT");
-        //     cmd.SetRenderTarget(motionVectorAddRT);
-        //     Blitter.BlitTexture(cmd, new Vector4(1,1,0,0), property._MotionVectorAdd_Material,0);
-        //     
-        //     RenderingUtils.ReAllocateIfNeeded(ref previousMotionVectorRT, skyRT.rt.descriptor, name: "PreviousMotionVectorRT");
-        //     cmd.CopyTexture(motionVectorAddRT, previousMotionVectorRT);
-        //     cmd.SetGlobalTexture("_PreviousMotionVector", previousMotionVectorRT);
-        // }
-        // public RTHandle previousMotionVectorRT;
-        //
-        // public void RenderFixupLateSplitFrame(CommandBuffer cmd, ref RenderingData renderingData, RTHandle srcRT, RTHandle dstRT)
-        // {
-        //     cmd.SetGlobalTexture("_SplitFrameRT", splitFrameRT);
-        //     cmd.SetGlobalTexture("_MotionVectorAdd", motionVectorAddRT);
-        //     Blitter.BlitCameraTexture(cmd,srcRT,dstRT,property._FixupLateSplitFrame_Material,0);
-        // }
         
         public void SetupTaaMatrices(CommandBuffer cmd,Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix)
         {
@@ -411,7 +319,6 @@ namespace WorldSystem.Runtime
         
         public RTHandle RenderFixupLate(CommandBuffer cmd, RTHandle activeRT)
         {
-            // RenderingUtils.ReAllocateIfNeeded(ref _fixupLateRTCache, activeRT.rt.descriptor, name: "FixupLateRTCache", wrapMode: TextureWrapMode.MirrorOnce);
             RenderTexture TemporaryRT =  RenderTexture.GetTemporary(activeRT.rt.descriptor);
             cmd.CopyTexture(activeRT,TemporaryRT);
             cmd.SetGlobalTexture("_ActiveTarget",TemporaryRT);
@@ -420,7 +327,6 @@ namespace WorldSystem.Runtime
             RenderTexture.ReleaseTemporary(TemporaryRT);
             return activeRT;
         }
-        // public RTHandle _fixupLateRTCache;
         
         public void RenderFixupLateBlit(CommandBuffer cmd, ref RenderingData renderingData, RTHandle SrcRT, RTHandle DstRT)
         {

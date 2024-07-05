@@ -974,17 +974,7 @@ namespace WorldSystem.Runtime
             [ReadOnly] 
             [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
             public Material CloudShadows_ScreenShadow_Material;
-
-            // [FoldoutGroup("配置")] [LabelText("阴影到屏幕着色器")] 
-            // [ReadOnly] 
-            // [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            // public Shader CloudShadows_ToScreen_Shader;
-            //
-            // [FoldoutGroup("配置")] [LabelText("阴影到屏幕材质")] 
-            // [ReadOnly] 
-            // [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            // public Material CloudShadows_ToScreen_Material;
-
+            
             [FoldoutGroup("阴影")] [LabelText("开启阴影铸造")] 
             [GUIColor(0.3f, 1f, 0.3f)]
             public bool _Shadow_UseCastShadow = true;

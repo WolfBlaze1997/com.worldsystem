@@ -145,11 +145,6 @@ namespace WorldSystem.Runtime
             Gizmos.DrawWireMesh(West, 
                 transform.position + -transform.right * maxTrack + -transform.right * 0.5f, 
                 Quaternion.Euler(-90,90,0), new Vector3(80,80,80) * maxTrack * 0.2f);
-
-            // if(North != null) Resources.UnloadAsset(North);
-            // if(South != null) Resources.UnloadAsset(South);
-            // if(East != null) Resources.UnloadAsset(East);
-            // if(West != null) Resources.UnloadAsset(West);
             
             Gizmos.color = Cache;
             Handles.color = Cache;
@@ -329,8 +324,7 @@ namespace WorldSystem.Runtime
             {
                 variable?.RenderCelestialBody(cmd, ref renderingData);
             }
-            // if(TemporalAATools.TaaRT != null)
-            //     Blitter.BlitCameraTexture(cmd,TemporalAATools.TaaRT, renderingData.cameraData.renderer.cameraColorTargetHandle);
+
         }
         
         
