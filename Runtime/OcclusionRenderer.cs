@@ -83,13 +83,13 @@ namespace WorldSystem.Runtime
     public partial class OcclusionRenderer : BaseModule
     {
         #region 字段
-        [LabelText("范围半径")][DisableInEditorMode]
+        [LabelText("范围半径")][ReadOnly]
         public float effectRadius;
         
         [LabelText("位置偏移")]
         public Vector3 occlusionPositionOffset = new Vector3(0, 0, 0);
         
-        [LabelText("深度渲染器数据")]
+        [LabelText("深度渲染器数据")][ReadOnly]
         public ScriptableRendererData occlusionRendererData;
 
         [LabelText("渲染纹理分辨率")] [MinValue(0)]
@@ -132,7 +132,7 @@ namespace WorldSystem.Runtime
             //创建摄像机纹理
             CreateRenderTexture();
         }
-        public void OnDisable()
+        public void OnDestroy()
         {
             CleanupRenderTexture();
             RemoveOcclusionRenderer();
