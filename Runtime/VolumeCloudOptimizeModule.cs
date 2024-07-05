@@ -975,15 +975,15 @@ namespace WorldSystem.Runtime
             [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
             public Material CloudShadows_ScreenShadow_Material;
 
-            [FoldoutGroup("配置")] [LabelText("阴影到屏幕着色器")] 
-            [ReadOnly] 
-            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            public Shader CloudShadows_ToScreen_Shader;
-
-            [FoldoutGroup("配置")] [LabelText("阴影到屏幕材质")] 
-            [ReadOnly] 
-            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            public Material CloudShadows_ToScreen_Material;
+            // [FoldoutGroup("配置")] [LabelText("阴影到屏幕着色器")] 
+            // [ReadOnly] 
+            // [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
+            // public Shader CloudShadows_ToScreen_Shader;
+            //
+            // [FoldoutGroup("配置")] [LabelText("阴影到屏幕材质")] 
+            // [ReadOnly] 
+            // [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
+            // public Material CloudShadows_ToScreen_Material;
 
             [FoldoutGroup("阴影")] [LabelText("开启阴影铸造")] 
             [GUIColor(0.3f, 1f, 0.3f)]
@@ -1093,10 +1093,6 @@ namespace WorldSystem.Runtime
                 property.CloudShadows_ScreenShadow_Shader =
                     AssetDatabase.LoadAssetAtPath<Shader>(
                         "Packages/com.worldsystem//Shader/VolumeClouds_V1_1_20240604/CloudShadowsScreenShadows_V1_1_20240604.shader");
-            if (property.CloudShadows_ToScreen_Shader == null)
-                property.CloudShadows_ToScreen_Shader =
-                    AssetDatabase.LoadAssetAtPath<Shader>(
-                        "Packages/com.worldsystem//Shader/VolumeClouds_V1_1_20240604/CloudShadowsToScreen_V1_1_20240604.shader");
 #endif
 
             if (property.CloudShadows_TemporalAA_Material == null)
@@ -1106,19 +1102,8 @@ namespace WorldSystem.Runtime
             if (property.CloudShadows_ScreenShadow_Material == null)
                 property.CloudShadows_ScreenShadow_Material =
                     CoreUtils.CreateEngineMaterial(property.CloudShadows_ScreenShadow_Shader);
-
-            if (property.CloudShadows_ToScreen_Material == null)
-                property.CloudShadows_ToScreen_Material =
-                    CoreUtils.CreateEngineMaterial(property.CloudShadows_ToScreen_Shader);
-
+            
             _cloudShadowResolutionCache = property._Shadow_Resolution;
-            RenderTextureDescriptor rtDescriptor =
-                new RenderTextureDescriptor((int)property._Shadow_Resolution, (int)property._Shadow_Resolution,
-                    RenderTextureFormat.DefaultHDR);
-            cloudShadowMapRT ??=
-                RTHandles.Alloc(rtDescriptor, name: "CloudShadowMapRT", filterMode: FilterMode.Bilinear);
-            cloudShadowTaaRT ??= RTHandles.Alloc(rtDescriptor, name: "CloudShadowTaaRT");
-            cloudShadowTemporalTaaRT ??= RTHandles.Alloc(rtDescriptor, name: "cloudShadowTemporalTaaRT");
         }
         private CloudShadowResolution _cloudShadowResolutionCache;
         
@@ -1128,52 +1113,27 @@ namespace WorldSystem.Runtime
                 Resources.UnloadAsset(property.CloudShadows_TemporalAA_Shader);
             if (property.CloudShadows_ScreenShadow_Shader != null)
                 Resources.UnloadAsset(property.CloudShadows_ScreenShadow_Shader);
-            if (property.CloudShadows_ToScreen_Shader != null)
-                Resources.UnloadAsset(property.CloudShadows_ToScreen_Shader);
             
             if (property.CloudShadows_TemporalAA_Material != null)
                 CoreUtils.Destroy(property.CloudShadows_TemporalAA_Material);
             if (property.CloudShadows_ScreenShadow_Material != null)
                 CoreUtils.Destroy(property.CloudShadows_ScreenShadow_Material);
-            if (property.CloudShadows_ToScreen_Material != null)
-                CoreUtils.Destroy(property.CloudShadows_ToScreen_Material);
 
-            cloudShadowTaaRT?.Release();
+            PreviousCloudShadowRT?.Release();
             cloudShadowMapRT?.Release();
-            cloudShadowTemporalTaaRT?.Release();
-            cloudScreenShadowRT?.Release();
-            mergeRT?.Release();
-
-            property.CloudShadows_ToScreen_Shader = null;
-            property.CloudShadows_ToScreen_Material = null;
+            cloudShadowTaaRT?.Release();
+            
             property.CloudShadows_TemporalAA_Shader = null;
             property.CloudShadows_ScreenShadow_Shader = null;
             property.CloudShadows_TemporalAA_Material = null;
             property.CloudShadows_ScreenShadow_Material = null;
-            cloudShadowTaaRT = null;
+            PreviousCloudShadowRT = null;
             cloudShadowMapRT = null;
-            cloudShadowTemporalTaaRT = null;
-            cloudScreenShadowRT = null;
-            mergeRT = null;
+            cloudShadowTaaRT = null;
         }
 
         private void OnValidate_VolumeCloudShadow()
         {
-            if (property._Shadow_Resolution != _cloudShadowResolutionCache)
-            {
-                //分配静态分辨率RT
-                RenderTextureDescriptor rtDescriptor =
-                    new RenderTextureDescriptor((int)property._Shadow_Resolution, (int)property._Shadow_Resolution, GraphicsFormat.B10G11R11_UFloatPack32,0);
-                cloudShadowMapRT?.Release();
-                cloudShadowMapRT =
-                    RTHandles.Alloc(rtDescriptor, name: "CloudShadowMapRT", filterMode: FilterMode.Bilinear);
-                cloudShadowTaaRT?.Release();
-                cloudShadowTaaRT = RTHandles.Alloc(rtDescriptor, name: "CloudShadowTaaRT");
-                cloudShadowTemporalTaaRT?.Release();
-                cloudShadowTemporalTaaRT = RTHandles.Alloc(rtDescriptor, name: "cloudShadowTemporalTaaRT");
-                
-            }
-
             SetupStaticProperty_Shadow();
 
             if (!property._Shadow_UseCastShadow)
@@ -1205,37 +1165,10 @@ namespace WorldSystem.Runtime
             
             return false;
         }
-
-        // private bool _RenderVolumeCloudShadow;
+        
         public void RenderVolumeCloudShadow(CommandBuffer cmd, ref RenderingData renderingData)
         {
             if (IsDisableVolumeCloudShadow(out _)) return;
-            RTHandle source = renderingData.cameraData.renderer.cameraColorTargetHandle;
-            
-//             if (!_RenderVolumeCloudShadow && Time.renderedFrameCount > 2
-// #if UNITY_EDITOR  
-//                                           && Application.isPlaying
-// #endif
-//                )
-//             {
-//                 
-//                 cmd.SetGlobalTexture(_ScreenTexture, source);
-//                 //将屏幕空间阴影合并输出到摄像机
-//                 cmd.SetRenderTarget(mergeRT);
-//                 Blitter.BlitTexture(cmd, new Vector4(1, 1, 0, 0), property.CloudShadows_ToScreen_Material, 0);
-//                 Blitter.BlitCameraTexture(cmd, mergeRT, source);
-//                 return;
-//             }
-//             _RenderVolumeCloudShadow = false;
-
-            //分配动态分辨率RT
-            RenderTextureDescriptor ssrtDescriptor = new RenderTextureDescriptor(
-                renderingData.cameraData.cameraTargetDescriptor.width,
-                renderingData.cameraData.cameraTargetDescriptor.height,
-                source.rt.format);
-            RenderingUtils.ReAllocateIfNeeded(ref cloudScreenShadowRT, ssrtDescriptor, name: "CloudScreenShadowRT");
-            RenderingUtils.ReAllocateIfNeeded(ref mergeRT, ssrtDescriptor, name: "MergeRT");
-            
             
             cmd.SetGlobalFloat(_ShadowPass, 1);
             cmd.SetGlobalVector(_RenderTextureDimensions,
@@ -1243,51 +1176,65 @@ namespace WorldSystem.Runtime
                     (int)property._Shadow_Resolution, (int)property._Shadow_Resolution));
             
             //渲染体积云阴影贴图
+            //初始化RT
+            if (property._Shadow_Resolution != _cloudShadowResolutionCache || cloudShadowMapRT == null)
+            {
+                RenderTextureDescriptor rtDescriptor =
+                    new RenderTextureDescriptor((int)property._Shadow_Resolution, (int)property._Shadow_Resolution,
+                        GraphicsFormat.B10G11R11_UFloatPack32, 0);
+                cloudShadowMapRT?.Release();
+                cloudShadowMapRT = RTHandles.Alloc(rtDescriptor, name: "CloudShadowMapRT", filterMode: FilterMode.Bilinear);
+                _cloudShadowResolutionCache = property._Shadow_Resolution;
+            }
             cmd.SetRenderTarget(cloudShadowMapRT);
             Blitter.BlitTexture(cmd, new Vector4(1, 1, 0, 0), property.VolumeCloud_Main_Material, 0);
 
+            
             if (property._Shadow_UseShadowTaa)
             {
-                //TAA
                 //将 原始体积云阴影贴图 设置为全局参数
-                cmd.SetGlobalTexture(_CURRENT_TAA_FRAME, cloudShadowMapRT);
+                cmd.SetGlobalTexture(_CURRENT_TAA_CLOUD_SHADOW, cloudShadowMapRT);
                 //在没有进行新的复制之前拿到的上一帧的TAA结果
-                cmd.SetGlobalTexture(_PREVIOUS_TAA_CLOUD_RESULTS, cloudShadowTaaRT);
+                if (PreviousCloudShadowRT == null)
+                {
+                    PreviousCloudShadowRT = RTHandles.Alloc(cloudShadowMapRT.rt.descriptor, name: "PreviousCloudShadowRT", filterMode: FilterMode.Bilinear);
+                    cmd.SetGlobalTexture(_PREVIOUS_TAA_CLOUD_SHADOW, cloudShadowMapRT);
+                }
+                else
+                {
+                    cmd.SetGlobalTexture(_PREVIOUS_TAA_CLOUD_SHADOW, PreviousCloudShadowRT);
+                }
+                
+                cloudShadowTaaRT ??= RTHandles.Alloc(cloudShadowMapRT.rt.descriptor, name: "CloudShadowTaaRT", filterMode: FilterMode.Bilinear);
                 //渲染体积云阴影贴图TAA
-                cmd.SetRenderTarget(cloudShadowTemporalTaaRT);
+                cmd.SetRenderTarget(cloudShadowTaaRT);
                 Blitter.BlitTexture(cmd, new Vector4(1, 1, 0, 0), property.CloudShadows_TemporalAA_Material, 0);
                 //将这一帧的TAA结果赋值给 cloudShadowTaaTexture 
-                cmd.CopyTexture(cloudShadowTemporalTaaRT, cloudShadowTaaRT);
+                cmd.CopyTexture(cloudShadowTaaRT, PreviousCloudShadowRT);
                 //将 TAA之后的体积云阴影贴图 设置为全局参数
-                cmd.SetGlobalTexture(_CloudShadowmap, cloudShadowTemporalTaaRT);
+                cmd.SetGlobalTexture(_CloudShadowmap, cloudShadowTaaRT);
             }
             else
             {
+                PreviousCloudShadowRT?.Release();
+                PreviousCloudShadowRT = null;
+                cloudShadowTaaRT?.Release();
+                cloudShadowTaaRT = null;
                 cmd.SetGlobalTexture(_CloudShadowmap, cloudShadowMapRT);
             }
 
+            
             //渲染屏幕空间云shadow
-            cmd.SetRenderTarget(cloudScreenShadowRT);
+            cmd.SetRenderTarget(renderingData.cameraData.renderer.cameraColorTargetHandle);
             Blitter.BlitTexture(cmd, new Vector4(1, 1, 0, 0), property.CloudShadows_ScreenShadow_Material, 0);
-
-            cmd.SetGlobalTexture(_CloudScreenShadows, cloudScreenShadowRT);
-            cmd.SetGlobalTexture(_ScreenTexture, source);
-
-            //将屏幕空间阴影合并输出到摄像机
-            cmd.SetRenderTarget(mergeRT);
-            Blitter.BlitTexture(cmd, new Vector4(1, 1, 0, 0), property.CloudShadows_ToScreen_Material, 0);
-            Blitter.BlitCameraTexture(cmd, mergeRT, source);
         }
 
         private RTHandle cloudShadowMapRT;
+        private RTHandle PreviousCloudShadowRT;
         private RTHandle cloudShadowTaaRT;
-        private RTHandle cloudShadowTemporalTaaRT;
-        private RTHandle cloudScreenShadowRT;
-        private RTHandle mergeRT;
         private readonly int _CloudShadowmap = Shader.PropertyToID("_CloudShadowmap");
-        private readonly int _CloudScreenShadows = Shader.PropertyToID("_CloudScreenShadows");
-        private readonly int _CURRENT_TAA_FRAME = Shader.PropertyToID("_CURRENT_TAA_FRAME");
-        private readonly int _PREVIOUS_TAA_CLOUD_RESULTS = Shader.PropertyToID("_PREVIOUS_TAA_CLOUD_RESULTS");
+        private readonly int _CURRENT_TAA_CLOUD_SHADOW = Shader.PropertyToID("_CURRENT_TAA_CLOUD_SHADOW");
+        private readonly int _PREVIOUS_TAA_CLOUD_SHADOW = Shader.PropertyToID("_PREVIOUS_TAA_CLOUD_SHADOW");
         
 
         #endregion

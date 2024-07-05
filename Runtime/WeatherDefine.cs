@@ -753,8 +753,8 @@ namespace WorldSystem.Runtime
                 VARIABLE.cloudProperty.CloudShadows_TemporalAA_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.CloudShadows_TemporalAA_Material;
                 VARIABLE.cloudProperty.CloudShadows_ScreenShadow_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.CloudShadows_ScreenShadow_Shader;
                 VARIABLE.cloudProperty.CloudShadows_ScreenShadow_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.CloudShadows_ScreenShadow_Material;
-                VARIABLE.cloudProperty.CloudShadows_ToScreen_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.CloudShadows_ToScreen_Shader;
-                VARIABLE.cloudProperty.CloudShadows_ToScreen_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.CloudShadows_ToScreen_Material;
+                // VARIABLE.cloudProperty.CloudShadows_ToScreen_Shader = WorldManager.Instance.volumeCloudOptimizeModule.property.CloudShadows_ToScreen_Shader;
+                // VARIABLE.cloudProperty.CloudShadows_ToScreen_Material = WorldManager.Instance.volumeCloudOptimizeModule.property.CloudShadows_ToScreen_Material;
                 
                 if (VARIABLE.cloudProperty._Modeling_Position_RadiusPreset != VolumeCloudOptimizeModule.CelestialBodySelection.Custom)
                     VARIABLE.cloudProperty._Modeling_Position_PlanetRadius = WorldManager.Instance.volumeCloudOptimizeModule.property._Modeling_Position_PlanetRadius;
