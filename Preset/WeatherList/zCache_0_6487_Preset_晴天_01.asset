@@ -627,8 +627,8 @@ MonoBehaviour:
     VolumeCloud_Main_Shader: {fileID: 4800000, guid: 432b92588026cab47a32165d32858d5d,
       type: 3}
     VolumeCloud_Main_Material: {fileID: 0}
-    _Render_CoarseSteps: 32
-    _Render_DetailSteps: 16
+    _Render_CoarseSteps: 42
+    _Render_DetailSteps: 24
     _Render_BlueNoiseArray: {fileID: 0}
     _Render_BlueNoise: 1
     _Render_MipmapDistance: {x: 4000, y: 8000}
