@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Unity.Collections;
+using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -566,6 +567,7 @@ namespace WorldSystem.Runtime
                 if (Instance.universeBackgroundModule.property._Render_UseAsyncRender)
                 {
                     //我现在希望分帧渲染只分为两帧,而不是分为多个帧,这样可以避免运动矢量的累加,降低复杂度
+                    //我现在希望分帧渲染不止分为两帧,使用多帧分帧渲染,继续提高性能
                     
                     profilingSampler.Begin(cmd);
                     //修改矩阵以扩大视野
