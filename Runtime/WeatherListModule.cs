@@ -9,7 +9,7 @@ namespace WorldSystem.Runtime
     {
         
 #if UNITY_EDITOR
-        [ToggleLeft][LabelText(" \u261a 修改天气列表参数后请点击此处刷新序列化数据")]
+        [ToggleLeft][LabelText(" \u261a 打包之前请点击此处刷新序列化数据, 否则部分参数可能不生效")]
         public bool RefreshSerializeData;
 #endif
         

@@ -265,38 +265,54 @@ namespace WorldSystem.Runtime
             public float _Render_MaxRenderDistance = 20000f;
 
             [FoldoutGroup("建模")]
-            [FoldoutGroup("建模/云量")] [LabelText("云量")][PropertyRange(0, 1)]
+            [TitleGroup("建模/云量")] [LabelText("云量")][PropertyRange(0, 1)]
             [GUIColor(1f, 0.7f, 0.7f)] [PropertyOrder(-10)]
             public float _Modeling_Amount_CloudAmount = 0.6f;
 
-            [FoldoutGroup("建模/云量")] [LabelText("覆盖远程云量")] 
+            [TitleGroup("建模/云量")] [LabelText("覆盖远程云量")] 
             [GUIColor(0.7f, 0.7f, 1.0f)]
             public bool _Modeling_Amount_UseFarOverlay = false;
 
-            [FoldoutGroup("建模/云量")] [LabelText("    开始距离(m)")]
+            [TitleGroup("建模/云量")] [LabelText("    开始距离(m)")]
             [GUIColor(1f, 0.7f, 0.7f)]
             [ShowIf("_Modeling_Amount_UseFarOverlay")]
             public float _Modeling_Amount_OverlayStartDistance = 20000f;
 
-            [FoldoutGroup("建模/云量")] [LabelText("    云量")] [PropertyRange(0, 1)]
+            [TitleGroup("建模/云量")] [LabelText("    云量")] [PropertyRange(0, 1)]
             [GUIColor(1f, 0.7f, 0.7f)]
             [ShowIf("_Modeling_Amount_UseFarOverlay")]
             public float _Modeling_Amount_OverlayCloudAmount = 0.8f;
 
-            [Title("基础(云图)")] 
-            [FoldoutGroup("建模/形状")] [LabelText("八度音程")] [PropertyRange(1, 6)] 
+            [TitleGroup("建模/位置")] [LabelText("星球半径预设")] 
+            [GUIColor(0.7f, 0.7f, 1f)]
+            public CelestialBodySelection _Modeling_Position_RadiusPreset;
+
+            [TitleGroup("建模/位置")] [LabelText("    星球半径(km)")] [MinValue(0)]
+            [GUIColor(0.7f, 0.7f, 1f)]
+            [EnableIf("@_Modeling_Position_RadiusPreset == CelestialBodySelection.Custom")]
+            public int _Modeling_Position_PlanetRadius = 6378;
+
+            [TitleGroup("建模/位置")] [LabelText("云层海拔(m)")] [MinValue(0)] 
+            [GUIColor(1f, 0.7f, 0.7f)]
+            public float _Modeling_Position_CloudHeight = 600f;
+
+            [TitleGroup("建模/位置")] [LabelText("云层厚度(m)")] [PropertyRange(100, 8000)] 
+            [GUIColor(1f, 0.7f, 0.7f)]
+            public float _Modeling_Position_CloudThickness = 4000f;
+            
+            [TitleGroup("建模/基础(云图)")] [LabelText("八度音程")] [PropertyRange(1, 6)] 
             [GUIColor(0.7f, 0.7f, 1f)]
             public int _Modeling_ShapeBase_Octaves = 3;
 
-            [FoldoutGroup("建模/形状")] [LabelText("增益")] [PropertyRange(0, 1)] 
+            [TitleGroup("建模/基础(云图)")] [LabelText("增益")] [PropertyRange(0, 1)] 
             [GUIColor(1f, 0.7f, 0.7f)]
             public float _Modeling_ShapeBase_Gain = 0.5f;
 
-            [FoldoutGroup("建模/形状")] [LabelText("频率")] [PropertyRange(2, 5)] 
+            [TitleGroup("建模/基础(云图)")] [LabelText("频率")] [PropertyRange(2, 5)] 
             [GUIColor(0.7f, 0.7f, 1f)]
             public float _Modeling_ShapeBase_Freq = 2f;
 
-            [FoldoutGroup("建模/形状")] [LabelText("比例")] 
+            [TitleGroup("建模/基础(云图)")] [LabelText("比例")] 
             [GUIColor(1f, 0.7f, 0.7f)]
             public float _Modeling_ShapeBase_Scale = 5f;
 
@@ -482,36 +498,20 @@ namespace WorldSystem.Runtime
             [GUIColor(0.7f, 0.7f, 1f)] [PropertyOrder(-10)] 
             public Vector2 _Render_MipmapDistance = new Vector2(4000, 8000);
             
-            [FoldoutGroup("建模/位置")] [LabelText("星球半径预设")] 
-            [GUIColor(0.7f, 0.7f, 1f)]
-            public CelestialBodySelection _Modeling_Position_RadiusPreset;
-
-            [FoldoutGroup("建模/位置")] [LabelText("    星球半径(km)")] [MinValue(0)]
-            [GUIColor(0.7f, 0.7f, 1f)]
-            [EnableIf("@_Modeling_Position_RadiusPreset == CelestialBodySelection.Custom")]
-            public int _Modeling_Position_PlanetRadius = 6378;
-
-            [FoldoutGroup("建模/位置")] [LabelText("云层海拔(m)")] [MinValue(0)] 
-            [GUIColor(1f, 0.7f, 0.7f)]
-            public float _Modeling_Position_CloudHeight = 600f;
-
-            [FoldoutGroup("建模/位置")] [LabelText("云层厚度(m)")] [PropertyRange(100, 8000)] 
-            [GUIColor(1f, 0.7f, 0.7f)]
-            public float _Modeling_Position_CloudThickness = 4000f;
-
-            [Title("细节")] [FoldoutGroup("建模/形状")] [LabelText("3D噪音")] 
+            
+            [TitleGroup("建模/细节")] [LabelText("3D噪音")] 
             [GUIColor(0.7f, 0.7f, 0.7f)] [ReadOnly]
             public Texture3D _Modeling_ShapeDetail_NoiseTexture3D = null;
 
-            [FoldoutGroup("建模/形状")] [LabelText("类型")] 
+            [TitleGroup("建模/细节")] [LabelText("类型")] 
             [GUIColor(0.7f, 0.7f, 1f)]
             public Noise3DTextureId _Modeling_ShapeDetail_Type = Noise3DTextureId.Perlin;
 
-            [FoldoutGroup("建模/形状")] [LabelText("质量")] 
+            [TitleGroup("建模/细节")] [LabelText("质量")] 
             [GUIColor(0.7f, 0.7f, 1f)]
             public TextureQuality _Modeling_ShapeDetail_Quality = TextureQuality.High;
 
-            [FoldoutGroup("建模/形状")] [LabelText("比例")] 
+            [TitleGroup("建模/细节")] [LabelText("比例")] 
             [GUIColor(1f, 0.7f, 0.7f)]
             public Vector3 _Modeling_ShapeDetail_Scale = new(5, 5, 5);
 
