@@ -61,6 +61,10 @@ namespace WorldSystem.Runtime
             [VerticalGroup("描述")][HideLabel][Multiline(3)][Space(3)]
             [EnableIf("@false")]
             public string describe;
+            
+            [HideInInspector]
+            public string[] patchFilePaths;
+
         }
 
         private string PackagesPath;
@@ -69,6 +73,7 @@ namespace WorldSystem.Runtime
         
         private void OnEnable()
         {
+            if (Application.isPlaying) return;
             //获取包路径与插件路径
             PackagesPath = UnityEngine.Windows.Directory.localFolder.Replace("LocalState", "Packages/com.worldsystem/Packages~").Replace("\\","/");  
             PluginsPath = UnityEngine.Windows.Directory.localFolder.Replace("LocalState", "Packages/com.worldsystem/Assets/Plugins").Replace("\\","/");
@@ -103,6 +108,8 @@ namespace WorldSystem.Runtime
         
         private void OnValidate()
         {
+            if (Application.isPlaying) return;
+
             if (Paths.Length == 0 || PJ.Length == 0) return;
             for (var index = 0; index < PJ.Length; index++)
             {
@@ -123,13 +130,7 @@ namespace WorldSystem.Runtime
                 //插件文件夹的Meta文件
                 string pluginsDirectoryMeta = PluginsPath + "/"+ directoryName + ".meta";
                 
-                //PJ序列化为Json
-                string PJstring = JsonUtility.ToJson(PJ[index]).Replace("\",","\",\n");
-                //更新包根目录下的SimplePackage.json文件
-                File.WriteAllText(simplePackageJson, PJstring);
-                //重新反序列化为PJ
-                PJstring = File.ReadAllText(simplePackageJson);
-                PJ[index] = JsonUtility.FromJson<PackageJson>(PJstring);
+                RefreshJsonFile(index, simplePackageJson);
 
                 if (PJ[index].active)
                 {
@@ -138,7 +139,31 @@ namespace WorldSystem.Runtime
                     {
                         //复制包文件夹到插件文件夹内
                         CopyFileAndDir(packagesDirectory, pluginsDirectory);
-                        //如果包文件夹存在Meta数据,则同样复杂
+                        
+                        if (Directory.Exists(pluginsDirectory + "/Patch"))
+                        {
+                            //将包中的补丁拷贝到目标文件夹
+                            string[] strings = Directory.GetDirectories(pluginsDirectory + "/Patch");
+                            foreach (var VARIABLE in strings)
+                            {
+                                CopyFileAndDir(VARIABLE, PluginsPath + "/" +  VARIABLE.Split("\\").Last());
+                            }
+
+                            //获取Patch文件夹内(包括子文件夹)的所有文件的路径
+                            string[] files = Directory.GetFiles(pluginsDirectory + "/Patch", "*", SearchOption.AllDirectories);
+                            for (int i = 0; i < files.Length; i++)
+                            {
+                                files[i] = files[i].Replace("\\", "/").Replace(pluginsDirectory + "/Patch", PluginsPath);
+                                // Debug.Log(files[i]);
+                            }
+                            PJ[index].patchFilePaths = files;
+                            
+                            RefreshJsonFile(index, simplePackageJson);
+                            
+                            //拷贝之后将补丁文件夹删除
+                            DeleteDirectory(pluginsDirectory + "/Patch");
+                        }
+                        //如果包文件夹存在Meta数据,则同样复制
                         if(File.Exists(packagesDirectoryMeta))
                             File.Copy(packagesDirectoryMeta,pluginsDirectoryMeta );
                     }
@@ -151,13 +176,54 @@ namespace WorldSystem.Runtime
                         Directory.Delete(pluginsDirectory, true);
                         if(File.Exists(pluginsDirectoryMeta))
                             File.Delete(pluginsDirectoryMeta);
+
+                        if (PJ[index].patchFilePaths.Length != 0)
+                        {
+                            foreach (var VARIABLE in PJ[index].patchFilePaths)
+                            {
+                                if(File.Exists(VARIABLE))
+                                    File.Delete(VARIABLE);
+                                if (File.Exists(VARIABLE + ".meta"))
+                                    File.Delete(VARIABLE + ".meta");
+                            }
+                        }
+                            
                     }
                 }
             }
             AssetDatabase.Refresh();
         }
-        
-        
+
+        private void RefreshJsonFile(int index, string simplePackageJson)
+        {
+            //PJ序列化为Json
+            string PJstring = JsonUtility.ToJson(PJ[index]).Replace("\",","\",\n");
+            //更新包根目录下的SimplePackage.json文件
+            File.WriteAllText(simplePackageJson, PJstring);
+            //重新反序列化为PJ
+            PJstring = File.ReadAllText(simplePackageJson);
+            PJ[index] = JsonUtility.FromJson<PackageJson>(PJstring);
+        }
+
+
+        public static void DeleteDirectory(string targetDir)
+        {
+            string[] files = Directory.GetFiles(targetDir);
+            string[] dirs = Directory.GetDirectories(targetDir);
+ 
+            foreach (string file in files)
+            {
+                File.SetAttributes(file, FileAttributes.Normal);
+                File.Delete(file);
+            }
+ 
+            foreach (string dir in dirs)
+            {
+                DeleteDirectory(dir);
+            }
+ 
+            Directory.Delete(targetDir, true);
+        }
         
         /// <summary>
         /// 复制文件夹下的所有文件、目录到指定的文件夹
@@ -166,24 +232,25 @@ namespace WorldSystem.Runtime
         /// <param name="desDir">指定的文件夹地址</param>
         public static void CopyFileAndDir(string dir, string desDir)
         {
-            if (!System.IO.Directory.Exists(desDir))
+            if (!Directory.Exists(desDir))
             {
-                System.IO.Directory.CreateDirectory(desDir);
+                Directory.CreateDirectory(desDir);
             }
             
-            IEnumerable<string> files = System.IO.Directory.EnumerateFileSystemEntries(dir);
-            if (files != null && files.Count() > 0)
+            IEnumerable<string> files = Directory.EnumerateFileSystemEntries(dir);
+            var enumerable = files as string[] ?? files.ToArray();
+            if (enumerable.Any())
             {
-                foreach (var item in files)
+                foreach (var item in enumerable)
                 {
-                    string desPath = System.IO.Path.Combine(desDir, System.IO.Path.GetFileName(item));
+                    string desPath = Path.Combine(desDir, Path.GetFileName(item));
 
                     //如果是文件
-                    var fileExist = System.IO.File.Exists(item);
+                    var fileExist = File.Exists(item);
                     if (fileExist)
                     {
                         //复制文件到指定目录下                     
-                        System.IO.File.Copy(item, desPath, true);
+                        File.Copy(item, desPath, true);
                         continue;
                     }
 
