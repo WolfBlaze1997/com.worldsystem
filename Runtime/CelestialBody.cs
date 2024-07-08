@@ -362,7 +362,15 @@ namespace WorldSystem.Runtime
         private void Update()
         {
             if (!(WorldManager.Instance?.celestialBodyManager?._Update ?? false)) return;
-            
+            if (angularDiameterDegreesEvaluate > 0.2)
+            {
+                property.lightComponent.enabled = true;
+            }
+            else
+            {
+                property.lightComponent.enabled = false;
+            }
+
             UpdateRotations();
             UpdateLightProperties();
 
