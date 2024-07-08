@@ -34,9 +34,9 @@ MonoBehaviour:
     _Render_AsyncFOV: 80
   StarProperty:
     starMesh: {fileID: 0}
-    starShader: {fileID: 4800000, guid: 72fdf5ab94348ed40b501f5e219caa8b, type: 3}
+    starShader: {fileID: 0}
     starMaterial: {fileID: 0}
-    starTexture: {fileID: 2800000, guid: 098deac9ca9c2bf40b32ff016481f6ba, type: 3}
+    starTexture: {fileID: 0}
     count: 10000
     size: 1.8
     automaticColor: 1
@@ -549,11 +549,10 @@ MonoBehaviour:
       m_RotationOrder: 4
     lightComponent: {fileID: 0}
   atmosphereProperty:
-    mesh: {fileID: 4300000, guid: 3ec8d1078f11f6147bb9cb75cf18150d, type: 2}
-    shader: {fileID: 4800000, guid: fa859031ab5153345a9e3ced9695a29d, type: 3}
+    mesh: {fileID: 0}
+    shader: {fileID: 0}
     material: {fileID: 0}
-    atmosphereBlendShader: {fileID: 4800000, guid: 1afe8fbe76cdae54abde0ad17f3e123d,
-      type: 3}
+    atmosphereBlendShader: {fileID: 0}
     atmosphereBlendMaterial: {fileID: 0}
     dayPeriodsList:
     - description: Night End
@@ -597,17 +596,16 @@ MonoBehaviour:
       equatorColor: {r: 0.01076923, g: 0.01076923, b: 0.02, a: 1}
       groundColor: {r: 0.0062499996, g: 0.0062499996, b: 0.01, a: 1}
     currentAtmosphereColor:
-      skyColor: {r: 0.07911617, g: 0.12262321, b: 0.321147, a: 1}
-      equatorColor: {r: 0.56333333, g: 0.659281, b: 0.73333335, a: 1}
-      groundColor: {r: 0.06627451, g: 0.060087148, b: 0.067320265, a: 1}
+      skyColor: {r: 0.06313726, g: 0.08854249, b: 0.18039216, a: 1}
+      equatorColor: {r: 0.01076923, g: 0.01076923, b: 0.02, a: 1}
+      groundColor: {r: 0.0062499996, g: 0.0062499996, b: 0.01, a: 1}
     currentCloudiness: 0
     currentPrecipitation: 0
     useAtmosphereBlend: 1
     start: 1000
     end: 20000
   cloudProperty:
-    VolumeCloud_BaseTex_Shader: {fileID: 4800000, guid: 97d206b1e14db664391cac55c77549be,
-      type: 3}
+    VolumeCloud_BaseTex_Shader: {fileID: 0}
     VolumeCloud_BaseTex_Material: {fileID: 0}
     _Render_MaxRenderDistance: 20000
     _Modeling_Amount_CloudAmount: 0.48
@@ -622,14 +620,13 @@ MonoBehaviour:
     _Modeling_ShapeBase_Gain: 0.7
     _Modeling_ShapeBase_Freq: 2
     _Modeling_ShapeBase_Scale: 5
-    _MotionBase_DynamicVector: {x: 0.08678154, y: 0.33328176}
+    _MotionBase_DynamicVector: {x: -0.20486322, y: 0.40338585}
     _MotionBase_Direction: 0
     _MotionBase_Speed: 0.25
     _MotionBase_UseDirectionRandom: 1
     _MotionBase_DirectionRandomRange: 60
     _MotionBase_DirectionRandomFreq: 12
-    VolumeCloud_Main_Shader: {fileID: 4800000, guid: 432b92588026cab47a32165d32858d5d,
-      type: 3}
+    VolumeCloud_Main_Shader: {fileID: 0}
     VolumeCloud_Main_Material: {fileID: 0}
     _Render_CoarseSteps: 40
     _Render_DetailSteps: 26
@@ -642,7 +639,7 @@ MonoBehaviour:
     _Modeling_ShapeDetail_Quality: 1
     _Modeling_ShapeDetail_Scale: {x: 8, y: 8, z: 8}
     _MotionBase_UseDynamicCloud: 1
-    _MotionDetail_DynamicVector: {x: 0.102740765, y: -1.0098541, z: 3.2909596}
+    _MotionDetail_DynamicVector: {x: -0.71770495, y: -0.3262332, z: 2.7155366}
     _MotionDetail_Direction: {x: 0, y: 0}
     _MotionDetail_Speed: 2.5
     _MotionDetail_UseRandomDirection: 1
@@ -744,8 +741,7 @@ MonoBehaviour:
     snowPrecipitation: 0
     snowSize: 2
   lightningEffectProperty:
-    prefab: {fileID: 5925228745392595290, guid: fe10b194253e1ee4a837ebdd03273df1,
-      type: 3}
+    prefab: {fileID: 0}
     mainCamera: {fileID: 0}
     lightningLit: {fileID: 0}
     lightningDataObjectArray:
