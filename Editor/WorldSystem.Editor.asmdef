@@ -1,9 +1,10 @@
 {
     "name": "WorldSystem.Editor",
-    "rootNamespace": "WorldSystem.Editor",
+    "rootNamespace": "WorldSystem",
     "references": [],
     "includePlatforms": [
-        "Editor"
+        "Editor",
+        "QNX"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
