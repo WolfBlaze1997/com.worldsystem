@@ -9,6 +9,8 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Serialization;
 
+// using WorldSystem.Editor;
+
 namespace WorldSystem.Runtime
 {
     public partial class WorldManager
@@ -211,7 +213,7 @@ namespace WorldSystem.Runtime
         [PropertyOrder(-100)]
         [ShowIf("fpsDisplayModuleToggle")]
         [FoldoutGroup("实用工具")]
-        [HorizontalGroup("实用工具/Split03",0.2f)]
+        [HorizontalGroup("实用工具/Split03",0.195f)]
         [VerticalGroup("实用工具/Split03/01")]
         [Button(ButtonSizes.Large, Name = "FPS显示模块"), GUIColor(0.3f, 1f, 0.3f)]
         private void FpsDisplayModuleToggle_Off()
@@ -228,6 +230,29 @@ namespace WorldSystem.Runtime
             fpsDisplayModuleToggle = true;
             OnValidate();
         }
+        
+#if UNITY_EDITOR
+        [PropertyOrder(-100)]
+        [ShowIf("packageManagerToggle")]
+        [HorizontalGroup("实用工具/Split03",0.195f)]
+        [VerticalGroup("实用工具/Split03/02")]
+        [Button(ButtonSizes.Large, Name = "包管理器模块"), GUIColor(0.3f, 1f, 0.3f)]
+        private void PackageManagerToggle_Off()
+        {
+            packageManagerToggle = false;
+            OnValidate();
+        }
+        [PropertyOrder(-100)]
+        [HideIf("packageManagerToggle")]
+        [VerticalGroup("实用工具/Split03/02")]
+        [Button(ButtonSizes.Large, Name = "包管理器模块"), GUIColor(0.5f, 0.2f, 0.2f)]
+        private void PackageManagerToggle_On()
+        {
+            packageManagerToggle = true;
+            OnValidate();
+        }
+#endif
+        
         
         #endregion
 
@@ -356,6 +381,12 @@ namespace WorldSystem.Runtime
         [FoldoutGroup("实用工具/FPS显示")][InlineEditor(InlineEditorObjectFieldModes.Hidden)][ShowIf("fpsDisplayModuleToggle")]
         public FPSDisplayModule fpsDisplayModule;
         
+#if UNITY_EDITOR
+        [HideInInspector] public bool packageManagerToggle;
+        [FoldoutGroup("实用工具/包管理器")][InlineEditor(InlineEditorObjectFieldModes.Hidden)][ShowIf("packageManagerToggle")]
+        public PackageManager packageManager;
+#endif
+        
         #endregion
 
         #region 事件函数
@@ -403,6 +434,9 @@ namespace WorldSystem.Runtime
             weatherEffectModuleToggle = false;
             windZoneModuleToggle = false;
             fpsDisplayModuleToggle = false;
+#if UNITY_EDITOR
+            packageManagerToggle = false;
+#endif
             OnValidate();
             
             timeModule = null;
@@ -413,7 +447,9 @@ namespace WorldSystem.Runtime
             windZoneModule = null;
             weatherEffectModule = null;
             fpsDisplayModule = null;
-            
+#if UNITY_EDITOR
+            packageManager = null;
+#endif
             Instance = null;
         }
         
@@ -434,6 +470,9 @@ namespace WorldSystem.Runtime
             
             fpsDisplayModule = AppendOrDestroyModule<FPSDisplayModule>(fpsDisplayModuleToggle);
             
+#if UNITY_EDITOR
+            packageManager = AppendOrDestroyModule<PackageManager>(packageManagerToggle);
+#endif
         }
         #endregion
 
