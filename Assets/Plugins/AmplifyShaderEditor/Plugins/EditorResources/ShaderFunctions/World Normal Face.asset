@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  m_Name: World Normal Face
+  m_EditorClassIdentifier: 
+  m_functionInfo: "// Made with Amplify Shader Editor v1.9.2.2\n// Available at the
+    Unity Asset Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=19202\nNode;AmplifyShaderEditor.StickyNoteNode;74;-96,-1200;Inherit;False;508.3998;151.394;Normal
+    Face Node;;0.05660379,0.05046281,0.05046281,1;Returns a world-space Face Normal$$Generates
+    unsmoothed normals for the faces of the mesh. $$The normals are generated using
+    derivatives so these normals are completely independent from the vertex normals
+    provided by the mesh.$;0;0\nNode;AmplifyShaderEditor.StickyNoteNode;80;-256,-864;Inherit;False;192.5178;114.047;;;0.05660379,0.0536668,0.0536668,1;Normals
+    are generated using the derivatives (DDX / DDY) of the position.;0;0\nNode;AmplifyShaderEditor.StickyNoteNode;83;-512,-1136;Inherit;False;211.6436;102.443;;;0.05660379,0.0536668,0.0536668,1;Use
+    Camera-relative World Position to avoid precision issues$;0;0\nNode;AmplifyShaderEditor.FunctionSwitch;86;224,-1024;Inherit;False;Safe
+    Normalize;True;1;2;1;In 0;In 1;Object;-1;10;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;9;FLOAT;0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionOutput;30;448,-1024;Inherit;False;True;-1;Out;0;True;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.DdyOpNode;76;-256,-1024;Inherit;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.DdxOpNode;77;-256,-944;Inherit;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.CrossProductOpNode;78;-128,-1024;Inherit;False;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.SimpleSubtractOpNode;82;-527,-979;Inherit;False;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.WorldPosInputsNode;75;-735,-1059;Inherit;False;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3\nNode;AmplifyShaderEditor.WorldSpaceCameraPos;81;-799,-915;Inherit;False;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3\nNode;AmplifyShaderEditor.NormalizeNode;79;48,-1024;Inherit;False;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.NormalizeNode;87;49,-944;Inherit;False;True;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nWireConnection;86;0;79;0\nWireConnection;86;1;87;0\nWireConnection;30;0;86;0\nWireConnection;76;0;82;0\nWireConnection;77;0;82;0\nWireConnection;78;0;76;0\nWireConnection;78;1;77;0\nWireConnection;82;0;75;0\nWireConnection;82;1;81;0\nWireConnection;79;0;78;0\nWireConnection;87;0;78;0\nASEEND*/\n//CHKSM=A53FDBBB6C88E6C23DA4EC6A052241577B1414D2"
+  m_functionName: 
+  m_description: Normal Face Node
+  m_additionalIncludes:
+    m_additionalIncludes: []
+    m_outsideIncludes: []
+  m_additionalPragmas:
+    m_additionalPragmas: []
+    m_outsidePragmas: []
+  m_additionalDirectives:
+    m_validData: 0
+    m_isDirty: 0
+    m_moduleName: ' Additional Directives'
+    m_independentModule: 1
+    m_customEdited: 0
+    m_additionalDirectives: []
+    m_shaderFunctionDirectives: []
+    m_nativeDirectives: []
+    m_nativeDirectivesIndex: -1
+    m_nativeDirectivesFoldout: 0
+    m_directivesSaveItems: []
+  m_nodeCategory: 11
+  m_headerStyle: 2
+  m_headerColor: {r: 0, g: 0.18039216, b: 0.4745098, a: 1}
+  m_customNodeCategory: ASE Normal
+  m_previewPosition: 0
+  m_hidden: 0
+  m_url: 

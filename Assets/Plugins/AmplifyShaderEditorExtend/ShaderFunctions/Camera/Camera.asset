@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  m_Name: Camera
+  m_EditorClassIdentifier: 
+  m_functionInfo: "// Made with Amplify Shader Editor v1.9.3.2\n// Available at the
+    Unity Asset Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=19302\nNode;AmplifyShaderEditor.CommentaryNode;53;-409.825,2055.159;Inherit;False;714.24;163.16;Comment;2;45;49;0\u5728\u8FD1\u5E73\u9762\uFF0C1\u5728\u8FDC\u5E73\u9762;1,1,1,1;0;0\nNode;AmplifyShaderEditor.CommentaryNode;52;-370.825,1824.159;Inherit;False;593.21;160.16;Comment;2;48;44;0\u5728\u76F8\u673A\u4F4D\u7F6E\uFF0C1\u5728\u8FDC\u5E73\u9762\u4F4D\u7F6E;1,1,1,1;0;0\nNode;AmplifyShaderEditor.CommentaryNode;51;-271.925,1601.358;Inherit;False;544.9901;161.4604;Comment;2;43;47;\u5E38\u7528\u4E8Efogfactor\u7684\u8BA1\u7B97;1,1,1,1;0;0\nNode;AmplifyShaderEditor.CommentaryNode;50;-483.7247,1372.759;Inherit;False;673.56;161.16;Comment;2;42;46;\u89C6\u7A7A\u95F4z\u503C;1,1,1,1;0;0\nNode;AmplifyShaderEditor.BreakToComponentsNode;41;-810.7247,1391.259;Inherit;False;FLOAT4;1;0;FLOAT4;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15\nNode;AmplifyShaderEditor.FunctionInput;28;-705,883;Inherit;False;PositionSS;2;0;False;1;0;FLOAT2;0,0;False;1;FLOAT2;0\nNode;AmplifyShaderEditor.SwizzleNode;5;-268,208;Inherit;False;FLOAT2;0;1;2;3;1;0;FLOAT4;0,0,0,0;False;1;FLOAT2;0\nNode;AmplifyShaderEditor.LODFadeNode;31;-372,1121;Inherit;False;False;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4\nNode;AmplifyShaderEditor.CustomExpressionNode;20;-358,712;Inherit;False;
+    return UNITY_RAW_FAR_CLIP_VALUE@;1;Create;0;FarValueCS;False;False;0;;False;0;1;FLOAT;0\nNode;AmplifyShaderEditor.CustomExpressionNode;2;-451.054,92.09596;Inherit;False;
+    return GetViewForwardDir()@;3;Create;0;GetViewForwardDir_Ref;True;False;0;;False;0;1;FLOAT3;0\nNode;AmplifyShaderEditor.CustomExpressionNode;34;-407,1237;Inherit;False;return
+    IsPerspectiveProjection()@;0;Create;0;IsPerspectiveProjection_Ref;True;False;0;;False;0;1;INT;0\nNode;AmplifyShaderEditor.CustomExpressionNode;18;-372,607;Inherit;False;
+    return UNITY_NEAR_CLIP_VALUE@;1;Create;0;NearValueCS;False;False;0;;False;0;1;FLOAT;0\nNode;AmplifyShaderEditor.ProjectionParams;13;-420,422;Inherit;False;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4\nNode;AmplifyShaderEditor.ScreenParams;4;-486,213;Inherit;False;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4\nNode;AmplifyShaderEditor.WorldSpaceCameraPos;1;-517.054,-103.904;Inherit;False;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3\nNode;AmplifyShaderEditor.CustomExpressionNode;30;-400,1018;Inherit;False;return
+    SampleSceneColor(positionSS)@;3;Create;1;True;positionSS;FLOAT2;0,0;In;;Inherit;False;SampleSceneColor_Ref;True;False;0;;False;1;0;FLOAT2;0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.CustomExpressionNode;29;-404,922;Inherit;False;return
+    SampleSceneNormals(positionSS)@;3;Create;1;True;positionSS;FLOAT2;0,0;In;;Inherit;False;SampleSceneNormals_Ref;True;False;0;;False;1;0;FLOAT2;0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.CustomExpressionNode;27;-402,822;Inherit;False;return
+    SampleSceneDepth(positionSS)@;1;Create;1;True;positionSS;FLOAT2;0,0;In;;Inherit;False;SampleSceneDepth_Ref;True;False;0;;False;1;0;FLOAT2;0,0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;39;-1034.725,1454.259;Inherit;False;PositionDS;4;1;False;1;0;FLOAT4;0,0,0,0;False;1;FLOAT4;0\nNode;AmplifyShaderEditor.CustomExpressionNode;46;-433.7247,1423.759;Inherit;False;return
+    LinearEyeDepth(deviceDepth, _ZBufferParams)@;1;Create;1;True;deviceDepth;FLOAT;0;In;;Inherit;False;LinearEyeDepth_Ref;True;False;0;;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.CustomExpressionNode;47;-221.925,1651.358;Inherit;False;return
+    max(linearEyeDepth - _ProjectionParams.y, 0)@;1;Create;1;True;linearEyeDepth;FLOAT;0;In;;Inherit;False;Linear0FarDepth_Ref;True;False;0;;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.CustomExpressionNode;48;-320.825,1874.159;Inherit;False;return
+    Linear01Depth(deviceDepth, _ZBufferParams)@;1;Create;1;True;deviceDepth;FLOAT;0;In;;Inherit;False;Linear01Depth_Ref;True;False;0;;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.CustomExpressionNode;49;-359.825,2108.159;Inherit;False;return
+    Linear01DepthFromNear(deviceDepth, _ZBufferParams)@;1;Create;1;True;deviceDepth;FLOAT;0;In;;Inherit;False;Linear01DepthFromNear_Ref;True;False;0;;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;6;-37,211;Inherit;False;False;-1;PixelSize;2;False;1;0;FLOAT2;0,0;False;1;FLOAT2;0\nNode;AmplifyShaderEditor.FunctionOutput;24;-102,822;Inherit;False;False;-1;DepthTex;7;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;3;-131.0537,96.09596;Inherit;False;False;-1;ForwardDirWS;1;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionOutput;26;-86,1004;Inherit;False;False;-1;OpaqueTex;9;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionOutput;44;10.17505,1874.159;Inherit;False;False;-1;Linear01Depth;13;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;43;45.27505,1652.659;Inherit;False;False;-1;Linear0FarDepth;12;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;42;-31.72493,1422.759;Inherit;False;False;-1;LinearEyeDepth;11;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;38;-597.7245,1265.757;Inherit;False;False;-1;DeviceDepth;10;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;32;-76,1092;Inherit;False;False;-1;LodFade[0...1];15;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;19;-106,708;Inherit;False;False;-1;FarValueCS;6;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;15;-103,395;Inherit;False;False;-1;NearValue;3;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;25;-102,916;Inherit;False;False;-1;NormalsTex;8;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionOutput;33;-67,1161;Inherit;False;False;-1;LodFade[16Lv];16;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;45;23.17505,2105.159;Inherit;False;False;-1;Linear01DepthFromNear;14;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;17;-104,596;Inherit;False;False;-1;NearValueCS;5;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;35;-67,1236;Inherit;False;False;-1;isPerspective;17;False;1;0;INT;0;False;1;INT;0\nNode;AmplifyShaderEditor.FunctionOutput;16;-93,466;Inherit;False;False;-1;FarValue;4;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;0;-131.0537,-84.90404;Inherit;False;True;-1;CameraPosWS;0;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nWireConnection;41;0;39;0\nWireConnection;5;0;4;0\nWireConnection;30;0;28;0\nWireConnection;29;0;28;0\nWireConnection;27;0;28;0\nWireConnection;46;0;41;2\nWireConnection;47;0;46;0\nWireConnection;48;0;41;2\nWireConnection;49;0;41;2\nWireConnection;6;0;5;0\nWireConnection;24;0;27;0\nWireConnection;3;0;2;0\nWireConnection;26;0;30;0\nWireConnection;44;0;48;0\nWireConnection;43;0;47;0\nWireConnection;42;0;46;0\nWireConnection;38;0;41;2\nWireConnection;32;0;31;1\nWireConnection;19;0;20;0\nWireConnection;15;0;13;2\nWireConnection;25;0;29;0\nWireConnection;33;0;31;2\nWireConnection;45;0;49;0\nWireConnection;17;0;18;0\nWireConnection;35;0;34;0\nWireConnection;16;0;13;3\nWireConnection;0;0;1;0\nASEEND*/\n//CHKSM=D550CF2D2CACA219C8596D4377E972BFF039C033"
+  m_functionName: 
+  m_description: 
+  m_additionalIncludes:
+    m_additionalIncludes: []
+    m_outsideIncludes: []
+  m_additionalPragmas:
+    m_additionalPragmas: []
+    m_outsidePragmas: []
+  m_additionalDirectives:
+    m_validData: 0
+    m_isDirty: 1
+    m_moduleName: ' Additional Directives'
+    m_independentModule: 1
+    m_customEdited: 0
+    m_additionalDirectives:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    m_shaderFunctionDirectives: []
+    m_nativeDirectives: []
+    m_nativeDirectivesIndex: -1
+    m_nativeDirectivesFoldout: 0
+    m_directivesSaveItems:
+    - LineType: 0
+      LineValue: Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl
+      GUIDToggle: 0
+      GUIDValue: 
+      ShowConditionals: 1
+      VersionMin: 0
+      VersionMax: 0
+      Passes: Forward
+      Origin: 2
+    - LineType: 0
+      LineValue: Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareNormalsTexture.hlsl
+      GUIDToggle: 0
+      GUIDValue: 
+      ShowConditionals: 1
+      VersionMin: 0
+      VersionMax: 0
+      Passes: Forward
+      Origin: 2
+    - LineType: 0
+      LineValue: Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareOpaqueTexture.hlsl
+      GUIDToggle: 0
+      GUIDValue: 
+      ShowConditionals: 1
+      VersionMin: 0
+      VersionMax: 0
+      Passes: Forward
+      Origin: 2
+  m_nodeCategory: 0
+  m_headerStyle: 0
+  m_headerColor: {r: 1, g: 0.4, b: 0, a: 1}
+  m_customNodeCategory: "\u6444\u50CF\u673A"
+  m_previewPosition: 0
+  m_hidden: 0
+  m_url: 

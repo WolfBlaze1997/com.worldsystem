@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  m_Name: GetNormalFromView
+  m_EditorClassIdentifier: 
+  m_functionInfo: "// Made with Amplify Shader Editor\n// Available at the Unity
+    Asset Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=18935\n2568;31;2544;1340;1715.586;742.8735;1;True;True\nNode;AmplifyShaderEditor.FunctionInput;11;-691.9001,-116.2;Inherit;False;normalVS;3;0;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.CustomExpressionNode;1;-449,-119;Inherit;False;
+    ;7;File;3;True;normalVS;FLOAT3;0,0,0;In;;Inherit;False;True;direction;OBJECT;0;Out;Direction;Inherit;False;True;TBN;FLOAT3x3;1,0,0,1,1,1,1,0,1;In;;Inherit;False;GetDirectionTransformSpaceFromViewNormal;False;True;0;de74368bd80a3dd48b365a5caa9fcda7;True;4;0;FLOAT;0;False;1;FLOAT3;0,0,0;False;2;OBJECT;0;False;3;FLOAT3x3;1,0,0,1,1,1,1,0,1;False;2;FLOAT;0;OBJECT;3\nNode;AmplifyShaderEditor.FunctionInput;15;-689.5861,-30.87347;Inherit;False;TBN;6;1;False;1;0;FLOAT3x3;1,0,0,1,1,1,1,0,1;False;1;FLOAT3x3;0\nNode;AmplifyShaderEditor.FunctionOutput;0;56,-72;Inherit;False;True;-1;Direction;0;False;1;0;OBJECT;0;False;1;OBJECT;0\nWireConnection;1;1;11;0\nWireConnection;1;3;15;0\nWireConnection;0;0;1;3\nASEEND*/\n//CHKSM=816AA2C70707892C9EA09D263C382220FE7A47FF"
+  m_functionName: 
+  m_description: 
+  m_additionalIncludes:
+    m_additionalIncludes: []
+    m_outsideIncludes: []
+  m_additionalPragmas:
+    m_additionalPragmas: []
+    m_outsidePragmas: []
+  m_additionalDirectives:
+    m_validData: 0
+    m_isDirty: 0
+    m_moduleName: ' Additional Directives'
+    m_independentModule: 1
+    m_customEdited: 0
+    m_additionalDirectives: []
+    m_shaderFunctionDirectives: []
+    m_nativeDirectives: []
+    m_nativeDirectivesIndex: -1
+    m_nativeDirectivesFoldout: 0
+    m_directivesSaveItems: []
+  m_nodeCategory: 0
+  m_customNodeCategory: "\u57FA\u7840\u51FD\u6570"
+  m_previewPosition: 0
+  m_hidden: 1
+  m_url: 

@@ -1,0 +1,339 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28fbcbca3fb14507af6ed5c104c40b84, type: 3}
+  m_Name: BlendOp
+  m_EditorClassIdentifier: 
+  presets:
+  - presetName: Add
+    propertyValues:
+    - propertyName: Add
+      propertyType: 2
+      intValue: 0
+      floatValue: 0
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: Subtract
+    propertyValues:
+    - propertyName: Subtract
+      propertyType: 2
+      intValue: 0
+      floatValue: 1
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: ReverseSubtract
+    propertyValues:
+    - propertyName: ReverseSubtract
+      propertyType: 2
+      intValue: 0
+      floatValue: 2
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: Min
+    propertyValues:
+    - propertyName: Min
+      propertyType: 2
+      intValue: 0
+      floatValue: 3
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: Max
+    propertyValues:
+    - propertyName: Max
+      propertyType: 2
+      intValue: 0
+      floatValue: 4
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: LogicalClear
+    propertyValues:
+    - propertyName: LogicalClear
+      propertyType: 2
+      intValue: 0
+      floatValue: 5
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: LogicalSet
+    propertyValues:
+    - propertyName: LogicalSet
+      propertyType: 2
+      intValue: 0
+      floatValue: 6
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: LogicalCopy
+    propertyValues:
+    - propertyName: LogicalCopy
+      propertyType: 2
+      intValue: 0
+      floatValue: 7
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: LogicalCopyInverted
+    propertyValues:
+    - propertyName: LogicalCopyInverted
+      propertyType: 2
+      intValue: 0
+      floatValue: 8
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: LogicalNoop
+    propertyValues:
+    - propertyName: LogicalNoop
+      propertyType: 2
+      intValue: 0
+      floatValue: 9
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: LogicalInvert
+    propertyValues:
+    - propertyName: LogicalInvert
+      propertyType: 2
+      intValue: 0
+      floatValue: 10
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: LogicalAnd
+    propertyValues:
+    - propertyName: LogicalAnd
+      propertyType: 2
+      intValue: 0
+      floatValue: 11
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: LogicalNand
+    propertyValues:
+    - propertyName: LogicalNand
+      propertyType: 2
+      intValue: 0
+      floatValue: 12
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: LogicalOr
+    propertyValues:
+    - propertyName: LogicalOr
+      propertyType: 2
+      intValue: 0
+      floatValue: 13
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: LogicalNor
+    propertyValues:
+    - propertyName: LogicalNor
+      propertyType: 2
+      intValue: 0
+      floatValue: 14
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: LogicalXor
+    propertyValues:
+    - propertyName: LogicalXor
+      propertyType: 2
+      intValue: 0
+      floatValue: 15
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: LogicalEquivalence
+    propertyValues:
+    - propertyName: LogicalEquivalence
+      propertyType: 2
+      intValue: 0
+      floatValue: 16
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: LogicalAndReverse
+    propertyValues:
+    - propertyName: LogicalAndReverse
+      propertyType: 2
+      intValue: 0
+      floatValue: 17
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: LogicalAndInverted
+    propertyValues:
+    - propertyName: LogicalAndInverted
+      propertyType: 2
+      intValue: 0
+      floatValue: 18
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: LogicalOrReverse
+    propertyValues:
+    - propertyName: LogicalOrReverse
+      propertyType: 2
+      intValue: 0
+      floatValue: 19
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: LogicalOrInverted
+    propertyValues:
+    - propertyName: LogicalOrInverted
+      propertyType: 2
+      intValue: 0
+      floatValue: 20
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: Multiply
+    propertyValues:
+    - propertyName: Multiply
+      propertyType: 2
+      intValue: 0
+      floatValue: 21
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: Screen
+    propertyValues:
+    - propertyName: Screen
+      propertyType: 2
+      intValue: 0
+      floatValue: 22
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: Overlay
+    propertyValues:
+    - propertyName: Overlay
+      propertyType: 2
+      intValue: 0
+      floatValue: 23
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: Darken
+    propertyValues:
+    - propertyName: Darken
+      propertyType: 2
+      intValue: 0
+      floatValue: 24
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: Lighten
+    propertyValues:
+    - propertyName: Lighten
+      propertyType: 2
+      intValue: 0
+      floatValue: 25
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: ColorDodge
+    propertyValues:
+    - propertyName: ColorDodge
+      propertyType: 2
+      intValue: 0
+      floatValue: 26
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: ColorBurn
+    propertyValues:
+    - propertyName: ColorBurn
+      propertyType: 2
+      intValue: 0
+      floatValue: 27
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: HardLight
+    propertyValues:
+    - propertyName: HardLight
+      propertyType: 2
+      intValue: 0
+      floatValue: 28
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: SoftLight
+    propertyValues:
+    - propertyName: SoftLight
+      propertyType: 2
+      intValue: 0
+      floatValue: 29
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: Difference
+    propertyValues:
+    - propertyName: Difference
+      propertyType: 2
+      intValue: 0
+      floatValue: 30
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: Exclusion
+    propertyValues:
+    - propertyName: Exclusion
+      propertyType: 2
+      intValue: 0
+      floatValue: 31
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: HSLHue
+    propertyValues:
+    - propertyName: HSLHue
+      propertyType: 2
+      intValue: 0
+      floatValue: 32
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: HSLSaturation
+    propertyValues:
+    - propertyName: HSLSaturation
+      propertyType: 2
+      intValue: 0
+      floatValue: 33
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: HSLColor
+    propertyValues:
+    - propertyName: HSLColor
+      propertyType: 2
+      intValue: 0
+      floatValue: 34
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: HSLLuminosity
+    propertyValues:
+    - propertyName: HSLLuminosity
+      propertyType: 2
+      intValue: 0
+      floatValue: 35
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}

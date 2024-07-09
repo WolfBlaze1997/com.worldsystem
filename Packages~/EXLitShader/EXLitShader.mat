@@ -1,0 +1,220 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EXLitShader
+  m_Shader: {fileID: 4800000, guid: 23aa6cb713989d64398cac9cdd8b1e64, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _OCCLUSION
+  - _SHADER_PBR
+  m_InvalidKeywords:
+  - ShaderModelGroup1_SENIOR
+  - _BLEND
+  - _CULL
+  - _DEPTH
+  - _DISPLAY
+  - _OFF
+  - _OTHER
+  - _STENCIL
+  - _SURFACEOPTIONS
+  - _USE_PARALLAXMAP_PARALLAX
+  - _WINDQUALITY_NONE
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: defb24939e3c9704c87bd05036142653, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ClearCoatMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _CustomReflectMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMap0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMap1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMap2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMap3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMixMap:
+        m_Texture: {fileID: 2800000, guid: cae4d21fd35f1a14bb6ae562d433adea, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ExtraMixMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HeightMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NRAMap:
+        m_Texture: {fileID: 2800000, guid: ece965accd5f52f41a35a9149e11d5ef, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PositionVATMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RotateVATMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - AOMultiBounce_On: 0
+    - Alpha_On: 0
+    - Billboard_Enum: 0
+    - EmissionGI_GUI: 0
+    - EnvironmentReflections_Off: 0
+    - ExtraMixMap_Display: 0
+    - FlipBackNormal_On: 0
+    - NoiseSource_Enum: 0
+    - Occlusion_On: 1
+    - ParallaxSource_Enum: 0
+    - ReceiveShadows_Off: 0
+    - Sample_Enum: 0
+    - SpecularHighLights_Off: 0
+    - SurfaceTypeTransparent_On: 0
+    - WindEnabled_Enum: 0
+    - _AddDirectDiffuseStrength: 1
+    - _AddDirectSpecularStrength: 1
+    - _AlphaToMask: 0
+    - _AnimatorStrength: 1
+    - _AutoPlay: 1
+    - _BackStencilComp: 8
+    - _BackStencilFail: 0
+    - _BackStencilPass: 0
+    - _BackStencilZFail: 0
+    - _BlendOp: 0
+    - _BlendOpAlpha: 0
+    - _BoundMax_X: 0
+    - _BoundMax_Y: 0
+    - _BoundMax_Z: 0
+    - _BoundMin_X: 0
+    - _BoundMin_Y: 0
+    - _BoundMin_Z: 0
+    - _BumpScale: 1
+    - _ClearCoatMask: 1
+    - _ClearCoatSmoothness: 1
+    - _ColorMask: 16
+    - _Conservative: 0
+    - _Cull: 2
+    - _CustomReflect: 0
+    - _Cutoff: 0.5
+    - _DetailNormalScale0: 1
+    - _DetailNormalScale1: 1
+    - _DetailNormalScale2: 1
+    - _DetailNormalScale3: 1
+    - _DetailOcclusionStrength0: 1
+    - _DetailOcclusionStrength1: 1
+    - _DetailOcclusionStrength2: 1
+    - _DetailOcclusionStrength3: 1
+    - _DisplayFrame: 1
+    - _DstBlend: 0
+    - _DstBlendAlpha: 0
+    - _FrameCount: 0
+    - _FrontStencilComp: 8
+    - _FrontStencilFail: 0
+    - _FrontStencilPass: 0
+    - _FrontStencilZFail: 0
+    - _HorizonOcclusion: 1
+    - _HoudiniFPS: 24
+    - _IndirectDiffuseStrength: 1
+    - _IndirectSpecularStrength: 1
+    - _IsPosTexHDR: 1
+    - _MainDirectDiffuseStrength: 1
+    - _MainDirectSpecularStrength: 1
+    - _Metallic: 1
+    - _OcclusionStrength: 1
+    - _Parallax: 0.1
+    - _PlaySpeed: 1
+    - _Roughness: 1
+    - _ScaleOrRotate: 0.3
+    - _SrcBlend: 1
+    - _SrcBlendAlpha: 1
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilFail: 0
+    - _StencilPass: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _StencilZFail: 0
+    - _SubsurfaceIndirect: 0.25
+    - _ZBias: 0
+    - _ZClip: 1
+    - _ZSlope: 0
+    - _ZTest: 4
+    - _ZWrite: 1
+    - _debugFloat01: 0
+    - _debugFloat02: 1
+    - _debugFloat03: 0
+    - _debugFloat04: 0
+    - _debugFloat05: 0
+    m_Colors:
+    - ClearCoatGroup0: {r: 0, g: 0, b: 0, a: 0}
+    - DeBugGroup2: {r: 0, g: 0, b: 0, a: 0}
+    - DetailGroup0: {r: 0, g: 0, b: 0, a: 0}
+    - HoudiniVATGroup0: {r: 0, g: 0, b: 0, a: 0}
+    - HueVariationGroup0: {r: 0, g: 0, b: 0, a: 0}
+    - ParallaxGroup0: {r: 0, g: 0, b: 0, a: 0}
+    - RenderStateGroup2: {r: 0, g: 0, b: 0, a: 0}
+    - ShaderModelGroup1: {r: 0, g: 0, b: 0, a: 0}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HueVariationColor: {r: 1, g: 0.5, b: 0, a: 0.1}
+    - _ST_WindAnimation: {r: 0, g: 0, b: 0, a: 0}
+    - _ST_WindBranch: {r: 0, g: 0, b: 0, a: 0}
+    - _ST_WindBranchAdherences: {r: 0, g: 0, b: 0, a: 0}
+    - _ST_WindBranchAnchor: {r: 0, g: 0, b: 0, a: 0}
+    - _ST_WindBranchTwitch: {r: 0, g: 0, b: 0, a: 0}
+    - _ST_WindBranchWhip: {r: 0, g: 0, b: 0, a: 0}
+    - _ST_WindFrondRipple: {r: 0, g: 0, b: 0, a: 0}
+    - _ST_WindGlobal: {r: 0, g: 0, b: 0, a: 0}
+    - _ST_WindLeaf1Ripple: {r: 0, g: 0, b: 0, a: 0}
+    - _ST_WindLeaf1Tumble: {r: 0, g: 0, b: 0, a: 0}
+    - _ST_WindLeaf1Twitch: {r: 0, g: 0, b: 0, a: 0}
+    - _ST_WindLeaf2Ripple: {r: 0, g: 0, b: 0, a: 0}
+    - _ST_WindLeaf2Tumble: {r: 0, g: 0, b: 0, a: 0}
+    - _ST_WindLeaf2Twitch: {r: 0, g: 0, b: 0, a: 0}
+    - _ST_WindTurbulences: {r: 0, g: 0, b: 0, a: 0}
+    - _ST_WindVector: {r: 0, g: 0, b: 0, a: 0}
+    - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SubsurfaceColor: {r: 1, g: 1, b: 1, a: 1}
+    - _UseMixMapChannel_Noise: {r: 0, g: 0, b: 0, a: 1}
+    - _UseMixMapChannel_Parallax: {r: 1, g: 0, b: 0, a: 0}
+    - _debugVector01: {r: 0, g: 0, b: 0, a: 0}
+    - _debugVector02: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []

@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  m_Name: PlantSubSurfaceScatter
+  m_EditorClassIdentifier: 
+  m_functionInfo: "// Made with Amplify Shader Editor v1.9.3.2\n// Available at the
+    Unity Asset Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=19302\nNode;AmplifyShaderEditor.FunctionInput;22;-295,362.5;Inherit;False;ViewDirWS;3;3;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionInput;18;-325,439.5;Inherit;False;MixDirectDiffuseAO;1;8;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;19;-346,520.5;Inherit;False;MixIndirectDiffuserAO;3;9;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionInput;20;-253,590.5;Inherit;False;BakedGI;3;2;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionInput;21;-292,668.5;Inherit;False;IndirectSubSurface;1;5;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleAddOpNode;3;-695.8569,160.9177;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT;0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.SimpleMultiplyOpNode;4;-341.8562,-29.08325;Inherit;False;3;3;0;FLOAT;0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.SimpleSubtractOpNode;5;-550.857,104.9168;Inherit;False;2;0;FLOAT3;0,0,0;False;1;FLOAT;0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionInput;24;-875.0759,125.7959;Inherit;False;Albedo;3;0;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.RangedFloatNode;2;-880.8569,214.9178;Inherit;False;Constant;_Float0;Float
+    0;30;0;Create;True;0;0;0;False;0;False;1;0;0;0;0;1;FLOAT;0\nNode;AmplifyShaderEditor.SwizzleNode;1;-586.9599,-48.93626;Inherit;False;FLOAT3;0;1;2;3;1;0;COLOR;0,0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.BreakToComponentsNode;28;-735.386,1.097728;Inherit;False;COLOR;1;0;COLOR;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15\nNode;AmplifyShaderEditor.FunctionInput;25;-584.0759,-179.2041;Inherit;False;SubSurfaceWeight;1;7;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;26;-1007.386,-76.90228;Inherit;False;SubSurfaceColor;5;6;False;1;0;COLOR;0.6901961,0.9019608,0,1;False;1;COLOR;0\nNode;AmplifyShaderEditor.CustomExpressionNode;13;43.33899,200.1129;Inherit;False;$half
+    fSubsurfaceRough = 0.7 - (1.0 - perceptualRoughness) * 0.5@$half fSubsurface
+    = D_GGX(clamp(-dot(mainLight.direction, viewDirWS), 0, 1), fSubsurfaceRough)@$directSubsurface
+    = subsurface * mainLight.color * fSubsurface * mainLight.shadowAttenuation *
+    mainLight.distanceAttenuation * mixDirectDiffuseAO@$indirectSubsurface = subsurface
+    * bakedGI * subSurfaceIndirect * mixIndirectDiffuserAO@$;7;Create;10;True;subsurface;FLOAT3;0,0,0;In;;Inherit;False;True;perceptualRoughness;FLOAT;0;In;;Inherit;False;True;mainLight;OBJECT;(Light)0;In;Light;Inherit;False;True;viewDirWS;FLOAT3;0,0,0;In;;Inherit;False;True;mixDirectDiffuseAO;FLOAT;1;In;;Inherit;False;True;mixIndirectDiffuserAO;FLOAT3;1,0,0;In;;Inherit;False;True;bakedGI;FLOAT3;0,0,0;In;;Inherit;False;True;subSurfaceIndirect;FLOAT;0;In;;Inherit;False;True;directSubsurface;FLOAT3;0,0,0;Out;;Inherit;False;True;indirectSubsurface;FLOAT3;0,0,0;Out;;Inherit;False;PlantSubSurfaceScatter;True;False;0;;False;11;0;FLOAT;0;False;1;FLOAT3;0,0,0;False;2;FLOAT;0;False;3;OBJECT;(Light)0;False;4;FLOAT3;0,0,0;False;5;FLOAT;1;False;6;FLOAT3;1,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0;False;9;FLOAT3;0,0,0;False;10;FLOAT3;0,0,0;False;3;FLOAT;0;FLOAT3;10;FLOAT3;11\nNode;AmplifyShaderEditor.FunctionInput;15;-317,206.5;Inherit;False;PerceptualRoughness;1;4;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;16;-260,282.5;Inherit;False;Light;14;1;False;1;0;OBJECT;0;False;1;OBJECT;0\nNode;AmplifyShaderEditor.CustomExpressionNode;17;-561,257.5;Inherit;False;
+    ;7;Create;1;True;light;OBJECT;(Light)0;Out;Light;Inherit;False;My Custom Expression;True;False;0;;False;2;0;FLOAT;0;False;1;OBJECT;(Light)0;False;2;FLOAT;0;OBJECT;2\nNode;AmplifyShaderEditor.FunctionOutput;14;552,255.5;Inherit;False;False;-1;IndirectSubSurface;1;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionOutput;0;540.0999,184.1;Inherit;False;True;-1;DirectSubSurface;0;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nWireConnection;3;0;24;0\nWireConnection;3;1;2;0\nWireConnection;4;0;25;0\nWireConnection;4;1;1;0\nWireConnection;4;2;5;0\nWireConnection;5;0;3;0\nWireConnection;5;1;28;3\nWireConnection;1;0;26;0\nWireConnection;28;0;26;0\nWireConnection;13;1;4;0\nWireConnection;13;2;15;0\nWireConnection;13;3;16;0\nWireConnection;13;4;22;0\nWireConnection;13;5;18;0\nWireConnection;13;6;19;0\nWireConnection;13;7;20;0\nWireConnection;13;8;21;0\nWireConnection;16;0;17;2\nWireConnection;14;0;13;11\nWireConnection;0;0;13;10\nASEEND*/\n//CHKSM=03805664F546F8A73FEFECFD025584A502A1860B"
+  m_functionName: 
+  m_description: 
+  m_additionalIncludes:
+    m_additionalIncludes: []
+    m_outsideIncludes: []
+  m_additionalPragmas:
+    m_additionalPragmas: []
+    m_outsidePragmas: []
+  m_additionalDirectives:
+    m_validData: 0
+    m_isDirty: 0
+    m_moduleName: ' Additional Directives'
+    m_independentModule: 1
+    m_customEdited: 0
+    m_additionalDirectives: []
+    m_shaderFunctionDirectives: []
+    m_nativeDirectives: []
+    m_nativeDirectivesIndex: -1
+    m_nativeDirectivesFoldout: 0
+    m_directivesSaveItems: []
+  m_nodeCategory: 0
+  m_headerStyle: 0
+  m_headerColor: {r: 1, g: 0.4, b: 0, a: 1}
+  m_customNodeCategory: "\u690D\u7269"
+  m_previewPosition: 0
+  m_hidden: 0
+  m_url: 

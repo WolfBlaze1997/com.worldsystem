@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28fbcbca3fb14507af6ed5c104c40b84, type: 3}
+  m_Name: ColorWriteMask
+  m_EditorClassIdentifier: 
+  presets:
+  - presetName: Alpha
+    propertyValues:
+    - propertyName: Alpha
+      propertyType: 2
+      intValue: 1
+      floatValue: 1
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: Blue
+    propertyValues:
+    - propertyName: Blue
+      propertyType: 2
+      intValue: 2
+      floatValue: 2
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: Green
+    propertyValues:
+    - propertyName: Green
+      propertyType: 2
+      intValue: 4
+      floatValue: 4
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: Red
+    propertyValues:
+    - propertyName: Red
+      propertyType: 2
+      intValue: 8
+      floatValue: 8
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: All
+    propertyValues:
+    - propertyName: All
+      propertyType: 2
+      intValue: 16
+      floatValue: 16
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: Zero
+    propertyValues:
+    - propertyName: Zero
+      propertyType: 2
+      intValue: 32
+      floatValue: 32
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}

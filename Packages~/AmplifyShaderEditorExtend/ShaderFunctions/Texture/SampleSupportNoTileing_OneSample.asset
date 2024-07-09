@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  m_Name: SampleSupportNoTileing_OneSample
+  m_EditorClassIdentifier: 
+  m_functionInfo: "// Made with Amplify Shader Editor v1.9.3.2\n// Available at the
+    Unity Asset Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=19302\nNode;AmplifyShaderEditor.FunctionInput;3;-727,-158.5;Inherit;False;uv;2;0;False;1;0;FLOAT2;0,0;False;1;FLOAT2;0\nNode;AmplifyShaderEditor.FunctionInput;4;-746,-61.5;Inherit;False;tex;9;1;False;1;0;SAMPLER2D;0,0;False;1;SAMPLER2D;0\nNode;AmplifyShaderEditor.CustomExpressionNode;1;-337,-8.5;Inherit;False;$float
+    DITHER_THRESHOLDS[16] = {$1.0 / 17.0, 9.0 / 17.0, 3.0 / 17.0, 11.0 / 17.0,$13.0
+    / 17.0, 5.0 / 17.0, 15.0 / 17.0, 7.0 / 17.0,$4.0 / 17.0, 12.0 / 17.0, 2.0 / 17.0,
+    10.0 / 17.0,$16.0 / 17.0, 8.0 / 17.0, 14.0 / 17.0, 6.0 / 17.0$}@$float2 suv =
+    positionDSxy.xy@$int2 iuv = floor(uv)@$float2 fuv = frac(uv)@$$// generate per-tile
+    transform$float4 ofa = hash4(iuv + int2(0, 0))@$float4 ofb = hash4(iuv + int2(1,
+    0))@$float4 ofc = hash4(iuv + int2(0, 1))@$float4 ofd = hash4(iuv + int2(1, 1))@$float2
+    ddxV = ddx(uv)@$float2 ddyV = ddy(uv)@$$// transform per-tile uvs$ofa.zw = sign(ofa.zw
+    - 0.5)@$ofb.zw = sign(ofb.zw - 0.5)@$ofc.zw = sign(ofc.zw - 0.5)@$ofd.zw = sign(ofd.zw
+    - 0.5)@$float2 b = smoothstep(0.25, 0.75, fuv)@$$int index = (int(suv.x) % 4)
+    * 4 + int(suv.y) % 4@$float r = DITHER_THRESHOLDS[index]@$b = clamp(sign(b -
+    r), 0.0, 1.0)@$float4 ofDither = lerp(lerp(ofa, ofb, b.x), lerp(ofc, ofd, b.x),
+    b.y)@$ddxV *= ofDither.zw@$ddyV *= ofDither.zw@$uv = uv * ofDither.zw + ofDither.xy@$return
+    tex2Dgrad(tex,uv, ddxV, ddyV)@$$$;4;File;3;True;uv;FLOAT2;0,0;In;;Inherit;False;True;tex;SAMPLER2D;;In;;Inherit;False;True;positionDSxy;FLOAT2;0,0;In;;Inherit;False;SampleSupportNoTileing_OneSample;False;False;0;0dca4844ac9226a4c835f2a06f16aae8;False;3;0;FLOAT2;0,0;False;1;SAMPLER2D;;False;2;FLOAT2;0,0;False;1;FLOAT4;0\nNode;AmplifyShaderEditor.FunctionInput;5;-750,30.5;Inherit;False;positionDSxy;2;2;False;1;0;FLOAT2;0,0;False;1;FLOAT2;0\nNode;AmplifyShaderEditor.FunctionOutput;0;29,-25;Inherit;False;True;-1;Output;0;False;1;0;FLOAT4;0,0,0,0;False;1;FLOAT4;0\nWireConnection;1;0;3;0\nWireConnection;1;1;4;0\nWireConnection;1;2;5;0\nWireConnection;0;0;1;0\nASEEND*/\n//CHKSM=D2F86305D4823FA5CE8F4A41EE059AC4B1A1CED8"
+  m_functionName: 
+  m_description: 
+  m_additionalIncludes:
+    m_additionalIncludes: []
+    m_outsideIncludes: []
+  m_additionalPragmas:
+    m_additionalPragmas: []
+    m_outsidePragmas: []
+  m_additionalDirectives:
+    m_validData: 0
+    m_isDirty: 0
+    m_moduleName: ' Additional Directives'
+    m_independentModule: 1
+    m_customEdited: 0
+    m_additionalDirectives: []
+    m_shaderFunctionDirectives: []
+    m_nativeDirectives: []
+    m_nativeDirectivesIndex: -1
+    m_nativeDirectivesFoldout: 0
+    m_directivesSaveItems: []
+  m_nodeCategory: 0
+  m_headerStyle: 0
+  m_headerColor: {r: 1, g: 0.4, b: 0, a: 1}
+  m_customNodeCategory: "\u7EB9\u7406"
+  m_previewPosition: 0
+  m_hidden: 0
+  m_url: 
