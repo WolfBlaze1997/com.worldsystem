@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28fbcbca3fb14507af6ed5c104c40b84, type: 3}
+  m_Name: StencilOp
+  m_EditorClassIdentifier: 
+  presets:
+  - presetName: Keep
+    propertyValues:
+    - propertyName: Keep
+      propertyType: 2
+      intValue: 0
+      floatValue: 0
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: Zero
+    propertyValues:
+    - propertyName: Zero
+      propertyType: 2
+      intValue: 0
+      floatValue: 1
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: Replace
+    propertyValues:
+    - propertyName: Replace
+      propertyType: 2
+      intValue: 0
+      floatValue: 2
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: IncrementSaturate
+    propertyValues:
+    - propertyName: IncrementSaturate
+      propertyType: 2
+      intValue: 0
+      floatValue: 3
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: DecrementSaturate
+    propertyValues:
+    - propertyName: DecrementSaturate
+      propertyType: 2
+      intValue: 0
+      floatValue: 4
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: Invert
+    propertyValues:
+    - propertyName: Invert
+      propertyType: 2
+      intValue: 0
+      floatValue: 5
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: IncrementWrap
+    propertyValues:
+    - propertyName: IncrementWrap
+      propertyType: 2
+      intValue: 0
+      floatValue: 6
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}
+  - presetName: DecrementWrap
+    propertyValues:
+    - propertyName: DecrementWrap
+      propertyType: 2
+      intValue: 0
+      floatValue: 7
+      colorValue: {r: 0, g: 0, b: 0, a: 0}
+      vectorValue: {x: 0, y: 0, z: 0, w: 0}
+      textureValue: {fileID: 0}

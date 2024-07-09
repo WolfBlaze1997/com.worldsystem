@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  m_Name: LightSwizzle
+  m_EditorClassIdentifier: 
+  m_functionInfo: "// Made with Amplify Shader Editor v1.9.3.2\n// Available at the
+    Unity Asset Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=19302\nNode;AmplifyShaderEditor.CustomExpressionNode;7;-765,-2.5;Inherit;False;
+    ;7;Create;1;True;light;OBJECT;(Light)0;Out;Light;Inherit;False;My Custom Expression;True;False;0;;False;2;0;FLOAT;0;False;1;OBJECT;(Light)0;False;2;FLOAT;0;OBJECT;2\nNode;AmplifyShaderEditor.CustomExpressionNode;1;-301,-11.5;Inherit;False;Direction
+    = light.direction@$Color = light.color@$DistanceAttenuation = light.distanceAttenuation@$ShadowAttenuation
+    = lightshadowAttenuation@$LayerMask = light.layerMask@;7;Create;6;True;light;OBJECT;(Light)0;In;Light;Inherit;False;True;Direction;FLOAT3;0,0,0;Out;;Inherit;False;True;Color;FLOAT3;0,0,0;Out;;Inherit;False;True;DistanceAttenuation;FLOAT;0;Out;;Inherit;False;True;ShadowAttenuation;FLOAT;0;Out;;Inherit;False;True;LayerMask;INT;0;Out;;Inherit;False;LightSplit;True;False;0;;False;7;0;FLOAT;0;False;1;OBJECT;(Light)0;False;2;FLOAT3;0,0,0;False;3;FLOAT3;0,0,0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;INT;0;False;6;FLOAT;0;FLOAT3;3;FLOAT3;4;FLOAT;5;FLOAT;6;INT;7\nNode;AmplifyShaderEditor.FunctionInput;6;-508,11.5;Inherit;False;Light;14;5;False;1;0;OBJECT;;False;1;OBJECT;0\nNode;AmplifyShaderEditor.CustomExpressionNode;8;-303,-401.5;Inherit;False;light.direction
+    = Direction@$light.color = Color@$light.distanceAttenuation = DistanceAttenuation@$light.shadowAttenuation
+    = ShadowAttenuation@$light.layerMask = LayerMask@;7;Create;6;True;Direction;FLOAT3;0,0,0;In;;Inherit;False;True;Color;FLOAT3;0,0,0;In;;Inherit;False;True;DistanceAttenuation;FLOAT;0;In;;Inherit;False;True;ShadowAttenuation;FLOAT;0;In;;Inherit;False;True;LayerMask;INT;0;In;;Inherit;False;True;light;OBJECT;(Light)0;Out;Light;Inherit;False;LightMerge;True;False;0;;False;7;0;FLOAT;0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;INT;0;False;6;OBJECT;(Light)0;False;2;FLOAT;0;OBJECT;7\nNode;AmplifyShaderEditor.FunctionInput;14;-611,-157.5;Inherit;False;LayerMask;0;4;False;1;0;INT;0;False;1;INT;0\nNode;AmplifyShaderEditor.FunctionInput;13;-639,-227.5;Inherit;False;ShadowAttenuation;1;3;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;12;-633,-295.5;Inherit;False;DistanceAttenuation;1;2;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;11;-621,-378.5;Inherit;False;Color;3;1;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionInput;10;-605,-454.5;Inherit;False;Direction;3;0;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionOutput;0;128,-134;Inherit;False;True;-1;Direction;0;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionOutput;2;135,-56.5;Inherit;False;False;-1;Color;1;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionOutput;3;118,25.5;Inherit;False;False;-1;DistanceAttenuation;2;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;4;119,95.5;Inherit;False;False;-1;ShadowAttenuation;3;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;5;119,170.5;Inherit;False;False;-1;LayerMask;4;False;1;0;INT;0;False;1;INT;0\nNode;AmplifyShaderEditor.FunctionOutput;9;90,-367.5;Inherit;False;False;-1;Light;5;False;1;0;OBJECT;0;False;1;OBJECT;0\nWireConnection;1;1;6;0\nWireConnection;6;0;7;2\nWireConnection;8;1;10;0\nWireConnection;8;2;11;0\nWireConnection;8;3;12;0\nWireConnection;8;4;13;0\nWireConnection;8;5;14;0\nWireConnection;0;0;1;3\nWireConnection;2;0;1;4\nWireConnection;3;0;1;5\nWireConnection;4;0;1;6\nWireConnection;5;0;1;7\nWireConnection;9;0;8;7\nASEEND*/\n//CHKSM=84555D3CE787ACB59BC97ED814F91867DCDB3DA8"
+  m_functionName: 
+  m_description: 
+  m_additionalIncludes:
+    m_additionalIncludes: []
+    m_outsideIncludes: []
+  m_additionalPragmas:
+    m_additionalPragmas: []
+    m_outsidePragmas: []
+  m_additionalDirectives:
+    m_validData: 0
+    m_isDirty: 0
+    m_moduleName: ' Additional Directives'
+    m_independentModule: 1
+    m_customEdited: 0
+    m_additionalDirectives: []
+    m_shaderFunctionDirectives: []
+    m_nativeDirectives: []
+    m_nativeDirectivesIndex: -1
+    m_nativeDirectivesFoldout: 0
+    m_directivesSaveItems: []
+  m_nodeCategory: 0
+  m_headerStyle: 0
+  m_headerColor: {r: 1, g: 0.4, b: 0, a: 1}
+  m_customNodeCategory: "\u6A21\u578B"
+  m_previewPosition: 0
+  m_hidden: 0
+  m_url: 

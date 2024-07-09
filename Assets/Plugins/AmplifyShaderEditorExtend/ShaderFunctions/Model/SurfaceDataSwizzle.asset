@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  m_Name: SurfaceDataSwizzle
+  m_EditorClassIdentifier: 
+  m_functionInfo: "// Made with Amplify Shader Editor v1.9.3.2\n// Available at the
+    Unity Asset Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=19302\nNode;AmplifyShaderEditor.CustomExpressionNode;6;-608,-49;Inherit;False;surfaceData.albedo
+    = Albedo@$surfaceData.specular = Specular@$surfaceData.metallic = Metallic@$surfaceData.smoothness
+    = Smoothness@$surfaceData.normalTS = NormalTS@$surfaceData.emission = Emission@$surfaceData.occlusion
+    = Occlusion@$surfaceData.alpha = Alpha@$surfaceData.clearCoatMask = ClearCoatMask@$surfaceData.clearCoatSmoothness
+    = ClearCoatSmoothness@;7;Create;11;True;Albedo;FLOAT3;0,0,0;In;;Inherit;False;True;Specular;FLOAT3;0,0,0;In;;Inherit;False;True;Metallic;FLOAT;0;In;;Inherit;False;True;Smoothness;FLOAT;0;In;;Inherit;False;True;NormalTS;FLOAT3;0,0,0;In;;Inherit;False;True;Emission;FLOAT3;0,0,0;In;;Inherit;False;True;Occlusion;FLOAT;0;In;;Inherit;False;True;Alpha;FLOAT;0;In;;Inherit;False;True;ClearCoatMask;FLOAT;0;In;;Inherit;False;True;ClearCoatSmoothness;FLOAT;0;In;;Inherit;False;True;surfaceData;OBJECT;(SurfaceData)0;Out;SurfaceData;Inherit;False;SurfaceDataMerge;True;False;0;;False;12;0;FLOAT;0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT3;0,0,0;False;6;FLOAT3;0,0,0;False;7;FLOAT;0;False;8;FLOAT;0;False;9;FLOAT;0;False;10;FLOAT;0;False;11;OBJECT;(SurfaceData)0;False;2;FLOAT;0;OBJECT;12\nNode;AmplifyShaderEditor.CustomExpressionNode;19;-1120.469,442.673;Inherit;False;
+    ;7;Create;1;True;surfaceData;OBJECT;(SurfaceData)0;Out;SurfaceData;Inherit;False;My
+    Custom Expression;True;False;0;;False;2;0;FLOAT;0;False;1;OBJECT;(SurfaceData)0;False;2;FLOAT;0;OBJECT;2\nNode;AmplifyShaderEditor.FunctionInput;13;-940.4694,-252.327;Inherit;False;Albedo;3;0;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionInput;14;-979.4694,-181.327;Inherit;False;Specular;3;1;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionInput;15;-946.4694,-108.327;Inherit;False;Metallic;1;2;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;16;-965.4694,-21.32703;Inherit;False;Smoothness;1;3;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;7;-1133.691,-2.008942;Inherit;False;NormalTS;3;4;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionInput;8;-1071.782,82.93837;Inherit;False;Emission;3;5;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionInput;9;-906.7819,129.9383;Inherit;False;AOMap;1;6;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;10;-1055.782,166.9383;Inherit;False;Alpha;1;7;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;18;-844.4694,450.673;Inherit;False;SurfaceData;14;10;False;1;0;OBJECT;0;False;1;OBJECT;0\nNode;AmplifyShaderEditor.CustomExpressionNode;17;-605.2693,401.973;Inherit;False;surfaceData.albedo
+    = Albedo@$surfaceData.specular = Specular@$surfaceData.metallic = Metallic@$surfaceData.smoothness
+    = Smoothness@$surfaceData.normalTS = NormalTS@$surfaceData.emission = Emission@$surfaceData.occlusion
+    = Occlusion@$surfaceData.alpha = Alpha@$surfaceData.clearCoatMask = ClearCoatMask@$surfaceData.clearCoatSmoothness
+    = ClearCoatSmoothness@;7;Create;11;True;surfaceData;OBJECT;(SurfaceData)0;In;SurfaceData;Inherit;False;True;Albedo;FLOAT3;0,0,0;Out;;Inherit;False;True;Specular;FLOAT3;0,0,0;Out;;Inherit;False;True;Metallic;FLOAT;0;Out;;Inherit;False;True;Smoothness;FLOAT;0;Out;;Inherit;False;True;NormalTS;FLOAT3;0,0,0;Out;;Inherit;False;True;Emission;FLOAT3;0,0,0;Out;;Inherit;False;True;Occlusion;FLOAT;0;Out;;Inherit;False;True;Alpha;FLOAT;0;Out;;Inherit;False;True;ClearCoatMask;FLOAT;0;Out;;Inherit;False;True;ClearCoatSmoothness;FLOAT;0;Out;;Inherit;False;SurfaceDataSplit;True;False;0;;False;12;0;FLOAT;0;False;1;OBJECT;(SurfaceData)0;False;2;FLOAT3;0,0,0;False;3;FLOAT3;0,0,0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0;False;9;FLOAT;0;False;10;FLOAT;0;False;11;FLOAT;0;False;11;FLOAT;0;FLOAT3;3;FLOAT3;4;FLOAT;5;FLOAT;6;FLOAT3;7;FLOAT3;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12\nNode;AmplifyShaderEditor.FunctionInput;12;-977.3248,308.9918;Inherit;False;ClearCoatSmoothness;1;9;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;11;-914.3247,224.9918;Inherit;False;ClearCoatMask;1;8;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;5;-200.1119,-26.20084;Inherit;False;True;-1;SurfaceData;10;False;1;0;OBJECT;0;False;1;OBJECT;0\nNode;AmplifyShaderEditor.FunctionOutput;20;-116.4694,253.673;Inherit;False;False;-1;Albedo;0;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionOutput;21;-119.4694,316.673;Inherit;False;False;-1;Specular;1;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionOutput;23;-112.4694,390.673;Inherit;False;False;-1;Metallic;2;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;24;-124.4694,453.673;Inherit;False;False;-1;Smoothness;3;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;25;-107.4694,510.673;Inherit;False;False;-1;NormalTS;4;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionOutput;26;-109.4694,563.673;Inherit;False;False;-1;Emission;5;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionOutput;27;-107.4694,613.673;Inherit;False;False;-1;AOMap;6;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;28;-108.4694,682.673;Inherit;False;False;-1;Alpha;7;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;29;-121.4694,726.673;Inherit;False;False;-1;ClearCoatMask;8;False;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;31;-128.4694,793.673;Inherit;False;False;-1;ClearCoatSmoothness;9;False;1;0;FLOAT;0;False;1;FLOAT;0\nWireConnection;6;1;13;0\nWireConnection;6;2;14;0\nWireConnection;6;3;15;0\nWireConnection;6;4;16;0\nWireConnection;6;5;7;0\nWireConnection;6;6;8;0\nWireConnection;6;7;9;0\nWireConnection;6;8;10;0\nWireConnection;6;9;11;0\nWireConnection;6;10;12;0\nWireConnection;18;0;19;2\nWireConnection;17;1;18;0\nWireConnection;5;0;6;12\nWireConnection;20;0;17;3\nWireConnection;21;0;17;4\nWireConnection;23;0;17;5\nWireConnection;24;0;17;6\nWireConnection;25;0;17;7\nWireConnection;26;0;17;8\nWireConnection;27;0;17;9\nWireConnection;28;0;17;10\nWireConnection;29;0;17;11\nWireConnection;31;0;17;12\nASEEND*/\n//CHKSM=1C8AC536E1902D56546232AAE8B014B17B32D097"
+  m_functionName: 
+  m_description: 
+  m_additionalIncludes:
+    m_additionalIncludes: []
+    m_outsideIncludes: []
+  m_additionalPragmas:
+    m_additionalPragmas: []
+    m_outsidePragmas: []
+  m_additionalDirectives:
+    m_validData: 0
+    m_isDirty: 0
+    m_moduleName: ' Additional Directives'
+    m_independentModule: 1
+    m_customEdited: 0
+    m_additionalDirectives: []
+    m_shaderFunctionDirectives: []
+    m_nativeDirectives: []
+    m_nativeDirectivesIndex: -1
+    m_nativeDirectivesFoldout: 0
+    m_directivesSaveItems: []
+  m_nodeCategory: 0
+  m_headerStyle: 0
+  m_headerColor: {r: 1, g: 0.4, b: 0, a: 1}
+  m_customNodeCategory: "\u6A21\u578B"
+  m_previewPosition: 0
+  m_hidden: 0
+  m_url: 

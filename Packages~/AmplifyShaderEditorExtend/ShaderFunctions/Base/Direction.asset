@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  m_Name: Direction
+  m_EditorClassIdentifier: 
+  m_functionInfo: "// Made with Amplify Shader Editor v1.9.3.2\n// Available at the
+    Unity Asset Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=19302\nNode;AmplifyShaderEditor.FunctionInput;2;-666,-87;Inherit;False;Direction;14;0;False;1;0;OBJECT;;False;1;OBJECT;0\nNode;AmplifyShaderEditor.CustomExpressionNode;1;-392,-137;Inherit;False;
+    ;7;File;7;True;direction;OBJECT;;In;Direction;Inherit;False;True;OS;FLOAT3;0,0,0;Out;;Inherit;False;True;WS;FLOAT3;0,0,0;Out;;Inherit;False;True;VS;FLOAT3;0,0,0;Out;;Inherit;False;True;uCS;FLOAT3;0,0,0;Out;;Inherit;False;True;LS;FLOAT3;0,0,0;Out;;Inherit;False;True;TS;FLOAT3;0,0,0;Out;;Inherit;False;Direction;False;False;0;de74368bd80a3dd48b365a5caa9fcda7;True;8;0;FLOAT;0;False;1;OBJECT;;False;2;FLOAT3;0,0,0;False;3;FLOAT3;0,0,0;False;4;FLOAT3;0,0,0;False;5;FLOAT3;0,0,0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;7;FLOAT;0;FLOAT3;3;FLOAT3;4;FLOAT3;5;FLOAT3;6;FLOAT3;7;FLOAT3;8\nNode;AmplifyShaderEditor.FunctionOutput;0;32,-291;Inherit;False;True;-1;OS\u5BF9\u8C61\u7A7A\u95F4;0;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionOutput;3;34,-223;Inherit;False;False;-1;WS\u4E16\u754C\u7A7A\u95F4;1;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionOutput;4;33,-148;Inherit;False;False;-1;VS\u89C6\u7EBF\u7A7A\u95F4;2;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionOutput;5;40,-64;Inherit;False;False;-1;uCS\u88C1\u526A\u7A7A\u95F4;3;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionOutput;9;32,22;Inherit;False;False;-1;LS\u4E3B\u706F\u5149\u7A7A\u95F4;4;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionOutput;10;40,93;Inherit;False;False;-1;TS\u5207\u7EBF\u7A7A\u95F4;5;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nWireConnection;1;1;2;0\nWireConnection;0;0;1;3\nWireConnection;3;0;1;4\nWireConnection;4;0;1;5\nWireConnection;5;0;1;6\nWireConnection;9;0;1;7\nWireConnection;10;0;1;8\nASEEND*/\n//CHKSM=0E1345DA6341C75298423D85BAC30746EF2EBD2F"
+  m_functionName: 
+  m_description: 
+  m_additionalIncludes:
+    m_additionalIncludes: []
+    m_outsideIncludes: []
+  m_additionalPragmas:
+    m_additionalPragmas: []
+    m_outsidePragmas: []
+  m_additionalDirectives:
+    m_validData: 0
+    m_isDirty: 0
+    m_moduleName: ' Additional Directives'
+    m_independentModule: 1
+    m_customEdited: 0
+    m_additionalDirectives: []
+    m_shaderFunctionDirectives: []
+    m_nativeDirectives: []
+    m_nativeDirectivesIndex: -1
+    m_nativeDirectivesFoldout: 0
+    m_directivesSaveItems: []
+  m_nodeCategory: 0
+  m_headerStyle: 0
+  m_headerColor: {r: 1, g: 0.4, b: 0, a: 1}
+  m_customNodeCategory: "\u57FA\u7840\u51FD\u6570"
+  m_previewPosition: 0
+  m_hidden: 1
+  m_url: 

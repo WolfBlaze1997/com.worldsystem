@@ -1,0 +1,5 @@
+{"active":true,"icon":{"instanceID":-170982},"name":"ASE扩展",
+"creator":"烂菜叶料理侠",
+"version":"0.1.1",
+"describe":"本人开发,AmplifyShaderEditor的私人扩展.添加了一个精心设计的无光照模板.大量自定义的着色器节点帮助获取URP管线的信息.简单明了高效.集成个人开发的一套ShaderGUI.用于解决有大量关键字的复杂着色器UI问题",
+"patchFilePaths":[]}

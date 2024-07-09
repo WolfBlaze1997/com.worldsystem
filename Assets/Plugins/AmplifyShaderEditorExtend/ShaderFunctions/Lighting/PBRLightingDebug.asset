@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  m_Name: PBRLightingDebug
+  m_EditorClassIdentifier: 
+  m_functionInfo: "// Made with Amplify Shader Editor v1.9.3.2\n// Available at the
+    Unity Asset Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=19302\nNode;AmplifyShaderEditor.FunctionInput;22;204.4384,78.9421;Inherit;False;FinalColor;4;7;True;1;0;FLOAT4;1,1,1,1;False;1;FLOAT4;0\nNode;AmplifyShaderEditor.FunctionInput;3;-409.5,-91;Inherit;False;SurfaceData;14;6;False;1;0;OBJECT;0;False;1;OBJECT;0\nNode;AmplifyShaderEditor.FunctionNode;23;486.4384,-51.05786;Inherit;False;If;-1;;65;58db534cb7946664eb869bdc1abdfb5a;0;3;7;INT;1;False;3;FLOAT4;0,0,0,0;False;4;FLOAT4;0,0,0,0;False;1;FLOAT4;0\nNode;AmplifyShaderEditor.CustomExpressionNode;24;266.4384,-139.0579;Inherit;False;#if
+    defined(DEBUG_DISPLAY)$return 1@$#else$return 0@$#endif$$;0;Create;0;IsDebugDisplay;True;False;0;;False;0;1;INT;0\nNode;AmplifyShaderEditor.CustomExpressionNode;5;-707.5,-130;Inherit;False;
+    ;7;Create;3;True;inputData;OBJECT;(InputData)0;Out;InputData;Inherit;False;True;surfaceData;OBJECT;(SurfaceData)0;Out;SurfaceData;Inherit;False;True;brdfData;OBJECT;(BRDFData)0;Out;BRDFData;Inherit;False;My
+    Custom Expression;True;False;0;;False;4;0;FLOAT;0;False;1;OBJECT;(InputData)0;False;2;OBJECT;(SurfaceData)0;False;3;OBJECT;(BRDFData)0;False;4;FLOAT;0;OBJECT;2;OBJECT;3;OBJECT;4\nNode;AmplifyShaderEditor.CustomExpressionNode;6;-1198.944,-337.8426;Inherit;False;inputData
+    = (InputData)0@$inputData.positionWS = PositionWS@$inputData.positionCS = PositionCS@$inputData.normalWS
+    = NormalWS@$inputData.viewDirectionWS = ViewDirectionWS@$inputData.shadowCoord
+    = ShadowCoord@$inputData.fogCoord = FogCoord@$inputData.vertexLighting = VertexLighting@$inputData.bakedGI
+    = BakedGI@$inputData.normalizedScreenSpaceUV = NormalizedScreenSpaceUV@$inputData.shadowMask
+    = ShadowMask@$inputData.tangentToWorld = TangentToWorld@$#if defined(DEBUG_DISPLAY)$inputData.dynamicLightmapUV
+    = DynamicLightmapUV@$inputData.staticLightmapUV = StaticLightmapUV@$inputData.vertexSH
+    = VertexSH@$inputData.brdfDiffuse = BrdfDiffuse@$inputData.brdfSpecular = BrdfSpecular@$inputData.uv
+    = UV@$inputData.mipCount = MipCount@$inputData.texelSize = TexelSize@$inputData.mipInfo
+    = MipInfo@$#endif;7;Create;21;True;PositionWS;FLOAT3;0,0,0;In;;Inherit;False;True;PositionCS;FLOAT4;0,0,0,0;In;;Inherit;False;True;NormalWS;FLOAT3;0,0,0;In;;Inherit;False;True;ViewDirectionWS;FLOAT3;0,0,0;In;;Inherit;False;True;ShadowCoord;FLOAT4;0,0,0,0;In;;Inherit;False;True;FogCoord;FLOAT;0;In;;Inherit;False;True;VertexLighting;FLOAT3;0,0,0;In;;Inherit;False;True;BakedGI;FLOAT3;0,0,0;In;;Inherit;False;True;NormalizedScreenSpaceUV;FLOAT2;0,0;In;;Inherit;False;True;ShadowMask;FLOAT4;0,0,0,0;In;;Inherit;False;True;TangentToWorld;FLOAT3x3;1,0,0,1,1,1,1,0,1;In;;Inherit;False;True;DynamicLightmapUV;FLOAT2;0,0;In;;Inherit;False;True;StaticLightmapUV;FLOAT2;0,0;In;;Inherit;False;True;VertexSH;FLOAT3;0,0,0;In;;Inherit;False;True;BrdfDiffuse;FLOAT3;0,0,0;In;;Inherit;False;True;BrdfSpecular;FLOAT3;0,0,0;In;;Inherit;False;True;UV;FLOAT2;0,0;In;;Inherit;False;True;MipCount;INT;0;In;;Inherit;False;True;TexelSize;FLOAT4;0,0,0,0;In;;Inherit;False;True;MipInfo;FLOAT4;0,0,0,0;In;;Inherit;False;True;inputData;OBJECT;(InputData)0;Out;InputData;Inherit;False;InputDataMerge;True;False;0;;False;22;0;FLOAT;0;False;1;FLOAT3;0,0,0;False;2;FLOAT4;0,0,0,0;False;3;FLOAT3;0,0,0;False;4;FLOAT3;0,0,0;False;5;FLOAT4;0,0,0,0;False;6;FLOAT;0;False;7;FLOAT3;0,0,0;False;8;FLOAT3;0,0,0;False;9;FLOAT2;0,0;False;10;FLOAT4;0,0,0,0;False;11;FLOAT3x3;1,0,0,1,1,1,1,0,1;False;12;FLOAT2;0,0;False;13;FLOAT2;0,0;False;14;FLOAT3;0,0,0;False;15;FLOAT3;0,0,0;False;16;FLOAT3;0,0,0;False;17;FLOAT2;0,0;False;18;INT;0;False;19;FLOAT4;0,0,0,0;False;20;FLOAT4;0,0,0,0;False;21;OBJECT;(InputData)0;False;2;FLOAT;0;OBJECT;22\nNode;AmplifyShaderEditor.FunctionInput;14;-1637.913,12.12519;Inherit;False;ShadowMask;4;5;False;1;0;FLOAT4;0,0,0,0;False;1;FLOAT4;0\nNode;AmplifyShaderEditor.FunctionInput;2;-1673.81,-380.8607;Inherit;False;PositionWS;3;0;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionInput;8;-1672.913,-296.8736;Inherit;False;NormalWS;3;2;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionInput;9;-1662.913,-220.8733;Inherit;False;ViewDirWS;3;3;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nNode;AmplifyShaderEditor.FunctionInput;10;-1658.913,-144.8735;Inherit;False;ShadowCoord;4;4;False;1;0;FLOAT4;0,0,0,0;False;1;FLOAT4;0\nNode;AmplifyShaderEditor.FunctionInput;13;-1650.913,-64.87512;Inherit;False;PositionSS;2;1;False;1;0;FLOAT2;0,0;False;1;FLOAT2;0\nNode;AmplifyShaderEditor.CustomExpressionNode;1;-96.5,-131;Inherit;False;return
+    UniversalFragmentPBR( inputData,  surfaceData)@;4;Create;2;True;inputData;OBJECT;(InputData)0;In;InputData;Inherit;True;True;surfaceData;OBJECT;(SurfaceData)0;In;SurfaceData;Inherit;True;CanDebugOverrideOutputColor_Ref;False;False;0;;False;2;0;OBJECT;(InputData)0;False;1;OBJECT;(SurfaceData)0;False;1;FLOAT4;0\nNode;AmplifyShaderEditor.FunctionOutput;0;769,-52;Inherit;False;True;-1;Output;0;False;1;0;FLOAT4;0,0,0,0;False;1;FLOAT4;0\nWireConnection;3;0;5;3\nWireConnection;23;7;24;0\nWireConnection;23;3;1;0\nWireConnection;23;4;22;0\nWireConnection;6;1;2;0\nWireConnection;6;3;8;0\nWireConnection;6;4;9;0\nWireConnection;6;5;10;0\nWireConnection;6;9;13;0\nWireConnection;6;10;14;0\nWireConnection;1;0;6;22\nWireConnection;1;1;3;0\nWireConnection;0;0;23;0\nASEEND*/\n//CHKSM=5F022DBEEEBCFE6B6546E0C3CCDDE4ED9B984641"
+  m_functionName: 
+  m_description: 
+  m_additionalIncludes:
+    m_additionalIncludes: []
+    m_outsideIncludes: []
+  m_additionalPragmas:
+    m_additionalPragmas: []
+    m_outsidePragmas: []
+  m_additionalDirectives:
+    m_validData: 0
+    m_isDirty: 0
+    m_moduleName: ' Additional Directives'
+    m_independentModule: 1
+    m_customEdited: 0
+    m_additionalDirectives: []
+    m_shaderFunctionDirectives: []
+    m_nativeDirectives: []
+    m_nativeDirectivesIndex: -1
+    m_nativeDirectivesFoldout: 0
+    m_directivesSaveItems: []
+  m_nodeCategory: 0
+  m_headerStyle: 0
+  m_headerColor: {r: 1, g: 0.4, b: 0, a: 1}
+  m_customNodeCategory: "\u5149\u7167"
+  m_previewPosition: 0
+  m_hidden: 0
+  m_url: 

@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  m_Name: vertex-PlantWindVertexAnimator
+  m_EditorClassIdentifier: 
+  m_functionInfo: "// Made with Amplify Shader Editor v1.9.3.2\n// Available at the
+    Unity Asset Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=19302\nNode;AmplifyShaderEditor.TexCoordVertexDataNode;6;-477.422,-287.7656;Inherit;False;0;4;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4\nNode;AmplifyShaderEditor.TexCoordVertexDataNode;7;-639.0221,-111.3656;Inherit;False;1;4;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4\nNode;AmplifyShaderEditor.TexCoordVertexDataNode;1;-919.4049,13.15889;Inherit;False;2;4;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4\nNode;AmplifyShaderEditor.TexCoordVertexDataNode;2;-614.205,100.1589;Inherit;False;3;4;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4\nNode;AmplifyShaderEditor.PosVertexDataNode;5;-239.757,-473.9763;Inherit;False;0;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4\nNode;AmplifyShaderEditor.NormalVertexDataNode;3;-231.157,-313.1764;Inherit;False;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4\nNode;AmplifyShaderEditor.CustomExpressionNode;9;203.811,-149.6038;Inherit;False;
+    ;7;File;11;True;vPos;FLOAT3;0,0,0;In;;Inherit;False;True;vNormal;FLOAT3;0,0,0;In;;Inherit;False;True;vTexcoord0;FLOAT4;0,0,0,0;In;;Inherit;False;True;vTexcoord1;FLOAT4;0,0,0,0;In;;Inherit;False;True;vTexcoord2;FLOAT4;0,0,0,0;In;;Inherit;False;True;vTexcoord3;FLOAT4;0,0,0,0;In;;Inherit;False;True;iWindQuality;INT;0;In;;Inherit;False;True;bBillboard;FLOAT;0;In;;Inherit;False;True;bCrossfade;INT;0;In;;Inherit;False;True;bHistory;INT;0;In;;Inherit;False;True;outPos;FLOAT3;0,0,0;Out;;Inherit;False;SpeedTreeWind;False;False;0;ce046d29fe558b847b9175ba08a6caae;True;12;0;FLOAT;0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT4;0,0,0,0;False;4;FLOAT4;0,0,0,0;False;5;FLOAT4;0,0,0,0;False;6;FLOAT4;0,0,0,0;False;7;INT;0;False;8;FLOAT;0;False;9;INT;0;False;10;INT;0;False;11;FLOAT3;0,0,0;False;2;FLOAT;0;FLOAT3;12\nNode;AmplifyShaderEditor.FunctionNode;10;-2.286987,325.6002;Inherit;False;Bool;-1;;6871;20b44fdee35a46b4eaab2203349f0df4;0;0;2;INT;0;INT;1\nNode;AmplifyShaderEditor.CustomExpressionNode;8;-5.286987,256.6001;Inherit;False;#if
+    defined(LOD_FADE_CROSSFADE)$return  true@$#else$return  false@$#endif;0;Create;0;bCrossfade;True;False;0;;False;0;1;INT;0\nNode;AmplifyShaderEditor.FunctionInput;11;-197,148.5;Inherit;False;iWindQuality;0;0;False;1;0;INT;0;False;1;INT;0\nNode;AmplifyShaderEditor.FunctionOutput;0;575,-149;Inherit;False;True;-1;VertexPosOS;0;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0\nWireConnection;9;1;5;0\nWireConnection;9;2;3;0\nWireConnection;9;3;6;0\nWireConnection;9;4;7;0\nWireConnection;9;5;1;0\nWireConnection;9;6;2;0\nWireConnection;9;7;11;0\nWireConnection;9;8;10;1\nWireConnection;9;9;8;0\nWireConnection;9;10;10;1\nWireConnection;0;0;9;12\nASEEND*/\n//CHKSM=54E2E2CFCD3B0C5A9F190EA54BD72C0EEF104766"
+  m_functionName: 
+  m_description: 
+  m_additionalIncludes:
+    m_additionalIncludes: []
+    m_outsideIncludes: []
+  m_additionalPragmas:
+    m_additionalPragmas: []
+    m_outsidePragmas: []
+  m_additionalDirectives:
+    m_validData: 0
+    m_isDirty: 0
+    m_moduleName: ' Additional Directives'
+    m_independentModule: 1
+    m_customEdited: 0
+    m_additionalDirectives: []
+    m_shaderFunctionDirectives: []
+    m_nativeDirectives: []
+    m_nativeDirectivesIndex: -1
+    m_nativeDirectivesFoldout: 0
+    m_directivesSaveItems: []
+  m_nodeCategory: 0
+  m_headerStyle: 0
+  m_headerColor: {r: 1, g: 0.4, b: 0, a: 1}
+  m_customNodeCategory: "\u690D\u7269"
+  m_previewPosition: 0
+  m_hidden: 0
+  m_url: 

@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 23aa6cb713989d64398cac9cdd8b1e64
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _BaseMap: {instanceID: 0}
+  - _NormalMixMap: {instanceID: 0}
+  - _MixMap: {instanceID: 0}
+  - _HeightMap: {instanceID: 0}
+  - _DetailMap0: {instanceID: 0}
+  - _DetailMap1: {instanceID: 0}
+  - _DetailMap2: {instanceID: 0}
+  - _DetailMap3: {instanceID: 0}
+  - _ClearCoatMap: {instanceID: 0}
+  - _EmissionMap: {instanceID: 0}
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
