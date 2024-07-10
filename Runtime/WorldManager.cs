@@ -499,6 +499,8 @@ namespace WorldSystem.Runtime
             {
                 _Update = false;
             }
+            if(!Instance.universeBackgroundModule.property._Render_UseAsyncRender)
+                _Update = true;
             
             if (Instance.timeModule is not null)
                 Instance.timeModule._Update = _Update;

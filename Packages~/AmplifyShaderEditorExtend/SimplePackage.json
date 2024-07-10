@@ -1,5 +1,5 @@
-{"active":true,"icon":{"instanceID":-111128},"name":"ASE扩展",
+{"active":true,"icon":{"instanceID":-88256},"name":"ASE扩展",
 "creator":"烂菜叶料理侠",
 "version":"0.1.1",
-"describe":"本人开发,AmplifyShaderEditor的私人扩展.添加了一个精心设计的无光照模板.大量自定义的着色器节点帮助获取URP管线的信息.简单明了高效.集成个人开发的一套ShaderGUI.用于解决有大量关键字的复杂着色器UI问题",
+"describe":"添加了一个精心设计的无光照模板.大量自定义的着色器节点帮助获取URP管线的信息.简单明了高效.集成个人开发的一套ShaderGUI.这些节点几乎包含了默认情况下URP管线向着色器提供的所有信息,使用这些节点和我提供的无光照模板可以轻松制作与URP-Lit完全一致的效果,扩展也很容易,使用这些节点制作Shader保证无冗余,变体完全可控",
 "patchFilePaths":[]}
