@@ -43,7 +43,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 259f72c20185e2b47931c804865f9c57, type: 3}
         m_Scale: {x: 2, y: 2}
         m_Offset: {x: 0, y: 0}
     - _BaseMap1:
@@ -79,7 +79,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMixMap:
-        m_Texture: {fileID: 2800000, guid: cae4d21fd35f1a14bb6ae562d433adea, type: 3}
+        m_Texture: {fileID: 2800000, guid: 259f72c20185e2b47931c804865f9c57, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ExtraMixMap:
@@ -91,7 +91,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NRAMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 259f72c20185e2b47931c804865f9c57, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NoiseMap:
