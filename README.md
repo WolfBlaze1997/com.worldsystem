@@ -12,12 +12,16 @@
 <font color="#c6d9f0">如果你基于此包开发了新的模块, 请提供一份源码给我, 感谢, 联系方式: QQ 1991997034</font>
 
 ## 提供已打包的Dome下载
+
 ![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8Wn6Od*LNUljW*CyQJ7Z2dT8tqOyLF9W4mAv8yDweyLgP.b7ur6WORKf5Vxo0Gk.tj7KSra9779YQKEQZWXfFVCA!/b=&bo=uwIcArsCHAIDHzo!&ek=1&tl=1)
+
 <font color="#ffff00">这里已经有打包好的可运行程序, 可以直接下载运行查看效果</font>
 
 ## 异步分帧渲染
 开启关闭异步分帧渲染的帧率对比 :
+
 ![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8WqUMAuSsIlyTykjGl23ciS1UwAOroPvdRNQTKJIKEeMBu5hmv95iGY8q04JOVs6bLNN6bE2kFUY5tEMDfUHbt7w!/b=&bo=cwhgAnMIYAIDHzo!&ek=1&tl=1)
+
 实时帧率有900+的提升, 平均帧率,最大帧率都有700~800+的提升, 目前测试用的电脑是3090的显卡, 如果在低端设备提升将会更加明显, 异步分帧对于GPU集中的渲染, 优化效果越明显
 这里简单说明一下异步分帧的原理.
 - 异步渲染 : 天空盒的渲染速率将会降到非常低 ( 默认20Fps/S ), 如果场景以1000Fps/S的速率渲染, 天空盒将会以20Fps/S的速率渲染, 天空盒由于渲染速率太低会出现 "不跟手" "晃动" , 我的解决方案是 : 对天空盒RT单独提升视野, 再计算运动矢量对其进行修正, 最后将天空盒RT的视野映射回去.
@@ -26,11 +30,14 @@
 ## 实机测试
 以下均为IL2CPP打包
 - PC端 : 3090显卡+5900X  渲染分辨率1920x1080 峰值帧率2800+, 平均帧率2300+
+
   ![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8Wp3rBObYSFZwdK8W6sJEcGV0mk8dBFumBFdZ.DT0wXjD1.yRlG7g3MPmOR.Hiwgx4cy.Vcci0QD0YMKHrbBwr0M!/b=&bo=AAqgBQAKoAUDHzo!&ek=1&tl=1)
+  
   由于录屏对帧率有影响, 真实帧率以上方图片为准
   <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=1356155331&bvid=BV1iz421q7op&cid=1610729276&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 - PC端 : 2060显卡  渲染分辨率1920x1080 峰值帧率1480+, 平均帧率1300+ (热心网友测试)
 - PC端 : 十年前的笔记本电脑  980m显卡  渲染分辨率1920x1080 峰值帧率440+, 平均帧率320+
+  
   ![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8WlBBAadSyt6hW6IGueZ..TkMm8sWXdtOF4RsnMWdKkKzvTtTuPi.KgfSxJ90bat7XudJ3SXbp*Tc4WE4ATUfn6o!/b=&bo=gAc4BIAHOAQDHzo!&ek=1&tl=1)
 
 - 安卓端 : 小米平板6p  骁龙8+  渲染分辨率1440x900  峰值帧率144+  平均帧率144+    
@@ -42,9 +49,10 @@
 
 ## 文档
 注意:
-红色是动态参数, 它们将在天气切换时进行线性插值,
-紫色是动态参数, 但是在所有的天气中保持一致, 只在昼夜变换中是动态的
-蓝色绿色是静态参数, 它们的值将在所有的天气中保持一致
+1. 红色是动态参数, 它们将在天气切换时进行线性插值,
+2. 紫色是动态参数, 但是在所有的天气中保持一致, 只在昼夜变换中是动态的
+3. 蓝色绿色是静态参数, 它们的值将在所有的天气中保持一致
+
 ![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8WiERylfTCqWJW2mpeBQkfSDqPsaKBPoP8Bvi6gXavQcJunYw7i7ksXjkDuFjZMbg7.1FLiRBx70UxWxqIh7vk9U!/b=&bo=wgIYAsICGAIDHzo!&ek=1&tl=1)
 
 | 参数                             | 描述                                                                                                                                                      |     |
@@ -220,18 +228,23 @@
 ## 包管理器中还有三个我开发的包
 #### ASE扩展
 添加了一个精心设计的无光照模板.大量自定义的着色器节点帮助获取URP管线的信息.简单明了高效.集成个人开发的一套ShaderGUI.
+
 ![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8WtKMH0CNqUznGqfDalBm177WnS7sNtUcimx.1SU1qWC6hji.XCjuKjv8SmTy4Mr6PhtL7nBmX1GChZyb*hsg0Uo!/b=&bo=SgcMBUoHDAUDHzo!&ek=1&tl=1)
+
 这些节点几乎包含了默认情况下URP管线向着色器提供的所有信息, 使用这些节点和我提供的无光照模板可以轻松制作与URP-Lit 完全一致的效果, 并可以轻松扩展, 使用这些制作Shader保证无冗余, 变体完全可控
 还有一些其他节点, 请自行探索吧
 
 #### EXLitShader
 ASE扩展包的实践, 使用个人设计的着色器框架,重构URP-LitShader,有两个版本纯代码版和ASE版,保留LitShader的所有功能,并进行扩展,此着色器框架易于扩展,对于设计有大量关键字的复杂Shader有一定优势
+
 ![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8Wk1awcpxzkIAlpSrPpmC4iEDCxIaZIUGlzTtj0Q9YKitGotYXGhg8E33VYBgt6CyDS8KzBCEk4vROOCpj0EVA5w!/b=&bo=bAeFA2wHhQMDHzo!&ek=1&tl=1)
 
 
 #### LogicalSGUI
 带有逻辑运算的ShaderGUI, 帮助实现复杂着色器UI
+
 ![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8WoCtyAquIHTO.s9IbHPA1vG5KX0ySWSMfqUjqHrI*C.E.6p5CYyN*Z0*yAjqs3PPbXLQaLontCCBELHNXBIFILY!/b=&bo=mwIdBJsCHQQDHzo!&ek=1&tl=1)
+
 这个内容有点多, 几乎所有属性都可以设置条件显示 (满足条件时显示, 不满足时隐藏)
 - 带枚举的折叠页, 可切换关键字, 使用变体切换效果, 灵感来自八猴的着色器UI
 - 枚举中文实现
