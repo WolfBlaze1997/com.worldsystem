@@ -1,4 +1,7 @@
-﻿## 简介
+﻿
+![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8WivwlwJPsS5ffjcjWeaTPRFOQbVjErNjHAD7JFenkSIxhFncWaWvUs33fjlQw1l5MAI7FNwEiHFz9T.plLU5XHU!/b=&bo=5QLSBOUC0gQDHzo!&ek=1&tl=1)
+
+# 简介
 - 简单易用的高性能昼夜天气系统 (体积云方案) , 使用原创的异步+分帧的渲染方法 , 打造极致性能
 - 完全模块化设计, 编写模块轻松扩展功能 , 这也是包名 "WorldSystem" 包含的 "野心" , 我希望它不仅仅是一套昼夜天气的方案 , 而是包含游戏需要的各种渲染效果, 它们都会以模块提供 , 这是一个长期目标.
 - 实现开发者/使用者不同面板, 当开启开发者模式时, 将显示所有隐藏信息, 方便开发调试, 但是面板会变得不整洁, "WorldManager" 的子物体也将暴露. 关闭开发者模式给使用者使用, 将会得到一个整洁的面板, 子物体也将隐藏, 大幅提高安全性
@@ -11,13 +14,13 @@
 
 <font color="#c6d9f0">如果你基于此包开发了新的模块, 请提供一份源码给我, 感谢, 联系方式: QQ 1991997034</font>
 
-## 提供已打包的Dome下载
+# 提供已打包的Dome下载
 
 ![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8Wn6Od*LNUljW*CyQJ7Z2dT8tqOyLF9W4mAv8yDweyLgP.b7ur6WORKf5Vxo0Gk.tj7KSra9779YQKEQZWXfFVCA!/b=&bo=uwIcArsCHAIDHzo!&ek=1&tl=1)
 
 <font color="#ffff00">这里已经有打包好的可运行程序, 可以直接下载运行查看效果</font>
 
-## 异步分帧渲染
+# 异步分帧渲染
 开启关闭异步分帧渲染的帧率对比 :
 
 ![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8WqUMAuSsIlyTykjGl23ciS1UwAOroPvdRNQTKJIKEeMBu5hmv95iGY8q04JOVs6bLNN6bE2kFUY5tEMDfUHbt7w!/b=&bo=cwhgAnMIYAIDHzo!&ek=1&tl=1)
@@ -27,7 +30,7 @@
 - 异步渲染 : 天空盒的渲染速率将会降到非常低 ( 默认20Fps/S ), 如果场景以1000Fps/S的速率渲染, 天空盒将会以20Fps/S的速率渲染, 天空盒由于渲染速率太低会出现 "不跟手" "晃动" , 我的解决方案是 : 对天空盒RT单独提升视野, 再计算运动矢量对其进行修正, 最后将天空盒RT的视野映射回去.
 - 分帧渲染 : 每帧渲染屏幕的一部分, 将一帧渲染完毕的效果分散到多帧, 他与异步渲染是相辅相成的. 目前此包只实现了分两帧 ( 一帧渲染左半部分, 下一帧渲染右半部分)
 
-## 实机测试
+# 实机测试
 以下均为IL2CPP打包
 - PC端 : 3090显卡+5900X  渲染分辨率1920x1080 峰值帧率2800+, 平均帧率2300+
 
@@ -43,11 +46,11 @@
 - 安卓端 : 小米平板6p  骁龙8+  渲染分辨率1440x900  峰值帧率144+  平均帧率144+    
   由于移动端的限制帧率无法突破屏幕刷新率,实际能跑到的帧率不止144
 
-## 使用方法
+# 使用方法
 1. 创建一个空游戏对象 , 添加组件 WorldManager
 2. 开启 " 昼夜与天气下的所有模块 "
 
-## 文档
+# 文档
 注意:
 1. 红色是动态参数, 它们将在天气切换时进行线性插值,
 2. 紫色是动态参数, 但是在所有的天气中保持一致, 只在昼夜变换中是动态的
@@ -211,11 +214,11 @@
 | 八, 调整天气定义的顺序                   | 直接拖动天气定义即可调整顺序, 会自动更新名字中的天气列表索引                                                                                                                         |     |
 | 注意 :                           | 请不要直接将做好的天气定义放入天气列表, 而是应该使用步骤六中的方式, 添加克隆版本的天气定义, 这样可以保证数据安全                                                                                             |     |
 
-## 不仅仅是昼夜天气 , 还有其他功能
-#### FPS显示模块
+# 不仅仅是昼夜天气 , 还有其他功能
+## FPS显示模块
 简单的FPS显示, 可显示平均帧率, 最大帧率, 最小帧率
 
-#### 包管理器
+## 包管理器
 将个人写的一些包, 工具, 库, 集中起来管理, 非常方便
 - 使用方法:
     - 在需要安装到包管理器的包根目录添加两个文件 "SimplePackage.json" "Icon.png" , json记录了包的信息, png是包显示的图标(注意这个图标识别png格式) , json内容参考我提供的包内的文件, 这里不在赘述了
@@ -225,8 +228,8 @@
 - 包管理器目前只是初版, 积极开发中, 版本管理正在路上
 
 
-## 包管理器中还有三个我开发的包
-#### ASE扩展
+# 包管理器中还有三个我开发的包
+## ASE扩展
 添加了一个精心设计的无光照模板.大量自定义的着色器节点帮助获取URP管线的信息.简单明了高效.集成个人开发的一套ShaderGUI.
 
 ![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8WtKMH0CNqUznGqfDalBm177WnS7sNtUcimx.1SU1qWC6hji.XCjuKjv8SmTy4Mr6PhtL7nBmX1GChZyb*hsg0Uo!/b=&bo=SgcMBUoHDAUDHzo!&ek=1&tl=1)
@@ -234,13 +237,13 @@
 这些节点几乎包含了默认情况下URP管线向着色器提供的所有信息, 使用这些节点和我提供的无光照模板可以轻松制作与URP-Lit 完全一致的效果, 并可以轻松扩展, 使用这些制作Shader保证无冗余, 变体完全可控
 还有一些其他节点, 请自行探索吧
 
-#### EXLitShader
+## EXLitShader
 ASE扩展包的实践, 使用个人设计的着色器框架,重构URP-LitShader,有两个版本纯代码版和ASE版,保留LitShader的所有功能,并进行扩展,此着色器框架易于扩展,对于设计有大量关键字的复杂Shader有一定优势
 
 ![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8Wk1awcpxzkIAlpSrPpmC4iEDCxIaZIUGlzTtj0Q9YKitGotYXGhg8E33VYBgt6CyDS8KzBCEk4vROOCpj0EVA5w!/b=&bo=bAeFA2wHhQMDHzo!&ek=1&tl=1)
 
 
-#### LogicalSGUI
+## LogicalSGUI
 带有逻辑运算的ShaderGUI, 帮助实现复杂着色器UI
 
 ![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8WoCtyAquIHTO.s9IbHPA1vG5KX0ySWSMfqUjqHrI*C.E.6p5CYyN*Z0*yAjqs3PPbXLQaLontCCBELHNXBIFILY!/b=&bo=mwIdBJsCHQQDHzo!&ek=1&tl=1)
