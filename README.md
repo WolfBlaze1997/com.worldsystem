@@ -4,13 +4,15 @@
 # 简介
 - 简单易用的高性能昼夜天气系统 (体积云方案) , 使用原创的异步+分帧的渲染方法 , 打造极致性能
 - 完全模块化设计, 编写模块轻松扩展功能 , 这也是包名 "WorldSystem" 包含的 "野心" , 我希望它不仅仅是一套昼夜天气的方案 , 而是包含游戏需要的各种渲染效果, 它们都会以模块提供 , 这是一个长期目标.
-- 实现开发者/使用者不同面板, 当开启开发者模式时, 将显示所有隐藏信息, 方便开发调试, 但是面板会变得不整洁, "WorldManager" 的子物体也将暴露. 关闭开发者模式给使用者使用, 将会得到一个整洁的面板, 子物体也将隐藏, 大幅提高安全性
+- 实现开发者/使用者不同面板, 当开启开发者模式时, 将显示所有隐藏信息, 方便开发调试, 但是面板会变得不整洁, "WorldManager" 的子物体也会暴露. 关闭开发者模式, 将会得到一个整洁的面板, 子物体也将隐藏, 大幅提高安全性
 - 开发了一个简单的包管理器, 可以将个人写的一些包, 工具, 库, 集中起来管理, 非常方便.
-  有同学要问了, 为啥不使用Unity自带的包管理器. 我们有些时候只是写一些小包小库小工具, 它们可能只是几个Shader, 根本没必要安装到Packages, 放到Assets缺乏管理手段, 混乱, 安全性也很低, 为解决这些痛点才开发了这个 "包管理器模块" , 你甚至可以将编写的模块安装到包管理器, 实现更精细化的管理
+
+  有同学要问了, 为啥不使用Unity自带的包管理器. 我们有些时候只是写一些小包/小库/小工具, 它们可能只是几个Shader, 根本没必要安装到Packages, 放到Assets缺乏管理手段, 混乱且安全性低, 为解决这些痛点开发了 "包管理器模块" , 你甚至可以将编写的模块安装到包管理器, 实现更精细化的管理
+  
 - 包管理器中额外提供了三个我开发的包
-    1. ASE扩展 :  添加了一个精心设计的无光照模板.大量自定义的着色器节点帮助获取URP管线的信息.简单明了高效.集成个人开发的一套ShaderGUI. 这些节点几乎包含了默认情况下URP管线向着色器提供的所有信息, 使用这些节点和我提供的无光照模板可以轻松制作与URP-Lit 完全一致的效果, 扩展也很容易, 使用这些节点制作Shader保证无冗余, 变体完全可控
+    1. ASE扩展 :  添加了一个精心设计的无光照模板.大量自定义的着色器节点帮助获取URP管线的信息.简单明了高效. 这些节点几乎包含了默认情况下URP管线向着色器提供的所有信息, 使用这些节点和我提供的无光照模板可以轻松制作与URP-Lit 完全一致的效果, 扩展也很容易, 确保无冗余, 变体完全可控
     2. LogicalSGUI:  带有逻辑运算的ShaderGUI, 帮助实现复杂着色器UI, 几乎所有属性都可以设置条件显示 (满足条件时显示, 不满足时隐藏)
-    3. EXLitShader:  ASE扩展包的实践, 使用个人设计的着色器框架,重构URP-LitShader, 有两个版本纯代码版和ASE版, 保留LitShader的所有功能, 此Shader易于扩展, 对于设计有大量关键字的复杂Shader有一定优势
+    3. EXLitShader:  ASE扩展包的实践,重构URP-Lit, 有两个版本纯代码版和ASE版, 在保留URP-Lit所有功能的基础上进行扩展. 着色器框架易于扩展, 对于设计有大量关键字的复杂Shader有一定优势
 
 <font color="#c6d9f0">如果你基于此包开发了新的模块, 请提供一份源码给我, 感谢, 联系方式: QQ 1991997034</font>
 
@@ -20,15 +22,16 @@
 
 <font color="#ffff00">这里已经有打包好的可运行程序, 可以直接下载运行查看效果</font>
 
-# 异步分帧渲染
+# 原创的异步分帧渲染方法
 开启关闭异步分帧渲染的帧率对比 :
 
 ![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8WqUMAuSsIlyTykjGl23ciS1UwAOroPvdRNQTKJIKEeMBu5hmv95iGY8q04JOVs6bLNN6bE2kFUY5tEMDfUHbt7w!/b=&bo=cwhgAnMIYAIDHzo!&ek=1&tl=1)
 
 实时帧率有900+的提升, 平均帧率,最大帧率都有700~800+的提升, 目前测试用的电脑是3090的显卡, 如果在低端设备提升将会更加明显, 异步分帧对于GPU集中的渲染, 优化效果越明显
+
 这里简单说明一下异步分帧的原理.
-- 异步渲染 : 天空盒的渲染速率将会降到非常低 ( 默认20Fps/S ), 如果场景以1000Fps/S的速率渲染, 天空盒将会以20Fps/S的速率渲染, 天空盒由于渲染速率太低会出现 "不跟手" "晃动" , 我的解决方案是 : 对天空盒RT单独提升视野, 再计算运动矢量对其进行修正, 最后将天空盒RT的视野映射回去.
-- 分帧渲染 : 每帧渲染屏幕的一部分, 将一帧渲染完毕的效果分散到多帧, 他与异步渲染是相辅相成的. 目前此包只实现了分两帧 ( 一帧渲染左半部分, 下一帧渲染右半部分)
+- 异步渲染 : 降低渲染速率 ( 默认20Fps/S ), 例如场景以1000Fps/S的速率渲染, 天空盒以20Fps/S的速率渲染, 天空盒由于渲染速率太低会出现 "不跟手" "晃动" , 我的解决方案是 : 对天空盒RT单独提升视野, 再计算运动矢量对其进行修正, 最后将天空盒RT的视野映射回去.
+- 分帧渲染 : 每帧渲染屏幕的一部分, 将一帧渲染完毕的效果分散到多帧, 他与异步渲染相辅相成. 目前此包只实现了分两帧 ( 一帧渲染左半部分, 下一帧渲染右半部分)
 
 # 实机测试
 以下均为IL2CPP打包
@@ -36,8 +39,6 @@
 
   ![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8Wp3rBObYSFZwdK8W6sJEcGV0mk8dBFumBFdZ.DT0wXjD1.yRlG7g3MPmOR.Hiwgx4cy.Vcci0QD0YMKHrbBwr0M!/b=&bo=AAqgBQAKoAUDHzo!&ek=1&tl=1)
   
-  由于录屏对帧率有影响, 真实帧率以上方图片为准
-  <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=1356155331&bvid=BV1iz421q7op&cid=1610729276&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 - PC端 : 2060显卡  渲染分辨率1920x1080 峰值帧率1480+, 平均帧率1300+ (热心网友测试)
 - PC端 : 十年前的笔记本电脑  980m显卡  渲染分辨率1920x1080 峰值帧率440+, 平均帧率320+
   
@@ -219,7 +220,7 @@
 简单的FPS显示, 可显示平均帧率, 最大帧率, 最小帧率
 
 ## 包管理器
-将个人写的一些包, 工具, 库, 集中起来管理, 非常方便
+可以将个人写的一些包, 工具, 库, 集中起来管理, 非常方便.
 - 使用方法:
     - 在需要安装到包管理器的包根目录添加两个文件 "SimplePackage.json" "Icon.png" , json记录了包的信息, png是包显示的图标(注意这个图标识别png格式) , json内容参考我提供的包内的文件, 这里不在赘述了
     - 将包移动到Packages/com.worldsystem/Packages~库文件夹内, 注意这个文件夹是隐藏文件夹, 请在资源管理器中操作
@@ -230,30 +231,28 @@
 
 # 包管理器中还有三个我开发的包
 ## ASE扩展
-添加了一个精心设计的无光照模板.大量自定义的着色器节点帮助获取URP管线的信息.简单明了高效.集成个人开发的一套ShaderGUI.
+添加了一个精心设计的无光照模板.大量自定义的着色器节点帮助获取URP管线的信息.简单明了高效. 这些节点几乎包含了默认情况下URP管线向着色器提供的所有信息, 使用这些节点和我提供的无光照模板可以轻松制作与URP-Lit 完全一致的效果, 扩展也很容易, 确保无冗余, 变体完全可控
 
 ![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8WtKMH0CNqUznGqfDalBm177WnS7sNtUcimx.1SU1qWC6hji.XCjuKjv8SmTy4Mr6PhtL7nBmX1GChZyb*hsg0Uo!/b=&bo=SgcMBUoHDAUDHzo!&ek=1&tl=1)
 
-这些节点几乎包含了默认情况下URP管线向着色器提供的所有信息, 使用这些节点和我提供的无光照模板可以轻松制作与URP-Lit 完全一致的效果, 并可以轻松扩展, 使用这些制作Shader保证无冗余, 变体完全可控
 还有一些其他节点, 请自行探索吧
 
 ## EXLitShader
-ASE扩展包的实践, 使用个人设计的着色器框架,重构URP-LitShader,有两个版本纯代码版和ASE版,保留LitShader的所有功能,并进行扩展,此着色器框架易于扩展,对于设计有大量关键字的复杂Shader有一定优势
+ASE扩展包的实践,重构URP-Lit, 有两个版本纯代码版和ASE版, 在保留URP-Lit所有功能的基础上进行扩展. 着色器框架易于扩展, 对于设计有大量关键字的复杂Shader有一定优势
 
 ![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8Wk1awcpxzkIAlpSrPpmC4iEDCxIaZIUGlzTtj0Q9YKitGotYXGhg8E33VYBgt6CyDS8KzBCEk4vROOCpj0EVA5w!/b=&bo=bAeFA2wHhQMDHzo!&ek=1&tl=1)
 
 
 ## LogicalSGUI
-带有逻辑运算的ShaderGUI, 帮助实现复杂着色器UI
+带有逻辑运算的ShaderGUI, 帮助实现复杂着色器UI, 几乎所有属性都可以设置条件显示 (满足条件时显示, 不满足时隐藏)
 
 ![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8WoCtyAquIHTO.s9IbHPA1vG5KX0ySWSMfqUjqHrI*C.E.6p5CYyN*Z0*yAjqs3PPbXLQaLontCCBELHNXBIFILY!/b=&bo=mwIdBJsCHQQDHzo!&ek=1&tl=1)
 
-这个内容有点多, 几乎所有属性都可以设置条件显示 (满足条件时显示, 不满足时隐藏)
-- 带枚举的折叠页, 可切换关键字, 使用变体切换效果, 灵感来自八猴的着色器UI
-- 枚举中文实现
-- 重置参数为默认
+- 几乎所有属性都可以设置条件显示
+- 带枚举的折叠页, 灵感来自八猴的着色器UI
 - 贴图拆分通道预览
 - 关键字显示
+- 枚举中文实现
 - 等等
 
 
