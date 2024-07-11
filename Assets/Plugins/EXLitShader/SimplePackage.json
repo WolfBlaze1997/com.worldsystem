@@ -1,4 +1,4 @@
-{"active":true,"icon":{"instanceID":-167730},"name":"EXLitShader",
+{"active":true,"icon":{"instanceID":-17924},"name":"EXLitShader",
 "creator":"烂菜叶料理侠",
 "version":"0.1.5",
 "describe":"ASE扩展包的实践,使用个人设计的着色器框架,重构URP-LitShader,有两个版本纯代码版和ASE版,保留LitShader的所有功能,此Shader易于扩展,对于设计有大量关键字的复杂Shader有一定优势",
