@@ -1,5 +1,4 @@
 ﻿
-![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8WivwlwJPsS5ffjcjWeaTPRFOQbVjErNjHAD7JFenkSIxhFncWaWvUs33fjlQw1l5MAI7FNwEiHFz9T.plLU5XHU!/b=&bo=5QLSBOUC0gQDHzo!&ek=1&tl=1)
 ![](./Documentation~/mianban.png)
 
 # 简介
@@ -19,14 +18,14 @@
 
 # 提供已打包的Dome下载
 
-![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8Wn6Od*LNUljW*CyQJ7Z2dT8tqOyLF9W4mAv8yDweyLgP.b7ur6WORKf5Vxo0Gk.tj7KSra9779YQKEQZWXfFVCA!/b=&bo=uwIcArsCHAIDHzo!&ek=1&tl=1)
+![](./Documentation~/tigongyidabao.png)
 
 <font color="#ffff00">这里已经有打包好的可运行程序, 可以直接下载运行查看效果</font>
 
 # 原创的异步分帧渲染方法
 开启关闭异步分帧渲染的帧率对比 :
 
-![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8WqUMAuSsIlyTykjGl23ciS1UwAOroPvdRNQTKJIKEeMBu5hmv95iGY8q04JOVs6bLNN6bE2kFUY5tEMDfUHbt7w!/b=&bo=cwhgAnMIYAIDHzo!&ek=1&tl=1)
+![](./Documentation~/duibi.png)
 
 实时帧率有900+的提升, 平均帧率,最大帧率都有700~800+的提升, 目前测试用的电脑是3090的显卡, 如果在低端设备提升将会更加明显, 异步分帧对于GPU集中的渲染, 优化效果越明显
 
@@ -38,15 +37,16 @@
 以下均为IL2CPP打包
 - PC端 : 3090显卡+5900X  渲染分辨率1920x1080 峰值帧率2800+, 平均帧率2300+
 
-  ![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8Wp3rBObYSFZwdK8W6sJEcGV0mk8dBFumBFdZ.DT0wXjD1.yRlG7g3MPmOR.Hiwgx4cy.Vcci0QD0YMKHrbBwr0M!/b=&bo=AAqgBQAKoAUDHzo!&ek=1&tl=1)
-  
+  ![](./Documentation~/cheshi1.png)
+
 - PC端 : 2060显卡  渲染分辨率1920x1080 峰值帧率1480+, 平均帧率1300+ (热心网友测试)
 - PC端 : 十年前的笔记本电脑  980m显卡  渲染分辨率1920x1080 峰值帧率440+, 平均帧率320+
   
-  ![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8WlBBAadSyt6hW6IGueZ..TkMm8sWXdtOF4RsnMWdKkKzvTtTuPi.KgfSxJ90bat7XudJ3SXbp*Tc4WE4ATUfn6o!/b=&bo=gAc4BIAHOAQDHzo!&ek=1&tl=1)
+  ![](./Documentation~/ceshi2.png)
 
 - 安卓端 : 小米平板6p  骁龙8+  渲染分辨率1440x900  峰值帧率144+  平均帧率144+    
   由于移动端的限制帧率无法突破屏幕刷新率,实际能跑到的帧率不止144
+  ![](./Documentation~/cheshi3.jpg)
 
 # 使用方法
 1. 创建一个空游戏对象 , 添加组件 WorldManager
@@ -58,7 +58,8 @@
 2. 紫色是动态参数, 但是在所有的天气中保持一致, 只在昼夜变换中是动态的
 3. 蓝色绿色是静态参数, 它们的值将在所有的天气中保持一致
 
-![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8WiERylfTCqWJW2mpeBQkfSDqPsaKBPoP8Bvi6gXavQcJunYw7i7ksXjkDuFjZMbg7.1FLiRBx70UxWxqIh7vk9U!/b=&bo=wgIYAsICGAIDHzo!&ek=1&tl=1)
+![](./Documentation~/canshu.png)
+
 
 | 参数                             | 描述                                                                                                                                                      |     |
 | :----------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ | --- |
@@ -234,20 +235,20 @@
 ## ASE扩展
 添加了一个精心设计的无光照模板.大量自定义的着色器节点帮助获取URP管线的信息.简单明了高效. 这些节点几乎包含了默认情况下URP管线向着色器提供的所有信息, 使用这些节点和我提供的无光照模板可以轻松制作与URP-Lit 完全一致的效果, 扩展也很容易, 确保无冗余, 变体完全可控
 
-![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8WtKMH0CNqUznGqfDalBm177WnS7sNtUcimx.1SU1qWC6hji.XCjuKjv8SmTy4Mr6PhtL7nBmX1GChZyb*hsg0Uo!/b=&bo=SgcMBUoHDAUDHzo!&ek=1&tl=1)
+![](./Documentation~/ASE.png)
 
 还有一些其他节点, 请自行探索吧
 
 ## EXLitShader
 ASE扩展包的实践,重构URP-Lit, 有两个版本纯代码版和ASE版, 在保留URP-Lit所有功能的基础上进行扩展. 着色器框架易于扩展, 对于设计有大量关键字的复杂Shader有一定优势
 
-![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8Wk1awcpxzkIAlpSrPpmC4iEDCxIaZIUGlzTtj0Q9YKitGotYXGhg8E33VYBgt6CyDS8KzBCEk4vROOCpj0EVA5w!/b=&bo=bAeFA2wHhQMDHzo!&ek=1&tl=1)
+![](./Documentation~/EXLit.png)
 
 
 ## LogicalSGUI
 带有逻辑运算的ShaderGUI, 帮助实现复杂着色器UI, 几乎所有属性都可以设置条件显示 (满足条件时显示, 不满足时隐藏)
 
-![](https://world.qpic.cn/psc?/world/O0cFsaTfOlqjIAnYAvw8WoCtyAquIHTO.s9IbHPA1vG5KX0ySWSMfqUjqHrI*C.E.6p5CYyN*Z0*yAjqs3PPbXLQaLontCCBELHNXBIFILY!/b=&bo=mwIdBJsCHQQDHzo!&ek=1&tl=1)
+![](./Documentation~/LogicalSGUI.png)
 
 - 几乎所有属性都可以设置条件显示
 - 带枚举的折叠页, 灵感来自八猴的着色器UI
