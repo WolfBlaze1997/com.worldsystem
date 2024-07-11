@@ -16,9 +16,11 @@ Material:
   - _PARALLAXMAP_OFF
   - _SAMPLE_COMMON
   - _SHADER_PBR
+  - _USE_PARALLAXMAP_PARALLAX
   - _WINDQUALITY_NONE
   m_InvalidKeywords:
   - ' '
+  - PLANT_SENIOR_DISABLE_DETAILGROUP0_DISABLE_CLEARCOATGROUP_DISABLE_PARALLAXGROUP0
   - ShaderModelGroup1, _OCCLUSION
   - ShaderModelGroup1_SENIOR
   - _
@@ -31,7 +33,6 @@ Material:
   - _SENIOR
   - _STENCIL
   - _SURFACEOPTIONS
-  - _USE_PARALLAXMAP_PARALLAX
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -128,10 +129,13 @@ Material:
     - ExtraMixMap_Display: 0
     - FlipBackNormal_On: 0
     - FlipBackNormal_On1: 0
+    - HoudiniVATGroup0: 0
     - NoiseSource_Enum: 0
     - Occlusion_On: 1
+    - ParallaxGroup0: 0
     - ParallaxSource_Enum: 0
     - Sample_Enum: 0
+    - ShaderModelGroup1: 1
     - WindEnabled_Enum: 0
     - _AlphaCutoff: 0.5
     - _AnimatorStrength: 1

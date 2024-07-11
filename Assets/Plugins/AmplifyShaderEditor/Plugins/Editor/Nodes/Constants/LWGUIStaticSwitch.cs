@@ -9,8 +9,8 @@ using System.Linq;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes("Static Switch LWGUI", "Logical Operators", "Creates a shader keyword toggle", Available = true)]
-	public sealed class LWGUIStaticSwitch : PropertyNode
+	[NodeAttributes("Static Switch LogicalSGUI", "Logical Operators", "Creates a shader keyword toggle", Available = true)]
+	public sealed class LogicalSGUIStaticSwitch : PropertyNode
 	{
 		public enum ShaderStage
 		{
@@ -91,9 +91,9 @@ namespace AmplifyShaderEditor
 		private KeywordModeType m_keywordModeType = KeywordModeType.LogicalSubToggle;
 
 		[SerializeField]
-		private LWGUIStaticSwitch m_reference = null;
+		private LogicalSGUIStaticSwitch m_reference = null;
 
-		private const string StaticSwitchStr = "Static Switch LWGUI";
+		private const string StaticSwitchStr = "Static Switch LogicalSGUI";
 		private const string MaterialToggleStr = "Material Toggle";
 
 		private const string ToggleMaterialValueStr = "Material Value";
@@ -169,7 +169,7 @@ namespace AmplifyShaderEditor
 			if (m_conditionId == -1)
 				m_conditionId = Shader.PropertyToID("_Condition");
 
-			LWGUIStaticSwitch node = (m_staticSwitchVarMode == StaticSwitchVariableMode.Reference && m_reference != null) ? m_reference : this;
+			LogicalSGUIStaticSwitch node = (m_staticSwitchVarMode == StaticSwitchVariableMode.Reference && m_reference != null) ? m_reference : this;
 
 			if (m_createToggle)
 				PreviewMaterial.SetInt(m_conditionId, node.MaterialValue);
@@ -188,11 +188,11 @@ namespace AmplifyShaderEditor
 
 			if (CurrentVarMode != StaticSwitchVariableMode.Reference)
 			{
-				ContainerGraph.LWGUIStaticSwitchNodes.AddNode(this);
+				ContainerGraph.LogicalSGUIStaticSwitchNodes.AddNode(this);
 			}
 
 			if (UniqueId > -1)
-				ContainerGraph.LWGUIStaticSwitchNodes.OnReorderEventComplete += OnReorderEventComplete;
+				ContainerGraph.LogicalSGUIStaticSwitchNodes.OnReorderEventComplete += OnReorderEventComplete;
 		}
 
 		public override void Destroy()
@@ -201,11 +201,11 @@ namespace AmplifyShaderEditor
 			UIUtils.UnregisterPropertyNode(this);
 			if (CurrentVarMode != StaticSwitchVariableMode.Reference)
 			{
-				ContainerGraph.LWGUIStaticSwitchNodes.RemoveNode(this);
+				ContainerGraph.LogicalSGUIStaticSwitchNodes.RemoveNode(this);
 			}
 
 			if (UniqueId > -1)
-				ContainerGraph.LWGUIStaticSwitchNodes.OnReorderEventComplete -= OnReorderEventComplete;
+				ContainerGraph.LogicalSGUIStaticSwitchNodes.OnReorderEventComplete -= OnReorderEventComplete;
 		}
 
 		void OnReorderEventComplete()
@@ -214,7 +214,7 @@ namespace AmplifyShaderEditor
 			{
 				if (m_reference != null)
 				{
-					m_referenceArrayId = ContainerGraph.LWGUIStaticSwitchNodes.GetNodeRegisterIdx(m_reference.UniqueId);
+					m_referenceArrayId = ContainerGraph.LogicalSGUIStaticSwitchNodes.GetNodeRegisterIdx(m_reference.UniqueId);
 				}
 			}
 		}
@@ -376,7 +376,7 @@ namespace AmplifyShaderEditor
 			}
 			return result;
 		}
-		private string GetKeywordEnumPropertyList_LWGUI()
+		private string GetKeywordEnumPropertyList_LogicalSGUI()
 		{
 			string result = string.Empty;
 			for (int i = 0; i < m_keywordEnumList.Length; i++)
@@ -529,7 +529,7 @@ namespace AmplifyShaderEditor
 			}
 			else if (CurrentVarMode == StaticSwitchVariableMode.Reference)
 			{
-				string[] arr = ContainerGraph.LWGUIStaticSwitchNodes.NodesArr;
+				string[] arr = ContainerGraph.LogicalSGUIStaticSwitchNodes.NodesArr;
 				bool guiEnabledBuffer = GUI.enabled;
 				if (arr != null && arr.Length > 0)
 				{
@@ -545,7 +545,7 @@ namespace AmplifyShaderEditor
 				m_referenceArrayId = EditorGUILayoutPopup(Constants.AvailableReferenceStr, m_referenceArrayId, arr);
 				if (EditorGUI.EndChangeCheck())
 				{
-					m_reference = ContainerGraph.LWGUIStaticSwitchNodes.GetNode(m_referenceArrayId);
+					m_reference = ContainerGraph.LogicalSGUIStaticSwitchNodes.GetNode(m_referenceArrayId);
 					if (m_reference != null)
 					{
 						m_referenceNodeId = m_reference.UniqueId;
@@ -681,7 +681,7 @@ namespace AmplifyShaderEditor
 
 					if (CurrentVarMode != StaticSwitchVariableMode.Reference)
 					{
-						ContainerGraph.LWGUIStaticSwitchNodes.UpdateDataOnNode(UniqueId, DataToArray);
+						ContainerGraph.LogicalSGUIStaticSwitchNodes.UpdateDataOnNode(UniqueId, DataToArray);
 					}
 				}
 			}
@@ -749,8 +749,8 @@ namespace AmplifyShaderEditor
 			{
 				if (m_reference == null && m_referenceNodeId > 0)
 				{
-					m_reference = ContainerGraph.GetNode(m_referenceNodeId) as LWGUIStaticSwitch;
-					m_referenceArrayId = ContainerGraph.LWGUIStaticSwitchNodes.GetNodeRegisterIdx(m_referenceNodeId);
+					m_reference = ContainerGraph.GetNode(m_referenceNodeId) as LogicalSGUIStaticSwitch;
+					m_referenceArrayId = ContainerGraph.LogicalSGUIStaticSwitchNodes.GetNodeRegisterIdx(m_referenceNodeId);
 				}
 
 				if (m_reference != null)
@@ -884,7 +884,7 @@ namespace AmplifyShaderEditor
 				if (!m_lockKeyword)
 					return string.Empty;
 
-				LWGUIStaticSwitch node = null;
+				LogicalSGUIStaticSwitch node = null;
 				switch (CurrentVarMode)
 				{
 					default:
@@ -979,7 +979,7 @@ namespace AmplifyShaderEditor
 
 			base.GenerateShaderForOutput(outputId, ref dataCollector, ignoreLocalvar);
 
-			LWGUIStaticSwitch node = (m_staticSwitchVarMode == StaticSwitchVariableMode.Reference && m_reference != null) ? m_reference : this;
+			LogicalSGUIStaticSwitch node = (m_staticSwitchVarMode == StaticSwitchVariableMode.Reference && m_reference != null) ? m_reference : this;
 
 			this.OrderIndex = node.RawOrderIndex;
 			this.OrderIndexOffset = node.OrderIndexOffset;
@@ -1226,7 +1226,7 @@ namespace AmplifyShaderEditor
 
 			if (!m_isNodeBeingCopied && CurrentVarMode != StaticSwitchVariableMode.Reference)
 			{
-				ContainerGraph.LWGUIStaticSwitchNodes.UpdateDataOnNode(UniqueId, DataToArray);
+				ContainerGraph.LogicalSGUIStaticSwitchNodes.UpdateDataOnNode(UniqueId, DataToArray);
 			}
 		}
 
@@ -1317,7 +1317,7 @@ namespace AmplifyShaderEditor
 				{
 					if (value == StaticSwitchVariableMode.Reference)
 					{
-						ContainerGraph.LWGUIStaticSwitchNodes.RemoveNode(this);
+						ContainerGraph.LogicalSGUIStaticSwitchNodes.RemoveNode(this);
 						m_referenceArrayId = -1;
 						m_referenceNodeId = -1;
 						m_reference = null;
@@ -1326,7 +1326,7 @@ namespace AmplifyShaderEditor
 					else
 					{
 						m_headerColorModifier = Color.white;
-						ContainerGraph.LWGUIStaticSwitchNodes.AddNode(this);
+						ContainerGraph.LogicalSGUIStaticSwitchNodes.AddNode(this);
 						UpdateLabels();
 					}
 				}

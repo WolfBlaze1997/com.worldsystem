@@ -31,7 +31,7 @@ Shader "EXLit"
 		[LogicalTitle(ShaderModelGroup1_ExtraMixMap_Display, Extra Mixed)][LogicalSubToggle(ShaderModelGroup1, _ExtraMixMap_Display)]ExtraMixMap_Display("显示额外混合贴图", Float) = 0
 		[LogicalTex(ShaderModelGroup1_ExtraMixMap_Display, false, R_G_B_A, _)]_ExtraMixMap("额外混合贴图", 2D) = "black" {}
 		[LogicalSubKeywordEnum(ShaderModelGroup1_SHADER_PLANT,_WINDQUALITY_NONE,_WINDQUALITY_FASTEST,_WINDQUALITY_FAST,_WINDQUALITY_BETTER,_WINDQUALITY_BEST,_WINDQUALITY_PALM)] WindEnabled_Enum("关闭/最快/快速/更好/最好/棕榈树/风力", Float) = 1
-		[EnumGroup(HoudiniVATGroup0, _SENIOR, Off, _,HoudiniVATSoft, _HOUDINI_VAT_SOFT)] HoudiniVATGroup0("禁用/软体动画/Houdini顶点动画贴图(VAT)", Vector) = (0,0,0,0)
+		[LogicalSubKeywordEnum( Off, _,HoudiniVATSoft, _HOUDINI_VAT_SOFT)] HoudiniVATGroup0("禁用/软体动画/Houdini顶点动画贴图(VAT)", Float) = 0
 		[LogicalTex(HoudiniVATGroup0_HOUDINI_VAT_SOFT, false, RGB_A, _)]_PositionVATMap("VAT位置贴图", 2D) = "white" {}
 		[LogicalTex(HoudiniVATGroup0_HOUDINI_VAT_SOFT, false, RGB_A, _)]_RotateVATMap("VAT旋转贴图", 2D) = "white" {}
 		[LogicalSubToggle(HoudiniVATGroup0_HOUDINI_VAT_SOFT, _)]_IsPosTexHDR("位置贴图使用HDR", Float) = 1
@@ -48,6 +48,7 @@ Shader "EXLit"
 		[LogicalSub(HoudiniVATGroup0_HOUDINI_VAT_SOFT)]_BoundMin_Y("Bound Min Y", Float) = 0
 		[LogicalSub(HoudiniVATGroup0_HOUDINI_VAT_SOFT)]_BoundMin_Z("Bound Min Z", Float) = 0
 		[EnumGroup(ParallaxGroup0, _SENIOR,Off disable_ParallaxSource_Enum, _PARALLAXMAP_OFF,ParallaxOffset, _PARALLAXMAP)] ParallaxGroup0("禁用/视差偏移/视差(UV)", Vector) = (0,0,0,0)
+		[LogicalSubKeywordEnum(ParallaxGroup0_PARALLAXMAP,_USE_PARALLAXMAP_PARALLAX,_USE_EXTRAMIXMAP_PARALLAX)] ParallaxSource_Enum("高度贴图/额外贴图/高度数据源", Float) = 1
 		[LogicalTex(ParallaxGroup0_PARALLAXMAP and ParallaxGroup0_USE_PARALLAXMAP_PARALLAX, false, RGB_A, _)]_HeightMap("视差贴图(高度)", 2D) = "white" {}
 		[LogicalSub(ParallaxGroup0_PARALLAXMAP)]_Parallax("视差强度", Range( 0 , 0.05)) = 0
 		[EnumGroup(DetailGroup0, _SENIOR,Off, _,Detail1Multi, _DETAIL,Detail2Multi, _DETAIL_2MULTI,Detail4Multi, _DETAIL_4MULTI)] DetailGroup0("禁用/一层细节/两层细节/四层细节/细节", Vector) = (0,0,0,0)
@@ -354,17 +355,18 @@ Shader "EXLit"
 			#include "Packages/com.worldsystem/Assets/Plugins/AmplifyShaderEditorExtend/ShaderLibrary/TextureFunctionLibrary.hlsl"
 			#define ASE_NEEDS_VERT_NORMAL
 			#define ASE_NEEDS_VERT_POSITION
+			#pragma shader_feature_local_fragment  
+			#pragma shader_feature_local _SAMPLE_COMMON _SAMPLE_NOISETILING _SAMPLE_HEXAGONTILING _SAMPLE_ONESAMPLEONTILING
+			#pragma shader_feature_local_fragment _WINDQUALITY_NONE _WINDQUALITY_FASTEST _WINDQUALITY_FAST _WINDQUALITY_BETTER _WINDQUALITY_BEST _WINDQUALITY_PALM
+			#pragma shader_feature_local_fragment _SHADER_PBR _SHADER_PLANT
+			#pragma shader_feature_local_fragment   _CLEARCOAT
+			#pragma shader_feature_local _USE_PARALLAXMAP_PARALLAX _USE_EXTRAMIXMAP_PARALLAX
+			#pragma shader_feature_local HoudiniVATSoft, _HOUDINI_VAT_SOFT
+			#pragma shader_feature_local_fragment   EFFECT_HUE_VARIATION
 			#pragma shader_feature_local_fragment   _DETAIL _DETAIL_2MULTI _DETAIL_4MULTI
-			#pragma shader_feature_local   EFFECT_HUE_VARIATION
-			#pragma shader_feature_local   _CLEARCOAT
-			#pragma shader_feature_local_fragment _SAMPLE_COMMON _SAMPLE_NOISETILING _SAMPLE_HEXAGONTILING _SAMPLE_ONESAMPLEONTILING
-			#pragma shader_feature_local_vertex _WINDQUALITY_NONE _WINDQUALITY_FASTEST _WINDQUALITY_FAST _WINDQUALITY_BETTER _WINDQUALITY_BEST _WINDQUALITY_PALM
-			#pragma shader_feature_local  
-			#pragma shader_feature_local_vertex   _HOUDINI_VAT_SOFT
-			#pragma shader_feature_local _SHADER_PBR _SHADER_PLANT
 			#pragma shader_feature_local_fragment _OCCLUSION
 			#pragma shader_feature_local_fragment _PARALLAXMAP_OFF _PARALLAXMAP
-			#pragma shader_feature_local EFFECT_BACKSIDE_NORMALS
+			#pragma shader_feature_local_fragment EFFECT_BACKSIDE_NORMALS
 
 
 			struct VertexInput
@@ -501,20 +503,20 @@ Shader "EXLit"
 				return GetNormalizedScreenSpaceUV(positionCS);
 			}
 			
-			float3 GTAOMultiBounce_Ref14_g7002( float ao, float3 albedo )
+			float3 GTAOMultiBounce_Ref14_g7005( float ao, float3 albedo )
 			{
 				half3 MultiBounceAO = GTAOMultiBounce(ao, albedo);
 				return MultiBounceAO;
 			}
 			
-			float4 ShadowMask28_g7017( float2 StaticLightMapUV )
+			float4 ShadowMask28_g7020( float2 StaticLightMapUV )
 			{
 				half4 shadowMask =half4(1, 1, 1, 1); 
 				shadowMask = SAMPLE_SHADOWMASK(StaticLightMapUV);
 				return shadowMask;
 			}
 			
-			float3 GetBakedGI39_g7018( float2 staticLightmapUV, float2 dynamicLightmapUV, float3 vertexSH, float3 normalWS, Light mainLight )
+			float3 GetBakedGI39_g7021( float2 staticLightmapUV, float2 dynamicLightmapUV, float3 vertexSH, float3 normalWS, Light mainLight )
 			{
 				half3 bakedGI = 0;
 				#if defined(DYNAMICLIGHTMAP_ON)
@@ -526,33 +528,33 @@ Shader "EXLit"
 				return bakedGI;
 			}
 			
-			float GetHorizonOcclusion_Ref17_g7002( float3 viewDirWS, float3 normalWS, float3 vertexNormalWS, float horizonFade )
+			float GetHorizonOcclusion_Ref17_g7005( float3 viewDirWS, float3 normalWS, float3 vertexNormalWS, float horizonFade )
 			{
 				half HorizonAO = GetHorizonOcclusion(viewDirWS, normalWS,vertexNormalWS, horizonFade);
 				return HorizonAO;
 			}
 			
-			float GetSpecularOcclusionFromAmbientOcclusion_Ref62_g7002( float NdotV, float ambientOcclusion, float perceptualRoughness )
+			float GetSpecularOcclusionFromAmbientOcclusion_Ref62_g7005( float NdotV, float ambientOcclusion, float perceptualRoughness )
 			{
 				half SpecularOcclusion = GetSpecularOcclusionFromAmbientOcclusion(NdotV, ambientOcclusion, perceptualRoughness);
 				return SpecularOcclusion;
 			}
 			
-			float3 GetBakedReflect36_g7019( float3 reflectDirWS, float3 positionWS, float perceptualRoughness, float2 normalizedScreenSpaceUV )
+			float3 GetBakedReflect36_g7022( float3 reflectDirWS, float3 positionWS, float perceptualRoughness, float2 normalizedScreenSpaceUV )
 			{
 				half3 BakedReflect = 0;
 				BakedReflect = GlossyEnvironmentReflection(reflectDirWS, positionWS, perceptualRoughness, 1.0h, normalizedScreenSpaceUV);
 				return BakedReflect;
 			}
 			
-			float3 GetBakedReflect26_g7019( float3 reflectDirWS, float3 positionWS, float perceptualRoughness, float2 normalizedScreenSpaceUV )
+			float3 GetBakedReflect26_g7022( float3 reflectDirWS, float3 positionWS, float perceptualRoughness, float2 normalizedScreenSpaceUV )
 			{
 				half3 BakedReflect = 0;
 				BakedReflect = GlossyEnvironmentReflection(reflectDirWS, positionWS, perceptualRoughness, 1.0h, normalizedScreenSpaceUV);
 				return BakedReflect;
 			}
 			
-			float3 AppendClearCoatReflect41_g7031( float3 bakedReflectClearCoat, float fresnel, BRDFData brdfDataClearCoat, float clearCoatMask, float3 mainBakedReflect )
+			float3 AppendClearCoatReflect41_g7034( float3 bakedReflectClearCoat, float fresnel, BRDFData brdfDataClearCoat, float clearCoatMask, float3 mainBakedReflect )
 			{
 				#if defined(_CLEARCOAT) || defined(_CLEARCOATMAP)
 				    half3 coatColor = EnvironmentBRDFClearCoat(brdfDataClearCoat, clearCoatMask, bakedReflectClearCoat, fresnel);
@@ -563,7 +565,7 @@ Shader "EXLit"
 				#endif
 			}
 			
-			int IsUseLightLayer11_g7026(  )
+			int IsUseLightLayer11_g7029(  )
 			{
 				int useLightLayer = 0;
 				#ifdef _LIGHT_LAYERS
@@ -572,28 +574,28 @@ Shader "EXLit"
 				return useLightLayer;
 			}
 			
-			int GetLightLayer_WBhrsge19_g7020( Light light )
+			int GetLightLayer_WBhrsge19_g7023( Light light )
 			{
 				 return light.layerMask;
 			}
 			
-			int GetMeshRenderingLayer_Ref14_g7026(  )
+			int GetMeshRenderingLayer_Ref14_g7029(  )
 			{
 				return GetMeshRenderingLayer();
 			}
 			
-			int IsMatchingLightLayer_Ref10_g7026( int lightLayers, int renderingLayers )
+			int IsMatchingLightLayer_Ref10_g7029( int lightLayers, int renderingLayers )
 			{
 				return IsMatchingLightLayer(lightLayers,renderingLayers);
 			}
 			
-			float GetSpecularOcclusionFromAmbientOcclusion_Ref8_g7002( float NdotV, float ambientOcclusion, float perceptualRoughness )
+			float GetSpecularOcclusionFromAmbientOcclusion_Ref8_g7005( float NdotV, float ambientOcclusion, float perceptualRoughness )
 			{
 				half SpecularOcclusion = GetSpecularOcclusionFromAmbientOcclusion(NdotV, ambientOcclusion, perceptualRoughness);
 				return SpecularOcclusion;
 			}
 			
-			int IsUseLightLayer11_g7021(  )
+			int IsUseLightLayer11_g7024(  )
 			{
 				int useLightLayer = 0;
 				#ifdef _LIGHT_LAYERS
@@ -602,17 +604,17 @@ Shader "EXLit"
 				return useLightLayer;
 			}
 			
-			int GetMeshRenderingLayer_Ref14_g7021(  )
+			int GetMeshRenderingLayer_Ref14_g7024(  )
 			{
 				return GetMeshRenderingLayer();
 			}
 			
-			int IsMatchingLightLayer_Ref10_g7021( int lightLayers, int renderingLayers )
+			int IsMatchingLightLayer_Ref10_g7024( int lightLayers, int renderingLayers )
 			{
 				return IsMatchingLightLayer(lightLayers,renderingLayers);
 			}
 			
-			float3 BrdfDataToDiffuse19_g7033( BRDFData BrdfData )
+			float3 BrdfDataToDiffuse19_g7036( BRDFData BrdfData )
 			{
 				return BrdfData.diffuse;
 			}
@@ -622,7 +624,7 @@ Shader "EXLit"
 				return VertexLighting(positionWS,normalWS);
 			}
 			
-			float4 CalculateFinalColor_Ref7_g7004( LightingData lightingData, float alpha )
+			float4 CalculateFinalColor_Ref7_g7007( LightingData lightingData, float alpha )
 			{
 				#if REAL_IS_HALF
 				    // Clamp any half.inf+ to HALF_MAX
@@ -903,7 +905,7 @@ Shader "EXLit"
 					#endif
 				#endif
 
-				float localGetLightingData1_g7004 = ( 0.0 );
+				float localGetLightingData1_g7007 = ( 0.0 );
 				float3 temp_cast_0 = (1.0).xxx;
 				float vertexToFrag237 = IN.ase_texcoord2.x;
 				float vertexToFrag236 = IN.ase_texcoord2.y;
@@ -927,17 +929,17 @@ Shader "EXLit"
 				float2 positionDSxy1_g2110 = IN.positionCS.xy;
 				float4 localSampleSupportNoTileing_OneSample1_g2110 = SampleSupportNoTileing_OneSample( uv1_g2110 , tex1_g2110 , positionDSxy1_g2110 );
 				#if defined(_SAMPLE_COMMON)
-				float staticSwitch332 = ( ( tex2DNode94.r + tex2DNode94.g + tex2DNode94.b + tex2DNode94.a ) / 4.0 );
+				float staticSwitch482 = ( ( tex2DNode94.r + tex2DNode94.g + tex2DNode94.b + tex2DNode94.a ) / 4.0 );
 				#elif defined(_SAMPLE_NOISETILING)
-				float staticSwitch332 = (localSampleSupportNoTileing_twoSample2_g2109).x;
+				float staticSwitch482 = (localSampleSupportNoTileing_twoSample2_g2109).x;
 				#elif defined(_SAMPLE_HEXAGONTILING)
-				float staticSwitch332 = (localSampleSupportNoTileing_HexagonSample1_g2108).x;
+				float staticSwitch482 = (localSampleSupportNoTileing_HexagonSample1_g2108).x;
 				#elif defined(_SAMPLE_ONESAMPLEONTILING)
-				float staticSwitch332 = (localSampleSupportNoTileing_OneSample1_g2110).x;
+				float staticSwitch482 = (localSampleSupportNoTileing_OneSample1_g2110).x;
 				#else
-				float staticSwitch332 = 0.0;
+				float staticSwitch482 = 0.0;
 				#endif
-				float height308 = staticSwitch332;
+				float height308 = staticSwitch482;
 				float height1_g6991 = height308;
 				float2 UVs1_g6991 = uv_primitive310;
 				float vertexToFrag264_g6964 = IN.ase_texcoord2.z;
@@ -953,13 +955,13 @@ Shader "EXLit"
 				float scale1_g6991 = _Parallax;
 				float2 localIterativeParallaxLegacy1_g6991 = IterativeParallaxLegacy1_g6991( height1_g6991 , UVs1_g6991 , plane1_g6991 , refp1_g6991 , scale1_g6991 );
 				#if defined(_PARALLAXMAP_OFF)
-				float2 staticSwitch92 = uv_primitive310;
+				float2 staticSwitch483 = uv_primitive310;
 				#elif defined(_PARALLAXMAP)
-				float2 staticSwitch92 = localIterativeParallaxLegacy1_g6991;
+				float2 staticSwitch483 = localIterativeParallaxLegacy1_g6991;
 				#else
-				float2 staticSwitch92 = uv_primitive310;
+				float2 staticSwitch483 = uv_primitive310;
 				#endif
-				float2 UV313 = staticSwitch92;
+				float2 UV313 = staticSwitch483;
 				float2 temp_output_3_0_g6993 = UV313;
 				float2 uv2_g6993 = temp_output_3_0_g6993;
 				sampler2D tex2_g6993 = _NRAMap;
@@ -976,83 +978,83 @@ Shader "EXLit"
 				float2 positionDSxy1_g6992 = IN.positionCS.xy;
 				float4 localSampleSupportNoTileing_OneSample1_g6992 = SampleSupportNoTileing_OneSample( uv1_g6992 , tex1_g6992 , positionDSxy1_g6992 );
 				#if defined(_SAMPLE_COMMON)
-				float4 staticSwitch164 = tex2D( _NRAMap, UV313 );
+				float4 staticSwitch486 = tex2D( _NRAMap, UV313 );
 				#elif defined(_SAMPLE_NOISETILING)
-				float4 staticSwitch164 = localSampleSupportNoTileing_twoSample2_g6993;
+				float4 staticSwitch486 = localSampleSupportNoTileing_twoSample2_g6993;
 				#elif defined(_SAMPLE_HEXAGONTILING)
-				float4 staticSwitch164 = localSampleSupportNoTileing_HexagonSample1_g6994;
+				float4 staticSwitch486 = localSampleSupportNoTileing_HexagonSample1_g6994;
 				#elif defined(_SAMPLE_ONESAMPLEONTILING)
-				float4 staticSwitch164 = localSampleSupportNoTileing_OneSample1_g6992;
+				float4 staticSwitch486 = localSampleSupportNoTileing_OneSample1_g6992;
 				#else
-				float4 staticSwitch164 = float4( 0,0,0,0 );
+				float4 staticSwitch486 = float4( 0,0,0,0 );
 				#endif
-				float4 break205 = staticSwitch164;
+				float4 break205 = staticSwitch486;
 				float lerpResult215 = lerp( 1.0 , break205.a , ( _OcclusionStrength + 1.0 ));
 				float occlusionMap217 = saturate( lerpResult215 );
-				float BakedAO40_g7002 = occlusionMap217;
-				float localGetScreenSpaceAmbientOcclusion_Ref4_g7002 = ( 0.0 );
+				float BakedAO40_g7005 = occlusionMap217;
+				float localGetScreenSpaceAmbientOcclusion_Ref4_g7005 = ( 0.0 );
 				float4 positionCS289_g6964 = PositionDS;
 				float2 localGetNormalizedScreenSpaceUV_Ref289_g6964 = GetNormalizedScreenSpaceUV_Ref( positionCS289_g6964 );
 				float3 appendResult291_g6964 = (float3(localGetNormalizedScreenSpaceUV_Ref289_g6964 , PositionDS.z));
 				float3 positionSS252 = appendResult291_g6964;
-				float2 positionSS4_g7002 = positionSS252.xy;
-				float IndirectAmbientOcclusion4_g7002 = 0;
-				float DirectAmbientOcclusion4_g7002 = 0;
+				float2 positionSS4_g7005 = positionSS252.xy;
+				float IndirectAmbientOcclusion4_g7005 = 0;
+				float DirectAmbientOcclusion4_g7005 = 0;
 				{
 				AmbientOcclusionFactor SSAO = (AmbientOcclusionFactor)0;
-				SSAO = GetScreenSpaceAmbientOcclusion(positionSS4_g7002);
-				IndirectAmbientOcclusion4_g7002 = SSAO.indirectAmbientOcclusion;
-				DirectAmbientOcclusion4_g7002 = SSAO.directAmbientOcclusion;
+				SSAO = GetScreenSpaceAmbientOcclusion(positionSS4_g7005);
+				IndirectAmbientOcclusion4_g7005 = SSAO.indirectAmbientOcclusion;
+				DirectAmbientOcclusion4_g7005 = SSAO.directAmbientOcclusion;
 				}
-				float IndirectSSAO43_g7002 = IndirectAmbientOcclusion4_g7002;
-				float temp_output_34_0_g7002 = min( BakedAO40_g7002 , IndirectSSAO43_g7002 );
-				float ao14_g7002 = temp_output_34_0_g7002;
-				float2 temp_output_3_0_g6997 = UV313;
-				float2 uv2_g6997 = temp_output_3_0_g6997;
-				sampler2D tex2_g6997 = _BaseMap;
-				float simpleNoise1_g6997 = SimpleNoise( temp_output_3_0_g6997*_ScaleOrRotate154 );
-				simpleNoise1_g6997 = simpleNoise1_g6997*2 - 1;
-				float noise2_g6997 = simpleNoise1_g6997;
-				float4 localSampleSupportNoTileing_twoSample2_g6997 = SampleSupportNoTileing_twoSample( uv2_g6997 , tex2_g6997 , noise2_g6997 );
-				float2 uv1_g6998 = UV313;
-				sampler2D tex1_g6998 = _BaseMap;
-				float scaleOrRotate1_g6998 = _ScaleOrRotate154;
-				float4 localSampleSupportNoTileing_HexagonSample1_g6998 = SampleSupportNoTileing_HexagonSample( uv1_g6998 , tex1_g6998 , scaleOrRotate1_g6998 );
-				float2 uv1_g6996 = UV313;
-				sampler2D tex1_g6996 = _BaseMap;
-				float2 positionDSxy1_g6996 = IN.positionCS.xy;
-				float4 localSampleSupportNoTileing_OneSample1_g6996 = SampleSupportNoTileing_OneSample( uv1_g6996 , tex1_g6996 , positionDSxy1_g6996 );
+				float IndirectSSAO43_g7005 = IndirectAmbientOcclusion4_g7005;
+				float temp_output_34_0_g7005 = min( BakedAO40_g7005 , IndirectSSAO43_g7005 );
+				float ao14_g7005 = temp_output_34_0_g7005;
+				float2 temp_output_3_0_g7002 = UV313;
+				float2 uv2_g7002 = temp_output_3_0_g7002;
+				sampler2D tex2_g7002 = _BaseMap;
+				float simpleNoise1_g7002 = SimpleNoise( temp_output_3_0_g7002*_ScaleOrRotate154 );
+				simpleNoise1_g7002 = simpleNoise1_g7002*2 - 1;
+				float noise2_g7002 = simpleNoise1_g7002;
+				float4 localSampleSupportNoTileing_twoSample2_g7002 = SampleSupportNoTileing_twoSample( uv2_g7002 , tex2_g7002 , noise2_g7002 );
+				float2 uv1_g7003 = UV313;
+				sampler2D tex1_g7003 = _BaseMap;
+				float scaleOrRotate1_g7003 = _ScaleOrRotate154;
+				float4 localSampleSupportNoTileing_HexagonSample1_g7003 = SampleSupportNoTileing_HexagonSample( uv1_g7003 , tex1_g7003 , scaleOrRotate1_g7003 );
+				float2 uv1_g7001 = UV313;
+				sampler2D tex1_g7001 = _BaseMap;
+				float2 positionDSxy1_g7001 = IN.positionCS.xy;
+				float4 localSampleSupportNoTileing_OneSample1_g7001 = SampleSupportNoTileing_OneSample( uv1_g7001 , tex1_g7001 , positionDSxy1_g7001 );
 				#if defined(_SAMPLE_COMMON)
-				float4 staticSwitch127 = tex2D( _BaseMap, UV313 );
+				float4 staticSwitch485 = tex2D( _BaseMap, UV313 );
 				#elif defined(_SAMPLE_NOISETILING)
-				float4 staticSwitch127 = localSampleSupportNoTileing_twoSample2_g6997;
+				float4 staticSwitch485 = localSampleSupportNoTileing_twoSample2_g7002;
 				#elif defined(_SAMPLE_HEXAGONTILING)
-				float4 staticSwitch127 = localSampleSupportNoTileing_HexagonSample1_g6998;
+				float4 staticSwitch485 = localSampleSupportNoTileing_HexagonSample1_g7003;
 				#elif defined(_SAMPLE_ONESAMPLEONTILING)
-				float4 staticSwitch127 = localSampleSupportNoTileing_OneSample1_g6996;
+				float4 staticSwitch485 = localSampleSupportNoTileing_OneSample1_g7001;
 				#else
-				float4 staticSwitch127 = float4( 0,0,0,0 );
+				float4 staticSwitch485 = float4( 0,0,0,0 );
 				#endif
-				float4 break198 = staticSwitch127;
-				float3 appendResult200 = (float3(break198.r , break198.g , break198.b));
+				float4 break198 = staticSwitch485;
+				float3 appendResult200 = (float3(break198.r , break198.g , 0.0));
 				float3 albedo201 = appendResult200;
-				float3 albedo14_g7002 = albedo201;
-				float3 localGTAOMultiBounce_Ref14_g7002 = GTAOMultiBounce_Ref14_g7002( ao14_g7002 , albedo14_g7002 );
+				float3 albedo14_g7005 = albedo201;
+				float3 localGTAOMultiBounce_Ref14_g7005 = GTAOMultiBounce_Ref14_g7005( ao14_g7005 , albedo14_g7005 );
 				#ifdef _OCCLUSION
-				float3 staticSwitch63 = localGTAOMultiBounce_Ref14_g7002;
+				float3 staticSwitch493 = localGTAOMultiBounce_Ref14_g7005;
 				#else
-				float3 staticSwitch63 = temp_cast_0;
+				float3 staticSwitch493 = temp_cast_0;
 				#endif
-				float3 temp_output_18_0_g7004 = staticSwitch63;
+				float3 temp_output_18_0_g7007 = staticSwitch493;
 				float2 staticLightMapUV366 = StaticLightmapUV;
-				float2 staticLightmapUV39_g7018 = staticLightMapUV366;
+				float2 staticLightmapUV39_g7021 = staticLightMapUV366;
 				float vertexToFrag521_g6964 = IN.ase_texcoord3.y;
 				float vertexToFrag522_g6964 = IN.ase_texcoord3.z;
 				float2 appendResult523_g6964 = (float2(vertexToFrag521_g6964 , vertexToFrag522_g6964));
 				float2 dynamicLightMapUV372 = appendResult523_g6964;
-				float2 dynamicLightmapUV39_g7018 = dynamicLightMapUV372;
+				float2 dynamicLightmapUV39_g7021 = dynamicLightMapUV372;
 				float3 vertexSH374 = VertexSH;
-				float3 vertexSH39_g7018 = vertexSH374;
+				float3 vertexSH39_g7021 = vertexSH374;
 				float2 appendResult206 = (float2(break205.r , break205.g));
 				float2 normalMapRG1_g6995 = appendResult206;
 				float4 localDecodeNormalRG1_g6995 = DecodeNormalRG( normalMapRG1_g6995 );
@@ -1081,13 +1083,13 @@ Shader "EXLit"
 				float3 normalizeResult320 = normalize( mul( normalTS208, TBN220 ) );
 				float isFront317 = ase_vface;
 				#ifdef EFFECT_BACKSIDE_NORMALS
-				float3 staticSwitch58 = ( (float)(int)isFront317 != 0.0 ? normalizeResult320 : -normalizeResult320 );
+				float3 staticSwitch487 = ( (float)(int)isFront317 != 0.0 ? normalizeResult320 : -normalizeResult320 );
 				#else
-				float3 staticSwitch58 = normalizeResult320;
+				float3 staticSwitch487 = normalizeResult320;
 				#endif
-				float3 normalWS224 = staticSwitch58;
-				float3 normalWS39_g7018 = normalWS224;
-				float localGetMainLight_Ref1_g7017 = ( 0.0 );
+				float3 normalWS224 = staticSwitch487;
+				float3 normalWS39_g7021 = normalWS224;
+				float localGetMainLight_Ref1_g7020 = ( 0.0 );
 				float localShadowCoordInputFragment352_g6964 = ( 0.0 );
 				float4 ShadowCoords352_g6964 = float4( 0,0,0,0 );
 				float vertexToFrag320_g6964 = IN.ase_texcoord6.x;
@@ -1103,339 +1105,339 @@ Shader "EXLit"
 				#endif
 				}
 				float4 shadowCoord362 = ShadowCoords352_g6964;
-				float4 shadowCoord1_g7017 = shadowCoord362;
+				float4 shadowCoord1_g7020 = shadowCoord362;
 				float3 positionWS402_g6964 = appendResult311_g6964;
 				float3 positionWS365 = positionWS402_g6964;
-				float3 positionWS1_g7017 = positionWS365;
-				float2 StaticLightMapUV28_g7017 = staticLightMapUV366;
-				float4 localShadowMask28_g7017 = ShadowMask28_g7017( StaticLightMapUV28_g7017 );
-				float4 shadowMask1_g7017 = localShadowMask28_g7017;
-				float3 Direction1_g7017 = float3( 0,0,0 );
-				float3 Color1_g7017 = float3( 0,0,0 );
-				float DistanceAttenuation1_g7017 = 0;
-				float ShadowAttenuation1_g7017 = 0;
-				int LayerMask1_g7017 = 0;
-				Light light1_g7017 = (Light)0;
+				float3 positionWS1_g7020 = positionWS365;
+				float2 StaticLightMapUV28_g7020 = staticLightMapUV366;
+				float4 localShadowMask28_g7020 = ShadowMask28_g7020( StaticLightMapUV28_g7020 );
+				float4 shadowMask1_g7020 = localShadowMask28_g7020;
+				float3 Direction1_g7020 = float3( 0,0,0 );
+				float3 Color1_g7020 = float3( 0,0,0 );
+				float DistanceAttenuation1_g7020 = 0;
+				float ShadowAttenuation1_g7020 = 0;
+				int LayerMask1_g7020 = 0;
+				Light light1_g7020 = (Light)0;
 				{
 				Light mainlight= (Light)0;
-				mainlight = GetMainLight(shadowCoord1_g7017, positionWS1_g7017, shadowMask1_g7017);
-				Direction1_g7017 = mainlight.direction;
-				Color1_g7017 = mainlight.color;
-				DistanceAttenuation1_g7017 = mainlight.distanceAttenuation;
-				ShadowAttenuation1_g7017 = mainlight.shadowAttenuation;
-				LayerMask1_g7017 = mainlight.layerMask;
-				light1_g7017 = mainlight;
+				mainlight = GetMainLight(shadowCoord1_g7020, positionWS1_g7020, shadowMask1_g7020);
+				Direction1_g7020 = mainlight.direction;
+				Color1_g7020 = mainlight.color;
+				DistanceAttenuation1_g7020 = mainlight.distanceAttenuation;
+				ShadowAttenuation1_g7020 = mainlight.shadowAttenuation;
+				LayerMask1_g7020 = mainlight.layerMask;
+				light1_g7020 = mainlight;
 				}
-				Light mainLight39_g7018 =(Light)light1_g7017;
-				float3 localGetBakedGI39_g7018 = GetBakedGI39_g7018( staticLightmapUV39_g7018 , dynamicLightmapUV39_g7018 , vertexSH39_g7018 , normalWS39_g7018 , mainLight39_g7018 );
-				float localBRDFDataSplit12_g7032 = ( 0.0 );
-				float localCreateClearCoatBRDFData_Ref139_g7005 = ( 0.0 );
-				float localSurfaceDataMerge6_g7007 = ( 0.0 );
-				float3 albedo107_g7005 = albedo201;
-				float3 Albedo6_g7007 = albedo107_g7005;
+				Light mainLight39_g7021 =(Light)light1_g7020;
+				float3 localGetBakedGI39_g7021 = GetBakedGI39_g7021( staticLightmapUV39_g7021 , dynamicLightmapUV39_g7021 , vertexSH39_g7021 , normalWS39_g7021 , mainLight39_g7021 );
+				float localBRDFDataSplit12_g7035 = ( 0.0 );
+				float localCreateClearCoatBRDFData_Ref139_g7008 = ( 0.0 );
+				float localSurfaceDataMerge6_g7010 = ( 0.0 );
+				float3 albedo107_g7008 = albedo201;
+				float3 Albedo6_g7010 = albedo107_g7008;
 				float3 temp_cast_13 = (0.04).xxx;
-				float temp_output_9_0_g7013 = _Metallic;
-				float2 temp_output_3_0_g7011 = UV313;
-				float2 uv2_g7011 = temp_output_3_0_g7011;
-				sampler2D tex2_g7011 = _EmissionMixMap;
-				float simpleNoise1_g7011 = SimpleNoise( temp_output_3_0_g7011*_ScaleOrRotate154 );
-				simpleNoise1_g7011 = simpleNoise1_g7011*2 - 1;
-				float noise2_g7011 = simpleNoise1_g7011;
-				float4 localSampleSupportNoTileing_twoSample2_g7011 = SampleSupportNoTileing_twoSample( uv2_g7011 , tex2_g7011 , noise2_g7011 );
-				float2 uv1_g7012 = UV313;
-				sampler2D tex1_g7012 = _EmissionMixMap;
-				float scaleOrRotate1_g7012 = _ScaleOrRotate154;
-				float4 localSampleSupportNoTileing_HexagonSample1_g7012 = SampleSupportNoTileing_HexagonSample( uv1_g7012 , tex1_g7012 , scaleOrRotate1_g7012 );
-				float2 uv1_g7010 = UV313;
-				sampler2D tex1_g7010 = _EmissionMixMap;
-				float2 positionDSxy1_g7010 = IN.positionCS.xy;
-				float4 localSampleSupportNoTileing_OneSample1_g7010 = SampleSupportNoTileing_OneSample( uv1_g7010 , tex1_g7010 , positionDSxy1_g7010 );
+				float temp_output_9_0_g7016 = _Metallic;
+				float2 temp_output_3_0_g7014 = UV313;
+				float2 uv2_g7014 = temp_output_3_0_g7014;
+				sampler2D tex2_g7014 = _EmissionMixMap;
+				float simpleNoise1_g7014 = SimpleNoise( temp_output_3_0_g7014*_ScaleOrRotate154 );
+				simpleNoise1_g7014 = simpleNoise1_g7014*2 - 1;
+				float noise2_g7014 = simpleNoise1_g7014;
+				float4 localSampleSupportNoTileing_twoSample2_g7014 = SampleSupportNoTileing_twoSample( uv2_g7014 , tex2_g7014 , noise2_g7014 );
+				float2 uv1_g7015 = UV313;
+				sampler2D tex1_g7015 = _EmissionMixMap;
+				float scaleOrRotate1_g7015 = _ScaleOrRotate154;
+				float4 localSampleSupportNoTileing_HexagonSample1_g7015 = SampleSupportNoTileing_HexagonSample( uv1_g7015 , tex1_g7015 , scaleOrRotate1_g7015 );
+				float2 uv1_g7013 = UV313;
+				sampler2D tex1_g7013 = _EmissionMixMap;
+				float2 positionDSxy1_g7013 = IN.positionCS.xy;
+				float4 localSampleSupportNoTileing_OneSample1_g7013 = SampleSupportNoTileing_OneSample( uv1_g7013 , tex1_g7013 , positionDSxy1_g7013 );
 				#if defined(_SAMPLE_COMMON)
-				float4 staticSwitch181 = tex2D( _EmissionMixMap, UV313 );
+				float4 staticSwitch489 = tex2D( _EmissionMixMap, UV313 );
 				#elif defined(_SAMPLE_NOISETILING)
-				float4 staticSwitch181 = localSampleSupportNoTileing_twoSample2_g7011;
+				float4 staticSwitch489 = localSampleSupportNoTileing_twoSample2_g7014;
 				#elif defined(_SAMPLE_HEXAGONTILING)
-				float4 staticSwitch181 = localSampleSupportNoTileing_HexagonSample1_g7012;
+				float4 staticSwitch489 = localSampleSupportNoTileing_HexagonSample1_g7015;
 				#elif defined(_SAMPLE_ONESAMPLEONTILING)
-				float4 staticSwitch181 = localSampleSupportNoTileing_OneSample1_g7010;
+				float4 staticSwitch489 = localSampleSupportNoTileing_OneSample1_g7013;
 				#else
-				float4 staticSwitch181 = float4( 0,0,0,0 );
+				float4 staticSwitch489 = float4( 0,0,0,0 );
 				#endif
-				float4 break268 = staticSwitch181;
-				float temp_output_12_0_g7013 = break268.a;
-				float lerpResult2_g7013 = lerp( temp_output_12_0_g7013 , 1.0 , temp_output_9_0_g7013);
-				float lerpResult6_g7013 = lerp( temp_output_12_0_g7013 , 0.0 , abs( temp_output_9_0_g7013 ));
-				float metallic271 = ( temp_output_9_0_g7013 >= 0.0 ? lerpResult2_g7013 : lerpResult6_g7013 );
-				float temp_output_70_0_g7005 = metallic271;
-				float metallic82_g7005 = temp_output_70_0_g7005;
-				float3 lerpResult28_g7005 = lerp( temp_cast_13 , albedo107_g7005 , metallic82_g7005);
-				float3 specular43_g7005 = ( lerpResult28_g7005 * _SpecColor.rgb );
-				float3 Specular6_g7007 = specular43_g7005;
-				float Metallic6_g7007 = metallic82_g7005;
-				float temp_output_9_0_g7009 = _Roughness;
-				float temp_output_12_0_g7009 = break205.b;
-				float lerpResult2_g7009 = lerp( temp_output_12_0_g7009 , 1.0 , temp_output_9_0_g7009);
-				float lerpResult6_g7009 = lerp( temp_output_12_0_g7009 , 0.0 , abs( temp_output_9_0_g7009 ));
-				float perceptualRoughness210 = ( temp_output_9_0_g7009 >= 0.0 ? lerpResult2_g7009 : lerpResult6_g7009 );
-				float temp_output_68_0_g7005 = perceptualRoughness210;
-				float perceptualRoughness75_g7005 = temp_output_68_0_g7005;
-				float perceptualSmoothness40_g7005 = ( 1.0 - perceptualRoughness75_g7005 );
-				float Smoothness6_g7007 = perceptualSmoothness40_g7005;
-				float3 NormalTS6_g7007 = normalTS208;
+				float4 break268 = staticSwitch489;
+				float temp_output_12_0_g7016 = break268.a;
+				float lerpResult2_g7016 = lerp( temp_output_12_0_g7016 , 1.0 , temp_output_9_0_g7016);
+				float lerpResult6_g7016 = lerp( temp_output_12_0_g7016 , 0.0 , abs( temp_output_9_0_g7016 ));
+				float metallic271 = ( temp_output_9_0_g7016 >= 0.0 ? lerpResult2_g7016 : lerpResult6_g7016 );
+				float temp_output_70_0_g7008 = metallic271;
+				float metallic82_g7008 = temp_output_70_0_g7008;
+				float3 lerpResult28_g7008 = lerp( temp_cast_13 , albedo107_g7008 , metallic82_g7008);
+				float3 specular43_g7008 = ( lerpResult28_g7008 * _SpecColor.rgb );
+				float3 Specular6_g7010 = specular43_g7008;
+				float Metallic6_g7010 = metallic82_g7008;
+				float temp_output_9_0_g7012 = _Roughness;
+				float temp_output_12_0_g7012 = break205.b;
+				float lerpResult2_g7012 = lerp( temp_output_12_0_g7012 , 1.0 , temp_output_9_0_g7012);
+				float lerpResult6_g7012 = lerp( temp_output_12_0_g7012 , 0.0 , abs( temp_output_9_0_g7012 ));
+				float perceptualRoughness210 = ( temp_output_9_0_g7012 >= 0.0 ? lerpResult2_g7012 : lerpResult6_g7012 );
+				float temp_output_68_0_g7008 = perceptualRoughness210;
+				float perceptualRoughness75_g7008 = temp_output_68_0_g7008;
+				float perceptualSmoothness40_g7008 = ( 1.0 - perceptualRoughness75_g7008 );
+				float Smoothness6_g7010 = perceptualSmoothness40_g7008;
+				float3 NormalTS6_g7010 = normalTS208;
 				float3 appendResult269 = (float3(break268.r , break268.g , break268.b));
 				float3 emission270 = ( (_EmissionColor).rgb * appendResult269 );
-				float3 Emission6_g7007 = emission270;
-				float Occlusion6_g7007 = occlusionMap217;
-				float alpha202 = break198.a;
-				float Alpha6_g7007 = alpha202;
+				float3 Emission6_g7010 = emission270;
+				float Occlusion6_g7010 = occlusionMap217;
+				float alpha202 = 0.0;
+				float Alpha6_g7010 = alpha202;
 				float4 tex2DNode113 = tex2D( _ClearCoatMap, uv_primitive310 );
 				float ClearCoatMask289 = saturate( ( tex2DNode113.a * ( _ClearCoatMask + 1.0 ) ) );
-				float ClearCoatMask6_g7007 = ClearCoatMask289;
-				float temp_output_9_0_g7003 = ( _ClearCoatSmoothness + 1.0 );
-				float temp_output_12_0_g7003 = ( ( tex2DNode113.r + tex2DNode113.g + tex2DNode113.b ) / 3.0 );
-				float lerpResult2_g7003 = lerp( temp_output_12_0_g7003 , 1.0 , temp_output_9_0_g7003);
-				float lerpResult6_g7003 = lerp( temp_output_12_0_g7003 , 0.0 , abs( temp_output_9_0_g7003 ));
-				float ClearCoatSmoothness296 = ( 1.0 - ( temp_output_9_0_g7003 >= 0.0 ? lerpResult2_g7003 : lerpResult6_g7003 ) );
-				float ClearCoatSmoothness6_g7007 = ClearCoatSmoothness296;
-				SurfaceData surfaceData6_g7007 = (SurfaceData)0;
+				float ClearCoatMask6_g7010 = ClearCoatMask289;
+				float temp_output_9_0_g7006 = ( _ClearCoatSmoothness + 1.0 );
+				float temp_output_12_0_g7006 = ( ( tex2DNode113.r + tex2DNode113.g + tex2DNode113.b ) / 3.0 );
+				float lerpResult2_g7006 = lerp( temp_output_12_0_g7006 , 1.0 , temp_output_9_0_g7006);
+				float lerpResult6_g7006 = lerp( temp_output_12_0_g7006 , 0.0 , abs( temp_output_9_0_g7006 ));
+				float ClearCoatSmoothness296 = ( 1.0 - ( temp_output_9_0_g7006 >= 0.0 ? lerpResult2_g7006 : lerpResult6_g7006 ) );
+				float ClearCoatSmoothness6_g7010 = ClearCoatSmoothness296;
+				SurfaceData surfaceData6_g7010 = (SurfaceData)0;
 				{
-				surfaceData6_g7007.albedo = Albedo6_g7007;
-				surfaceData6_g7007.specular = Specular6_g7007;
-				surfaceData6_g7007.metallic = Metallic6_g7007;
-				surfaceData6_g7007.smoothness = Smoothness6_g7007;
-				surfaceData6_g7007.normalTS = NormalTS6_g7007;
-				surfaceData6_g7007.emission = Emission6_g7007;
-				surfaceData6_g7007.occlusion = Occlusion6_g7007;
-				surfaceData6_g7007.alpha = Alpha6_g7007;
-				surfaceData6_g7007.clearCoatMask = ClearCoatMask6_g7007;
-				surfaceData6_g7007.clearCoatSmoothness = ClearCoatSmoothness6_g7007;
+				surfaceData6_g7010.albedo = Albedo6_g7010;
+				surfaceData6_g7010.specular = Specular6_g7010;
+				surfaceData6_g7010.metallic = Metallic6_g7010;
+				surfaceData6_g7010.smoothness = Smoothness6_g7010;
+				surfaceData6_g7010.normalTS = NormalTS6_g7010;
+				surfaceData6_g7010.emission = Emission6_g7010;
+				surfaceData6_g7010.occlusion = Occlusion6_g7010;
+				surfaceData6_g7010.alpha = Alpha6_g7010;
+				surfaceData6_g7010.clearCoatMask = ClearCoatMask6_g7010;
+				surfaceData6_g7010.clearCoatSmoothness = ClearCoatSmoothness6_g7010;
 				}
-				SurfaceData surfaceData139_g7005 = surfaceData6_g7007;
-				float localBRDFDataMerge1_g7006 = ( 0.0 );
-				float3 Albedo1_g7006 = albedo107_g7005;
-				float oneMinusReflectivity48_g7005 = ( ( 1.0 - metallic82_g7005 ) * 0.96 );
-				float3 diffuse49_g7005 = ( oneMinusReflectivity48_g7005 * albedo107_g7005 * _BaseColor.rgb );
-				float3 Diffuse1_g7006 = diffuse49_g7005;
-				float3 Specular1_g7006 = specular43_g7005;
-				float Reflectivity47_g7005 = ( 1.0 - oneMinusReflectivity48_g7005 );
-				float Reflectivity1_g7006 = Reflectivity47_g7005;
-				float PerceptualRoughness1_g7006 = perceptualRoughness75_g7005;
-				float roughness44_g7005 = max( ( perceptualRoughness75_g7005 * perceptualRoughness75_g7005 ) , 0.0078125 );
-				float Roughness1_g7006 = roughness44_g7005;
-				float roughness2116_g7005 = max( ( roughness44_g7005 * roughness44_g7005 ) , 6.103516E-05 );
-				float Roughness21_g7006 = roughness2116_g7005;
-				float grazingTerm41_g7005 = saturate( ( perceptualSmoothness40_g7005 + Reflectivity47_g7005 ) );
-				float GrazingTerm1_g7006 = grazingTerm41_g7005;
-				float normalizationTerm42_g7005 = ( ( roughness44_g7005 * 4.0 ) + 2.0 );
-				float NormalizationTerm1_g7006 = normalizationTerm42_g7005;
-				float roughness2MinusOne46_g7005 = ( roughness2116_g7005 - 1.0 );
-				float Roughness2MinusOne1_g7006 = roughness2MinusOne46_g7005;
-				BRDFData brdfData1_g7006 = (BRDFData)0;
+				SurfaceData surfaceData139_g7008 = surfaceData6_g7010;
+				float localBRDFDataMerge1_g7009 = ( 0.0 );
+				float3 Albedo1_g7009 = albedo107_g7008;
+				float oneMinusReflectivity48_g7008 = ( ( 1.0 - metallic82_g7008 ) * 0.96 );
+				float3 diffuse49_g7008 = ( oneMinusReflectivity48_g7008 * albedo107_g7008 * _BaseColor.rgb );
+				float3 Diffuse1_g7009 = diffuse49_g7008;
+				float3 Specular1_g7009 = specular43_g7008;
+				float Reflectivity47_g7008 = ( 1.0 - oneMinusReflectivity48_g7008 );
+				float Reflectivity1_g7009 = Reflectivity47_g7008;
+				float PerceptualRoughness1_g7009 = perceptualRoughness75_g7008;
+				float roughness44_g7008 = max( ( perceptualRoughness75_g7008 * perceptualRoughness75_g7008 ) , 0.0078125 );
+				float Roughness1_g7009 = roughness44_g7008;
+				float roughness2116_g7008 = max( ( roughness44_g7008 * roughness44_g7008 ) , 6.103516E-05 );
+				float Roughness21_g7009 = roughness2116_g7008;
+				float grazingTerm41_g7008 = saturate( ( perceptualSmoothness40_g7008 + Reflectivity47_g7008 ) );
+				float GrazingTerm1_g7009 = grazingTerm41_g7008;
+				float normalizationTerm42_g7008 = ( ( roughness44_g7008 * 4.0 ) + 2.0 );
+				float NormalizationTerm1_g7009 = normalizationTerm42_g7008;
+				float roughness2MinusOne46_g7008 = ( roughness2116_g7008 - 1.0 );
+				float Roughness2MinusOne1_g7009 = roughness2MinusOne46_g7008;
+				BRDFData brdfData1_g7009 = (BRDFData)0;
 				{
-				brdfData1_g7006 = (BRDFData)0;
-				brdfData1_g7006.albedo = Albedo1_g7006;
-				brdfData1_g7006.diffuse = Diffuse1_g7006;
-				brdfData1_g7006.specular = Specular1_g7006;
-				brdfData1_g7006.reflectivity = Reflectivity1_g7006;
-				brdfData1_g7006.perceptualRoughness = PerceptualRoughness1_g7006;
-				brdfData1_g7006.roughness = Roughness1_g7006;
-				brdfData1_g7006.roughness2 = Roughness21_g7006;
-				brdfData1_g7006.grazingTerm = GrazingTerm1_g7006;
-				brdfData1_g7006.normalizationTerm = NormalizationTerm1_g7006;
-				brdfData1_g7006.roughness2MinusOne = Roughness2MinusOne1_g7006;
+				brdfData1_g7009 = (BRDFData)0;
+				brdfData1_g7009.albedo = Albedo1_g7009;
+				brdfData1_g7009.diffuse = Diffuse1_g7009;
+				brdfData1_g7009.specular = Specular1_g7009;
+				brdfData1_g7009.reflectivity = Reflectivity1_g7009;
+				brdfData1_g7009.perceptualRoughness = PerceptualRoughness1_g7009;
+				brdfData1_g7009.roughness = Roughness1_g7009;
+				brdfData1_g7009.roughness2 = Roughness21_g7009;
+				brdfData1_g7009.grazingTerm = GrazingTerm1_g7009;
+				brdfData1_g7009.normalizationTerm = NormalizationTerm1_g7009;
+				brdfData1_g7009.roughness2MinusOne = Roughness2MinusOne1_g7009;
 				}
-				BRDFData brdfData139_g7005 = brdfData1_g7006;
-				BRDFData brdfDataClearCoat139_g7005 = (BRDFData)1;
+				BRDFData brdfData139_g7008 = brdfData1_g7009;
+				BRDFData brdfDataClearCoat139_g7008 = (BRDFData)1;
 				{
-				brdfDataClearCoat139_g7005 = CreateClearCoatBRDFData(surfaceData139_g7005, brdfData139_g7005);
+				brdfDataClearCoat139_g7008 = CreateClearCoatBRDFData(surfaceData139_g7008, brdfData139_g7008);
 				}
-				BRDFData brdfData12_g7032 = brdfData139_g7005;
-				float3 Albedo12_g7032 = float3( 0,0,0 );
-				float3 Diffuse12_g7032 = float3( 0,0,0 );
-				float3 Specular12_g7032 = float3( 0,0,0 );
-				float Reflectivity12_g7032 = 0;
-				float PerceptualRoughness12_g7032 = 0;
-				float Roughness12_g7032 = 0;
-				float Roughness212_g7032 = 0;
-				float GrazingTerm12_g7032 = 0;
-				float NormalizationTerm12_g7032 = 0;
-				float Roughness2MinusOne12_g7032 = 0;
+				BRDFData brdfData12_g7035 = brdfData139_g7008;
+				float3 Albedo12_g7035 = float3( 0,0,0 );
+				float3 Diffuse12_g7035 = float3( 0,0,0 );
+				float3 Specular12_g7035 = float3( 0,0,0 );
+				float Reflectivity12_g7035 = 0;
+				float PerceptualRoughness12_g7035 = 0;
+				float Roughness12_g7035 = 0;
+				float Roughness212_g7035 = 0;
+				float GrazingTerm12_g7035 = 0;
+				float NormalizationTerm12_g7035 = 0;
+				float Roughness2MinusOne12_g7035 = 0;
 				{
-				Albedo12_g7032 = brdfData12_g7032.albedo;
-				Diffuse12_g7032 = brdfData12_g7032.diffuse;
-				Specular12_g7032 = brdfData12_g7032.specular;
-				Reflectivity12_g7032 = brdfData12_g7032.reflectivity;
-				PerceptualRoughness12_g7032 = brdfData12_g7032.perceptualRoughness;
-				Roughness12_g7032 = brdfData12_g7032.roughness ;
-				Roughness212_g7032 = brdfData12_g7032.roughness2;
-				GrazingTerm12_g7032 = brdfData12_g7032.grazingTerm;
-				NormalizationTerm12_g7032 = brdfData12_g7032.normalizationTerm;
-				Roughness2MinusOne12_g7032 = brdfData12_g7032.roughness2MinusOne;
+				Albedo12_g7035 = brdfData12_g7035.albedo;
+				Diffuse12_g7035 = brdfData12_g7035.diffuse;
+				Specular12_g7035 = brdfData12_g7035.specular;
+				Reflectivity12_g7035 = brdfData12_g7035.reflectivity;
+				PerceptualRoughness12_g7035 = brdfData12_g7035.perceptualRoughness;
+				Roughness12_g7035 = brdfData12_g7035.roughness ;
+				Roughness212_g7035 = brdfData12_g7035.roughness2;
+				GrazingTerm12_g7035 = brdfData12_g7035.grazingTerm;
+				NormalizationTerm12_g7035 = brdfData12_g7035.normalizationTerm;
+				Roughness2MinusOne12_g7035 = brdfData12_g7035.roughness2MinusOne;
 				}
-				float3 temp_output_10_0_g7002 = normalWS224;
+				float3 temp_output_10_0_g7005 = normalWS224;
 				float vertexToFrag332_g6964 = IN.ase_texcoord6.w;
 				float vertexToFrag333_g6964 = IN.ase_texcoord7.x;
 				float vertexToFrag334_g6964 = IN.ase_texcoord7.y;
 				float3 appendResult335_g6964 = (float3(vertexToFrag332_g6964 , vertexToFrag333_g6964 , vertexToFrag334_g6964));
 				float3 normalizeResult484_g6964 = normalize( appendResult335_g6964 );
 				float3 viewDirWS259 = normalizeResult484_g6964;
-				float3 temp_output_11_0_g7002 = viewDirWS259;
-				float dotResult9_g7002 = dot( temp_output_10_0_g7002 , temp_output_11_0_g7002 );
-				float NdotV57_g7002 = saturate( dotResult9_g7002 );
-				float NdotV62_g7002 = NdotV57_g7002;
-				float3 viewDirWS17_g7002 = temp_output_11_0_g7002;
-				float3 normalWS17_g7002 = temp_output_10_0_g7002;
+				float3 temp_output_11_0_g7005 = viewDirWS259;
+				float dotResult9_g7005 = dot( temp_output_10_0_g7005 , temp_output_11_0_g7005 );
+				float NdotV57_g7005 = saturate( dotResult9_g7005 );
+				float NdotV62_g7005 = NdotV57_g7005;
+				float3 viewDirWS17_g7005 = temp_output_11_0_g7005;
+				float3 normalWS17_g7005 = temp_output_10_0_g7005;
 				float3 vNormalWS256 = NormalWS388_g6964;
-				float3 vertexNormalWS17_g7002 = vNormalWS256;
-				float horizonFade17_g7002 = ( _HorizonOcclusion + 0.5 );
-				float localGetHorizonOcclusion_Ref17_g7002 = GetHorizonOcclusion_Ref17_g7002( viewDirWS17_g7002 , normalWS17_g7002 , vertexNormalWS17_g7002 , horizonFade17_g7002 );
-				float HorizonAO47_g7002 = localGetHorizonOcclusion_Ref17_g7002;
-				float ambientOcclusion62_g7002 = min( temp_output_34_0_g7002 , HorizonAO47_g7002 );
-				float temp_output_13_0_g7002 = perceptualRoughness210;
-				float perceptualRoughness62_g7002 = temp_output_13_0_g7002;
-				float localGetSpecularOcclusionFromAmbientOcclusion_Ref62_g7002 = GetSpecularOcclusionFromAmbientOcclusion_Ref62_g7002( NdotV62_g7002 , ambientOcclusion62_g7002 , perceptualRoughness62_g7002 );
+				float3 vertexNormalWS17_g7005 = vNormalWS256;
+				float horizonFade17_g7005 = ( _HorizonOcclusion + 0.5 );
+				float localGetHorizonOcclusion_Ref17_g7005 = GetHorizonOcclusion_Ref17_g7005( viewDirWS17_g7005 , normalWS17_g7005 , vertexNormalWS17_g7005 , horizonFade17_g7005 );
+				float HorizonAO47_g7005 = localGetHorizonOcclusion_Ref17_g7005;
+				float ambientOcclusion62_g7005 = min( temp_output_34_0_g7005 , HorizonAO47_g7005 );
+				float temp_output_13_0_g7005 = perceptualRoughness210;
+				float perceptualRoughness62_g7005 = temp_output_13_0_g7005;
+				float localGetSpecularOcclusionFromAmbientOcclusion_Ref62_g7005 = GetSpecularOcclusionFromAmbientOcclusion_Ref62_g7005( NdotV62_g7005 , ambientOcclusion62_g7005 , perceptualRoughness62_g7005 );
 				#ifdef _OCCLUSION
-				float staticSwitch264 = localGetSpecularOcclusionFromAmbientOcclusion_Ref62_g7002;
+				float staticSwitch494 = localGetSpecularOcclusionFromAmbientOcclusion_Ref62_g7005;
 				#else
-				float staticSwitch264 = 1.0;
+				float staticSwitch494 = 1.0;
 				#endif
-				float3 temp_output_15_0_g7019 = reflect( -viewDirWS259 , normalWS224 );
-				float3 reflectDirWS36_g7019 = temp_output_15_0_g7019;
-				float3 temp_output_16_0_g7019 = positionWS365;
-				float3 positionWS36_g7019 = temp_output_16_0_g7019;
-				float localBRDFDataSplit12_g7008 = ( 0.0 );
-				BRDFData brdfData12_g7008 = brdfDataClearCoat139_g7005;
-				float3 Albedo12_g7008 = float3( 0,0,0 );
-				float3 Diffuse12_g7008 = float3( 0,0,0 );
-				float3 Specular12_g7008 = float3( 0,0,0 );
-				float Reflectivity12_g7008 = 0;
-				float PerceptualRoughness12_g7008 = 0;
-				float Roughness12_g7008 = 0;
-				float Roughness212_g7008 = 0;
-				float GrazingTerm12_g7008 = 0;
-				float NormalizationTerm12_g7008 = 0;
-				float Roughness2MinusOne12_g7008 = 0;
+				float3 temp_output_15_0_g7022 = reflect( -viewDirWS259 , normalWS224 );
+				float3 reflectDirWS36_g7022 = temp_output_15_0_g7022;
+				float3 temp_output_16_0_g7022 = positionWS365;
+				float3 positionWS36_g7022 = temp_output_16_0_g7022;
+				float localBRDFDataSplit12_g7011 = ( 0.0 );
+				BRDFData brdfData12_g7011 = brdfDataClearCoat139_g7008;
+				float3 Albedo12_g7011 = float3( 0,0,0 );
+				float3 Diffuse12_g7011 = float3( 0,0,0 );
+				float3 Specular12_g7011 = float3( 0,0,0 );
+				float Reflectivity12_g7011 = 0;
+				float PerceptualRoughness12_g7011 = 0;
+				float Roughness12_g7011 = 0;
+				float Roughness212_g7011 = 0;
+				float GrazingTerm12_g7011 = 0;
+				float NormalizationTerm12_g7011 = 0;
+				float Roughness2MinusOne12_g7011 = 0;
 				{
-				Albedo12_g7008 = brdfData12_g7008.albedo;
-				Diffuse12_g7008 = brdfData12_g7008.diffuse;
-				Specular12_g7008 = brdfData12_g7008.specular;
-				Reflectivity12_g7008 = brdfData12_g7008.reflectivity;
-				PerceptualRoughness12_g7008 = brdfData12_g7008.perceptualRoughness;
-				Roughness12_g7008 = brdfData12_g7008.roughness ;
-				Roughness212_g7008 = brdfData12_g7008.roughness2;
-				GrazingTerm12_g7008 = brdfData12_g7008.grazingTerm;
-				NormalizationTerm12_g7008 = brdfData12_g7008.normalizationTerm;
-				Roughness2MinusOne12_g7008 = brdfData12_g7008.roughness2MinusOne;
+				Albedo12_g7011 = brdfData12_g7011.albedo;
+				Diffuse12_g7011 = brdfData12_g7011.diffuse;
+				Specular12_g7011 = brdfData12_g7011.specular;
+				Reflectivity12_g7011 = brdfData12_g7011.reflectivity;
+				PerceptualRoughness12_g7011 = brdfData12_g7011.perceptualRoughness;
+				Roughness12_g7011 = brdfData12_g7011.roughness ;
+				Roughness212_g7011 = brdfData12_g7011.roughness2;
+				GrazingTerm12_g7011 = brdfData12_g7011.grazingTerm;
+				NormalizationTerm12_g7011 = brdfData12_g7011.normalizationTerm;
+				Roughness2MinusOne12_g7011 = brdfData12_g7011.roughness2MinusOne;
 				}
-				float perceptualRoughnessClearCoat384 = PerceptualRoughness12_g7008;
-				float temp_output_38_0_g7019 = perceptualRoughnessClearCoat384;
-				float perceptualRoughness36_g7019 = temp_output_38_0_g7019;
-				float2 temp_output_18_0_g7019 = positionSS252.xy;
-				float2 normalizedScreenSpaceUV36_g7019 = temp_output_18_0_g7019;
-				float3 localGetBakedReflect36_g7019 = GetBakedReflect36_g7019( reflectDirWS36_g7019 , positionWS36_g7019 , perceptualRoughness36_g7019 , normalizedScreenSpaceUV36_g7019 );
-				float3 bakedReflectClearCoat41_g7031 = localGetBakedReflect36_g7019;
-				float dotResult51_g7005 = dot( normalWS224 , viewDirWS259 );
-				float temp_output_53_0_g7005 = ( 1.0 - saturate( dotResult51_g7005 ) );
-				float fresnel54_g7005 = ( temp_output_53_0_g7005 * temp_output_53_0_g7005 * temp_output_53_0_g7005 * temp_output_53_0_g7005 );
-				float fresnel396 = fresnel54_g7005;
-				float temp_output_20_0_g7031 = fresnel396;
-				float fresnel41_g7031 = temp_output_20_0_g7031;
-				BRDFData brdfDataClearCoat41_g7031 =(BRDFData)brdfDataClearCoat139_g7005;
-				float clearCoatMask41_g7031 = ClearCoatMask289;
-				float3 reflectDirWS26_g7019 = temp_output_15_0_g7019;
-				float3 positionWS26_g7019 = temp_output_16_0_g7019;
-				float temp_output_17_0_g7019 = perceptualRoughness210;
-				float perceptualRoughness26_g7019 = temp_output_17_0_g7019;
-				float2 normalizedScreenSpaceUV26_g7019 = temp_output_18_0_g7019;
-				float3 localGetBakedReflect26_g7019 = GetBakedReflect26_g7019( reflectDirWS26_g7019 , positionWS26_g7019 , perceptualRoughness26_g7019 , normalizedScreenSpaceUV26_g7019 );
-				float3 temp_cast_21 = (GrazingTerm12_g7032).xxx;
-				float3 lerpResult8_g7031 = lerp( Specular12_g7032 , temp_cast_21 , temp_output_20_0_g7031);
-				float3 mainBakedReflect41_g7031 = ( localGetBakedReflect26_g7019 * ( lerpResult8_g7031 / ( Roughness212_g7032 + 1.0 ) ) );
-				float3 localAppendClearCoatReflect41_g7031 = AppendClearCoatReflect41_g7031( bakedReflectClearCoat41_g7031 , fresnel41_g7031 , brdfDataClearCoat41_g7031 , clearCoatMask41_g7031 , mainBakedReflect41_g7031 );
-				float3 GIColor1_g7004 = ( ( temp_output_18_0_g7004 * ( localGetBakedGI39_g7018 * Diffuse12_g7032 ) ) + ( staticSwitch264 * localAppendClearCoatReflect41_g7031 ) );
-				float DirectSSAO44_g7002 = DirectAmbientOcclusion4_g7002;
-				float temp_output_28_0_g7002 = min( DirectSSAO44_g7002 , saturate( ( BakedAO40_g7002 * 2.0 ) ) );
+				float perceptualRoughnessClearCoat384 = PerceptualRoughness12_g7011;
+				float temp_output_38_0_g7022 = perceptualRoughnessClearCoat384;
+				float perceptualRoughness36_g7022 = temp_output_38_0_g7022;
+				float2 temp_output_18_0_g7022 = positionSS252.xy;
+				float2 normalizedScreenSpaceUV36_g7022 = temp_output_18_0_g7022;
+				float3 localGetBakedReflect36_g7022 = GetBakedReflect36_g7022( reflectDirWS36_g7022 , positionWS36_g7022 , perceptualRoughness36_g7022 , normalizedScreenSpaceUV36_g7022 );
+				float3 bakedReflectClearCoat41_g7034 = localGetBakedReflect36_g7022;
+				float dotResult51_g7008 = dot( normalWS224 , viewDirWS259 );
+				float temp_output_53_0_g7008 = ( 1.0 - saturate( dotResult51_g7008 ) );
+				float fresnel54_g7008 = ( temp_output_53_0_g7008 * temp_output_53_0_g7008 * temp_output_53_0_g7008 * temp_output_53_0_g7008 );
+				float fresnel396 = fresnel54_g7008;
+				float temp_output_20_0_g7034 = fresnel396;
+				float fresnel41_g7034 = temp_output_20_0_g7034;
+				BRDFData brdfDataClearCoat41_g7034 =(BRDFData)brdfDataClearCoat139_g7008;
+				float clearCoatMask41_g7034 = ClearCoatMask289;
+				float3 reflectDirWS26_g7022 = temp_output_15_0_g7022;
+				float3 positionWS26_g7022 = temp_output_16_0_g7022;
+				float temp_output_17_0_g7022 = perceptualRoughness210;
+				float perceptualRoughness26_g7022 = temp_output_17_0_g7022;
+				float2 normalizedScreenSpaceUV26_g7022 = temp_output_18_0_g7022;
+				float3 localGetBakedReflect26_g7022 = GetBakedReflect26_g7022( reflectDirWS26_g7022 , positionWS26_g7022 , perceptualRoughness26_g7022 , normalizedScreenSpaceUV26_g7022 );
+				float3 temp_cast_21 = (GrazingTerm12_g7035).xxx;
+				float3 lerpResult8_g7034 = lerp( Specular12_g7035 , temp_cast_21 , temp_output_20_0_g7034);
+				float3 mainBakedReflect41_g7034 = ( localGetBakedReflect26_g7022 * ( lerpResult8_g7034 / ( Roughness212_g7035 + 1.0 ) ) );
+				float3 localAppendClearCoatReflect41_g7034 = AppendClearCoatReflect41_g7034( bakedReflectClearCoat41_g7034 , fresnel41_g7034 , brdfDataClearCoat41_g7034 , clearCoatMask41_g7034 , mainBakedReflect41_g7034 );
+				float3 GIColor1_g7007 = ( ( temp_output_18_0_g7007 * ( localGetBakedGI39_g7021 * Diffuse12_g7035 ) ) + ( staticSwitch494 * localAppendClearCoatReflect41_g7034 ) );
+				float DirectSSAO44_g7005 = DirectAmbientOcclusion4_g7005;
+				float temp_output_28_0_g7005 = min( DirectSSAO44_g7005 , saturate( ( BakedAO40_g7005 * 2.0 ) ) );
 				#ifdef _OCCLUSION
-				float staticSwitch265 = temp_output_28_0_g7002;
+				float staticSwitch495 = temp_output_28_0_g7005;
 				#else
-				float staticSwitch265 = 1.0;
+				float staticSwitch495 = 1.0;
 				#endif
-				float temp_output_21_0_g7004 = staticSwitch265;
-				int localIsUseLightLayer11_g7026 = IsUseLightLayer11_g7026();
-				Light light19_g7020 =(Light)light1_g7017;
-				int localGetLightLayer_WBhrsge19_g7020 = GetLightLayer_WBhrsge19_g7020( light19_g7020 );
-				int lightLayers10_g7026 = localGetLightLayer_WBhrsge19_g7020;
-				int localGetMeshRenderingLayer_Ref14_g7026 = GetMeshRenderingLayer_Ref14_g7026();
-				int renderingLayers10_g7026 = localGetMeshRenderingLayer_Ref14_g7026;
-				int localIsMatchingLightLayer_Ref10_g7026 = IsMatchingLightLayer_Ref10_g7026( lightLayers10_g7026 , renderingLayers10_g7026 );
-				float localLightingPhysicallyBased5_g7020 = ( 0.0 );
-				float3 normalWS5_g7020 = normalWS224;
-				float3 viewDirWS5_g7020 = viewDirWS259;
-				Light light5_g7020 =(Light)light1_g7017;
-				BRDFData brdfData5_g7020 =(BRDFData)brdfData139_g7005;
-				BRDFData brdfDataClearCoat5_g7020 =(BRDFData)brdfDataClearCoat139_g7005;
-				float clearCoatMask5_g7020 = ClearCoatMask289;
-				float3 outDirectDiffuse5_g7020 = float3( 0,0,0 );
-				float3 outDirectSpecular5_g7020 = float3( 0,0,0 );
-				LightingPhysicallyBased( normalWS5_g7020 , viewDirWS5_g7020 , light5_g7020 , brdfData5_g7020 , brdfDataClearCoat5_g7020 , clearCoatMask5_g7020 , outDirectDiffuse5_g7020 , outDirectSpecular5_g7020 );
-				float3 temp_output_7_0_g7026 = outDirectDiffuse5_g7020;
+				float temp_output_21_0_g7007 = staticSwitch495;
+				int localIsUseLightLayer11_g7029 = IsUseLightLayer11_g7029();
+				Light light19_g7023 =(Light)light1_g7020;
+				int localGetLightLayer_WBhrsge19_g7023 = GetLightLayer_WBhrsge19_g7023( light19_g7023 );
+				int lightLayers10_g7029 = localGetLightLayer_WBhrsge19_g7023;
+				int localGetMeshRenderingLayer_Ref14_g7029 = GetMeshRenderingLayer_Ref14_g7029();
+				int renderingLayers10_g7029 = localGetMeshRenderingLayer_Ref14_g7029;
+				int localIsMatchingLightLayer_Ref10_g7029 = IsMatchingLightLayer_Ref10_g7029( lightLayers10_g7029 , renderingLayers10_g7029 );
+				float localLightingPhysicallyBased5_g7023 = ( 0.0 );
+				float3 normalWS5_g7023 = normalWS224;
+				float3 viewDirWS5_g7023 = viewDirWS259;
+				Light light5_g7023 =(Light)light1_g7020;
+				BRDFData brdfData5_g7023 =(BRDFData)brdfData139_g7008;
+				BRDFData brdfDataClearCoat5_g7023 =(BRDFData)brdfDataClearCoat139_g7008;
+				float clearCoatMask5_g7023 = ClearCoatMask289;
+				float3 outDirectDiffuse5_g7023 = float3( 0,0,0 );
+				float3 outDirectSpecular5_g7023 = float3( 0,0,0 );
+				LightingPhysicallyBased( normalWS5_g7023 , viewDirWS5_g7023 , light5_g7023 , brdfData5_g7023 , brdfDataClearCoat5_g7023 , clearCoatMask5_g7023 , outDirectDiffuse5_g7023 , outDirectSpecular5_g7023 );
+				float3 temp_output_7_0_g7029 = outDirectDiffuse5_g7023;
 				float3 temp_cast_24 = (0.0).xxx;
-				float NdotV8_g7002 = NdotV57_g7002;
-				float ambientOcclusion8_g7002 = min( temp_output_28_0_g7002 , HorizonAO47_g7002 );
-				float perceptualRoughness8_g7002 = temp_output_13_0_g7002;
-				float localGetSpecularOcclusionFromAmbientOcclusion_Ref8_g7002 = GetSpecularOcclusionFromAmbientOcclusion_Ref8_g7002( NdotV8_g7002 , ambientOcclusion8_g7002 , perceptualRoughness8_g7002 );
+				float NdotV8_g7005 = NdotV57_g7005;
+				float ambientOcclusion8_g7005 = min( temp_output_28_0_g7005 , HorizonAO47_g7005 );
+				float perceptualRoughness8_g7005 = temp_output_13_0_g7005;
+				float localGetSpecularOcclusionFromAmbientOcclusion_Ref8_g7005 = GetSpecularOcclusionFromAmbientOcclusion_Ref8_g7005( NdotV8_g7005 , ambientOcclusion8_g7005 , perceptualRoughness8_g7005 );
 				#ifdef _OCCLUSION
-				float staticSwitch266 = localGetSpecularOcclusionFromAmbientOcclusion_Ref8_g7002;
+				float staticSwitch496 = localGetSpecularOcclusionFromAmbientOcclusion_Ref8_g7005;
 				#else
-				float staticSwitch266 = 1.0;
+				float staticSwitch496 = 1.0;
 				#endif
-				float temp_output_20_0_g7004 = staticSwitch266;
-				int localIsUseLightLayer11_g7021 = IsUseLightLayer11_g7021();
-				int lightLayers10_g7021 = localGetLightLayer_WBhrsge19_g7020;
-				int localGetMeshRenderingLayer_Ref14_g7021 = GetMeshRenderingLayer_Ref14_g7021();
-				int renderingLayers10_g7021 = localGetMeshRenderingLayer_Ref14_g7021;
-				int localIsMatchingLightLayer_Ref10_g7021 = IsMatchingLightLayer_Ref10_g7021( lightLayers10_g7021 , renderingLayers10_g7021 );
-				float3 temp_output_7_0_g7021 = outDirectSpecular5_g7020;
+				float temp_output_20_0_g7007 = staticSwitch496;
+				int localIsUseLightLayer11_g7024 = IsUseLightLayer11_g7024();
+				int lightLayers10_g7024 = localGetLightLayer_WBhrsge19_g7023;
+				int localGetMeshRenderingLayer_Ref14_g7024 = GetMeshRenderingLayer_Ref14_g7024();
+				int renderingLayers10_g7024 = localGetMeshRenderingLayer_Ref14_g7024;
+				int localIsMatchingLightLayer_Ref10_g7024 = IsMatchingLightLayer_Ref10_g7024( lightLayers10_g7024 , renderingLayers10_g7024 );
+				float3 temp_output_7_0_g7024 = outDirectSpecular5_g7023;
 				float3 temp_cast_27 = (0.0).xxx;
-				float3 MainLightColor1_g7004 = ( ( temp_output_21_0_g7004 * ( (float)localIsUseLightLayer11_g7026 != 0.0 ? ( (float)localIsMatchingLightLayer_Ref10_g7026 != 0.0 ? temp_output_7_0_g7026 : temp_cast_24 ) : temp_output_7_0_g7026 ) ) + ( temp_output_20_0_g7004 * ( (float)localIsUseLightLayer11_g7021 != 0.0 ? ( (float)localIsMatchingLightLayer_Ref10_g7021 != 0.0 ? temp_output_7_0_g7021 : temp_cast_27 ) : temp_output_7_0_g7021 ) ) );
-				float localLightingPhysicallyBased_AdditionaLighting7_g7033 = ( 0.0 );
-				float3 positionWS7_g7033 = positionWS365;
-				float2 positionSS7_g7033 = positionSS252.xy;
-				float3 normalWS7_g7033 = normalWS224;
-				float3 viewDirWS7_g7033 = viewDirWS259;
-				float4 shadowMask434 = localShadowMask28_g7017;
-				float4 shadowMask7_g7033 = shadowMask434;
-				BRDFData brdfData7_g7033 =(BRDFData)brdfData139_g7005;
-				BRDFData brdfDataClearCoat7_g7033 =(BRDFData)brdfDataClearCoat139_g7005;
-				float clearCoatMask7_g7033 = ClearCoatMask289;
-				float3 outAddDirectDiffuse7_g7033 = float3( 0,0,0 );
-				float3 outAddDirectSpecular7_g7033 = float3( 0,0,0 );
-				LightingPhysicallyBased_AdditionaLighting( positionWS7_g7033 , positionSS7_g7033 , normalWS7_g7033 , viewDirWS7_g7033 , shadowMask7_g7033 , brdfData7_g7033 , brdfDataClearCoat7_g7033 , clearCoatMask7_g7033 , outAddDirectDiffuse7_g7033 , outAddDirectSpecular7_g7033 );
-				float3 AdditionalLightsColor1_g7004 = ( ( temp_output_21_0_g7004 * outAddDirectDiffuse7_g7033 ) + ( temp_output_20_0_g7004 * outAddDirectSpecular7_g7033 ) );
-				BRDFData BrdfData19_g7033 =(BRDFData)brdfData139_g7005;
-				float3 localBrdfDataToDiffuse19_g7033 = BrdfDataToDiffuse19_g7033( BrdfData19_g7033 );
+				float3 MainLightColor1_g7007 = ( ( temp_output_21_0_g7007 * ( (float)localIsUseLightLayer11_g7029 != 0.0 ? ( (float)localIsMatchingLightLayer_Ref10_g7029 != 0.0 ? temp_output_7_0_g7029 : temp_cast_24 ) : temp_output_7_0_g7029 ) ) + ( temp_output_20_0_g7007 * ( (float)localIsUseLightLayer11_g7024 != 0.0 ? ( (float)localIsMatchingLightLayer_Ref10_g7024 != 0.0 ? temp_output_7_0_g7024 : temp_cast_27 ) : temp_output_7_0_g7024 ) ) );
+				float localLightingPhysicallyBased_AdditionaLighting7_g7036 = ( 0.0 );
+				float3 positionWS7_g7036 = positionWS365;
+				float2 positionSS7_g7036 = positionSS252.xy;
+				float3 normalWS7_g7036 = normalWS224;
+				float3 viewDirWS7_g7036 = viewDirWS259;
+				float4 shadowMask434 = localShadowMask28_g7020;
+				float4 shadowMask7_g7036 = shadowMask434;
+				BRDFData brdfData7_g7036 =(BRDFData)brdfData139_g7008;
+				BRDFData brdfDataClearCoat7_g7036 =(BRDFData)brdfDataClearCoat139_g7008;
+				float clearCoatMask7_g7036 = ClearCoatMask289;
+				float3 outAddDirectDiffuse7_g7036 = float3( 0,0,0 );
+				float3 outAddDirectSpecular7_g7036 = float3( 0,0,0 );
+				LightingPhysicallyBased_AdditionaLighting( positionWS7_g7036 , positionSS7_g7036 , normalWS7_g7036 , viewDirWS7_g7036 , shadowMask7_g7036 , brdfData7_g7036 , brdfDataClearCoat7_g7036 , clearCoatMask7_g7036 , outAddDirectDiffuse7_g7036 , outAddDirectSpecular7_g7036 );
+				float3 AdditionalLightsColor1_g7007 = ( ( temp_output_21_0_g7007 * outAddDirectDiffuse7_g7036 ) + ( temp_output_20_0_g7007 * outAddDirectSpecular7_g7036 ) );
+				BRDFData BrdfData19_g7036 =(BRDFData)brdfData139_g7008;
+				float3 localBrdfDataToDiffuse19_g7036 = BrdfDataToDiffuse19_g7036( BrdfData19_g7036 );
 				float vertexToFrag530_g6964 = IN.ase_texcoord7.z;
 				float vertexToFrag531_g6964 = IN.ase_texcoord7.w;
 				float vertexToFrag532_g6964 = IN.ase_texcoord8.x;
 				float3 appendResult534_g6964 = (float3(vertexToFrag530_g6964 , vertexToFrag531_g6964 , vertexToFrag532_g6964));
 				float3 vertexlight440 = appendResult534_g6964;
-				float3 VertexLightingColor1_g7004 = ( temp_output_18_0_g7004 * ( localBrdfDataToDiffuse19_g7033 * vertexlight440 ) );
-				float3 EmissionColor1_g7004 = emission270;
-				LightingData lightingData1_g7004 = (LightingData)0;
+				float3 VertexLightingColor1_g7007 = ( temp_output_18_0_g7007 * ( localBrdfDataToDiffuse19_g7036 * vertexlight440 ) );
+				float3 EmissionColor1_g7007 = emission270;
+				LightingData lightingData1_g7007 = (LightingData)0;
 				{
-				lightingData1_g7004 = (LightingData)0;
-				lightingData1_g7004.giColor = GIColor1_g7004;
-				lightingData1_g7004.mainLightColor = MainLightColor1_g7004;
-				lightingData1_g7004.additionalLightsColor = AdditionalLightsColor1_g7004;
-				lightingData1_g7004.vertexLightingColor = VertexLightingColor1_g7004;
-				lightingData1_g7004.emissionColor = EmissionColor1_g7004;
+				lightingData1_g7007 = (LightingData)0;
+				lightingData1_g7007.giColor = GIColor1_g7007;
+				lightingData1_g7007.mainLightColor = MainLightColor1_g7007;
+				lightingData1_g7007.additionalLightsColor = AdditionalLightsColor1_g7007;
+				lightingData1_g7007.vertexLightingColor = VertexLightingColor1_g7007;
+				lightingData1_g7007.emissionColor = EmissionColor1_g7007;
 				}
-				LightingData lightingData7_g7004 =(LightingData)lightingData1_g7004;
-				float alpha7_g7004 = 1.0;
-				float4 localCalculateFinalColor_Ref7_g7004 = CalculateFinalColor_Ref7_g7004( lightingData7_g7004 , alpha7_g7004 );
+				LightingData lightingData7_g7007 =(LightingData)lightingData1_g7007;
+				float alpha7_g7007 = 1.0;
+				float4 localCalculateFinalColor_Ref7_g7007 = CalculateFinalColor_Ref7_g7007( lightingData7_g7007 , alpha7_g7007 );
 				
 
-				float3 Color = localCalculateFinalColor_Ref7_g7004.xyz;
+				float3 Color = localCalculateFinalColor_Ref7_g7007.xyz;
 				float Alpha = alpha202;
 				float AlphaClipThreshold = 0.5;
 				float AlphaClipThresholdShadow = 0.5;
@@ -1569,26 +1571,24 @@ Shader "EXLit"
             #endif
 
 			#include "Packages/com.worldsystem/Assets/Plugins/AmplifyShaderEditorExtend/ShaderLibrary/BaseFunctionLibrary.hlsl"
-			#include "Packages/com.worldsystem/Assets/Plugins/AmplifyShaderEditorExtend/ShaderLibrary/TextureFunctionLibrary.hlsl"
 			#define ASE_NEEDS_VERT_POSITION
 			#define ASE_NEEDS_VERT_NORMAL
+			#pragma shader_feature_local_fragment  
+			#pragma shader_feature_local _SAMPLE_COMMON _SAMPLE_NOISETILING _SAMPLE_HEXAGONTILING _SAMPLE_ONESAMPLEONTILING
+			#pragma shader_feature_local_fragment _WINDQUALITY_NONE _WINDQUALITY_FASTEST _WINDQUALITY_FAST _WINDQUALITY_BETTER _WINDQUALITY_BEST _WINDQUALITY_PALM
+			#pragma shader_feature_local_fragment _SHADER_PBR _SHADER_PLANT
+			#pragma shader_feature_local_fragment   _CLEARCOAT
+			#pragma shader_feature_local _USE_PARALLAXMAP_PARALLAX _USE_EXTRAMIXMAP_PARALLAX
+			#pragma shader_feature_local HoudiniVATSoft, _HOUDINI_VAT_SOFT
+			#pragma shader_feature_local_fragment   EFFECT_HUE_VARIATION
 			#pragma shader_feature_local_fragment   _DETAIL _DETAIL_2MULTI _DETAIL_4MULTI
-			#pragma shader_feature_local   EFFECT_HUE_VARIATION
-			#pragma shader_feature_local   _CLEARCOAT
-			#pragma shader_feature_local_fragment _SAMPLE_COMMON _SAMPLE_NOISETILING _SAMPLE_HEXAGONTILING _SAMPLE_ONESAMPLEONTILING
-			#pragma shader_feature_local_vertex _WINDQUALITY_NONE _WINDQUALITY_FASTEST _WINDQUALITY_FAST _WINDQUALITY_BETTER _WINDQUALITY_BEST _WINDQUALITY_PALM
-			#pragma shader_feature_local  
-			#pragma shader_feature_local_vertex   _HOUDINI_VAT_SOFT
-			#pragma shader_feature_local _SHADER_PBR _SHADER_PLANT
-			#pragma shader_feature_local_fragment _PARALLAXMAP_OFF _PARALLAXMAP
 
 
 			struct VertexInput
 			{
 				float4 positionOS : POSITION;
 				float3 normalOS : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
-				float4 ase_tangent : TANGENT;
+				
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1596,8 +1596,7 @@ Shader "EXLit"
 			{
 				float4 positionCS : SV_POSITION;
 
-				float4 ase_texcoord : TEXCOORD0;
-				float4 ase_texcoord1 : TEXCOORD1;
+				
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -1610,8 +1609,6 @@ Shader "EXLit"
 			sampler2D _RotateVATMap;
 			samplerCUBE _CustomReflectMap;
 			sampler2D _ExtraMixMap;
-			sampler2D _BaseMap;
-			sampler2D _HeightMap;
 
 
 			float3 TransformObjectToWorldNormal_Ref33_g6967( float3 normalOS )
@@ -1623,55 +1620,6 @@ Shader "EXLit"
 			{
 				float dp3 = max(1.175494351e-38, dot(inVec, inVec));
 				return inVec* rsqrt(dp3);
-			}
-			
-			inline float noise_randomValue (float2 uv) { return frac(sin(dot(uv, float2(12.9898, 78.233)))*43758.5453); }
-			inline float noise_interpolate (float a, float b, float t) { return (1.0-t)*a + (t*b); }
-			inline float valueNoise (float2 uv)
-			{
-				float2 i = floor(uv);
-				float2 f = frac( uv );
-				f = f* f * (3.0 - 2.0 * f);
-				uv = abs( frac(uv) - 0.5);
-				float2 c0 = i + float2( 0.0, 0.0 );
-				float2 c1 = i + float2( 1.0, 0.0 );
-				float2 c2 = i + float2( 0.0, 1.0 );
-				float2 c3 = i + float2( 1.0, 1.0 );
-				float r0 = noise_randomValue( c0 );
-				float r1 = noise_randomValue( c1 );
-				float r2 = noise_randomValue( c2 );
-				float r3 = noise_randomValue( c3 );
-				float bottomOfGrid = noise_interpolate( r0, r1, f.x );
-				float topOfGrid = noise_interpolate( r2, r3, f.x );
-				float t = noise_interpolate( bottomOfGrid, topOfGrid, f.y );
-				return t;
-			}
-			
-			float SimpleNoise(float2 UV)
-			{
-				float t = 0.0;
-				float freq = pow( 2.0, float( 0 ) );
-				float amp = pow( 0.5, float( 3 - 0 ) );
-				t += valueNoise( UV/freq )*amp;
-				freq = pow(2.0, float(1));
-				amp = pow(0.5, float(3-1));
-				t += valueNoise( UV/freq )*amp;
-				freq = pow(2.0, float(2));
-				amp = pow(0.5, float(3-2));
-				t += valueNoise( UV/freq )*amp;
-				return t;
-			}
-			
-			float3 TransformWorldToTangentDir_Ref133_g6965( float3 directionWS, float3x3 TBN )
-			{
-				return TransformWorldToTangentDir(directionWS, TBN);
-			}
-			
-			float2 IterativeParallaxLegacy1_g6991( float height, float2 UVs, float2 plane, float refp, float scale )
-			{
-				UVs += plane * scale * refp;
-				UVs += (height - 1) * plane * scale;
-				return UVs;
 			}
 			
 
@@ -1726,38 +1674,6 @@ Shader "EXLit"
 				#endif
 				}
 				
-				float2 break242 = ( ( v.ase_texcoord.xy * _BaseMap_ST.xy ) + _BaseMap_ST.zw );
-				float vertexToFrag237 = break242.x;
-				o.ase_texcoord.x = vertexToFrag237;
-				float vertexToFrag236 = break242.y;
-				o.ase_texcoord.y = vertexToFrag236;
-				float3 vertexPositionWS386_g6964 = temp_output_345_7_g6964;
-				float3 normalizeResult129_g6964 = ASESafeNormalize( ( _WorldSpaceCameraPos - vertexPositionWS386_g6964 ) );
-				float3 temp_output_43_0_g6965 = normalizeResult129_g6964;
-				float3 directionWS133_g6965 = temp_output_43_0_g6965;
-				float3 temp_output_43_0_g6966 = ( v.ase_tangent.xyz + float3( 0,0,0 ) );
-				float3 objToWorldDir42_g6966 = mul( GetObjectToWorldMatrix(), float4( temp_output_43_0_g6966, 0 ) ).xyz;
-				float3 normalizeResult128_g6966 = ASESafeNormalize( objToWorldDir42_g6966 );
-				float3 VertexTangentlWS474_g6964 = normalizeResult128_g6966;
-				float3 VertexNormalWS314_g6964 = temp_output_515_34_g6964;
-				float ase_vertexTangentSign = v.ase_tangent.w * ( unity_WorldTransformParams.w >= 0.0 ? 1.0 : -1.0 );
-				float3 normalizeResult473_g6964 = ASESafeNormalize( ( cross( VertexNormalWS314_g6964 , VertexTangentlWS474_g6964 ) * ase_vertexTangentSign ) );
-				float3 VertexBitangentWS476_g6964 = normalizeResult473_g6964;
-				float3x3 temp_output_103_0_g6965 = float3x3(VertexTangentlWS474_g6964, VertexBitangentWS476_g6964, VertexNormalWS314_g6964);
-				float3x3 TBN133_g6965 = temp_output_103_0_g6965;
-				float3 localTransformWorldToTangentDir_Ref133_g6965 = TransformWorldToTangentDir_Ref133_g6965( directionWS133_g6965 , TBN133_g6965 );
-				float3 normalizeResult132_g6965 = ASESafeNormalize( localTransformWorldToTangentDir_Ref133_g6965 );
-				float3 break336_g6964 = normalizeResult132_g6965;
-				float vertexToFrag264_g6964 = break336_g6964.x;
-				o.ase_texcoord.z = vertexToFrag264_g6964;
-				float vertexToFrag337_g6964 = break336_g6964.y;
-				o.ase_texcoord.w = vertexToFrag337_g6964;
-				float vertexToFrag338_g6964 = break336_g6964.z;
-				o.ase_texcoord1.x = vertexToFrag338_g6964;
-				
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord1.yzw = 0;
 
 				o.positionCS = positionCS412_g6964;
 
@@ -1769,9 +1685,7 @@ Shader "EXLit"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 normalOS : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
-				float4 ase_tangent : TANGENT;
-
+				
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1788,8 +1702,7 @@ Shader "EXLit"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.positionOS;
 				o.normalOS = v.normalOS;
-				o.ase_texcoord = v.ase_texcoord;
-				o.ase_tangent = v.ase_tangent;
+				
 				return o;
 			}
 
@@ -1828,8 +1741,7 @@ Shader "EXLit"
 				VertexInput o = (VertexInput) 0;
 				o.positionOS = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.normalOS = patch[0].normalOS * bary.x + patch[1].normalOS * bary.y + patch[2].normalOS * bary.z;
-				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
-				o.ase_tangent = patch[0].ase_tangent * bary.x + patch[1].ase_tangent * bary.y + patch[2].ase_tangent * bary.z;
+				
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -1852,89 +1764,7 @@ Shader "EXLit"
 				UNITY_SETUP_INSTANCE_ID( IN );
 				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX( IN );
 
-				float vertexToFrag237 = IN.ase_texcoord.x;
-				float vertexToFrag236 = IN.ase_texcoord.y;
-				float2 appendResult238 = (float2(vertexToFrag237 , vertexToFrag236));
-				float2 uv_primitive310 = appendResult238;
-				float4 tex2DNode94 = tex2D( _HeightMap, uv_primitive310 );
-				float2 temp_output_3_0_g2109 = uv_primitive310;
-				float2 uv2_g2109 = temp_output_3_0_g2109;
-				sampler2D tex2_g2109 = _HeightMap;
-				float _ScaleOrRotate154 = _ScaleOrRotate;
-				float simpleNoise1_g2109 = SimpleNoise( temp_output_3_0_g2109*_ScaleOrRotate154 );
-				simpleNoise1_g2109 = simpleNoise1_g2109*2 - 1;
-				float noise2_g2109 = simpleNoise1_g2109;
-				float4 localSampleSupportNoTileing_twoSample2_g2109 = SampleSupportNoTileing_twoSample( uv2_g2109 , tex2_g2109 , noise2_g2109 );
-				float2 uv1_g2108 = uv_primitive310;
-				sampler2D tex1_g2108 = _HeightMap;
-				float scaleOrRotate1_g2108 = _ScaleOrRotate154;
-				float4 localSampleSupportNoTileing_HexagonSample1_g2108 = SampleSupportNoTileing_HexagonSample( uv1_g2108 , tex1_g2108 , scaleOrRotate1_g2108 );
-				float2 uv1_g2110 = uv_primitive310;
-				sampler2D tex1_g2110 = _HeightMap;
-				float2 positionDSxy1_g2110 = half4(0,0,0,0).xy;
-				float4 localSampleSupportNoTileing_OneSample1_g2110 = SampleSupportNoTileing_OneSample( uv1_g2110 , tex1_g2110 , positionDSxy1_g2110 );
-				#if defined(_SAMPLE_COMMON)
-				float staticSwitch332 = ( ( tex2DNode94.r + tex2DNode94.g + tex2DNode94.b + tex2DNode94.a ) / 4.0 );
-				#elif defined(_SAMPLE_NOISETILING)
-				float staticSwitch332 = (localSampleSupportNoTileing_twoSample2_g2109).x;
-				#elif defined(_SAMPLE_HEXAGONTILING)
-				float staticSwitch332 = (localSampleSupportNoTileing_HexagonSample1_g2108).x;
-				#elif defined(_SAMPLE_ONESAMPLEONTILING)
-				float staticSwitch332 = (localSampleSupportNoTileing_OneSample1_g2110).x;
-				#else
-				float staticSwitch332 = 0.0;
-				#endif
-				float height308 = staticSwitch332;
-				float height1_g6991 = height308;
-				float2 UVs1_g6991 = uv_primitive310;
-				float vertexToFrag264_g6964 = IN.ase_texcoord.z;
-				float vertexToFrag337_g6964 = IN.ase_texcoord.w;
-				float vertexToFrag338_g6964 = IN.ase_texcoord1.x;
-				float3 appendResult340_g6964 = (float3(vertexToFrag264_g6964 , vertexToFrag337_g6964 , vertexToFrag338_g6964));
-				float3 normalizeResult451_g6964 = normalize( appendResult340_g6964 );
-				float3 viewDirTS311 = normalizeResult451_g6964;
-				float3 break6_g6991 = viewDirTS311;
-				float2 appendResult5_g6991 = (float2(break6_g6991.x , break6_g6991.y));
-				float2 plane1_g6991 = ( appendResult5_g6991 / break6_g6991.z );
-				float refp1_g6991 = 0.5;
-				float scale1_g6991 = _Parallax;
-				float2 localIterativeParallaxLegacy1_g6991 = IterativeParallaxLegacy1_g6991( height1_g6991 , UVs1_g6991 , plane1_g6991 , refp1_g6991 , scale1_g6991 );
-				#if defined(_PARALLAXMAP_OFF)
-				float2 staticSwitch92 = uv_primitive310;
-				#elif defined(_PARALLAXMAP)
-				float2 staticSwitch92 = localIterativeParallaxLegacy1_g6991;
-				#else
-				float2 staticSwitch92 = uv_primitive310;
-				#endif
-				float2 UV313 = staticSwitch92;
-				float2 temp_output_3_0_g6997 = UV313;
-				float2 uv2_g6997 = temp_output_3_0_g6997;
-				sampler2D tex2_g6997 = _BaseMap;
-				float simpleNoise1_g6997 = SimpleNoise( temp_output_3_0_g6997*_ScaleOrRotate154 );
-				simpleNoise1_g6997 = simpleNoise1_g6997*2 - 1;
-				float noise2_g6997 = simpleNoise1_g6997;
-				float4 localSampleSupportNoTileing_twoSample2_g6997 = SampleSupportNoTileing_twoSample( uv2_g6997 , tex2_g6997 , noise2_g6997 );
-				float2 uv1_g6998 = UV313;
-				sampler2D tex1_g6998 = _BaseMap;
-				float scaleOrRotate1_g6998 = _ScaleOrRotate154;
-				float4 localSampleSupportNoTileing_HexagonSample1_g6998 = SampleSupportNoTileing_HexagonSample( uv1_g6998 , tex1_g6998 , scaleOrRotate1_g6998 );
-				float2 uv1_g6996 = UV313;
-				sampler2D tex1_g6996 = _BaseMap;
-				float2 positionDSxy1_g6996 = half4(0,0,0,0).xy;
-				float4 localSampleSupportNoTileing_OneSample1_g6996 = SampleSupportNoTileing_OneSample( uv1_g6996 , tex1_g6996 , positionDSxy1_g6996 );
-				#if defined(_SAMPLE_COMMON)
-				float4 staticSwitch127 = tex2D( _BaseMap, UV313 );
-				#elif defined(_SAMPLE_NOISETILING)
-				float4 staticSwitch127 = localSampleSupportNoTileing_twoSample2_g6997;
-				#elif defined(_SAMPLE_HEXAGONTILING)
-				float4 staticSwitch127 = localSampleSupportNoTileing_HexagonSample1_g6998;
-				#elif defined(_SAMPLE_ONESAMPLEONTILING)
-				float4 staticSwitch127 = localSampleSupportNoTileing_OneSample1_g6996;
-				#else
-				float4 staticSwitch127 = float4( 0,0,0,0 );
-				#endif
-				float4 break198 = staticSwitch127;
-				float alpha202 = break198.a;
+				float alpha202 = 0.0;
 				
 
 				float Alpha = alpha202;
@@ -2049,34 +1879,30 @@ Shader "EXLit"
             #endif
 
 			#include "Packages/com.worldsystem/Assets/Plugins/AmplifyShaderEditorExtend/ShaderLibrary/BaseFunctionLibrary.hlsl"
-			#include "Packages/com.worldsystem/Assets/Plugins/AmplifyShaderEditorExtend/ShaderLibrary/TextureFunctionLibrary.hlsl"
 			#define ASE_NEEDS_VERT_POSITION
-			#define ASE_NEEDS_VERT_NORMAL
+			#pragma shader_feature_local_fragment  
+			#pragma shader_feature_local _SAMPLE_COMMON _SAMPLE_NOISETILING _SAMPLE_HEXAGONTILING _SAMPLE_ONESAMPLEONTILING
+			#pragma shader_feature_local_fragment _WINDQUALITY_NONE _WINDQUALITY_FASTEST _WINDQUALITY_FAST _WINDQUALITY_BETTER _WINDQUALITY_BEST _WINDQUALITY_PALM
+			#pragma shader_feature_local_fragment _SHADER_PBR _SHADER_PLANT
+			#pragma shader_feature_local_fragment   _CLEARCOAT
+			#pragma shader_feature_local _USE_PARALLAXMAP_PARALLAX _USE_EXTRAMIXMAP_PARALLAX
+			#pragma shader_feature_local HoudiniVATSoft, _HOUDINI_VAT_SOFT
+			#pragma shader_feature_local_fragment   EFFECT_HUE_VARIATION
 			#pragma shader_feature_local_fragment   _DETAIL _DETAIL_2MULTI _DETAIL_4MULTI
-			#pragma shader_feature_local   EFFECT_HUE_VARIATION
-			#pragma shader_feature_local   _CLEARCOAT
-			#pragma shader_feature_local_fragment _SAMPLE_COMMON _SAMPLE_NOISETILING _SAMPLE_HEXAGONTILING _SAMPLE_ONESAMPLEONTILING
-			#pragma shader_feature_local_vertex _WINDQUALITY_NONE _WINDQUALITY_FASTEST _WINDQUALITY_FAST _WINDQUALITY_BETTER _WINDQUALITY_BEST _WINDQUALITY_PALM
-			#pragma shader_feature_local  
-			#pragma shader_feature_local_vertex   _HOUDINI_VAT_SOFT
-			#pragma shader_feature_local _SHADER_PBR _SHADER_PLANT
-			#pragma shader_feature_local_fragment _PARALLAXMAP_OFF _PARALLAXMAP
 
 
 			struct VertexInput
 			{
 				float4 positionOS : POSITION;
 				float3 normalOS : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
-				float4 ase_tangent : TANGENT;
+				
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
 			struct VertexOutput
 			{
 				float4 positionCS : SV_POSITION;
-				float4 ase_texcoord : TEXCOORD0;
-				float4 ase_texcoord1 : TEXCOORD1;
+				
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -2089,71 +1915,9 @@ Shader "EXLit"
 			sampler2D _RotateVATMap;
 			samplerCUBE _CustomReflectMap;
 			sampler2D _ExtraMixMap;
-			sampler2D _BaseMap;
-			sampler2D _HeightMap;
 
 
-			inline float noise_randomValue (float2 uv) { return frac(sin(dot(uv, float2(12.9898, 78.233)))*43758.5453); }
-			inline float noise_interpolate (float a, float b, float t) { return (1.0-t)*a + (t*b); }
-			inline float valueNoise (float2 uv)
-			{
-				float2 i = floor(uv);
-				float2 f = frac( uv );
-				f = f* f * (3.0 - 2.0 * f);
-				uv = abs( frac(uv) - 0.5);
-				float2 c0 = i + float2( 0.0, 0.0 );
-				float2 c1 = i + float2( 1.0, 0.0 );
-				float2 c2 = i + float2( 0.0, 1.0 );
-				float2 c3 = i + float2( 1.0, 1.0 );
-				float r0 = noise_randomValue( c0 );
-				float r1 = noise_randomValue( c1 );
-				float r2 = noise_randomValue( c2 );
-				float r3 = noise_randomValue( c3 );
-				float bottomOfGrid = noise_interpolate( r0, r1, f.x );
-				float topOfGrid = noise_interpolate( r2, r3, f.x );
-				float t = noise_interpolate( bottomOfGrid, topOfGrid, f.y );
-				return t;
-			}
 			
-			float SimpleNoise(float2 UV)
-			{
-				float t = 0.0;
-				float freq = pow( 2.0, float( 0 ) );
-				float amp = pow( 0.5, float( 3 - 0 ) );
-				t += valueNoise( UV/freq )*amp;
-				freq = pow(2.0, float(1));
-				amp = pow(0.5, float(3-1));
-				t += valueNoise( UV/freq )*amp;
-				freq = pow(2.0, float(2));
-				amp = pow(0.5, float(3-2));
-				t += valueNoise( UV/freq )*amp;
-				return t;
-			}
-			
-			float3 ASESafeNormalize(float3 inVec)
-			{
-				float dp3 = max(1.175494351e-38, dot(inVec, inVec));
-				return inVec* rsqrt(dp3);
-			}
-			
-			float3 TransformObjectToWorldNormal_Ref33_g6967( float3 normalOS )
-			{
-				return TransformObjectToWorldNormal(normalOS,false);
-			}
-			
-			float3 TransformWorldToTangentDir_Ref133_g6965( float3 directionWS, float3x3 TBN )
-			{
-				return TransformWorldToTangentDir(directionWS, TBN);
-			}
-			
-			float2 IterativeParallaxLegacy1_g6991( float height, float2 UVs, float2 plane, float refp, float scale )
-			{
-				UVs += plane * scale * refp;
-				UVs += (height - 1) * plane * scale;
-				return UVs;
-			}
-			
-
 			VertexOutput VertexFunction( VertexInput v  )
 			{
 				VertexOutput o = (VertexOutput)0;
@@ -2181,44 +1945,6 @@ Shader "EXLit"
 				float4 vertexPositionCS382_g6964 = CS1_g6976;
 				float4 temp_output_478_313 = vertexPositionCS382_g6964;
 				
-				float2 break242 = ( ( v.ase_texcoord.xy * _BaseMap_ST.xy ) + _BaseMap_ST.zw );
-				float vertexToFrag237 = break242.x;
-				o.ase_texcoord.x = vertexToFrag237;
-				float vertexToFrag236 = break242.y;
-				o.ase_texcoord.y = vertexToFrag236;
-				float3 temp_output_345_7_g6964 = WS1_g6976;
-				float3 vertexPositionWS386_g6964 = temp_output_345_7_g6964;
-				float3 normalizeResult129_g6964 = ASESafeNormalize( ( _WorldSpaceCameraPos - vertexPositionWS386_g6964 ) );
-				float3 temp_output_43_0_g6965 = normalizeResult129_g6964;
-				float3 directionWS133_g6965 = temp_output_43_0_g6965;
-				float3 temp_output_43_0_g6966 = ( v.ase_tangent.xyz + float3( 0,0,0 ) );
-				float3 objToWorldDir42_g6966 = mul( GetObjectToWorldMatrix(), float4( temp_output_43_0_g6966, 0 ) ).xyz;
-				float3 normalizeResult128_g6966 = ASESafeNormalize( objToWorldDir42_g6966 );
-				float3 VertexTangentlWS474_g6964 = normalizeResult128_g6966;
-				float3 temp_output_31_0_g6967 = ( v.normalOS + float3( 0,0,0 ) );
-				float3 normalOS33_g6967 = temp_output_31_0_g6967;
-				float3 localTransformObjectToWorldNormal_Ref33_g6967 = TransformObjectToWorldNormal_Ref33_g6967( normalOS33_g6967 );
-				float3 normalizeResult140_g6967 = ASESafeNormalize( localTransformObjectToWorldNormal_Ref33_g6967 );
-				float3 temp_output_515_34_g6964 = normalizeResult140_g6967;
-				float3 VertexNormalWS314_g6964 = temp_output_515_34_g6964;
-				float ase_vertexTangentSign = v.ase_tangent.w * ( unity_WorldTransformParams.w >= 0.0 ? 1.0 : -1.0 );
-				float3 normalizeResult473_g6964 = ASESafeNormalize( ( cross( VertexNormalWS314_g6964 , VertexTangentlWS474_g6964 ) * ase_vertexTangentSign ) );
-				float3 VertexBitangentWS476_g6964 = normalizeResult473_g6964;
-				float3x3 temp_output_103_0_g6965 = float3x3(VertexTangentlWS474_g6964, VertexBitangentWS476_g6964, VertexNormalWS314_g6964);
-				float3x3 TBN133_g6965 = temp_output_103_0_g6965;
-				float3 localTransformWorldToTangentDir_Ref133_g6965 = TransformWorldToTangentDir_Ref133_g6965( directionWS133_g6965 , TBN133_g6965 );
-				float3 normalizeResult132_g6965 = ASESafeNormalize( localTransformWorldToTangentDir_Ref133_g6965 );
-				float3 break336_g6964 = normalizeResult132_g6965;
-				float vertexToFrag264_g6964 = break336_g6964.x;
-				o.ase_texcoord.z = vertexToFrag264_g6964;
-				float vertexToFrag337_g6964 = break336_g6964.y;
-				o.ase_texcoord.w = vertexToFrag337_g6964;
-				float vertexToFrag338_g6964 = break336_g6964.z;
-				o.ase_texcoord1.x = vertexToFrag338_g6964;
-				
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord1.yzw = 0;
 
 				o.positionCS = temp_output_478_313;
 
@@ -2231,9 +1957,7 @@ Shader "EXLit"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 normalOS : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
-				float4 ase_tangent : TANGENT;
-
+				
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -2250,8 +1974,7 @@ Shader "EXLit"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.positionOS;
 				o.normalOS = v.normalOS;
-				o.ase_texcoord = v.ase_texcoord;
-				o.ase_tangent = v.ase_tangent;
+				
 				return o;
 			}
 
@@ -2290,8 +2013,7 @@ Shader "EXLit"
 				VertexInput o = (VertexInput) 0;
 				o.positionOS = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.normalOS = patch[0].normalOS * bary.x + patch[1].normalOS * bary.y + patch[2].normalOS * bary.z;
-				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
-				o.ase_tangent = patch[0].ase_tangent * bary.x + patch[1].ase_tangent * bary.y + patch[2].ase_tangent * bary.z;
+				
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -2314,89 +2036,7 @@ Shader "EXLit"
 				UNITY_SETUP_INSTANCE_ID(IN);
 				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX( IN );
 
-				float vertexToFrag237 = IN.ase_texcoord.x;
-				float vertexToFrag236 = IN.ase_texcoord.y;
-				float2 appendResult238 = (float2(vertexToFrag237 , vertexToFrag236));
-				float2 uv_primitive310 = appendResult238;
-				float4 tex2DNode94 = tex2D( _HeightMap, uv_primitive310 );
-				float2 temp_output_3_0_g2109 = uv_primitive310;
-				float2 uv2_g2109 = temp_output_3_0_g2109;
-				sampler2D tex2_g2109 = _HeightMap;
-				float _ScaleOrRotate154 = _ScaleOrRotate;
-				float simpleNoise1_g2109 = SimpleNoise( temp_output_3_0_g2109*_ScaleOrRotate154 );
-				simpleNoise1_g2109 = simpleNoise1_g2109*2 - 1;
-				float noise2_g2109 = simpleNoise1_g2109;
-				float4 localSampleSupportNoTileing_twoSample2_g2109 = SampleSupportNoTileing_twoSample( uv2_g2109 , tex2_g2109 , noise2_g2109 );
-				float2 uv1_g2108 = uv_primitive310;
-				sampler2D tex1_g2108 = _HeightMap;
-				float scaleOrRotate1_g2108 = _ScaleOrRotate154;
-				float4 localSampleSupportNoTileing_HexagonSample1_g2108 = SampleSupportNoTileing_HexagonSample( uv1_g2108 , tex1_g2108 , scaleOrRotate1_g2108 );
-				float2 uv1_g2110 = uv_primitive310;
-				sampler2D tex1_g2110 = _HeightMap;
-				float2 positionDSxy1_g2110 = half4(0,0,0,0).xy;
-				float4 localSampleSupportNoTileing_OneSample1_g2110 = SampleSupportNoTileing_OneSample( uv1_g2110 , tex1_g2110 , positionDSxy1_g2110 );
-				#if defined(_SAMPLE_COMMON)
-				float staticSwitch332 = ( ( tex2DNode94.r + tex2DNode94.g + tex2DNode94.b + tex2DNode94.a ) / 4.0 );
-				#elif defined(_SAMPLE_NOISETILING)
-				float staticSwitch332 = (localSampleSupportNoTileing_twoSample2_g2109).x;
-				#elif defined(_SAMPLE_HEXAGONTILING)
-				float staticSwitch332 = (localSampleSupportNoTileing_HexagonSample1_g2108).x;
-				#elif defined(_SAMPLE_ONESAMPLEONTILING)
-				float staticSwitch332 = (localSampleSupportNoTileing_OneSample1_g2110).x;
-				#else
-				float staticSwitch332 = 0.0;
-				#endif
-				float height308 = staticSwitch332;
-				float height1_g6991 = height308;
-				float2 UVs1_g6991 = uv_primitive310;
-				float vertexToFrag264_g6964 = IN.ase_texcoord.z;
-				float vertexToFrag337_g6964 = IN.ase_texcoord.w;
-				float vertexToFrag338_g6964 = IN.ase_texcoord1.x;
-				float3 appendResult340_g6964 = (float3(vertexToFrag264_g6964 , vertexToFrag337_g6964 , vertexToFrag338_g6964));
-				float3 normalizeResult451_g6964 = normalize( appendResult340_g6964 );
-				float3 viewDirTS311 = normalizeResult451_g6964;
-				float3 break6_g6991 = viewDirTS311;
-				float2 appendResult5_g6991 = (float2(break6_g6991.x , break6_g6991.y));
-				float2 plane1_g6991 = ( appendResult5_g6991 / break6_g6991.z );
-				float refp1_g6991 = 0.5;
-				float scale1_g6991 = _Parallax;
-				float2 localIterativeParallaxLegacy1_g6991 = IterativeParallaxLegacy1_g6991( height1_g6991 , UVs1_g6991 , plane1_g6991 , refp1_g6991 , scale1_g6991 );
-				#if defined(_PARALLAXMAP_OFF)
-				float2 staticSwitch92 = uv_primitive310;
-				#elif defined(_PARALLAXMAP)
-				float2 staticSwitch92 = localIterativeParallaxLegacy1_g6991;
-				#else
-				float2 staticSwitch92 = uv_primitive310;
-				#endif
-				float2 UV313 = staticSwitch92;
-				float2 temp_output_3_0_g6997 = UV313;
-				float2 uv2_g6997 = temp_output_3_0_g6997;
-				sampler2D tex2_g6997 = _BaseMap;
-				float simpleNoise1_g6997 = SimpleNoise( temp_output_3_0_g6997*_ScaleOrRotate154 );
-				simpleNoise1_g6997 = simpleNoise1_g6997*2 - 1;
-				float noise2_g6997 = simpleNoise1_g6997;
-				float4 localSampleSupportNoTileing_twoSample2_g6997 = SampleSupportNoTileing_twoSample( uv2_g6997 , tex2_g6997 , noise2_g6997 );
-				float2 uv1_g6998 = UV313;
-				sampler2D tex1_g6998 = _BaseMap;
-				float scaleOrRotate1_g6998 = _ScaleOrRotate154;
-				float4 localSampleSupportNoTileing_HexagonSample1_g6998 = SampleSupportNoTileing_HexagonSample( uv1_g6998 , tex1_g6998 , scaleOrRotate1_g6998 );
-				float2 uv1_g6996 = UV313;
-				sampler2D tex1_g6996 = _BaseMap;
-				float2 positionDSxy1_g6996 = half4(0,0,0,0).xy;
-				float4 localSampleSupportNoTileing_OneSample1_g6996 = SampleSupportNoTileing_OneSample( uv1_g6996 , tex1_g6996 , positionDSxy1_g6996 );
-				#if defined(_SAMPLE_COMMON)
-				float4 staticSwitch127 = tex2D( _BaseMap, UV313 );
-				#elif defined(_SAMPLE_NOISETILING)
-				float4 staticSwitch127 = localSampleSupportNoTileing_twoSample2_g6997;
-				#elif defined(_SAMPLE_HEXAGONTILING)
-				float4 staticSwitch127 = localSampleSupportNoTileing_HexagonSample1_g6998;
-				#elif defined(_SAMPLE_ONESAMPLEONTILING)
-				float4 staticSwitch127 = localSampleSupportNoTileing_OneSample1_g6996;
-				#else
-				float4 staticSwitch127 = float4( 0,0,0,0 );
-				#endif
-				float4 break198 = staticSwitch127;
-				float alpha202 = break198.a;
+				float alpha202 = 0.0;
 				
 
 				float Alpha = alpha202;
@@ -2505,34 +2145,30 @@ Shader "EXLit"
 			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
 
 			#include "Packages/com.worldsystem/Assets/Plugins/AmplifyShaderEditorExtend/ShaderLibrary/BaseFunctionLibrary.hlsl"
-			#include "Packages/com.worldsystem/Assets/Plugins/AmplifyShaderEditorExtend/ShaderLibrary/TextureFunctionLibrary.hlsl"
 			#define ASE_NEEDS_VERT_POSITION
-			#define ASE_NEEDS_VERT_NORMAL
+			#pragma shader_feature_local_fragment  
+			#pragma shader_feature_local _SAMPLE_COMMON _SAMPLE_NOISETILING _SAMPLE_HEXAGONTILING _SAMPLE_ONESAMPLEONTILING
+			#pragma shader_feature_local_fragment _WINDQUALITY_NONE _WINDQUALITY_FASTEST _WINDQUALITY_FAST _WINDQUALITY_BETTER _WINDQUALITY_BEST _WINDQUALITY_PALM
+			#pragma shader_feature_local_fragment _SHADER_PBR _SHADER_PLANT
+			#pragma shader_feature_local_fragment   _CLEARCOAT
+			#pragma shader_feature_local _USE_PARALLAXMAP_PARALLAX _USE_EXTRAMIXMAP_PARALLAX
+			#pragma shader_feature_local HoudiniVATSoft, _HOUDINI_VAT_SOFT
+			#pragma shader_feature_local_fragment   EFFECT_HUE_VARIATION
 			#pragma shader_feature_local_fragment   _DETAIL _DETAIL_2MULTI _DETAIL_4MULTI
-			#pragma shader_feature_local   EFFECT_HUE_VARIATION
-			#pragma shader_feature_local   _CLEARCOAT
-			#pragma shader_feature_local_fragment _SAMPLE_COMMON _SAMPLE_NOISETILING _SAMPLE_HEXAGONTILING _SAMPLE_ONESAMPLEONTILING
-			#pragma shader_feature_local_vertex _WINDQUALITY_NONE _WINDQUALITY_FASTEST _WINDQUALITY_FAST _WINDQUALITY_BETTER _WINDQUALITY_BEST _WINDQUALITY_PALM
-			#pragma shader_feature_local  
-			#pragma shader_feature_local_vertex   _HOUDINI_VAT_SOFT
-			#pragma shader_feature_local _SHADER_PBR _SHADER_PLANT
-			#pragma shader_feature_local_fragment _PARALLAXMAP_OFF _PARALLAXMAP
 
 
 			struct VertexInput
 			{
 				float4 positionOS : POSITION;
 				float3 normalOS : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
-				float4 ase_tangent : TANGENT;
+				
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
 			struct VertexOutput
 			{
 				float4 positionCS : SV_POSITION;
-				float4 ase_texcoord : TEXCOORD0;
-				float4 ase_texcoord1 : TEXCOORD1;
+				
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -2545,71 +2181,9 @@ Shader "EXLit"
 			sampler2D _RotateVATMap;
 			samplerCUBE _CustomReflectMap;
 			sampler2D _ExtraMixMap;
-			sampler2D _BaseMap;
-			sampler2D _HeightMap;
 
 
-			inline float noise_randomValue (float2 uv) { return frac(sin(dot(uv, float2(12.9898, 78.233)))*43758.5453); }
-			inline float noise_interpolate (float a, float b, float t) { return (1.0-t)*a + (t*b); }
-			inline float valueNoise (float2 uv)
-			{
-				float2 i = floor(uv);
-				float2 f = frac( uv );
-				f = f* f * (3.0 - 2.0 * f);
-				uv = abs( frac(uv) - 0.5);
-				float2 c0 = i + float2( 0.0, 0.0 );
-				float2 c1 = i + float2( 1.0, 0.0 );
-				float2 c2 = i + float2( 0.0, 1.0 );
-				float2 c3 = i + float2( 1.0, 1.0 );
-				float r0 = noise_randomValue( c0 );
-				float r1 = noise_randomValue( c1 );
-				float r2 = noise_randomValue( c2 );
-				float r3 = noise_randomValue( c3 );
-				float bottomOfGrid = noise_interpolate( r0, r1, f.x );
-				float topOfGrid = noise_interpolate( r2, r3, f.x );
-				float t = noise_interpolate( bottomOfGrid, topOfGrid, f.y );
-				return t;
-			}
 			
-			float SimpleNoise(float2 UV)
-			{
-				float t = 0.0;
-				float freq = pow( 2.0, float( 0 ) );
-				float amp = pow( 0.5, float( 3 - 0 ) );
-				t += valueNoise( UV/freq )*amp;
-				freq = pow(2.0, float(1));
-				amp = pow(0.5, float(3-1));
-				t += valueNoise( UV/freq )*amp;
-				freq = pow(2.0, float(2));
-				amp = pow(0.5, float(3-2));
-				t += valueNoise( UV/freq )*amp;
-				return t;
-			}
-			
-			float3 ASESafeNormalize(float3 inVec)
-			{
-				float dp3 = max(1.175494351e-38, dot(inVec, inVec));
-				return inVec* rsqrt(dp3);
-			}
-			
-			float3 TransformObjectToWorldNormal_Ref33_g6967( float3 normalOS )
-			{
-				return TransformObjectToWorldNormal(normalOS,false);
-			}
-			
-			float3 TransformWorldToTangentDir_Ref133_g6965( float3 directionWS, float3x3 TBN )
-			{
-				return TransformWorldToTangentDir(directionWS, TBN);
-			}
-			
-			float2 IterativeParallaxLegacy1_g6991( float height, float2 UVs, float2 plane, float refp, float scale )
-			{
-				UVs += plane * scale * refp;
-				UVs += (height - 1) * plane * scale;
-				return UVs;
-			}
-			
-
 			int _ObjectId;
 			int _PassValue;
 
@@ -2648,44 +2222,6 @@ Shader "EXLit"
 				float4 vertexPositionCS382_g6964 = CS1_g6976;
 				float4 temp_output_478_313 = vertexPositionCS382_g6964;
 				
-				float2 break242 = ( ( v.ase_texcoord.xy * _BaseMap_ST.xy ) + _BaseMap_ST.zw );
-				float vertexToFrag237 = break242.x;
-				o.ase_texcoord.x = vertexToFrag237;
-				float vertexToFrag236 = break242.y;
-				o.ase_texcoord.y = vertexToFrag236;
-				float3 temp_output_345_7_g6964 = WS1_g6976;
-				float3 vertexPositionWS386_g6964 = temp_output_345_7_g6964;
-				float3 normalizeResult129_g6964 = ASESafeNormalize( ( _WorldSpaceCameraPos - vertexPositionWS386_g6964 ) );
-				float3 temp_output_43_0_g6965 = normalizeResult129_g6964;
-				float3 directionWS133_g6965 = temp_output_43_0_g6965;
-				float3 temp_output_43_0_g6966 = ( v.ase_tangent.xyz + float3( 0,0,0 ) );
-				float3 objToWorldDir42_g6966 = mul( GetObjectToWorldMatrix(), float4( temp_output_43_0_g6966, 0 ) ).xyz;
-				float3 normalizeResult128_g6966 = ASESafeNormalize( objToWorldDir42_g6966 );
-				float3 VertexTangentlWS474_g6964 = normalizeResult128_g6966;
-				float3 temp_output_31_0_g6967 = ( v.normalOS + float3( 0,0,0 ) );
-				float3 normalOS33_g6967 = temp_output_31_0_g6967;
-				float3 localTransformObjectToWorldNormal_Ref33_g6967 = TransformObjectToWorldNormal_Ref33_g6967( normalOS33_g6967 );
-				float3 normalizeResult140_g6967 = ASESafeNormalize( localTransformObjectToWorldNormal_Ref33_g6967 );
-				float3 temp_output_515_34_g6964 = normalizeResult140_g6967;
-				float3 VertexNormalWS314_g6964 = temp_output_515_34_g6964;
-				float ase_vertexTangentSign = v.ase_tangent.w * ( unity_WorldTransformParams.w >= 0.0 ? 1.0 : -1.0 );
-				float3 normalizeResult473_g6964 = ASESafeNormalize( ( cross( VertexNormalWS314_g6964 , VertexTangentlWS474_g6964 ) * ase_vertexTangentSign ) );
-				float3 VertexBitangentWS476_g6964 = normalizeResult473_g6964;
-				float3x3 temp_output_103_0_g6965 = float3x3(VertexTangentlWS474_g6964, VertexBitangentWS476_g6964, VertexNormalWS314_g6964);
-				float3x3 TBN133_g6965 = temp_output_103_0_g6965;
-				float3 localTransformWorldToTangentDir_Ref133_g6965 = TransformWorldToTangentDir_Ref133_g6965( directionWS133_g6965 , TBN133_g6965 );
-				float3 normalizeResult132_g6965 = ASESafeNormalize( localTransformWorldToTangentDir_Ref133_g6965 );
-				float3 break336_g6964 = normalizeResult132_g6965;
-				float vertexToFrag264_g6964 = break336_g6964.x;
-				o.ase_texcoord.z = vertexToFrag264_g6964;
-				float vertexToFrag337_g6964 = break336_g6964.y;
-				o.ase_texcoord.w = vertexToFrag337_g6964;
-				float vertexToFrag338_g6964 = break336_g6964.z;
-				o.ase_texcoord1.x = vertexToFrag338_g6964;
-				
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord1.yzw = 0;
 
 				o.positionCS = temp_output_478_313;
 
@@ -2697,9 +2233,7 @@ Shader "EXLit"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 normalOS : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
-				float4 ase_tangent : TANGENT;
-
+				
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -2716,8 +2250,7 @@ Shader "EXLit"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.positionOS;
 				o.normalOS = v.normalOS;
-				o.ase_texcoord = v.ase_texcoord;
-				o.ase_tangent = v.ase_tangent;
+				
 				return o;
 			}
 
@@ -2756,8 +2289,7 @@ Shader "EXLit"
 				VertexInput o = (VertexInput) 0;
 				o.positionOS = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.normalOS = patch[0].normalOS * bary.x + patch[1].normalOS * bary.y + patch[2].normalOS * bary.z;
-				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
-				o.ase_tangent = patch[0].ase_tangent * bary.x + patch[1].ase_tangent * bary.y + patch[2].ase_tangent * bary.z;
+				
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -2779,89 +2311,7 @@ Shader "EXLit"
 			{
 				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
 
-				float vertexToFrag237 = IN.ase_texcoord.x;
-				float vertexToFrag236 = IN.ase_texcoord.y;
-				float2 appendResult238 = (float2(vertexToFrag237 , vertexToFrag236));
-				float2 uv_primitive310 = appendResult238;
-				float4 tex2DNode94 = tex2D( _HeightMap, uv_primitive310 );
-				float2 temp_output_3_0_g2109 = uv_primitive310;
-				float2 uv2_g2109 = temp_output_3_0_g2109;
-				sampler2D tex2_g2109 = _HeightMap;
-				float _ScaleOrRotate154 = _ScaleOrRotate;
-				float simpleNoise1_g2109 = SimpleNoise( temp_output_3_0_g2109*_ScaleOrRotate154 );
-				simpleNoise1_g2109 = simpleNoise1_g2109*2 - 1;
-				float noise2_g2109 = simpleNoise1_g2109;
-				float4 localSampleSupportNoTileing_twoSample2_g2109 = SampleSupportNoTileing_twoSample( uv2_g2109 , tex2_g2109 , noise2_g2109 );
-				float2 uv1_g2108 = uv_primitive310;
-				sampler2D tex1_g2108 = _HeightMap;
-				float scaleOrRotate1_g2108 = _ScaleOrRotate154;
-				float4 localSampleSupportNoTileing_HexagonSample1_g2108 = SampleSupportNoTileing_HexagonSample( uv1_g2108 , tex1_g2108 , scaleOrRotate1_g2108 );
-				float2 uv1_g2110 = uv_primitive310;
-				sampler2D tex1_g2110 = _HeightMap;
-				float2 positionDSxy1_g2110 = half4(0,0,0,0).xy;
-				float4 localSampleSupportNoTileing_OneSample1_g2110 = SampleSupportNoTileing_OneSample( uv1_g2110 , tex1_g2110 , positionDSxy1_g2110 );
-				#if defined(_SAMPLE_COMMON)
-				float staticSwitch332 = ( ( tex2DNode94.r + tex2DNode94.g + tex2DNode94.b + tex2DNode94.a ) / 4.0 );
-				#elif defined(_SAMPLE_NOISETILING)
-				float staticSwitch332 = (localSampleSupportNoTileing_twoSample2_g2109).x;
-				#elif defined(_SAMPLE_HEXAGONTILING)
-				float staticSwitch332 = (localSampleSupportNoTileing_HexagonSample1_g2108).x;
-				#elif defined(_SAMPLE_ONESAMPLEONTILING)
-				float staticSwitch332 = (localSampleSupportNoTileing_OneSample1_g2110).x;
-				#else
-				float staticSwitch332 = 0.0;
-				#endif
-				float height308 = staticSwitch332;
-				float height1_g6991 = height308;
-				float2 UVs1_g6991 = uv_primitive310;
-				float vertexToFrag264_g6964 = IN.ase_texcoord.z;
-				float vertexToFrag337_g6964 = IN.ase_texcoord.w;
-				float vertexToFrag338_g6964 = IN.ase_texcoord1.x;
-				float3 appendResult340_g6964 = (float3(vertexToFrag264_g6964 , vertexToFrag337_g6964 , vertexToFrag338_g6964));
-				float3 normalizeResult451_g6964 = normalize( appendResult340_g6964 );
-				float3 viewDirTS311 = normalizeResult451_g6964;
-				float3 break6_g6991 = viewDirTS311;
-				float2 appendResult5_g6991 = (float2(break6_g6991.x , break6_g6991.y));
-				float2 plane1_g6991 = ( appendResult5_g6991 / break6_g6991.z );
-				float refp1_g6991 = 0.5;
-				float scale1_g6991 = _Parallax;
-				float2 localIterativeParallaxLegacy1_g6991 = IterativeParallaxLegacy1_g6991( height1_g6991 , UVs1_g6991 , plane1_g6991 , refp1_g6991 , scale1_g6991 );
-				#if defined(_PARALLAXMAP_OFF)
-				float2 staticSwitch92 = uv_primitive310;
-				#elif defined(_PARALLAXMAP)
-				float2 staticSwitch92 = localIterativeParallaxLegacy1_g6991;
-				#else
-				float2 staticSwitch92 = uv_primitive310;
-				#endif
-				float2 UV313 = staticSwitch92;
-				float2 temp_output_3_0_g6997 = UV313;
-				float2 uv2_g6997 = temp_output_3_0_g6997;
-				sampler2D tex2_g6997 = _BaseMap;
-				float simpleNoise1_g6997 = SimpleNoise( temp_output_3_0_g6997*_ScaleOrRotate154 );
-				simpleNoise1_g6997 = simpleNoise1_g6997*2 - 1;
-				float noise2_g6997 = simpleNoise1_g6997;
-				float4 localSampleSupportNoTileing_twoSample2_g6997 = SampleSupportNoTileing_twoSample( uv2_g6997 , tex2_g6997 , noise2_g6997 );
-				float2 uv1_g6998 = UV313;
-				sampler2D tex1_g6998 = _BaseMap;
-				float scaleOrRotate1_g6998 = _ScaleOrRotate154;
-				float4 localSampleSupportNoTileing_HexagonSample1_g6998 = SampleSupportNoTileing_HexagonSample( uv1_g6998 , tex1_g6998 , scaleOrRotate1_g6998 );
-				float2 uv1_g6996 = UV313;
-				sampler2D tex1_g6996 = _BaseMap;
-				float2 positionDSxy1_g6996 = half4(0,0,0,0).xy;
-				float4 localSampleSupportNoTileing_OneSample1_g6996 = SampleSupportNoTileing_OneSample( uv1_g6996 , tex1_g6996 , positionDSxy1_g6996 );
-				#if defined(_SAMPLE_COMMON)
-				float4 staticSwitch127 = tex2D( _BaseMap, UV313 );
-				#elif defined(_SAMPLE_NOISETILING)
-				float4 staticSwitch127 = localSampleSupportNoTileing_twoSample2_g6997;
-				#elif defined(_SAMPLE_HEXAGONTILING)
-				float4 staticSwitch127 = localSampleSupportNoTileing_HexagonSample1_g6998;
-				#elif defined(_SAMPLE_ONESAMPLEONTILING)
-				float4 staticSwitch127 = localSampleSupportNoTileing_OneSample1_g6996;
-				#else
-				float4 staticSwitch127 = float4( 0,0,0,0 );
-				#endif
-				float4 break198 = staticSwitch127;
-				float alpha202 = break198.a;
+				float alpha202 = 0.0;
 				
 
 				surfaceDescription.Alpha = alpha202;
@@ -2976,34 +2426,30 @@ Shader "EXLit"
             #endif
 
 			#include "Packages/com.worldsystem/Assets/Plugins/AmplifyShaderEditorExtend/ShaderLibrary/BaseFunctionLibrary.hlsl"
-			#include "Packages/com.worldsystem/Assets/Plugins/AmplifyShaderEditorExtend/ShaderLibrary/TextureFunctionLibrary.hlsl"
 			#define ASE_NEEDS_VERT_POSITION
-			#define ASE_NEEDS_VERT_NORMAL
+			#pragma shader_feature_local_fragment  
+			#pragma shader_feature_local _SAMPLE_COMMON _SAMPLE_NOISETILING _SAMPLE_HEXAGONTILING _SAMPLE_ONESAMPLEONTILING
+			#pragma shader_feature_local_fragment _WINDQUALITY_NONE _WINDQUALITY_FASTEST _WINDQUALITY_FAST _WINDQUALITY_BETTER _WINDQUALITY_BEST _WINDQUALITY_PALM
+			#pragma shader_feature_local_fragment _SHADER_PBR _SHADER_PLANT
+			#pragma shader_feature_local_fragment   _CLEARCOAT
+			#pragma shader_feature_local _USE_PARALLAXMAP_PARALLAX _USE_EXTRAMIXMAP_PARALLAX
+			#pragma shader_feature_local HoudiniVATSoft, _HOUDINI_VAT_SOFT
+			#pragma shader_feature_local_fragment   EFFECT_HUE_VARIATION
 			#pragma shader_feature_local_fragment   _DETAIL _DETAIL_2MULTI _DETAIL_4MULTI
-			#pragma shader_feature_local   EFFECT_HUE_VARIATION
-			#pragma shader_feature_local   _CLEARCOAT
-			#pragma shader_feature_local_fragment _SAMPLE_COMMON _SAMPLE_NOISETILING _SAMPLE_HEXAGONTILING _SAMPLE_ONESAMPLEONTILING
-			#pragma shader_feature_local_vertex _WINDQUALITY_NONE _WINDQUALITY_FASTEST _WINDQUALITY_FAST _WINDQUALITY_BETTER _WINDQUALITY_BEST _WINDQUALITY_PALM
-			#pragma shader_feature_local  
-			#pragma shader_feature_local_vertex   _HOUDINI_VAT_SOFT
-			#pragma shader_feature_local _SHADER_PBR _SHADER_PLANT
-			#pragma shader_feature_local_fragment _PARALLAXMAP_OFF _PARALLAXMAP
 
 
 			struct VertexInput
 			{
 				float4 positionOS : POSITION;
 				float3 normalOS : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
-				float4 ase_tangent : TANGENT;
+				
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
 			struct VertexOutput
 			{
 				float4 positionCS : SV_POSITION;
-				float4 ase_texcoord : TEXCOORD0;
-				float4 ase_texcoord1 : TEXCOORD1;
+				
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -3016,71 +2462,9 @@ Shader "EXLit"
 			sampler2D _RotateVATMap;
 			samplerCUBE _CustomReflectMap;
 			sampler2D _ExtraMixMap;
-			sampler2D _BaseMap;
-			sampler2D _HeightMap;
 
 
-			inline float noise_randomValue (float2 uv) { return frac(sin(dot(uv, float2(12.9898, 78.233)))*43758.5453); }
-			inline float noise_interpolate (float a, float b, float t) { return (1.0-t)*a + (t*b); }
-			inline float valueNoise (float2 uv)
-			{
-				float2 i = floor(uv);
-				float2 f = frac( uv );
-				f = f* f * (3.0 - 2.0 * f);
-				uv = abs( frac(uv) - 0.5);
-				float2 c0 = i + float2( 0.0, 0.0 );
-				float2 c1 = i + float2( 1.0, 0.0 );
-				float2 c2 = i + float2( 0.0, 1.0 );
-				float2 c3 = i + float2( 1.0, 1.0 );
-				float r0 = noise_randomValue( c0 );
-				float r1 = noise_randomValue( c1 );
-				float r2 = noise_randomValue( c2 );
-				float r3 = noise_randomValue( c3 );
-				float bottomOfGrid = noise_interpolate( r0, r1, f.x );
-				float topOfGrid = noise_interpolate( r2, r3, f.x );
-				float t = noise_interpolate( bottomOfGrid, topOfGrid, f.y );
-				return t;
-			}
 			
-			float SimpleNoise(float2 UV)
-			{
-				float t = 0.0;
-				float freq = pow( 2.0, float( 0 ) );
-				float amp = pow( 0.5, float( 3 - 0 ) );
-				t += valueNoise( UV/freq )*amp;
-				freq = pow(2.0, float(1));
-				amp = pow(0.5, float(3-1));
-				t += valueNoise( UV/freq )*amp;
-				freq = pow(2.0, float(2));
-				amp = pow(0.5, float(3-2));
-				t += valueNoise( UV/freq )*amp;
-				return t;
-			}
-			
-			float3 ASESafeNormalize(float3 inVec)
-			{
-				float dp3 = max(1.175494351e-38, dot(inVec, inVec));
-				return inVec* rsqrt(dp3);
-			}
-			
-			float3 TransformObjectToWorldNormal_Ref33_g6967( float3 normalOS )
-			{
-				return TransformObjectToWorldNormal(normalOS,false);
-			}
-			
-			float3 TransformWorldToTangentDir_Ref133_g6965( float3 directionWS, float3x3 TBN )
-			{
-				return TransformWorldToTangentDir(directionWS, TBN);
-			}
-			
-			float2 IterativeParallaxLegacy1_g6991( float height, float2 UVs, float2 plane, float refp, float scale )
-			{
-				UVs += plane * scale * refp;
-				UVs += (height - 1) * plane * scale;
-				return UVs;
-			}
-			
-
 			float4 _SelectionID;
 
 			struct SurfaceDescription
@@ -3118,44 +2502,6 @@ Shader "EXLit"
 				float4 vertexPositionCS382_g6964 = CS1_g6976;
 				float4 temp_output_478_313 = vertexPositionCS382_g6964;
 				
-				float2 break242 = ( ( v.ase_texcoord.xy * _BaseMap_ST.xy ) + _BaseMap_ST.zw );
-				float vertexToFrag237 = break242.x;
-				o.ase_texcoord.x = vertexToFrag237;
-				float vertexToFrag236 = break242.y;
-				o.ase_texcoord.y = vertexToFrag236;
-				float3 temp_output_345_7_g6964 = WS1_g6976;
-				float3 vertexPositionWS386_g6964 = temp_output_345_7_g6964;
-				float3 normalizeResult129_g6964 = ASESafeNormalize( ( _WorldSpaceCameraPos - vertexPositionWS386_g6964 ) );
-				float3 temp_output_43_0_g6965 = normalizeResult129_g6964;
-				float3 directionWS133_g6965 = temp_output_43_0_g6965;
-				float3 temp_output_43_0_g6966 = ( v.ase_tangent.xyz + float3( 0,0,0 ) );
-				float3 objToWorldDir42_g6966 = mul( GetObjectToWorldMatrix(), float4( temp_output_43_0_g6966, 0 ) ).xyz;
-				float3 normalizeResult128_g6966 = ASESafeNormalize( objToWorldDir42_g6966 );
-				float3 VertexTangentlWS474_g6964 = normalizeResult128_g6966;
-				float3 temp_output_31_0_g6967 = ( v.normalOS + float3( 0,0,0 ) );
-				float3 normalOS33_g6967 = temp_output_31_0_g6967;
-				float3 localTransformObjectToWorldNormal_Ref33_g6967 = TransformObjectToWorldNormal_Ref33_g6967( normalOS33_g6967 );
-				float3 normalizeResult140_g6967 = ASESafeNormalize( localTransformObjectToWorldNormal_Ref33_g6967 );
-				float3 temp_output_515_34_g6964 = normalizeResult140_g6967;
-				float3 VertexNormalWS314_g6964 = temp_output_515_34_g6964;
-				float ase_vertexTangentSign = v.ase_tangent.w * ( unity_WorldTransformParams.w >= 0.0 ? 1.0 : -1.0 );
-				float3 normalizeResult473_g6964 = ASESafeNormalize( ( cross( VertexNormalWS314_g6964 , VertexTangentlWS474_g6964 ) * ase_vertexTangentSign ) );
-				float3 VertexBitangentWS476_g6964 = normalizeResult473_g6964;
-				float3x3 temp_output_103_0_g6965 = float3x3(VertexTangentlWS474_g6964, VertexBitangentWS476_g6964, VertexNormalWS314_g6964);
-				float3x3 TBN133_g6965 = temp_output_103_0_g6965;
-				float3 localTransformWorldToTangentDir_Ref133_g6965 = TransformWorldToTangentDir_Ref133_g6965( directionWS133_g6965 , TBN133_g6965 );
-				float3 normalizeResult132_g6965 = ASESafeNormalize( localTransformWorldToTangentDir_Ref133_g6965 );
-				float3 break336_g6964 = normalizeResult132_g6965;
-				float vertexToFrag264_g6964 = break336_g6964.x;
-				o.ase_texcoord.z = vertexToFrag264_g6964;
-				float vertexToFrag337_g6964 = break336_g6964.y;
-				o.ase_texcoord.w = vertexToFrag337_g6964;
-				float vertexToFrag338_g6964 = break336_g6964.z;
-				o.ase_texcoord1.x = vertexToFrag338_g6964;
-				
-				
-				//setting value to unused interpolator channels and avoid initialization warnings
-				o.ase_texcoord1.yzw = 0;
 
 				o.positionCS = temp_output_478_313;
 
@@ -3167,9 +2513,7 @@ Shader "EXLit"
 			{
 				float4 vertex : INTERNALTESSPOS;
 				float3 normalOS : NORMAL;
-				float4 ase_texcoord : TEXCOORD0;
-				float4 ase_tangent : TANGENT;
-
+				
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -3186,8 +2530,7 @@ Shader "EXLit"
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 				o.vertex = v.positionOS;
 				o.normalOS = v.normalOS;
-				o.ase_texcoord = v.ase_texcoord;
-				o.ase_tangent = v.ase_tangent;
+				
 				return o;
 			}
 
@@ -3226,8 +2569,7 @@ Shader "EXLit"
 				VertexInput o = (VertexInput) 0;
 				o.positionOS = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.normalOS = patch[0].normalOS * bary.x + patch[1].normalOS * bary.y + patch[2].normalOS * bary.z;
-				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
-				o.ase_tangent = patch[0].ase_tangent * bary.x + patch[1].ase_tangent * bary.y + patch[2].ase_tangent * bary.z;
+				
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -3249,89 +2591,7 @@ Shader "EXLit"
 			{
 				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
 
-				float vertexToFrag237 = IN.ase_texcoord.x;
-				float vertexToFrag236 = IN.ase_texcoord.y;
-				float2 appendResult238 = (float2(vertexToFrag237 , vertexToFrag236));
-				float2 uv_primitive310 = appendResult238;
-				float4 tex2DNode94 = tex2D( _HeightMap, uv_primitive310 );
-				float2 temp_output_3_0_g2109 = uv_primitive310;
-				float2 uv2_g2109 = temp_output_3_0_g2109;
-				sampler2D tex2_g2109 = _HeightMap;
-				float _ScaleOrRotate154 = _ScaleOrRotate;
-				float simpleNoise1_g2109 = SimpleNoise( temp_output_3_0_g2109*_ScaleOrRotate154 );
-				simpleNoise1_g2109 = simpleNoise1_g2109*2 - 1;
-				float noise2_g2109 = simpleNoise1_g2109;
-				float4 localSampleSupportNoTileing_twoSample2_g2109 = SampleSupportNoTileing_twoSample( uv2_g2109 , tex2_g2109 , noise2_g2109 );
-				float2 uv1_g2108 = uv_primitive310;
-				sampler2D tex1_g2108 = _HeightMap;
-				float scaleOrRotate1_g2108 = _ScaleOrRotate154;
-				float4 localSampleSupportNoTileing_HexagonSample1_g2108 = SampleSupportNoTileing_HexagonSample( uv1_g2108 , tex1_g2108 , scaleOrRotate1_g2108 );
-				float2 uv1_g2110 = uv_primitive310;
-				sampler2D tex1_g2110 = _HeightMap;
-				float2 positionDSxy1_g2110 = half4(0,0,0,0).xy;
-				float4 localSampleSupportNoTileing_OneSample1_g2110 = SampleSupportNoTileing_OneSample( uv1_g2110 , tex1_g2110 , positionDSxy1_g2110 );
-				#if defined(_SAMPLE_COMMON)
-				float staticSwitch332 = ( ( tex2DNode94.r + tex2DNode94.g + tex2DNode94.b + tex2DNode94.a ) / 4.0 );
-				#elif defined(_SAMPLE_NOISETILING)
-				float staticSwitch332 = (localSampleSupportNoTileing_twoSample2_g2109).x;
-				#elif defined(_SAMPLE_HEXAGONTILING)
-				float staticSwitch332 = (localSampleSupportNoTileing_HexagonSample1_g2108).x;
-				#elif defined(_SAMPLE_ONESAMPLEONTILING)
-				float staticSwitch332 = (localSampleSupportNoTileing_OneSample1_g2110).x;
-				#else
-				float staticSwitch332 = 0.0;
-				#endif
-				float height308 = staticSwitch332;
-				float height1_g6991 = height308;
-				float2 UVs1_g6991 = uv_primitive310;
-				float vertexToFrag264_g6964 = IN.ase_texcoord.z;
-				float vertexToFrag337_g6964 = IN.ase_texcoord.w;
-				float vertexToFrag338_g6964 = IN.ase_texcoord1.x;
-				float3 appendResult340_g6964 = (float3(vertexToFrag264_g6964 , vertexToFrag337_g6964 , vertexToFrag338_g6964));
-				float3 normalizeResult451_g6964 = normalize( appendResult340_g6964 );
-				float3 viewDirTS311 = normalizeResult451_g6964;
-				float3 break6_g6991 = viewDirTS311;
-				float2 appendResult5_g6991 = (float2(break6_g6991.x , break6_g6991.y));
-				float2 plane1_g6991 = ( appendResult5_g6991 / break6_g6991.z );
-				float refp1_g6991 = 0.5;
-				float scale1_g6991 = _Parallax;
-				float2 localIterativeParallaxLegacy1_g6991 = IterativeParallaxLegacy1_g6991( height1_g6991 , UVs1_g6991 , plane1_g6991 , refp1_g6991 , scale1_g6991 );
-				#if defined(_PARALLAXMAP_OFF)
-				float2 staticSwitch92 = uv_primitive310;
-				#elif defined(_PARALLAXMAP)
-				float2 staticSwitch92 = localIterativeParallaxLegacy1_g6991;
-				#else
-				float2 staticSwitch92 = uv_primitive310;
-				#endif
-				float2 UV313 = staticSwitch92;
-				float2 temp_output_3_0_g6997 = UV313;
-				float2 uv2_g6997 = temp_output_3_0_g6997;
-				sampler2D tex2_g6997 = _BaseMap;
-				float simpleNoise1_g6997 = SimpleNoise( temp_output_3_0_g6997*_ScaleOrRotate154 );
-				simpleNoise1_g6997 = simpleNoise1_g6997*2 - 1;
-				float noise2_g6997 = simpleNoise1_g6997;
-				float4 localSampleSupportNoTileing_twoSample2_g6997 = SampleSupportNoTileing_twoSample( uv2_g6997 , tex2_g6997 , noise2_g6997 );
-				float2 uv1_g6998 = UV313;
-				sampler2D tex1_g6998 = _BaseMap;
-				float scaleOrRotate1_g6998 = _ScaleOrRotate154;
-				float4 localSampleSupportNoTileing_HexagonSample1_g6998 = SampleSupportNoTileing_HexagonSample( uv1_g6998 , tex1_g6998 , scaleOrRotate1_g6998 );
-				float2 uv1_g6996 = UV313;
-				sampler2D tex1_g6996 = _BaseMap;
-				float2 positionDSxy1_g6996 = half4(0,0,0,0).xy;
-				float4 localSampleSupportNoTileing_OneSample1_g6996 = SampleSupportNoTileing_OneSample( uv1_g6996 , tex1_g6996 , positionDSxy1_g6996 );
-				#if defined(_SAMPLE_COMMON)
-				float4 staticSwitch127 = tex2D( _BaseMap, UV313 );
-				#elif defined(_SAMPLE_NOISETILING)
-				float4 staticSwitch127 = localSampleSupportNoTileing_twoSample2_g6997;
-				#elif defined(_SAMPLE_HEXAGONTILING)
-				float4 staticSwitch127 = localSampleSupportNoTileing_HexagonSample1_g6998;
-				#elif defined(_SAMPLE_ONESAMPLEONTILING)
-				float4 staticSwitch127 = localSampleSupportNoTileing_OneSample1_g6996;
-				#else
-				float4 staticSwitch127 = float4( 0,0,0,0 );
-				#endif
-				float4 break198 = staticSwitch127;
-				float alpha202 = break198.a;
+				float alpha202 = 0.0;
 				
 
 				surfaceDescription.Alpha = alpha202;
@@ -3458,16 +2718,17 @@ Shader "EXLit"
 			#include "Packages/com.worldsystem/Assets/Plugins/AmplifyShaderEditorExtend/ShaderLibrary/TextureFunctionLibrary.hlsl"
 			#define ASE_NEEDS_VERT_POSITION
 			#define ASE_NEEDS_VERT_NORMAL
+			#pragma shader_feature_local_fragment  
+			#pragma shader_feature_local _SAMPLE_COMMON _SAMPLE_NOISETILING _SAMPLE_HEXAGONTILING _SAMPLE_ONESAMPLEONTILING
+			#pragma shader_feature_local_fragment _WINDQUALITY_NONE _WINDQUALITY_FASTEST _WINDQUALITY_FAST _WINDQUALITY_BETTER _WINDQUALITY_BEST _WINDQUALITY_PALM
+			#pragma shader_feature_local_fragment _SHADER_PBR _SHADER_PLANT
+			#pragma shader_feature_local_fragment   _CLEARCOAT
+			#pragma shader_feature_local _USE_PARALLAXMAP_PARALLAX _USE_EXTRAMIXMAP_PARALLAX
+			#pragma shader_feature_local HoudiniVATSoft, _HOUDINI_VAT_SOFT
+			#pragma shader_feature_local_fragment   EFFECT_HUE_VARIATION
 			#pragma shader_feature_local_fragment   _DETAIL _DETAIL_2MULTI _DETAIL_4MULTI
-			#pragma shader_feature_local   EFFECT_HUE_VARIATION
-			#pragma shader_feature_local   _CLEARCOAT
-			#pragma shader_feature_local_fragment _SAMPLE_COMMON _SAMPLE_NOISETILING _SAMPLE_HEXAGONTILING _SAMPLE_ONESAMPLEONTILING
-			#pragma shader_feature_local_vertex _WINDQUALITY_NONE _WINDQUALITY_FASTEST _WINDQUALITY_FAST _WINDQUALITY_BETTER _WINDQUALITY_BEST _WINDQUALITY_PALM
-			#pragma shader_feature_local  
-			#pragma shader_feature_local_vertex   _HOUDINI_VAT_SOFT
-			#pragma shader_feature_local _SHADER_PBR _SHADER_PLANT
+			#pragma shader_feature_local_fragment EFFECT_BACKSIDE_NORMALS
 			#pragma shader_feature_local_fragment _PARALLAXMAP_OFF _PARALLAXMAP
-			#pragma shader_feature_local EFFECT_BACKSIDE_NORMALS
 
 
 			struct VertexInput
@@ -3499,9 +2760,9 @@ Shader "EXLit"
 			sampler2D _RotateVATMap;
 			samplerCUBE _CustomReflectMap;
 			sampler2D _ExtraMixMap;
+			sampler2D _NRAMap;
 			sampler2D _BaseMap;
 			sampler2D _HeightMap;
-			sampler2D _NRAMap;
 
 
 			inline float noise_randomValue (float2 uv) { return frac(sin(dot(uv, float2(12.9898, 78.233)))*43758.5453); }
@@ -3634,7 +2895,6 @@ Shader "EXLit"
 				o.ase_texcoord1.w = vertexToFrag337_g6964;
 				float vertexToFrag338_g6964 = break336_g6964.z;
 				o.ase_texcoord2.x = vertexToFrag338_g6964;
-				
 				float3 break141_g6964 = VertexTangentlWS474_g6964;
 				float vertexToFrag326_g6964 = break141_g6964.x;
 				o.ase_texcoord2.y = vertexToFrag326_g6964;
@@ -3757,6 +3017,8 @@ Shader "EXLit"
 			{
 				SurfaceDescription surfaceDescription = (SurfaceDescription)0;
 
+				float alpha202 = 0.0;
+				
 				float vertexToFrag237 = IN.ase_texcoord1.x;
 				float vertexToFrag236 = IN.ase_texcoord1.y;
 				float2 appendResult238 = (float2(vertexToFrag237 , vertexToFrag236));
@@ -3779,17 +3041,17 @@ Shader "EXLit"
 				float2 positionDSxy1_g2110 = half4(0,0,0,0).xy;
 				float4 localSampleSupportNoTileing_OneSample1_g2110 = SampleSupportNoTileing_OneSample( uv1_g2110 , tex1_g2110 , positionDSxy1_g2110 );
 				#if defined(_SAMPLE_COMMON)
-				float staticSwitch332 = ( ( tex2DNode94.r + tex2DNode94.g + tex2DNode94.b + tex2DNode94.a ) / 4.0 );
+				float staticSwitch482 = ( ( tex2DNode94.r + tex2DNode94.g + tex2DNode94.b + tex2DNode94.a ) / 4.0 );
 				#elif defined(_SAMPLE_NOISETILING)
-				float staticSwitch332 = (localSampleSupportNoTileing_twoSample2_g2109).x;
+				float staticSwitch482 = (localSampleSupportNoTileing_twoSample2_g2109).x;
 				#elif defined(_SAMPLE_HEXAGONTILING)
-				float staticSwitch332 = (localSampleSupportNoTileing_HexagonSample1_g2108).x;
+				float staticSwitch482 = (localSampleSupportNoTileing_HexagonSample1_g2108).x;
 				#elif defined(_SAMPLE_ONESAMPLEONTILING)
-				float staticSwitch332 = (localSampleSupportNoTileing_OneSample1_g2110).x;
+				float staticSwitch482 = (localSampleSupportNoTileing_OneSample1_g2110).x;
 				#else
-				float staticSwitch332 = 0.0;
+				float staticSwitch482 = 0.0;
 				#endif
-				float height308 = staticSwitch332;
+				float height308 = staticSwitch482;
 				float height1_g6991 = height308;
 				float2 UVs1_g6991 = uv_primitive310;
 				float vertexToFrag264_g6964 = IN.ase_texcoord1.z;
@@ -3805,42 +3067,13 @@ Shader "EXLit"
 				float scale1_g6991 = _Parallax;
 				float2 localIterativeParallaxLegacy1_g6991 = IterativeParallaxLegacy1_g6991( height1_g6991 , UVs1_g6991 , plane1_g6991 , refp1_g6991 , scale1_g6991 );
 				#if defined(_PARALLAXMAP_OFF)
-				float2 staticSwitch92 = uv_primitive310;
+				float2 staticSwitch483 = uv_primitive310;
 				#elif defined(_PARALLAXMAP)
-				float2 staticSwitch92 = localIterativeParallaxLegacy1_g6991;
+				float2 staticSwitch483 = localIterativeParallaxLegacy1_g6991;
 				#else
-				float2 staticSwitch92 = uv_primitive310;
+				float2 staticSwitch483 = uv_primitive310;
 				#endif
-				float2 UV313 = staticSwitch92;
-				float2 temp_output_3_0_g6997 = UV313;
-				float2 uv2_g6997 = temp_output_3_0_g6997;
-				sampler2D tex2_g6997 = _BaseMap;
-				float simpleNoise1_g6997 = SimpleNoise( temp_output_3_0_g6997*_ScaleOrRotate154 );
-				simpleNoise1_g6997 = simpleNoise1_g6997*2 - 1;
-				float noise2_g6997 = simpleNoise1_g6997;
-				float4 localSampleSupportNoTileing_twoSample2_g6997 = SampleSupportNoTileing_twoSample( uv2_g6997 , tex2_g6997 , noise2_g6997 );
-				float2 uv1_g6998 = UV313;
-				sampler2D tex1_g6998 = _BaseMap;
-				float scaleOrRotate1_g6998 = _ScaleOrRotate154;
-				float4 localSampleSupportNoTileing_HexagonSample1_g6998 = SampleSupportNoTileing_HexagonSample( uv1_g6998 , tex1_g6998 , scaleOrRotate1_g6998 );
-				float2 uv1_g6996 = UV313;
-				sampler2D tex1_g6996 = _BaseMap;
-				float2 positionDSxy1_g6996 = half4(0,0,0,0).xy;
-				float4 localSampleSupportNoTileing_OneSample1_g6996 = SampleSupportNoTileing_OneSample( uv1_g6996 , tex1_g6996 , positionDSxy1_g6996 );
-				#if defined(_SAMPLE_COMMON)
-				float4 staticSwitch127 = tex2D( _BaseMap, UV313 );
-				#elif defined(_SAMPLE_NOISETILING)
-				float4 staticSwitch127 = localSampleSupportNoTileing_twoSample2_g6997;
-				#elif defined(_SAMPLE_HEXAGONTILING)
-				float4 staticSwitch127 = localSampleSupportNoTileing_HexagonSample1_g6998;
-				#elif defined(_SAMPLE_ONESAMPLEONTILING)
-				float4 staticSwitch127 = localSampleSupportNoTileing_OneSample1_g6996;
-				#else
-				float4 staticSwitch127 = float4( 0,0,0,0 );
-				#endif
-				float4 break198 = staticSwitch127;
-				float alpha202 = break198.a;
-				
+				float2 UV313 = staticSwitch483;
 				float2 temp_output_3_0_g6993 = UV313;
 				float2 uv2_g6993 = temp_output_3_0_g6993;
 				sampler2D tex2_g6993 = _NRAMap;
@@ -3857,17 +3090,17 @@ Shader "EXLit"
 				float2 positionDSxy1_g6992 = half4(0,0,0,0).xy;
 				float4 localSampleSupportNoTileing_OneSample1_g6992 = SampleSupportNoTileing_OneSample( uv1_g6992 , tex1_g6992 , positionDSxy1_g6992 );
 				#if defined(_SAMPLE_COMMON)
-				float4 staticSwitch164 = tex2D( _NRAMap, UV313 );
+				float4 staticSwitch486 = tex2D( _NRAMap, UV313 );
 				#elif defined(_SAMPLE_NOISETILING)
-				float4 staticSwitch164 = localSampleSupportNoTileing_twoSample2_g6993;
+				float4 staticSwitch486 = localSampleSupportNoTileing_twoSample2_g6993;
 				#elif defined(_SAMPLE_HEXAGONTILING)
-				float4 staticSwitch164 = localSampleSupportNoTileing_HexagonSample1_g6994;
+				float4 staticSwitch486 = localSampleSupportNoTileing_HexagonSample1_g6994;
 				#elif defined(_SAMPLE_ONESAMPLEONTILING)
-				float4 staticSwitch164 = localSampleSupportNoTileing_OneSample1_g6992;
+				float4 staticSwitch486 = localSampleSupportNoTileing_OneSample1_g6992;
 				#else
-				float4 staticSwitch164 = float4( 0,0,0,0 );
+				float4 staticSwitch486 = float4( 0,0,0,0 );
 				#endif
-				float4 break205 = staticSwitch164;
+				float4 break205 = staticSwitch486;
 				float2 appendResult206 = (float2(break205.r , break205.g));
 				float2 normalMapRG1_g6995 = appendResult206;
 				float4 localDecodeNormalRG1_g6995 = DecodeNormalRG( normalMapRG1_g6995 );
@@ -3896,11 +3129,11 @@ Shader "EXLit"
 				float3 normalizeResult320 = normalize( mul( normalTS208, TBN220 ) );
 				float isFront317 = ase_vface;
 				#ifdef EFFECT_BACKSIDE_NORMALS
-				float3 staticSwitch58 = ( (float)(int)isFront317 != 0.0 ? normalizeResult320 : -normalizeResult320 );
+				float3 staticSwitch487 = ( (float)(int)isFront317 != 0.0 ? normalizeResult320 : -normalizeResult320 );
 				#else
-				float3 staticSwitch58 = normalizeResult320;
+				float3 staticSwitch487 = normalizeResult320;
 				#endif
-				float3 normalWS224 = staticSwitch58;
+				float3 normalWS224 = staticSwitch487;
 				
 
 				surfaceDescription.Alpha = alpha202;
@@ -3945,7 +3178,7 @@ Shader "EXLit"
 }
 /*ASEBEGIN
 Version=19302
-Node;AmplifyShaderEditor.CommentaryNode;121;-6712.862,-1222.023;Inherit;False;2821.902;4145.219;Comment;95;75;74;189;186;233;184;193;190;188;187;73;72;69;67;270;272;283;71;269;271;275;274;70;273;268;181;232;180;66;175;179;178;177;183;61;210;217;224;315;58;320;319;318;208;248;51;314;201;202;60;212;211;231;155;64;216;215;200;198;127;52;156;153;140;249;322;207;209;206;213;59;205;164;163;162;161;55;167;234;168;310;238;237;236;242;241;240;243;239;228;56;388;389;426;387;着色器模型properties;1,1,1,1;0;0
+Node;AmplifyShaderEditor.CommentaryNode;121;-6712.862,-1222.023;Inherit;False;2821.902;4145.219;Comment;95;74;186;233;184;193;190;188;187;73;72;69;67;270;272;283;71;269;271;275;274;70;273;268;232;180;66;175;179;178;177;183;210;217;224;315;320;319;318;208;248;314;201;202;60;212;211;231;155;64;216;215;200;198;52;156;153;140;249;322;207;209;206;213;59;205;163;162;161;55;167;234;168;310;238;237;236;242;241;240;243;239;228;56;388;389;426;387;484;485;486;487;488;489;490;491;着色器模型properties;1,1,1,1;0;0
 Node;AmplifyShaderEditor.TexturePropertyNode;56;-6596.004,-920.0909;Inherit;True;Property;_BaseMap;基础贴图;4;0;Create;False;0;0;0;True;3;Title(ShaderModelGroup1, Albedo Alpha);MainTexture;LogicalTex(ShaderModelGroup1, true, RGB_A, _);False;None;None;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.RegisterLocalVarNode;228;-6169.891,-918.4715;Inherit;False;baseMap;-1;True;1;0;SAMPLER2D;;False;1;SAMPLER2D;0
 Node;AmplifyShaderEditor.TexCoordVertexDataNode;239;-5847.303,-992.7264;Inherit;False;0;2;0;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
@@ -3955,35 +3188,35 @@ Node;AmplifyShaderEditor.SimpleAddOpNode;241;-5428.028,-912.1108;Inherit;False;2
 Node;AmplifyShaderEditor.BreakToComponentsNode;242;-5294.772,-916.9367;Inherit;False;FLOAT2;1;0;FLOAT2;0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
 Node;AmplifyShaderEditor.VertexToFragmentNode;236;-5141.92,-847.2185;Inherit;False;False;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.VertexToFragmentNode;237;-5143.696,-926.0538;Inherit;False;False;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.CommentaryNode;120;-10953.79,-1212.924;Inherit;False;820.6211;746.7925;Comment;4;45;47;154;50;渲染状态properties;1,1,1,1;0;0
+Node;AmplifyShaderEditor.CommentaryNode;120;-10858.5,-1192.504;Inherit;False;820.6211;746.7925;Comment;4;45;154;50;480;渲染状态properties;1,1,1,1;0;0
 Node;AmplifyShaderEditor.DynamicAppendNode;238;-4924.284,-912.5563;Inherit;False;FLOAT2;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.RangedFloatNode;50;-10912.44,-661.1305;Inherit;False;Property;_ScaleOrRotate;缩放/旋转;2;0;Create;False;0;0;0;True;1;LogicalSub(RenderStateGroup2_SAMPLE_NOISETILING or RenderStateGroup2_SAMPLE_HEXAGONTILING indent);False;0.3;0.3;-1;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.CommentaryNode;123;-9300.913,-1168.002;Inherit;False;2225.218;1569.251;Comment;23;424;308;423;332;94;95;93;313;92;353;348;312;96;335;334;333;326;327;328;330;304;331;325;视差(UV)properties;1,1,1,1;0;0
+Node;AmplifyShaderEditor.RangedFloatNode;50;-10817.15,-640.7098;Inherit;False;Property;_ScaleOrRotate;缩放/旋转;2;0;Create;False;0;0;0;True;1;LogicalSub(RenderStateGroup2_SAMPLE_NOISETILING or RenderStateGroup2_SAMPLE_HEXAGONTILING indent);False;0.3;0.3;-1;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.CommentaryNode;123;-9379.189,-1191.826;Inherit;False;2225.218;1569.251;Comment;23;424;308;423;94;95;313;353;348;312;96;335;334;333;326;327;328;330;304;331;325;481;482;483;视差(UV)properties;1,1,1,1;0;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;310;-4732.555,-909.0411;Inherit;False;uv_primitive;-1;True;1;0;FLOAT2;0,0;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.RegisterLocalVarNode;154;-10587.49,-661.8;Inherit;False;_ScaleOrRotate;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.TexturePropertyNode;325;-9124.833,-856.8271;Inherit;True;Property;_HeightMap;视差贴图(高度);43;0;Create;False;0;0;0;False;1;LogicalTex(ParallaxGroup0_PARALLAXMAP and ParallaxGroup0_USE_PARALLAXMAP_PARALLAX, false, RGB_A, _);False;None;None;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
-Node;AmplifyShaderEditor.GetLocalVarNode;304;-9193.783,-647.5818;Inherit;False;310;uv_primitive;1;0;OBJECT;;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.GetLocalVarNode;331;-9012.551,-340.6446;Inherit;False;154;_ScaleOrRotate;1;0;OBJECT;;False;1;FLOAT;0
-Node;AmplifyShaderEditor.TemplateFragmentDataNode;330;-9207.832,-528.3082;Inherit;False;0;1;positionCS;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SamplerNode;94;-8451.155,-829.0771;Inherit;True;Property;_HeightMap02;视差贴图(高度);49;0;Create;False;0;0;0;False;1;LogicalTex(ParallaxGroup0_PARALLAXMAP and ParallaxGroup0_USE_PARALLAXMAP_PARALLAX, false, RGB_A, _);False;-1;None;None;True;0;False;linearGrey;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.FunctionNode;328;-8493.144,-390.4443;Inherit;False;SampleSupportNoTileing_HexagonSample;-1;;2108;2be24d88e4fca7d4d85f800f408556e7;0;3;2;FLOAT2;0,0;False;3;SAMPLER2D;0,0;False;4;FLOAT;0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.FunctionNode;327;-8483.568,-510.4539;Inherit;False;SampleSupportNoTileing_twoSample;-1;;2109;bdfdef6c25be0344dbc4ba61cf1c3986;0;3;3;FLOAT2;0,0;False;4;SAMPLER2D;;False;5;FLOAT;0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.FunctionNode;326;-8482.743,-629.3155;Inherit;False;SampleSupportNoTileing_OneSample;-1;;2110;dd8b7457939c2a44e9e4de0a0843db12;0;3;3;FLOAT2;0,0;False;4;SAMPLER2D;0,0;False;5;FLOAT2;0,0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.SimpleAddOpNode;423;-8113.926,-803.24;Inherit;False;4;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SwizzleNode;333;-8051.371,-626.0117;Inherit;False;FLOAT;0;1;2;3;1;0;FLOAT4;0,0,0,0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SwizzleNode;334;-8055.27,-537.6118;Inherit;False;FLOAT;0;1;2;3;1;0;FLOAT4;0,0,0,0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SwizzleNode;335;-8055.27,-437.3115;Inherit;False;FLOAT;0;1;2;3;1;0;FLOAT4;0,0,0,0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleDivideOpNode;424;-7975.926,-800.24;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;4;False;1;FLOAT;0
-Node;AmplifyShaderEditor.LWGUIStaticSwitch;332;-7775.147,-680.459;Inherit;False;Property;Sample_Enum5;关闭/Noise平铺/六边形平铺/抖动采样/消除纹理平铺重复;1;0;Create;False;0;0;0;True;0;False;0;1;1;True;;LogicalSubKeywordEnum;5;RenderStateGroup2_SurfaceOptions;_;_SAMPLE_NOISETILING;_SAMPLE_HEXAGONTILING;_SAMPLE_ONESAMPLEONTILING;Reference;47;True;True;Fragment;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RegisterLocalVarNode;154;-10492.2,-641.3793;Inherit;False;_ScaleOrRotate;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.TexturePropertyNode;325;-9203.109,-880.6508;Inherit;True;Property;_HeightMap;视差贴图(高度);43;0;Create;False;0;0;0;False;1;LogicalTex(ParallaxGroup0_PARALLAXMAP and ParallaxGroup0_USE_PARALLAXMAP_PARALLAX, false, RGB_A, _);False;None;None;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
+Node;AmplifyShaderEditor.GetLocalVarNode;304;-9272.06,-671.4055;Inherit;False;310;uv_primitive;1;0;OBJECT;;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.GetLocalVarNode;331;-9090.827,-364.4685;Inherit;False;154;_ScaleOrRotate;1;0;OBJECT;;False;1;FLOAT;0
+Node;AmplifyShaderEditor.TemplateFragmentDataNode;330;-9286.108,-552.1319;Inherit;False;0;1;positionCS;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;94;-8529.432,-852.9008;Inherit;True;Property;_HeightMap02;视差贴图(高度);49;0;Create;False;0;0;0;False;1;LogicalTex(ParallaxGroup0_PARALLAXMAP and ParallaxGroup0_USE_PARALLAXMAP_PARALLAX, false, RGB_A, _);False;-1;None;None;True;0;False;linearGrey;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.FunctionNode;328;-8571.42,-414.2682;Inherit;False;SampleSupportNoTileing_HexagonSample;-1;;2108;2be24d88e4fca7d4d85f800f408556e7;0;3;2;FLOAT2;0,0;False;3;SAMPLER2D;0,0;False;4;FLOAT;0;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.FunctionNode;327;-8561.845,-534.2776;Inherit;False;SampleSupportNoTileing_twoSample;-1;;2109;bdfdef6c25be0344dbc4ba61cf1c3986;0;3;3;FLOAT2;0,0;False;4;SAMPLER2D;;False;5;FLOAT;0;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.FunctionNode;326;-8561.02,-653.1392;Inherit;False;SampleSupportNoTileing_OneSample;-1;;2110;dd8b7457939c2a44e9e4de0a0843db12;0;3;3;FLOAT2;0,0;False;4;SAMPLER2D;0,0;False;5;FLOAT2;0,0;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.SimpleAddOpNode;423;-8192.202,-827.0637;Inherit;False;4;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SwizzleNode;333;-8129.647,-649.8354;Inherit;False;FLOAT;0;1;2;3;1;0;FLOAT4;0,0,0,0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SwizzleNode;334;-8133.546,-561.4355;Inherit;False;FLOAT;0;1;2;3;1;0;FLOAT4;0,0,0,0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SwizzleNode;335;-8133.546,-461.1354;Inherit;False;FLOAT;0;1;2;3;1;0;FLOAT4;0,0,0,0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleDivideOpNode;424;-8054.202,-824.0637;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;4;False;1;FLOAT;0
 Node;AmplifyShaderEditor.FunctionNode;478;-451.461,1274.607;Inherit;False;Model;-1;;6964;db2a50576abc55b4182a85385bad6f66;8,430,0,511,0,512,0,514,0,513,0,505,0,431,0,552,0;7;307;FLOAT3;0,0,0;False;432;FLOAT3;0,0,0;False;377;FLOAT3;0,0,0;False;433;FLOAT3;0,0,0;False;554;FLOAT3;0,0,0;False;555;FLOAT3;0,0,0;False;556;FLOAT3;0,0,0;False;39;FLOAT2;543;FLOAT3;546;FLOAT;547;FLOAT4;347;FLOAT4;313;FLOAT4;413;FLOAT4;415;FLOAT2;273;FLOAT2;275;FLOAT3;277;FLOAT;410;FLOAT3;285;FLOAT4;243;FLOAT4;178;FLOAT3;0;FLOAT3;4;FLOAT3;5;FLOAT3x3;6;FLOAT3;312;FLOAT3;156;FLOAT3;271;FLOAT3;229;FLOAT3;7;FLOAT3;185;FLOAT3;194;FLOAT3;197;FLOAT3;11;FLOAT;21;FLOAT;540;FLOAT;541;FLOAT;542;FLOAT;22;INT;202;FLOAT4;224;FLOAT4;225;FLOAT3;220;INT;216;INT;217;INT;219
-Node;AmplifyShaderEditor.RegisterLocalVarNode;308;-7318.987,-680.157;Inherit;False;height;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.LogicalSGUIStaticSwitch;482;-7814.566,-667.4743;Inherit;False;Property;ParallaxSource_Enum1;高度贴图/额外贴图/高度数据源;1;0;Create;False;0;0;0;False;0;False;0;1;1;True;;LogicalSubKeywordEnum;3;ParallaxGroup0_PARALLAXMAP;_USE_PARALLAXMAP_PARALLAX;_USE_EXTRAMIXMAP_PARALLAX;Reference;480;True;True;All;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;311;284.8431,2424.229;Inherit;False;viewDirTS;-1;True;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.RangedFloatNode;96;-8932.399,111.1657;Inherit;False;Property;_Parallax;视差强度;45;0;Create;False;0;0;0;True;1;LogicalSub(ParallaxGroup0_PARALLAXMAP);False;0;0.1;0;0.05;0;1;FLOAT;0
-Node;AmplifyShaderEditor.GetLocalVarNode;312;-8866.876,6.33357;Inherit;False;311;viewDirTS;1;0;OBJECT;;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.GetLocalVarNode;348;-8858.741,-79.20041;Inherit;False;308;height;1;0;OBJECT;;False;1;FLOAT;0
-Node;AmplifyShaderEditor.FunctionNode;353;-8513.037,-60.28094;Inherit;False;ParallaxMapping;-1;;6991;828cd39fcb68245479af3f7728c1427b;0;5;2;FLOAT;0;False;3;FLOAT2;0,0;False;8;FLOAT3;0,0,0;False;9;FLOAT;0.5;False;10;FLOAT;0;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.LWGUIStaticSwitch;92;-8200.54,-134.7653;Inherit;False;Property;ParallaxGroup0;禁用/视差偏移/视差(UV);41;0;Create;False;0;0;0;True;0;False;0;0;0;True;;EnumGroup;2;Off disable_ParallaxSource_Enum, _PARALLAXMAP_OFF;ParallaxOffset, _PARALLAXMAP;Create;True;True;Fragment;9;1;FLOAT2;0,0;False;0;FLOAT2;0,0;False;2;FLOAT2;0,0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT2;0,0;False;6;FLOAT2;0,0;False;7;FLOAT2;0,0;False;8;FLOAT2;0,0;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.RegisterLocalVarNode;313;-7528.658,-137.2726;Inherit;False;UV;-1;True;1;0;FLOAT2;0,0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.RegisterLocalVarNode;308;-7357.263,-671.9807;Inherit;False;height;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;96;-9010.676,87.34193;Inherit;False;Property;_Parallax;视差强度;45;0;Create;False;0;0;0;True;1;LogicalSub(ParallaxGroup0_PARALLAXMAP);False;0;0.1;0;0.05;0;1;FLOAT;0
+Node;AmplifyShaderEditor.GetLocalVarNode;312;-8945.152,-17.49022;Inherit;False;311;viewDirTS;1;0;OBJECT;;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.GetLocalVarNode;348;-8937.018,-103.0242;Inherit;False;308;height;1;0;OBJECT;;False;1;FLOAT;0
+Node;AmplifyShaderEditor.FunctionNode;353;-8591.313,-84.10472;Inherit;False;ParallaxMapping;-1;;6991;828cd39fcb68245479af3f7728c1427b;0;5;2;FLOAT;0;False;3;FLOAT2;0,0;False;8;FLOAT3;0,0,0;False;9;FLOAT;0.5;False;10;FLOAT;0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.LogicalSGUIStaticSwitch;483;-8233.176,-132.8212;Inherit;False;Property;ParallaxGroup0;禁用/视差偏移/视差(UV);41;0;Create;False;0;0;0;True;0;False;0;0;0;True;;EnumGroup;2;Off disable_ParallaxSource_Enum, _PARALLAXMAP_OFF;ParallaxOffset, _PARALLAXMAP;Create;True;True;Fragment;9;1;FLOAT2;0,0;False;0;FLOAT2;0,0;False;2;FLOAT2;0,0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT2;0,0;False;6;FLOAT2;0,0;False;7;FLOAT2;0,0;False;8;FLOAT2;0,0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.RegisterLocalVarNode;313;-7582.935,-132.2964;Inherit;False;UV;-1;True;1;0;FLOAT2;0,0;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.TexturePropertyNode;168;-6658.053,-197.0579;Inherit;True;Property;_NRAMap;NRA贴图#通用PBR:(法线, 粗糙度, AO)#场景-植物:(法线, 粗糙度, AO);7;0;Create;False;0;0;0;True;2;Title(ShaderModelGroup1, Normal Roughness Occlusion);LogicalTex(ShaderModelGroup1, false, RG_B_A, _);False;None;None;False;bump;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.TemplateFragmentDataNode;234;-6625.062,135.9574;Inherit;False;0;1;positionCS;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.GetLocalVarNode;167;-6644.781,313.6207;Inherit;False;154;_ScaleOrRotate;1;0;OBJECT;;False;1;FLOAT;0
@@ -3992,7 +3225,7 @@ Node;AmplifyShaderEditor.SamplerNode;55;-6273.805,-180.9253;Inherit;True;Propert
 Node;AmplifyShaderEditor.FunctionNode;161;-6214.881,12.44971;Inherit;False;SampleSupportNoTileing_OneSample;-1;;6992;dd8b7457939c2a44e9e4de0a0843db12;0;3;3;FLOAT2;0,0;False;4;SAMPLER2D;0,0;False;5;FLOAT2;0,0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.FunctionNode;162;-6215.707,131.3115;Inherit;False;SampleSupportNoTileing_twoSample;-1;;6993;bdfdef6c25be0344dbc4ba61cf1c3986;0;3;3;FLOAT2;0,0;False;4;SAMPLER2D;;False;5;FLOAT;0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.FunctionNode;163;-6225.282,251.3208;Inherit;False;SampleSupportNoTileing_HexagonSample;-1;;6994;2be24d88e4fca7d4d85f800f408556e7;0;3;2;FLOAT2;0,0;False;3;SAMPLER2D;0,0;False;4;FLOAT;0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.LWGUIStaticSwitch;164;-5641.191,-166.8381;Inherit;False;Property;Sample_Enum2;关闭/Noise平铺/六边形平铺/抖动采样/消除纹理平铺重复;1;0;Create;False;0;0;0;True;0;False;0;1;1;True;;LogicalSubKeywordEnum;5;RenderStateGroup2_SurfaceOptions;_;_SAMPLE_NOISETILING;_SAMPLE_HEXAGONTILING;_SAMPLE_ONESAMPLEONTILING;Reference;47;True;True;Fragment;9;1;COLOR;0,0,0,0;False;0;COLOR;0,0,0,0;False;2;COLOR;0,0,0,0;False;3;COLOR;0,0,0,0;False;4;COLOR;0,0,0,0;False;5;COLOR;0,0,0,0;False;6;COLOR;0,0,0,0;False;7;COLOR;0,0,0,0;False;8;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.LogicalSGUIStaticSwitch;486;-5646.619,-178.0652;Inherit;False;Property;ShaderModelGroup3;通用PBR/场景-植物/着色器模型;1;0;Create;False;0;0;0;True;0;False;0;1;1;True;;LogicalSubKeywordEnum;2;PBR_senior disable_WindEnabled_Enum, _SHADER_PBR;PLANT_senior disable_DetailGroup0 disable_ClearCoatGroup disable_ParallaxGroup0, _SHADER_PLANT;Reference;480;True;True;Fragment;9;1;COLOR;0,0,0,0;False;0;COLOR;0,0,0,0;False;2;COLOR;0,0,0,0;False;3;COLOR;0,0,0,0;False;4;COLOR;0,0,0,0;False;5;COLOR;0,0,0,0;False;6;COLOR;0,0,0,0;False;7;COLOR;0,0,0,0;False;8;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.BreakToComponentsNode;205;-5197.806,-149.9032;Inherit;False;COLOR;1;0;COLOR;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
 Node;AmplifyShaderEditor.RangedFloatNode;59;-5473.684,45.33562;Inherit;False;Property;_BumpScale;法线强度;9;0;Create;False;0;0;0;False;1;LogicalSub(ShaderModelGroup1);False;0;1;-1;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;213;-5361.781,242.3767;Inherit;False;Constant;_Float2;Float 2;69;0;Create;True;0;0;0;False;0;False;1;0;0;0;0;1;FLOAT;0
@@ -4003,27 +3236,26 @@ Node;AmplifyShaderEditor.RegisterLocalVarNode;220;267.6577,2263.452;Inherit;Fals
 Node;AmplifyShaderEditor.RegisterLocalVarNode;208;-4663.448,-142.6815;Inherit;False;normalTS;-1;True;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.GetLocalVarNode;319;-4632.945,-61.60727;Inherit;False;220;TBN;1;0;OBJECT;;False;1;FLOAT3x3;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;318;-4458.945,-122.6073;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT3x3;0,0,0,1,1,1,1,0,1;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.NormalizeNode;320;-4320.945,-122.6073;Inherit;False;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.RegisterLocalVarNode;317;288.076,2592.578;Inherit;False;isFront;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.GetLocalVarNode;322;-5039.903,-399.1647;Inherit;False;317;isFront;1;0;OBJECT;;False;1;FLOAT;0
+Node;AmplifyShaderEditor.NegateNode;249;-5007.93,-304.8098;Inherit;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.FunctionNode;248;-4815,-390.6239;Inherit;False;If;-1;;6999;58db534cb7946664eb869bdc1abdfb5a;0;3;7;INT;1;False;3;FLOAT3;0,0,0;False;4;FLOAT3;0,0,0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.LogicalSGUIStaticSwitch;487;-4588.519,-415.971;Inherit;False;Property;FlipBackNormal_On;翻转背面法线;8;0;Create;False;0;0;0;True;0;False;0;0;0;True;ShaderModelGroup1_senior, EFFECT_BACKSIDE_NORMALS;LogicalSubToggle;2;PBR_senior disable_WindEnabled_Enum, _SHADER_PBR;PLANT_senior disable_DetailGroup0 disable_ClearCoatGroup disable_ParallaxGroup0, _SHADER_PLANT;Create;True;False;Fragment;9;1;FLOAT3;0,0,0;False;0;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT3;0,0,0;False;4;FLOAT3;0,0,0;False;5;FLOAT3;0,0,0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT3;0,0,0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.CommentaryNode;126;-1172.063,-1186.943;Inherit;False;420;448.3723;Comment;3;119;118;498;色调变体properties;1,1,1,1;0;0
+Node;AmplifyShaderEditor.CommentaryNode;125;-3805.463,-1205.569;Inherit;False;1753.321;780.905;Comment;18;296;292;297;356;355;290;289;354;293;295;294;116;115;291;113;288;428;492;清漆properties;1,1,1,1;0;0
+Node;AmplifyShaderEditor.CommentaryNode;124;-1953.638,-1267.392;Inherit;False;652.0459;1911.89;Comment;13;104;105;102;101;106;103;99;111;110;108;107;109;499;细节properties;1,1,1,1;0;0
+Node;AmplifyShaderEditor.CommentaryNode;122;-9999.406,-1196.327;Inherit;False;484;1497.098;Comment;16;77;78;83;82;81;80;79;85;86;87;88;89;90;91;84;497;Houdini顶点动画贴图(VAT)properties;1,1,1,1;0;0
+Node;AmplifyShaderEditor.RegisterLocalVarNode;202;-5138.448,-592.0736;Inherit;False;alpha;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RegisterLocalVarNode;224;-4139.515,-396.4013;Inherit;False;normalWS;-1;True;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.GetLocalVarNode;155;-6546.849,-357.4633;Inherit;False;154;_ScaleOrRotate;1;0;OBJECT;;False;1;FLOAT;0
 Node;AmplifyShaderEditor.TemplateFragmentDataNode;231;-6606.326,-537.7451;Inherit;False;0;1;positionCS;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.GetLocalVarNode;314;-6573.295,-661.6767;Inherit;False;313;UV;1;0;OBJECT;;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.NormalizeNode;320;-4320.945,-122.6073;Inherit;False;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.RegisterLocalVarNode;317;288.076,2592.578;Inherit;False;isFront;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.FunctionNode;140;-6212.95,-616.635;Inherit;False;SampleSupportNoTileing_OneSample;-1;;6996;dd8b7457939c2a44e9e4de0a0843db12;0;3;3;FLOAT2;0,0;False;4;SAMPLER2D;0,0;False;5;FLOAT2;0,0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.FunctionNode;153;-6213.775,-497.773;Inherit;False;SampleSupportNoTileing_twoSample;-1;;6997;bdfdef6c25be0344dbc4ba61cf1c3986;0;3;3;FLOAT2;0,0;False;4;SAMPLER2D;;False;5;FLOAT;0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.FunctionNode;156;-6223.349,-377.7633;Inherit;False;SampleSupportNoTileing_HexagonSample;-1;;6998;2be24d88e4fca7d4d85f800f408556e7;0;3;2;FLOAT2;0,0;False;3;SAMPLER2D;0,0;False;4;FLOAT;0;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.FunctionNode;140;-6212.95,-616.635;Inherit;False;SampleSupportNoTileing_OneSample;-1;;7001;dd8b7457939c2a44e9e4de0a0843db12;0;3;3;FLOAT2;0,0;False;4;SAMPLER2D;0,0;False;5;FLOAT2;0,0;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.FunctionNode;153;-6213.775,-497.773;Inherit;False;SampleSupportNoTileing_twoSample;-1;;7002;bdfdef6c25be0344dbc4ba61cf1c3986;0;3;3;FLOAT2;0,0;False;4;SAMPLER2D;;False;5;FLOAT;0;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.FunctionNode;156;-6223.349,-377.7633;Inherit;False;SampleSupportNoTileing_HexagonSample;-1;;7003;2be24d88e4fca7d4d85f800f408556e7;0;3;2;FLOAT2;0,0;False;3;SAMPLER2D;0,0;False;4;FLOAT;0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.SamplerNode;52;-6198.861,-809.8947;Inherit;True;Property;_BaseMap01;基础贴图;6;0;Create;False;0;0;0;False;3;Title(ShaderModelGroup1, Albedo Alpha);MainTexture;LogicalTex(ShaderModelGroup1, true, RGB_A, _);False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.GetLocalVarNode;322;-5039.903,-399.1647;Inherit;False;317;isFront;1;0;OBJECT;;False;1;FLOAT;0
-Node;AmplifyShaderEditor.NegateNode;249;-5007.93,-304.8098;Inherit;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.LWGUIStaticSwitch;127;-5775.477,-689.75;Inherit;False;Property;Sample_Enum1;关闭/Noise平铺/六边形平铺/抖动采样/消除纹理平铺重复;1;0;Create;False;0;0;0;True;0;False;0;1;1;True;;LogicalSubKeywordEnum;5;RenderStateGroup2_SurfaceOptions;_;_SAMPLE_NOISETILING;_SAMPLE_HEXAGONTILING;_SAMPLE_ONESAMPLEONTILING;Reference;47;True;True;Fragment;9;1;COLOR;0,0,0,0;False;0;COLOR;0,0,0,0;False;2;COLOR;0,0,0,0;False;3;COLOR;0,0,0,0;False;4;COLOR;0,0,0,0;False;5;COLOR;0,0,0,0;False;6;COLOR;0,0,0,0;False;7;COLOR;0,0,0,0;False;8;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.FunctionNode;248;-4815,-390.6239;Inherit;False;If;-1;;6999;58db534cb7946664eb869bdc1abdfb5a;0;3;7;INT;1;False;3;FLOAT3;0,0,0;False;4;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.BreakToComponentsNode;198;-5302.449,-684.0736;Inherit;False;COLOR;1;0;COLOR;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
-Node;AmplifyShaderEditor.LWGUIStaticSwitch;58;-4609.685,-400.3263;Inherit;False;Property;FlipBackNormal_On;翻转背面法线;8;0;Create;False;0;0;0;True;0;False;0;0;0;True;ShaderModelGroup1_senior, EFFECT_BACKSIDE_NORMALS;LogicalSubToggle;2;Key0;Key1;Create;True;False;All;9;1;FLOAT3;0,0,0;False;0;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT3;0,0,0;False;4;FLOAT3;0,0,0;False;5;FLOAT3;0,0,0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT3;0,0,0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.CommentaryNode;126;-1172.063,-1186.943;Inherit;False;420;448.3723;Comment;3;119;118;117;色调变体properties;1,1,1,1;0;0
-Node;AmplifyShaderEditor.CommentaryNode;125;-3805.463,-1205.569;Inherit;False;1753.321;780.905;Comment;18;296;292;297;356;355;290;289;354;293;295;294;112;116;115;291;113;288;428;清漆properties;1,1,1,1;0;0
-Node;AmplifyShaderEditor.CommentaryNode;124;-1953.638,-1267.392;Inherit;False;652.0459;1911.89;Comment;13;98;104;105;102;101;106;103;99;111;110;108;107;109;细节properties;1,1,1,1;0;0
-Node;AmplifyShaderEditor.CommentaryNode;122;-9999.406,-1209.941;Inherit;False;484;1497.098;Comment;16;77;78;83;82;81;80;79;85;86;87;88;89;90;91;84;76;Houdini顶点动画贴图(VAT)properties;1,1,1,1;0;0
-Node;AmplifyShaderEditor.RegisterLocalVarNode;202;-5138.448,-592.0736;Inherit;False;alpha;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RegisterLocalVarNode;224;-4139.515,-396.4013;Inherit;False;normalWS;-1;True;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.SamplerNode;109;-1886.299,-52.1955;Inherit;True;Property;_DetailMap3;4-细节贴图;56;0;Create;False;0;0;0;True;2;LogicalTitle(DetailGroup0_DETAIL_4MULTI, Detail Four Layer);LogicalTex(DetailGroup0_DETAIL_4MULTI, true, RG_B_A, _);False;-1;None;None;True;0;False;bump;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RangedFloatNode;107;-1894.733,-204.1134;Inherit;False;Property;_DetailOcclusionStrength2;3-细节遮蔽强度;54;0;Create;False;0;0;0;True;1;LogicalSub(DetailGroup0_DETAIL_4MULTI);False;1;1;0;2;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;108;-1891.733,-132.1135;Inherit;False;Property;_DetailNormalScale2;3-细节法线强度;55;0;Create;False;0;0;0;True;1;LogicalSub(DetailGroup0_DETAIL_4MULTI);False;1;1;0;2;0;1;FLOAT;0
@@ -4036,30 +3268,26 @@ Node;AmplifyShaderEditor.RangedFloatNode;101;-1895.797,-889.8127;Inherit;False;P
 Node;AmplifyShaderEditor.RangedFloatNode;102;-1896.797,-816.8129;Inherit;False;Property;_DetailNormalScale0;1-细节法线强度;49;0;Create;False;0;0;0;True;1;LogicalSub(DetailGroup0_DETAIL or DetailGroup0_DETAIL_2MULTI or DetailGroup0_DETAIL_4MULTI);False;1;1;0;2;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;105;-1898.297,-555.313;Inherit;False;Property;_DetailOcclusionStrength1;2-细节遮蔽强度;52;0;Create;False;0;0;0;True;1;LogicalSub(DetailGroup0_DETAIL_2MULTI or DetailGroup0_DETAIL_4MULTI);False;1;1;0;2;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;104;-1899.298,-480.3133;Inherit;False;Property;_DetailNormalScale1;2-细节法线强度;51;0;Create;False;0;0;0;True;1;LogicalSub(DetailGroup0_DETAIL_2MULTI or DetailGroup0_DETAIL_4MULTI);False;1;1;0;2;0;1;FLOAT;0
-Node;AmplifyShaderEditor.LWGUIStaticSwitch;98;-1903.639,-1217.392;Inherit;False;Property;DetailGroup0;禁用/一层细节/两层细节/四层细节/细节;46;0;Create;False;0;0;0;True;0;False;0;0;0;True;;EnumGroup;4;Off, _;Detail1Multi, _DETAIL;Detail2Multi, _DETAIL_2MULTI;Detail4Multi, _DETAIL_4MULTI;Create;True;True;Fragment;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.ColorNode;118;-1121.972,-1030.611;Inherit;False;Property;_HueVariationColor;色调变体颜色;64;0;Create;False;0;0;0;True;1;LogicalSub(HueVariationGroup0EFFECT_HUE_VARIATION);False;1,0.5,0,0.1019608;1,0.5019608,0,0.1019608;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.LWGUIStaticSwitch;117;-1122.063,-1136.943;Inherit;False;Property;HueVariationGroup0;禁用/开启/色调变体;63;0;Create;False;0;0;0;True;0;False;0;0;0;True;;EnumGroup;2;Off, _;On, EFFECT_HUE_VARIATION;Create;True;False;All;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SamplerNode;77;-9930.354,-1038.813;Inherit;True;Property;_PositionVATMap;VAT位置贴图;26;0;Create;False;0;0;0;True;1;LogicalTex(HoudiniVATGroup0_HOUDINI_VAT_SOFT, false, RGB_A, _);False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SamplerNode;78;-9937.159,-855.0785;Inherit;True;Property;_RotateVATMap;VAT旋转贴图;27;0;Create;False;0;0;0;True;1;LogicalTex(HoudiniVATGroup0_HOUDINI_VAT_SOFT, false, RGB_A, _);False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.RangedFloatNode;83;-9898.793,-388.8425;Inherit;False;Property;_AnimatorStrength;动画幅度;32;0;Create;False;0;0;0;True;1;LogicalSub(HoudiniVATGroup0_HOUDINI_VAT_SOFT);False;1;1;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;82;-9903.793,-457.8425;Inherit;False;Property;_PlaySpeed;播放速度;31;0;Create;False;0;0;0;True;1;LogicalSub(HoudiniVATGroup0_HOUDINI_VAT_SOFT);False;1;1;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;81;-9908.793,-522.8427;Inherit;False;Property;_DisplayFrame;显示帧;30;0;Create;False;0;0;0;True;1;LogicalSub(HoudiniVATGroup0_HOUDINI_VAT_SOFT);False;1;1;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;80;-9905.793,-591.8423;Inherit;False;Property;_AutoPlay;自动播放;29;0;Create;False;0;0;0;True;1;LogicalSubToggle(HoudiniVATGroup0_HOUDINI_VAT_SOFT, _);False;1;1;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;79;-9921.438,-662.8221;Inherit;False;Property;_IsPosTexHDR;位置贴图使用HDR;28;0;Create;False;0;0;0;True;1;LogicalSubToggle(HoudiniVATGroup0_HOUDINI_VAT_SOFT, _);False;1;1;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;85;-9910.793,-248.8422;Inherit;False;Property;_FrameCount;Frame Count;34;0;Create;False;0;0;0;True;1;LogicalSub(HoudiniVATGroup0_HOUDINI_VAT_SOFT);False;0;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;86;-9910.793,-177.8422;Inherit;False;Property;_BoundMax_X;Bound Max X;35;0;Create;False;0;0;0;True;1;LogicalSub(HoudiniVATGroup0_HOUDINI_VAT_SOFT);False;0;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;87;-9908.793,-117.8421;Inherit;False;Property;_BoundMax_Y;Bound Max Y;36;0;Create;False;0;0;0;True;1;LogicalSub(HoudiniVATGroup0_HOUDINI_VAT_SOFT);False;0;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;88;-9907.793,-42.84221;Inherit;False;Property;_BoundMax_Z;Bound Max Z;37;0;Create;False;0;0;0;True;1;LogicalSub(HoudiniVATGroup0_HOUDINI_VAT_SOFT);False;0;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;89;-9911.793,27.15763;Inherit;False;Property;_BoundMin_X;Bound Min X;38;0;Create;False;0;0;0;True;1;LogicalSub(HoudiniVATGroup0_HOUDINI_VAT_SOFT);False;0;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;90;-9902.793,100.158;Inherit;False;Property;_BoundMin_Y;Bound Min Y;39;0;Create;False;0;0;0;True;1;LogicalSub(HoudiniVATGroup0_HOUDINI_VAT_SOFT);False;0;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;91;-9903.793,174.1579;Inherit;False;Property;_BoundMin_Z;Bound Min Z;40;0;Create;False;0;0;0;True;1;LogicalSub(HoudiniVATGroup0_HOUDINI_VAT_SOFT);False;0;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;84;-9911.793,-313.8423;Inherit;False;Property;_HoudiniFPS;Houdini FPS;33;0;Create;False;0;0;0;True;2;Title(HoudiniVATGroup0_HOUDINI_VAT_SOFT, Houdini VAT Data);LogicalSub(HoudiniVATGroup0_HOUDINI_VAT_SOFT);False;24;24;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.LWGUIStaticSwitch;47;-10900.47,-935.5577;Inherit;False;Property;Sample_Enum;关闭/Noise平铺/六边形平铺/抖动采样/消除纹理平铺重复;1;0;Create;False;0;0;0;False;0;False;0;0;0;True;;LogicalSubKeywordEnum;5;RenderStateGroup2_SurfaceOptions;_SAMPLE_COMMON;_SAMPLE_NOISETILING;_SAMPLE_HEXAGONTILING;_SAMPLE_ONESAMPLEONTILING;Create;True;True;Fragment;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.Vector4Node;45;-10902.79,-1150.924;Inherit;False;Property;RenderStateGroup2;表面选项/渲染状态;0;0;Create;False;0;0;0;True;1;EnumGroup(RenderStateGroup2, _SENIOR, SurfaceOptions, _SurfaceOptions);False;0,0,0,0;0,0,0,0;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;77;-9930.354,-1025.199;Inherit;True;Property;_PositionVATMap;VAT位置贴图;26;0;Create;False;0;0;0;True;1;LogicalTex(HoudiniVATGroup0_HOUDINI_VAT_SOFT, false, RGB_A, _);False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;78;-9937.159,-841.465;Inherit;True;Property;_RotateVATMap;VAT旋转贴图;27;0;Create;False;0;0;0;True;1;LogicalTex(HoudiniVATGroup0_HOUDINI_VAT_SOFT, false, RGB_A, _);False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.RangedFloatNode;83;-9898.793,-375.2289;Inherit;False;Property;_AnimatorStrength;动画幅度;32;0;Create;False;0;0;0;True;1;LogicalSub(HoudiniVATGroup0_HOUDINI_VAT_SOFT);False;1;1;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;82;-9903.793,-444.2289;Inherit;False;Property;_PlaySpeed;播放速度;31;0;Create;False;0;0;0;True;1;LogicalSub(HoudiniVATGroup0_HOUDINI_VAT_SOFT);False;1;1;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;81;-9908.793,-509.2292;Inherit;False;Property;_DisplayFrame;显示帧;30;0;Create;False;0;0;0;True;1;LogicalSub(HoudiniVATGroup0_HOUDINI_VAT_SOFT);False;1;1;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;80;-9905.793,-578.2288;Inherit;False;Property;_AutoPlay;自动播放;29;0;Create;False;0;0;0;True;1;LogicalSubToggle(HoudiniVATGroup0_HOUDINI_VAT_SOFT, _);False;1;1;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;79;-9921.438,-649.2086;Inherit;False;Property;_IsPosTexHDR;位置贴图使用HDR;28;0;Create;False;0;0;0;True;1;LogicalSubToggle(HoudiniVATGroup0_HOUDINI_VAT_SOFT, _);False;1;1;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;85;-9910.793,-235.2286;Inherit;False;Property;_FrameCount;Frame Count;34;0;Create;False;0;0;0;True;1;LogicalSub(HoudiniVATGroup0_HOUDINI_VAT_SOFT);False;0;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;86;-9910.793,-164.2286;Inherit;False;Property;_BoundMax_X;Bound Max X;35;0;Create;False;0;0;0;True;1;LogicalSub(HoudiniVATGroup0_HOUDINI_VAT_SOFT);False;0;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;87;-9908.793,-104.2285;Inherit;False;Property;_BoundMax_Y;Bound Max Y;36;0;Create;False;0;0;0;True;1;LogicalSub(HoudiniVATGroup0_HOUDINI_VAT_SOFT);False;0;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;88;-9907.793,-29.22862;Inherit;False;Property;_BoundMax_Z;Bound Max Z;37;0;Create;False;0;0;0;True;1;LogicalSub(HoudiniVATGroup0_HOUDINI_VAT_SOFT);False;0;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;89;-9911.793,40.77122;Inherit;False;Property;_BoundMin_X;Bound Min X;38;0;Create;False;0;0;0;True;1;LogicalSub(HoudiniVATGroup0_HOUDINI_VAT_SOFT);False;0;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;90;-9902.793,113.7716;Inherit;False;Property;_BoundMin_Y;Bound Min Y;39;0;Create;False;0;0;0;True;1;LogicalSub(HoudiniVATGroup0_HOUDINI_VAT_SOFT);False;0;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;91;-9903.793,187.7715;Inherit;False;Property;_BoundMin_Z;Bound Min Z;40;0;Create;False;0;0;0;True;1;LogicalSub(HoudiniVATGroup0_HOUDINI_VAT_SOFT);False;0;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;84;-9911.793,-300.2286;Inherit;False;Property;_HoudiniFPS;Houdini FPS;33;0;Create;False;0;0;0;True;2;Title(HoudiniVATGroup0_HOUDINI_VAT_SOFT, Houdini VAT Data);LogicalSub(HoudiniVATGroup0_HOUDINI_VAT_SOFT);False;24;24;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.Vector4Node;45;-10807.5,-1130.504;Inherit;False;Property;RenderStateGroup2;表面选项/渲染状态;0;0;Create;False;0;0;0;True;1;EnumGroup(RenderStateGroup2, _SENIOR, SurfaceOptions, _SurfaceOptions);False;0,0,0,0;0,0,0,0;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleAddOpNode;291;-3384.781,-857.202;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;1;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;116;-3646.939,-747.3712;Inherit;False;Property;_ClearCoatSmoothness;清漆粗糙度;62;0;Create;False;0;0;0;True;1;LogicalSub(ClearCoatGroup0_CLEARCOAT);False;0;1;-1;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.LWGUIStaticSwitch;93;-8774.935,-1027.824;Inherit;False;Property;ParallaxSource_Enum;高度贴图/额外贴图/高度数据源;42;0;Create;False;0;0;0;False;0;False;0;1;1;True;;LogicalSubKeywordEnum;3;ParallaxGroup0_PARALLAXMAP;_USE_PARALLAXMAP_PARALLAX;_USE_EXTRAMIXMAP_PARALLAX;Create;True;True;Fragment;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.Vector4Node;95;-9046.813,-1050.855;Inherit;False;Property;_UseMixMapChannel_Parallax;使用混合贴图通道;44;0;Create;False;0;0;0;False;1;LogicalChannel(ParallaxGroup0_PARALLAXMAP and ParallaxGroup0_USE_EXTRAMIXMAP_PARALLAX indent);False;1,0,0,0;0,0,0,0;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.Vector4Node;95;-9125.09,-1074.679;Inherit;False;Property;_UseMixMapChannel_Parallax;使用混合贴图通道;44;0;Create;False;0;0;0;False;1;LogicalChannel(ParallaxGroup0_PARALLAXMAP and ParallaxGroup0_USE_EXTRAMIXMAP_PARALLAX indent);False;1,0,0,0;0,0,0,0;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.SimpleAddOpNode;293;-3358.781,-748.202;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;1;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleAddOpNode;354;-3226.036,-1034.296;Inherit;False;3;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;356;-3243.036,-839.2961;Inherit;False;Constant;_Float8;Float 8;72;0;Create;True;0;0;0;False;0;False;3;0;0;0;0;1;FLOAT;0
@@ -4087,25 +3315,19 @@ Node;AmplifyShaderEditor.GetLocalVarNode;377;-3194.661,1471.068;Inherit;False;36
 Node;AmplifyShaderEditor.GetLocalVarNode;378;-3193.661,1542.068;Inherit;False;252;positionSS;1;0;OBJECT;;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.GetLocalVarNode;390;-3271.567,1877.747;Inherit;False;389;isCustomReflect;1;0;OBJECT;;False;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;383;-3294.959,1710.169;Inherit;False;210;perceptualRoughness;1;0;OBJECT;;False;1;FLOAT;0
-Node;AmplifyShaderEditor.FunctionNode;380;-3453.261,1598.767;Inherit;False;ReflectDir;-1;;7001;a73de9be7b6b71b4d92e3337acef4e55;0;2;5;FLOAT3;0,0,0;False;8;FLOAT3;0,0,0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.FunctionNode;380;-3453.261,1598.767;Inherit;False;ReflectDir;-1;;7004;a73de9be7b6b71b4d92e3337acef4e55;0;2;5;FLOAT3;0,0,0;False;8;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.GetLocalVarNode;381;-3690.261,1561.767;Inherit;False;259;viewDirWS;1;0;OBJECT;;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.GetLocalVarNode;382;-3683.261,1642.767;Inherit;False;224;normalWS;1;0;OBJECT;;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.WireNode;395;-3072.985,1632.918;Inherit;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.GetLocalVarNode;298;-3542.14,610.6072;Inherit;False;289;ClearCoatMask;1;0;OBJECT;;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;399;-2552.604,360.2089;Inherit;False;brdfData;-1;True;1;0;OBJECT;;False;1;OBJECT;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;396;-2561.548,274.1114;Inherit;False;fresnel;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.LWGUIStaticSwitch;112;-3536.463,-1155.57;Inherit;False;Property;ClearCoatGroup0;禁用/启用/清漆;59;0;Create;False;0;0;0;True;0;False;0;0;0;True;;EnumGroup;2; Off disable_ClearCoatSource_Enum, _;On, _CLEARCOAT;Create;True;False;All;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.FunctionNode;250;-2334.419,2469.893;Inherit;False;EnvOcclusion;-1;;7002;1f8d06f242dc65745b935d33a763c278;5,54,1,60,1,55,1,65,1,53,1;8;3;FLOAT;0;False;5;FLOAT2;0,0;False;10;FLOAT3;0,0,0;False;21;FLOAT3;0,0,0;False;22;FLOAT;1;False;11;FLOAT3;0,0,0;False;13;FLOAT;0;False;15;FLOAT3;0,0,0;False;8;FLOAT;0;FLOAT;18;FLOAT;6;FLOAT;7;FLOAT3;33;FLOAT;36;FLOAT;24;FLOAT;29
+Node;AmplifyShaderEditor.FunctionNode;250;-2334.419,2469.893;Inherit;False;EnvOcclusion;-1;;7005;1f8d06f242dc65745b935d33a763c278;5,54,1,60,1,55,1,65,1,53,1;8;3;FLOAT;0;False;5;FLOAT2;0,0;False;10;FLOAT3;0,0,0;False;21;FLOAT3;0,0,0;False;22;FLOAT;1;False;11;FLOAT3;0,0,0;False;13;FLOAT;0;False;15;FLOAT3;0,0,0;False;8;FLOAT;0;FLOAT;18;FLOAT;6;FLOAT;7;FLOAT3;33;FLOAT;36;FLOAT;24;FLOAT;29
 Node;AmplifyShaderEditor.GetLocalVarNode;253;-2597.34,2371.1;Inherit;False;252;positionSS;1;0;OBJECT;;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.GetLocalVarNode;254;-2613.014,2444.567;Inherit;False;224;normalWS;1;0;OBJECT;;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.GetLocalVarNode;257;-2614.414,2519.178;Inherit;False;256;vNormalWS;1;0;OBJECT;;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.SimpleAddOpNode;258;-2581.604,2589.456;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0.5;False;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;260;-2649.45,2681.808;Inherit;False;259;viewDirWS;1;0;OBJECT;;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.LWGUIStaticSwitch;265;-1675.284,2659.656;Inherit;False;Property;Occlusion_On2;环境光遮蔽;11;0;Create;False;0;0;0;True;0;False;0;1;1;True;ShaderModelGroup1, _OCCLUSION;LogicalSubToggle;2;Key0;Key1;Reference;63;True;False;Fragment;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.LWGUIStaticSwitch;266;-1665.221,2755.656;Inherit;False;Property;Occlusion_On3;环境光遮蔽;11;0;Create;False;0;0;0;True;0;False;0;1;1;True;ShaderModelGroup1, _OCCLUSION;LogicalSubToggle;2;Key0;Key1;Reference;63;True;False;Fragment;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.LWGUIStaticSwitch;264;-1673.284,2560.656;Inherit;False;Property;Occlusion_On1;环境光遮蔽;11;0;Create;False;0;0;0;True;0;False;0;1;1;True;ShaderModelGroup1, _OCCLUSION;LogicalSubToggle;2;Key0;Key1;Reference;63;True;False;Fragment;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.LWGUIStaticSwitch;63;-1682.081,2453.389;Inherit;False;Property;Occlusion_On;环境光遮蔽;11;0;Create;False;0;0;0;True;0;False;0;1;1;True;ShaderModelGroup1, _OCCLUSION;LogicalSubToggle;2;Key0;Key1;Create;True;False;Fragment;9;1;FLOAT3;0,0,0;False;0;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT3;0,0,0;False;4;FLOAT3;0,0,0;False;5;FLOAT3;0,0,0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT3;0,0,0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.RangedFloatNode;263;-1909.284,2457.655;Inherit;False;Constant;_Float3;Float 3;69;0;Create;True;0;0;0;False;0;False;1;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.TexturePropertyNode;392;-3291.359,1969.964;Inherit;True;Property;_CustomReflectMap;自定义反射贴图;16;0;Create;False;0;0;0;True;1;LogicalLineTex(ShaderModelGroup1_customreflect indent);False;None;None;False;white;LockedToCube;Cube;-1;0;2;SAMPLERCUBE;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.Vector4Node;393;-3332.007,2182.998;Inherit;False;Global;_CustomReflectMap_HDR;_CustomReflectMap_HDR;72;0;Fetch;True;0;0;0;False;0;False;0,0,0,0;0,0,0,0;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RegisterLocalVarNode;400;-2548.604,529.2089;Inherit;False;brdfDataClearCoat;-1;True;1;0;OBJECT;;False;1;OBJECT;0
@@ -4118,7 +3340,7 @@ Node;AmplifyShaderEditor.RangedFloatNode;115;-3688.398,-876.9219;Inherit;False;P
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;290;-2886.781,-1014.202;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SamplerNode;113;-3504.399,-1058.393;Inherit;True;Property;_ClearCoatMap;清漆贴图;60;0;Create;False;0;0;0;True;1;LogicalTex(ClearCoatGroup0_CLEARCOAT, false, R_G_B_A, _);False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.GetLocalVarNode;288;-3721.781,-1027.202;Inherit;False;310;uv_primitive;1;0;OBJECT;;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.FunctionNode;292;-2936.781,-759.202;Inherit;False;SubsectionLerp;-1;;7003;3b4c54dea1c34724bb8ee82b01eb8b74;0;4;9;FLOAT;0;False;12;FLOAT;0;False;13;FLOAT;1;False;14;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.FunctionNode;292;-2936.781,-759.202;Inherit;False;SubsectionLerp;-1;;7006;3b4c54dea1c34724bb8ee82b01eb8b74;0;4;9;FLOAT;0;False;12;FLOAT;0;False;13;FLOAT;1;False;14;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;296;-2302.629,-762.2563;Inherit;False;ClearCoatSmoothness;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SaturateNode;428;-2692.986,-1028.701;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;289;-2506.781,-1019.202;Inherit;False;ClearCoatMask;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
@@ -4146,27 +3368,26 @@ Node;AmplifyShaderEditor.GetLocalVarNode;438;-2315.005,2340.726;Inherit;False;28
 Node;AmplifyShaderEditor.GetLocalVarNode;436;-2190.005,2197.726;Inherit;False;399;brdfData;1;0;OBJECT;;False;1;OBJECT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;437;-2294.005,2261.726;Inherit;False;400;brdfDataClearCoat;1;0;OBJECT;;False;1;OBJECT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;441;-2084.811,2323.919;Inherit;False;440;vertexlight;1;0;OBJECT;;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.FunctionNode;443;-1090.644,1861.005;Inherit;False;CalculateFinalColor;-1;;7004;4a3e69251c0a99c4aac425c4fd3784d1;0;13;13;FLOAT3;0,0,0;False;14;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;9;FLOAT3;0,0,0;False;10;FLOAT3;0,0,0;False;5;FLOAT3;0,0,0;False;18;FLOAT3;1,0,0;False;19;FLOAT;1;False;21;FLOAT;1;False;20;FLOAT;1;False;6;FLOAT3;0,0,0;False;8;FLOAT;1;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.FunctionNode;402;-3200.153,-33.66544;Inherit;False;SurfaceData;-1;;7005;e41fa51f5f7c55c4db0e5c93e9d28133;0;13;79;FLOAT3;0,0,0;False;80;FLOAT3;1,1,1;False;84;FLOAT3;1,1,1;False;70;FLOAT;0;False;68;FLOAT;0;False;128;FLOAT3;0,0,0;False;129;FLOAT3;0,0,0;False;130;FLOAT;0;False;85;FLOAT3;0,0,0;False;86;FLOAT3;0,0,0;False;131;FLOAT;0;False;132;FLOAT;0;False;133;FLOAT;0;False;19;FLOAT3;97;FLOAT;99;FLOAT3;94;FLOAT3;95;FLOAT;90;FLOAT;89;FLOAT;101;FLOAT;0;FLOAT;87;FLOAT;103;FLOAT;88;FLOAT;91;FLOAT;92;FLOAT;93;FLOAT;96;OBJECT;121;OBJECT;106;FLOAT;143;OBJECT;140
+Node;AmplifyShaderEditor.FunctionNode;443;-1090.644,1861.005;Inherit;False;CalculateFinalColor;-1;;7007;4a3e69251c0a99c4aac425c4fd3784d1;0;13;13;FLOAT3;0,0,0;False;14;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;9;FLOAT3;0,0,0;False;10;FLOAT3;0,0,0;False;5;FLOAT3;0,0,0;False;18;FLOAT3;1,0,0;False;19;FLOAT;1;False;21;FLOAT;1;False;20;FLOAT;1;False;6;FLOAT3;0,0,0;False;8;FLOAT;1;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.FunctionNode;402;-3200.153,-33.66544;Inherit;False;SurfaceData;-1;;7008;e41fa51f5f7c55c4db0e5c93e9d28133;0;13;79;FLOAT3;0,0,0;False;80;FLOAT3;1,1,1;False;84;FLOAT3;1,1,1;False;70;FLOAT;0;False;68;FLOAT;0;False;128;FLOAT3;0,0,0;False;129;FLOAT3;0,0,0;False;130;FLOAT;0;False;85;FLOAT3;0,0,0;False;86;FLOAT3;0,0,0;False;131;FLOAT;0;False;132;FLOAT;0;False;133;FLOAT;0;False;19;FLOAT3;97;FLOAT;99;FLOAT3;94;FLOAT3;95;FLOAT;90;FLOAT;89;FLOAT;101;FLOAT;0;FLOAT;87;FLOAT;103;FLOAT;88;FLOAT;91;FLOAT;92;FLOAT;93;FLOAT;96;OBJECT;121;OBJECT;106;FLOAT;143;OBJECT;140
 Node;AmplifyShaderEditor.DynamicAppendNode;200;-5151.448,-732.0736;Inherit;False;FLOAT3;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.LerpOp;215;-4917.991,321.2181;Inherit;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleAddOpNode;216;-5070.123,405.0016;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;1;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;64;-5462.596,403.89;Inherit;False;Property;_OcclusionStrength;环境光遮蔽贴图强度;12;0;Create;False;0;0;0;True;1;LogicalSub(ShaderModelGroup1_OCCLUSION indent);False;0;1;-1;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.FunctionNode;211;-4962.252,103.1551;Inherit;False;SubsectionLerp;-1;;7009;3b4c54dea1c34724bb8ee82b01eb8b74;0;4;9;FLOAT;0;False;12;FLOAT;0;False;13;FLOAT;1;False;14;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.FunctionNode;211;-4962.252,103.1551;Inherit;False;SubsectionLerp;-1;;7012;3b4c54dea1c34724bb8ee82b01eb8b74;0;4;9;FLOAT;0;False;12;FLOAT;0;False;13;FLOAT;1;False;14;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;212;-5363.677,317.026;Inherit;False;Constant;_Float1;Float 1;69;0;Create;True;0;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;60;-5481.266,153.8539;Inherit;False;Property;_Roughness;粗糙度;10;0;Create;False;0;0;0;False;1;LogicalSub(ShaderModelGroup1);False;0;1;-1;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;210;-4490.906,102.1426;Inherit;False;perceptualRoughness;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;183;-6461.522,1404.41;Inherit;False;154;_ScaleOrRotate;1;0;OBJECT;;False;1;FLOAT;0
-Node;AmplifyShaderEditor.FunctionNode;177;-6092.021,1243.138;Inherit;False;SampleSupportNoTileing_OneSample;-1;;7010;dd8b7457939c2a44e9e4de0a0843db12;0;3;3;FLOAT2;0,0;False;4;SAMPLER2D;0,0;False;5;FLOAT2;0,0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.FunctionNode;178;-6092.847,1362;Inherit;False;SampleSupportNoTileing_twoSample;-1;;7011;bdfdef6c25be0344dbc4ba61cf1c3986;0;3;3;FLOAT2;0,0;False;4;SAMPLER2D;;False;5;FLOAT;0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.FunctionNode;179;-6102.42,1482.01;Inherit;False;SampleSupportNoTileing_HexagonSample;-1;;7012;2be24d88e4fca7d4d85f800f408556e7;0;3;2;FLOAT2;0,0;False;3;SAMPLER2D;0,0;False;4;FLOAT;0;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.FunctionNode;177;-6092.021,1243.138;Inherit;False;SampleSupportNoTileing_OneSample;-1;;7013;dd8b7457939c2a44e9e4de0a0843db12;0;3;3;FLOAT2;0,0;False;4;SAMPLER2D;0,0;False;5;FLOAT2;0,0;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.FunctionNode;178;-6092.847,1362;Inherit;False;SampleSupportNoTileing_twoSample;-1;;7014;bdfdef6c25be0344dbc4ba61cf1c3986;0;3;3;FLOAT2;0,0;False;4;SAMPLER2D;;False;5;FLOAT;0;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.FunctionNode;179;-6102.42,1482.01;Inherit;False;SampleSupportNoTileing_HexagonSample;-1;;7015;2be24d88e4fca7d4d85f800f408556e7;0;3;2;FLOAT2;0,0;False;3;SAMPLER2D;0,0;False;4;FLOAT;0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.TexturePropertyNode;175;-6547.141,1007.951;Inherit;True;Property;_EmissionMixMap;自发光混合贴图#通用PBR:(自发光, 金属度)#场景-植物:(自发光, 次表面强度);14;0;Create;False;0;0;0;True;3;LogicalTitle(ShaderModelGroup1_SHADER_PBR, Emission Metallic);LogicalTitle(ShaderModelGroup1_SHADER_PLANT, Emission SubSurfaceWeight);LogicalTex(ShaderModelGroup1, false, RGB_A, _);False;None;None;False;black;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.SamplerNode;66;-6125.849,1063.359;Inherit;True;Property;_EmissionMixMap02;自发光混合贴图#通用PBR:(自发光, 金属度)#场景-植物:(自发光, 次表面强度);18;0;Create;False;0;0;0;False;3;LogicalTitle(ShaderModelGroup1_SHADER_PBR, Emission Metallic);LogicalTitle(ShaderModelGroup1_SHADER_PLANT, Emission SubSurfaceWeight);LogicalTex(ShaderModelGroup1, false, RGB_A, _);False;-1;None;None;True;0;False;black;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.GetLocalVarNode;180;-6483.896,1237.681;Inherit;False;313;UV;1;0;OBJECT;;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.TemplateFragmentDataNode;232;-6650.56,1304.932;Inherit;False;0;1;positionCS;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.LWGUIStaticSwitch;181;-5453.341,1196.936;Inherit;False;Property;Sample_Enum3;关闭/Noise平铺/六边形平铺/抖动采样/消除纹理平铺重复;1;0;Create;False;0;0;0;True;0;False;0;1;1;True;;LogicalSubKeywordEnum;5;RenderStateGroup2_SurfaceOptions;_;_SAMPLE_NOISETILING;_SAMPLE_HEXAGONTILING;_SAMPLE_ONESAMPLEONTILING;Reference;47;True;True;Fragment;9;1;COLOR;0,0,0,0;False;0;COLOR;0,0,0,0;False;2;COLOR;0,0,0,0;False;3;COLOR;0,0,0,0;False;4;COLOR;0,0,0,0;False;5;COLOR;0,0,0,0;False;6;COLOR;0,0,0,0;False;7;COLOR;0,0,0,0;False;8;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.BreakToComponentsNode;268;-4977.778,1201.041;Inherit;False;COLOR;1;0;COLOR;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
-Node;AmplifyShaderEditor.FunctionNode;273;-4820.636,1423.296;Inherit;False;SubsectionLerp;-1;;7013;3b4c54dea1c34724bb8ee82b01eb8b74;0;4;9;FLOAT;0;False;12;FLOAT;0;False;13;FLOAT;1;False;14;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.FunctionNode;273;-4820.636,1423.296;Inherit;False;SubsectionLerp;-1;;7016;3b4c54dea1c34724bb8ee82b01eb8b74;0;4;9;FLOAT;0;False;12;FLOAT;0;False;13;FLOAT;1;False;14;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;70;-5173.986,1409.288;Inherit;False;Property;_Metallic;金属度;19;0;Create;False;0;0;0;True;1;LogicalSub(ShaderModelGroup1_SHADER_PBR or ShaderModelGroup1_SHADER_ALPHATEST);False;0;1;-1;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;274;-5056.493,1481.01;Inherit;False;Constant;_Float5;Float 5;71;0;Create;True;0;0;0;False;0;False;1;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;275;-5055.493,1546.01;Inherit;False;Constant;_Float6;Float 5;71;0;Create;True;0;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0
@@ -4177,20 +3398,16 @@ Node;AmplifyShaderEditor.SwizzleNode;283;-4739.109,1095.678;Inherit;False;FLOAT3
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;272;-4563.636,1180.296;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;270;-4387.777,1191.041;Inherit;False;emission;-1;True;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.ColorNode;67;-6577.928,1718.481;Inherit;False;Property;_SubsurfaceColor;散射颜色;17;0;Create;False;0;0;0;True;1;LogicalSub(ShaderModelGroup1_SHADER_PLANT);False;1,1,1,1;1,1,1,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.FunctionNode;187;-5484.279,1920.042;Inherit;False;SampleSupportNoTileing_OneSample;-1;;7014;dd8b7457939c2a44e9e4de0a0843db12;0;3;3;FLOAT2;0,0;False;4;SAMPLER2D;_Sampler4187;False;5;FLOAT2;0,0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.FunctionNode;188;-5485.105,2038.903;Inherit;False;SampleSupportNoTileing_twoSample;-1;;7015;bdfdef6c25be0344dbc4ba61cf1c3986;0;3;3;FLOAT2;0,0;False;4;SAMPLER2D;_Sampler4188;False;5;FLOAT;0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.FunctionNode;190;-5494.68,2158.912;Inherit;False;SampleSupportNoTileing_HexagonSample;-1;;7016;2be24d88e4fca7d4d85f800f408556e7;0;3;2;FLOAT2;0,0;False;3;SAMPLER2D;_Sampler3190;False;4;FLOAT;0;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.FunctionNode;187;-5484.279,1920.042;Inherit;False;SampleSupportNoTileing_OneSample;-1;;7017;dd8b7457939c2a44e9e4de0a0843db12;0;3;3;FLOAT2;0,0;False;4;SAMPLER2D;_Sampler4187;False;5;FLOAT2;0,0;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.FunctionNode;188;-5485.105,2038.903;Inherit;False;SampleSupportNoTileing_twoSample;-1;;7018;bdfdef6c25be0344dbc4ba61cf1c3986;0;3;3;FLOAT2;0,0;False;4;SAMPLER2D;_Sampler4188;False;5;FLOAT;0;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.FunctionNode;190;-5494.68,2158.912;Inherit;False;SampleSupportNoTileing_HexagonSample;-1;;7019;2be24d88e4fca7d4d85f800f408556e7;0;3;2;FLOAT2;0,0;False;3;SAMPLER2D;_Sampler3190;False;4;FLOAT;0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.TexturePropertyNode;193;-5905.54,1727.04;Inherit;True;Property;_ExtraMixMap;额外混合贴图;23;0;Create;False;0;0;0;True;1;LogicalTex(ShaderModelGroup1_ExtraMixMap_Display, false, R_G_B_A, _);False;None;None;False;black;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.GetLocalVarNode;184;-5888.154,1941.584;Inherit;False;313;UV;1;0;OBJECT;;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.TemplateFragmentDataNode;233;-6070.827,1995.203;Inherit;False;0;1;positionCS;0;5;FLOAT4;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.GetLocalVarNode;186;-5869.123,2127.782;Inherit;False;154;_ScaleOrRotate;1;0;OBJECT;;False;1;FLOAT;0
-Node;AmplifyShaderEditor.LWGUIStaticSwitch;189;-4877.114,1858.452;Inherit;False;Property;Sample_Enum4;关闭/Noise平铺/六边形平铺/抖动采样/消除纹理平铺重复;1;0;Create;False;0;0;0;True;0;False;0;1;1;True;;LogicalSubKeywordEnum;5;RenderStateGroup2_SurfaceOptions;_;_SAMPLE_NOISETILING;_SAMPLE_HEXAGONTILING;_SAMPLE_ONESAMPLEONTILING;Reference;47;True;True;Fragment;9;1;COLOR;0,0,0,0;False;0;COLOR;0,0,0,0;False;2;COLOR;0,0,0,0;False;3;COLOR;0,0,0,0;False;4;COLOR;0,0,0,0;False;5;COLOR;0,0,0,0;False;6;COLOR;0,0,0,0;False;7;COLOR;0,0,0,0;False;8;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SamplerNode;74;-5492.763,1730.355;Inherit;True;Property;_ExtraMixMap02;额外混合贴图;25;0;Create;False;0;0;0;False;1;LogicalTex(ShaderModelGroup1_ExtraMixMap_Display, false, R_G_B_A, _);False;-1;None;None;True;0;False;black;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.LWGUIStaticSwitch;75;-5514.305,2458.905;Inherit;False;Property;WindEnabled_Enum;关闭/最快/快速/更好/最好/棕榈树/风力;24;0;Create;False;0;0;0;True;0;False;0;1;1;True;;LogicalSubKeywordEnum;7;ShaderModelGroup1_SHADER_PLANT;_WINDQUALITY_NONE;_WINDQUALITY_FASTEST;_WINDQUALITY_FAST;_WINDQUALITY_BETTER;_WINDQUALITY_BEST;_WINDQUALITY_PALM;Create;True;True;Vertex;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.IntNode;387;-6154.829,436.7504;Inherit;False;Constant;_Int2;Int 2;72;0;Create;True;0;0;0;False;0;False;0;0;False;0;1;INT;0
 Node;AmplifyShaderEditor.IntNode;388;-6144.829,526.7504;Inherit;False;Constant;_Int3;Int 3;72;0;Create;True;0;0;0;False;0;False;1;0;False;0;1;INT;0
-Node;AmplifyShaderEditor.LWGUIStaticSwitch;61;-5955.34,478.4445;Inherit;False;Property;_CustomReflect;自定义反射;15;0;Create;False;0;0;0;True;0;False;0;0;0;True;ShaderModelGroup1, _customreflect;LogicalSubToggle;2;Key0;Key1;Create;True;False;All;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RegisterLocalVarNode;389;-5588.829,530.7504;Inherit;False;isCustomReflect;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;217;-4527.123,325.0016;Inherit;False;occlusionMap;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SaturateNode;426;-4728.755,327.7317;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;201;-4917.448,-714.0736;Inherit;False;albedo;-1;True;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
@@ -4201,15 +3418,13 @@ Node;AmplifyShaderEditor.RangedFloatNode;72;-6540.928,1973.482;Inherit;False;Pro
 Node;AmplifyShaderEditor.RangedFloatNode;69;-6594.928,1889.481;Inherit;False;Property;_SubsurfaceIndirect;间接光散射;18;0;Create;False;0;0;0;True;1;LogicalSub(ShaderModelGroup1_SHADER_PLANT);False;0.25;0.25;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;73;-6564.928,2056.482;Inherit;False;Property;ExtraMixMap_Display;显示额外混合贴图;22;0;Create;False;0;0;0;True;2;LogicalTitle(ShaderModelGroup1_ExtraMixMap_Display, Extra Mixed);LogicalSubToggle(ShaderModelGroup1, _ExtraMixMap_Display);False;0;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;119;-1114.993,-851.5707;Inherit;False;Property;_LogicalKeywordList;LogicalKeywordList;65;0;Create;True;0;0;0;True;1;LogicalKeywordList(_);False;0;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.FunctionNode;446;-3008.284,834.7573;Inherit;False;MainLight;-1;;7017;8feda1e983ee2e6418994fa25e7d0c8f;0;3;29;FLOAT4;0,0,0,0;False;31;FLOAT3;0,0,0;False;30;FLOAT2;0,0;False;7;FLOAT3;0;FLOAT3;10;FLOAT;11;FLOAT;12;INT;13;OBJECT;17;FLOAT4;32
-Node;AmplifyShaderEditor.FunctionNode;447;-2897.324,1129.267;Inherit;False;EnvLighting;-1;;7018;1c7b249abd298d448b85814cac86e2ab;0;5;17;FLOAT3;0,0,0;False;35;FLOAT2;0,0;False;36;FLOAT2;0,0;False;37;FLOAT3;0,0,0;False;21;OBJECT;;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.FunctionNode;448;-2929.022,1331.934;Inherit;False;EnvReflect;-1;;7019;5ceebe00e6af51a45836843f20fb949d;2,45,0,44,0;7;16;FLOAT3;0,0,0;False;18;FLOAT2;0,0;False;15;FLOAT3;0,0,0;False;17;FLOAT;0;False;38;FLOAT;0;False;20;SAMPLERCUBE;0;False;25;FLOAT4;0,0,0,0;False;2;FLOAT3;14;FLOAT3;43
-Node;AmplifyShaderEditor.FunctionNode;358;-2413.804,1709.818;Inherit;False;UnityStandardPBRLighting_MainLight;-1;;7020;b41580952992c61469d041596eb13ef8;0;6;12;FLOAT3;0,0,0;False;13;FLOAT3;0,0,0;False;14;OBJECT;;False;15;OBJECT;;False;16;OBJECT;;False;17;FLOAT;0;False;2;FLOAT3;0;FLOAT3;18
-Node;AmplifyShaderEditor.FunctionNode;439;-1930.076,1331.545;Inherit;False;UnityStandardPBRLighting_Indirect;-1;;7031;4e256c588e7d3354f8b27082ef19ebfc;0;7;29;FLOAT3;0,0,0;False;23;FLOAT3;0,0,0;False;42;FLOAT3;0,0,0;False;20;FLOAT;0;False;31;OBJECT;;False;43;OBJECT;;False;44;FLOAT;0;False;2;FLOAT3;28;FLOAT3;0
-Node;AmplifyShaderEditor.FunctionNode;449;-1838.711,1996.474;Inherit;False;UnityStandardPBRLighting_AddLight;-1;;7033;82d97dd707e557a49be2444a391eab2e;0;9;9;FLOAT3;0,0,0;False;10;FLOAT2;0,0;False;11;FLOAT3;0,0,0;False;13;FLOAT3;0,0,0;False;14;FLOAT4;1,1,1,1;False;15;OBJECT;;False;16;OBJECT;;False;17;FLOAT;0;False;21;FLOAT3;0,0,0;False;3;FLOAT3;0;FLOAT3;8;FLOAT3;23
+Node;AmplifyShaderEditor.FunctionNode;446;-3008.284,834.7573;Inherit;False;MainLight;-1;;7020;8feda1e983ee2e6418994fa25e7d0c8f;0;3;29;FLOAT4;0,0,0,0;False;31;FLOAT3;0,0,0;False;30;FLOAT2;0,0;False;7;FLOAT3;0;FLOAT3;10;FLOAT;11;FLOAT;12;INT;13;OBJECT;17;FLOAT4;32
+Node;AmplifyShaderEditor.FunctionNode;447;-2897.324,1129.267;Inherit;False;EnvLighting;-1;;7021;1c7b249abd298d448b85814cac86e2ab;0;5;17;FLOAT3;0,0,0;False;35;FLOAT2;0,0;False;36;FLOAT2;0,0;False;37;FLOAT3;0,0,0;False;21;OBJECT;;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.FunctionNode;448;-2929.022,1331.934;Inherit;False;EnvReflect;-1;;7022;5ceebe00e6af51a45836843f20fb949d;2,45,0,44,0;7;16;FLOAT3;0,0,0;False;18;FLOAT2;0,0;False;15;FLOAT3;0,0,0;False;17;FLOAT;0;False;38;FLOAT;0;False;20;SAMPLERCUBE;0;False;25;FLOAT4;0,0,0,0;False;2;FLOAT3;14;FLOAT3;43
+Node;AmplifyShaderEditor.FunctionNode;358;-2413.804,1709.818;Inherit;False;UnityStandardPBRLighting_MainLight;-1;;7023;b41580952992c61469d041596eb13ef8;0;6;12;FLOAT3;0,0,0;False;13;FLOAT3;0,0,0;False;14;OBJECT;;False;15;OBJECT;;False;16;OBJECT;;False;17;FLOAT;0;False;2;FLOAT3;0;FLOAT3;18
+Node;AmplifyShaderEditor.FunctionNode;439;-1930.076,1331.545;Inherit;False;UnityStandardPBRLighting_Indirect;-1;;7034;4e256c588e7d3354f8b27082ef19ebfc;0;7;29;FLOAT3;0,0,0;False;23;FLOAT3;0,0,0;False;42;FLOAT3;0,0,0;False;20;FLOAT;0;False;31;OBJECT;;False;43;OBJECT;;False;44;FLOAT;0;False;2;FLOAT3;28;FLOAT3;0
+Node;AmplifyShaderEditor.FunctionNode;449;-1838.711,1996.474;Inherit;False;UnityStandardPBRLighting_AddLight;-1;;7036;82d97dd707e557a49be2444a391eab2e;0;9;9;FLOAT3;0,0,0;False;10;FLOAT2;0,0;False;11;FLOAT3;0,0,0;False;13;FLOAT3;0,0,0;False;14;FLOAT4;1,1,1,1;False;15;OBJECT;;False;16;OBJECT;;False;17;FLOAT;0;False;21;FLOAT3;0,0,0;False;3;FLOAT3;0;FLOAT3;8;FLOAT3;23
 Node;AmplifyShaderEditor.StickyNoteNode;450;-6036.01,3024.484;Inherit;False;968.9526;777.198;keyword;关键字;1,1,1,1;//主灯光全局关键字$multi_compile _ LIGHTMAP_SHADOW_MIXING$$multi_compile _ SHADOWS_SHADOWMASK$$multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN$$multi_compile_fragment _ _LIGHT_COOKIES $$multi_compile _ _LIGHT_LAYERS$$multi_compile_fragment _ _SHADOWS_SOFT _SHADOWS_SOFT_LOW _SHADOWS_SOFT_MEDIUM _SHADOWS_SOFT_HIGH$$//------------------------------------------------------------------------------------------------------$烘焙GI全局关键字$REQUIRE_BAKEDGI$$multi_compile _ EVALUATE_SH_MIXED EVALUATE_SH_VERTEX$$multi_compile _ DIRLIGHTMAP_COMBINED$$multi_compile _ LIGHTMAP_ON$$multi_compile _ DYNAMICLIGHTMAP_ON$$//------------------------------------------------------------------------------------------------------$烘焙反射全局关键字$multi_compile_fragment _ _REFLECTION_PROBE_BLENDING$$multi_compile_fragment _ _REFLECTION_PROBE_BOX_PROJECTION$$//------------------------------------------------------------------------------------------------------$附加灯光全局关键字$multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS$$multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS$$$;0;0
-Node;AmplifyShaderEditor.LWGUIStaticSwitch;76;-9949.406,-1159.941;Inherit;False;Property;HoudiniVATGroup0;禁用/软体动画/Houdini顶点动画贴图(VAT);25;0;Create;False;0;0;0;True;0;False;0;0;0;True;;EnumGroup;2; Off, _;HoudiniVATSoft, _HOUDINI_VAT_SOFT;Create;True;True;Vertex;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.LWGUIStaticSwitch;51;-6561.165,-1122.849;Inherit;False;Property;ShaderModelGroup1;通用PBR/场景-植物/着色器模型;3;0;Create;False;0;0;0;True;0;False;0;0;0;True;;EnumGroup;2;PBR_senior disable_WindEnabled_Enum, _SHADER_PBR;PLANT_senior disable_DetailGroup0 disable_ClearCoatGroup disable_ParallaxGroup0, _SHADER_PLANT;Create;True;True;All;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;421;-387.1088,925.6396;Inherit;False;202;alpha;1;0;OBJECT;;False;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;255;-361.3407,1021.49;Inherit;False;224;normalWS;1;0;OBJECT;;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.TemplateMultiPassSwitchNode;27;254.4167,1442.291;Inherit;False;0;0;8;8;0;FLOAT4;0,0,0,0;False;1;FLOAT4;0,0,0,0;False;2;FLOAT4;0,0,0,0;False;3;FLOAT4;0,0,0,0;False;4;FLOAT4;0,0,0,0;False;5;FLOAT4;0,0,0,0;False;6;FLOAT4;0,0,0,0;False;7;FLOAT4;0,0,0,0;False;1;FLOAT4;0
@@ -4224,6 +3439,24 @@ Node;AmplifyShaderEditor.RegisterLocalVarNode;259;282.2891,2342.099;Inherit;Fals
 Node;AmplifyShaderEditor.RegisterLocalVarNode;365;264.8487,1944.627;Inherit;False;positionWS;-1;True;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;252;286.9651,2496.29;Inherit;False;positionSS;-1;True;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.WireNode;479;-557.7101,1226.379;Inherit;False;1;0;FLOAT4;0,0,0,0;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.RegisterLocalVarNode;389;-5626.829,509.7504;Inherit;False;isCustomReflect;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.LogicalSGUIStaticSwitch;490;-4923.525,1920.421;Inherit;False;Property;ShaderModelGroup5;通用PBR/场景-植物/着色器模型;46;0;Create;False;0;0;0;True;0;False;0;1;1;True;;LogicalSubKeywordEnum;2;PBR_senior disable_WindEnabled_Enum, _SHADER_PBR;PLANT_senior disable_DetailGroup0 disable_ClearCoatGroup disable_ParallaxGroup0, _SHADER_PLANT;Reference;480;True;True;Fragment;9;1;COLOR;0,0,0,0;False;0;COLOR;0,0,0,0;False;2;COLOR;0,0,0,0;False;3;COLOR;0,0,0,0;False;4;COLOR;0,0,0,0;False;5;COLOR;0,0,0,0;False;6;COLOR;0,0,0,0;False;7;COLOR;0,0,0,0;False;8;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.RangedFloatNode;263;-1877.284,2431.655;Inherit;False;Constant;_Float3;Float 3;69;0;Create;True;0;0;0;False;0;False;1;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.LogicalSGUIStaticSwitch;494;-1602.81,2552.787;Inherit;False;Property;Occlusion_On1;环境光遮蔽;11;0;Create;False;0;0;0;True;0;False;0;1;1;True;ShaderModelGroup1, _OCCLUSION;LogicalSubToggle;2; Off disable_ClearCoatSource_Enum, _;On, _CLEARCOAT;Reference;493;True;False;Fragment;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.LogicalSGUIStaticSwitch;495;-1588.81,2658.787;Inherit;False;Property;Occlusion_On2;环境光遮蔽;11;0;Create;False;0;0;0;True;0;False;0;1;1;True;ShaderModelGroup1, _OCCLUSION;LogicalSubToggle;2; Off disable_ClearCoatSource_Enum, _;On, _CLEARCOAT;Reference;493;True;False;Fragment;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.LogicalSGUIStaticSwitch;496;-1589.81,2763.787;Inherit;False;Property;Occlusion_On3;环境光遮蔽;11;0;Create;False;0;0;0;True;0;False;0;1;1;True;ShaderModelGroup1, _OCCLUSION;LogicalSubToggle;2; Off disable_ClearCoatSource_Enum, _;On, _CLEARCOAT;Reference;493;True;False;Fragment;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.LogicalSGUIStaticSwitch;497;-9971.16,-1153.22;Inherit;False;Property;HoudiniVATGroup0;禁用/软体动画/Houdini顶点动画贴图(VAT);25;0;Create;False;0;0;0;True;0;False;0;0;0;True;;LogicalSubKeywordEnum;2; Off, _;HoudiniVATSoft, _HOUDINI_VAT_SOFT;Create;True;True;All;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.LogicalSGUIStaticSwitch;480;-10760.81,-857.1783;Inherit;False;Property;Sample_Enum;关闭/Noise平铺/六边形平铺/抖动采样/消除纹理平铺重复;1;0;Create;False;0;0;0;False;0;False;0;0;0;True;;LogicalSubKeywordEnum;5;RenderStateGroup2_SurfaceOptions;_SAMPLE_COMMON;_SAMPLE_NOISETILING;_SAMPLE_HEXAGONTILING;_SAMPLE_ONESAMPLEONTILING;Create;True;True;All;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.LogicalSGUIStaticSwitch;485;-5757.77,-643.2765;Inherit;False;Property;ShaderModelGroup2;通用PBR/场景-植物/着色器模型;1;0;Create;False;0;0;0;True;0;False;0;1;1;True;;LogicalSubKeywordEnum;2;PBR_senior disable_WindEnabled_Enum, _SHADER_PBR;PLANT_senior disable_DetailGroup0 disable_ClearCoatGroup disable_ParallaxGroup0, _SHADER_PLANT;Reference;480;True;True;Fragment;9;1;COLOR;0,0,0,0;False;0;COLOR;0,0,0,0;False;2;COLOR;0,0,0,0;False;3;COLOR;0,0,0,0;False;4;COLOR;0,0,0,0;False;5;COLOR;0,0,0,0;False;6;COLOR;0,0,0,0;False;7;COLOR;0,0,0,0;False;8;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.LogicalSGUIStaticSwitch;489;-5457.505,1177.591;Inherit;False;Property;ShaderModelGroup4;通用PBR/场景-植物/着色器模型;1;0;Create;False;0;0;0;True;0;False;0;1;1;True;;LogicalSubKeywordEnum;2;PBR_senior disable_WindEnabled_Enum, _SHADER_PBR;PLANT_senior disable_DetailGroup0 disable_ClearCoatGroup disable_ParallaxGroup0, _SHADER_PLANT;Reference;480;True;True;Fragment;9;1;COLOR;0,0,0,0;False;0;COLOR;0,0,0,0;False;2;COLOR;0,0,0,0;False;3;COLOR;0,0,0,0;False;4;COLOR;0,0,0,0;False;5;COLOR;0,0,0,0;False;6;COLOR;0,0,0,0;False;7;COLOR;0,0,0,0;False;8;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.LogicalSGUIStaticSwitch;491;-5748.769,2542.527;Inherit;False;Property;WindEnabled_Enum;关闭/最快/快速/更好/最好/棕榈树/风力;24;0;Create;False;0;0;0;True;0;False;0;1;1;True;;LogicalSubKeywordEnum;7;ShaderModelGroup1_SHADER_PLANT;_WINDQUALITY_NONE;_WINDQUALITY_FASTEST;_WINDQUALITY_FAST;_WINDQUALITY_BETTER;_WINDQUALITY_BEST;_WINDQUALITY_PALM;Create;True;True;Fragment;9;1;COLOR;0,0,0,0;False;0;COLOR;0,0,0,0;False;2;COLOR;0,0,0,0;False;3;COLOR;0,0,0,0;False;4;COLOR;0,0,0,0;False;5;COLOR;0,0,0,0;False;6;COLOR;0,0,0,0;False;7;COLOR;0,0,0,0;False;8;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.LogicalSGUIStaticSwitch;488;-5966.498,477.0173;Inherit;False;Property;_CustomReflect;自定义反射;15;0;Create;False;0;0;0;True;0;False;0;0;0;True;ShaderModelGroup1, _customreflect;LogicalSubToggle;2;PBR_senior disable_WindEnabled_Enum, _SHADER_PBR;PLANT_senior disable_DetailGroup0 disable_ClearCoatGroup disable_ParallaxGroup0, _SHADER_PLANT;Create;True;False;Fragment;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.LogicalSGUIStaticSwitch;493;-1601.617,2436.633;Inherit;False;Property;Occlusion_On;环境光遮蔽;11;0;Create;False;0;0;0;True;0;False;0;1;1;True;ShaderModelGroup1, _OCCLUSION;LogicalSubToggle;2; Off disable_ClearCoatSource_Enum, _;On, _CLEARCOAT;Create;True;False;Fragment;9;1;FLOAT3;0,0,0;False;0;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT3;0,0,0;False;4;FLOAT3;0,0,0;False;5;FLOAT3;0,0,0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT3;0,0,0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.LogicalSGUIStaticSwitch;484;-6443.755,-1119.533;Inherit;False;Property;ShaderModelGroup1;通用PBR/场景-植物/着色器模型;3;0;Create;False;0;0;0;True;0;False;0;0;0;True;;EnumGroup;2;PBR_senior disable_WindEnabled_Enum, _SHADER_PBR;PLANT_senior disable_DetailGroup0 disable_ClearCoatGroup disable_ParallaxGroup0, _SHADER_PLANT;Create;True;True;Fragment;9;1;FLOAT2;0,0;False;0;FLOAT2;0,0;False;2;FLOAT2;0,0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT2;0,0;False;6;FLOAT2;0,0;False;7;FLOAT2;0,0;False;8;FLOAT2;0,0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.LogicalSGUIStaticSwitch;481;-8820.903,-1058.659;Inherit;False;Property;ParallaxSource_Enum;高度贴图/额外贴图/高度数据源;42;0;Create;False;0;0;0;True;0;False;0;1;1;True;;LogicalSubKeywordEnum;3;ParallaxGroup0_PARALLAXMAP;_USE_PARALLAXMAP_PARALLAX;_USE_EXTRAMIXMAP_PARALLAX;Create;True;True;All;9;1;FLOAT;0;False;0;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT;0;False;7;FLOAT;0;False;8;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.LogicalSGUIStaticSwitch;492;-3566.689,-1158.855;Inherit;False;Property;ClearCoatGroup0;禁用/启用/清漆;59;0;Create;False;0;0;0;True;0;False;0;0;0;True;;EnumGroup;2; Off disable_ClearCoatSource_Enum, _;On, _CLEARCOAT;Create;True;True;Fragment;9;1;FLOAT2;0,0;False;0;FLOAT2;0,0;False;2;FLOAT2;0,0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT2;0,0;False;6;FLOAT2;0,0;False;7;FLOAT2;0,0;False;8;FLOAT2;0,0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.LogicalSGUIStaticSwitch;498;-1149.58,-1136.001;Inherit;False;Property;HueVariationGroup0;禁用/开启/色调变体;63;0;Create;False;0;0;0;True;0;False;0;0;0;True;;EnumGroup;2;Off, _;On, EFFECT_HUE_VARIATION;Create;True;True;Fragment;9;1;FLOAT2;0,0;False;0;FLOAT2;0,0;False;2;FLOAT2;0,0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT2;0,0;False;6;FLOAT2;0,0;False;7;FLOAT2;0,0;False;8;FLOAT2;0,0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.LogicalSGUIStaticSwitch;499;-1903.759,-1227.035;Inherit;False;Property;DetailGroup0;禁用/一层细节/两层细节/四层细节/细节;46;0;Create;False;0;0;0;True;0;False;0;0;0;True;;EnumGroup;4;Off, _;Detail1Multi, _DETAIL;Detail2Multi, _DETAIL_2MULTI;Detail4Multi, _DETAIL_4MULTI;Create;True;True;Fragment;9;1;FLOAT2;0,0;False;0;FLOAT2;0,0;False;2;FLOAT2;0,0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT2;0,0;False;6;FLOAT2;0,0;False;7;FLOAT2;0,0;False;8;FLOAT2;0,0;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;452;674,-634;Float;False;False;-1;2;LWGUI.LWGUI;0;1;New Amplify Shader;fa16f3565aea0f0448ed74c1d4f5407b;True;ExtraPrePass;0;0;ExtraPrePass;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Unlit;True;5;True;12;all;0;False;True;1;1;False;;0;False;;0;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;0;False;False;0;;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;454;674,-634;Float;False;False;-1;2;LWGUI.LWGUI;0;1;New Amplify Shader;fa16f3565aea0f0448ed74c1d4f5407b;True;ShadowCaster;0;2;ShadowCaster;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Unlit;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;False;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;False;True;1;LightMode=ShadowCaster;False;False;0;;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;455;674,-634;Float;False;False;-1;2;LWGUI.LWGUI;0;1;New Amplify Shader;fa16f3565aea0f0448ed74c1d4f5407b;True;DepthOnly;0;3;DepthOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Unlit;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;True;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;False;False;True;1;LightMode=DepthOnly;False;False;0;;0;0;Standard;0;False;0
@@ -4265,19 +3498,19 @@ WireConnection;333;0;326;0
 WireConnection;334;0;327;0
 WireConnection;335;0;328;0
 WireConnection;424;0;423;0
-WireConnection;332;0;424;0
-WireConnection;332;2;334;0
-WireConnection;332;3;335;0
-WireConnection;332;4;333;0
-WireConnection;308;0;332;0
+WireConnection;482;0;424;0
+WireConnection;482;2;334;0
+WireConnection;482;3;335;0
+WireConnection;482;4;333;0
 WireConnection;311;0;478;271
+WireConnection;308;0;482;0
 WireConnection;353;2;348;0
 WireConnection;353;3;304;0
 WireConnection;353;8;312;0
 WireConnection;353;10;96;0
-WireConnection;92;1;304;0
-WireConnection;92;0;353;0
-WireConnection;313;0;92;0
+WireConnection;483;1;304;0
+WireConnection;483;0;353;0
+WireConnection;313;0;483;0
 WireConnection;55;0;168;0
 WireConnection;55;1;315;0
 WireConnection;55;7;168;1
@@ -4290,11 +3523,11 @@ WireConnection;162;5;167;0
 WireConnection;163;2;315;0
 WireConnection;163;3;168;0
 WireConnection;163;4;167;0
-WireConnection;164;0;55;0
-WireConnection;164;2;162;0
-WireConnection;164;3;163;0
-WireConnection;164;4;161;0
-WireConnection;205;0;164;0
+WireConnection;486;0;55;0
+WireConnection;486;2;162;0
+WireConnection;486;3;163;0
+WireConnection;486;4;161;0
+WireConnection;205;0;486;0
 WireConnection;206;0;205;0
 WireConnection;206;1;205;1
 WireConnection;209;0;59;0
@@ -4307,6 +3540,13 @@ WireConnection;318;0;208;0
 WireConnection;318;1;319;0
 WireConnection;320;0;318;0
 WireConnection;317;0;478;22
+WireConnection;249;0;320;0
+WireConnection;248;7;322;0
+WireConnection;248;3;320;0
+WireConnection;248;4;249;0
+WireConnection;487;1;320;0
+WireConnection;487;0;248;0
+WireConnection;224;0;487;0
 WireConnection;140;3;314;0
 WireConnection;140;4;56;0
 WireConnection;140;5;231;0
@@ -4319,19 +3559,7 @@ WireConnection;156;4;155;0
 WireConnection;52;0;56;0
 WireConnection;52;1;314;0
 WireConnection;52;7;56;1
-WireConnection;249;0;320;0
-WireConnection;127;0;52;0
-WireConnection;127;2;153;0
-WireConnection;127;3;156;0
-WireConnection;127;4;140;0
-WireConnection;248;7;322;0
-WireConnection;248;3;320;0
-WireConnection;248;4;249;0
-WireConnection;198;0;127;0
-WireConnection;58;1;320;0
-WireConnection;58;0;248;0
-WireConnection;202;0;198;3
-WireConnection;224;0;58;0
+WireConnection;198;0;485;0
 WireConnection;291;0;115;0
 WireConnection;293;0;116;0
 WireConnection;354;0;113;1
@@ -4354,14 +3582,6 @@ WireConnection;250;11;260;0
 WireConnection;250;13;262;0
 WireConnection;250;15;261;0
 WireConnection;258;0;65;0
-WireConnection;265;1;263;0
-WireConnection;265;0;250;24
-WireConnection;266;1;263;0
-WireConnection;266;0;250;29
-WireConnection;264;1;263;0
-WireConnection;264;0;250;36
-WireConnection;63;1;263;0
-WireConnection;63;0;250;33
 WireConnection;400;0;402;140
 WireConnection;290;0;113;4
 WireConnection;290;1;291;0
@@ -4383,10 +3603,10 @@ WireConnection;443;11;358;18
 WireConnection;443;9;449;0
 WireConnection;443;10;449;8
 WireConnection;443;5;449;23
-WireConnection;443;18;63;0
-WireConnection;443;19;264;0
-WireConnection;443;21;265;0
-WireConnection;443;20;266;0
+WireConnection;443;18;493;0
+WireConnection;443;19;494;0
+WireConnection;443;21;495;0
+WireConnection;443;20;496;0
 WireConnection;443;6;419;0
 WireConnection;402;79;278;0
 WireConnection;402;80;53;0
@@ -4403,7 +3623,6 @@ WireConnection;402;132;298;0
 WireConnection;402;133;299;0
 WireConnection;200;0;198;0
 WireConnection;200;1;198;1
-WireConnection;200;2;198;2
 WireConnection;215;0;213;0
 WireConnection;215;1;205;3
 WireConnection;215;2;216;0
@@ -4426,11 +3645,7 @@ WireConnection;179;4;183;0
 WireConnection;66;0;175;0
 WireConnection;66;1;180;0
 WireConnection;66;7;175;1
-WireConnection;181;0;66;0
-WireConnection;181;2;178;0
-WireConnection;181;3;179;0
-WireConnection;181;4;177;0
-WireConnection;268;0;181;0
+WireConnection;268;0;489;0
 WireConnection;273;9;70;0
 WireConnection;273;12;268;3
 WireConnection;273;13;274;0
@@ -4452,16 +3667,9 @@ WireConnection;188;5;186;0
 WireConnection;190;2;184;0
 WireConnection;190;3;193;0
 WireConnection;190;4;186;0
-WireConnection;189;0;74;0
-WireConnection;189;2;188;0
-WireConnection;189;3;190;0
-WireConnection;189;4;187;0
 WireConnection;74;0;193;0
 WireConnection;74;1;184;0
 WireConnection;74;7;193;1
-WireConnection;61;1;387;0
-WireConnection;61;0;388;0
-WireConnection;389;0;61;0
 WireConnection;217;0;426;0
 WireConnection;426;0;215;0
 WireConnection;201;0;200;0
@@ -4519,6 +3727,29 @@ WireConnection;259;0;478;156
 WireConnection;365;0;478;312
 WireConnection;252;0;478;7
 WireConnection;479;0;443;0
+WireConnection;389;0;488;0
+WireConnection;490;0;74;0
+WireConnection;490;2;188;0
+WireConnection;490;3;190;0
+WireConnection;490;4;187;0
+WireConnection;494;1;263;0
+WireConnection;494;0;250;36
+WireConnection;495;1;263;0
+WireConnection;495;0;250;24
+WireConnection;496;1;263;0
+WireConnection;496;0;250;29
+WireConnection;485;0;52;0
+WireConnection;485;2;153;0
+WireConnection;485;3;156;0
+WireConnection;485;4;140;0
+WireConnection;489;0;66;0
+WireConnection;489;2;178;0
+WireConnection;489;3;179;0
+WireConnection;489;4;177;0
+WireConnection;488;1;387;0
+WireConnection;488;0;388;0
+WireConnection;493;1;263;0
+WireConnection;493;0;250;33
 WireConnection;453;0;479;0
 WireConnection;453;1;421;0
 WireConnection;453;4;255;0
@@ -4528,4 +3759,4 @@ WireConnection;453;9;478;547
 WireConnection;453;12;478;347
 WireConnection;453;13;27;0
 ASEEND*/
-//CHKSM=52ADAD772FFF92B5374B50166575503606F0D074
+//CHKSM=E4CACC388817AD8B3AB31E5B0A60BC7B5DFE5B48

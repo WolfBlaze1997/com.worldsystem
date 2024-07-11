@@ -1,4 +1,4 @@
-{"active":true,"icon":{"instanceID":-17926},"name":"LogicalSGUI",
+{"active":true,"icon":{"instanceID":-155028},"name":"LogicalSGUI",
 "creator":"烂菜叶料理侠",
 "version":"0.2.2",
 "describe":"带有逻辑运算的ShaderGUI,帮助实现复杂的着色器UI,几乎所有属性都可以设置条件显示(满足条件时显示,不满足时隐藏)",

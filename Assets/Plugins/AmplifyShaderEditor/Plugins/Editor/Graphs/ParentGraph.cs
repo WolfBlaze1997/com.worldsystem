@@ -119,7 +119,7 @@ namespace AmplifyShaderEditor
 		private UsageListStaticSwitchNodes m_staticSwitchNodes = new UsageListStaticSwitchNodes();
 
 		[SerializeField]
-		private UsageListLWGUIStaticSwitchNodes m_lwguiStaticSwitchNodes = new UsageListLWGUIStaticSwitchNodes();
+		private UsageListLogicalSGUIStaticSwitchNodes m_LogicalSGUIStaticSwitchNodes = new UsageListLogicalSGUIStaticSwitchNodes();
 
 		[SerializeField]
 		private int m_masterNodeId = Constants.INVALID_NODE_ID;
@@ -234,9 +234,9 @@ namespace AmplifyShaderEditor
 			m_staticSwitchNodes = new UsageListStaticSwitchNodes();
 			m_staticSwitchNodes.ContainerGraph = this;
 			m_staticSwitchNodes.ReorderOnChange = true;
-			m_lwguiStaticSwitchNodes = new UsageListLWGUIStaticSwitchNodes();
-			m_lwguiStaticSwitchNodes.ContainerGraph = this;
-			m_lwguiStaticSwitchNodes.ReorderOnChange = true;
+			m_LogicalSGUIStaticSwitchNodes = new UsageListLogicalSGUIStaticSwitchNodes();
+			m_LogicalSGUIStaticSwitchNodes.ContainerGraph = this;
+			m_LogicalSGUIStaticSwitchNodes.ReorderOnChange = true;
 			m_screenColorNodes = new UsageListScreenColorNodes();
 			m_screenColorNodes.ContainerGraph = this;
 			m_screenColorNodes.ReorderOnChange = true;
@@ -320,7 +320,7 @@ namespace AmplifyShaderEditor
 			m_rawPropertyNodes.UpdateNodeArr();
 			m_customExpressionsOnFunctionMode.UpdateNodeArr();
 			m_staticSwitchNodes.UpdateNodeArr();
-			m_lwguiStaticSwitchNodes.UpdateNodeArr();
+			m_LogicalSGUIStaticSwitchNodes.UpdateNodeArr();
 			m_functionInputNodes.UpdateNodeArr();
 			m_functionNodes.UpdateNodeArr();
 			m_functionOutputNodes.UpdateNodeArr();
@@ -428,7 +428,7 @@ namespace AmplifyShaderEditor
 			m_rawPropertyNodes.Clear();
 			m_customExpressionsOnFunctionMode.Clear();
 			m_staticSwitchNodes.Clear();
-			m_lwguiStaticSwitchNodes.Clear();
+			m_LogicalSGUIStaticSwitchNodes.Clear();
 			m_functionInputNodes.Clear();
 			m_functionNodes.Clear();
 			m_functionOutputNodes.Clear();
@@ -644,7 +644,7 @@ namespace AmplifyShaderEditor
 			m_customExpressionsOnFunctionMode.Clear();
 
 			m_staticSwitchNodes.Clear();
-			m_lwguiStaticSwitchNodes.Clear();
+			m_LogicalSGUIStaticSwitchNodes.Clear();
 
 			m_functionInputNodes.Clear();
 			//m_functionInputNodes = null;
@@ -749,8 +749,8 @@ namespace AmplifyShaderEditor
 			m_staticSwitchNodes.Destroy();
 			m_staticSwitchNodes = null;
 
-			m_lwguiStaticSwitchNodes.Destroy();
-			m_lwguiStaticSwitchNodes = null;
+			m_LogicalSGUIStaticSwitchNodes.Destroy();
+			m_LogicalSGUIStaticSwitchNodes = null;
 
 			m_functionInputNodes.Destroy();
 			m_functionInputNodes = null;
@@ -3996,7 +3996,7 @@ namespace AmplifyShaderEditor
 		public UsageListPropertyNodes RawPropertyNodes { get { return m_rawPropertyNodes; } }
 		public UsageListCustomExpressionsOnFunctionMode CustomExpressionOnFunctionMode { get { return m_customExpressionsOnFunctionMode; } }
 		public UsageListStaticSwitchNodes StaticSwitchNodes { get { return m_staticSwitchNodes; } }
-		public UsageListLWGUIStaticSwitchNodes LWGUIStaticSwitchNodes { get { return m_lwguiStaticSwitchNodes; } }
+		public UsageListLogicalSGUIStaticSwitchNodes LogicalSGUIStaticSwitchNodes { get { return m_LogicalSGUIStaticSwitchNodes; } }
 		public UsageListScreenColorNodes ScreenColorNodes { get { return m_screenColorNodes; } }
 		public UsageListRegisterLocalVarNodes LocalVarNodes { get { return m_localVarNodes; } }
 		public UsageListGlobalArrayNodes GlobalArrayNodes { get { return m_globalArrayNodes; } }
