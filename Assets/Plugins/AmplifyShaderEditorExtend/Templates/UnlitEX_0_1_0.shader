@@ -98,6 +98,13 @@ Shader /*ase_name*/ "Hidden/Universal/UnlitEX_0_1_0" /*end*/
 				false,disable:ExcludePass:Meta
 				false:HidePort:Forward:Baked Albedo
 				false:HidePort:Forward:Baked Emission
+			Option:RoughnessMetallic Pass:false,true:false
+				true:IncludePass:SmoothnessMetallic
+				true:ShowPort:Forward:Roughness
+				true:ShowPort:Forward:Metallic
+				false,disable:ExcludePass:SmoothnessMetallic
+				false:HidePort:Forward:Roughness
+				false:HidePort:Forward:Metallic
 			Option:Extra Pre Pass:false,true:false
 				true:IncludePass:ExtraPrePass
 				false,disable:ExcludePass:ExtraPrePass
@@ -455,10 +462,9 @@ Shader /*ase_name*/ "Hidden/Universal/UnlitEX_0_1_0" /*end*/
 
 				float3 Color = /*ase_frag_out:Color;Float3;0;-1;_Color*/float3(0.5, 0.5, 0.5)/*end*/;
 				float Alpha = /*ase_frag_out:Alpha;Float;1;-1;_Alpha*/1/*end*/;
-				float AlphaClipThreshold = /*ase_frag_out:Alpha Clip Threshold;Float;2;-1;_AlphaClip*/0.5/*end*/;
 
 				#ifdef _ALPHATEST_ON
-					clip( Alpha - AlphaClipThreshold );
+					clip( Alpha - 0.5 );
 				#endif
 
 				#ifdef LOD_FADE_CROSSFADE
@@ -746,14 +752,15 @@ Shader /*ase_name*/ "Hidden/Universal/UnlitEX_0_1_0" /*end*/
 
 				float3 Color = /*ase_frag_out:Color;Float3;0;-1;_Color*/float3(0.5, 0.5, 0.5)/*end*/;
 				float Alpha = /*ase_frag_out:Alpha;Float;1;-1;_Alpha*/1/*end*/;
-				float AlphaClipThreshold = /*ase_frag_out:Alpha Clip Threshold;Float;2;-1;_AlphaClip*/0.5/*end*/;
 				float AlphaClipThresholdShadow = /*ase_frag_out:Alpha Clip Threshold Shadow;Float;3;-1;_AlphaClipShadow*/0.5/*end*/;
 				float3 WorldNormal = /*ase_frag_out:World Normal;Float3;4;-1;_WorldNormal*/float3(0, 0, 1)/*end*/;
 				float3 BakedAlbedo = /*ase_frag_out:Baked Albedo;Float3;5;-1;_Albedo*/0/*end*/;
 				float3 BakedEmission = /*ase_frag_out:Baked Emission;Float3;6;-1;_Emission*/0/*end*/;
-
+				float Roughness = /*ase_frag_out:Roughness;Float;14;-1;_Roughness*/0/*end*/;
+                float Metallic = /*ase_frag_out:Metallic;Float;15;-1;_Metallic*/0/*end*/;
+				
 				#ifdef _ALPHATEST_ON
-					clip( Alpha - AlphaClipThreshold );
+					clip( Alpha - 0.5 );
 				#endif
 
 				#if defined(_DBUFFER)
@@ -962,15 +969,14 @@ Shader /*ase_name*/ "Hidden/Universal/UnlitEX_0_1_0" /*end*/
 
 				/*ase_frag_code:IN=VertexOutput*/
 
-				float Alpha = /*ase_frag_out:Alpha;Float;0;-1;_Alpha*/1/*end*/;
-				float AlphaClipThreshold = /*ase_frag_out:Alpha Clip Threshold;Float;1;-1;_AlphaClip*/0.5/*end*/;
-				float AlphaClipThresholdShadow = /*ase_frag_out:Alpha Clip Threshold Shadow;Float;2;-1;_AlphaClipShadow*/0.5/*end*/;
+				float Alpha = /*ase_frag_out:Alpha;Float;1;-1;_Alpha*/1/*end*/;
+				float AlphaClipThresholdShadow = /*ase_frag_out:Alpha Clip Threshold Shadow;Float;3;-1;_AlphaClipShadow*/0.5/*end*/;
 
 				#ifdef _ALPHATEST_ON
 					#ifdef _ALPHATEST_SHADOW_ON
 						clip(Alpha - AlphaClipThresholdShadow);
 					#else
-						clip(Alpha - AlphaClipThreshold);
+						clip(Alpha - 0.5);
 					#endif
 				#endif
 
@@ -1155,11 +1161,10 @@ Shader /*ase_name*/ "Hidden/Universal/UnlitEX_0_1_0" /*end*/
 
 				/*ase_frag_code:IN=VertexOutput*/
 
-				float Alpha = /*ase_frag_out:Alpha;Float;0;-1;_Alpha*/1/*end*/;
-				float AlphaClipThreshold = /*ase_frag_out:Alpha Clip Threshold;Float;1;-1;_AlphaClip*/0.5/*end*/;
+				float Alpha = /*ase_frag_out:Alpha;Float;1;-1;_Alpha*/1/*end*/;
 
 				#ifdef _ALPHATEST_ON
-					clip(Alpha - AlphaClipThreshold);
+					clip(Alpha - 0.5);
 				#endif
 
 				#ifdef LOD_FADE_CROSSFADE
@@ -1249,13 +1254,12 @@ Shader /*ase_name*/ "Hidden/Universal/UnlitEX_0_1_0" /*end*/
 
 				/*ase_frag_code:IN=VertexOutput*/
 
-				float3 BakedAlbedo = /*ase_frag_out:Baked Albedo;Float3;0;-1;_Albedo*/0/*end*/;
-				float3 BakedEmission = /*ase_frag_out:Baked Emission;Float3;1;-1;_Emission*/0/*end*/;
-				float Alpha = /*ase_frag_out:Alpha;Float;2;-1;_Alpha*/1/*end*/;
-				float AlphaClipThreshold = /*ase_frag_out:Alpha Clip Threshold;Float;3;-1;_AlphaClip*/0.5/*end*/;
+				float Alpha = /*ase_frag_out:Alpha;Float;1;-1;_Alpha*/1/*end*/;
+				float3 BakedAlbedo = /*ase_frag_out:Baked Albedo;Float3;5;-1;_Albedo*/0/*end*/;
+				float3 BakedEmission = /*ase_frag_out:Baked Emission;Float3;6;-1;_Emission*/0/*end*/;
 
 				#ifdef _ALPHATEST_ON
-					clip(Alpha - AlphaClipThreshold);
+					clip(Alpha - 0.5);
 				#endif
 
 				MetaInput metaInput = (MetaInput)0;
@@ -1450,13 +1454,12 @@ Shader /*ase_name*/ "Hidden/Universal/UnlitEX_0_1_0" /*end*/
 
 				/*ase_frag_code:IN=VertexOutput*/
 
-				surfaceDescription.Alpha = /*ase_frag_out:Alpha;Float;0;-1;_Alpha*/1/*end*/;
-				surfaceDescription.AlphaClipThreshold = /*ase_frag_out:Alpha Clip Threshold;Float;1;-1;_AlphaClip*/0.5/*end*/;
+				surfaceDescription.Alpha = /*ase_frag_out:Alpha;Float;1;-1;_Alpha*/1/*end*/;
 
 				#if _ALPHATEST_ON
 					float alphaClipThreshold = 0.01f;
 					#if ALPHA_CLIP_THRESHOLD
-						alphaClipThreshold = surfaceDescription.AlphaClipThreshold;
+						alphaClipThreshold = 0.5;
 					#endif
 					clip(surfaceDescription.Alpha - alphaClipThreshold);
 				#endif
@@ -1653,13 +1656,12 @@ Shader /*ase_name*/ "Hidden/Universal/UnlitEX_0_1_0" /*end*/
 
 				/*ase_frag_code:IN=VertexOutput*/
 
-				surfaceDescription.Alpha = /*ase_frag_out:Alpha;Float;0;-1;_Alpha*/1/*end*/;
-				surfaceDescription.AlphaClipThreshold = /*ase_frag_out:Alpha Clip Threshold;Float;1;-1;_AlphaClip*/0.5/*end*/;
+				surfaceDescription.Alpha = /*ase_frag_out:Alpha;Float;1;-1;_Alpha*/1/*end*/;
 
 				#if _ALPHATEST_ON
 					float alphaClipThreshold = 0.01f;
 					#if ALPHA_CLIP_THRESHOLD
-						alphaClipThreshold = surfaceDescription.AlphaClipThreshold;
+						alphaClipThreshold = 0.5;
 					#endif
 					clip(surfaceDescription.Alpha - alphaClipThreshold);
 				#endif
@@ -1866,12 +1868,11 @@ Shader /*ase_name*/ "Hidden/Universal/UnlitEX_0_1_0" /*end*/
 
 				/*ase_frag_code:IN=VertexOutput*/
 
-				surfaceDescription.Alpha = /*ase_frag_out:Alpha;Float;0;-1;_Alpha*/1/*end*/;
-				surfaceDescription.AlphaClipThreshold = /*ase_frag_out:Alpha Clip Threshold;Float;1;-1;_AlphaClip*/0.5/*end*/;
-                float3 WorldNormal = /*ase_frag_out:World Normal;Float3;2;-1;_WorldNormal*/float3(0, 0, 1)/*end*/;
+				surfaceDescription.Alpha = /*ase_frag_out:Alpha;Float;1;-1;_Alpha*/1/*end*/;
+                float3 WorldNormal = /*ase_frag_out:World Normal;Float3;4;-1;_WorldNormal*/float3(0, 0, 1)/*end*/;
 
 				#if _ALPHATEST_ON
-					clip(surfaceDescription.Alpha - surfaceDescription.AlphaClipThreshold);
+					clip(surfaceDescription.Alpha - 0.5);
 				#endif
 
 				#ifdef LOD_FADE_CROSSFADE
@@ -1897,6 +1898,227 @@ Shader /*ase_name*/ "Hidden/Universal/UnlitEX_0_1_0" /*end*/
 
 			ENDHLSL
 		}
+
+
+		/*ase_pass*/
+		Pass
+		{
+			/*ase_hide_pass*/
+			Name "SmoothnessMetallic"
+			
+			Tags 
+			{ }
+
+			ZTest LEqual
+			ZWrite On
+
+			HLSLPROGRAM
+
+			CBUFFER_START(UnityPerMaterial)
+			#ifdef ASE_TESSELLATION
+				float _TessPhongStrength;
+				float _TessValue;
+				float _TessMin;
+				float _TessMax;
+				float _TessEdgeLength;
+				float _TessMaxDisp;
+			#endif
+			CBUFFER_END
+			
+			#pragma vertex vert
+			#pragma fragment frag
+
+        	#pragma multi_compile_fragment _ _GBUFFER_NORMALS_OCT
+
+			/*ase_srp_cond_begin:<140007*/
+            #pragma multi_compile_fragment _ _WRITE_RENDERING_LAYERS
+			/*ase_srp_cond_end*/
+
+			#define ATTRIBUTES_NEED_NORMAL
+			#define ATTRIBUTES_NEED_TANGENT
+			#define VARYINGS_NEED_NORMAL_WS
+
+			#define SHADERPASS SHADERPASS_DEPTHNORMALSONLY
+
+			/*ase_srp_cond_begin:>=140007*/
+			#if ASE_SRP_VERSION >=140007
+			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/RenderingLayers.hlsl"
+			#endif
+			/*ase_srp_cond_end*/
+
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/TextureStack.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
+
+            #if defined(LOD_FADE_CROSSFADE)
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LODCrossFade.hlsl"
+            #endif
+
+			/*ase_pragma*/
+
+			struct VertexInput
+			{
+				float4 positionOS : POSITION;
+				float3 normalOS : NORMAL;
+				/*ase_vdata:p=p;n=n*/
+				UNITY_VERTEX_INPUT_INSTANCE_ID
+			};
+
+			struct VertexOutput
+			{
+				float4 positionCS : SV_POSITION;
+
+				/*ase_interp(1,):sp=sp;*/
+				UNITY_VERTEX_INPUT_INSTANCE_ID
+				UNITY_VERTEX_OUTPUT_STEREO
+			};
+
+			/*ase_globals*/
+
+			/*ase_funcs*/
+
+			struct SurfaceDescription
+			{
+				float Alpha;
+				float AlphaClipThreshold;
+			};
+
+			VertexOutput VertexFunction(VertexInput v /*ase_vert_input*/ )
+			{
+				VertexOutput o;
+				ZERO_INITIALIZE(VertexOutput, o);
+
+				UNITY_SETUP_INSTANCE_ID(v);
+				UNITY_TRANSFER_INSTANCE_ID(v, o);
+				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+				
+				/*ase_vert_code:v=VertexInput;o=VertexOutput*/
+
+				o.positionCS = /*ase_vert_out:vertex-DeviceCoord;Float4;3;-1;_DeviceCoord*/TransformObjectToHClip(v.positionOS.xyz)/*end*/;
+				return o;
+			}
+
+			#if defined(ASE_TESSELLATION)
+			struct VertexControl
+			{
+				float4 vertex : INTERNALTESSPOS;
+				float3 normalOS : NORMAL;
+				/*ase_vcontrol*/
+				UNITY_VERTEX_INPUT_INSTANCE_ID
+			};
+
+			struct TessellationFactors
+			{
+				float edge[3] : SV_TessFactor;
+				float inside : SV_InsideTessFactor;
+			};
+
+			VertexControl vert ( VertexInput v )
+			{
+				VertexControl o;
+				UNITY_SETUP_INSTANCE_ID(v);
+				UNITY_TRANSFER_INSTANCE_ID(v, o);
+				o.vertex = v.positionOS;
+				o.normalOS = v.normalOS;
+				/*ase_control_code:v=VertexInput;o=VertexControl*/
+				return o;
+			}
+
+			TessellationFactors TessellationFunction (InputPatch<VertexControl,3> v)
+			{
+				TessellationFactors o;
+				float4 tf = 1;
+				float tessValue = /*ase_inline_begin*/_TessValue/*ase_inline_end*/; float tessMin = /*ase_inline_begin*/_TessMin/*ase_inline_end*/; float tessMax = /*ase_inline_begin*/_TessMax/*ase_inline_end*/;
+				float edgeLength = /*ase_inline_begin*/_TessEdgeLength/*ase_inline_end*/; float tessMaxDisp = /*ase_inline_begin*/_TessMaxDisp/*ase_inline_end*/;
+				#if defined(ASE_FIXED_TESSELLATION)
+				tf = FixedTess( tessValue );
+				#elif defined(ASE_DISTANCE_TESSELLATION)
+				tf = DistanceBasedTess(v[0].vertex, v[1].vertex, v[2].vertex, tessValue, tessMin, tessMax, GetObjectToWorldMatrix(), _WorldSpaceCameraPos );
+				#elif defined(ASE_LENGTH_TESSELLATION)
+				tf = EdgeLengthBasedTess(v[0].vertex, v[1].vertex, v[2].vertex, edgeLength, GetObjectToWorldMatrix(), _WorldSpaceCameraPos, _ScreenParams );
+				#elif defined(ASE_LENGTH_CULL_TESSELLATION)
+				tf = EdgeLengthBasedTessCull(v[0].vertex, v[1].vertex, v[2].vertex, edgeLength, tessMaxDisp, GetObjectToWorldMatrix(), _WorldSpaceCameraPos, _ScreenParams, unity_CameraWorldClipPlanes );
+				#endif
+				o.edge[0] = tf.x; o.edge[1] = tf.y; o.edge[2] = tf.z; o.inside = tf.w;
+				return o;
+			}
+
+			[domain("tri")]
+			[partitioning("fractional_odd")]
+			[outputtopology("triangle_cw")]
+			[patchconstantfunc("TessellationFunction")]
+			[outputcontrolpoints(3)]
+			VertexControl HullFunction(InputPatch<VertexControl, 3> patch, uint id : SV_OutputControlPointID)
+			{
+				return patch[id];
+			}
+
+			[domain("tri")]
+			VertexOutput DomainFunction(TessellationFactors factors, OutputPatch<VertexControl, 3> patch, float3 bary : SV_DomainLocation)
+			{
+				VertexInput o = (VertexInput) 0;
+				o.positionOS = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
+				o.normalOS = patch[0].normalOS * bary.x + patch[1].normalOS * bary.y + patch[2].normalOS * bary.z;
+				/*ase_domain_code:patch=VertexControl;o=VertexInput;bary=SV_DomainLocation*/
+				#if defined(ASE_PHONG_TESSELLATION)
+				float3 pp[3];
+				for (int i = 0; i < 3; ++i)
+					pp[i] = o.positionOS.xyz - patch[i].normalOS * (dot(o.positionOS.xyz, patch[i].normalOS) - dot(patch[i].vertex.xyz, patch[i].normalOS));
+				float phongStrength = /*ase_inline_begin*/_TessPhongStrength/*ase_inline_end*/;
+				o.positionOS.xyz = phongStrength * (pp[0]*bary.x + pp[1]*bary.y + pp[2]*bary.z) + (1.0f-phongStrength) * o.positionOS.xyz;
+				#endif
+				UNITY_TRANSFER_INSTANCE_ID(patch[0], o);
+				return VertexFunction(o);
+			}
+			#else
+			VertexOutput vert ( VertexInput v )
+			{
+				return VertexFunction( v );
+			}
+			#endif
+
+			void frag( VertexOutput IN
+				, out half2 outSmoothnessMetallic : SV_Target0
+			#ifdef _WRITE_RENDERING_LAYERS
+				, out float4 outRenderingLayers : SV_Target1
+			#endif
+				/*ase_frag_input*/ )
+			{
+
+
+				/*ase_frag_code:IN=VertexOutput*/
+
+				float Alpha = /*ase_frag_out:Alpha;Float;1;-1;_Alpha*/1/*end*/;
+                float Roughness = /*ase_frag_out:Roughness;Float;14;-1;_Roughness*/0/*end*/;
+                float Metallic = /*ase_frag_out:Metallic;Float;15;-1;_Metallic*/0/*end*/;
+
+				
+				#if _ALPHATEST_ON
+					clip(Alpha - 0.5);
+				#endif
+
+				#ifdef LOD_FADE_CROSSFADE
+					LODFadeCrossFade( IN.positionCS );
+				#endif
+
+				
+				outSmoothnessMetallic = half2(1 - Roughness, Metallic);
+
+
+				#ifdef _WRITE_RENDERING_LAYERS
+					uint renderingLayers = GetMeshRenderingLayer();
+					outRenderingLayers = float4(EncodeMeshRenderingLayer(renderingLayers), 0, 0, 0);
+				#endif
+			}
+
+			ENDHLSL
+		}
+
+		
 
 		/*ase_pass_end*/
 	}

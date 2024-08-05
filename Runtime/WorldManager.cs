@@ -209,6 +209,46 @@ namespace WorldSystem.Runtime
             OnValidate();
         }
         
+        [PropertyOrder(-100)]
+        [ShowIf("moistAccumulatedWaterModuleToggle")]
+        [VerticalGroup("昼夜与天气/Split02/06")]
+        [Button(ButtonSizes.Large, Name = "湿润积水模块"), GUIColor(0.3f, 1f, 0.3f)]
+        private void MoistAccumulatedWaterModuleToggle_Off()
+        {
+            moistAccumulatedWaterModuleToggle = false;
+            OnValidate();
+        }
+        [PropertyOrder(-100)]
+        [HideIf("moistAccumulatedWaterModuleToggle")]
+        [VerticalGroup("昼夜与天气/Split02/06")]
+        [Button(ButtonSizes.Large, Name = "湿润积水模块"), GUIColor(0.5f, 0.2f, 0.2f)]
+        private void MoistAccumulatedWaterModuleToggle_On()
+        {
+            UniverseBackgroundModuleToggle_On();
+            moistAccumulatedWaterModuleToggle = true;
+            OnValidate();
+        }
+        
+        [PropertyOrder(-100)]
+        [ShowIf("approxRealtimeGIModuleToggle")]
+        [VerticalGroup("昼夜与天气/Split02/07")]
+        [Button(ButtonSizes.Large, Name = "近似实时全局光照模块"), GUIColor(0.3f, 1f, 0.3f)]
+        private void ApproxRealtimeGIModuleToggle_Off()
+        {
+            approxRealtimeGIModuleToggle = false;
+            OnValidate();
+        }
+        [PropertyOrder(-100)]
+        [HideIf("approxRealtimeGIModuleToggle")]
+        [VerticalGroup("昼夜与天气/Split02/07")]
+        [Button(ButtonSizes.Large, Name = "近似实时全局光照模块"), GUIColor(0.5f, 0.2f, 0.2f)]
+        private void ApproxRealtimeGIModuleToggle_On()
+        {
+            UniverseBackgroundModuleToggle_On();
+            approxRealtimeGIModuleToggle = true;
+            OnValidate();
+        }
+        
         
         [PropertyOrder(-100)]
         [ShowIf("fpsDisplayModuleToggle")]
@@ -373,9 +413,18 @@ namespace WorldSystem.Runtime
         
         
         [HideInInspector] public bool weatherSystemModuleToggle;
-        [FormerlySerializedAs("weatherSystemModule")] [FoldoutGroup("昼夜与天气/天气列表模块")][InlineEditor(InlineEditorObjectFieldModes.Hidden)][ShowIf("weatherSystemModuleToggle")]
+        [FoldoutGroup("昼夜与天气/天气列表模块")][InlineEditor(InlineEditorObjectFieldModes.Hidden)][ShowIf("weatherSystemModuleToggle")]
         public WeatherListModule weatherListModule;
 
+        [HideInInspector] public bool moistAccumulatedWaterModuleToggle;
+        [FoldoutGroup("昼夜与天气/湿润积水模块")][InlineEditor(InlineEditorObjectFieldModes.Hidden)][ShowIf("moistAccumulatedWaterModuleToggle")]
+        [ShowIf("@(moistAccumulatedWaterModuleToggle && !weatherSystemModuleToggle) || (moistAccumulatedWaterModuleToggle && (windZoneModule.hideFlags == HideFlags.None))")]
+        public MoistAccumulatedWaterModule moistAccumulatedWaterModule;
+        
+        [HideInInspector] public bool approxRealtimeGIModuleToggle;
+        [FoldoutGroup("昼夜与天气/近似实时光照模块")][InlineEditor(InlineEditorObjectFieldModes.Hidden)][ShowIf("approxRealtimeGIModuleToggle")]
+        [ShowIf("@(approxRealtimeGIModuleToggle && !weatherSystemModuleToggle) || (approxRealtimeGIModuleToggle && (windZoneModule.hideFlags == HideFlags.None))")]
+        public ApproxRealtimeGIModule approxRealtimeGIModule;
         
         [HideInInspector] public bool fpsDisplayModuleToggle;
         [FoldoutGroup("实用工具/FPS显示")][InlineEditor(InlineEditorObjectFieldModes.Hidden)][ShowIf("fpsDisplayModuleToggle")]
@@ -434,6 +483,8 @@ namespace WorldSystem.Runtime
             weatherEffectModuleToggle = false;
             windZoneModuleToggle = false;
             fpsDisplayModuleToggle = false;
+            moistAccumulatedWaterModuleToggle = false;
+            approxRealtimeGIModuleToggle = false;
 #if UNITY_EDITOR
             packageManagerToggle = false;
 #endif
@@ -447,6 +498,8 @@ namespace WorldSystem.Runtime
             windZoneModule = null;
             weatherEffectModule = null;
             fpsDisplayModule = null;
+            moistAccumulatedWaterModule = null;
+            approxRealtimeGIModule = null;
 #if UNITY_EDITOR
             packageManager = null;
 #endif
@@ -467,7 +520,8 @@ namespace WorldSystem.Runtime
             weatherEffectModule = AppendOrDestroyModule<WeatherEffectModule>(weatherEffectModuleToggle);
             windZoneModule = AppendOrDestroyModule<WindZoneModule>(windZoneModuleToggle, true, new Vector3(0,-2,0));
             weatherListModule = AppendOrDestroyModule<WeatherListModule>(weatherSystemModuleToggle);
-            
+            moistAccumulatedWaterModule = AppendOrDestroyModule<MoistAccumulatedWaterModule>(moistAccumulatedWaterModuleToggle);
+            approxRealtimeGIModule = AppendOrDestroyModule<ApproxRealtimeGIModule>(approxRealtimeGIModuleToggle);
             fpsDisplayModule = AppendOrDestroyModule<FPSDisplayModule>(fpsDisplayModuleToggle);
             
 #if UNITY_EDITOR
@@ -524,6 +578,10 @@ namespace WorldSystem.Runtime
                 Instance.weatherEffectModule.lightningEffect._Update = _Update;
             if (Instance.weatherListModule is not null)
                 Instance.weatherListModule._Update = _Update;
+            if (Instance.moistAccumulatedWaterModule is not null)
+                Instance.moistAccumulatedWaterModule._Update = _Update;
+            if (Instance.approxRealtimeGIModule is not null)
+                Instance.approxRealtimeGIModule._Update = _Update;
         }
 
         

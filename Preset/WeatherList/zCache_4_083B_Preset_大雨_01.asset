@@ -29,7 +29,7 @@ MonoBehaviour:
     _Render_ResolutionOptions: 1
     _Render_TemporalAAFactor: 0
     _Render_TargetFps: -1
-    _Render_UseAsyncRender: 1
+    _Render_UseAsyncRender: 0
     _Render_AsyncUpdateRate: 20
     _Render_AsyncFOV: 80
   StarProperty:
@@ -277,17 +277,8 @@ MonoBehaviour:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.71643275
-        value: 0.24450573
-        inSlope: 3.0402102
-        outSlope: 3.0402102
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.062085528
-        outWeight: 0.038822323
-      - serializedVersion: 3
         time: 1
-        value: 0.4940459
+        value: 0.01
         inSlope: 0.113242544
         outSlope: 0.113242544
         tangentMode: 0
@@ -405,7 +396,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    useLight: 1
+    useLight: 0
     lightingColorMask:
       serializedVersion: 2
       key0: {r: 0, g: 0, b: 0, a: 1}
@@ -579,9 +570,9 @@ MonoBehaviour:
       equatorColor: {r: 0.01372549, g: 0.01372549, b: 0.019607844, a: 1}
       groundColor: {r: 0.0062499996, g: 0.0062499996, b: 0.01, a: 1}
     currentAtmosphereColor:
-      skyColor: {r: 0.15855166, g: 0.1807751, b: 0.27766666, a: 1}
-      equatorColor: {r: 0.5497834, g: 0.5960729, b: 0.6333333, a: 1}
-      groundColor: {r: 0.07317647, g: 0.066509806, b: 0.067320265, a: 1}
+      skyColor: {r: 0.061118312, g: 0.08218968, b: 0.16829608, a: 1}
+      equatorColor: {r: 0.020313846, g: 0.020313846, b: 0.03602, a: 1}
+      groundColor: {r: 0.007508382, g: 0.007508382, b: 0.010702353, a: 1}
     currentCloudiness: 0
     currentPrecipitation: 0
     useAtmosphereBlend: 1
@@ -596,11 +587,15 @@ MonoBehaviour:
     _Modeling_Amount_UseFarOverlay: 0
     _Modeling_Amount_OverlayStartDistance: 20000
     _Modeling_Amount_OverlayCloudAmount: 0.8
+    _Modeling_Position_RadiusPreset: 6
+    _Modeling_Position_PlanetRadius: 78
+    _Modeling_Position_CloudHeight: 800
+    _Modeling_Position_CloudThickness: 3800
     _Modeling_ShapeBase_Octaves: 3
     _Modeling_ShapeBase_Gain: 0.8
     _Modeling_ShapeBase_Freq: 2
     _Modeling_ShapeBase_Scale: 5
-    _MotionBase_DynamicVector: {x: 0.078572385, y: 0.12609668}
+    _MotionBase_DynamicVector: {x: 0, y: 0.30896854}
     _MotionBase_Direction: 0
     _MotionBase_Speed: 0.1
     _MotionBase_UseDirectionRandom: 1
@@ -614,17 +609,13 @@ MonoBehaviour:
     _Render_BlueNoiseArray: {fileID: 0}
     _Render_BlueNoise: 1
     _Render_MipmapDistance: {x: 4000, y: 8000}
-    _Modeling_Position_RadiusPreset: 6
-    _Modeling_Position_PlanetRadius: 78
-    _Modeling_Position_CloudHeight: 800
-    _Modeling_Position_CloudThickness: 3800
     _Modeling_ShapeDetail_NoiseTexture3D: {fileID: 11700000, guid: 86cf7d681999abd45a0011b72550dc47,
       type: 2}
     _Modeling_ShapeDetail_Type: 1
     _Modeling_ShapeDetail_Quality: 1
     _Modeling_ShapeDetail_Scale: {x: 4, y: 6, z: 4}
     _MotionBase_UseDynamicCloud: 1
-    _MotionDetail_DynamicVector: {x: 0.64616305, y: 0.18338683, z: 0.31732067}
+    _MotionDetail_DynamicVector: {x: 0, y: 0, z: 3.0896854}
     _MotionDetail_Direction: {x: 0, y: 0}
     _MotionDetail_Speed: 0.5
     _MotionDetail_UseRandomDirection: 1
@@ -714,13 +705,13 @@ MonoBehaviour:
     maxSpeed: 2
     vfxModifier: 1
     windZone: {fileID: 0}
-  useOcclusion: 1
+  useOcclusion: 0
   effectRadius: 40
   rainEffectProperty:
     rainRadius: 40
     rainPrecipitation: 1
-    rainSize: 0.01
-    rainDropLength: 10
+    rainSize: 0.012
+    rainDropLength: 20
   snowEffectProperty:
     snowRadius: 40
     snowPrecipitation: 1

@@ -69,7 +69,9 @@ namespace WorldSystem.Runtime
 #endif
                     //一旦设置Active, 说明必定退出插值了, 将CelestialBody.useLerp 设置为false
                     CelestialBody.useLerp = false;
-                    _singleExecute = true;
+                    ApproxRealtimeGIModule.useLerp = false;
+                    celestialBodySingleExecute = true;
+                    approxRealtimeGISingleExecute = true;
                 }
             }
         }
@@ -119,6 +121,8 @@ namespace WorldSystem.Runtime
                 UniformStaticProperty_VolumeCloudOptimizeModule(item);
                 UniformStaticProperty_WindZoneModule(item);
                 UniformStaticProperty_WeatherEffectModule(item);
+                UniformStaticProperty_MoistAccumulatedWaterModule(item);
+                UniformStaticProperty_ApproxRealtimeGIModule(item);
             }
 
             SetupProperty();
@@ -138,6 +142,8 @@ namespace WorldSystem.Runtime
             SetupProperty_VolumeCloudOptimizeModule();
             SetupProperty_WindZoneModule();
             SetupProperty_WeatherEffectModule();
+            SetupProperty_MoistAccumulatedWaterModule();
+            SetupProperty_ApproxRealtimeGIModule();
         }
 
         // 动态属性
@@ -149,6 +155,8 @@ namespace WorldSystem.Runtime
             SetupLerpProperty_VolumeCloudOptimizeModule(weatherDefine, lerpCoeff);
             SetupLerpProperty_WindZoneModule(weatherDefine, lerpCoeff);
             SetupLerpProperty_WeatherEffectModule(weatherDefine, lerpCoeff);
+            SetupLerpProperty_MoistAccumulatedWaterModule(weatherDefine, lerpCoeff);
+            SetupLerpProperty_ApproxRealtimeGIModule(weatherDefine, lerpCoeff);
         }
 
         #endregion
@@ -418,7 +426,7 @@ namespace WorldSystem.Runtime
             
         }
 
-        private static bool _singleExecute = true;
+        private static bool celestialBodySingleExecute = true;
         //动态属性
         public void SetupLerpProperty_CelestialBodyManager(WeatherDefine weatherDefine, float lerpCoeff)
         {
@@ -430,7 +438,7 @@ namespace WorldSystem.Runtime
             for (int i = 0; i < celestialBodyList.Count; i++)
             {
                 //只执行一次
-                if (_singleExecute)
+                if (celestialBodySingleExecute)
                 {
                     //输入下一个天气的动态属性
                     WorldManager.Instance.celestialBodyManager.property.celestialBodyList[i].property.objectColor =
@@ -464,12 +472,12 @@ namespace WorldSystem.Runtime
                     math.lerp(celestialBodyList[i].intensityCurve.Evaluate(curveTime),
                         weatherDefine.celestialBodyList[i].intensityCurve.Evaluate(curveTime), lerpCoeff);
             }
-            _singleExecute = false;
+            celestialBodySingleExecute = false;
         }
         
     }
 
-
+    
     /// <summary>
     /// 大气模块
     /// </summary>
@@ -543,7 +551,8 @@ namespace WorldSystem.Runtime
             WorldManager.Instance.atmosphereModule.property.useAtmosphereBlend = atmosphereProperty.useAtmosphereBlend;
             WorldManager.Instance.atmosphereModule.property.start = atmosphereProperty.start;
             WorldManager.Instance.atmosphereModule.property.end = atmosphereProperty.end;
-
+            // WorldManager.Instance.atmosphereModule.property.realtimeGIStrengthCurve = atmosphereProperty.realtimeGIStrengthCurve;
+            
             WorldManager.Instance.atmosphereModule.OnValidate();
             
 #if UNITY_EDITOR
@@ -598,6 +607,7 @@ namespace WorldSystem.Runtime
             }
             
             item.atmosphereProperty.useAtmosphereBlend = atmosphereProperty.useAtmosphereBlend;
+            // item.atmosphereProperty.realtimeGIStrengthCurve = atmosphereProperty.realtimeGIStrengthCurve;
         }
 
         public void SetupLerpProperty_AtmosphereModule(WeatherDefine weatherDefine, float lerpCoeff)
@@ -1135,5 +1145,247 @@ namespace WorldSystem.Runtime
     }
     
     
+    /// <summary>
+    /// 湿润积水模块
+    /// </summary>
+    public partial class WeatherDefine
+    {
+        #region 湿润积水模块
+        
+        [FoldoutGroup("昼夜与天气/湿润积水模块")][HideLabel]
+        [EnableIf("isActive")] [ShowIf("@WorldManager.Instance?.moistAccumulatedWaterModuleToggle")]
+        public MoistAccumulatedWaterModule.Property moistAccumulatedWaterProperty = new();
+        
+        #endregion
+        
+        public void SetupProperty_MoistAccumulatedWaterModule()
+        {
+            if (WorldManager.Instance?.moistAccumulatedWaterModule is null)
+                return;
+            
+            WorldManager.Instance.moistAccumulatedWaterModule.property.globalMoist =
+                moistAccumulatedWaterProperty.globalMoist;
+            WorldManager.Instance.moistAccumulatedWaterModule.property.raindropsTiling =
+                moistAccumulatedWaterProperty.raindropsTiling;
+            WorldManager.Instance.moistAccumulatedWaterModule.property.raindropsSplashSpeed =
+                moistAccumulatedWaterProperty.raindropsSplashSpeed;
+            WorldManager.Instance.moistAccumulatedWaterModule.property.raindropsSize =
+                moistAccumulatedWaterProperty.raindropsSize;
+            WorldManager.Instance.moistAccumulatedWaterModule.property.accumulatedWaterMaskTiling =
+                moistAccumulatedWaterProperty.accumulatedWaterMaskTiling;
+            WorldManager.Instance.moistAccumulatedWaterModule.property.accumulatedWaterContrast =
+                moistAccumulatedWaterProperty.accumulatedWaterContrast;
+            WorldManager.Instance.moistAccumulatedWaterModule.property.accumulatedWaterSteepHillExtinction =
+                moistAccumulatedWaterProperty.accumulatedWaterSteepHillExtinction;
+            WorldManager.Instance.moistAccumulatedWaterModule.property.accumulatedWaterParallaxStrength =
+                moistAccumulatedWaterProperty.accumulatedWaterParallaxStrength;
+            WorldManager.Instance.moistAccumulatedWaterModule.property.xColumnsYRowsZSpeedWStrartFrame =
+                moistAccumulatedWaterProperty.xColumnsYRowsZSpeedWStrartFrame;
+            WorldManager.Instance.moistAccumulatedWaterModule.property.ripplesMainTiling =
+                moistAccumulatedWaterProperty.ripplesMainTiling;
+            WorldManager.Instance.moistAccumulatedWaterModule.property.ripplesMainStrength =
+                moistAccumulatedWaterProperty.ripplesMainStrength;
+            WorldManager.Instance.moistAccumulatedWaterModule.property.waterWaveRotate =
+                moistAccumulatedWaterProperty.waterWaveRotate;
+            WorldManager.Instance.moistAccumulatedWaterModule.property.waterWaveMainTiling =
+                moistAccumulatedWaterProperty.waterWaveMainTiling;
+            WorldManager.Instance.moistAccumulatedWaterModule.property.waterWaveMainSpeed =
+                moistAccumulatedWaterProperty.waterWaveMainSpeed;
+            WorldManager.Instance.moistAccumulatedWaterModule.property.waterWaveMainStrength =
+                moistAccumulatedWaterProperty.waterWaveMainStrength;
+            WorldManager.Instance.moistAccumulatedWaterModule.property.waterWaveDetailTiling =
+                moistAccumulatedWaterProperty.waterWaveDetailTiling;
+            WorldManager.Instance.moistAccumulatedWaterModule.property.waterWaveDetailSpeed =
+                moistAccumulatedWaterProperty.waterWaveDetailSpeed;
+            WorldManager.Instance.moistAccumulatedWaterModule.property.waterWaveDetailStrength =
+                moistAccumulatedWaterProperty.waterWaveDetailStrength;
+            WorldManager.Instance.moistAccumulatedWaterModule.property.flowTiling =
+                moistAccumulatedWaterProperty.flowTiling;
+            
+            WorldManager.Instance.moistAccumulatedWaterModule.OnValidate();
+#if UNITY_EDITOR
+            //仅显示信息
+            WeatherDefine[] weatherDefineAll = Resources.FindObjectsOfTypeAll<WeatherDefine>();
+            foreach (var VARIABLE in weatherDefineAll)
+            {
+                VARIABLE.moistAccumulatedWaterProperty.accumulatedWaterMask = WorldManager.Instance.moistAccumulatedWaterModule.property.accumulatedWaterMask;
+                VARIABLE.moistAccumulatedWaterProperty.waterWaveNormal = WorldManager.Instance.moistAccumulatedWaterModule.property.waterWaveNormal;
+                VARIABLE.moistAccumulatedWaterProperty.raindropsGradientMap = WorldManager.Instance.moistAccumulatedWaterModule.property.raindropsGradientMap;
+                VARIABLE.moistAccumulatedWaterProperty.flowMap = WorldManager.Instance.moistAccumulatedWaterModule.property.flowMap;
+                VARIABLE.moistAccumulatedWaterProperty.ripplesNormalAtlas = WorldManager.Instance.moistAccumulatedWaterModule.property.ripplesNormalAtlas;
+            }
+#endif
+        }
+
+        private void UniformStaticProperty_MoistAccumulatedWaterModule(WeatherDefine item)
+        {
+            if (WorldManager.Instance?.atmosphereModule is null)
+                return;
+            
+            item.moistAccumulatedWaterProperty.raindropsGradientMap = moistAccumulatedWaterProperty.raindropsGradientMap;
+            item.moistAccumulatedWaterProperty.raindropsTiling = moistAccumulatedWaterProperty.raindropsTiling;
+            item.moistAccumulatedWaterProperty.raindropsSplashSpeed = moistAccumulatedWaterProperty.raindropsSplashSpeed;
+            item.moistAccumulatedWaterProperty.raindropsSize = moistAccumulatedWaterProperty.raindropsSize;
+            
+            item.moistAccumulatedWaterProperty.accumulatedWaterMask = moistAccumulatedWaterProperty.accumulatedWaterMask;
+            item.moistAccumulatedWaterProperty.accumulatedWaterMaskTiling = moistAccumulatedWaterProperty.accumulatedWaterMaskTiling;
+            item.moistAccumulatedWaterProperty.accumulatedWaterContrast = moistAccumulatedWaterProperty.accumulatedWaterContrast;
+            item.moistAccumulatedWaterProperty.accumulatedWaterSteepHillExtinction = moistAccumulatedWaterProperty.accumulatedWaterSteepHillExtinction;
+            item.moistAccumulatedWaterProperty.accumulatedWaterParallaxStrength = moistAccumulatedWaterProperty.accumulatedWaterParallaxStrength;
+            
+            item.moistAccumulatedWaterProperty.ripplesNormalAtlas = moistAccumulatedWaterProperty.ripplesNormalAtlas;
+            item.moistAccumulatedWaterProperty.xColumnsYRowsZSpeedWStrartFrame = moistAccumulatedWaterProperty.xColumnsYRowsZSpeedWStrartFrame;
+            item.moistAccumulatedWaterProperty.ripplesMainTiling = moistAccumulatedWaterProperty.ripplesMainTiling;
+            item.moistAccumulatedWaterProperty.ripplesMainStrength = moistAccumulatedWaterProperty.ripplesMainStrength;
+            
+            item.moistAccumulatedWaterProperty.waterWaveNormal = moistAccumulatedWaterProperty.waterWaveNormal;
+            item.moistAccumulatedWaterProperty.waterWaveRotate = moistAccumulatedWaterProperty.waterWaveRotate;
+            item.moistAccumulatedWaterProperty.waterWaveMainTiling = moistAccumulatedWaterProperty.waterWaveMainTiling;
+            item.moistAccumulatedWaterProperty.waterWaveMainSpeed = moistAccumulatedWaterProperty.waterWaveMainSpeed;
+            item.moistAccumulatedWaterProperty.waterWaveMainStrength = moistAccumulatedWaterProperty.waterWaveMainStrength;
+            item.moistAccumulatedWaterProperty.waterWaveDetailTiling = moistAccumulatedWaterProperty.waterWaveDetailTiling;
+            item.moistAccumulatedWaterProperty.waterWaveDetailSpeed = moistAccumulatedWaterProperty.waterWaveDetailSpeed;
+            item.moistAccumulatedWaterProperty.waterWaveDetailStrength = moistAccumulatedWaterProperty.waterWaveDetailStrength;
+            
+            item.moistAccumulatedWaterProperty.flowMap = moistAccumulatedWaterProperty.flowMap;
+            item.moistAccumulatedWaterProperty.flowTiling = moistAccumulatedWaterProperty.flowTiling;
+            
+        }
+
+        public void SetupLerpProperty_MoistAccumulatedWaterModule(WeatherDefine weatherDefine, float lerpCoeff)
+        {
+            if (WorldManager.Instance?.moistAccumulatedWaterModule is null)
+                return;
+            
+            WorldManager.Instance.moistAccumulatedWaterModule.property.globalMoist =
+                math.lerp(moistAccumulatedWaterProperty.globalMoist, weatherDefine.moistAccumulatedWaterProperty.globalMoist, lerpCoeff);
+
+        }
+    }
+    
+    
+    
+    /// <summary>
+    /// 近似实时光照模块
+    /// </summary>
+    public partial class WeatherDefine
+    {
+        #region 字段
+        
+        [FoldoutGroup("昼夜与天气/近似实时光照模块")][HideLabel]
+        [EnableIf("isActive")] [ShowIf("@WorldManager.Instance?.starModuleToggle")]
+        public ApproxRealtimeGIModule.Property approxRealtimeGIProperty = new();
+        
+        #endregion
+
+        private static bool approxRealtimeGISingleExecute = true;
+
+        public void SetupProperty_ApproxRealtimeGIModule()
+        {
+            if (WorldManager.Instance?.approxRealtimeGIModule is null) 
+                return;
+            WorldManager.Instance.approxRealtimeGIModule.property.realtimeGIStrengthCurve =
+                approxRealtimeGIProperty.realtimeGIStrengthCurve;
+            WorldManager.Instance.approxRealtimeGIModule.property.LightingMapContrast =
+                approxRealtimeGIProperty.LightingMapContrast;
+            WorldManager.Instance.approxRealtimeGIModule.property.ReflectionSkyColor =
+                approxRealtimeGIProperty.ReflectionSkyColor;
+            WorldManager.Instance.approxRealtimeGIModule.property.ReflectionStrengthCurve =
+                approxRealtimeGIProperty.ReflectionStrengthCurve;
+            WorldManager.Instance.approxRealtimeGIModule.property.MixCoeffCurve =
+                approxRealtimeGIProperty.MixCoeffCurve;
+            WorldManager.Instance.approxRealtimeGIModule.property._ApproxRealtimeGI_AOMin =
+                approxRealtimeGIProperty._ApproxRealtimeGI_AOMin;
+            WorldManager.Instance.approxRealtimeGIModule.property._ApproxRealtimeGI_AOMax =
+                approxRealtimeGIProperty._ApproxRealtimeGI_AOMax;
+            WorldManager.Instance.approxRealtimeGIModule.property._SSR_Samples =
+                approxRealtimeGIProperty._SSR_Samples;
+            WorldManager.Instance.approxRealtimeGIModule.property._SSR_RayLength =
+                approxRealtimeGIProperty._SSR_RayLength;
+            WorldManager.Instance.approxRealtimeGIModule.property._SSR_Thickness =
+                approxRealtimeGIProperty._SSR_Thickness;
+            WorldManager.Instance.approxRealtimeGIModule.property._SSR_Jitter =
+                approxRealtimeGIProperty._SSR_Jitter;
+            
+            WorldManager.Instance.approxRealtimeGIModule.property.ReflectionCubeTexture =
+                approxRealtimeGIProperty.ReflectionCubeTexture;
+            WorldManager.Instance.approxRealtimeGIModule.property._SSR_BlendCurve =
+                approxRealtimeGIProperty._SSR_BlendCurve;
+            
+            WorldManager.Instance.approxRealtimeGIModule.OnValidate();
+#if UNITY_EDITOR
+            //仅显示信息
+            WeatherDefine[] weatherDefineAll = Resources.FindObjectsOfTypeAll<WeatherDefine>();
+            foreach (var VARIABLE in weatherDefineAll)
+            {
+                VARIABLE.approxRealtimeGIProperty._SSR_NoiseTex = 
+                    WorldManager.Instance.approxRealtimeGIModule.property._SSR_NoiseTex;
+                VARIABLE.approxRealtimeGIProperty.MainReflectionProbe = 
+                    WorldManager.Instance.approxRealtimeGIModule.property.MainReflectionProbe;
+                VARIABLE.approxRealtimeGIProperty.BlendCubeTexture = 
+                    WorldManager.Instance.approxRealtimeGIModule.property.BlendCubeTexture;
+            }
+#endif
+
+        }
+        
+        
+        private void UniformStaticProperty_ApproxRealtimeGIModule(WeatherDefine item)
+        {
+            if (WorldManager.Instance?.approxRealtimeGIModule is null)
+                return;
+            
+            item.approxRealtimeGIProperty.realtimeGIStrengthCurve = approxRealtimeGIProperty.realtimeGIStrengthCurve;
+            item.approxRealtimeGIProperty.LightingMapContrast = approxRealtimeGIProperty.LightingMapContrast;
+            item.approxRealtimeGIProperty.ReflectionStrengthCurve = approxRealtimeGIProperty.ReflectionStrengthCurve;
+            item.approxRealtimeGIProperty.MixCoeffCurve = approxRealtimeGIProperty.MixCoeffCurve;
+            item.approxRealtimeGIProperty._ApproxRealtimeGI_AOMin = approxRealtimeGIProperty._ApproxRealtimeGI_AOMin;
+            item.approxRealtimeGIProperty._ApproxRealtimeGI_AOMax = approxRealtimeGIProperty._ApproxRealtimeGI_AOMax;
+            item.approxRealtimeGIProperty._SSR_Samples = approxRealtimeGIProperty._SSR_Samples;
+            item.approxRealtimeGIProperty._SSR_RayLength = approxRealtimeGIProperty._SSR_RayLength;
+            item.approxRealtimeGIProperty._SSR_Thickness = approxRealtimeGIProperty._SSR_Thickness;
+            item.approxRealtimeGIProperty._SSR_NoiseTex = approxRealtimeGIProperty._SSR_NoiseTex;
+            item.approxRealtimeGIProperty._SSR_Jitter = approxRealtimeGIProperty._SSR_Jitter;
+            
+            item.approxRealtimeGIProperty.MainReflectionProbe = approxRealtimeGIProperty.MainReflectionProbe;
+            item.approxRealtimeGIProperty.BlendCubeTexture = approxRealtimeGIProperty.BlendCubeTexture;
+            
+            item.approxRealtimeGIProperty._SSR_BlendCurve = approxRealtimeGIProperty._SSR_BlendCurve;
+
+        }
+
+
+        //动态属性
+        public void SetupLerpProperty_ApproxRealtimeGIModule(WeatherDefine weatherDefine, float lerpCoeff)
+        {
+            if (WorldManager.Instance?.approxRealtimeGIModule is null || WorldManager.Instance.timeModule is null) 
+                return;
+            //当进入插值时将 ApproxRealtimeGIModule.useLerp 设置为true,停止属性的根据昼夜的变换, 而是由外部多个天气进行插值
+            ApproxRealtimeGIModule.useLerp = true;
+            
+            //只执行一次
+            if (approxRealtimeGISingleExecute)
+            {
+                //输入下一个天气的动态属性
+                WorldManager.Instance.approxRealtimeGIModule.property.ReflectionSkyColor =
+                    weatherDefine.approxRealtimeGIProperty.ReflectionSkyColor;
+                WorldManager.Instance.approxRealtimeGIModule.property.ReflectionCubeTexture =
+                    weatherDefine.approxRealtimeGIProperty.ReflectionCubeTexture;
+            }
+            
+            WorldManager.Instance.approxRealtimeGIModule.ReflectionSkyColorExecute = 
+                Color.Lerp(approxRealtimeGIProperty.ReflectionSkyColor.Evaluate(WorldManager.Instance.timeModule.CurrentTime01),
+                    weatherDefine.approxRealtimeGIProperty.ReflectionSkyColor.Evaluate(WorldManager.Instance.timeModule.CurrentTime01), lerpCoeff);
+
+            ReflectionProbe.BlendCubemap(approxRealtimeGIProperty.ReflectionCubeTexture,
+                weatherDefine.approxRealtimeGIProperty.ReflectionCubeTexture, lerpCoeff,
+                WorldManager.Instance.approxRealtimeGIModule.property.BlendCubeTexture);
+
+            
+            approxRealtimeGISingleExecute = false;
+        }
+        
+    }
+       
     
 }

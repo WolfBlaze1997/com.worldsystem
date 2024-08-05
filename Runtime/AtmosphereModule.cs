@@ -28,15 +28,15 @@ namespace WorldSystem.Runtime
             [GUIColor(0.7f, 0.7f, 1f)]
             public float startTime;
 
-            [LabelText("天空颜色")] [ColorUsage(false, true)]
+            [LabelText("天空颜色")] [ColorUsage(true, true)]
             [GUIColor(1f, 0.7f, 0.7f)]
             public Color skyColor;
 
-            [LabelText("赤道颜色")] [ColorUsage(false, true)]
+            [LabelText("赤道颜色")] [ColorUsage(true, true)]
             [GUIColor(1f, 0.7f, 0.7f)]
             public Color equatorColor;
 
-            [LabelText("地面颜色")] [ColorUsage(false, true)]
+            [LabelText("地面颜色")] [ColorUsage(true, true)]
             [GUIColor(1f, 0.7f, 0.7f)]
             public Color groundColor;
 
@@ -53,13 +53,13 @@ namespace WorldSystem.Runtime
         [Serializable]
         public struct AtmosphereColor
         {
-            [HorizontalGroup("大气颜色")] [LabelText("天空颜色")][ColorUsage(false,true)]
+            [HorizontalGroup("大气颜色")] [LabelText("天空颜色")][ColorUsage(true,true)]
             public Color skyColor;
 
-            [HorizontalGroup("大气颜色")] [LabelText("赤道颜色")][ColorUsage(false,true)]
+            [HorizontalGroup("大气颜色")] [LabelText("赤道颜色")][ColorUsage(true,true)]
             public Color equatorColor;
 
-            [HorizontalGroup("大气颜色")] [LabelText("地面颜色")][ColorUsage(false,true)]
+            [HorizontalGroup("大气颜色")] [LabelText("地面颜色")][ColorUsage(true,true)]
             public Color groundColor;
         }
         
@@ -139,6 +139,11 @@ namespace WorldSystem.Runtime
                 new DayPeriods("Night", 19f, new Color32(35, 4, 46, 255), new Color32(36, 21, 36, 255),
                     new Color32(26, 23, 26, 255))
             };
+            
+            // [FoldoutGroup("颜色")] [LabelText("模拟实时GI强度")] 
+            // [GUIColor(1f,0.7f,1f)]
+            // public AnimationCurve realtimeGIStrengthCurve = new(new Keyframe(0, 1.0f), new Keyframe(1,1.0f));
+            
             
             private protected virtual void DayPeriodsListAddFunc()
             {

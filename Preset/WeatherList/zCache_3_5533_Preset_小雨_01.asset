@@ -29,7 +29,7 @@ MonoBehaviour:
     _Render_ResolutionOptions: 1
     _Render_TemporalAAFactor: 0
     _Render_TargetFps: -1
-    _Render_UseAsyncRender: 1
+    _Render_UseAsyncRender: 0
     _Render_AsyncUpdateRate: 20
     _Render_AsyncFOV: 80
   StarProperty:
@@ -405,7 +405,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    useLight: 1
+    useLight: 0
     lightingColorMask:
       serializedVersion: 2
       key0: {r: 0, g: 0, b: 0, a: 1}
@@ -538,50 +538,155 @@ MonoBehaviour:
       type: 3}
     atmosphereBlendMaterial: {fileID: 0}
     dayPeriodsList:
-    - description: Night End
+    - description: "\u9ECE\u660E"
       startTime: 5
       skyColor: {r: 0.087921575, g: 0.09854732, b: 0.14901961, a: 1}
       equatorColor: {r: 0.022588236, g: 0.022588236, b: 0.03137255, a: 1}
       groundColor: {r: 0.009411765, g: 0.009411765, b: 0.011764706, a: 1}
-    - description: Dawn
+    - description: "\u6607\u65E5"
       startTime: 7
       skyColor: {r: 0.16690196, g: 0.16690196, b: 0.29803923, a: 1}
       equatorColor: {r: 0.5520116, g: 0.42869055, b: 0.35640025, a: 1}
       groundColor: {r: 0.034615386, g: 0.025, b: 0.05, a: 1}
-    - description: Day
+    - description: "\u4E0A\u5348"
       startTime: 9
       skyColor: {r: 0.149902, g: 0.16888072, b: 0.241, a: 1}
       equatorColor: {r: 0.5089888, g: 0.5595506, b: 0.6, a: 1}
       groundColor: {r: 0.07, g: 0.060000002, b: 0.05, a: 1}
-    - description: Day
+    - description: "\u6B63\u5348,\u5149\u7167\u6700\u5F3A"
       startTime: 12
       skyColor: {r: 0.17585099, g: 0.2045639, b: 0.35099998, a: 1}
       equatorColor: {r: 0.6313726, g: 0.6691176, b: 0.7, a: 1}
       groundColor: {r: 0.07952941, g: 0.07952941, b: 0.101960786, a: 1}
-    - description: Day End
+    - description: "\u4E0B\u5348"
       startTime: 16
       skyColor: {r: 0.13552941, g: 0.16026887, b: 0.2509804, a: 1}
       equatorColor: {r: 0.2784314, g: 0.3137255, b: 0.34901962, a: 1}
       groundColor: {r: 0.07, g: 0.060000002, b: 0.05, a: 1}
-    - description: Evening
+    - description: "\u843D\u65E5"
       startTime: 17
       skyColor: {r: 0.16607845, g: 0.16607845, b: 0.3019608, a: 1}
       equatorColor: {r: 0.55, g: 0.42932835, b: 0.35750002, a: 1}
       groundColor: {r: 0.036, g: 0.026, b: 0.05, a: 1}
-    - description: Night
+    - description: "\u5165\u591C"
       startTime: 19
       skyColor: {r: 0.087921575, g: 0.095890865, b: 0.14901961, a: 1}
       equatorColor: {r: 0.022588236, g: 0.022588236, b: 0.03137255, a: 1}
       groundColor: {r: 0.009134057, g: 0.009134057, b: 0.011612245, a: 1}
-    - description: Day
+    - description: "\u5348\u591C,\u5149\u7167\u6700\u5F31"
       startTime: 24
       skyColor: {r: 0.099215694, g: 0.11815689, b: 0.18039216, a: 1}
       equatorColor: {r: 0.01372549, g: 0.01372549, b: 0.019607844, a: 1}
       groundColor: {r: 0.0062499996, g: 0.0062499996, b: 0.01, a: 1}
+    realtimeGIStrengthCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 24.766855
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.1786312
+        value: 23.509716
+        inSlope: -29.368246
+        outSlope: -29.368246
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.12057305
+        outWeight: 1
+      - serializedVersion: 3
+        time: 0.208
+        value: 20.491343
+        inSlope: -205.5773
+        outSlope: -205.5773
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.17690644
+      - serializedVersion: 3
+        time: 0.26146013
+        value: 4.40861
+        inSlope: -238.72437
+        outSlope: -238.72437
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.2566826
+      - serializedVersion: 3
+        time: 0.292
+        value: 2.2075882
+        inSlope: -5.2076936
+        outSlope: -5.2076936
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.32910922
+        outWeight: 0.10907163
+      - serializedVersion: 3
+        time: 0.5
+        value: 2
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.708
+        value: 2.207588
+        inSlope: 6.11969
+        outSlope: 6.11969
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.18045536
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7385399
+        value: 4.40861
+        inSlope: 243.00562
+        outSlope: 243.00562
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.792
+        value: 20.491343
+        inSlope: 184.08737
+        outSlope: 184.08737
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.19595455
+        outWeight: 0.04121059
+      - serializedVersion: 3
+        time: 0.8213688
+        value: 23.50972
+        inSlope: 35.9011
+        outSlope: 35.9011
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 1
+        outWeight: 0.22150058
+      - serializedVersion: 3
+        time: 1
+        value: 24.766851
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
     currentAtmosphereColor:
-      skyColor: {r: 0.15855166, g: 0.1807751, b: 0.27766666, a: 1}
-      equatorColor: {r: 0.5497834, g: 0.5960729, b: 0.6333333, a: 1}
-      groundColor: {r: 0.07317647, g: 0.066509806, b: 0.067320265, a: 1}
+      skyColor: {r: 0.15347251, g: 0.17998016, b: 0.2954891, a: 1}
+      equatorColor: {r: 0.4354902, g: 0.47187498, b: 0.50520587, a: 1}
+      groundColor: {r: 0.07424059, g: 0.06869059, b: 0.073122546, a: 1}
     currentCloudiness: 0
     currentPrecipitation: 0
     useAtmosphereBlend: 1
@@ -596,11 +701,15 @@ MonoBehaviour:
     _Modeling_Amount_UseFarOverlay: 0
     _Modeling_Amount_OverlayStartDistance: 20000
     _Modeling_Amount_OverlayCloudAmount: 0.8
+    _Modeling_Position_RadiusPreset: 6
+    _Modeling_Position_PlanetRadius: 78
+    _Modeling_Position_CloudHeight: 800
+    _Modeling_Position_CloudThickness: 3800
     _Modeling_ShapeBase_Octaves: 3
     _Modeling_ShapeBase_Gain: 0.8
     _Modeling_ShapeBase_Freq: 2
     _Modeling_ShapeBase_Scale: 5
-    _MotionBase_DynamicVector: {x: 0.078572385, y: 0.12609668}
+    _MotionBase_DynamicVector: {x: -0.04152624, y: 0.25607038}
     _MotionBase_Direction: 0
     _MotionBase_Speed: 0.1
     _MotionBase_UseDirectionRandom: 1
@@ -614,17 +723,13 @@ MonoBehaviour:
     _Render_BlueNoiseArray: {fileID: 0}
     _Render_BlueNoise: 1
     _Render_MipmapDistance: {x: 4000, y: 8000}
-    _Modeling_Position_RadiusPreset: 6
-    _Modeling_Position_PlanetRadius: 78
-    _Modeling_Position_CloudHeight: 800
-    _Modeling_Position_CloudThickness: 3800
     _Modeling_ShapeDetail_NoiseTexture3D: {fileID: 11700000, guid: 86cf7d681999abd45a0011b72550dc47,
       type: 2}
     _Modeling_ShapeDetail_Type: 1
     _Modeling_ShapeDetail_Quality: 1
     _Modeling_ShapeDetail_Scale: {x: 4, y: 6, z: 4}
-    _MotionBase_UseDynamicCloud: 1
-    _MotionDetail_DynamicVector: {x: 0.64616305, y: 0.18338683, z: 0.31732067}
+    _MotionBase_UseDynamicCloud: 0
+    _MotionDetail_DynamicVector: {x: -0.55819947, y: -0.14176796, z: 2.5294194}
     _MotionDetail_Direction: {x: 0, y: 0}
     _MotionDetail_Speed: 0.5
     _MotionDetail_UseRandomDirection: 1
@@ -714,13 +819,13 @@ MonoBehaviour:
     maxSpeed: 2
     vfxModifier: 1
     windZone: {fileID: 0}
-  useOcclusion: 1
+  useOcclusion: 0
   effectRadius: 40
   rainEffectProperty:
     rainRadius: 40
-    rainPrecipitation: 0.5
+    rainPrecipitation: 0.6
     rainSize: 0.01
-    rainDropLength: 10
+    rainDropLength: 15
   snowEffectProperty:
     snowRadius: 40
     snowPrecipitation: 0
@@ -734,7 +839,7 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     lightningLifetimeArray:
-    - -Infinity
+    - -0.0044036508
     - -Infinity
     lightningLightStrength: 1
     lightningLength: 2000
@@ -742,3 +847,38 @@ MonoBehaviour:
     lightningMaxLifetime: 0.8
     lightningSpawnRate: 0
   occlusionRenderer: {fileID: 0}
+  moistAccumulatedWaterProperty:
+    globalMoist: 1.605
+    raindropsGradientMap: {fileID: 2800000, guid: e89949843abf7004e84edac7b109710b,
+      type: 3}
+    raindropsTiling: 20
+    raindropsSplashSpeed: 0.3
+    raindropsSize: 0.5
+    accumulatedWaterMask: {fileID: 2800000, guid: a2cf78be182d9e04885921107bcd90b8,
+      type: 3}
+    accumulatedWaterMaskTiling: 0.6
+    accumulatedWaterContrast: 2
+    accumulatedWaterSteepHillExtinction: 0.97
+    accumulatedWaterParallaxStrength: 0.2
+    ripplesNormalAtlas: {fileID: 2800000, guid: a6e49a766b3568e4eb66b720e93376e5,
+      type: 3}
+    xColumnsYRowsZSpeedWStrartFrame:
+      x: 8
+      y: 8
+      z: 12
+      w: 0
+    ripplesMainTiling: 1
+    ripplesMainStrength: 0.6
+    waterWaveNormal: {fileID: 2800000, guid: 5e34ad465893856488924104088e658b, type: 3}
+    waterWaveRotate: 0
+    waterWaveMainTiling: 1
+    waterWaveMainSpeed: 0.05
+    waterWaveMainStrength: 0.05
+    waterWaveDetailTiling: 1.5
+    waterWaveDetailSpeed: 0.03
+    waterWaveDetailStrength: 0.03
+    flowMap: {fileID: 2800000, guid: 1b28c8de5a0e75c42a955ff734a916b3, type: 3}
+    flowTiling:
+      x: 1.5
+      y: 8
+      z: 1.5

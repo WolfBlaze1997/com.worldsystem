@@ -17,8 +17,8 @@ MonoBehaviour:
   sustainedTimeCache: 10
   varyingTimeCache: 8
   backgroundProperty:
-    skyMesh: {fileID: 4300000, guid: 3ec8d1078f11f6147bb9cb75cf18150d, type: 2}
-    backgroundShader: {fileID: 4800000, guid: 67f4e0ff7e5a88441ae4f52664bb1c79, type: 3}
+    skyMesh: {fileID: 0}
+    backgroundShader: {fileID: 0}
     backgroundMaterial: {fileID: 0}
     TaaShader: {fileID: 4800000, guid: b9197ee2061afb84cb58c1d854bea3ca, type: 3}
     TaaMaterial: {fileID: 0}
@@ -28,8 +28,8 @@ MonoBehaviour:
     VolumeCloud_FixupLateBlit_Material: {fileID: 0}
     _Render_ResolutionOptions: 1
     _Render_TemporalAAFactor: 0
-    _Render_TargetFps: 60
-    _Render_UseAsyncRender: 1
+    _Render_TargetFps: -1
+    _Render_UseAsyncRender: 0
     _Render_AsyncUpdateRate: 20
     _Render_AsyncFOV: 80
   StarProperty:
@@ -423,7 +423,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    useLight: 1
+    useLight: 0
     lightingColorMask:
       serializedVersion: 2
       key0: {r: 0, g: 0, b: 0, a: 1}
@@ -596,9 +596,9 @@ MonoBehaviour:
       equatorColor: {r: 0.01076923, g: 0.01076923, b: 0.02, a: 1}
       groundColor: {r: 0.0062499996, g: 0.0062499996, b: 0.01, a: 1}
     currentAtmosphereColor:
-      skyColor: {r: 0.06313726, g: 0.08854249, b: 0.18039216, a: 1}
-      equatorColor: {r: 0.01076923, g: 0.01076923, b: 0.02, a: 1}
-      groundColor: {r: 0.0062499996, g: 0.0062499996, b: 0.01, a: 1}
+      skyColor: {r: 0.058876164, g: 0.07513454, b: 0.15486275, a: 1}
+      equatorColor: {r: 0.018953847, g: 0.018953847, b: 0.0316, a: 1}
+      groundColor: {r: 0.008905883, g: 0.008905883, b: 0.011482353, a: 1}
     currentCloudiness: 0
     currentPrecipitation: 0
     useAtmosphereBlend: 1
@@ -620,7 +620,7 @@ MonoBehaviour:
     _Modeling_ShapeBase_Gain: 0.5
     _Modeling_ShapeBase_Freq: 2
     _Modeling_ShapeBase_Scale: 5
-    _MotionBase_DynamicVector: {x: -0.20486322, y: 0.40338585}
+    _MotionBase_DynamicVector: {x: -0.04152624, y: 0.25607038}
     _MotionBase_Direction: 0
     _MotionBase_Speed: 0.25
     _MotionBase_UseDirectionRandom: 1
@@ -628,8 +628,8 @@ MonoBehaviour:
     _MotionBase_DirectionRandomFreq: 12
     VolumeCloud_Main_Shader: {fileID: 0}
     VolumeCloud_Main_Material: {fileID: 0}
-    _Render_CoarseSteps: 40
-    _Render_DetailSteps: 26
+    _Render_CoarseSteps: 32
+    _Render_DetailSteps: 16
     _Render_BlueNoiseArray: {fileID: 0}
     _Render_BlueNoise: 1
     _Render_MipmapDistance: {x: 4000, y: 8000}
@@ -638,8 +638,8 @@ MonoBehaviour:
     _Modeling_ShapeDetail_Type: 1
     _Modeling_ShapeDetail_Quality: 1
     _Modeling_ShapeDetail_Scale: {x: 5.11, y: 5.11, z: 5.11}
-    _MotionBase_UseDynamicCloud: 1
-    _MotionDetail_DynamicVector: {x: -0.71770495, y: -0.3262332, z: 2.7155366}
+    _MotionBase_UseDynamicCloud: 0
+    _MotionDetail_DynamicVector: {x: -0.55819947, y: -0.14176796, z: 2.5294194}
     _MotionDetail_Direction: {x: 0, y: 0}
     _MotionDetail_Speed: 1.25
     _MotionDetail_UseRandomDirection: 1

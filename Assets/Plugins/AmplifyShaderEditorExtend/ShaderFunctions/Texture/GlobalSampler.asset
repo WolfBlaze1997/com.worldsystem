@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  m_Name: GlobalSampler
+  m_EditorClassIdentifier: 
+  m_functionInfo: "// Made with Amplify Shader Editor v1.9.3.2\n// Available at the
+    Unity Asset Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=19302\nNode;AmplifyShaderEditor.CustomExpressionNode;2;-254,-166.5;Inherit;False;PointClamp
+    = sampler_PointClamp@$LinearClamp = sampler_LinearClamp@$PointRepeat = sampler_PointRepeat@$LinearRepeat
+    = sampler_LinearRepeat@$;7;Create;4;True;PointClamp;SAMPLERSTATE;sampler_PointClamp;Out;SamplerState;Inherit;False;True;LinearClamp;SAMPLERSTATE;sampler_LinearClamp;Out;SamplerState;Inherit;False;True;PointRepeat;SAMPLERSTATE;sampler_PointRepeat;Out;SamplerState;Inherit;False;True;LinearRepeat;SAMPLERSTATE;sampler_LinearRepeat;Out;SamplerState;Inherit;False;GlobalSampler;False;False;0;;False;5;0;FLOAT;0;False;1;SAMPLERSTATE;sampler_PointClamp;False;2;SAMPLERSTATE;sampler_LinearClamp;False;3;SAMPLERSTATE;sampler_PointRepeat;False;4;SAMPLERSTATE;sampler_LinearRepeat;False;5;FLOAT;0;SAMPLERSTATE;2;SAMPLERSTATE;3;SAMPLERSTATE;4;SAMPLERSTATE;5\nNode;AmplifyShaderEditor.FunctionOutput;4;112,-67.5;Inherit;False;False;-1;PointRepeat;2;False;1;0;SAMPLERSTATE;0;False;1;SAMPLERSTATE;0\nNode;AmplifyShaderEditor.FunctionOutput;5;115,4.5;Inherit;False;False;-1;LinearRepeat;3;False;1;0;SAMPLERSTATE;0;False;1;SAMPLERSTATE;0\nNode;AmplifyShaderEditor.FunctionOutput;0;107,-214;Inherit;False;True;-1;PointClamp;0;False;1;0;SAMPLERSTATE;0;False;1;SAMPLERSTATE;0\nNode;AmplifyShaderEditor.FunctionOutput;3;109,-142.5;Inherit;False;False;-1;LinearClamp;1;False;1;0;SAMPLERSTATE;0;False;1;SAMPLERSTATE;0\nWireConnection;4;0;2;4\nWireConnection;5;0;2;5\nWireConnection;0;0;2;2\nWireConnection;3;0;2;3\nASEEND*/\n//CHKSM=C03300464B62B65908BC46C2DD757A6073F25835"
+  m_functionName: 
+  m_description: 
+  m_additionalIncludes:
+    m_additionalIncludes: []
+    m_outsideIncludes: []
+  m_additionalPragmas:
+    m_additionalPragmas: []
+    m_outsidePragmas: []
+  m_additionalDirectives:
+    m_validData: 0
+    m_isDirty: 1
+    m_moduleName: ' Additional Directives'
+    m_independentModule: 1
+    m_customEdited: 0
+    m_additionalDirectives:
+    - {fileID: 0}
+    m_shaderFunctionDirectives: []
+    m_nativeDirectives: []
+    m_nativeDirectivesIndex: -1
+    m_nativeDirectivesFoldout: 0
+    m_directivesSaveItems:
+    - LineType: 0
+      LineValue: Packages/com.unity.render-pipelines.core/ShaderLibrary/GlobalSamplers.hlsl
+      GUIDToggle: 0
+      GUIDValue: 
+      ShowConditionals: 0
+      VersionMin: 0
+      VersionMax: 0
+      Passes: 
+      Origin: 2
+  m_nodeCategory: 0
+  m_headerStyle: 0
+  m_headerColor: {r: 1, g: 0.4, b: 0, a: 1}
+  m_customNodeCategory: "\u7EB9\u7406"
+  m_previewPosition: 0
+  m_hidden: 0
+  m_url: 

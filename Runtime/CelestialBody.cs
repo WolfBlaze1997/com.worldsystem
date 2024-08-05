@@ -45,7 +45,7 @@ namespace WorldSystem.Runtime
 
         public Color GetAtmosphereScatterColor()
         {
-            if (property.lightComponent is null)
+            if (!property.lightComponent)
                 return objectColorEvaluate;
 
             return Mathf.CorrelatedColorTemperatureToRGB(property.lightComponent.colorTemperature) * property.lightComponent.color;
@@ -362,15 +362,12 @@ namespace WorldSystem.Runtime
         private void Update()
         {
             if (!(WorldManager.Instance?.celestialBodyManager?._Update ?? false)) return;
-            if (angularDiameterDegreesEvaluate > 0.2)
+            
+            if (property.lightComponent)
             {
-                property.lightComponent.enabled = true;
+                property.lightComponent.enabled = angularDiameterDegreesEvaluate > 0.2;
             }
-            else
-            {
-                property.lightComponent.enabled = false;
-            }
-
+            
             UpdateRotations();
             UpdateLightProperties();
 
