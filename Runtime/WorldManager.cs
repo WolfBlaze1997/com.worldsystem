@@ -356,7 +356,6 @@ namespace WorldSystem.Runtime
 
     }
     
-    
     [AddComponentMenu("WorldSystem/WorldManager")]
     [ExecuteAlways]
     public partial class WorldManager : MonoBehaviour
@@ -653,14 +652,15 @@ namespace WorldSystem.Runtime
 
             public static int _SplitFrameCount;
             private Matrix4x4 _ViewMatrix;
-            private Matrix4x4 _ViewMatrix_Inv;
+            private float3 _CameraPosition;
+            // private Matrix4x4 _ViewMatrix_Inv;
             public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
             {
                 
                 if (Instance?.universeBackgroundModule is null) 
                     return;
 
-                CommandBuffer cmd = CommandBufferPool.Get("Test: SkyRender");
+                CommandBuffer cmd = CommandBufferPool.Get("WorldSystem: SkyRender");
                 var dataCamera = renderingData.cameraData.camera;
                 
                 if (Instance.universeBackgroundModule.property._Render_UseAsyncRender)
@@ -668,13 +668,16 @@ namespace WorldSystem.Runtime
                     //我现在希望分帧渲染只分为两帧,而不是分为多个帧,这样可以避免运动矢量的累加,降低复杂度
                     //我现在希望分帧渲染不止分为两帧,使用多帧分帧渲染,继续提高性能
                     
-                    profilingSampler.Begin(cmd);
+                    // profilingSampler.Begin(cmd);
                     //修改矩阵以扩大视野
                     float cameraAspect = dataCamera.pixelRect.width / dataCamera.pixelRect.height;
                     
-                    //缓存分帧渲染需要的ViewMatrix,保证它在分帧渲染的过程中保持不变
+                    //缓存分帧渲染需要的ViewMatrix,Position,保证它在分帧渲染的过程中保持不变
                     if (_SplitFrameCount == 0)
+                    {
                         _ViewMatrix = dataCamera.worldToCameraMatrix;
+                        _CameraPosition = dataCamera.transform.position;
+                    }
                     
                     //重新设置矩阵,用于扩大视野和维持分帧渲染过程中,ViewMatrix不变
                     var projectionMatrix = Matrix4x4.Perspective(Instance.universeBackgroundModule.property._Render_AsyncFOV, cameraAspect, dataCamera.nearClipPlane, dataCamera.farClipPlane);
@@ -712,11 +715,13 @@ namespace WorldSystem.Runtime
                         //我们这里将星星和星体放在后面渲染,使用特别的方式正确混合,这是因为,大气体积云我们可以降低分辨率渲染,而星星星体为保持清晰度不可降低分辨率
                         //渲染星星
                         Instance.starModule?.RenderStar(cmd, ref renderingData);
-                        //渲染星体
-                        Instance.celestialBodyManager?.RenderCelestialBodyList(cmd, ref renderingData);
+                        
+                        // //渲染星体
+                        Instance.celestialBodyManager?.RenderCelestialBodyList(cmd, _CameraPosition);
                         
                         //取消分帧矩形
                         cmd.DisableScissorRect();
+                        
                         // EditorApplication.isPaused = true;
                         //累加计数器
 #if UNITY_EDITOR
@@ -732,6 +737,7 @@ namespace WorldSystem.Runtime
                         if (_SplitFrameCount == 2)
                         {
                             _ActiveRT = Instance.universeBackgroundModule?.RenderFixupLate(cmd, _ActiveRT);
+                            
                             RenderingUtils.ReAllocateIfNeeded(ref Instance.universeBackgroundModule.splitFrameRT, _ActiveRT.rt.descriptor, name: "SplitFrameRT");
                             cmd.CopyTexture(_ActiveRT, Instance.universeBackgroundModule.splitFrameRT);
                             _ActiveRT = Instance.universeBackgroundModule.splitFrameRT;
@@ -745,6 +751,8 @@ namespace WorldSystem.Runtime
                             if (Instance.universeBackgroundModule.splitFrameRT != null)
                                 _ActiveRT = Instance.universeBackgroundModule?.RenderFixupLate(cmd, Instance.universeBackgroundModule.splitFrameRT);
                         }
+                        
+                        
                     }
                     else
                     {
@@ -752,9 +760,6 @@ namespace WorldSystem.Runtime
                         if (Instance.universeBackgroundModule.splitFrameRT != null)
                             _ActiveRT = Instance.universeBackgroundModule?.RenderFixupLate(cmd, Instance.universeBackgroundModule.splitFrameRT);
                     }
-                    
-                    profilingSampler.End(cmd);
-                    
                     
                     //恢复矩阵
                     projectionMatrix = GL.GetGPUProjectionMatrix(dataCamera.projectionMatrix, true); 
@@ -765,6 +770,9 @@ namespace WorldSystem.Runtime
                     //修正视野范围
                     if(_ActiveRT != null) 
                         Instance.universeBackgroundModule.RenderFixupLateBlit(cmd,ref renderingData ,_ActiveRT, renderingData.cameraData.renderer.cameraColorTargetHandle);
+                    
+                    
+                    
                     context.ExecuteCommandBuffer(cmd);
                     cmd.Clear();
                     

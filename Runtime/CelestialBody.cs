@@ -434,7 +434,19 @@ namespace WorldSystem.Runtime
             cmd.DrawMesh(property.skyObjectMesh, m, property.material);
 
         }
+        public void RenderCelestialBody(CommandBuffer cmd, Vector3 Position)
+        {
+            if (!isActiveAndEnabled || angularDiameterDegreesEvaluate < 1) return;
+            
+            Matrix4x4 m = Matrix4x4.identity;
+            m.SetTRS(
+                positionRelative + Position,
+                transform.rotation,
+                Vector3.one * (Mathf.Tan(angularDiameterDegreesEvaluate * Mathf.Deg2Rad) * property.sortOrder)
+            );
+            cmd.DrawMesh(property.skyObjectMesh, m, property.material);
 
+        }
 
 
         #endregion

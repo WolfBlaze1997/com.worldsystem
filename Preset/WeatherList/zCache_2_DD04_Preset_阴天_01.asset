@@ -29,7 +29,7 @@ MonoBehaviour:
     _Render_ResolutionOptions: 1
     _Render_TemporalAAFactor: 0
     _Render_TargetFps: -1
-    _Render_UseAsyncRender: 0
+    _Render_UseAsyncRender: 1
     _Render_AsyncUpdateRate: 20
     _Render_AsyncFOV: 80
   StarProperty:
@@ -579,9 +579,9 @@ MonoBehaviour:
       equatorColor: {r: 0.01372549, g: 0.01372549, b: 0.019607844, a: 1}
       groundColor: {r: 0.0062499996, g: 0.0062499996, b: 0.01, a: 1}
     currentAtmosphereColor:
-      skyColor: {r: 0.104270145, g: 0.14670512, b: 0.34714216, a: 0.5946079}
-      equatorColor: {r: 0.60762364, g: 0.69323236, b: 0.76354915, a: 0.622}
-      groundColor: {r: 0.07675616, g: 0.065788105, b: 0.05982992, a: 0.79180396}
+      skyColor: {r: 0.14679645, g: 0.17904179, b: 0.32139218, a: 1}
+      equatorColor: {r: 0.44519612, g: 0.48164833, b: 0.5148579, a: 1}
+      groundColor: {r: 0.07450265, g: 0.06922765, b: 0.07455148, a: 1}
     currentCloudiness: 0
     currentPrecipitation: 0
     useAtmosphereBlend: 1
@@ -604,7 +604,7 @@ MonoBehaviour:
     _Modeling_ShapeBase_Gain: 0.7
     _Modeling_ShapeBase_Freq: 2
     _Modeling_ShapeBase_Scale: 5
-    _MotionBase_DynamicVector: {x: 0.112439506, y: 0.13728514}
+    _MotionBase_DynamicVector: {x: 0.048001517, y: 0.12164256}
     _MotionBase_Direction: 0
     _MotionBase_Speed: 0.1
     _MotionBase_UseDirectionRandom: 1
@@ -624,7 +624,7 @@ MonoBehaviour:
     _Modeling_ShapeDetail_Quality: 1
     _Modeling_ShapeDetail_Scale: {x: 4, y: 6, z: 4}
     _MotionBase_UseDynamicCloud: 1
-    _MotionDetail_DynamicVector: {x: 0.75513667, y: -0.38911352, z: 1.5579938}
+    _MotionDetail_DynamicVector: {x: 0.0766609, y: 0.017376693, z: 0.6491129}
     _MotionDetail_Direction: {x: 0, y: 0}
     _MotionDetail_Speed: 0.5
     _MotionDetail_UseRandomDirection: 1
@@ -751,10 +751,10 @@ MonoBehaviour:
     raindropsSize: 0.5
     accumulatedWaterMask: {fileID: 2800000, guid: a2cf78be182d9e04885921107bcd90b8,
       type: 3}
-    accumulatedWaterMaskTiling: 0.6
-    accumulatedWaterContrast: 2
-    accumulatedWaterSteepHillExtinction: 0.97
-    accumulatedWaterParallaxStrength: 0.2
+    accumulatedWaterMaskTiling: 0.2
+    accumulatedWaterContrast: 4
+    accumulatedWaterSteepHillExtinction: 0.9952
+    accumulatedWaterParallaxStrength: 0.25
     ripplesNormalAtlas: {fileID: 2800000, guid: a6e49a766b3568e4eb66b720e93376e5,
       type: 3}
     xColumnsYRowsZSpeedWStrartFrame:
@@ -783,7 +783,7 @@ MonoBehaviour:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 34.91747
+        value: 49.869003
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -792,7 +792,7 @@ MonoBehaviour:
         outWeight: 0
       - serializedVersion: 3
         time: 0.1786312
-        value: 33.188484
+        value: 47.314426
         inSlope: -29.368246
         outSlope: -29.368246
         tangentMode: 0
@@ -801,16 +801,16 @@ MonoBehaviour:
         outWeight: 1
       - serializedVersion: 3
         time: 0.208
-        value: 29.037209
-        inSlope: -205.5773
-        outSlope: -205.5773
+        value: 41.180916
+        inSlope: -568.1195
+        outSlope: -568.1195
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
+        inWeight: 0.19400255
         outWeight: 0.17690644
       - serializedVersion: 3
         time: 0.26146013
-        value: 6.9180646
+        value: 8.499857
         inSlope: -238.72437
         outSlope: -238.72437
         tangentMode: 0
@@ -819,7 +819,7 @@ MonoBehaviour:
         outWeight: 0.2566826
       - serializedVersion: 3
         time: 0.292
-        value: 3.8909225
+        value: 4.027251
         inSlope: -5.2076936
         outSlope: -5.2076936
         tangentMode: 0
@@ -837,7 +837,7 @@ MonoBehaviour:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.708
-        value: 3.890922
+        value: 4.02725
         inSlope: 6.11969
         outSlope: 6.11969
         tangentMode: 0
@@ -846,7 +846,7 @@ MonoBehaviour:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.7385399
-        value: 6.9180646
+        value: 8.499857
         inSlope: 243.00562
         outSlope: 243.00562
         tangentMode: 0
@@ -855,16 +855,16 @@ MonoBehaviour:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.792
-        value: 29.037209
-        inSlope: 184.08737
-        outSlope: 184.08737
+        value: 41.180916
+        inSlope: 423.89688
+        outSlope: 423.89688
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.19595455
-        outWeight: 0.04121059
+        outWeight: 0.2346005
       - serializedVersion: 3
         time: 0.8213688
-        value: 33.188488
+        value: 47.314438
         inSlope: 27.875948
         outSlope: 27.875948
         tangentMode: 0
@@ -873,7 +873,7 @@ MonoBehaviour:
         outWeight: 0.21502209
       - serializedVersion: 3
         time: 1
-        value: 34.917465
+        value: 49.869003
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -883,7 +883,10 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    LightingMapContrast: 0.75
+    LightingMapContrast: 0.7
+    ReflectionCubeTexture: {fileID: 0}
+    MainReflectionProbe: {fileID: 0}
+    BlendCubeTexture: {fileID: 8400000, guid: b303b0552780698488db7fcda026fe91, type: 2}
     ReflectionSkyColor:
       serializedVersion: 2
       key0: {r: 1, g: 1, b: 1, a: 1}
@@ -919,7 +922,7 @@ MonoBehaviour:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.15
+        value: 0.1
         inSlope: 0.08968766
         outSlope: 0.08968766
         tangentMode: 0
@@ -955,7 +958,7 @@ MonoBehaviour:
         outWeight: 0.04861126
       - serializedVersion: 3
         time: 1
-        value: 0.15
+        value: 0.1
         inSlope: -0.074509814
         outSlope: -0.074509814
         tangentMode: 0
@@ -1018,8 +1021,59 @@ MonoBehaviour:
       m_RotationOrder: 4
     _ApproxRealtimeGI_AOMin: -0.02
     _ApproxRealtimeGI_AOMax: 0.25
-    _SSR_Samples: 16
-    _SSR_RayLength: 6
+    _SSR_BlendCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 4.807692
+        outSlope: 4.807692
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.208
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.5
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.792
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: -4.807692
+        outSlope: -4.807692
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    _SSR_Samples: 32
+    _SSR_RayLength: 200
     _SSR_Thickness: 0.5
     _SSR_NoiseTex: {fileID: 2800000, guid: f11b6fec0abc7114c97b0325d4523122, type: 3}
-    _SSR_Jitter: 0.3
+    _SSR_Jitter: 0

@@ -324,9 +324,16 @@ namespace WorldSystem.Runtime
             {
                 variable?.RenderCelestialBody(cmd, ref renderingData);
             }
-
         }
         
+        public void RenderCelestialBodyList(CommandBuffer cmd,  Vector3 cameraPosition)
+        {
+            if (property.celestialBodyList == null || property.celestialBodyList.Count == 0 || !isActiveAndEnabled) return;
+            foreach (var variable in property.celestialBodyList)
+            {
+                variable?.RenderCelestialBody(cmd, cameraPosition);
+            }
+        }
         
         #endregion
 

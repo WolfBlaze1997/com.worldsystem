@@ -28,7 +28,7 @@ namespace WorldSystem.Runtime
             [FoldoutGroup("模拟实时反射")][LabelText("混合立方体纹理")][GUIColor(0.7f,0.7f,1f)]
             public RenderTexture BlendCubeTexture;
             [FoldoutGroup("模拟实时反射")][LabelText("反射探针天空颜色")][GUIColor(1f,0.7f,0.7f)]
-            public Gradient ReflectionSkyColor;
+            public Gradient ReflectionSkyColor = new Gradient();
             [FoldoutGroup("模拟实时反射")][LabelText("反射探针强度曲线")][GUIColor(1f,0.7f,1f)]
             public AnimationCurve ReflectionStrengthCurve = new(new Keyframe(0,0),new Keyframe(1,0));
             [FoldoutGroup("模拟实时反射")][LabelText("反射探针基准混合曲线")][GUIColor(1f,0.7f,1f)]
@@ -54,7 +54,7 @@ namespace WorldSystem.Runtime
             public float _SSR_Jitter = 0.3f;
         }
         [HideLabel]
-        public Property property;
+        public Property property = new Property();
         
         #endregion
         
@@ -105,24 +105,24 @@ namespace WorldSystem.Runtime
             if (property._SSR_NoiseTex == null)
                 property._SSR_NoiseTex = AssetDatabase.LoadAssetAtPath<Texture2D>("Packages/com.worldsystem/Textures/Noise Textures/blueNoiseSSR64.png");
             if (property.BlendCubeTexture == null)
-                property.BlendCubeTexture =
-                    AssetDatabase.LoadAssetAtPath<RenderTexture>(
-                        "Packages/com.worldsystem/Runtime/BlendCubeTexture/BlendCubeTexture.renderTexture");
+                property.BlendCubeTexture = AssetDatabase.LoadAssetAtPath<RenderTexture>("Packages/com.worldsystem/Runtime/BlendCubeTexture/BlendCubeTexture.renderTexture");
 #endif
            property.MainReflectionProbe = FindAnyObjectByType<ReflectionProbe>();
            property.MainReflectionProbe.mode = ReflectionProbeMode.Custom;
            
-           // property.MainReflectionProbe.customBakedTexture = property.ReflectionCubeTexture;
            OnValidate();
         }
+        
+        
 
         private void OnDisable()
         {
             if(property._SSR_NoiseTex != null)
                 Resources.UnloadAsset(property._SSR_NoiseTex);
-            property._SSR_NoiseTex = null;
             if(property.BlendCubeTexture != null)
                 Resources.UnloadAsset(property.BlendCubeTexture);
+            
+            property._SSR_NoiseTex = null;
             property.BlendCubeTexture = null;
         }
 
