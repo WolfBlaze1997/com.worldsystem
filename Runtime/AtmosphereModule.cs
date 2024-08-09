@@ -359,7 +359,11 @@ namespace WorldSystem.Runtime
         #endregion
 
         
+        
         #region 渲染函数
+        
+        public RTHandle _atmosphereMixRT;
+        private readonly int _SkyTexture = Shader.PropertyToID("_SkyTexture");
         
         public void RenderAtmosphere(CommandBuffer cmd, ref RenderingData renderingData, RTHandle activeRT, Rect renderRect)
         {
@@ -378,6 +382,7 @@ namespace WorldSystem.Runtime
                 _atmosphereMixRT,0,0, (int)renderRect.x, (int)renderRect.y);
             cmd.SetGlobalTexture(_SkyTexture, _atmosphereMixRT);
         }
+        
         public void RenderAtmosphere(CommandBuffer cmd, ref RenderingData renderingData, RTHandle activeRT)
         {
             if (!isActiveAndEnabled) return;
@@ -395,20 +400,18 @@ namespace WorldSystem.Runtime
             cmd.SetGlobalTexture(_SkyTexture, _atmosphereMixRT);
         }
         
-        
-        public RTHandle _atmosphereMixRT;
-        private readonly int _SkyTexture = Shader.PropertyToID("_SkyTexture");
-
-        
         public void RenderAtmosphereBlend(CommandBuffer cmd, ref RenderingData renderingData)
         {
             RTHandle source = renderingData.cameraData.renderer.cameraColorTargetHandle;
             if (!property.useAtmosphereBlend || !isActiveAndEnabled) return;
             cmd.SetRenderTarget(source);
             Blitter.BlitTexture(cmd,new Vector4(1,1,0,0), property.atmosphereBlendMaterial,0);
+            
         }
         
+        
         #endregion
+        
         
     }
 }

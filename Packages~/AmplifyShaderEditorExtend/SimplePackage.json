@@ -1,4 +1,4 @@
-{"active":true,"icon":{"instanceID":-234708},"name":"ASE扩展",
+{"active":true,"icon":{"instanceID":-70732},"name":"ASE扩展",
 "creator":"烂菜叶料理侠",
 "version":"0.1.1",
 "describe":"添加了一个精心设计的无光照模板.大量自定义的着色器节点帮助获取URP管线的信息.简单明了高效. 这些节点几乎包含了默认情况下URP管线向着色器提供的所有信息, 轻松实现URP-Lit的所有功能, 扩展也很容易, 确保无冗余, 变体完全可控",

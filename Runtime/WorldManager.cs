@@ -41,70 +41,10 @@ namespace WorldSystem.Runtime
             OnValidate();
         }
 
-                
-        [PropertyOrder(-100)]
-        [ShowIf("windZoneModuleToggle")]
-        [VerticalGroup("昼夜与天气/Split/02")]
-        [Button(ButtonSizes.Large, Name = "风场模块"), GUIColor(0.3f, 1f, 0.3f)]
-        private void WindZoneModuleToggle_Off()
-        {
-            windZoneModuleToggle = false;
-            OnValidate();
-        }
-        [PropertyOrder(-100)]
-        [HideIf("windZoneModuleToggle")]
-        [VerticalGroup("昼夜与天气/Split/02")]
-        [Button(ButtonSizes.Large, Name = "风场模块"), GUIColor(0.5f, 0.2f, 0.2f)]
-        private void WindZoneModuleToggle_On()
-        {
-            windZoneModuleToggle = true;
-            OnValidate();
-        }
-        
-        
-        [PropertyOrder(-100)]
-        [ShowIf("weatherEffectModuleToggle")]
-        [VerticalGroup("昼夜与天气/Split/03")]
-        [Button(ButtonSizes.Large, Name = "天气特效模块"), GUIColor(0.3f, 1f, 0.3f)]
-        private void WeatherEffectModuleToggle_Off()
-        {
-            weatherEffectModuleToggle = false;
-            OnValidate();
-        }
-        [PropertyOrder(-100)]
-        [HideIf("weatherEffectModuleToggle")]
-        [VerticalGroup("昼夜与天气/Split/03")]
-        [Button(ButtonSizes.Large, Name = "天气特效模块"), GUIColor(0.5f, 0.2f, 0.2f)]
-        private void WeatherEffectModuleToggle_On()
-        {
-            weatherEffectModuleToggle = true;
-            OnValidate();
-        }
-        
-        
-        [PropertyOrder(-100)]
-        [ShowIf("weatherSystemModuleToggle")]
-        [VerticalGroup("昼夜与天气/Split/04")]
-        [Button(ButtonSizes.Large, Name = "天气列表模块"), GUIColor(0.3f, 1f, 0.3f)]
-        private void WeatherSystemModuleToggle_Off()
-        {
-            weatherSystemModuleToggle = false;
-            OnValidate();
-        }
-        [PropertyOrder(-100)]
-        [HideIf("weatherSystemModuleToggle")]
-        [VerticalGroup("昼夜与天气/Split/04")]
-        [Button(ButtonSizes.Large, Name = "天气列表模块"), GUIColor(0.5f, 0.2f, 0.2f)]
-        private void WeatherSystemModuleToggle_On()
-        {
-            weatherSystemModuleToggle = true;
-            OnValidate();
-        }
         
         [PropertyOrder(-100)]
         [ShowIf("universeBackgroundModuleToggle")]
-        [HorizontalGroup("昼夜与天气/Split02")]
-        [VerticalGroup("昼夜与天气/Split02/01")]
+        [VerticalGroup("昼夜与天气/Split/02")]
         [Button(ButtonSizes.Large, Name = "渲染设置与背景"), GUIColor(0.3f, 1f, 0.3f)]
         private void UniverseBackgroundModuleToggle_Off()
         {
@@ -117,7 +57,7 @@ namespace WorldSystem.Runtime
         }
         [PropertyOrder(-100)]
         [HideIf("universeBackgroundModuleToggle")]
-        [VerticalGroup("昼夜与天气/Split02/01")]
+        [VerticalGroup("昼夜与天气/Split/02")]
         [Button(ButtonSizes.Large, Name = "渲染设置与背景"), GUIColor(0.5f, 0.2f, 0.2f)]
         private void UniverseBackgroundModuleToggle_On()
         {
@@ -125,10 +65,31 @@ namespace WorldSystem.Runtime
             OnValidate();
         }
         
-
+                
+        [PropertyOrder(-100)]
+        [ShowIf("weatherSystemModuleToggle")]
+        [VerticalGroup("昼夜与天气/Split/03")]
+        [Button(ButtonSizes.Large, Name = "天气列表模块"), GUIColor(0.3f, 1f, 0.3f)]
+        private void WeatherSystemModuleToggle_Off()
+        {
+            weatherSystemModuleToggle = false;
+            OnValidate();
+        }
+        [PropertyOrder(-100)]
+        [HideIf("weatherSystemModuleToggle")]
+        [VerticalGroup("昼夜与天气/Split/03")]
+        [Button(ButtonSizes.Large, Name = "天气列表模块"), GUIColor(0.5f, 0.2f, 0.2f)]
+        private void WeatherSystemModuleToggle_On()
+        {
+            weatherSystemModuleToggle = true;
+            OnValidate();
+        }
+        
+        
         [PropertyOrder(-100)]
         [ShowIf("starModuleToggle")]
-        [VerticalGroup("昼夜与天气/Split02/02")]
+        [HorizontalGroup("昼夜与天气/Split02")]
+        [VerticalGroup("昼夜与天气/Split02/01")]
         [Button(ButtonSizes.Large, Name = "星星模块"), GUIColor(0.3f, 1f, 0.3f)]
         private void StarModuleToggle_Off()
         {
@@ -137,7 +98,7 @@ namespace WorldSystem.Runtime
         }
         [PropertyOrder(-100)]
         [HideIf("starModuleToggle")]
-        [VerticalGroup("昼夜与天气/Split02/02")]
+        [VerticalGroup("昼夜与天气/Split02/01")]
         [Button(ButtonSizes.Large, Name = "星星模块"), GUIColor(0.5f, 0.2f, 0.2f)]
         private void StarModuleToggle_On()
         {
@@ -149,7 +110,7 @@ namespace WorldSystem.Runtime
         
         [PropertyOrder(-100)]
         [ShowIf("celestialBodyManagerToggle")]
-        [VerticalGroup("昼夜与天气/Split02/03")]
+        [VerticalGroup("昼夜与天气/Split02/02")]
         [Button(ButtonSizes.Large, Name = "天体模块"), GUIColor(0.3f, 1f, 0.3f)]
         private void CelestialBodyModuleToggle_Off()
         {
@@ -158,7 +119,7 @@ namespace WorldSystem.Runtime
         }
         [PropertyOrder(-100)]
         [HideIf("celestialBodyManagerToggle")]
-        [VerticalGroup("昼夜与天气/Split02/03")]
+        [VerticalGroup("昼夜与天气/Split02/02")]
         [Button(ButtonSizes.Large, Name = "天体模块"), GUIColor(0.5f, 0.2f, 0.2f)]
         private void CelestialBodyModuleToggle_On()
         {
@@ -170,7 +131,7 @@ namespace WorldSystem.Runtime
         
         [PropertyOrder(-100)]
         [ShowIf("atmosphereModuleToggle")]
-        [VerticalGroup("昼夜与天气/Split02/04")]
+        [VerticalGroup("昼夜与天气/Split02/03")]
         [Button(ButtonSizes.Large, Name = "大气模块"), GUIColor(0.3f, 1f, 0.3f)]
         private void AtmosphereModuleToggle_Off()
         {
@@ -179,7 +140,7 @@ namespace WorldSystem.Runtime
         }
         [PropertyOrder(-100)]
         [HideIf("atmosphereModuleToggle")]
-        [VerticalGroup("昼夜与天气/Split02/04")]
+        [VerticalGroup("昼夜与天气/Split02/03")]
         [Button(ButtonSizes.Large, Name = "大气模块"), GUIColor(0.5f, 0.2f, 0.2f)]
         private void AtmosphereModuleToggle_On()
         {
@@ -191,7 +152,7 @@ namespace WorldSystem.Runtime
         
         [PropertyOrder(-100)]
         [ShowIf("volumeCloudOptimizeModuleToggle")]
-        [VerticalGroup("昼夜与天气/Split02/05")]
+        [VerticalGroup("昼夜与天气/Split02/04")]
         [Button(ButtonSizes.Large, Name = "体积云模块"), GUIColor(0.3f, 1f, 0.3f)]
         private void VolumeCloudOptimizeModuleToggle_Off()
         {
@@ -200,7 +161,7 @@ namespace WorldSystem.Runtime
         }
         [PropertyOrder(-100)]
         [HideIf("volumeCloudOptimizeModuleToggle")]
-        [VerticalGroup("昼夜与天气/Split02/05")]
+        [VerticalGroup("昼夜与天气/Split02/04")]
         [Button(ButtonSizes.Large, Name = "体积云模块"), GUIColor(0.5f, 0.2f, 0.2f)]
         private void VolumeCloudOptimizeModuleToggle_On()
         {
@@ -210,8 +171,49 @@ namespace WorldSystem.Runtime
         }
         
         [PropertyOrder(-100)]
+        [ShowIf("windZoneModuleToggle")]
+        [VerticalGroup("昼夜与天气/Split02/05")]
+        [Button(ButtonSizes.Large, Name = "风场模块"), GUIColor(0.3f, 1f, 0.3f)]
+        private void WindZoneModuleToggle_Off()
+        {
+            windZoneModuleToggle = false;
+            OnValidate();
+        }
+        [PropertyOrder(-100)]
+        [HideIf("windZoneModuleToggle")]
+        [VerticalGroup("昼夜与天气/Split02/05")]
+        [Button(ButtonSizes.Large, Name = "风场模块"), GUIColor(0.5f, 0.2f, 0.2f)]
+        private void WindZoneModuleToggle_On()
+        {
+            windZoneModuleToggle = true;
+            OnValidate();
+        }
+        
+        
+        [PropertyOrder(-100)]
+        [ShowIf("weatherEffectModuleToggle")]
+        [HorizontalGroup("昼夜与天气/Split03")]
+        [VerticalGroup("昼夜与天气/Split03/01")]
+        [Button(ButtonSizes.Large, Name = "天气特效模块"), GUIColor(0.3f, 1f, 0.3f)]
+        private void WeatherEffectModuleToggle_Off()
+        {
+            weatherEffectModuleToggle = false;
+            OnValidate();
+        }
+        [PropertyOrder(-100)]
+        [HideIf("weatherEffectModuleToggle")]
+        [VerticalGroup("昼夜与天气/Split03/01")]
+        [Button(ButtonSizes.Large, Name = "天气特效模块"), GUIColor(0.5f, 0.2f, 0.2f)]
+        private void WeatherEffectModuleToggle_On()
+        {
+            weatherEffectModuleToggle = true;
+            OnValidate();
+        }
+        
+        
+        [PropertyOrder(-100)]
         [ShowIf("moistAccumulatedWaterModuleToggle")]
-        [VerticalGroup("昼夜与天气/Split02/06")]
+        [VerticalGroup("昼夜与天气/Split03/02")]
         [Button(ButtonSizes.Large, Name = "湿润积水模块"), GUIColor(0.3f, 1f, 0.3f)]
         private void MoistAccumulatedWaterModuleToggle_Off()
         {
@@ -220,7 +222,7 @@ namespace WorldSystem.Runtime
         }
         [PropertyOrder(-100)]
         [HideIf("moistAccumulatedWaterModuleToggle")]
-        [VerticalGroup("昼夜与天气/Split02/06")]
+        [VerticalGroup("昼夜与天气/Split03/02")]
         [Button(ButtonSizes.Large, Name = "湿润积水模块"), GUIColor(0.5f, 0.2f, 0.2f)]
         private void MoistAccumulatedWaterModuleToggle_On()
         {
@@ -231,7 +233,7 @@ namespace WorldSystem.Runtime
         
         [PropertyOrder(-100)]
         [ShowIf("approxRealtimeGIModuleToggle")]
-        [VerticalGroup("昼夜与天气/Split02/07")]
+        [VerticalGroup("昼夜与天气/Split03/03")]
         [Button(ButtonSizes.Large, Name = "近似实时全局光照模块"), GUIColor(0.3f, 1f, 0.3f)]
         private void ApproxRealtimeGIModuleToggle_Off()
         {
@@ -240,12 +242,33 @@ namespace WorldSystem.Runtime
         }
         [PropertyOrder(-100)]
         [HideIf("approxRealtimeGIModuleToggle")]
-        [VerticalGroup("昼夜与天气/Split02/07")]
+        [VerticalGroup("昼夜与天气/Split03/03")]
         [Button(ButtonSizes.Large, Name = "近似实时全局光照模块"), GUIColor(0.5f, 0.2f, 0.2f)]
         private void ApproxRealtimeGIModuleToggle_On()
         {
             UniverseBackgroundModuleToggle_On();
             approxRealtimeGIModuleToggle = true;
+            OnValidate();
+        }
+        
+        
+        [PropertyOrder(-100)]
+        [ShowIf("fogModuleToggle")]
+        [VerticalGroup("昼夜与天气/Split03/04")]
+        [Button(ButtonSizes.Large, Name = "雾模块"), GUIColor(0.3f, 1f, 0.3f)]
+        private void FogModuleToggle_Off()
+        {
+            fogModuleToggle = false;
+            OnValidate();
+        }
+        [PropertyOrder(-100)]
+        [HideIf("fogModuleToggle")]
+        [VerticalGroup("昼夜与天气/Split03/04")]
+        [Button(ButtonSizes.Large, Name = "雾模块"), GUIColor(0.5f, 0.2f, 0.2f)]
+        private void FogModuleToggle_On()
+        {
+            UniverseBackgroundModuleToggle_On();
+            fogModuleToggle = true;
             OnValidate();
         }
         
@@ -425,6 +448,11 @@ namespace WorldSystem.Runtime
         [ShowIf("@(approxRealtimeGIModuleToggle && !weatherSystemModuleToggle) || (approxRealtimeGIModuleToggle && (windZoneModule.hideFlags == HideFlags.None))")]
         public ApproxRealtimeGIModule approxRealtimeGIModule;
         
+        [HideInInspector] public bool fogModuleToggle;
+        [FoldoutGroup("昼夜与天气/近似实时光照模块")][InlineEditor(InlineEditorObjectFieldModes.Hidden)][ShowIf("fogModuleToggle")]
+        [ShowIf("@(fogModuleToggle && !weatherSystemModuleToggle) || (fogModuleToggle && (windZoneModule.hideFlags == HideFlags.None))")]
+        public FogModule fogModule;
+        
         [HideInInspector] public bool fpsDisplayModuleToggle;
         [FoldoutGroup("实用工具/FPS显示")][InlineEditor(InlineEditorObjectFieldModes.Hidden)][ShowIf("fpsDisplayModuleToggle")]
         public FPSDisplayModule fpsDisplayModule;
@@ -484,6 +512,7 @@ namespace WorldSystem.Runtime
             fpsDisplayModuleToggle = false;
             moistAccumulatedWaterModuleToggle = false;
             approxRealtimeGIModuleToggle = false;
+            fogModuleToggle = false;
 #if UNITY_EDITOR
             packageManagerToggle = false;
 #endif
@@ -499,6 +528,7 @@ namespace WorldSystem.Runtime
             fpsDisplayModule = null;
             moistAccumulatedWaterModule = null;
             approxRealtimeGIModule = null;
+            fogModule = null;
 #if UNITY_EDITOR
             packageManager = null;
 #endif
@@ -521,8 +551,9 @@ namespace WorldSystem.Runtime
             weatherListModule = AppendOrDestroyModule<WeatherListModule>(weatherSystemModuleToggle);
             moistAccumulatedWaterModule = AppendOrDestroyModule<MoistAccumulatedWaterModule>(moistAccumulatedWaterModuleToggle);
             approxRealtimeGIModule = AppendOrDestroyModule<ApproxRealtimeGIModule>(approxRealtimeGIModuleToggle);
-            fpsDisplayModule = AppendOrDestroyModule<FPSDisplayModule>(fpsDisplayModuleToggle);
+            fogModule = AppendOrDestroyModule<FogModule>(fogModuleToggle);
             
+            fpsDisplayModule = AppendOrDestroyModule<FPSDisplayModule>(fpsDisplayModuleToggle);
 #if UNITY_EDITOR
             packageManager = AppendOrDestroyModule<PackageManager>(packageManagerToggle);
 #endif
@@ -581,6 +612,9 @@ namespace WorldSystem.Runtime
                 Instance.moistAccumulatedWaterModule._Update = _Update;
             if (Instance.approxRealtimeGIModule is not null)
                 Instance.approxRealtimeGIModule._Update = _Update;
+            if(Instance.fogModule is not null)
+                Instance.fogModule._Update = _Update;
+
         }
 
         
@@ -638,6 +672,8 @@ namespace WorldSystem.Runtime
         private VolumeCloudOptimizeShadowRenderPass volumeCloudOptimizeShadowRenderPass;
         private AtmosphereBlendPass atmosphereBlendPass;
         
+        
+        
         private class SkyRenderPass : ScriptableRenderPass
         {
             public SkyRenderPass()
@@ -650,7 +686,7 @@ namespace WorldSystem.Runtime
                     Instance?.volumeCloudOptimizeModule?.RenderCloudMap();
             }
 
-            public static int _SplitFrameCount;
+            private static int _SplitFrameCount;
             private Matrix4x4 _ViewMatrix;
             private float3 _CameraPosition;
             // private Matrix4x4 _ViewMatrix_Inv;
@@ -816,7 +852,7 @@ namespace WorldSystem.Runtime
         {
             public AtmosphereBlendPass()
             {
-                renderPassEvent = RenderPassEvent.BeforeRenderingPostProcessing;
+                renderPassEvent = RenderPassEvent.AfterRenderingTransparents;
             }
             
             public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
@@ -849,10 +885,15 @@ namespace WorldSystem.Runtime
         }
 
         
+        
+	    public class BetterFogPass : ScriptableRenderPass
+		{
+			public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
+			{
+				
+			}
+        }
+        
+        
     }
-
-        
-    
-        
-    
 }

@@ -17,8 +17,8 @@ MonoBehaviour:
   sustainedTimeCache: 48
   varyingTimeCache: 8
   backgroundProperty:
-    skyMesh: {fileID: 0}
-    backgroundShader: {fileID: 0}
+    skyMesh: {fileID: 4300000, guid: 3ec8d1078f11f6147bb9cb75cf18150d, type: 2}
+    backgroundShader: {fileID: 4800000, guid: 67f4e0ff7e5a88441ae4f52664bb1c79, type: 3}
     backgroundMaterial: {fileID: 0}
     TaaShader: {fileID: 4800000, guid: b9197ee2061afb84cb58c1d854bea3ca, type: 3}
     TaaMaterial: {fileID: 0}
@@ -29,14 +29,14 @@ MonoBehaviour:
     _Render_ResolutionOptions: 1
     _Render_TemporalAAFactor: 0
     _Render_TargetFps: -1
-    _Render_UseAsyncRender: 1
+    _Render_UseAsyncRender: 0
     _Render_AsyncUpdateRate: 20
     _Render_AsyncFOV: 80
   StarProperty:
     starMesh: {fileID: 0}
-    starShader: {fileID: 0}
+    starShader: {fileID: 4800000, guid: 72fdf5ab94348ed40b501f5e219caa8b, type: 3}
     starMaterial: {fileID: 0}
-    starTexture: {fileID: 0}
+    starTexture: {fileID: 2800000, guid: 098deac9ca9c2bf40b32ff016481f6ba, type: 3}
     count: 10000
     size: 1.8
     automaticColor: 1
@@ -549,10 +549,11 @@ MonoBehaviour:
       m_RotationOrder: 4
     lightComponent: {fileID: 0}
   atmosphereProperty:
-    mesh: {fileID: 0}
-    shader: {fileID: 0}
+    mesh: {fileID: 4300000, guid: 3ec8d1078f11f6147bb9cb75cf18150d, type: 2}
+    shader: {fileID: 4800000, guid: fa859031ab5153345a9e3ced9695a29d, type: 3}
     material: {fileID: 0}
-    atmosphereBlendShader: {fileID: 0}
+    atmosphereBlendShader: {fileID: 4800000, guid: 1afe8fbe76cdae54abde0ad17f3e123d,
+      type: 3}
     atmosphereBlendMaterial: {fileID: 0}
     dayPeriodsList:
     - description: "\u9ECE\u660E"
@@ -596,16 +597,17 @@ MonoBehaviour:
       equatorColor: {r: 0.024999999, g: 0.024999999, b: 0.04, a: 0.29803923}
       groundColor: {r: 0.008235294, g: 0.008235294, b: 0.011764706, a: 0.35686275}
     currentAtmosphereColor:
-      skyColor: {r: 0.09805659, g: 0.17900155, b: 0.5634335, a: 0.45732352}
-      equatorColor: {r: 0.56261516, g: 0.6667909, b: 0.7478314, a: 0.6}
-      groundColor: {r: 0.06903798, g: 0.06361872, b: 0.079568654, a: 0.8945}
+      skyColor: {r: 0.10548934, g: 0.08083275, b: 0.19336157, a: 0.4163705}
+      equatorColor: {r: 0.43045706, g: 0.21790114, b: 0.14258742, a: 0.7053719}
+      groundColor: {r: 0.03593766, g: 0.03665036, b: 0.051423743, a: 0.5884337}
     currentCloudiness: 0
     currentPrecipitation: 0
     useAtmosphereBlend: 1
     start: 20
     end: 2000
   cloudProperty:
-    VolumeCloud_BaseTex_Shader: {fileID: 0}
+    VolumeCloud_BaseTex_Shader: {fileID: 4800000, guid: 97d206b1e14db664391cac55c77549be,
+      type: 3}
     VolumeCloud_BaseTex_Material: {fileID: 0}
     _Render_MaxRenderDistance: 20000
     _Modeling_Amount_CloudAmount: 0.48
@@ -620,13 +622,14 @@ MonoBehaviour:
     _Modeling_ShapeBase_Gain: 0.7
     _Modeling_ShapeBase_Freq: 2
     _Modeling_ShapeBase_Scale: 5
-    _MotionBase_DynamicVector: {x: 0, y: 0.3267041}
+    _MotionBase_DynamicVector: {x: -0.108732276, y: 0.21302056}
     _MotionBase_Direction: 0
     _MotionBase_Speed: 0.25
     _MotionBase_UseDirectionRandom: 1
     _MotionBase_DirectionRandomRange: 60
     _MotionBase_DirectionRandomFreq: 12
-    VolumeCloud_Main_Shader: {fileID: 0}
+    VolumeCloud_Main_Shader: {fileID: 4800000, guid: 432b92588026cab47a32165d32858d5d,
+      type: 3}
     VolumeCloud_Main_Material: {fileID: 0}
     _Render_CoarseSteps: 32
     _Render_DetailSteps: 16
@@ -639,7 +642,7 @@ MonoBehaviour:
     _Modeling_ShapeDetail_Quality: 1
     _Modeling_ShapeDetail_Scale: {x: 8, y: 8, z: 8}
     _MotionBase_UseDynamicCloud: 1
-    _MotionDetail_DynamicVector: {x: 0, y: 0, z: 3.2670412}
+    _MotionDetail_DynamicVector: {x: 0.011829289, y: -0.09967939, z: 2.3895547}
     _MotionDetail_Direction: {x: 0, y: 0}
     _MotionDetail_Speed: 2.5
     _MotionDetail_UseRandomDirection: 1
@@ -741,7 +744,8 @@ MonoBehaviour:
     snowPrecipitation: 0
     snowSize: 2
   lightningEffectProperty:
-    prefab: {fileID: 0}
+    prefab: {fileID: 5925228745392595290, guid: fe10b194253e1ee4a837ebdd03273df1,
+      type: 3}
     mainCamera: {fileID: 0}
     lightningLit: {fileID: 0}
     lightningDataObjectArray:
@@ -757,17 +761,20 @@ MonoBehaviour:
     lightningSpawnRate: 0
   occlusionRenderer: {fileID: 0}
   moistAccumulatedWaterProperty:
-    globalMoist: 1.54
-    raindropsGradientMap: {fileID: 0}
+    globalMoist: 1.592
+    raindropsGradientMap: {fileID: 2800000, guid: e89949843abf7004e84edac7b109710b,
+      type: 3}
     raindropsTiling: 20
     raindropsSplashSpeed: 0.3
     raindropsSize: 0.5
-    accumulatedWaterMask: {fileID: 0}
+    accumulatedWaterMask: {fileID: 2800000, guid: a2cf78be182d9e04885921107bcd90b8,
+      type: 3}
     accumulatedWaterMaskTiling: 0.2
     accumulatedWaterContrast: 4
     accumulatedWaterSteepHillExtinction: 0.9952
     accumulatedWaterParallaxStrength: 0.25
-    ripplesNormalAtlas: {fileID: 0}
+    ripplesNormalAtlas: {fileID: 2800000, guid: a6e49a766b3568e4eb66b720e93376e5,
+      type: 3}
     xColumnsYRowsZSpeedWStrartFrame:
       x: 8
       y: 8
@@ -775,7 +782,7 @@ MonoBehaviour:
       w: 0
     ripplesMainTiling: 1
     ripplesMainStrength: 0.6
-    waterWaveNormal: {fileID: 0}
+    waterWaveNormal: {fileID: 2800000, guid: 5e34ad465893856488924104088e658b, type: 3}
     waterWaveRotate: 0
     waterWaveMainTiling: 1
     waterWaveMainSpeed: 0.05
@@ -783,7 +790,7 @@ MonoBehaviour:
     waterWaveDetailTiling: 1.5
     waterWaveDetailSpeed: 0.03
     waterWaveDetailStrength: 0.03
-    flowMap: {fileID: 0}
+    flowMap: {fileID: 2800000, guid: 1b28c8de5a0e75c42a955ff734a916b3, type: 3}
     flowTiling:
       x: 1.5
       y: 8
@@ -898,7 +905,7 @@ MonoBehaviour:
     ReflectionCubeTexture: {fileID: 8900000, guid: 2ea2a47483686e44d875bde50ad205cf,
       type: 3}
     MainReflectionProbe: {fileID: 0}
-    BlendCubeTexture: {fileID: 0}
+    BlendCubeTexture: {fileID: 8400000, guid: b303b0552780698488db7fcda026fe91, type: 2}
     ReflectionSkyColor:
       serializedVersion: 2
       key0: {r: 0.21960784, g: 0.25098038, b: 0.4, a: 1}
@@ -1087,5 +1094,5 @@ MonoBehaviour:
     _SSR_Samples: 32
     _SSR_RayLength: 200
     _SSR_Thickness: 0.5
-    _SSR_NoiseTex: {fileID: 0}
+    _SSR_NoiseTex: {fileID: 2800000, guid: f11b6fec0abc7114c97b0325d4523122, type: 3}
     _SSR_Jitter: 0
