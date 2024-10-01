@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -8,7 +8,19 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "PI", "Constants And Properties", "PI constant : 3.14159265359" )]
+	[NodeAttributes( "PI",            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Constants And Properties"
+#else
+"常数和属性"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"PI constant : 3.14159265359"
+#else
+"PI常数：3.14159265359"
+#endif
+)]
 	public sealed class PiNode : ParentNode
 	{
 		public PiNode() : base() { }
@@ -16,7 +28,13 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT, true, "Multiplier" );
+			AddInputPort( WirePortDataType.FLOAT, true, 
+#if !WB_LANGUAGE_CHINESE
+"Multiplier"
+#else
+"乘数"
+#endif
+);
 			AddOutputPort( WirePortDataType.FLOAT, Constants.EmptyPortValue );
 			m_textLabelWidth = 70;
 			InputPorts[ 0 ].FloatInternalData = 1;
@@ -46,18 +64,18 @@ namespace AmplifyShaderEditor
 			return finalValue;
 		}
 
-		//public override void ReadFromString( ref string[] nodeParams )
-		//{
-		//	base.ReadFromString( ref nodeParams );
+		
+		
+		
 
-			// Removed on version 5004
-			//m_value = Convert.ToSingle( GetCurrentParam( ref nodeParams ) );
-		//}
+			
+			
+		
 
-		//public override void WriteToString( ref string nodeInfo, ref string connectionsInfo )
-		//{
-		//	base.WriteToString( ref nodeInfo, ref connectionsInfo );
-		//}
+		
+		
+		
+		
 
 	}
 }

@@ -1,7 +1,25 @@
 namespace AmplifyShaderEditor
 {
 	[System.Serializable]
-	[NodeAttributes( "Color Space Double", "Miscellaneous", "Color Space Double" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Color Space Double"
+#else
+"双色空间"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Color Space Double"
+#else
+"双色空间"
+#endif
+)]
 	public class ColorSpaceDouble : ParentNode
 	{
 		private const string ColorSpaceDoubleStr = "unity_ColorSpaceDouble";

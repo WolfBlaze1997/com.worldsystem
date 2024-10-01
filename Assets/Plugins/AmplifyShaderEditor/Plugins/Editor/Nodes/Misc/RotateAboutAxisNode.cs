@@ -1,16 +1,40 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 using UnityEditor;
 using System;
 
 namespace AmplifyShaderEditor
 {
     [Serializable]
-    [NodeAttributes( "Rotate About Axis", "Vector Operators", "Rotates a vector around a normalized axis" )]
+    [NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Rotate About Axis"
+#else
+"绕轴旋转"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vector Operators"
+#else
+"矢量运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Rotates a vector around a normalized axis"
+#else
+"围绕归一化轴旋转向量"
+#endif
+)]
     public class RotateAboutAxisNode : ParentNode
     {
         private const string FunctionHeader = "float3 RotateAroundAxis( float3 center, float3 original, float3 u, float angle )";
-        private const string FunctionCall = "RotateAroundAxis( {0}, {1}, {2}, {3} )";
+        private const string FunctionCall = 
+#if !WB_LANGUAGE_CHINESE
+"RotateAroundAxis( {0}, {1}, {2}, {3} )"
+#else
+"RotateAroundAxis（｛0｝、｛1｝、｛2｝、｛3｝）"
+#endif
+;
         private readonly string[] FunctionBody =
         {
             "float3 RotateAroundAxis( float3 center, float3 original, float3 u, float angle )\n",
@@ -33,9 +57,27 @@ namespace AmplifyShaderEditor
             "}\n"
         };
 
-        private const string NormalizeAxisLabel = "Rotation Axis";
-        private const string NonNormalizeAxisLabel = "Normalized Rotation Axis";
-        private const string NormalizeAxisStr = "Normalize Axis";
+        private const string NormalizeAxisLabel = 
+#if !WB_LANGUAGE_CHINESE
+"Rotation Axis"
+#else
+"旋转轴"
+#endif
+;
+        private const string NonNormalizeAxisLabel = 
+#if !WB_LANGUAGE_CHINESE
+"Normalized Rotation Axis"
+#else
+"标准化旋转轴"
+#endif
+;
+        private const string NormalizeAxisStr = 
+#if !WB_LANGUAGE_CHINESE
+"Normalize Axis"
+#else
+"规范化轴"
+#endif
+;
 
         [UnityEngine.SerializeField]
         private bool m_normalizeAxis = false;
@@ -44,9 +86,27 @@ namespace AmplifyShaderEditor
         {
             base.CommonInit( uniqueId );
             AddInputPort( WirePortDataType.FLOAT3, false, m_normalizeAxis? NormalizeAxisLabel: NonNormalizeAxisLabel );
-            AddInputPort( WirePortDataType.FLOAT, false, "Rotation Angle" );
-            AddInputPort( WirePortDataType.FLOAT3, false, "Pivot Point" );
-            AddInputPort( WirePortDataType.FLOAT3, false, "Position" );
+            AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Rotation Angle"
+#else
+"旋转角度"
+#endif
+);
+            AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"Pivot Point"
+#else
+"枢轴点"
+#endif
+);
+            AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"Position"
+#else
+"职位"
+#endif
+);
             AddOutputPort( WirePortDataType.FLOAT3, Constants.EmptyPortValue );
             m_useInternalPortData = true;
 			m_autoWrapProperties = true;

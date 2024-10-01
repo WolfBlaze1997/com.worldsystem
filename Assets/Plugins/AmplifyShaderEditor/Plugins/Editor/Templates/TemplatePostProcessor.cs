@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEditor;
 using UnityEngine;
@@ -39,7 +39,7 @@ namespace AmplifyShaderEditor
 				}
 			}
 
-			// leave early if there's no shaders among the imports
+			
 			if( !containsShaders )
 				return;
 
@@ -117,7 +117,7 @@ namespace AmplifyShaderEditor
 						TemplateDataParent templateData = templatesManager.GetTemplate( guid );
 						if( templateData != null )
 						{
-							// Close any window using that template
+							
 							int windowCount = IOUtils.AllOpenedWindows.Count;
 							for( int windowIdx = 0; windowIdx < windowCount; windowIdx++ )
 							{
@@ -135,27 +135,27 @@ namespace AmplifyShaderEditor
 				}
 			}
 
-			//for ( int i = 0; i < movedAssets.Length; i++ )
-			//{
-			//	if ( TemplateHelperFunctions.CheckIfTemplate( movedAssets[ i ] ) )
-			//	{
-			//		refreshMenuItems = true;
-			//		break;
-			//	}
-			//}
+			
+			
+			
+			
+			
+			
+			
+			
 
-			//for ( int i = 0; i < movedFromAssetPaths.Length; i++ )
-			//{
-			//	if ( TemplateHelperFunctions.CheckIfTemplate( movedFromAssetPaths[ i ] ) )
-			//	{
-			//		refreshMenuItems = true;
-			//		break;
-			//	}
-			//}
+			
+			
+			
+			
+			
+			
+			
+			
 
 			if( refreshMenuItems )
 			{
-				//UnityEngine.Debug.Log( "Refresh Menu Items" );
+				
 				refreshMenuItems = false;
 				templatesManager.CreateTemplateMenuItems();
 
@@ -170,10 +170,10 @@ namespace AmplifyShaderEditor
 				UIUtils.CurrentWindow = currWindow;
 			}
 
-			// reimport menu items at the end of everything, hopefully preventing import loops
+			
 			templatesManager.ReimportMenuItems();
 
-			// destroying the DummyManager, not doing so will create leaks over time
+			
 			Destroy();
 		}
 	}

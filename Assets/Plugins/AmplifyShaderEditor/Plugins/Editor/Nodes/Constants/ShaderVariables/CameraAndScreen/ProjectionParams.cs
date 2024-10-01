@@ -1,20 +1,62 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Projection Params", "Camera And Screen", "Projection Near/Far parameters" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Projection Params"
+#else
+"投影参数"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Camera And Screen"
+#else
+"摄像头和屏幕"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Projection Near/Far parameters"
+#else
+"投影近/远参数"
+#endif
+)]
 	public sealed class ProjectionParams : ConstVecShaderVariable
 	{
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			ChangeOutputName( 1, "Flipped" );
-			ChangeOutputName( 2, "Near Plane" );
-			ChangeOutputName( 3, "Far Plane" );
-			ChangeOutputName( 4, "1/Far Plane" );
+			ChangeOutputName( 1, 
+#if !WB_LANGUAGE_CHINESE
+"Flipped"
+#else
+"轻弹"
+#endif
+);
+			ChangeOutputName( 2, 
+#if !WB_LANGUAGE_CHINESE
+"Near Plane"
+#else
+"近平面"
+#endif
+);
+			ChangeOutputName( 3, 
+#if !WB_LANGUAGE_CHINESE
+"Far Plane"
+#else
+"远飞机"
+#endif
+);
+			ChangeOutputName( 4, 
+#if !WB_LANGUAGE_CHINESE
+"1/Far Plane"
+#else
+"1/远平面"
+#endif
+);
 			m_value = "_ProjectionParams";
 			m_previewShaderGUID = "97ae846cb0a6b044388fad3bc03bb4c2";
 		}

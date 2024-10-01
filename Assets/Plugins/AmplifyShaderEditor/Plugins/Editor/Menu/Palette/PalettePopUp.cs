@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 
@@ -20,7 +20,13 @@ namespace AmplifyShaderEditor
 		{
 			m_content = new GUIContent( GUIContent.none );
 			m_areaSettings = new Rect( 0, 0, 100, 30 );
-			m_labelContent = new GUIContent( "Test Label" );
+			m_labelContent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Test Label"
+#else
+"测试标签"
+#endif
+);
 		}
 
 		public void Activate( string label )

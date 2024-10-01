@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 #if UNITY_2019_1_OR_NEWER
 using UnityEditor;
 using UnityEngine;
@@ -61,7 +61,25 @@ namespace AmplifyShaderEditor
 	}
 
 	[Serializable]
-	[NodeAttributes( "Diffusion Profile", "Constants And Properties", "Returns Diffusion Profile Hash Id. To be used on Diffusion Profile port on HDRP templates.", KeyCode.None, true, 0, int.MaxValue )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Diffusion Profile"
+#else
+"扩散剖面图"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Constants And Properties"
+#else
+"常数和属性"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Returns Diffusion Profile Hash Id. To be used on Diffusion Profile port on HDRP templates."
+#else
+"返回扩散配置文件哈希Id。用于HDRP模板上的扩散配置文件端口。"
+#endif
+, KeyCode.None, true, 0, int.MaxValue )]
 	public sealed class DiffusionProfileNode : PropertyNode
 	{
 		[SerializeField]
@@ -74,10 +92,16 @@ namespace AmplifyShaderEditor
 		private bool m_defaultInspector = false;
 
 		private bool m_isEditingFields;
-		//[NonSerialized]
-		//private DiffusionProfileSettings m_previousValue;
+		
+		
 
-		public const string NodeErrorMsg = "Only valid on HDRP";
+		public const string NodeErrorMsg = 
+#if !WB_LANGUAGE_CHINESE
+"Only valid on HDRP"
+#else
+"仅在HDRP上有效"
+#endif
+;
 
 		protected override void CommonInit( int uniqueId )
 		{
@@ -107,7 +131,7 @@ namespace AmplifyShaderEditor
 
 		public override void DrawSubProperties()
 		{
-			m_defaultValue = EditorGUILayoutObjectField( Constants.DefaultValueLabel, m_defaultValue, DiffusionProfileSettingsEx.Type, true ) /*as UnityEngine.Object*/;
+			m_defaultValue = EditorGUILayoutObjectField( Constants.DefaultValueLabel, m_defaultValue, DiffusionProfileSettingsEx.Type, true ) ;
 		}
 
 		public override void DrawMaterialProperties()
@@ -115,7 +139,7 @@ namespace AmplifyShaderEditor
 			if( m_materialMode )
 				EditorGUI.BeginChangeCheck();
 
-			m_materialValue = EditorGUILayoutObjectField( Constants.MaterialValueLabel, m_materialValue, DiffusionProfileSettingsEx.Type, true ) /*as DiffusionProfileSettings*/;
+			m_materialValue = EditorGUILayoutObjectField( Constants.MaterialValueLabel, m_materialValue, DiffusionProfileSettingsEx.Type, true ) ;
 
 			if( m_materialMode && EditorGUI.EndChangeCheck() )
 			{
@@ -144,9 +168,21 @@ namespace AmplifyShaderEditor
 						case PropertyType.Property:
 						case PropertyType.InstancedProperty:
 						{
-							m_defaultInspector = EditorGUILayoutToggle( "Default Inspector", m_defaultInspector );
+							m_defaultInspector = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Default Inspector"
+#else
+"默认检查器"
+#endif
+, m_defaultInspector );
 							if( m_defaultInspector )
-								EditorGUILayout.HelpBox("While \"Default Inspector\" is turned ON you can't reorder this property or change it's name, and you can only have one per shader, use it only if you intend to share this shader with non-ASE users",MessageType.Info);
+								EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"While \"Default Inspector\" is turned ON you can't reorder this property or change it's name, and you can only have one per shader, use it only if you intend to share this shader with non-ASE users"
+#else
+"当“默认检查器”处于打开状态时，您无法重新排序此属性或更改其名称，并且每个着色器只能有一个，只有当您打算与非ASE用户共享此着色器时，才能使用它"
+#endif
+,MessageType.Info);
 							EditorGUI.BeginDisabledGroup( m_defaultInspector );
 							ShowPropertyInspectorNameGUI();
 							ShowPropertyNameGUI( true );
@@ -348,7 +384,7 @@ namespace AmplifyShaderEditor
 			return PropertyName;
 		}
 
-		//Vector4 ProfileGUID { get { return ( m_diffusionProfile != null ) ? HDUtils.ConvertGUIDToVector4( AssetDatabase.AssetPathToGUID( AssetDatabase.GetAssetPath( m_diffusionProfile ) ) ) : Vector4.zero; } }
+		
 		uint DefaultHash { get { return ( m_defaultValue != null ) ? DiffusionProfileSettingsEx.Hash( m_defaultValue ) : 0; } }
 		uint MaterialHash { get { return ( m_materialValue != null ) ? DiffusionProfileSettingsEx.Hash( m_materialValue ) : 0; } }
 
@@ -420,7 +456,7 @@ namespace AmplifyShaderEditor
 					}
 					else
 					{
-						// remove the leading minus sign
+						
 						if( len > 0 )
 						{
 							s = str.Substring( 1, 1 ) + str.Substring( 3, len );

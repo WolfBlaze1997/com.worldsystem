@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEditor;
 using UnityEngine;
@@ -11,8 +11,20 @@ namespace AmplifyShaderEditor
 		public delegate ShaderLoadResult OnConfirmationSelected( bool value, Shader shader, Material material );
 		public event OnConfirmationSelected OnConfirmationSelectedEvt;
 
-		private const string m_yesStr = "Yes";
-		private const string m_noStr = "No";
+		private const string m_yesStr = 
+#if !WB_LANGUAGE_CHINESE
+"Yes"
+#else
+"是的"
+#endif
+;
+		private const string m_noStr = 
+#if !WB_LANGUAGE_CHINESE
+"No"
+#else
+"不"
+#endif
+;
 		private bool m_isActive = false;
 		private string m_currentMessage;
 

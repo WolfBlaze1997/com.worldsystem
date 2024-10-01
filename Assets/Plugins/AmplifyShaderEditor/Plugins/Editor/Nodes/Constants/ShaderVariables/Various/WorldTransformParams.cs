@@ -1,11 +1,29 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "World Transform Params", "Object Transform", "World Transform Params contains information about the transform, W is usually 1.0, or -1.0 for odd-negative scale transforms" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"World Transform Params"
+#else
+"世界变换参数"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Object Transform"
+#else
+"对象变换"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"World Transform Params contains information about the transform, W is usually 1.0, or -1.0 for odd-negative scale transforms"
+#else
+"世界变换参数包含有关变换的信息，W通常为1.0，对于奇数负比例变换为-1.0"
+#endif
+)]
 	public sealed class WorldTransformParams : ConstVecShaderVariable
 	{
 		protected override void CommonInit( int uniqueId )

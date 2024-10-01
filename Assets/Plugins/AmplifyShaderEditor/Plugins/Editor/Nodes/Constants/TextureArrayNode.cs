@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -8,8 +8,32 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	//[NodeAttributes( "Texture Array", "Textures", "Texture Array fetches a texture from a texture2DArray asset file given a index value", KeyCode.None, true, 0, int.MaxValue, typeof( Texture2DArray ) )]
-	[NodeAttributes( "[Old]Texture Array", "Textures", "Texture Array fetches a texture from a texture2DArray asset file given a index value", null, KeyCode.None, true, true, "SamplerNode", typeof( SamplerNode ) )]
+	
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"[Old]Texture Array"
+#else
+"[旧]纹理阵列"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Textures"
+#else
+"纹理"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Texture Array fetches a texture from a texture2DArray asset file given a index value"
+#else
+"纹理数组从给定索引值的texture2DArray资源文件中获取纹理"
+#endif
+, null, KeyCode.None, true, true, 
+#if !WB_LANGUAGE_CHINESE
+"SamplerNode"
+#else
+"采样器节点"
+#endif
+, typeof( SamplerNode ) )]
 	public class TextureArrayNode : PropertyNode
 	{
 		[SerializeField]
@@ -51,9 +75,21 @@ namespace AmplifyShaderEditor
 		private OutputPort m_colorPort;
 
 		private const string AutoUnpackNormalsStr = "Normal";
-		private const string NormalScaleStr = "Scale";
+		private const string NormalScaleStr = 
+#if !WB_LANGUAGE_CHINESE
+"Scale"
+#else
+"规模"
+#endif
+;
 
-		private string m_labelText = "None (Texture2DArray)";
+		private string m_labelText = 
+#if !WB_LANGUAGE_CHINESE
+"None (Texture2DArray)"
+#else
+"无（纹理2DArray）"
+#endif
+;
 
 		private readonly Color ReferenceHeaderColor = new Color( 2.66f, 1.02f, 0.6f, 1.0f );
 
@@ -77,10 +113,28 @@ namespace AmplifyShaderEditor
 			base.CommonInit( uniqueId );
 			AddOutputColorPorts( "RGBA" );
 			m_colorPort = m_outputPorts[ 0 ];
-			AddInputPort( WirePortDataType.SAMPLER2D, false, "Tex", -1, MasterNodePortCategory.Fragment, 6 );
+			AddInputPort( WirePortDataType.SAMPLER2D, false, 
+#if !WB_LANGUAGE_CHINESE
+"Tex"
+#else
+"特克斯"
+#endif
+, -1, MasterNodePortCategory.Fragment, 6 );
 			AddInputPort( WirePortDataType.FLOAT2, false, "UV", -1, MasterNodePortCategory.Fragment, 0 );
-			AddInputPort( WirePortDataType.FLOAT, false, "Index", -1, MasterNodePortCategory.Fragment, 1 );
-			AddInputPort( WirePortDataType.FLOAT, false, "Level", -1, MasterNodePortCategory.Fragment, 2 );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Index"
+#else
+"索引"
+#endif
+, -1, MasterNodePortCategory.Fragment, 1 );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Level"
+#else
+"级别"
+#endif
+, -1, MasterNodePortCategory.Fragment, 2 );
 			AddInputPort( WirePortDataType.FLOAT, false, NormalScaleStr, -1, MasterNodePortCategory.Fragment, 3 );
 			AddInputPort( WirePortDataType.FLOAT2, false, "DDX", -1, MasterNodePortCategory.Fragment, 4 );
 			AddInputPort( WirePortDataType.FLOAT2, false, "DDY", -1, MasterNodePortCategory.Fragment, 5 );
@@ -188,7 +242,13 @@ namespace AmplifyShaderEditor
 		{
 			m_uvSet = EditorGUILayoutIntPopup( Constants.AvailableUVSetsLabel, m_uvSet, Constants.AvailableUVSetsStr, Constants.AvailableUVSets );
 
-			MipType newMipMode = (MipType)EditorGUILayoutPopup( "Mip Mode", (int)m_mipMode, m_mipOptions );
+			MipType newMipMode = (MipType)EditorGUILayoutPopup( 
+#if !WB_LANGUAGE_CHINESE
+"Mip Mode"
+#else
+"Mip模式"
+#endif
+, (int)m_mipMode, m_mipOptions );
 			if( newMipMode != m_mipMode )
 			{
 				m_mipMode = newMipMode;
@@ -216,17 +276,35 @@ namespace AmplifyShaderEditor
 
 			if( m_ddxPort.Visible )
 			{
-				EditorGUILayout.HelpBox( "Warning: Derivative Mip Mode only works on some platforms (D3D11 XBOXONE GLES3 GLCORE)", MessageType.Warning );
+				EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"Warning: Derivative Mip Mode only works on some platforms (D3D11 XBOXONE GLES3 GLCORE)"
+#else
+"警告：衍生Mip模式仅适用于某些平台（WM_1 XBOXONE GLES3 GLCORE）"
+#endif
+, MessageType.Warning );
 			}
 
 			if( !m_lodPort.IsConnected && m_lodPort.Visible )
 			{
-				m_lodPort.FloatInternalData = EditorGUILayoutFloatField( "Mip Level", m_lodPort.FloatInternalData );
+				m_lodPort.FloatInternalData = EditorGUILayoutFloatField( 
+#if !WB_LANGUAGE_CHINESE
+"Mip Level"
+#else
+"Mip级别"
+#endif
+, m_lodPort.FloatInternalData );
 			}
 
 			if( !m_indexPort.IsConnected )
 			{
-				m_indexPort.FloatInternalData = EditorGUILayoutFloatField( "Index", m_indexPort.FloatInternalData );
+				m_indexPort.FloatInternalData = EditorGUILayoutFloatField( 
+#if !WB_LANGUAGE_CHINESE
+"Index"
+#else
+"索引"
+#endif
+, m_indexPort.FloatInternalData );
 			}
 
 
@@ -329,7 +407,13 @@ namespace AmplifyShaderEditor
 		public void DrawSamplerOptions()
 		{
 			EditorGUI.BeginChangeCheck();
-			bool autoUnpackNormals = EditorGUILayoutToggle( "Normal Map", m_autoUnpackNormals );
+			bool autoUnpackNormals = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Normal Map"
+#else
+"法线贴图"
+#endif
+, m_autoUnpackNormals );
 			if( EditorGUI.EndChangeCheck() )
 			{
 				if( m_autoUnpackNormals != autoUnpackNormals )
@@ -539,10 +623,10 @@ namespace AmplifyShaderEditor
 						SetAdditonalTitleText( m_previewTextProp.AdditonalTitleContent.text );
 					}
 
-					// Draw chain lock
+					
 					GUI.Label( m_iconPos, string.Empty, UIUtils.GetCustomStyle( CustomStyle.SamplerTextureIcon ) );
 
-					// Draw frame around preview
+					
 					GUI.Label( m_previewRect, string.Empty, UIUtils.GetCustomStyle( CustomStyle.SamplerFrame ) );
 				}
 				break;
@@ -557,10 +641,10 @@ namespace AmplifyShaderEditor
 						SetAdditonalTitleText( m_referenceSampler.PreviewTextProp.AdditonalTitleContent.text );
 					}
 
-					// Draw chain lock
+					
 					GUI.Label( m_iconPos, string.Empty, UIUtils.GetCustomStyle( CustomStyle.SamplerTextureIcon ) );
 
-					// Draw frame around preview
+					
 					GUI.Label( m_previewRect, string.Empty, UIUtils.GetCustomStyle( CustomStyle.SamplerFrame ) );
 				}
 				break;
@@ -596,7 +680,13 @@ namespace AmplifyShaderEditor
 				{
 					DrawPreviewMaskButtonsRepaint( drawInfo, butRect );
 				}
-				GUI.Label( smallButton, "Select", UIUtils.GetCustomStyle( CustomStyle.SamplerButton ) );
+				GUI.Label( smallButton, 
+#if !WB_LANGUAGE_CHINESE
+"Select"
+#else
+"选择"
+#endif
+, UIUtils.GetCustomStyle( CustomStyle.SamplerButton ) );
 			}
 
 			GUI.Label( newRect, string.Empty, UIUtils.GetCustomStyle( CustomStyle.SamplerFrame ) );
@@ -662,7 +752,7 @@ namespace AmplifyShaderEditor
 			{
 				if( dataCollector.IsTemplate )
 				{
-					uvs = dataCollector.TemplateDataCollectorInstance.GetTextureCoord( m_uvSet, propertyName/*( instanced ? m_referenceSampler.PropertyName : PropertyName )*/, UniqueId, CurrentPrecisionType );
+					uvs = dataCollector.TemplateDataCollectorInstance.GetTextureCoord( m_uvSet, propertyName, UniqueId, CurrentPrecisionType );
 				}
 				else
 				{
@@ -678,8 +768,8 @@ namespace AmplifyShaderEditor
 
 			if( dataCollector.IsTemplate && dataCollector.IsSRP )
 			{
-				//CAREFUL mipbias here means derivative (this needs index changes)
-				//TODO: unity now supports bias as well
+				
+				
 				if( m_mipMode == MipType.MipBias )
 				{
 					GeneratorUtils.AddCustomArraySamplingMacros( ref dataCollector );
@@ -696,7 +786,7 @@ namespace AmplifyShaderEditor
 			}
 			else
 			{
-				//CAREFUL mipbias here means derivative (this needs index changes)
+				
 				if( m_mipMode == MipType.MipBias )
 				{
 					GeneratorUtils.AddCustomArraySamplingMacros( ref dataCollector );
@@ -803,8 +893,8 @@ namespace AmplifyShaderEditor
 			ConfigureOutputPorts();
 
 			m_lodPort.Visible = ( m_mipMode == MipType.MipLevel );
-			m_ddxPort.Visible = ( m_mipMode == MipType.MipBias ); //not really bias, it's derivative
-			m_ddyPort.Visible = ( m_mipMode == MipType.MipBias ); //not really bias, it's derivative
+			m_ddxPort.Visible = ( m_mipMode == MipType.MipBias ); 
+			m_ddyPort.Visible = ( m_mipMode == MipType.MipBias ); 
 
 			UpdateHeaderColor();
 

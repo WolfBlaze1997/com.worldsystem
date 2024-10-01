@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -31,7 +31,7 @@ namespace AmplifyShaderEditor
 			base.DrawProperties();
 			DrawPrecisionProperty();
 		}
-		//This needs to be called on the end of the CommonInit on all children
+		
 		protected void InitialSetup()
 		{
 			m_currentInputValueStr = Constants.InputVarStr + "." + UIUtils.GetInputValueFromType( m_currentInput );

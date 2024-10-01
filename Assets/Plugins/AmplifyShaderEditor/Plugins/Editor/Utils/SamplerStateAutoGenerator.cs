@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.Collections.Generic;
@@ -54,8 +54,20 @@ namespace AmplifyShaderEditor
 	{
 		private const int MaxCount = 3;
 		private const float ButtonLayoutWidth = 15;
-		private const string AdditionalWrapsStr = "Additional Wraps";
-		private const string InlineSamplerStateStr = "Inline Sampler State";
+		private const string AdditionalWrapsStr = 
+#if !WB_LANGUAGE_CHINESE
+"Additional Wraps"
+#else
+"附加包装"
+#endif
+;
+		private const string InlineSamplerStateStr = 
+#if !WB_LANGUAGE_CHINESE
+"Inline Sampler State"
+#else
+"内联采样器状态"
+#endif
+;
 
 		[SerializeField]
 		private InlineSamplerFilteringMode m_filterMode = InlineSamplerFilteringMode.Point;

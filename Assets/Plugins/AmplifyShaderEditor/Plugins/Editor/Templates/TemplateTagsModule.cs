@@ -8,13 +8,49 @@ namespace AmplifyShaderEditor
 	[Serializable]
 	public class TemplateTagsModule : TemplateModuleParent
 	{
-		private const string CustomTagsStr = "Tags";
-		private const string TagNameStr = "Name";
-		private const string TagValueStr = "Value";
+		private const string CustomTagsStr = 
+#if !WB_LANGUAGE_CHINESE
+"Tags"
+#else
+"标签"
+#endif
+;
+		private const string TagNameStr = 
+#if !WB_LANGUAGE_CHINESE
+"Name"
+#else
+"姓名"
+#endif
+;
+		private const string TagValueStr = 
+#if !WB_LANGUAGE_CHINESE
+"Value"
+#else
+"价值观"
+#endif
+;
 		private const string QueueIndexStr = "Index";
-		private const string QueueLabelStr = "Queue";
-		private const string RenderTypeLabelStr = "Type";
-		private const string CustomRenderTypeLabelStr = "Custom";
+		private const string QueueLabelStr = 
+#if !WB_LANGUAGE_CHINESE
+"Queue"
+#else
+"排队"
+#endif
+;
+		private const string RenderTypeLabelStr = 
+#if !WB_LANGUAGE_CHINESE
+"Type"
+#else
+"类型"
+#endif
+;
+		private const string CustomRenderTypeLabelStr = 
+#if !WB_LANGUAGE_CHINESE
+"Custom"
+#else
+"自定义"
+#endif
+;
 
 		private const float ShaderKeywordButtonLayoutWidth = 15;
 		private UndoParentNode m_currentOwner;
@@ -68,9 +104,9 @@ namespace AmplifyShaderEditor
 
 		public override void ShowUnreadableDataMessage( ParentNode owner )
 		{
-			//bool foldout = owner.ContainerGraph.ParentWindow.InnerWindowVariables.ExpandedCustomTags;
+			
 			NodeUtils.DrawPropertyGroup( ref m_foldout, CustomTagsStr, base.ShowUnreadableDataMessage );
-			//owner.ContainerGraph.ParentWindow.InnerWindowVariables.ExpandedCustomTags = foldout;
+			
 		}
 
 		public void OnLogicUpdate()
@@ -103,7 +139,7 @@ namespace AmplifyShaderEditor
 		public override void Draw( UndoParentNode owner, bool style = true )
 		{
 			m_currentOwner = owner;
-			//bool foldout = owner.ContainerGraph.ParentWindow.InnerWindowVariables.ExpandedCustomTags;
+			
 			if( style )
 			{
 				NodeUtils.DrawPropertyGroup( ref m_foldout, CustomTagsStr, DrawMainBody, DrawButtons );
@@ -112,21 +148,21 @@ namespace AmplifyShaderEditor
 			{
 				NodeUtils.DrawNestedPropertyGroup( ref m_foldout, CustomTagsStr, DrawMainBody, DrawButtons );
 			}
-			//owner.ContainerGraph.ParentWindow.InnerWindowVariables.ExpandedCustomTags = foldout;
+			
 		}
 
 		void DrawButtons()
 		{
 			EditorGUILayout.Separator();
 
-			// Add tag
+			
 			if( GUILayout.Button( string.Empty, UIUtils.PlusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 			{
 				m_availableTags.Add( new CustomTagData() );
 				EditorGUI.FocusTextInControl( null );
 			}
 
-			//Remove tag
+			
 			if( GUILayout.Button( string.Empty, UIUtils.MinusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 			{
 				if( m_availableTags.Count > 0 )
@@ -146,7 +182,13 @@ namespace AmplifyShaderEditor
 
 				if( itemCount == 0 )
 				{
-					EditorGUILayout.HelpBox( "Your list is Empty!\nUse the plus button to add one.", MessageType.Info );
+					EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"Your list is Empty!\nUse the plus button to add one."
+#else
+"您的列表为空！\n使用加号按钮添加一个。"
+#endif
+, MessageType.Info );
 				}
 
 				int markedToDelete = -1;
@@ -158,7 +200,7 @@ namespace AmplifyShaderEditor
 					{
 						EditorGUI.indentLevel += 1;
 						EditorGUIUtility.labelWidth = 70;
-						//Tag Name
+						
 						EditorGUI.BeginChangeCheck();
 						m_availableTags[ i ].TagName = m_currentOwner.EditorGUILayoutTextField( TagNameStr, m_availableTags[ i ].TagName );
 						if( EditorGUI.EndChangeCheck() )
@@ -169,7 +211,7 @@ namespace AmplifyShaderEditor
 							m_tagNameCheckTimestamp = EditorApplication.timeSinceStartup;
 						}
 
-						//Tag Value
+						
 						switch( m_availableTags[ i ].SpecialTag )
 						{
 							case TemplateSpecialTags.DisableBatching:
@@ -218,14 +260,14 @@ namespace AmplifyShaderEditor
 						EditorGUILayout.BeginHorizontal();
 						{
 							GUILayout.Label( " " );
-							// Add new port
+							
 							if( m_currentOwner.GUILayoutButton( string.Empty, UIUtils.PlusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 							{
 								m_availableTags.Insert( i + 1, new CustomTagData() );
 								EditorGUI.FocusTextInControl( null );
 							}
 
-							//Remove port
+							
 							if( m_currentOwner.GUILayoutButton( string.Empty, UIUtils.MinusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 							{
 								markedToDelete = i;
@@ -253,8 +295,8 @@ namespace AmplifyShaderEditor
 			}
 		}
 
-		//Method used by template options
-		// As such. Render Queue will have value and offset separated by ,
+		
+		
 		public void AddSpecialTag( TemplateSpecialTags tag, TemplateActionItem item )
 		{
 			if( tag == TemplateSpecialTags.None )

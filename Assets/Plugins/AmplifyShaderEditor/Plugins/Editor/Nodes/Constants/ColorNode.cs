@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -8,7 +8,25 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Color", "Constants And Properties", "Color property", null, KeyCode.Alpha5 )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Color"
+#else
+"颜色"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Constants And Properties"
+#else
+"常数和属性"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Color property"
+#else
+"颜色属性"
+#endif
+, null, KeyCode.Alpha5 )]
 	public sealed class ColorNode : PropertyNode
 	{
 		private const string ColorSpaceStr = "Color Space";
@@ -24,8 +42,8 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private bool m_isHDR = false;
 
-		//[SerializeField]
-		//private ASEColorSpace m_colorSpace = ASEColorSpace.Auto;
+		
+		
 		private GUIContent m_dummyContent;
 
 		private int m_cachedPropertyId = -1;
@@ -36,7 +54,13 @@ namespace AmplifyShaderEditor
 		private bool m_autoGammaToLinearConversion = true;
 
 		private const string AutoGammaToLinearConversion = "IsGammaSpace() ? {0} : {1}";
-		private const string AutoGammaToLinearStr = "Auto Gamma To Linear";
+		private const string AutoGammaToLinearStr = 
+#if !WB_LANGUAGE_CHINESE
+"Auto Gamma To Linear"
+#else
+"自动伽玛转换为线性"
+#endif
+;
 
 		public ColorNode() : base() { }
 		public ColorNode( int uniqueId, float x, float y, float width, float height ) : base( uniqueId, x, y, width, height ) { }
@@ -87,51 +111,51 @@ namespace AmplifyShaderEditor
 			}
 		}
 
-		//public override void DrawMainPropertyBlock()
-		//{
-		//	EditorGUILayout.BeginVertical();
-		//	{
+		
+		
+		
+		
 
-		//		PropertyType parameterType = (PropertyType)EditorGUILayoutEnumPopup( ParameterTypeStr, m_currentParameterType );
-		//		if( parameterType != m_currentParameterType )
-		//		{
-		//			ChangeParameterType( parameterType );
-		//			BeginPropertyFromInspectorCheck();
-		//		}
+		
+		
+		
+		
+		
+		
 
-		//		switch( m_currentParameterType )
-		//		{
-		//			case PropertyType.Property:
-		//			case PropertyType.InstancedProperty:
-		//			{
-		//				ShowPropertyInspectorNameGUI();
-		//				ShowPropertyNameGUI( true );
-		//				ShowVariableMode();
-		//				ShowPrecision();
-		//				ShowToolbar();
-		//			}
-		//			break;
-		//			case PropertyType.Global:
-		//			{
-		//				ShowPropertyInspectorNameGUI();
-		//				ShowPropertyNameGUI( false );
-		//				ShowVariableMode();
-		//				ShowPrecision();
-		//				ShowDefaults();
-		//			}
-		//			break;
-		//			case PropertyType.Constant:
-		//			{
-		//				ShowPropertyInspectorNameGUI();
-		//				ShowPrecision();
-		//				m_colorSpace = (ASEColorSpace)EditorGUILayoutEnumPopup( ColorSpaceStr, m_colorSpace );
-		//				ShowDefaults();
-		//			}
-		//			break;
-		//		}
-		//	}
-		//	EditorGUILayout.EndVertical();
-		//}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 		public override void DrawMaterialProperties()
 		{
@@ -161,7 +185,7 @@ namespace AmplifyShaderEditor
 				return;
 
 			Rect hitBox = m_remainingBox;
-			//hitBox.xMin -= LabelWidth * drawInfo.InvertedZoom;
+			
 			bool insideBox = hitBox.Contains( drawInfo.MousePosition );
 
 			if( insideBox )
@@ -223,13 +247,13 @@ namespace AmplifyShaderEditor
 		public override void ConfigureLocalVariable( ref MasterNodeDataCollector dataCollector )
 		{
 			Color color = m_defaultValue;
-			//switch( m_colorSpace )
-			//{
-			//	default:
-			//	case ASEColorSpace.Auto: color = m_defaultValue; break;
-			//	case ASEColorSpace.Gamma: color = m_defaultValue.gamma; break;
-			//	case ASEColorSpace.Linear: color = m_defaultValue.linear; break;
-			//}
+			
+			
+			
+			
+			
+			
+			
 
 			dataCollector.AddLocalVariable( UniqueId, CreateLocalVarDec( color.r + "," + color.g + "," + color.b + "," + color.a ) );
 
@@ -248,7 +272,7 @@ namespace AmplifyShaderEditor
 			if( m_currentParameterType != PropertyType.Constant )
 				return GetOutputVectorItem( 0, outputId, PropertyData( dataCollector.PortCategory ) );
 
-			// Constant Only Code
+			
 
 			if( m_outputPorts[ outputId ].IsLocalValue(dataCollector.PortCategory) )
 			{
@@ -276,13 +300,13 @@ namespace AmplifyShaderEditor
 				}
 
 				Color color = m_defaultValue;
-				//switch( m_colorSpace )
-				//{
-				//	default:
-				//	case ASEColorSpace.Auto: color = m_defaultValue; break;
-				//	case ASEColorSpace.Gamma: color = m_defaultValue.gamma; break;
-				//	case ASEColorSpace.Linear: color = m_defaultValue.linear; break;
-				//}
+				
+				
+				
+				
+				
+				
+				
 				string result = string.Empty;
 
 				switch( outputId )
@@ -337,7 +361,7 @@ namespace AmplifyShaderEditor
 			m_isHDR = false;
 			for( int i = 0; i < count; i++ )
 			{
-				if( m_selectedAttribs[ i ] == 1 /*HDR Property ID*/)
+				if( m_selectedAttribs[ i ] == 1 )
 				{
 					m_isHDR = true;
 					break;
@@ -426,10 +450,10 @@ namespace AmplifyShaderEditor
 			{
 				m_autoGammaToLinearConversion = false;
 			}
-			//if( UIUtils.CurrentShaderVersion() > 14202 )
-			//{
-			//	m_colorSpace = (ASEColorSpace)Enum.Parse( typeof( ASEColorSpace ), GetCurrentParam( ref nodeParams ) );
-			//}
+			
+			
+			
+			
 		}
 
 		public override void WriteToString( ref string nodeInfo, ref string connectionsInfo )
@@ -438,7 +462,7 @@ namespace AmplifyShaderEditor
 			IOUtils.AddFieldValueToString( ref nodeInfo, IOUtils.ColorToString( m_defaultValue ) );
 			IOUtils.AddFieldValueToString( ref nodeInfo, IOUtils.ColorToString( m_materialValue ) );
 			IOUtils.AddFieldValueToString( ref nodeInfo, m_autoGammaToLinearConversion );
-			//IOUtils.AddFieldValueToString( ref nodeInfo, m_colorSpace );
+			
 		}
 
 		public override void SetGlobalValue() { Shader.SetGlobalColor( m_propertyName, m_defaultValue ); }

@@ -3,11 +3,29 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "RGB to HSV", "Image Effects", "Converts from RGB to HSV color space" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"RGB to HSV"
+#else
+"RGB转换为HSV"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Image Effects"
+#else
+"图像效果"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Converts from RGB to HSV color space"
+#else
+"从RGB转换到HSV颜色空间"
+#endif
+)]
 	public sealed class RGBToHSVNode : ParentNode
 	{
-		public static readonly string RGBToHSVHeader = "RGBToHSV( {0} )";
-		public static readonly string[] RGBToHSVFunction = {	"{0}3 RGBToHSV({0}3 c)\n",
+		public readonly static string RGBToHSVHeader = "RGBToHSV( {0} )";
+		public readonly static string[] RGBToHSVFunction = {	"{0}3 RGBToHSV({0}3 c)\n",
 																"{\n",
 																"\t{0}4 K = {0}4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);\n",
 																"\t{0}4 p = lerp( {0}4( c.bg, K.wz ), {0}4( c.gb, K.xy ), step( c.b, c.g ) );\n",
@@ -18,7 +36,7 @@ namespace AmplifyShaderEditor
 																"}"
 															};
 
-		public static readonly bool[] RGBToHSVFlags = {	true,
+		public readonly static bool[] RGBToHSVFlags = {	true,
 														false,
 														true,
 														true,
@@ -52,7 +70,7 @@ namespace AmplifyShaderEditor
 		{
 			if( !dataCollector.HasFunction( RGBToHSVHeader ) )
 			{
-				//Hack to be used util indent is properly used
+				
 				int currIndent = UIUtils.ShaderIndentLevel;
 				if( dataCollector.MasterNodeCategory == AvailableShaderTypes.Template )
 				{

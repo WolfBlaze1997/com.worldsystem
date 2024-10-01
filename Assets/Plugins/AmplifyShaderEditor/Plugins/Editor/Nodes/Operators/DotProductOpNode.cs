@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Dot", "Vector Operators", "Scalar dot product of two vectors ( A . B )", null, KeyCode.Period )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Dot"
+#else
+"圆点"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vector Operators"
+#else
+"矢量运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Scalar dot product of two vectors ( A . B )"
+#else
+"两个向量的标量点积（A.B）"
+#endif
+, null, KeyCode.Period )]
 	public sealed class DotProductOpNode : DynamicTypeNode
 	{
 		protected override void CommonInit( int uniqueId )

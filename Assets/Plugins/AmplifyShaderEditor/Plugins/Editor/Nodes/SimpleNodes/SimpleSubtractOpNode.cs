@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -7,7 +7,25 @@ using UnityEngine;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Subtract", "Math Operators", "Subtraction of two values ( A - B )", null, UnityEngine.KeyCode.S )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Subtract"
+#else
+"减法"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Subtraction of two values ( A - B )"
+#else
+"减去两个值（A-B）"
+#endif
+, null, UnityEngine.KeyCode.S )]
 	public sealed class SimpleSubtractOpNode : DynamicTypeNode
 	{
 		protected override void CommonInit( int uniqueId )

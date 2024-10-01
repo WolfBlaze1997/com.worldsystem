@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -8,23 +8,47 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Function Subtitle", "Functions", "Adds a subtitle to its shader function", NodeAvailabilityFlags = (int)NodeAvailability.ShaderFunction )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Function Subtitle"
+#else
+"功能字幕"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Functions"
+#else
+"功能"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Adds a subtitle to its shader function"
+#else
+"将字幕添加到其着色器功能中"
+#endif
+, NodeAvailabilityFlags = (int)NodeAvailability.ShaderFunction )]
 	public sealed class FunctionSubtitle : ParentNode
 	{
 
-		//protected override void CommonInit( int uniqueId )
-		//{
-		//	base.CommonInit( uniqueId );
-		//	AddInputPort( WirePortDataType.FLOAT, false, Constants.EmptyPortValue );
-		//	AddOutputPort( WirePortDataType.FLOAT, Constants.EmptyPortValue );
-		//	m_autoWrapProperties = true;
-		//	m_textLabelWidth = 100;
-		//	//SetTitleText( m_inputName );
-		//	//SetAdditonalTitleText( "( " + m_inputValueTypes[ m_selectedInputTypeInt ] + " )" );
-		//	m_previewShaderGUID = "04bc8e7b317dccb4d8da601680dd8140";
-		//}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		[SerializeField]
-		private string m_subtitle = "Subtitle";
+		private string m_subtitle = 
+#if !WB_LANGUAGE_CHINESE
+"Subtitle"
+#else
+"字幕"
+#endif
+;
 
 		protected override void CommonInit( int uniqueId )
 		{
@@ -57,24 +81,24 @@ namespace AmplifyShaderEditor
 			return m_inputPorts[ 0 ].GenerateShaderForOutput( ref dataCollector, m_inputPorts[ 0 ].DataType, ignoreLocalvar );
 		}
 
-		//public override void PropagateNodeData( NodeData nodeData, ref MasterNodeDataCollector dataCollector )
-		//{
-		//	base.PropagateNodeData( nodeData, ref dataCollector );
+		
+		
+		
 
-		//	//if( m_containerGraph.CurrentShaderFunction != null )
-		//		//m_containerGraph.CurrentShaderFunction.FunctionSubtitle = m_subttile;
-		//}
+		
+		
+		
 
 		public override void OnNodeLogicUpdate( DrawInfo drawInfo )
 		{
 			base.OnNodeLogicUpdate( drawInfo );
-			//public override void PropagateNodeData( NodeData nodeData, ref MasterNodeDataCollector dataCollector )
-			//{
-			//	base.PropagateNodeData( nodeData, ref dataCollector );
-			//Debug.Log( IsConnected + " " + m_containerGraph.CurrentFunctionOutput );
+			
+			
+			
+			
 			if( m_containerGraph.CurrentFunctionOutput != null && IsConnected )
 				m_containerGraph.CurrentFunctionOutput.SubTitle = m_subtitle;
-			//	m_containerGraph.CurrentShaderFunction.FunctionSubtitle = m_subttile;
+			
 		}
 
 		public override void DrawProperties()
@@ -82,27 +106,33 @@ namespace AmplifyShaderEditor
 			base.DrawProperties();
 			EditorGUILayout.BeginVertical();
 			EditorGUI.BeginChangeCheck();
-			m_subtitle = EditorGUILayoutTextField( "Name", m_subtitle );
+			m_subtitle = EditorGUILayoutTextField( 
+#if !WB_LANGUAGE_CHINESE
+"Name"
+#else
+"姓名"
+#endif
+, m_subtitle );
 			if( EditorGUI.EndChangeCheck() )
 			{
 				SetTitleText( m_subtitle );
-				//UIUtils.UpdateFunctionInputData( UniqueId, m_inputName );
+				
 			}
 			EditorGUI.BeginChangeCheck();
-			//m_selectedInputTypeInt = EditorGUILayoutPopup( InputTypeStr, m_selectedInputTypeInt, m_inputValueTypes );
-			//if( EditorGUI.EndChangeCheck() )
-			//{
-			//	UpdatePorts();
-			//	SetAdditonalTitleText( "( " + m_inputValueTypes[ m_selectedInputTypeInt ] + " )" );
-			//}
+			
+			
+			
+			
+			
+			
 
-			//m_autoCast = EditorGUILayoutToggle( "Auto Cast", m_autoCast );
+			
 
-			//EditorGUILayout.Separator();
-			//if( !m_inputPorts[ 0 ].IsConnected && m_inputPorts[ 0 ].ValidInternalData )
-			//{
-			//	m_inputPorts[ 0 ].ShowInternalData( this, true, "Default Value" );
-			//}
+			
+			
+			
+			
+			
 
 
 			EditorGUILayout.EndVertical();

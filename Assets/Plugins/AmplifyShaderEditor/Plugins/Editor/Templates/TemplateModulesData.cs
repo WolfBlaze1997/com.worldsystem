@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.Text.RegularExpressions;
@@ -48,7 +48,7 @@ namespace AmplifyShaderEditor
 		ControlData,
 		DomainData,
 		ModuleRenderPlatforms
-		//EndPass
+		
 	}
 
 	public enum TemplateSRPType
@@ -201,7 +201,7 @@ namespace AmplifyShaderEditor
 
 			m_uniquePrefix = uniquePrefix;
 			
-			//RENDERING PLATFORMS
+			
 			m_renderPlatformHelper = new TemplateRenderPlatformHelper();
 			TemplateHelperFunctions.FillRenderingPlatform( m_renderPlatformHelper , subBody );
 			if( m_renderPlatformHelper.IsValid )
@@ -210,10 +210,10 @@ namespace AmplifyShaderEditor
 				idManager.RegisterId( m_renderPlatformHelper.Index , uniquePrefix + m_renderPlatformHelper.ID , m_renderPlatformHelper.ID );
 			}
 
-			//PRAGMAS AND INCLUDES
+			
 			TemplateHelperFunctions.CreatePragmaIncludeList( subBody, m_includePragmaContainer );
 
-			//COMMON TAGS
+			
 			ConfigureCommonTag( m_globalsTag, propertyContainer, idManager, uniquePrefix, offsetIdx, subBody );
 			ConfigureCommonTag( m_srpBatcherTag, propertyContainer, idManager, uniquePrefix, offsetIdx, subBody );
 			ConfigureCommonTag( m_functionsTag, propertyContainer, idManager, uniquePrefix, offsetIdx, subBody );
@@ -226,13 +226,13 @@ namespace AmplifyShaderEditor
 			ConfigureCommonTag( m_inputsVertTag, propertyContainer, idManager, uniquePrefix, offsetIdx, subBody );
 			ConfigureCommonTag( m_inputsFragTag, propertyContainer, idManager, uniquePrefix, offsetIdx, subBody );
 
-			// If Options are enabled then remove them so they won't influence Regex matches
+			
 			if( optionsContainer.Enabled && optionsContainer.EndIndex  > 0 )
 			{
 				offsetIdx += optionsContainer.EndIndex;
 				subBody = subBody.Substring( optionsContainer.EndIndex );
 			}
-			//BlEND MODE
+			
 			{
 				Match blendModeMatch = Regex.Match( subBody, TemplateHelperFunctions.BlendModePattern1 );
 				if( blendModeMatch.Success )
@@ -312,7 +312,7 @@ namespace AmplifyShaderEditor
 					
 				}
 			}
-			//BLEND OP
+			
 			{
 				Match blendOpMatch = Regex.Match( subBody, TemplateHelperFunctions.BlendOpPattern1 );
 				if( blendOpMatch.Success )
@@ -397,7 +397,7 @@ namespace AmplifyShaderEditor
 				m_blendData.DataCheck = ( m_blendData.ValidBlendMode || m_blendData.ValidBlendOp ) ? TemplateDataCheck.Valid : TemplateDataCheck.Invalid;
 			}
 			
-			//ALPHA TO MASK
+			
 			{
 				Match alphaToMaskMatch = Regex.Match( subBody, TemplateHelperFunctions.AlphaToMaskPattern );
 				if( alphaToMaskMatch.Success )
@@ -414,7 +414,7 @@ namespace AmplifyShaderEditor
 				}
 			}
 
-			//CULL MODE
+			
 			{
 				Match cullMatch = Regex.Match( subBody, TemplateHelperFunctions.CullWholeWordPattern );
 				if( cullMatch.Success )
@@ -431,13 +431,13 @@ namespace AmplifyShaderEditor
 					
 				}
 			}
-			//COLOR MASK
+			
 			{
 				Match colorMaskMatch = Regex.Match( subBody, TemplateHelperFunctions.ColorMask1Pattern );
 				if( colorMaskMatch.Success )
 				{
 					int colorMaskIdx = colorMaskMatch.Index;
-					int end = colorMaskMatch.Length + colorMaskIdx;// subBody.IndexOf( TemplatesManager.TemplateNewLine, colorMaskIdx );
+					int end = colorMaskMatch.Length + colorMaskIdx;
 					string colorMaskParams = subBody.Substring( colorMaskIdx, end - colorMaskIdx );
 					m_colorMaskData1.ColorMaskId = colorMaskParams;
 					m_colorMaskData1.StartIdx = offsetIdx + colorMaskIdx;
@@ -453,7 +453,7 @@ namespace AmplifyShaderEditor
 				if( colorMaskMatch.Success )
 				{
 					int colorMaskIdx = colorMaskMatch.Index;
-					int end = colorMaskMatch.Length + colorMaskIdx;// subBody.IndexOf( TemplatesManager.TemplateNewLine, colorMaskIdx );
+					int end = colorMaskMatch.Length + colorMaskIdx;
 					string colorMaskParams = subBody.Substring( colorMaskIdx, end - colorMaskIdx );
 					m_colorMaskData2.ColorMaskId = colorMaskParams;
 					m_colorMaskData2.StartIdx = offsetIdx + colorMaskIdx;
@@ -469,7 +469,7 @@ namespace AmplifyShaderEditor
 				if( colorMaskMatch.Success )
 				{
 					int colorMaskIdx = colorMaskMatch.Index;
-					int end = colorMaskMatch.Length + colorMaskIdx;// subBody.IndexOf( TemplatesManager.TemplateNewLine, colorMaskIdx );
+					int end = colorMaskMatch.Length + colorMaskIdx;
 					string colorMaskParams = subBody.Substring( colorMaskIdx, end - colorMaskIdx );
 					m_colorMaskData3.ColorMaskId = colorMaskParams;
 					m_colorMaskData3.StartIdx = offsetIdx + colorMaskIdx;
@@ -492,7 +492,7 @@ namespace AmplifyShaderEditor
 				if( colorMaskMatch.Success )
 				{
 					int colorMaskIdx = colorMaskMatch.Index;
-					int end = colorMaskMatch.Length + colorMaskIdx; //subBody.IndexOf( TemplatesManager.TemplateNewLine, colorMaskIdx );
+					int end = colorMaskMatch.Length + colorMaskIdx; 
 					string colorMaskParams = subBody.Substring( colorMaskIdx, end - colorMaskIdx );
 					m_colorMaskData.ColorMaskId = colorMaskParams;
 					m_colorMaskData.StartIdx = offsetIdx + colorMaskIdx;
@@ -503,7 +503,7 @@ namespace AmplifyShaderEditor
 
 				}
 			}
-			//STENCIL
+			
 			{
 				Match stencilMatch = Regex.Match( subBody, TemplateHelperFunctions.StencilWholeWordPattern );
 				if( stencilMatch.Success )
@@ -536,7 +536,7 @@ namespace AmplifyShaderEditor
 					}
 				}
 			}
-			//ZWRITE
+			
 			{
 				Match zWriteMatch = Regex.Match( subBody, TemplateHelperFunctions.ZWriteWholeWordPattern );
 				if( zWriteMatch.Success )
@@ -557,7 +557,7 @@ namespace AmplifyShaderEditor
 				}
 			}
 
-			//ZTEST
+			
 			{
 				Match zTestMatch = Regex.Match( subBody, TemplateHelperFunctions.ZTestWholeWordPattern );
 				if( zTestMatch.Success )
@@ -578,7 +578,7 @@ namespace AmplifyShaderEditor
 				}
 			}
 
-			//ZOFFSET
+			
 			{
 				Match zOffsetMatch = Regex.Match( subBody, TemplateHelperFunctions.ZOffsetWholeWordPattern );
 				if( zOffsetMatch.Success )
@@ -599,7 +599,7 @@ namespace AmplifyShaderEditor
 				}
 				m_depthData.SetDataCheck();
 			}
-			//TAGS
+			
 			{
 				Match tagsMatch = Regex.Match( subBody, TemplateHelperFunctions.TagsWholeWordPattern );
 				if ( tagsMatch.Success )
@@ -628,7 +628,7 @@ namespace AmplifyShaderEditor
 				}
 			}
 
-			//SHADER MODEL
+			
 			{
 				Match match = Regex.Match( subBody, TemplateHelperFunctions.ShaderModelPattern );
 				if ( match != null && match.Groups.Count > 1 )
@@ -649,11 +649,11 @@ namespace AmplifyShaderEditor
 				}
 			}
 
-			// ALL MODULES
+			
 			int allModulesIndex = subBody.IndexOf( TemplatesManager.TemplateAllModulesTag );
 			if( allModulesIndex > 0 )
 			{
-				//ONLY REGISTER MISSING TAGS
+				
 				ConfigureCommonTag( m_allModulesTag, propertyContainer, idManager, uniquePrefix, offsetIdx, subBody );
 				m_allModulesMode = true;
 				

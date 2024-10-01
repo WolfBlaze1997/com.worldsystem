@@ -1,11 +1,29 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Decode View Normal Stereo", "Miscellaneous", "Decodes view space normal from enc4.xy" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Decode View Normal Stereo"
+#else
+"解码视图普通立体声"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Decodes view space normal from enc4.xy"
+#else
+"从enc4.xy解码正常视图空间"
+#endif
+)]
 	public sealed class DecodeViewNormalStereoHlpNode : HelperParentNode
 	{
 		protected override void CommonInit( int uniqueId )

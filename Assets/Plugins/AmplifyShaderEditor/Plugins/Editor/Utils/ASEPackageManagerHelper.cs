@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -109,7 +109,7 @@ namespace AmplifyShaderEditor
 		public static ASESRPBaseline CurrentURPBaseline { get { return m_currentURPBaseline; } }
 		public static ASESRPBaseline CurrentHDRPBaseline { get { return m_currentHDRPBaseline; } }
 
-		private static int m_packageURPVersion = -1; // @diogo: starts as missing
+		private static int m_packageURPVersion = -1; 
 		private static int m_packageHDRPVersion = -1;
 
 		public static int PackageSRPVersion { get { return ( m_packageHDRPVersion >= m_packageURPVersion ) ? m_packageHDRPVersion : m_packageURPVersion; } }
@@ -204,7 +204,7 @@ namespace AmplifyShaderEditor
 			AssetDatabase.importPackageCompleted += CompletedPackageImport;
 			AssetDatabase.importPackageFailed += FailedPackageImport;
 			AssetDatabase.ImportPackage( packagePath, false );
-			//AssetDatabaseEX.ImportPackageImmediately( packagePath );
+			
 		}
 
 		public static void FinishImporter()
@@ -220,9 +220,9 @@ namespace AmplifyShaderEditor
 			if ( shader == null )
 				return;
 
-			//If a previous delayed object is pending discard it and register the new one
-			// So the last selection will be the choice of opening
-			//This can happen when trying to open an ASE canvas while importing templates or in play mode
+			
+			
+			
 			if ( m_lateShader != null )
 			{
 				EditorApplication.delayCall -= LateShaderOpener;
@@ -252,9 +252,9 @@ namespace AmplifyShaderEditor
 			if ( material == null )
 				return;
 
-			//If a previous delayed object is pending discard it and register the new one
-			// So the last selection will be the choice of opening
-			//This can happen when trying to open an ASE canvas while importing templates or in play mode
+			
+			
+			
 			if ( m_lateMaterial != null )
 			{
 				EditorApplication.delayCall -= LateMaterialOpener;
@@ -284,9 +284,9 @@ namespace AmplifyShaderEditor
 			if ( shaderFunction == null )
 				return;
 
-			//If a previous delayed object is pending discard it and register the new one
-			// So the last selection will be the choice of opening
-			//This can happen when trying to open an ASE canvas while importing templates or in play mode
+			
+			
+			
 			if ( m_lateShaderFunction != null )
 			{
 				EditorApplication.delayCall -= LateShaderFunctionOpener;
@@ -311,7 +311,7 @@ namespace AmplifyShaderEditor
 			}
 		}
 
-		private static readonly string SemVerPattern = @"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$";
+		private readonly static string SemVerPattern = @"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$";
 
 		private static int PackageVersionStringToCode( string version, out int major, out int minor, out int patch )
 		{
@@ -411,7 +411,7 @@ namespace AmplifyShaderEditor
 
 						if ( pi.name.Equals( URPPackageId ) && m_srpPackageSupport.TryGetValue( baseline, out match ) )
 						{
-							// Universal Rendering Pipeline
+							
 							m_currentURPBaseline = match.baseline;
 							m_packageURPVersion = version;
 							m_urpPackageInfo = pi;
@@ -420,7 +420,7 @@ namespace AmplifyShaderEditor
 						}
 						else if ( pi.name.Equals( HDRPPackageId ) && m_srpPackageSupport.TryGetValue( baseline, out match ) )
 						{
-							// High-Definition Rendering Pipeline
+							
 							m_currentHDRPBaseline = match.baseline;
 							m_packageHDRPVersion = version;
 							m_hdrpPackageInfo = pi;

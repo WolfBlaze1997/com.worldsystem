@@ -1,10 +1,28 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 namespace AmplifyShaderEditor
 {
 	[System.Serializable]
-	[NodeAttributes( "Texture 0 Matrix", "Matrix Transform", "Texture 0 Matrix", null, UnityEngine.KeyCode.None, true, true )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Texture 0 Matrix"
+#else
+"纹理0矩阵"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Matrix Transform"
+#else
+"矩阵变换"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Texture 0 Matrix"
+#else
+"纹理0矩阵"
+#endif
+, null, UnityEngine.KeyCode.None, true, true )]
 	public sealed class Texture0MatrixNode : ConstantShaderVariable
 	{
 		protected override void CommonInit( int uniqueId )

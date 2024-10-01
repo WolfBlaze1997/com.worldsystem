@@ -6,11 +6,35 @@ using System.Collections.Generic;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Texture Transform", "Textures", "Gives access to texture tiling and offset as set on the material inspector" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Texture Transform"
+#else
+"纹理变换"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Textures"
+#else
+"纹理"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Gives access to texture tiling and offset as set on the material inspector"
+#else
+"提供对材质检查器上设置的纹理平铺和偏移的访问"
+#endif
+)]
 	public sealed class TextureTransformNode : ParentNode
 	{
 		private readonly string[] Dummy = { string.Empty };
-		private const string InstancedLabelStr = "Instanced";
+		private const string InstancedLabelStr = 
+#if !WB_LANGUAGE_CHINESE
+"Instanced"
+#else
+"实例"
+#endif
+;
 
 		[SerializeField]
 		private bool m_instanced = false;
@@ -38,7 +62,13 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.SAMPLER2D, false, "Tex" );
+			AddInputPort( WirePortDataType.SAMPLER2D, false, 
+#if !WB_LANGUAGE_CHINESE
+"Tex"
+#else
+"特克斯"
+#endif
+);
 			m_inputPorts[ 0 ].CreatePortRestrictions( WirePortDataType.SAMPLER1D, WirePortDataType.SAMPLER2D, WirePortDataType.SAMPLER3D, WirePortDataType.SAMPLERCUBE, WirePortDataType.SAMPLER2DARRAY, WirePortDataType.OBJECT );
 			AddOutputPort( WirePortDataType.FLOAT2, "Tiling" );
 			AddOutputPort( WirePortDataType.FLOAT2, "Offset" );
@@ -62,10 +92,10 @@ namespace AmplifyShaderEditor
 
 		public override void RenderNodePreview()
 		{
-			//Runs at least one time
+			
 			if( !m_initialized )
 			{
-				// nodes with no preview don't update at all
+				
 				PreviewIsDirty = false;
 				return;
 			}
@@ -252,9 +282,9 @@ namespace AmplifyShaderEditor
 					UIUtils.ShowMessage( UniqueId, "Please specify a texture sample on the Texture Transform Size node", MessageSeverity.Warning );
 				}
 
-				//bool excludeUniformKeyword = UIUtils.CurrentWindow.OutsideGraph.IsInstancedShader || UIUtils.CurrentWindow.OutsideGraph.IsSRP;
-				//string uniformRegister = UIUtils.GenerateUniformName( excludeUniformKeyword, WirePortDataType.FLOAT4, texTransform );
-				//dataCollector.AddToUniforms( UniqueId, uniformRegister, true );
+				
+				
+				
 				if( m_texCoordsHelper == null )
 				{
 					m_texCoordsHelper = CreateInstance<Vector4Node>();
@@ -355,7 +385,7 @@ namespace AmplifyShaderEditor
 			m_upperLeftWidget = null;
 			if( m_texCoordsHelper != null )
 			{
-				//Not calling m_texCoordsHelper.Destroy() on purpose so UIUtils does not incorrectly unregister stuff
+				
 				DestroyImmediate( m_texCoordsHelper );
 				m_texCoordsHelper = null;
 			}

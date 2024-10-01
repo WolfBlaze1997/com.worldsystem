@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -9,7 +9,25 @@ using System.Collections.Generic;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Get Local Var", "Miscellaneous", "Use a registered local variable", null, KeyCode.G )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Get Local Var"
+#else
+"获取本地变量"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Use a registered local variable"
+#else
+"使用已注册的局部变量"
+#endif
+, null, KeyCode.G )]
 	public class GetLocalVarNode : ParentNode
 	{
 		[SerializeField]
@@ -39,7 +57,7 @@ namespace AmplifyShaderEditor
 			base.CommonInit( uniqueId );
 			AddOutputPort( WirePortDataType.OBJECT, Constants.EmptyPortValue );
 
-			// This is needed for infinite loop detection
+			
 			AddInputPort( WirePortDataType.OBJECT, false, Constants.EmptyPortValue );
 			m_inputPorts[ 0 ].Visible = false;
 
@@ -77,7 +95,7 @@ namespace AmplifyShaderEditor
 					m_drawPreviewAsSphere = m_currentSelected.SpherePreview;
 					OnNodeChange();
 				}
-				//CheckSpherePreview();
+				
 
 				if( m_cachedPropertyId == -1 )
 					m_cachedPropertyId = Shader.PropertyToID( "_A" );
@@ -102,7 +120,7 @@ namespace AmplifyShaderEditor
 				UIUtils.FocusOnNode( m_currentSelected, 0, false );
 			}
 			EditorGUILayout.EndHorizontal();
-			//EditorGUILayout.LabelField( ConnStatus.ToString() + " " + m_activeConnections );
+			
 		}
 
 		public override void Destroy()
@@ -273,14 +291,14 @@ namespace AmplifyShaderEditor
 		}
 
 
-		//public override void PropagateNodeData( NodeData nodeData, ref MasterNodeDataCollector dataCollector )
-		//{
-		//	base.PropagateNodeData( nodeData, ref dataCollector );
-		//	if( m_currentSelected != null )
-		//	{
-		//		m_currentSelected.PropagateNodeData( nodeData, ref dataCollector );
-		//	}
-		//}
+		
+		
+		
+		
+		
+		
+		
+		
 
 		public override void ReadFromString( ref string[] nodeParams )
 		{
@@ -400,7 +418,7 @@ namespace AmplifyShaderEditor
 			get { return m_currentSelected; }
 			set
 			{
-				// This is needed for infinite loop detection
+				
 				if( m_inputPorts != null )
 					m_inputPorts[ 0 ].DummyClear();
 
@@ -408,7 +426,7 @@ namespace AmplifyShaderEditor
 				{
 					m_currentSelected.UnregisterGetLocalVar( this );
 
-					//if( m_currentSelected != value )
+					
 					m_currentSelected.DeactivateNode( 0, false );
 				}
 
@@ -418,7 +436,7 @@ namespace AmplifyShaderEditor
 					if( IsConnected && value != m_currentSelected )
 						value.ActivateNode( UniqueId, 0, m_activeType );
 
-					// This is needed for infinite loop detection
+					
 					m_inputPorts[ 0 ].DummyAdd( value.UniqueId, 0 ); ;
 				}
 

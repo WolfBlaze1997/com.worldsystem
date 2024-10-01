@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -8,13 +8,49 @@ using UnityEditor;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Sticky Note", "Miscellaneous", "Allows adding notes into canvas" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Sticky Note"
+#else
+"贴纸"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Allows adding notes into canvas"
+#else
+"允许在画布中添加注释"
+#endif
+)]
 	public sealed class StickyNoteNode : ParentNode, ISerializationCallbackReceiver
 	{
-		private const string WarningText = "Characters $ and @ are NOT allowed inside notes since they are internally used as delimiters over the node meta.\nThey will be automatically removed when saving the shader.";
+		private const string WarningText = 
+#if !WB_LANGUAGE_CHINESE
+"Characters $ and @ are NOT allowed inside notes since they are internally used as delimiters over the node meta.\nThey will be automatically removed when saving the shader."
+#else
+"注释中不允许使用字符$和@，因为它们在内部用作节点元上的分隔符。\n保存着色器时，它们将被自动删除。"
+#endif
+;
 
-		private const string CommentaryTitle = "Comment";
-		private const string NoteTitle = "Note Title";
+		private const string CommentaryTitle = 
+#if !WB_LANGUAGE_CHINESE
+"Comment"
+#else
+"评论"
+#endif
+;
+		private const string NoteTitle = 
+#if !WB_LANGUAGE_CHINESE
+"Note Title"
+#else
+"注释标题"
+#endif
+;
 		private const float BORDER_SIZE_X = 50;
 		private const float BORDER_SIZE_Y = 50;
 		private const float MIN_SIZE_X = 100;
@@ -25,7 +61,13 @@ namespace AmplifyShaderEditor
 		private readonly Vector2 ResizeButtonPos = new Vector2( 1, 1 );
 
 		[SerializeField]
-		private string m_innerTitleText = "New Note";
+		private string m_innerTitleText = 
+#if !WB_LANGUAGE_CHINESE
+"New Note"
+#else
+"新注释"
+#endif
+;
 
 		[SerializeField]
 		private string m_titleText = string.Empty;
@@ -110,7 +152,13 @@ namespace AmplifyShaderEditor
 			NodeUtils.DrawPropertyGroup( ref m_propertiesFoldout, Constants.ParameterLabelStr,()=>
 			{
 				EditorGUI.BeginChangeCheck();
-				m_titleText = EditorGUILayoutTextField( "Frame Title", m_titleText );
+				m_titleText = EditorGUILayoutTextField( 
+#if !WB_LANGUAGE_CHINESE
+"Frame Title"
+#else
+"框架标题"
+#endif
+, m_titleText );
 				if ( EditorGUI.EndChangeCheck() )
 				{
 					m_checkTitleText = true;
@@ -124,14 +172,20 @@ namespace AmplifyShaderEditor
 
 				m_noteText = EditorGUILayoutTextArea(  m_noteText , UIUtils.MainSkin.textArea );
 
-				m_frameColor = EditorGUILayoutColorField( "Frame Color", m_frameColor );
+				m_frameColor = EditorGUILayoutColorField( 
+#if !WB_LANGUAGE_CHINESE
+"Frame Color"
+#else
+"框架颜色"
+#endif
+, m_frameColor );
 			} );
 			EditorGUILayout.HelpBox( WarningText, MessageType.Warning );
 		}
 
 		public override void OnNodeLayout( DrawInfo drawInfo )
 		{
-			//base.OnLayout( drawInfo );
+			
 			CalculatePositionAndVisibility( drawInfo );
 
 			m_headerPosition = m_globalPosition;
@@ -158,14 +212,14 @@ namespace AmplifyShaderEditor
 				m_resizeIconTex = UIUtils.GetCustomStyle( CustomStyle.CommentaryResizeButton ).normal.background;
 			}
 
-			// LEFT RESIZE BUTTON
+			
 			m_resizeLeftIconCoords = m_globalPosition;
 			m_resizeLeftIconCoords.x = m_globalPosition.x + 2;
 			m_resizeLeftIconCoords.y = m_globalPosition.y + m_globalPosition.height - 2 - ( m_resizeIconTex.height + ResizeButtonPos.y ) * drawInfo.InvertedZoom;
 			m_resizeLeftIconCoords.width = m_resizeIconTex.width * drawInfo.InvertedZoom;
 			m_resizeLeftIconCoords.height = m_resizeIconTex.height * drawInfo.InvertedZoom;
 
-			// RIGHT RESIZE BUTTON
+			
 			m_resizeRightIconCoords = m_globalPosition;
 			m_resizeRightIconCoords.x = m_globalPosition.x + m_globalPosition.width - 1 - ( m_resizeIconTex.width + ResizeButtonPos.x ) * drawInfo.InvertedZoom;
 			m_resizeRightIconCoords.y = m_globalPosition.y + m_globalPosition.height - 2 - ( m_resizeIconTex.height + ResizeButtonPos.y ) * drawInfo.InvertedZoom;
@@ -179,33 +233,33 @@ namespace AmplifyShaderEditor
 				return;
 
 			m_colorBuffer = GUI.color;
-			// Background
+			
 			GUI.color = Constants.NodeBodyColor * m_frameColor;
 			GUI.Label( m_globalPosition, string.Empty, UIUtils.GetCustomStyle( CustomStyle.CommentaryBackground ) );
 			
-			// Header
+			
 			GUI.color = m_headerColor * m_headerColorModifier * m_frameColor;
 			GUI.Label( m_headerPosition, string.Empty, UIUtils.GetCustomStyle( CustomStyle.NodeHeader ) );
 			GUI.color = m_colorBuffer;
 
-			// Fixed Title ( only renders when not editing )
+			
 			if ( !m_isEditingInnerTitle && !m_startEditingInnerTitle && ContainerGraph.LodLevel <= ParentGraph.NodeLOD.LOD3 )
 			{
 				GUI.Label( m_innerTitleArea, m_innerTitleText, UIUtils.CommentaryTitle );
 			}
 
 
-			// Note Text ( only renders when not editing )
+			
 			if( !m_isEditingNoteText && !m_startEditingNoteText && ContainerGraph.LodLevel <= ParentGraph.NodeLOD.LOD3 )
 			{
 				GUI.Label( m_noteTextArea, m_noteText, UIUtils.StickyNoteText );
 			}
 
-			// Buttons
+			
 			GUI.Label( m_resizeLeftIconCoords, string.Empty, UIUtils.GetCustomStyle( CustomStyle.CommentaryResizeButtonInv ) );
 			GUI.Label( m_resizeRightIconCoords, string.Empty, UIUtils.GetCustomStyle( CustomStyle.CommentaryResizeButton ) );
 
-			// Selection Box
+			
 			if ( m_selected )
 			{
 				GUI.color = Constants.NodeSelectedColor;
@@ -237,7 +291,7 @@ namespace AmplifyShaderEditor
 		{
 			base.Draw( drawInfo );
 
-			// Custom Editable Title
+			
 			if ( ContainerGraph.LodLevel <= ParentGraph.NodeLOD.LOD3 )
 			{
 				if( !m_startEditingNoteText && !m_isEditingNoteText )
@@ -286,7 +340,7 @@ namespace AmplifyShaderEditor
 					}
 				}
 
-				////////////////////////
+				
 				if( !m_startEditingInnerTitle  && !m_isEditingInnerTitle )
 				{
 					if( !m_isEditingNoteText && ( ( !ContainerGraph.ParentWindow.MouseInteracted && drawInfo.CurrentEventType == EventType.MouseDown && m_noteTextArea.Contains( drawInfo.MousePosition ) ) ) )
@@ -326,12 +380,12 @@ namespace AmplifyShaderEditor
 						}
 					}
 				}
-				////////////////////////
+				
 			}
 
 			if ( drawInfo.CurrentEventType == EventType.MouseDown && drawInfo.LeftMouseButtonPressed )
 			{
-				// Left Button
+				
 				if( m_resizeLeftIconCoords.Contains( drawInfo.MousePosition ) && ContainerGraph.ParentWindow.CurrentEvent.modifiers != EventModifiers.Shift )
 				{
 					if ( !m_isResizingLeft )
@@ -342,7 +396,7 @@ namespace AmplifyShaderEditor
 					}
 				}
 
-				// Right Button
+				
 				if ( m_resizeRightIconCoords.Contains( drawInfo.MousePosition ) && ContainerGraph.ParentWindow.CurrentEvent.modifiers != EventModifiers.Shift )
 				{
 					if ( !m_isResizingRight )
@@ -356,7 +410,7 @@ namespace AmplifyShaderEditor
 
 			if ( drawInfo.CurrentEventType == EventType.Repaint || drawInfo.CurrentEventType == EventType.MouseUp )
 			{
-				// Left Button
+				
 				EditorGUIUtility.AddCursorRect( m_resizeLeftIconCoords, MouseCursor.ResizeUpRight );
 				if ( m_isResizingLeft )
 				{
@@ -368,7 +422,7 @@ namespace AmplifyShaderEditor
 					}
 					else
 					{
-						Vector2 currSize = ( drawInfo.TransformedMousePos - m_resizeStartPoint ) /*/ drawInfo.InvertedZoom*/;
+						Vector2 currSize = ( drawInfo.TransformedMousePos - m_resizeStartPoint ) ;
 						m_resizeStartPoint = drawInfo.TransformedMousePos;
 						if ( m_resizeAxis != eResizeAxis.Y_AXIS )
 						{
@@ -392,7 +446,7 @@ namespace AmplifyShaderEditor
 					}
 				}
 
-				// Right Button
+				
 				EditorGUIUtility.AddCursorRect( m_resizeRightIconCoords, MouseCursor.ResizeUpLeft );
 				if ( m_isResizingRight )
 				{
@@ -404,7 +458,7 @@ namespace AmplifyShaderEditor
 					}
 					else
 					{
-						Vector2 currSize = ( drawInfo.TransformedMousePos - m_resizeStartPoint ) /*/ drawInfo.InvertedZoom*/;
+						Vector2 currSize = ( drawInfo.TransformedMousePos - m_resizeStartPoint ) ;
 						m_resizeStartPoint = drawInfo.TransformedMousePos;
 						if ( m_resizeAxis != eResizeAxis.Y_AXIS )
 						{

@@ -3,22 +3,40 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "World To Tangent Matrix", "Matrix Transform", "World to tangent transform matrix" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"World To Tangent Matrix"
+#else
+"世界切线矩阵"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Matrix Transform"
+#else
+"矩阵变换"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"World to tangent transform matrix"
+#else
+"世界到切线变换矩阵"
+#endif
+)]
 	public sealed class WorldToTangentMatrix : ParentNode
 	{
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
 			AddOutputPort( WirePortDataType.FLOAT3x3, "Out" );
-			//UIUtils.AddNormalDependentCount();
+			
 			m_drawPreview = false;
 		}
 
-		//public override void Destroy()
-		//{
-		//	ContainerGraph.RemoveNormalDependentCount();
-		//	base.Destroy();
-		//}
+		
+		
+		
+		
+		
 
 		public override void PropagateNodeData( NodeData nodeData, ref MasterNodeDataCollector dataCollector )
 		{

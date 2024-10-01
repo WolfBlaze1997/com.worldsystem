@@ -1,11 +1,29 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Decode Float RG", "Miscellaneous", "Decodes a previously-encoded RG float" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Decode Float RG"
+#else
+"解码浮点RG"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Decodes a previously-encoded RG float"
+#else
+"对先前编码的RG浮点进行解码"
+#endif
+)]
 	public sealed class DecodeFloatRGHlpNode : HelperParentNode
 	{
 		protected override void CommonInit( int uniqueId )

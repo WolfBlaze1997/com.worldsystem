@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -22,8 +22,8 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		protected string m_moduleName = string.Empty;
 
-		//[SerializeField]
-		//protected bool m_foldoutValue = false;
+		
+		
 
 		[SerializeField]
 		protected bool m_independentModule = true;

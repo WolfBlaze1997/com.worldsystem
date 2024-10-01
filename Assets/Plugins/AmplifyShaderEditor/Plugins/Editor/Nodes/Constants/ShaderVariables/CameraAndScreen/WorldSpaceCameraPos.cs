@@ -1,11 +1,29 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "World Space Camera Pos", "Camera And Screen", "World Space Camera position" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"World Space Camera Pos"
+#else
+"世界空间相机位置"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Camera And Screen"
+#else
+"摄像头和屏幕"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"World Space Camera position"
+#else
+"世界空间相机位置"
+#endif
+)]
 	public sealed class WorldSpaceCameraPos : ConstantShaderVariable
 	{
 		protected override void CommonInit( int uniqueId )

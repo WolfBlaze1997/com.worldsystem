@@ -1,10 +1,28 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 namespace AmplifyShaderEditor
 {
 	[System.Serializable]
-	[NodeAttributes( "FWidth", "Math Operators", "Sum of approximate window-space partial derivatives magnitudes (Only valid on Fragment type ports)" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"FWidth"
+#else
+"F宽度"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Sum of approximate window-space partial derivatives magnitudes (Only valid on Fragment type ports)"
+#else
+"近似窗口空间偏导数幅度之和（仅对片段类型端口有效）"
+#endif
+)]
 	public sealed class FWidthOpNode : SingleInputOp
 	{
 		private const string FWidthErrorMsg = "Attempting to connect an FWidth to a {0} type port. It is only valid on Fragment type ports";
@@ -20,7 +38,7 @@ namespace AmplifyShaderEditor
 														WirePortDataType.FLOAT4,
 														WirePortDataType.COLOR ,
 														WirePortDataType.INT);
-			//m_inputPorts[ 0 ].ChangeType( WirePortDataType.FLOAT4, false );
+			
 		}
 
 		public override string GenerateShaderForOutput( int outputId, ref MasterNodeDataCollector dataCollector, bool ignoreLocalvar )

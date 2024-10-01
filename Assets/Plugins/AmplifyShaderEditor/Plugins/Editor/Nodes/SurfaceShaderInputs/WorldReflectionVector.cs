@@ -1,18 +1,42 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "World Reflection", "Surface Data", "Per pixel world reflection vector, accepts a <b>Normal</b> vector in tangent space (ie: normalmap)" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"World Reflection"
+#else
+"世界反思"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Surface Data"
+#else
+"地表数据"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Per pixel world reflection vector, accepts a <b>Normal</b> vector in tangent space (ie: normalmap)"
+#else
+"每像素世界反射向量，接受切线空间中的<b>法线</b>向量（即：法线贴图）"
+#endif
+)]
 	public sealed class WorldReflectionVector : ParentNode
 	{
 		private const string ReflectionVecValStr = "newWorldReflection";
 		private const string ReflectionVecDecStr = "{0} {1} = {2};";
 
-		private const string NormalizeOptionStr = "Normalize";
+		private const string NormalizeOptionStr = 
+#if !WB_LANGUAGE_CHINESE
+"Normalize"
+#else
+"正常化"
+#endif
+;
 		private const string NormalizeFunc = "normalize( {0} )";
 
 		[SerializeField]
@@ -21,13 +45,19 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT3, false, "Normal" );
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"Normal"
+#else
+"正常"
+#endif
+);
 			AddOutputVectorPorts( WirePortDataType.FLOAT3, "XYZ" );
 			m_drawPreviewAsSphere = true;
 			m_previewShaderGUID = "8e267e9aa545eeb418585a730f50273e";
 			m_autoWrapProperties = true;
 			m_textLabelWidth = 80;
-			//UIUtils.AddNormalDependentCount();
+			
 		}
 
 		public override void SetPreviewInputs()
@@ -46,11 +76,11 @@ namespace AmplifyShaderEditor
 			m_normalize = EditorGUILayoutToggle( NormalizeOptionStr, m_normalize );
 		}
 
-		//public override void Destroy()
-		//{
-		//	ContainerGraph.RemoveNormalDependentCount();
-		//	base.Destroy();
-		//}
+		
+		
+		
+		
+		
 
 		public override void PropagateNodeData( NodeData nodeData, ref MasterNodeDataCollector dataCollector )
 		{
@@ -180,8 +210,8 @@ namespace AmplifyShaderEditor
 				}
 
 				return GetOutputVectorItem( 0, outputId, result );
-				//RegisterLocalVariable( 0, result, ref dataCollector, "worldrefVec" + OutputId );
-				//return GetOutputVectorItem( 0, outputId, m_outputPorts[ 0 ].LocalValue );
+				
+				
 			}
 		}
 

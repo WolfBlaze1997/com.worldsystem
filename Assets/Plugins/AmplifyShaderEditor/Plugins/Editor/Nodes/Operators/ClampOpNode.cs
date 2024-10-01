@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Clamp", "Math Operators", "Value clamped to the range [min,max]" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Clamp"
+#else
+"夹紧"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Value clamped to the range [min,max]"
+#else
+"值被限制在范围[min，max]内"
+#endif
+)]
 	public sealed class ClampOpNode : ParentNode
 	{
 
@@ -14,8 +32,20 @@ namespace AmplifyShaderEditor
 		{
 			base.CommonInit( uniqueId );
 			AddInputPort( WirePortDataType.FLOAT, false, Constants.EmptyPortValue );
-			AddInputPort( WirePortDataType.FLOAT, false, "Min" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Max" );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Min"
+#else
+"分钟"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Max"
+#else
+"马克斯"
+#endif
+);
 			m_inputPorts[ m_inputPorts.Count - 1 ].FloatInternalData = 1;
 			AddOutputPort( WirePortDataType.FLOAT, Constants.EmptyPortValue );
 			m_useInternalPortData = true;
@@ -34,10 +64,10 @@ namespace AmplifyShaderEditor
 
 				m_outputPorts[ 0 ].ChangeType( m_inputPorts[ 0 ].DataType, false );
 			}
-			//else
-			//{
-			//	_inputPorts[ portId ].MatchPortToConnection();
-			//}
+			
+			
+			
+			
 		}
 
 		public override void OnConnectedOutputNodeChanges( int outputPortId, int otherNodeId, int otherPortId, string name, WirePortDataType type )

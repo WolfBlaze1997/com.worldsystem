@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -83,7 +83,13 @@ namespace AmplifyShaderEditor
 	[Serializable]
 	public class TemplateCodeSnippetToggle : TemplateCodeSnippetBase
 	{
-		private const string Label = "Activate";
+		private const string Label = 
+#if !WB_LANGUAGE_CHINESE
+"Activate"
+#else
+"激活"
+#endif
+;
 		[SerializeField]
 		private bool m_value = false;
 

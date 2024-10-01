@@ -5,21 +5,20 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.Serialization;
 
-// ReSharper disable ConvertToConstant.Local
-// ReSharper disable InconsistentNaming
 
 namespace WorldSystem.Runtime
 {
+    
     public partial class StarModule
     {
         private struct StarMeshProperties
         {
-            public Matrix4x4 mat;
-            public Vector3 color;
-            public float brightness;
-            public float id;
-
+            public Matrix4x4 Mat;
+            public Vector3 Color;
+            public float Brightness;
+            public float ID;
             public static int Size()
             {
                 return sizeof(float) * 4 * 4
@@ -30,6 +29,7 @@ namespace WorldSystem.Runtime
                        + // brightness
                        sizeof(float); // id
             }
+            
         }
         
         /// <summary>
@@ -108,7 +108,10 @@ namespace WorldSystem.Runtime
     [ExecuteAlways]
     public partial class StarModule : BaseModule
     {
+        
+        
         #region 字段
+        
         [Serializable]
         public class Property
         {
@@ -164,7 +167,7 @@ namespace WorldSystem.Runtime
 
             [TitleGroup("位置")] [LabelText("随机种")]
             [GUIColor(0.7f,0.7f,1f)]
-            public int initialSeed = 1; //随机器种子
+            public int initialSeed = 1;
 
             [TitleGroup("位置")] [LabelText("倾斜度")]
             [GUIColor(0.7f,0.7f,1f)]
@@ -184,11 +187,24 @@ namespace WorldSystem.Runtime
         [HideLabel]
         public Property property = new();
 
+        [HideInInspector] public bool update;
+        
         #endregion
-
+        
+        
 
         #region 安装参数
         
+        private ComputeBuffer _argsBuffer;
+        private ComputeBuffer _meshPropertiesBuffer;
+        private readonly int altos_StarBuffer = Shader.PropertyToID("altos_StarBuffer");
+        private readonly int _FlickerFrequency = Shader.PropertyToID("_FlickerFrequency");
+        private readonly int _FlickerStrength = Shader.PropertyToID("_FlickerStrength");
+        private readonly int _Inclination = Shader.PropertyToID("_Inclination");
+        private readonly int _Star_MainTex = Shader.PropertyToID("_Star_MainTex");
+        private readonly int _StarColor = Shader.PropertyToID("_StarColor");
+        private readonly int _Brightness = Shader.PropertyToID("_Brightness");
+
         private void ComputeStarBuffers()
         {
             if (property.starMesh == null)
@@ -212,31 +228,31 @@ namespace WorldSystem.Runtime
                 Quaternion rotation = Quaternion.LookRotation(Vector3.zero - position, UnityEngine.Random.onUnitSphere);
                 Vector3 scale = Vector3.one * UnityEngine.Random.Range(1f, 2f) * 0.1f * property.size;
 
-                starMeshProperties.mat = Matrix4x4.TRS(position, rotation, scale);
+                starMeshProperties.Mat = Matrix4x4.TRS(position, rotation, scale);
 
                 //设置星星的颜色
                 if (property.automaticColor)
                 {
                     float temperature = ComputeStarTemperature(UnityEngine.Random.Range(0f, 1f));
-                    starMeshProperties.color = ComputeBlackbodyColor(temperature);
+                    starMeshProperties.Color = ComputeBlackbodyColor(temperature);
                 }
                 else
                 {
-                    starMeshProperties.color = new Vector3(1, 1, 1);
+                    starMeshProperties.Color = new Vector3(1, 1, 1);
                 }
 
                 //设置星星的亮度
                 if (property.automaticBrightness)
                 {
-                    starMeshProperties.brightness = ComputeStarBrightness(UnityEngine.Random.Range(0f, 1f));
+                    starMeshProperties.Brightness = ComputeStarBrightness(UnityEngine.Random.Range(0f, 1f));
                 }
                 else
                 {
-                    starMeshProperties.brightness = 1f;
+                    starMeshProperties.Brightness = 1f;
                 }
 
 
-                starMeshProperties.id = UnityEngine.Random.Range(0f, 1f);
+                starMeshProperties.ID = UnityEngine.Random.Range(0f, 1f);
                 meshPropertiesArray[i] = starMeshProperties;
             }
 
@@ -244,9 +260,6 @@ namespace WorldSystem.Runtime
             _meshPropertiesBuffer = new ComputeBuffer(property.count, StarMeshProperties.Size());
             _meshPropertiesBuffer.SetData(meshPropertiesArray);
         }
-        private ComputeBuffer _argsBuffer;
-        private ComputeBuffer _meshPropertiesBuffer;
-        
         
         private void SetupStaticProperty()
         {
@@ -258,26 +271,19 @@ namespace WorldSystem.Runtime
             Shader.SetGlobalColor(_StarColor, property.starColor);
             
         }
-        private readonly int altos_StarBuffer = Shader.PropertyToID("altos_StarBuffer");
-        private readonly int _FlickerFrequency = Shader.PropertyToID("_FlickerFrequency");
-        private readonly int _FlickerStrength = Shader.PropertyToID("_FlickerStrength");
-        private readonly int _Inclination = Shader.PropertyToID("_Inclination");
-        private readonly int _Star_MainTex = Shader.PropertyToID("_Star_MainTex");
-        private readonly int _StarColor = Shader.PropertyToID("_StarColor");
         
         private void SetupDynamicProperty()
         {
             Shader.SetGlobalFloat(_Brightness, Mathf.Lerp(property.brightness, 0,
                 WorldManager.Instance?.timeModule?.DaytimeFactor ?? 0.833333f));
         }
-        private readonly int _Brightness = Shader.PropertyToID("_Brightness");
-
         
         #endregion
 
         
         
         #region 事件函数
+        
         private void OnEnable()
         {
 #if UNITY_EDITOR
@@ -294,6 +300,7 @@ namespace WorldSystem.Runtime
 
             OnValidate();
         }
+        
         private void OnDisable()
         {
             if (property.starShader != null)
@@ -316,7 +323,6 @@ namespace WorldSystem.Runtime
             _meshPropertiesBuffer = null;
         }
         
-        
 #if UNITY_EDITOR
         private void Start()
         {
@@ -324,22 +330,22 @@ namespace WorldSystem.Runtime
         }
 #endif
         
-        
         public void OnValidate()
         {
             property.LimitProperty();
-            
             ComputeStarBuffers();
-            
-            //设置静态全局参数
             SetupStaticProperty();
         }
         
-        [HideInInspector] public bool _Update;
+
+        
         private void Update()
         {
-            if (!_Update) return;
-
+            if (!update) return;
+            if (!isActiveAndEnabled || (8 < WorldManager.Instance?.timeModule?.CurrentTime && WorldManager.Instance?.timeModule?.CurrentTime < 16) ||
+                property.brightness < 0.01f)
+                return;
+            
             SetupDynamicProperty();
         }
 
@@ -347,12 +353,12 @@ namespace WorldSystem.Runtime
         
         
         
-        
         #region 渲染函数
         
         public void RenderStar(CommandBuffer cmd, ref RenderingData renderingData)
         {
-            if (!isActiveAndEnabled || (8 < WorldManager.Instance?.timeModule?.CurrentTime && WorldManager.Instance?.timeModule?.CurrentTime < 16))
+            if (!isActiveAndEnabled || (8 < WorldManager.Instance?.timeModule?.CurrentTime && WorldManager.Instance?.timeModule?.CurrentTime < 16) ||
+                property.brightness < 0.01f)
                 return;
             
             //渲染星星

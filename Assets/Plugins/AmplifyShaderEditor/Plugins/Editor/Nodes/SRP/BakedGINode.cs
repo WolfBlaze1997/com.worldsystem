@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -7,7 +7,25 @@ using UnityEngine;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "SRP Baked GI", "Miscellaneous", "Gets Baked GI info." )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"SRP Baked GI"
+#else
+"SRP烤GI"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Gets Baked GI info."
+#else
+"获取烘焙GI信息。"
+#endif
+)]
 	public sealed class BakedGINode : ParentNode
 	{
 		private const string HDBakedGIHeader = "ASEBakedGI( {0}, {1}, {2}, {3} )";
@@ -35,7 +53,13 @@ namespace AmplifyShaderEditor
 		"}\n"
 		};
 
-		private const string ApplyScalingStr = "Apply Scaling";
+		private const string ApplyScalingStr = 
+#if !WB_LANGUAGE_CHINESE
+"Apply Scaling"
+#else
+"应用缩放"
+#endif
+;
 
 		[SerializeField]
 		private bool m_applyScaling = true;
@@ -43,10 +67,34 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT3, false, "World Position" );
-			AddInputPort( WirePortDataType.FLOAT3, false, "World Normal" );
-			AddInputPort( WirePortDataType.FLOAT2, false, "Static UV" );
-			AddInputPort( WirePortDataType.FLOAT2, false, "Dynamic UV" );
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"World Position"
+#else
+"世界地位"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"World Normal"
+#else
+"世界正常"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT2, false, 
+#if !WB_LANGUAGE_CHINESE
+"Static UV"
+#else
+"静态紫外线"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT2, false, 
+#if !WB_LANGUAGE_CHINESE
+"Dynamic UV"
+#else
+"动态UV"
+#endif
+);
 			AddOutputPort( WirePortDataType.FLOAT3, Constants.EmptyPortValue );
 			m_textLabelWidth = 95;
 			m_autoWrapProperties = true;

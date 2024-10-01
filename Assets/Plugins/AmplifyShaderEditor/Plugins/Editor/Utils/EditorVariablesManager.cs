@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEditor;
 using System;
@@ -138,7 +138,7 @@ namespace AmplifyShaderEditor
 		public static EditorVariableBool ExpandedTesselation  = new EditorVariableBool( "ASEExpandedTesselation", " ExpandedTesselation", false );
 		public static EditorVariableBool ExpandedProperties = new EditorVariableBool( "ASEExpandedProperties", " ExpandedProperties", false );
 		public static EditorVariableBool ExpandedUsePass = new EditorVariableBool( "ASEUsePass", " UsePass", false );
-		//Templates
+		
 		public static EditorVariableBool ExpandedBlendModeModule = new EditorVariableBool( "ASEExpandedBlendModeModule", " ExpandedBlendModeModule", false );
 	}
 

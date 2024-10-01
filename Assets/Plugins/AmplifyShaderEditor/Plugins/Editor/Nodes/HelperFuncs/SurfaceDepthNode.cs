@@ -5,7 +5,25 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Surface Depth", "Surface Data", "Returns the surface view depth" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Surface Depth"
+#else
+"表面深度"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Surface Data"
+#else
+"地表数据"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Returns the surface view depth"
+#else
+"返回曲面视图深度"
+#endif
+)]
 	public sealed class SurfaceDepthNode : ParentNode
 	{
 		[SerializeField]
@@ -19,7 +37,13 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT3, false, "Vertex Position" );
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"Vertex Position"
+#else
+"顶点位置"
+#endif
+);
 			AddOutputPort( WirePortDataType.FLOAT, "Depth" );
 			m_autoWrapProperties = true;
 			m_hasLeftDropdown = true;
@@ -58,7 +82,13 @@ namespace AmplifyShaderEditor
 		{
 			base.DrawProperties();
 			EditorGUI.BeginChangeCheck();
-			m_viewSpaceInt = EditorGUILayoutPopup( "View Space", m_viewSpaceInt, m_viewSpaceStr );
+			m_viewSpaceInt = EditorGUILayoutPopup( 
+#if !WB_LANGUAGE_CHINESE
+"View Space"
+#else
+"查看空间"
+#endif
+, m_viewSpaceInt, m_viewSpaceStr );
 			if( EditorGUI.EndChangeCheck() )
 			{
 				SetAdditonalTitleText( string.Format( Constants.SubTitleSpaceFormatStr, m_viewSpaceStr[ m_viewSpaceInt ] ) );

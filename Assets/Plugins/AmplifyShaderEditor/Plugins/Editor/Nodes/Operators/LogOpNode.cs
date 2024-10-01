@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Log", "Math Operators", "Natural logarithm of scalars and vectors" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Log"
+#else
+"日志"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Natural logarithm of scalars and vectors"
+#else
+"标量和向量的自然对数"
+#endif
+)]
 	public sealed class LogOpNode : SingleInputOp
 	{
 		protected override void CommonInit( int uniqueId )

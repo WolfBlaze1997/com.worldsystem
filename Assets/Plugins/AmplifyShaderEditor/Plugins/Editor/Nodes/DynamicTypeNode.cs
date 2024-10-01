@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 using UnityEngine;
 using UnityEditor;
 using System;
@@ -18,10 +18,10 @@ namespace AmplifyShaderEditor
 		protected bool m_extensibleInputPorts = false;
 		protected bool m_allowMatrixCheck = false;
 		protected bool m_vectorMatrixOps = false;
-		//[SerializeField]
+		
 		private int m_inputCount = 2;
 
-		//[SerializeField]
+		
 		private int m_lastInputCount = 2;
 
 		private bool m_previouslyDragging = false;

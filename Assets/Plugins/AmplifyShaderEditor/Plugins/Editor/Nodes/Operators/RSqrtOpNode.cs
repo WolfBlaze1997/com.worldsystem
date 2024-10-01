@@ -1,12 +1,36 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Rsqrt", "Math Operators", "Reciprocal square root of scalars and vectors", tags: "reciprocal square root" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Rsqrt"
+#else
+"Rsqrt"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Reciprocal square root of scalars and vectors"
+#else
+"标量和向量的互易平方根"
+#endif
+, tags: 
+#if !WB_LANGUAGE_CHINESE
+"reciprocal square root"
+#else
+"倒数平方根"
+#endif
+)]
 	public sealed class RSqrtOpNode : SingleInputOp
 	{
 		protected override void CommonInit( int uniqueId )

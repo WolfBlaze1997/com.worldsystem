@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Two Sided Sign", "Primitive", "Indicates whether the rendered surface is facing the camera (1), or facing away from the camera(-1)" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Two Sided Sign"
+#else
+"双面标志"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Primitive"
+#else
+"原始"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Indicates whether the rendered surface is facing the camera (1), or facing away from the camera(-1)"
+#else
+"指示渲染曲面是面向摄影机（1）还是背向摄影机（-1）"
+#endif
+)]
 	public class TwoSidedSign : ParentNode
 	{
 		public const string FaceOnVertexWarning = "Face type nodes generates extra instructions when used on vertex ports since it needs to manually calculate the value";

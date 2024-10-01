@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -8,7 +8,25 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Matrix4X4", "Constants And Properties", "Matrix4X4 property" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Matrix4X4"
+#else
+"Matrix4X4"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Constants And Properties"
+#else
+"常数和属性"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Matrix4X4 property"
+#else
+"Matrix4X4物业"
+#endif
+)]
 	public sealed class Matrix4X4Node : MatrixParentNode
 	{	
 		private string[,] m_fieldText = new string[ 4, 4 ] { { "0", "0", "0", "0" }, { "0", "0", "0", "0" }, { "0", "0", "0", "0" }, { "0", "0", "0", "0" } };
@@ -20,8 +38,8 @@ namespace AmplifyShaderEditor
 			GlobalTypeWarningText = string.Format( GlobalTypeWarningText, "Matrix" );
 			AddOutputPort( WirePortDataType.FLOAT4x4, Constants.EmptyPortValue );
 			m_insideSize.Set( Constants.FLOAT_DRAW_WIDTH_FIELD_SIZE * 4 + Constants.FLOAT_WIDTH_SPACING * 3, Constants.FLOAT_DRAW_HEIGHT_FIELD_SIZE * 4 + Constants.FLOAT_WIDTH_SPACING * 3 + Constants.OUTSIDE_WIRE_MARGIN );
-			//m_defaultValue = new Matrix4x4();
-			//m_materialValue = new Matrix4x4();
+			
+			
 			m_drawPreview = false;
 		}
 
@@ -136,7 +154,7 @@ namespace AmplifyShaderEditor
 			else if ( drawInfo.CurrentEventType == EventType.Repaint )
 			{
 				bool guiEnabled = GUI.enabled;
-				//redundant ternary conditional but this makes easier to read that only when m_showCuffer is on that we need to take PropertyType.Property into account
+				
 				GUI.enabled = ( m_showCBuffer ) ? m_currentParameterType != PropertyType.Global && m_currentParameterType != PropertyType.Property : m_currentParameterType != PropertyType.Global;
 
 				bool currMode = m_materialMode && m_currentParameterType != PropertyType.Constant;

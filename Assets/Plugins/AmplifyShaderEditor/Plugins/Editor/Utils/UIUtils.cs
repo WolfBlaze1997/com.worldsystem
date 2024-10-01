@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -109,10 +109,10 @@ namespace AmplifyShaderEditor
 	public enum PortGenType
 	{
 		NonCustomLighting,
-		//Normal = 1 << 1,
-		//Emission = 1 << 2,
-		//Metallic = 1 << 3,
-		//Specular = 1 << 4,
+		
+		
+		
+		
 		CustomLighting
 	}
 
@@ -290,7 +290,7 @@ namespace AmplifyShaderEditor
 		public static GUIStyle UnZoomedInputPortStyle;
 		public static GUIStyle UnZoomedOutputPortPortStyle;
 
-		// Node Property Menu items
+		
 		public static GUIStyle MenuItemToggleStyle;
 		public static GUIStyle MenuItemEnableStyle;
 		public static GUIStyle MenuItemBackgroundStyle;
@@ -304,7 +304,7 @@ namespace AmplifyShaderEditor
 		public static Texture ShaderIcon { get { return EditorGUIUtility.IconContent( "Shader Icon" ).image; } }
 		public static Texture MaterialIcon { get { return EditorGUIUtility.IconContent( "Material Icon" ).image; } }
 
-		//50be8291f9514914aa55c66c49da67cf
+		
 		public static Texture ShaderFunctionIcon { get { return AssetDatabase.LoadAssetAtPath<Texture>( AssetDatabase.GUIDToAssetPath( "50be8291f9514914aa55c66c49da67cf" ) ); } }
 
 		public static Texture2D WireNodeSelection = null;
@@ -346,7 +346,7 @@ namespace AmplifyShaderEditor
 						}
 						else
 						{
-							//Debug.Log("No Window Found!");
+							
 						}
 					}
 				}
@@ -383,7 +383,7 @@ namespace AmplifyShaderEditor
 		private static int m_shaderIndentLevel = 0;
 		private static string m_shaderIndentTabs = string.Empty;
 
-		//Label Vars
+		
 
 		private static TextAnchor m_alignment;
 		private static TextClipping m_clipping;
@@ -399,7 +399,7 @@ namespace AmplifyShaderEditor
 		private static Dictionary<int , UndoParentNode> m_undoHelper = new Dictionary<int , UndoParentNode>();
 
 		private static Dictionary<string , int> AvailableKeywordsDict = new Dictionary<string , int>();
-		public static readonly string[] AvailableKeywords =
+		public readonly static string[] AvailableKeywords =
 		{
 			"Custom",
 			"ETC1_EXTERNAL_ALPHA",
@@ -414,7 +414,7 @@ namespace AmplifyShaderEditor
 		};
 
 		private static Dictionary<string , int> AvailableURPKeywordsDict = new Dictionary<string , int>();
-		public static readonly string[] AvailableURPKeywords =
+		public readonly static string[] AvailableURPKeywords =
 		{
 			"Custom",
 			"ETC1_EXTERNAL_ALPHA",
@@ -429,39 +429,123 @@ namespace AmplifyShaderEditor
 			"DIRECTIONAL_COOKIE"
 		};
 
-		//private static Dictionary<string, string> URPToBultinKeywordsDict = new Dictionary<string, string>()
-		//{
-		//	{"SHADERPASS_FORWARD","UNITY_PASS_FORWARDBASE"},
-		//	{"SHADERPASS_SHADOWCASTER","UNITY_PASS_SHADOWCASTER"}
-		//};
+		
+		
+		
+		
+		
 
-		//private static Dictionary<string, string> BultinToURPKeywordsDict = new Dictionary<string, string>()
-		//{
-		//	{"UNITY_PASS_FORWARDBASE","SHADERPASS_FORWARD"},
-		//	{"UNITY_PASS_SHADOWCASTER","SHADERPASS_SHADOWCASTER"}
-		//};
+		
+		
+		
+		
+		
 
-		public static readonly string[] CategoryPresets =
-		{
-			"<Custom>",
-			"Camera And Screen",
-			"Constants And Properties",
-			"Functions",
-			"Image Effects",
-			"Lighting",
-			"Logical Operators",
-			"Math Operators",
-			"Matrix Operators",
-			"Miscellaneous",
-			"Object Transform",
-			"Surface Data",
-			"Textures",
-			"Time",
-			"Trigonometry Operators",
-			"UV Coordinates",
-			"Vector Operators",
-			"Vertex Data"
-		};
+		public readonly static string[] CategoryPresets =
+		{ 
+			"<Custom>", 
+#if !WB_LANGUAGE_CHINESE
+"Camera And Screen"
+#else
+"摄像头和屏幕"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Constants And Properties"
+#else
+"常数和属性"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Functions"
+#else
+"功能"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Image Effects"
+#else
+"图像效果"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Lighting"
+#else
+"照明"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Logical Operators"
+#else
+"逻辑运算符"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Matrix Operators"
+#else
+"矩阵运算符"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Object Transform"
+#else
+"对象变换"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Surface Data"
+#else
+"地表数据"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Textures"
+#else
+"纹理"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Time"
+#else
+"时间"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Trigonometry Operators"
+#else
+"三角运算符"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"UV Coordinates"
+#else
+"UV坐标"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Vector Operators"
+#else
+"矢量运算符"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Vertex Data"
+#else
+"顶点数据"
+#endif
+};
 
 		private static Dictionary<MasterNodePortCategory , int> m_portCategoryToArrayIdx = new Dictionary<MasterNodePortCategory , int>
 		{
@@ -503,7 +587,7 @@ namespace AmplifyShaderEditor
 
 		private static Dictionary<string , string> m_exampleMaterialIDs = new Dictionary<string , string>()
 		{
-			//Community
+			
 			{"2Sided",                      "8ebbbf2c99a544ca780a2573ef1450fc" },
 			{"DissolveBurn",                "f144f2d7ff3daf349a2b7f0fd81ec8ac" },
 			{"MourEnvironmentGradient",     "b64adae401bc073408ac7bff0993c107" },
@@ -511,7 +595,7 @@ namespace AmplifyShaderEditor
 			{"HighlightAnimated",           "3d232e7526f6e426cab994cbec1fc287" },
 			{"Hologram",                    "b422c600f1c3941b8bc7e95db33476ad" },
 			{"LowPolyWater",                 "0557703d3791a4286a62f8ee709d5bef"},
-			//Official
+			
 			{"AnimatedFire",                "63ea5eae6d954a14292033589d0d4275" },
 			{"AnimatedFire-ShaderFunction", "9c6c9fcb82afe874a825a9e680e694b2" },
 			{"BurnEffect",                  "0b019675a8064414b97862a02f644166" },
@@ -572,29 +656,167 @@ namespace AmplifyShaderEditor
 
 		private static Dictionary<string , Color> m_nodeCategoryToColor = new Dictionary<string , Color>()
 		{
-			{ "Master",                             new Color( 0.6f, 0.52f, 0.43f, 1.0f )},
-			{ "Default",                            new Color( 0.26f, 0.35f, 0.44f, 1.0f )},
-			{ "Vertex Data",                        new Color( 0.8f, 0.07f, 0.18f, 1.0f)},
-			{ "Primitive",							new Color( 0.8f, 0.07f, 0.18f, 1.0f)},
-			{ "Math Operators",                     new Color( 0.26f, 0.35f, 0.44f, 1.0f )},
-			{ "Logical Operators",                  new Color( 0.0f, 0.55f, 0.45f, 1.0f)},
-			{ "Trigonometry Operators",             new Color( 0.1f, 0.20f, 0.35f, 1.0f)},
-			{ "Image Effects",                      new Color( 0.5f, 0.2f, 0.90f, 1.0f)},
-			{ "Miscellaneous",                      new Color( 0.49f, 0.32f, 0.60f, 1.0f)},
-			{ "Camera And Screen",                  new Color( 0.75f, 0.10f, 0.30f, 1.0f )},
-			{ "Constants And Properties",           new Color( 0.42f, 0.70f, 0.22f, 1.0f) },
-			{ "Surface Data",                       new Color( 0.92f, 0.73f, 0.03f, 1.0f)},
-			{ "Matrix Transform",                   new Color( 0.09f, 0.43f, 0.2f, 1.0f) },
-			{ "Time",                               new Color( 0.25f, 0.25f, 0.25f, 1.0f)},
-			{ "Functions",                          new Color( 1.00f, 0.4f, 0.0f, 1.0f) },
-			{ "Vector Operators",                   new Color( 0.22f, 0.20f, 0.45f, 1.0f)},
-			{ "Matrix Operators",                   new Color( 0.45f, 0.9f, 0.20f, 1.0f) },
-			{ "Lighting",                           new Color( 1.0f, 0.9f, 0.0f, 1.0f) },
-			{ "Textures",                           new Color( 0.15f, 0.40f, 0.8f, 1.0f)},
-			{ "Commentary",                         new Color( 0.7f, 0.7f, 0.7f, 1.0f)},
-			{ "UV Coordinates",                     new Color( 0.89f, 0.59f, 0.0f, 1.0f) },
-			{ "Object Transform",                   new Color( 0.15f, 0.4f, 0.49f, 1.0f)},
-			{ "Vertex Transform",                   new Color( 0.15f, 0.4f, 0.49f, 1.0f)}
+			{ 
+#if !WB_LANGUAGE_CHINESE
+"Master"
+#else
+"大师"
+#endif
+,                             new Color( 0.6f, 0.52f, 0.43f, 1.0f )},
+			{ 
+#if !WB_LANGUAGE_CHINESE
+"Default"
+#else
+"违约"
+#endif
+,                            new Color( 0.26f, 0.35f, 0.44f, 1.0f )},
+			{ 
+#if !WB_LANGUAGE_CHINESE
+"Vertex Data"
+#else
+"顶点数据"
+#endif
+,                        new Color( 0.8f, 0.07f, 0.18f, 1.0f)},
+			{ 
+#if !WB_LANGUAGE_CHINESE
+"Primitive"
+#else
+"原始"
+#endif
+,							new Color( 0.8f, 0.07f, 0.18f, 1.0f)},
+			{ 
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+,                     new Color( 0.26f, 0.35f, 0.44f, 1.0f )},
+			{ 
+#if !WB_LANGUAGE_CHINESE
+"Logical Operators"
+#else
+"逻辑运算符"
+#endif
+,                  new Color( 0.0f, 0.55f, 0.45f, 1.0f)},
+			{ 
+#if !WB_LANGUAGE_CHINESE
+"Trigonometry Operators"
+#else
+"三角运算符"
+#endif
+,             new Color( 0.1f, 0.20f, 0.35f, 1.0f)},
+			{ 
+#if !WB_LANGUAGE_CHINESE
+"Image Effects"
+#else
+"图像效果"
+#endif
+,                      new Color( 0.5f, 0.2f, 0.90f, 1.0f)},
+			{ 
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+,                      new Color( 0.49f, 0.32f, 0.60f, 1.0f)},
+			{ 
+#if !WB_LANGUAGE_CHINESE
+"Camera And Screen"
+#else
+"摄像头和屏幕"
+#endif
+,                  new Color( 0.75f, 0.10f, 0.30f, 1.0f )},
+			{ 
+#if !WB_LANGUAGE_CHINESE
+"Constants And Properties"
+#else
+"常数和属性"
+#endif
+,           new Color( 0.42f, 0.70f, 0.22f, 1.0f) },
+			{ 
+#if !WB_LANGUAGE_CHINESE
+"Surface Data"
+#else
+"地表数据"
+#endif
+,                       new Color( 0.92f, 0.73f, 0.03f, 1.0f)},
+			{ 
+#if !WB_LANGUAGE_CHINESE
+"Matrix Transform"
+#else
+"矩阵变换"
+#endif
+,                   new Color( 0.09f, 0.43f, 0.2f, 1.0f) },
+			{ 
+#if !WB_LANGUAGE_CHINESE
+"Time"
+#else
+"时间"
+#endif
+,                               new Color( 0.25f, 0.25f, 0.25f, 1.0f)},
+			{ 
+#if !WB_LANGUAGE_CHINESE
+"Functions"
+#else
+"功能"
+#endif
+,                          new Color( 1.00f, 0.4f, 0.0f, 1.0f) },
+			{ 
+#if !WB_LANGUAGE_CHINESE
+"Vector Operators"
+#else
+"矢量运算符"
+#endif
+,                   new Color( 0.22f, 0.20f, 0.45f, 1.0f)},
+			{ 
+#if !WB_LANGUAGE_CHINESE
+"Matrix Operators"
+#else
+"矩阵运算符"
+#endif
+,                   new Color( 0.45f, 0.9f, 0.20f, 1.0f) },
+			{ 
+#if !WB_LANGUAGE_CHINESE
+"Lighting"
+#else
+"照明"
+#endif
+,                           new Color( 1.0f, 0.9f, 0.0f, 1.0f) },
+			{ 
+#if !WB_LANGUAGE_CHINESE
+"Textures"
+#else
+"纹理"
+#endif
+,                           new Color( 0.15f, 0.40f, 0.8f, 1.0f)},
+			{ 
+#if !WB_LANGUAGE_CHINESE
+"Commentary"
+#else
+"评论"
+#endif
+,                         new Color( 0.7f, 0.7f, 0.7f, 1.0f)},
+			{ 
+#if !WB_LANGUAGE_CHINESE
+"UV Coordinates"
+#else
+"UV坐标"
+#endif
+,                     new Color( 0.89f, 0.59f, 0.0f, 1.0f) },
+			{ 
+#if !WB_LANGUAGE_CHINESE
+"Object Transform"
+#else
+"对象变换"
+#endif
+,                   new Color( 0.15f, 0.4f, 0.49f, 1.0f)},
+			{ 
+#if !WB_LANGUAGE_CHINESE
+"Vertex Transform"
+#else
+"顶点变换"
+#endif
+,                   new Color( 0.15f, 0.4f, 0.49f, 1.0f)}
 		};
 
 		private static Dictionary<ToolButtonType , List<string>> m_toolButtonTooltips = new Dictionary<ToolButtonType , List<string>>
@@ -656,7 +878,7 @@ namespace AmplifyShaderEditor
 		private static Dictionary<SurfaceInputs , string> m_inputTypeDeclaration = new Dictionary<SurfaceInputs , string>()
 		{
 			{ SurfaceInputs.DEPTH, "{0} Depth : SV_Depth"},
-			{ SurfaceInputs.UV_COORDS, "{0}2 uv"},// texture uv must have uv or uv2 followed by the texture name
+			{ SurfaceInputs.UV_COORDS, "{0}2 uv"},
 			{ SurfaceInputs.UV2_COORDS, "{0}2 uv2"},
 			{ SurfaceInputs.VIEW_DIR, "{0}3 viewDir"},
 			{ SurfaceInputs.COLOR, Constants.ColorInput},
@@ -672,7 +894,7 @@ namespace AmplifyShaderEditor
 		private static Dictionary<SurfaceInputs , string> m_inputTypeName = new Dictionary<SurfaceInputs , string>()
 		{
 			{ SurfaceInputs.DEPTH, "Depth"},
-			{ SurfaceInputs.UV_COORDS, "uv"},// texture uv must have uv or uv2 followed by the texture name
+			{ SurfaceInputs.UV_COORDS, "uv"},
 			{ SurfaceInputs.UV2_COORDS, "uv2"},
 			{ SurfaceInputs.VIEW_DIR, "viewDir"},
 			{ SurfaceInputs.COLOR, Constants.ColorVariable},
@@ -826,9 +1048,9 @@ namespace AmplifyShaderEditor
 			{WirePortDataType.COLOR,            7}
 		};
 
-		private static readonly string IncorrectInputConnectionErrorMsg = "Input Port {0} from node {1} has type {2}\nwhich is incompatible with connection of type {3} from port {4} on node {5}";
-		private static readonly string IncorrectOutputConnectionErrorMsg = "Output Port {0} from node {1} has type {2}\nwhich is incompatible with connection of type {3} from port {4} on node {5}";
-		private static readonly string NoVertexModeNodeWarning = "{0} is unable to generate code in vertex function";
+		private readonly static string IncorrectInputConnectionErrorMsg = "Input Port {0} from node {1} has type {2}\nwhich is incompatible with connection of type {3} from port {4} on node {5}";
+		private readonly static string IncorrectOutputConnectionErrorMsg = "Output Port {0} from node {1} has type {2}\nwhich is incompatible with connection of type {3} from port {4} on node {5}";
+		private readonly static string NoVertexModeNodeWarning = "{0} is unable to generate code in vertex function";
 
 		private static float SwitchFixedHeight;
 		private static float SwitchFontSize;
@@ -1097,7 +1319,7 @@ namespace AmplifyShaderEditor
 			RangedFloatSliderThumbStyle.margin = RectOffsetZero;
 
 			SwitchNodePopUp = new GUIStyle( (GUIStyle)"Popup" );
-			// RectOffset cannot be initiliazed on constructor
+			
 			SwitchNodeBorder = new RectOffset( 4 , 15 , 3 , 3 );
 			SwitchNodeMargin = new RectOffset( 4 , 4 , 3 , 3 );
 			SwitchNodeOverflow = new RectOffset( 0 , 0 , -1 , 2 );
@@ -1116,8 +1338,8 @@ namespace AmplifyShaderEditor
 			Label = new GUIStyle( GUI.skin.label );
 			Toggle = new GUIStyle( GUI.skin.toggle );
 			Textfield = new GUIStyle( GUI.skin.textField );
-			//ShaderIcon = EditorGUIUtility.IconContent( "Shader Icon" ).image;
-			//MaterialIcon = EditorGUIUtility.IconContent( "Material Icon" ).image;
+			
+			
 
 			ConsoleLogLabel = new GUIStyle( GUI.skin.label );
 			ConsoleLogLabel.wordWrap = true;
@@ -1171,26 +1393,26 @@ namespace AmplifyShaderEditor
 		{
 			if( LinearMaterial == null )
 			{
-				Shader linearShader = AssetDatabase.LoadAssetAtPath<Shader>( AssetDatabase.GUIDToAssetPath( "e90ef6ea05743b84baf9549874c52e47" ) ); //linear previews
+				Shader linearShader = AssetDatabase.LoadAssetAtPath<Shader>( AssetDatabase.GUIDToAssetPath( "e90ef6ea05743b84baf9549874c52e47" ) ); 
 				LinearMaterial = new Material( linearShader );
 			}
 
 			if( IntShader == null )
-				IntShader = AssetDatabase.LoadAssetAtPath<Shader>( AssetDatabase.GUIDToAssetPath( "0f64d695b6ffacc469f2dd31432a232a" ) ); //int
+				IntShader = AssetDatabase.LoadAssetAtPath<Shader>( AssetDatabase.GUIDToAssetPath( "0f64d695b6ffacc469f2dd31432a232a" ) ); 
 			if( FloatShader == null )
-				FloatShader = AssetDatabase.LoadAssetAtPath<Shader>( AssetDatabase.GUIDToAssetPath( "d9ca47581ac157145bff6f72ac5dd73e" ) ); //ranged float
+				FloatShader = AssetDatabase.LoadAssetAtPath<Shader>( AssetDatabase.GUIDToAssetPath( "d9ca47581ac157145bff6f72ac5dd73e" ) ); 
 			if( Vector2Shader == null )
-				Vector2Shader = AssetDatabase.LoadAssetAtPath<Shader>( AssetDatabase.GUIDToAssetPath( "88b4191eb06084d4da85d1dd2f984085" ) ); //vector2
+				Vector2Shader = AssetDatabase.LoadAssetAtPath<Shader>( AssetDatabase.GUIDToAssetPath( "88b4191eb06084d4da85d1dd2f984085" ) ); 
 			if( Vector3Shader == null )
-				Vector3Shader = AssetDatabase.LoadAssetAtPath<Shader>( AssetDatabase.GUIDToAssetPath( "8a44d38f06246bf48944b3f314bc7920" ) ); //vector3
+				Vector3Shader = AssetDatabase.LoadAssetAtPath<Shader>( AssetDatabase.GUIDToAssetPath( "8a44d38f06246bf48944b3f314bc7920" ) ); 
 			if( Vector4Shader == null )
-				Vector4Shader = AssetDatabase.LoadAssetAtPath<Shader>( AssetDatabase.GUIDToAssetPath( "aac241d0e47a5a84fbd2edcd640788dc" ) ); //vector4
+				Vector4Shader = AssetDatabase.LoadAssetAtPath<Shader>( AssetDatabase.GUIDToAssetPath( "aac241d0e47a5a84fbd2edcd640788dc" ) ); 
 			if( ColorShader == null )
-				ColorShader = AssetDatabase.LoadAssetAtPath<Shader>( AssetDatabase.GUIDToAssetPath( "6cf365ccc7ae776488ae8960d6d134c3" ) ); //color node
+				ColorShader = AssetDatabase.LoadAssetAtPath<Shader>( AssetDatabase.GUIDToAssetPath( "6cf365ccc7ae776488ae8960d6d134c3" ) ); 
 			if( MaskingShader == null )
-				MaskingShader = AssetDatabase.LoadAssetAtPath<Shader>( AssetDatabase.GUIDToAssetPath( "9c34f18ebe2be3e48b201b748c73dec0" ) ); //masking shader
+				MaskingShader = AssetDatabase.LoadAssetAtPath<Shader>( AssetDatabase.GUIDToAssetPath( "9c34f18ebe2be3e48b201b748c73dec0" ) ); 
 			if( Texture2DShader == null )
-				Texture2DShader = AssetDatabase.LoadAssetAtPath<Shader>( AssetDatabase.GUIDToAssetPath( "13bd295c44d04e1419f20f792d331e33" ) ); //texture2d shader
+				Texture2DShader = AssetDatabase.LoadAssetAtPath<Shader>( AssetDatabase.GUIDToAssetPath( "13bd295c44d04e1419f20f792d331e33" ) ); 
 		}
 
 		private static void FetchMenuItemStyles()
@@ -1223,13 +1445,13 @@ namespace AmplifyShaderEditor
 
 			if ( GUI.skin.FindStyle( "ToolbarSearchTextField" ) != null )
 			{
-				// @diogo: new, fixed
+				
 				ToolbarSearchTextfield = new GUIStyle( ( GUIStyle )"ToolbarSearchTextField" );
 				ToolbarSearchCancelButton = new GUIStyle( ( GUIStyle )"ToolbarSearchCancelButton" );
 			}
 			else
 			{
-				// @diogo: old, typo
+				
 				ToolbarSearchTextfield = new GUIStyle( ( GUIStyle )"ToolbarSeachTextField" );
 				ToolbarSearchCancelButton = new GUIStyle( ( GUIStyle )"ToolbarSeachCancelButton" );
 			}
@@ -1387,7 +1609,7 @@ namespace AmplifyShaderEditor
 			return string.Format( m_precisionWirePortToCgType[ type ] , m_precisionTypeToCg[ precisionType ] );
 		}
 
-		public static string PrecisionWirePortToTypeValue( PrecisionType precisionType , WirePortDataType type , string varName/*, bool isSRP, bool samplingMacro*/ )
+		public static string PrecisionWirePortToTypeValue( PrecisionType precisionType , WirePortDataType type , string varName )
 		{
 			string result = string.Empty;
 			string varType = string.Empty;
@@ -1423,7 +1645,7 @@ namespace AmplifyShaderEditor
 				case WirePortDataType.SAMPLERCUBE:
 				case WirePortDataType.SAMPLER2DARRAY:
 				ParentGraph outsideGraph = UIUtils.CurrentWindow.OutsideGraph;
-				if( outsideGraph.SamplingMacros /*&& !outsideGraph.IsStandardSurface*/ )
+				if( outsideGraph.SamplingMacros  )
 				{
 					if( outsideGraph.IsSRP )
 						varType = string.Format( m_precisionWirePortToSRPMacroType[ type ] , m_precisionTypeToCg[ precisionType ] );
@@ -1507,7 +1729,7 @@ namespace AmplifyShaderEditor
 			string newTypeStr = m_wirePortToCgType[ newType ];
 			newTypeStr = m_textInfo.ToTitleCase( newTypeStr );
 			int castId = ( dataCollector.PortCategory == MasterNodePortCategory.Vertex || dataCollector.PortCategory == MasterNodePortCategory.Tessellation ) ? dataCollector.AvailableVertexTempId : dataCollector.AvailableFragTempId;
-			string localVarName = "temp_cast_" + castId;//m_wirePortToCgType[ oldType ] + "To" + newTypeStr + "_" + castInfo.ToString();
+			string localVarName = "temp_cast_" + castId;
 			string result = string.Empty;
 			bool useRealValue = ( parameterName == null );
 
@@ -1620,44 +1842,44 @@ namespace AmplifyShaderEditor
 							result = ( useRealValue ) ? precisionStr + "4( " + vecVal.x + " , " + vecVal.y + " , " + vecVal.z + " , 0.0 )" : precisionStr + "4( " + parameterName + " , 0.0 )";
 						}
 						break;
-						//case WirePortDataType.FLOAT3x3:
-						//{
-						//	if ( useRealValue )
-						//	{
-						//		result = precisionStr + "3x3( " + vecVal.x + " , " + vecVal.y + " , " + vecVal.z + " , " +
-						//									vecVal.x + " , " + vecVal.y + " , " + vecVal.z + " , " +
-						//									vecVal.x + " , " + vecVal.y + " , " + vecVal.z + " )";
-						//	}
-						//	else
-						//	{
-						//		string localVal = CreateLocalValueName( currentPrecision, newType, localVarName, parameterName );
-						//		CurrentDataCollector.AddToLocalVariables( portCategory, -1, localVal );
-						//		result = precisionStr + "3x3( " + localVarName + ".x , " + localVarName + ".y , " + localVarName + ".x , " +
-						//							   localVarName + ".x , " + localVarName + ".y , " + localVarName + ".y , " +
-						//							   localVarName + ".x , " + localVarName + ".y , " + localVarName + ".z )";
-						//	}
-						//}
-						//break;
-						//case WirePortDataType.FLOAT4x4:
-						//{
-						//	if ( useRealValue )
-						//	{
-						//		result = precisionStr + "4x4( " + vecVal + ".x , " + vecVal + ".y , " + vecVal + ".z , 0 , " +
-						//								vecVal + ".x , " + vecVal + ".y , " + vecVal + ".z , 0 , " +
-						//								vecVal + ".x , " + vecVal + ".y , " + vecVal + ".z , 0 , " +
-						//								vecVal + ".x , " + vecVal + ".y , " + vecVal + ".z , 0 )";
-						//	}
-						//	else
-						//	{
-						//		string localVal = CreateLocalValueName( currentPrecision, newType, localVarName, parameterName );
-						//		CurrentDataCollector.AddToLocalVariables( portCategory, -1, localVal );
-						//		result = precisionStr + "4x4( " + localVarName + ".x , " + localVarName + ".y , " + localVarName + ".z , 0 , " +
-						//								localVarName + ".x , " + localVarName + ".y , " + localVarName + ".z , 0 , " +
-						//								localVarName + ".x , " + localVarName + ".y , " + localVarName + ".z , 0 , " +
-						//								localVarName + ".x , " + localVarName + ".y , " + localVarName + ".z , 0 )";
-						//	}
-						//}
-						//break;
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
 					}
 				}
 				break;
@@ -1682,26 +1904,26 @@ namespace AmplifyShaderEditor
 							result = ( useRealValue ) ? precisionStr + "3( " + vecVal.x + " , " + vecVal.y + " , " + vecVal.z + " )" : parameterName + ".xyz";
 						}
 						break;
-						//case WirePortDataType.FLOAT4x4:
-						//{
-						//	if ( useRealValue )
-						//	{
-						//		result = precisionStr + "4x4( " + vecVal + ".x , " + vecVal + ".y , " + vecVal + ".z , " + vecVal + ".w , " +
-						//								vecVal + ".x , " + vecVal + ".y , " + vecVal + ".z , " + vecVal + ".w , " +
-						//								vecVal + ".x , " + vecVal + ".y , " + vecVal + ".z , " + vecVal + ".w , " +
-						//								vecVal + ".x , " + vecVal + ".y , " + vecVal + ".z , " + vecVal + ".w )";
-						//	}
-						//	else
-						//	{
-						//		string localVal = CreateLocalValueName( currentPrecision, newType, localVarName, parameterName );
-						//		CurrentDataCollector.AddToLocalVariables( portCategory, -1, localVal );
-						//		result = precisionStr + "4x4( " + localVarName + ".x , " + localVarName + ".y , " + localVarName + ".z , " + localVarName + ".w , " +
-						//								localVarName + ".x , " + localVarName + ".y , " + localVarName + ".z , " + localVarName + ".w , " +
-						//								localVarName + ".x , " + localVarName + ".y , " + localVarName + ".z , " + localVarName + ".w , " +
-						//								localVarName + ".x , " + localVarName + ".y , " + localVarName + ".z , " + localVarName + ".w )";
-						//	}
-						//}
-						//break;
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
 						case WirePortDataType.COLOR:
 						{
 							result = useRealValue ? precisionStr + "4( " + vecVal.x + " , " + vecVal.y + " , " + vecVal.z + " , " + vecVal.w + " )" : parameterName;
@@ -1712,19 +1934,19 @@ namespace AmplifyShaderEditor
 				break;
 				case WirePortDataType.FLOAT3x3:
 				{
-					//Matrix4x4 matrixVal = useRealValue ? ( Matrix4x4 ) value : Matrix4x4.identity;
-					//switch ( newType )
-					//{
-					//	case WirePortDataType.OBJECT:
-					//	case WirePortDataType.FLOAT4x4:
-					//	{
-					//		result = ( useRealValue ) ? precisionStr + "4x4(" + matrixVal.m00 + " , " + matrixVal.m01 + " , " + matrixVal.m02 + " , " + matrixVal.m03 + " , " +
-					//													matrixVal.m10 + " , " + matrixVal.m11 + " , " + matrixVal.m12 + " , " + matrixVal.m10 + " , " +
-					//													matrixVal.m20 + " , " + matrixVal.m21 + " , " + matrixVal.m22 + " , " + matrixVal.m20 + " , " +
-					//													matrixVal.m30 + " , " + matrixVal.m31 + " , " + matrixVal.m32 + " , " + matrixVal.m30 + " )" : precisionStr + "4x4(" + parameterName + ")";
-					//	}
-					//	break;
-					//}
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
 				}
 				break;
 				case WirePortDataType.FLOAT4x4:
@@ -1769,27 +1991,27 @@ namespace AmplifyShaderEditor
 							result = useRealValue ? precisionStr + "4( " + colorValue.r + " , " + colorValue.g + " , " + colorValue.b + " , " + colorValue.a + " )" : parameterName;
 						}
 						break;
-						//case WirePortDataType.FLOAT4x4:
-						//{
-						//	if ( useRealValue )
-						//	{
-						//		result = precisionStr + "4x4( " + colorValue.r + " , " + colorValue.g + " , " + colorValue.b + " , " + colorValue.a + " , " +
-						//											colorValue.r + " , " + colorValue.g + " , " + colorValue.b + " , " + colorValue.a + " , " +
-						//											colorValue.r + " , " + colorValue.g + " , " + colorValue.b + " , " + colorValue.a + " , " +
-						//											colorValue.r + " , " + colorValue.g + " , " + colorValue.b + " , " + colorValue.a + " )";
-						//	}
-						//	else
-						//	{
-						//		string localVal = CreateLocalValueName( currentPrecision, newType, localVarName, parameterName );
-						//		CurrentDataCollector.AddToLocalVariables( portCategory, -1, localVal );
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
 
-						//		result = precisionStr + "4x4( " + localVarName + ".x , " + localVarName + ".y , " + localVarName + ".z , " + localVarName + ".w , " +
-						//								localVarName + ".x , " + localVarName + ".y , " + localVarName + ".z , " + localVarName + ".w , " +
-						//								localVarName + ".x , " + localVarName + ".y , " + localVarName + ".z , " + localVarName + ".w , " +
-						//								localVarName + ".x , " + localVarName + ".y , " + localVarName + ".z , " + localVarName + ".w )";
-						//	}
-						//}
-						//break;
+						
+						
+						
+						
+						
+						
+						
 					}
 				}
 				break;
@@ -2173,7 +2395,13 @@ namespace AmplifyShaderEditor
 			{
 				Debug.LogException( e );
 			}
-			return m_nodeCategoryToColor[ "Default" ];
+			return m_nodeCategoryToColor[ 
+#if !WB_LANGUAGE_CHINESE
+"Default"
+#else
+"违约"
+#endif
+ ];
 		}
 
 		public static Color GetColorFromCategory( string category )
@@ -2185,7 +2413,13 @@ namespace AmplifyShaderEditor
 			if( DebugConsoleWindow.DeveloperMode )
 				Debug.LogWarning( category + " category does not contain an associated color" );
 
-			return m_nodeCategoryToColor[ "Default" ];
+			return m_nodeCategoryToColor[ 
+#if !WB_LANGUAGE_CHINESE
+"Default"
+#else
+"违约"
+#endif
+ ];
 		}
 
 		public static string LatestOpenedFolder
@@ -2399,7 +2633,7 @@ namespace AmplifyShaderEditor
 				int relFilenameId = newShader.IndexOf( Application.dataPath );
 				if( relFilenameId > -1 )
 				{
-					string relFilename = newShader.Substring( relFilenameId + Application.dataPath.Length - 6 );// -6 need to also copy the assets/ part
+					string relFilename = newShader.Substring( relFilenameId + Application.dataPath.Length - 6 );
 					CurrentWindow.LoadFromDisk( relFilename );
 				}
 				else
@@ -2773,7 +3007,7 @@ namespace AmplifyShaderEditor
 		{
 			if( CurrentWindow != null )
 			{
-				//				CurrentWindow.Focus();
+				
 				CurrentWindow.ForceUpdateFromMaterial();
 			}
 		}
@@ -2819,7 +3053,7 @@ namespace AmplifyShaderEditor
 
 		public static void RemoveVirtualTextureCount() { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.RemoveVirtualTextureCount(); } }
 
-		//public static void AddInstancePropertyCount() { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.AddInstancePropertyCount(); } }
+		
 
 		public static bool IsInstancedShader()
 		{
@@ -2830,17 +3064,17 @@ namespace AmplifyShaderEditor
 			return false;
 		}
 
-		//public static void RemoveInstancePropertyCount() { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.RemoveInstancePropertyCount(); } }
-		//public static void AddNormalDependentCount() { if ( CurrentWindow != null ) { CurrentWindow.CurrentGraph.AddNormalDependentCount(); } }
-		//public static void RemoveNormalDependentCount() { if ( CurrentWindow != null ) { CurrentWindow.CurrentGraph.RemoveNormalDependentCount(); } }
-		//public static bool IsNormalDependent()
-		//{
-		//	if ( CurrentWindow != null )
-		//	{
-		//		return CurrentWindow.CurrentGraph.IsNormalDependent;
-		//	}
-		//	return false;
-		//}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 		public static void CopyValuesFromMaterial( Material mat )
 		{
@@ -2862,7 +3096,7 @@ namespace AmplifyShaderEditor
 			}
 		}
 
-		// Sampler Node
+		
 		public static void RegisterSamplerNode( SamplerNode node ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.SamplerNodes.AddNode( node ); } }
 		public static void UnregisterSamplerNode( SamplerNode node ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.SamplerNodes.RemoveNode( node ); } }
 		public static string[] SamplerNodeArr() { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.SamplerNodes.NodesArr; } return null; }
@@ -2871,7 +3105,7 @@ namespace AmplifyShaderEditor
 		public static int GetSamplerNodeRegisterId( int uniqueId ) { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.SamplerNodes.GetNodeRegisterIdx( uniqueId ); } return -1; }
 		public static int GetSamplerNodeAmount() { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.SamplerNodes.NodesList.Count; } return -1; }
 
-		// Float Node
+		
 		public static void RegisterFloatIntNode( PropertyNode node ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.FloatIntNodes.AddNode( node ); } }
 		public static void UnregisterFloatIntNode( PropertyNode node ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.FloatIntNodes.RemoveNode( node ); } }
 		public static string[] FloatIntNodeArr() { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.FloatIntNodes.NodesArr; } return null; }
@@ -2900,7 +3134,7 @@ namespace AmplifyShaderEditor
 		}
 		public static PropertyNode GetFloatIntNodeByUniqueId( int uniqueId ) { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.FloatIntNodes.GetNodeByUniqueId( uniqueId ); } return null; }
 
-		// Texture Property
+		
 		public static void RegisterTexturePropertyNode( TexturePropertyNode node ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.TexturePropertyNodes.AddNode( node ); } }
 		public static void UnregisterTexturePropertyNode( TexturePropertyNode node ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.TexturePropertyNodes.RemoveNode( node ); } }
 		public static string[] TexturePropertyNodeArr() { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.TexturePropertyNodes.NodesArr; } return null; }
@@ -2909,7 +3143,7 @@ namespace AmplifyShaderEditor
 		public static int GetTexturePropertyNodeRegisterId( int uniqueId ) { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.TexturePropertyNodes.GetNodeRegisterIdx( uniqueId ); } return -1; }
 		public static int GetTexturePropertyNodeAmount() { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.TexturePropertyNodes.NodesList.Count; } return -1; }
 
-		// Texture Array
+		
 		public static void RegisterTextureArrayNode( TextureArrayNode node ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.TextureArrayNodes.AddNode( node ); } }
 		public static void UnregisterTextureArrayNode( TextureArrayNode node ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.TextureArrayNodes.RemoveNode( node ); } }
 		public static string[] TextureArrayNodeArr() { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.TextureArrayNodes.NodesArr; } return null; }
@@ -2918,11 +3152,11 @@ namespace AmplifyShaderEditor
 		public static int GetTextureArrayNodeRegisterId( int uniqueId ) { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.TextureArrayNodes.GetNodeRegisterIdx( uniqueId ); } return -1; }
 		public static int GetTextureArrayNodeAmount() { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.TextureArrayNodes.NodesList.Count; } return -1; }
 
-		// Raw Property Node
+		
 		public static void RegisterRawPropertyNode( PropertyNode node ) { if( CurrentWindow != null ) { CurrentWindow.OutsideGraph.RawPropertyNodes.AddNode( node ); } }
 		public static void UnregisterRawPropertyNode( PropertyNode node ) { if( CurrentWindow != null ) { CurrentWindow.OutsideGraph.RawPropertyNodes.RemoveNode( node ); } }
 
-		// Property Node
+		
 		public static void RegisterPropertyNode( PropertyNode node ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.PropertyNodes.AddNode( node ); } }
 		public static void UnregisterPropertyNode( PropertyNode node ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.PropertyNodes.RemoveNode( node ); } }
 		public static string[] PropertyNodeNodeArr() { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.PropertyNodes.NodesArr; } return null; }
@@ -2933,31 +3167,31 @@ namespace AmplifyShaderEditor
 		public static List<PropertyNode> PropertyNodesList() { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.PropertyNodes.NodesList; } return null; }
 		public static int GetPropertyNodeAmount() { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.PropertyNodes.NodesList.Count; } return -1; }
 
-		// Function Inputs
+		
 		public static void RegisterFunctionInputNode( FunctionInput node ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.FunctionInputNodes.AddNode( node ); } }
 		public static void UnregisterFunctionInputNode( FunctionInput node ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.FunctionInputNodes.RemoveNode( node ); } }
 		public static void UpdateFunctionInputData( int uniqueId , string data ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.FunctionInputNodes.UpdateDataOnNode( uniqueId , data ); } }
 		public static List<FunctionInput> FunctionInputList() { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.FunctionInputNodes.NodesList; } return null; }
 
-		// Function Nodes
+		
 		public static void RegisterFunctionNode( FunctionNode node ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.FunctionNodes.AddNode( node ); } }
 		public static void UnregisterFunctionNode( FunctionNode node ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.FunctionNodes.RemoveNode( node ); } }
 		public static void UpdateFunctionData( int uniqueId , string data ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.FunctionNodes.UpdateDataOnNode( uniqueId , data ); } }
 		public static List<FunctionNode> FunctionList() { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.FunctionNodes.NodesList; } return null; }
 
-		// Function Outputs
+		
 		public static void RegisterFunctionOutputNode( FunctionOutput node ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.FunctionOutputNodes.AddNode( node ); } }
 		public static void UnregisterFunctionOutputNode( FunctionOutput node ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.FunctionOutputNodes.RemoveNode( node ); } }
 		public static void UpdateFunctionOutputData( int uniqueId , string data ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.FunctionOutputNodes.UpdateDataOnNode( uniqueId , data ); } }
 		public static List<FunctionOutput> FunctionOutputList() { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.FunctionOutputNodes.NodesList; } return null; }
 
-		// Function Switches Copy
+		
 		public static void RegisterFunctionSwitchCopyNode( FunctionSwitch node ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.FunctionSwitchCopyNodes.AddNode( node ); } }
 		public static void UnregisterFunctionSwitchCopyNode( FunctionSwitch node ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.FunctionSwitchCopyNodes.RemoveNode( node ); } }
 		public static void UpdateFunctionSwitchCopyData( int uniqueId , string data ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.FunctionSwitchCopyNodes.UpdateDataOnNode( uniqueId , data ); } }
 		public static List<FunctionSwitch> FunctionSwitchCopyList() { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.FunctionSwitchCopyNodes.NodesList; } return null; }
 
-		// Function Switches
+		
 		public static void RegisterFunctionSwitchNode( FunctionSwitch node ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.FunctionSwitchNodes.AddNode( node ); } }
 		public static void UnregisterFunctionSwitchNode( FunctionSwitch node ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.FunctionSwitchNodes.RemoveNode( node ); } }
 		public static void UpdateFunctionSwitchData( int uniqueId , string data ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.FunctionSwitchNodes.UpdateDataOnNode( uniqueId , data ); } }
@@ -2967,7 +3201,7 @@ namespace AmplifyShaderEditor
 		public static FunctionSwitch GetFunctionSwitchNode( int idx ) { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.FunctionSwitchNodes.GetNode( idx ); } return null; }
 		public static int GetFunctionSwitchNodeIndex( int uniqueId ) { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.FunctionSwitchNodes.GetNodeRegisterIdx( uniqueId ); } return -1; }
 
-		// Screen Color Node
+		
 		public static void RegisterScreenColorNode( ScreenColorNode node ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.ScreenColorNodes.AddNode( node ); } }
 		public static void UnregisterScreenColorNode( ScreenColorNode node ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.ScreenColorNodes.RemoveNode( node ); } }
 		public static string[] ScreenColorNodeArr() { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.ScreenColorNodes.NodesArr; } return null; }
@@ -2976,7 +3210,7 @@ namespace AmplifyShaderEditor
 		public static void UpdateScreenColorDataNode( int uniqueId , string data ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.ScreenColorNodes.UpdateDataOnNode( uniqueId , data ); } }
 		public static int GetScreenColorNodeAmount() { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.ScreenColorNodes.NodesList.Count; } return -1; }
 
-		// Local Var Node
+		
 		public static int RegisterLocalVarNode( RegisterLocalVarNode node ) { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.LocalVarNodes.AddNode( node ); } return -1; }
 		public static void UnregisterLocalVarNode( RegisterLocalVarNode node ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.LocalVarNodes.RemoveNode( node ); } }
 		public static string[] LocalVarNodeArr() { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.LocalVarNodes.NodesArr; } return null; }
@@ -2985,7 +3219,7 @@ namespace AmplifyShaderEditor
 		public static RegisterLocalVarNode GetLocalVarNode( int idx ) { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.LocalVarNodes.GetNode( idx ); } return null; }
 		public static void UpdateLocalVarDataNode( int uniqueId , string data ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.LocalVarNodes.UpdateDataOnNode( uniqueId , data ); } }
 
-		//Global Array
+		
 		public static void RegisterGlobalArrayNode( GlobalArrayNode node ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.GlobalArrayNodes.AddNode( node ); } }
 		public static void UnregisterGlobalArrayNode( GlobalArrayNode node ) { if( CurrentWindow != null ) { CurrentWindow.CurrentGraph.GlobalArrayNodes.RemoveNode( node ); } }
 		public static string[] GlobalArrayNodeArr() { if( CurrentWindow != null ) { return CurrentWindow.CurrentGraph.GlobalArrayNodes.NodesArr; } return null; }

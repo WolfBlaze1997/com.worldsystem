@@ -1,11 +1,35 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Luminance", "Image Effects", "Converts color to luminance (grayscale)", Deprecated = true, DeprecatedAlternativeType = typeof( TFHCGrayscale ), DeprecatedAlternative = "Grayscale" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Luminance"
+#else
+"亮度"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Image Effects"
+#else
+"图像效果"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Converts color to luminance (grayscale)"
+#else
+"将颜色转换为亮度（灰度）"
+#endif
+, Deprecated = true, DeprecatedAlternativeType = typeof( TFHCGrayscale ), DeprecatedAlternative = 
+#if !WB_LANGUAGE_CHINESE
+"Grayscale"
+#else
+"灰度"
+#endif
+)]
 	public sealed class LuminanceHlpNode : HelperParentNode
 	{
 		protected override void CommonInit( int uniqueId )

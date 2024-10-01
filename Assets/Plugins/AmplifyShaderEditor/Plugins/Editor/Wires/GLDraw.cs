@@ -6,10 +6,7 @@ namespace AmplifyShaderEditor
 {
 	public class GLDraw
 	{
-		/*
-		* Clipping code: http://forum.unity3d.com/threads/17066-How-to-draw-a-GUI-2D-quot-line-quot?p=230386#post230386
-		* Thick line drawing code: http://unifycommunity.com/wiki/index.php?title=VectorLine
-		*/
+		
 		public static Material LineMaterial = null;
 		public static bool MultiLine = false;
 		private static Shader LineShader = null;
@@ -58,7 +55,7 @@ namespace AmplifyShaderEditor
 
 		public static Rect DrawBezier( Vector2 start, Vector2 startTangent, Vector2 end, Vector2 endTangent, Color color, float width, int type = 1 )
 		{
-			int segments = Mathf.FloorToInt( ( start - end ).magnitude / 20 ) * 3; // Three segments per distance of 20
+			int segments = Mathf.FloorToInt( ( start - end ).magnitude / 20 ) * 3; 
 			return DrawBezier( start, startTangent, end, endTangent, color, width, segments, type );
 		}
 
@@ -117,7 +114,7 @@ namespace AmplifyShaderEditor
 				}
 				Aux1Vec2.Set( StartPt.x - EndPt.x, StartPt.y - EndPt.y );
 				FastNormalized( ref Aux1Vec2 );
-				//aux1Vec2.FastNormalized();
+				
 				Aux1Vec2.Set( Aux1Vec2.x * width, Aux1Vec2.y * width );
 				AllPerpendiculars[ i ] = Aux1Vec2;
 			}
@@ -144,13 +141,13 @@ namespace AmplifyShaderEditor
 		}
 	}
 
-	//public static class VectorEx
-	//{
-	//	public static void FastNormalized( this Vector2 v )
-	//	{
-	//		float len = Mathf.Sqrt( v.x * v.x + v.y * v.y );
-	//		v.Set( v.x / len, v.y / len );
-	//	}
-	//}
+	
+	
+	
+	
+	
+	
+	
+	
 }
 

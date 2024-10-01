@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.Collections.Generic;
@@ -155,7 +155,7 @@ namespace AmplifyShaderEditor
 
 			Color cachedColor = GUI.color;
 			GUI.color = new Color( cachedColor.r, cachedColor.g, cachedColor.b, ( EditorGUIUtility.isProSkin ? 0.5f : 0.25f ) );
-			//EditorGUILayout.BeginVertical( UIUtils.MenuItemBackgroundStyle );
+			
 			GUI.color = cachedColor;
 
 			EditorGUILayout.Separator();
@@ -180,7 +180,7 @@ namespace AmplifyShaderEditor
 			}
 			EditorGUILayout.Separator();
 			EditorGUIUtility.labelWidth = cache;
-			//EditorGUILayout.EndVertical();
+			
 			if( EditorGUI.EndChangeCheck() )
 			{
 				m_isDirty = true;

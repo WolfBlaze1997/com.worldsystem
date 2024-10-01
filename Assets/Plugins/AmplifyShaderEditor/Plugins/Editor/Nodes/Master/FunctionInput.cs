@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -9,10 +9,34 @@ using System.Collections.Generic;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Function Input", "Functions", "Function Input adds an input port to the shader function", NodeAvailabilityFlags = (int)NodeAvailability.ShaderFunction )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Function Input"
+#else
+"功能输入"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Functions"
+#else
+"功能"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Function Input adds an input port to the shader function"
+#else
+"Function Input为着色器函数添加了一个输入端口"
+#endif
+, NodeAvailabilityFlags = (int)NodeAvailability.ShaderFunction )]
 	public sealed class FunctionInput : ParentNode
 	{
-		private const string InputTypeStr = "Input Type";
+		private const string InputTypeStr = 
+#if !WB_LANGUAGE_CHINESE
+"Input Type"
+#else
+"输入类型"
+#endif
+;
 		private readonly string[] m_inputValueTypes ={  "Int",
 														"Float",
 														"Vector2",
@@ -38,7 +62,13 @@ namespace AmplifyShaderEditor
 		private FunctionNode m_functionNode;
 
 		[SerializeField]
-		private string m_inputName = "Input";
+		private string m_inputName = 
+#if !WB_LANGUAGE_CHINESE
+"Input"
+#else
+"输入"
+#endif
+;
 
 		[SerializeField]
 		private bool m_autoCast = false;
@@ -53,7 +83,7 @@ namespace AmplifyShaderEditor
 		public delegate string PortGeneration( ref MasterNodeDataCollector dataCollector, int index, ParentGraph graph );
 		public PortGeneration OnPortGeneration = null;
 
-		//Title editing 
+		
 		[SerializeField]
 		private string m_uniqueName;
 
@@ -71,7 +101,7 @@ namespace AmplifyShaderEditor
 			base.CommonInit( uniqueId );
 			AddInputPort( WirePortDataType.FLOAT, false, Constants.EmptyPortValue );
 			m_inputPorts[ 0 ].AutoDrawInternalData = true;
-			//m_inputPorts[ 0 ].Visible = false;
+			
 			AddOutputPort( WirePortDataType.FLOAT, Constants.EmptyPortValue );
 			m_autoWrapProperties = true;
 			m_textLabelWidth = 100;
@@ -251,7 +281,7 @@ namespace AmplifyShaderEditor
 		public override void Draw( DrawInfo drawInfo )
 		{
 			base.Draw( drawInfo );
-			// Custom Editable Title
+			
 			if( ContainerGraph.LodLevel <= ParentGraph.NodeLOD.LOD3 )
 			{
 				if( !m_isEditing && ( ( !ContainerGraph.ParentWindow.MouseInteracted && drawInfo.CurrentEventType == EventType.MouseDown && m_titleClickArea.Contains( drawInfo.MousePosition ) ) ) )
@@ -305,7 +335,7 @@ namespace AmplifyShaderEditor
 
 		public override void OnNodeLayout( DrawInfo drawInfo )
 		{
-			// RUN LAYOUT CHANGES AFTER TITLES CHANGE
+			
 			base.OnNodeLayout( drawInfo );
 			m_titleClickArea = m_titlePos;
 			m_titleClickArea.height = Constants.NODE_HEADER_HEIGHT;
@@ -318,7 +348,7 @@ namespace AmplifyShaderEditor
 			if( !m_isVisible )
 				return;
 
-			// Fixed Title ( only renders when not editing )
+			
 			if( m_showTitleWhenNotEditing && !m_isEditing && !m_startEditing && ContainerGraph.LodLevel <= ParentGraph.NodeLOD.LOD3 )
 			{
 				GUI.Label( m_titleClickArea, m_content, UIUtils.GetCustomStyle( CustomStyle.NodeTitle ) );
@@ -338,7 +368,13 @@ namespace AmplifyShaderEditor
 			base.DrawProperties();
 			EditorGUILayout.BeginVertical();
 			EditorGUI.BeginChangeCheck();
-			m_inputName = EditorGUILayoutTextField( "Name", m_inputName );
+			m_inputName = EditorGUILayoutTextField( 
+#if !WB_LANGUAGE_CHINESE
+"Name"
+#else
+"姓名"
+#endif
+, m_inputName );
 			if( EditorGUI.EndChangeCheck() )
 			{
 				SetTitleText( m_inputName );
@@ -352,7 +388,13 @@ namespace AmplifyShaderEditor
 				SetAdditonalTitleText( "( " + m_inputValueTypes[ m_selectedInputTypeInt ] + " )" );
 			}
 
-			m_autoCast = EditorGUILayoutToggle( "Auto Cast", m_autoCast );
+			m_autoCast = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Auto Cast"
+#else
+"自动铸造"
+#endif
+, m_autoCast );
 
 			EditorGUILayout.Separator();
 			if( !m_inputPorts[ 0 ].IsConnected && m_inputPorts[ 0 ].ValidInternalData )
@@ -388,7 +430,7 @@ namespace AmplifyShaderEditor
 
 			ChangeInputType( m_selectedInputType, false );
 
-			//This node doesn't have any restrictions but changing types should be restricted to prevent invalid connections
+			
 			m_outputPorts[ 0 ].ChangeTypeWithRestrictions( m_selectedInputType, PortCreateRestriction( m_selectedInputType ) );
 			m_sizeIsDirty = true;
 		}

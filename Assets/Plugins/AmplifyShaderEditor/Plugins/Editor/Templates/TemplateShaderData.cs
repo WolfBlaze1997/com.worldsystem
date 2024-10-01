@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -55,16 +55,16 @@ namespace AmplifyShaderEditor
 			int nameBegin = body.IndexOf( TemplatesManager.TemplateShaderNameBeginTag );
 			if( nameBegin < 0 )
 			{
-				// Not a template
+				
 				return null;
 			}
 
 			TemplateShaderInfo shaderData = null;
-			//SHADER
+			
 			MatchCollection shaderMatch = Regex.Matches( body, "\\bShader\\b" );
 			if( shaderMatch.Count > 0 )
 			{
-				//SUBSHADER
+				
 				MatchCollection subShaderMatch = Regex.Matches( body, TemplatesManager.TemplateMPSubShaderTag );
 				int subShaderAmount = subShaderMatch.Count;
 				if( subShaderAmount > 0 )
@@ -83,7 +83,7 @@ namespace AmplifyShaderEditor
 						subShaderData.Data = body.Substring( subshaderBeginIndex, subShaderEndIndex - subshaderBeginIndex );
 						subShaderData.StartIdx = subshaderBeginIndex;
 
-						//PASS
+						
 						MatchCollection passMatch = Regex.Matches( subShaderData.Data, TemplatesManager.TemplatePassTagPattern );
 						if( passMatch.Count == 0 )
 						{

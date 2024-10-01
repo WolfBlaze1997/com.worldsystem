@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -9,7 +9,25 @@ using System.Collections.Generic;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Function Switch", "Functions", "Function Switch allows switching options at compile time for shader function", NodeAvailabilityFlags = (int)NodeAvailability.ShaderFunction )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Function Switch"
+#else
+"功能开关"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Functions"
+#else
+"功能"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Function Switch allows switching options at compile time for shader function"
+#else
+"Function Switch允许在编译时切换着色器函数的选项"
+#endif
+, NodeAvailabilityFlags = (int)NodeAvailability.ShaderFunction )]
 	public sealed class FunctionSwitch : ParentNode
 	{
 		private const string InputPortNameStr = "In ";
@@ -17,7 +35,13 @@ namespace AmplifyShaderEditor
 		private const string ToggleFalseStr = "False";
 		private const string ToggleTrueStr = "True";
 
-		private const string CurrSelectedStr = "Current";
+		private const string CurrSelectedStr = 
+#if !WB_LANGUAGE_CHINESE
+"Current"
+#else
+"当前"
+#endif
+;
 		private const string MaxAmountStr = "Amount";
 		private const int MaxAllowedAmount = 10;
 
@@ -25,7 +49,13 @@ namespace AmplifyShaderEditor
 		private const int MaxComboSize = 105;
 
 		[SerializeField]
-		private string m_optionLabel = "Option";
+		private string m_optionLabel = 
+#if !WB_LANGUAGE_CHINESE
+"Option"
+#else
+"选项"
+#endif
+;
 
 		[SerializeField]
 		private string[] AvailableInputsLabels = { "In 0", "In 1" };
@@ -263,11 +293,11 @@ namespace AmplifyShaderEditor
 		{
 			if( !IsConnected && !forceDraw )
 			{
-				//EditorGUILayout.LabelField( "Not Connected" );
+				
 				return false;
 			}
 
-			if( m_asDrawn ) //used to prevent the same property to be drawn more than once
+			if( m_asDrawn ) 
 				return false;
 
 			if( m_validReference )
@@ -433,7 +463,13 @@ namespace AmplifyShaderEditor
 				}
 
 				EditorGUI.BeginChangeCheck();
-				m_optionLabel = EditorGUILayoutTextField( "Option Label", m_optionLabel );
+				m_optionLabel = EditorGUILayoutTextField( 
+#if !WB_LANGUAGE_CHINESE
+"Option Label"
+#else
+"选项标签"
+#endif
+, m_optionLabel );
 				if( EditorGUI.EndChangeCheck() )
 				{
 					m_optionLabel = UIUtils.RemoveInvalidEnumCharacters( m_optionLabel );
@@ -446,7 +482,13 @@ namespace AmplifyShaderEditor
 				}
 
 				EditorGUI.BeginChangeCheck();
-				m_toggleMode = EditorGUILayoutToggle( "Toggle Mode", m_toggleMode );
+				m_toggleMode = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Toggle Mode"
+#else
+"切换模式"
+#endif
+, m_toggleMode );
 				if( EditorGUI.EndChangeCheck() )
 				{
 					if( m_toggleMode )
@@ -510,7 +552,13 @@ namespace AmplifyShaderEditor
 					for( int i = 0; i < m_maxAmountInputs; i++ )
 					{
 						EditorGUI.BeginChangeCheck();
-						m_inputPorts[ i ].Name = EditorGUILayoutTextField( "Item " + i, m_inputPorts[ i ].Name );
+						m_inputPorts[ i ].Name = EditorGUILayoutTextField( 
+#if !WB_LANGUAGE_CHINESE
+"Item "
+#else
+"项目"
+#endif
++ i, m_inputPorts[ i ].Name );
 						if( EditorGUI.EndChangeCheck() )
 						{
 							m_nameModified = true;

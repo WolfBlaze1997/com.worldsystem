@@ -1,8 +1,8 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
-//
-// Custom Node Global Array
-// Donated by Johann van Berkel
+
+
+
+
+
 
 using System;
 using UnityEngine;
@@ -11,16 +11,64 @@ using UnityEditor;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Global Array" , "Constants And Properties" , "The node returns a value from a global array, which you can configure by entering the name of the array in the node's settings." , null , KeyCode.None , true , false , null , null , "Johann van Berkel" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Global Array"
+#else
+"全局数组"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Constants And Properties"
+#else
+"常数和属性"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"The node returns a value from a global array, which you can configure by entering the name of the array in the node's settings."
+#else
+"节点从全局数组返回一个值，您可以通过在节点的设置中输入数组的名称来配置该值。"
+#endif
+, null , KeyCode.None , true , false , null , null , 
+#if !WB_LANGUAGE_CHINESE
+"Johann van Berkel"
+#else
+"约翰·范·贝克尔"
+#endif
+)]
 	public sealed class GlobalArrayNode : ParentNode
 	{
 		private const string DefaultArrayName = "MyGlobalArray";
-		private const string TypeStr = "Type";
-		private const string AutoRangeCheckStr = "Range Check";
+		private const string TypeStr = 
+#if !WB_LANGUAGE_CHINESE
+"Type"
+#else
+"类型"
+#endif
+;
+		private const string AutoRangeCheckStr = 
+#if !WB_LANGUAGE_CHINESE
+"Range Check"
+#else
+"范围检查"
+#endif
+;
 		private const string ArrayFormatStr = "{0}[{1}]";
 		private const string JaggedArrayFormatStr = "{0}[{1}][{2}]";
-		private const string IsJaggedStr = "Is Jagged";
-		private const string AutoRegisterStr = "Auto-Register";
+		private const string IsJaggedStr = 
+#if !WB_LANGUAGE_CHINESE
+"Is Jagged"
+#else
+"被卡住了"
+#endif
+;
+		private const string AutoRegisterStr = 
+#if !WB_LANGUAGE_CHINESE
+"Auto-Register"
+#else
+"自动注册"
+#endif
+;
 
 		private readonly string[] AvailableTypesLabel = { "Float" , "Color" , "Vector4" , "Matrix4x4" };
 		private readonly WirePortDataType[] AvailableTypesValues = { WirePortDataType.FLOAT , WirePortDataType.COLOR , WirePortDataType.FLOAT4 , WirePortDataType.FLOAT4x4 };
@@ -52,7 +100,7 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private bool m_autoRegister = false;
 
-		//////////////////////////////////////////////////////////////////
+		
 		private readonly Color ReferenceHeaderColor = new Color( 0.6f , 3.0f , 1.25f , 1.0f );
 
 		[SerializeField]
@@ -72,10 +120,34 @@ namespace AmplifyShaderEditor
 		{
 			base.CommonInit( uniqueId );
 
-			AddInputPort( WirePortDataType.INT , false , "Index" , -1 , MasterNodePortCategory.Fragment , 0 );
-			AddInputPort( WirePortDataType.INT , false , "Index Y" , -1 , MasterNodePortCategory.Fragment , 2 );
-			AddInputPort( WirePortDataType.INT , false , "Array Length" , -1 , MasterNodePortCategory.Fragment , 1 );
-			AddInputPort( WirePortDataType.INT , false , "Array Length Y" , -1 , MasterNodePortCategory.Fragment , 3 );
+			AddInputPort( WirePortDataType.INT , false , 
+#if !WB_LANGUAGE_CHINESE
+"Index"
+#else
+"索引"
+#endif
+, -1 , MasterNodePortCategory.Fragment , 0 );
+			AddInputPort( WirePortDataType.INT , false , 
+#if !WB_LANGUAGE_CHINESE
+"Index Y"
+#else
+"指数Y"
+#endif
+, -1 , MasterNodePortCategory.Fragment , 2 );
+			AddInputPort( WirePortDataType.INT , false , 
+#if !WB_LANGUAGE_CHINESE
+"Array Length"
+#else
+"阵列长度"
+#endif
+, -1 , MasterNodePortCategory.Fragment , 1 );
+			AddInputPort( WirePortDataType.INT , false , 
+#if !WB_LANGUAGE_CHINESE
+"Array Length Y"
+#else
+"阵列长度Y"
+#endif
+, -1 , MasterNodePortCategory.Fragment , 3 );
 
 			AddOutputPort( WirePortDataType.FLOAT , "Out" );
 

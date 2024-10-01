@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using System;
@@ -26,7 +26,13 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT, false, "Weights" );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Weights"
+#else
+"重量"
+#endif
+);
 			AddInputPort( WirePortDataType.FLOAT, false, AmountsStr[ 0 ] );
 			AddInputPort( WirePortDataType.FLOAT, false, AmountsStr[ 1 ] );
 			AddInputPort( WirePortDataType.FLOAT, false, AmountsStr[ 2 ] );
@@ -124,10 +130,10 @@ namespace AmplifyShaderEditor
 					break;
 				}
 			}
-			//else
-			//{
-			//	SetMainOutputType();
-			//}
+			
+			
+			
+			
 
 			SetMainOutputType();
 			m_sizeIsDirty = true;

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEditor;
@@ -9,7 +9,25 @@ namespace AmplifyShaderEditor
 	using UnityEngine;
 
 	[Serializable]
-	[NodeAttributes( "HD Emission", "Miscellaneous", "Get emission HDR Color. Only available on HDRP." )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"HD Emission"
+#else
+"HD排放"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Get emission HDR Color. Only available on HDRP."
+#else
+"获取发射HDR颜色。仅在HDRP上可用。"
+#endif
+)]
 	public sealed class HDEmissionNode : ParentNode
 	{
 		public enum HDEmissionIntensityUnit
@@ -43,12 +61,30 @@ namespace AmplifyShaderEditor
 		public const string EmissionHeaderLuminance = "ASEGetEmissionHDRColor{0}({1},{2},{3},GetInverseCurrentExposureMultiplier())";
 		public const string EmissionHeaderEV100 = "ASEGetEmissionHDRColor{0}({1},ConvertEvToLuminance({2}),{3},GetInverseCurrentExposureMultiplier())";
 
-		public const string IntensityUnityLabel = "Intensity Unit";
+		public const string IntensityUnityLabel = 
+#if !WB_LANGUAGE_CHINESE
+"Intensity Unit"
+#else
+"强度单位"
+#endif
+;
 
-		public const string NormalizeColorLabel = "Normalize Color";
+		public const string NormalizeColorLabel = 
+#if !WB_LANGUAGE_CHINESE
+"Normalize Color"
+#else
+"标准化颜色"
+#endif
+;
 		public const string ErrorOnCompilationMsg = "Attempting to use HDRP specific node on incorrect SRP or Builtin RP.";
 		public const string MinorVersionMsg = "This node require at least Unity 2019.1/HDRP v5 to properly work.";
-		public const string NodeErrorMsg = "Only valid on HDRP";
+		public const string NodeErrorMsg = 
+#if !WB_LANGUAGE_CHINESE
+"Only valid on HDRP"
+#else
+"仅在HDRP上有效"
+#endif
+;
 		public const string MinorNodeErrorMsg = "Invalid Unity/HDRP version";
 
 		[SerializeField]
@@ -60,9 +96,27 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT3, false, "Color" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Intensity" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Exposition Weight" );
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"Color"
+#else
+"颜色"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Intensity"
+#else
+"强度"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Exposition Weight"
+#else
+"博览会重量"
+#endif
+);
 			AddOutputPort( WirePortDataType.FLOAT3, Constants.EmptyPortValue );
 
 			m_errorMessageTooltip = NodeErrorMsg;
@@ -149,4 +203,4 @@ namespace AmplifyShaderEditor
 		}
 	}
 }
-//#endif
+

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using System.Collections.Generic;
@@ -37,8 +37,8 @@ namespace AmplifyShaderEditor
 
 	public class ShortcutsManager
 	{
-		public static readonly KeyCode ScrollUpKey = KeyCode.PageUp;
-		public static readonly KeyCode ScrollDownKey = KeyCode.PageDown;
+		public readonly static KeyCode ScrollUpKey = KeyCode.PageUp;
+		public readonly static KeyCode ScrollDownKey = KeyCode.PageDown;
 
 
 		private const string ItemWikiFormat = "*<b>[{0}]:</b> {1}\n";

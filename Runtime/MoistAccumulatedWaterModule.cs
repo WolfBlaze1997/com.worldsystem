@@ -3,13 +3,13 @@ using Sirenix.OdinInspector;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Rendering;
 
 namespace WorldSystem.Runtime
 {
     public class MoistAccumulatedWaterModule : BaseModule
     {
-
+        
         #region 字段
 
         [Serializable]
@@ -69,7 +69,7 @@ namespace WorldSystem.Runtime
             public float ripplesMainTiling = 1f;
 
             [FoldoutGroup("涟漪")][LabelText("涟漪强度")]
-            [GUIColor(0.7f,0.7f,1f)]
+            [GUIColor(1f,0.7f,0.7f)]
             public float ripplesMainStrength = 0.6f;
 
             [FoldoutGroup("水波")][LabelText("水波法线")]
@@ -107,13 +107,21 @@ namespace WorldSystem.Runtime
             [FoldoutGroup("水流")][LabelText("水流贴图")]
             [ReadOnly] [ShowIf("@WorldManager.Instance?.atmosphereModule?.hideFlags == HideFlags.None")]
             public Texture2D flowMap;
-
+            
+            [FoldoutGroup("水流")][LabelText("水流强度")]
+            [GUIColor(1f,0.7f,0.7f)]
+            public float flowStrength = 1.0f;
+            
             [FoldoutGroup("水流")][LabelText("水流贴图平铺")]
             [GUIColor(0.7f,0.7f,1f)]
             public float3 flowTiling = new(1.5f,8f,1.5f);
         }
+        
         [HideLabel]
         public Property property = new Property();
+        
+        [HideInInspector]
+        public bool update;
         
         #endregion
         
@@ -121,33 +129,8 @@ namespace WorldSystem.Runtime
         
         #region 安装属性
 
-        private void SetupStaticProperty()
-        {
-            Shader.SetGlobalVector(_FlowTiling, new float4(property.flowTiling,0));
-            Shader.SetGlobalTexture(_FlowMap, property.flowMap);
-            Shader.SetGlobalTexture(_RaindropsGradientMap, property.raindropsGradientMap);
-            Shader.SetGlobalFloat(_RaindropsTiling, property.raindropsTiling);
-            Shader.SetGlobalFloat(_RaindropsSplashSpeed, property.raindropsSplashSpeed);
-            Shader.SetGlobalFloat(_RaindropsSize, property.raindropsSize);
-            Shader.SetGlobalTexture(_AccumulatedWaterMask, property.accumulatedWaterMask);
-            Shader.SetGlobalFloat(_AccumulatedWaterMaskTiling, property.accumulatedWaterMaskTiling);
-            Shader.SetGlobalFloat(_AccumulatedWaterContrast, property.accumulatedWaterContrast);
-            Shader.SetGlobalFloat(_AccumulatedWaterSteepHillExtinction, property.accumulatedWaterSteepHillExtinction);
-            Shader.SetGlobalFloat(_AccumulatedWaterParallaxStrength, property.accumulatedWaterParallaxStrength);
-            Shader.SetGlobalTexture(_RipplesNormalAtlas, property.ripplesNormalAtlas);
-            Shader.SetGlobalVector(_XColumnsYRowsZSpeedWStrartFrame, property.xColumnsYRowsZSpeedWStrartFrame);
-            Shader.SetGlobalFloat(_RipplesMainTiling, property.ripplesMainTiling);
-            Shader.SetGlobalFloat(_RipplesMainStrength, property.ripplesMainStrength);
-            Shader.SetGlobalTexture(_WaterWaveNormal, property.waterWaveNormal);
-            Shader.SetGlobalFloat(_WaterWaveRotate, property.waterWaveRotate);
-            Shader.SetGlobalFloat(_WaterWaveMainTiling, property.waterWaveMainTiling);
-            Shader.SetGlobalFloat(_WaterWaveMainSpeed, property.waterWaveMainSpeed);
-            Shader.SetGlobalFloat(_WaterWaveMainStrength, property.waterWaveMainStrength);
-            Shader.SetGlobalFloat(_WaterWaveDetailTiling, property.waterWaveDetailTiling);
-            Shader.SetGlobalFloat(_WaterWaveDetailSpeed, property.waterWaveDetailSpeed);
-            Shader.SetGlobalFloat(_WaterWaveDetailStrength, property.waterWaveDetailStrength);
-        }
         private static readonly int _FlowTiling = Shader.PropertyToID("_FlowTiling");
+        private static readonly int _FlowStrength = Shader.PropertyToID("_FlowStrength");
         private static readonly int _FlowMap = Shader.PropertyToID("_FlowMap");
         private static readonly int _RaindropsGradientMap = Shader.PropertyToID("_RaindropsGradientMap");
         private static readonly int _RaindropsTiling = Shader.PropertyToID("_RaindropsTiling");
@@ -170,15 +153,51 @@ namespace WorldSystem.Runtime
         private static readonly int _WaterWaveDetailTiling = Shader.PropertyToID("_WaterWaveDetailTiling");
         private static readonly int _WaterWaveDetailSpeed = Shader.PropertyToID("_WaterWaveDetailSpeed");
         private static readonly int _WaterWaveDetailStrength = Shader.PropertyToID("_WaterWaveDetailStrength");
+        private static readonly int _GlobalMoist = Shader.PropertyToID("_GlobalMoist");
 
+        // ReSharper disable once InconsistentNaming
+        private GlobalKeyword _ACCUMULATEDWATER_ON;
+        // ReSharper disable once InconsistentNaming
+        private GlobalKeyword _RAINDROPS_ON;
+        
+        private void SetupStaticProperty()
+        {
+            Shader.SetGlobalVector(_FlowTiling, new float4(property.flowTiling,0));
+            Shader.SetGlobalTexture(_FlowMap, property.flowMap);
+            Shader.SetGlobalTexture(_RaindropsGradientMap, property.raindropsGradientMap);
+            Shader.SetGlobalFloat(_RaindropsTiling, property.raindropsTiling);
+            Shader.SetGlobalFloat(_RaindropsSplashSpeed, property.raindropsSplashSpeed);
+            Shader.SetGlobalFloat(_RaindropsSize, property.raindropsSize);
+            Shader.SetGlobalTexture(_AccumulatedWaterMask, property.accumulatedWaterMask);
+            Shader.SetGlobalFloat(_AccumulatedWaterMaskTiling, property.accumulatedWaterMaskTiling);
+            Shader.SetGlobalFloat(_AccumulatedWaterContrast, property.accumulatedWaterContrast);
+            Shader.SetGlobalFloat(_AccumulatedWaterSteepHillExtinction, property.accumulatedWaterSteepHillExtinction);
+            Shader.SetGlobalFloat(_AccumulatedWaterParallaxStrength, property.accumulatedWaterParallaxStrength);
+            Shader.SetGlobalTexture(_RipplesNormalAtlas, property.ripplesNormalAtlas);
+            Shader.SetGlobalVector(_XColumnsYRowsZSpeedWStrartFrame, property.xColumnsYRowsZSpeedWStrartFrame);
+            Shader.SetGlobalFloat(_RipplesMainTiling, property.ripplesMainTiling);
+            Shader.SetGlobalTexture(_WaterWaveNormal, property.waterWaveNormal);
+            Shader.SetGlobalFloat(_WaterWaveRotate, property.waterWaveRotate);
+            Shader.SetGlobalFloat(_WaterWaveMainTiling, property.waterWaveMainTiling);
+            Shader.SetGlobalFloat(_WaterWaveMainSpeed, property.waterWaveMainSpeed);
+            Shader.SetGlobalFloat(_WaterWaveMainStrength, property.waterWaveMainStrength);
+            Shader.SetGlobalFloat(_WaterWaveDetailTiling, property.waterWaveDetailTiling);
+            Shader.SetGlobalFloat(_WaterWaveDetailSpeed, property.waterWaveDetailSpeed);
+            Shader.SetGlobalFloat(_WaterWaveDetailStrength, property.waterWaveDetailStrength);
+        }
+        
         private void SetupDynamicProperty()
         {
             Shader.SetGlobalFloat(_GlobalMoist, property.globalMoist);
+            Shader.SetKeyword(_ACCUMULATEDWATER_ON, property.globalMoist > 1);
+            Shader.SetKeyword(_RAINDROPS_ON, property.globalMoist is > 0.05f and < 1);
+            Shader.SetGlobalFloat(_RipplesMainStrength, property.ripplesMainStrength);
+            Shader.SetGlobalFloat(_FlowStrength, property.flowStrength);
+
         }
-        private static readonly int _GlobalMoist = Shader.PropertyToID("_GlobalMoist");
 
         #endregion
-
+        
         
         
         #region 事件函数
@@ -197,8 +216,9 @@ namespace WorldSystem.Runtime
             if(property.waterWaveNormal == null)
                 property.waterWaveNormal = AssetDatabase.LoadAssetAtPath<Texture2D>("Packages/com.worldsystem/Textures/Moist/WaterWaveNormal.png");
 #endif
+            _ACCUMULATEDWATER_ON = GlobalKeyword.Create("_ACCUMULATEDWATER_ON");
+            _RAINDROPS_ON = GlobalKeyword.Create("_RAINDROPS_ON");
             
-            // this.hideFlags = HideFlags.None;
             OnValidate();
         }
 
@@ -229,15 +249,11 @@ namespace WorldSystem.Runtime
             SetupStaticProperty();
         }
         
-        
-        [HideInInspector]
-        public bool _Update;
         private void Update()
         {
-            if (!_Update) return;
+            if (!update) return;
             SetupDynamicProperty();
         }
-        
         
 #if UNITY_EDITOR
         private void Start()

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using System;
@@ -13,8 +13,8 @@ namespace AmplifyShaderEditor
 
 		[SerializeField]
 		protected string m_opName;
-		//[SerializeField]
-		//protected int m_validTypes;
+		
+		
 
 		protected bool m_autoUpdateOutputPort = true;
 
@@ -23,7 +23,7 @@ namespace AmplifyShaderEditor
 			base.CommonInit( uniqueId );
 			AddInputPort( WirePortDataType.FLOAT, false, Constants.EmptyPortValue );
 			AddOutputPort( WirePortDataType.FLOAT, Constants.EmptyPortValue );
-			//m_validTypes = 0;
+			
 			m_useInternalPortData = true;
 
 		}

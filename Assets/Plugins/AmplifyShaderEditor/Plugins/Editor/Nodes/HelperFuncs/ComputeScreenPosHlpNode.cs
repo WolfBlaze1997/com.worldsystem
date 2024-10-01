@@ -1,16 +1,40 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 using UnityEngine;
 using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Compute Screen Pos", "Camera And Screen", "Computes texture coordinate for doing a screenspace-mapped texture sample. Input is clip space position" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Compute Screen Pos"
+#else
+"计算屏幕位置"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Camera And Screen"
+#else
+"摄像头和屏幕"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Computes texture coordinate for doing a screenspace-mapped texture sample. Input is clip space position"
+#else
+"计算纹理坐标以进行屏幕空间映射纹理采样。输入是剪辑空间位置"
+#endif
+)]
 	public sealed class ComputeScreenPosHlpNode : HelperParentNode
 	{
 		[SerializeField]
 		private bool m_normalize = false;
-		private string NormalizeStr = "Normalize";
+		private string NormalizeStr = 
+#if !WB_LANGUAGE_CHINESE
+"Normalize"
+#else
+"正常化"
+#endif
+;
 		private readonly string[] NormalizeOps =
 		{	"{0} = {0} / {0}.w;",
 			"{0}.z = ( UNITY_NEAR_CLIP_VALUE >= 0 ) ? {0}.z : {0}.z* 0.5 + 0.5;"

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -8,7 +8,25 @@ using UnityEditor;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Blend Normals", "Textures", "Blend Normals" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Blend Normals"
+#else
+"混合法线"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Textures"
+#else
+"纹理"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Blend Normals"
+#else
+"混合法线"
+#endif
+)]
 	public class BlendNormalsNode : ParentNode
 	{
 		public readonly static string[] ModeListStr = { "Tangent Normals", "Reoriented Tangent Normals", "Reoriented World Normals" };
@@ -20,9 +38,27 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT3, false, "Normal A" );
-			AddInputPort( WirePortDataType.FLOAT3, false, "Normal B" );
-			AddInputPort( WirePortDataType.FLOAT3, false, "Vertex Normal" );
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"Normal A"
+#else
+"正常A"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"Normal B"
+#else
+"正常B"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"Vertex Normal"
+#else
+"顶点法线"
+#endif
+);
 			m_inputPorts[ 2 ].Visible = false;
 			AddOutputPort( WirePortDataType.FLOAT3, "XYZ" );
 			m_useInternalPortData = true;
@@ -71,7 +107,13 @@ namespace AmplifyShaderEditor
 				NodeUtils.DrawPropertyGroup( ref m_propertiesFoldout, Constants.ParameterLabelStr, () =>
 				{
 					EditorGUI.BeginChangeCheck();
-					m_selectedMode = EditorGUILayoutIntPopup( "Mode", m_selectedMode, ModeListStr, ModeListInt );
+					m_selectedMode = EditorGUILayoutIntPopup( 
+#if !WB_LANGUAGE_CHINESE
+"Mode"
+#else
+"模式"
+#endif
+, m_selectedMode, ModeListStr, ModeListInt );
 					if( EditorGUI.EndChangeCheck() )
 					{
 						if( m_selectedMode == 2 )

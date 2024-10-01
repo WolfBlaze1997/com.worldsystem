@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -8,7 +8,31 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "[Deprecated] World Normal", "Surface Data", "Vertex Normal World", null, KeyCode.None, true, true, "World Normal", typeof( WorldNormalVector ) )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"[Deprecated] World Normal"
+#else
+"[弃用]世界正常"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Surface Data"
+#else
+"地表数据"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Vertex Normal World"
+#else
+"顶点法线世界"
+#endif
+, null, KeyCode.None, true, true, 
+#if !WB_LANGUAGE_CHINESE
+"World Normal"
+#else
+"世界正常"
+#endif
+, typeof( WorldNormalVector ) )]
 	public sealed class WorldNormalInputsNode : SurfaceShaderINParentNode
 	{
 		private const string PerPixelLabelStr = "Per Pixel";
@@ -33,14 +57,14 @@ namespace AmplifyShaderEditor
 			base.CommonInit( uniqueId );
 			m_currentInput = SurfaceInputs.WORLD_NORMAL;
 			InitialSetup();
-			//UIUtils.AddNormalDependentCount();
+			
 		}
 
-		//public override void Destroy()
-		//{
-		//	ContainerGraph.RemoveNormalDependentCount();
-		//	base.Destroy();
-		//}
+		
+		
+		
+		
+		
 
 		public override void DrawProperties()
 		{
@@ -67,7 +91,7 @@ namespace AmplifyShaderEditor
 				dataCollector.AddToInput( UniqueId, SurfaceInputs.INTERNALDATA, addSemiColon: false );
 				if ( dataCollector.PortCategory != MasterNodePortCategory.Debug && m_perPixel && dataCollector.DirtyNormal )
 				{
-					//string result = "WorldNormalVector( " + Constants.InputVarStr + " , float3( 0,0,1 ))";
+					
 					m_precisionString = UIUtils.PrecisionWirePortToCgType( CurrentPrecisionType, WirePortDataType.FLOAT3 );
 					string result = string.Format( Constants.WorldNormalLocalDecStr, m_precisionString );
 					int count = 0;

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 using System;
 using UnityEngine;
 using System.Collections.Generic;
@@ -99,8 +99,8 @@ namespace AmplifyShaderEditor
 
 		public void AddToClipboard( List<ParentNode> selectedNodes , Vector3 initialPosition, ParentGraph graph )
 		{
-			//m_clipboardStrData.Clear();
-			//m_clipboardAuxData.Clear();
+			
+			
 
 			string clipboardData = IOUtils.Vector3ToString( initialPosition ) + ClipboardTagId[ 0 ];
 			int masterNodeId = UIUtils.CurrentWindow.CurrentGraph.CurrentMasterNodeId;
@@ -121,9 +121,9 @@ namespace AmplifyShaderEditor
 					if ( i < count - 1 )
 						clipboardData += ClipboardTagId[ 0 ];
 
-					//ClipboardData data = new ClipboardData( nodeData, connections, selectedNodes[ i ].UniqueId );
-					//m_clipboardStrData.Add( data );
-					//m_clipboardAuxData.Add( selectedNodes[ i ].UniqueId, data );
+					
+					
+					
 				}
 			}
 
@@ -131,20 +131,20 @@ namespace AmplifyShaderEditor
 			{
 				EditorPrefs.SetString( ClipboardId, clipboardData );
 			}
-			//for ( int i = 0; i < selectedNodes.Count; i++ )
-			//{
-			//	if ( selectedNodes[ i ].UniqueId != masterNodeId )
-			//	{
-			//		WireNode wireNode = selectedNodes[ i ] as WireNode;
-			//		if ( wireNode != null )
-			//		{
-			//			if ( !IsNodeChainValid( selectedNodes[ i ], true ) || !IsNodeChainValid( selectedNodes[ i ], false ) )
-			//			{
-			//				UnityEngine.Debug.Log( "found invalid wire port" );
-			//			}
-			//		}
-			//	}
-			//}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		}
 
 		public Vector3 GetDataFromEditorPrefs()

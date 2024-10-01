@@ -1,14 +1,38 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Simple Contrast", "Image Effects", "Simple contrast matrix multiplication" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Simple Contrast"
+#else
+"简单对比"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Image Effects"
+#else
+"图像效果"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Simple contrast matrix multiplication"
+#else
+"简单对比度矩阵乘法"
+#endif
+)]
 	public sealed class SimpleContrastOpNode : ParentNode
 	{
-		private const string InputTypeStr = "Contrast";
+		private const string InputTypeStr = 
+#if !WB_LANGUAGE_CHINESE
+"Contrast"
+#else
+"对比度"
+#endif
+;
 		private const string FunctionHeader = "CalculateContrast({0},{1})";
 		private readonly string[] m_functionBody = { "float4 CalculateContrast( float contrastValue, float4 colorTarget )\n",
 											"{\n",
@@ -27,7 +51,13 @@ namespace AmplifyShaderEditor
 		void AddPorts()
 		{
 			AddInputPort( WirePortDataType.COLOR, false, "RGBA", -1, MasterNodePortCategory.Fragment, 1 );
-			AddInputPort( WirePortDataType.FLOAT, false, "Value", -1, MasterNodePortCategory.Fragment, 0 );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Value"
+#else
+"价值观"
+#endif
+, -1, MasterNodePortCategory.Fragment, 0 );
 			AddOutputPort( WirePortDataType.COLOR, Constants.EmptyPortValue );
 		}
 

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.Collections.Generic;
@@ -33,15 +33,39 @@ namespace AmplifyShaderEditor
 	[Serializable]
 	public class MasterNode : OutputNode
 	{
-		protected const string CustomInspectorStr = "Custom Editor";
+		protected const string CustomInspectorStr = 
+#if !WB_LANGUAGE_CHINESE
+"Custom Editor"
+#else
+"自定义编辑器"
+#endif
+;
 		protected const string CustomInspectorFormat = "CustomEditor \"{0}\"";
 
-		private const string PropertyOrderFoldoutStr = " Material Properties";
-		private const string PropertyOrderTemplateFoldoutStr = "Material Properties";
+		private const string PropertyOrderFoldoutStr = 
+#if !WB_LANGUAGE_CHINESE
+" Material Properties"
+#else
+"材料特性"
+#endif
+;
+		private const string PropertyOrderTemplateFoldoutStr = 
+#if !WB_LANGUAGE_CHINESE
+"Material Properties"
+#else
+"材料特性"
+#endif
+;
 
 		protected MasterNodeDataCollector m_currentDataCollector;
 
-		protected const string ShaderNameStr = "Shader Name";
+		protected const string ShaderNameStr = 
+#if !WB_LANGUAGE_CHINESE
+"Shader Name"
+#else
+"着色器名称"
+#endif
+;
 		protected GUIContent m_shaderNameContent;
 
 		private const string IndentationHelper = "\t\t{0}\n";
@@ -51,10 +75,22 @@ namespace AmplifyShaderEditor
 		public event OnMaterialUpdated OnMaterialUpdatedEvent;
 		public event OnMaterialUpdated OnShaderUpdatedEvent;
 
-		protected const string GeneralFoldoutStr = " General";
+		protected const string GeneralFoldoutStr = 
+#if !WB_LANGUAGE_CHINESE
+" General"
+#else
+"概述"
+#endif
+;
 
 		protected readonly string[] ShaderModelTypeArr = { "2.0", "2.5", "3.0", "3.5", "4.0", "4.5", "4.6", "5.0" };
-		private const string ShaderKeywordsStr = "Shader Keywords";
+		private const string ShaderKeywordsStr = 
+#if !WB_LANGUAGE_CHINESE
+"Shader Keywords"
+#else
+"着色器关键字"
+#endif
+;
 
 		[SerializeField]
 		protected int m_shaderLOD = 0;
@@ -68,8 +104,8 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		protected Material m_currentMaterial;
 
-		//[SerializeField]
-		//private bool m_isMainMasterNode = false;
+		
+		
 
 		[SerializeField]
 		private Rect m_masterNodeIconCoords;
@@ -84,7 +120,7 @@ namespace AmplifyShaderEditor
 		protected string m_customInspectorName = Constants.DefaultCustomInspector;
 
 		[SerializeField]
-		protected int m_masterNodeCategory = 0;// MasterNodeCategories.SurfaceShader;
+		protected int m_masterNodeCategory = 0;
 
 		[SerializeField]
 		protected bool m_samplingMacros = false;
@@ -98,7 +134,7 @@ namespace AmplifyShaderEditor
 		private Texture2D m_gpuInstanceOnTex;
 		private Texture2D m_gpuInstanceOffTex;
 
-		// Shader Keywords
+		
 		[SerializeField]
 		private List<string> m_shaderKeywords = new List<string>();
 
@@ -115,7 +151,19 @@ namespace AmplifyShaderEditor
 		public MasterNode() : base() { CommonInit(); }
 		public MasterNode( int uniqueId, float x, float y, float width, float height ) : base( uniqueId, x, y, width, height ) { CommonInit(); }
 
-		protected GUIContent m_categoryLabel = new GUIContent( "Shader Type ", "Specify the shader type you want to be working on" );
+		protected GUIContent m_categoryLabel = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Shader Type "
+#else
+"着色器类型"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Specify the shader type you want to be working on"
+#else
+"指定要处理的着色器类型"
+#endif
+);
 
 		protected GUIContent[] m_availableCategoryLabels;
 		protected MasterNodeCategoriesData[] m_availableCategories;
@@ -125,7 +173,7 @@ namespace AmplifyShaderEditor
 
 		private ReorderableList m_propertyReordableList;
 		protected bool m_propertyOrderChanged = false;
-		//private int m_availableCount = 0;
+		
 		private int m_lastCount = 0;
 
 		private GUIStyle m_propertyAdjustment;
@@ -152,7 +200,13 @@ namespace AmplifyShaderEditor
 			m_availableCategoryLabels = new GUIContent[ templateCount + 1 ];
 
 			m_availableCategories[ 0 ] = new MasterNodeCategoriesData( AvailableShaderTypes.SurfaceShader, string.Empty );
-			m_availableCategoryLabels[ 0 ] = new GUIContent( "Surface" );
+			m_availableCategoryLabels[ 0 ] = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Surface"
+#else
+"表面"
+#endif
+);
 
 			for( int i = 0; i < templateCount; i++ )
 			{
@@ -179,7 +233,7 @@ namespace AmplifyShaderEditor
 
 		public override void SetupNodeCategories()
 		{
-			//base.SetupNodeCategories();
+			
 			ContainerGraph.ResetNodesData();
 			int count = m_inputPorts.Count;
 			for( int i = 0; i < count; i++ )
@@ -340,8 +394,8 @@ namespace AmplifyShaderEditor
 		protected void DrawShaderName()
 		{
 
-			// this is a hack to control the automatic selection of text fields when the window is selected after serialization
-			// by having a selectable label the focus happens on it instead and doesn't interupt the usual flow of the editor
+			
+			
 			EditorGUILayout.SelectableLabel( "", GUILayout.Height( 0 ) );
 
 			EditorGUI.BeginChangeCheck();
@@ -365,7 +419,13 @@ namespace AmplifyShaderEditor
 		protected void DrawSamplingMacros()
 		{
 			EditorGUI.BeginChangeCheck();
-			m_samplingMacros = EditorGUILayoutToggle( "Use Sampling Macros", m_samplingMacros );
+			m_samplingMacros = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Use Sampling Macros"
+#else
+"使用采样宏"
+#endif
+, m_samplingMacros );
 			if( EditorGUI.EndChangeCheck() )
 				ContainerGraph.SamplingMacros = SamplingMacros;
 		}
@@ -388,13 +448,13 @@ namespace AmplifyShaderEditor
 			{
 				m_shaderKeywordsFoldout = EditorGUILayout.Foldout( m_shaderKeywordsFoldout, ShaderKeywordsStr );
 
-				// Add keyword
+				
 				if( GUILayout.Button( string.Empty, m_addShaderKeywordStyle ) )
 				{
 					m_shaderKeywords.Insert( 0, "" );
 				}
 
-				//Remove keyword
+				
 				if( GUILayout.Button( string.Empty, m_removeShaderKeywordStyle ) )
 				{
 					m_shaderKeywords.RemoveAt( m_shaderKeywords.Count - 1 );
@@ -412,13 +472,13 @@ namespace AmplifyShaderEditor
 					EditorGUILayout.BeginHorizontal();
 					{
 						GUILayout.Label( " " );
-						// Add new port
+						
 						if( GUILayoutButton( string.Empty, m_smallAddShaderKeywordItemStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 						{
 							m_shaderKeywords.Insert( i, "" );
 						}
 
-						//Remove port
+						
 						if( GUILayoutButton( string.Empty, m_smallRemoveShaderKeywordStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 						{
 							markedToDelete = i;
@@ -495,16 +555,16 @@ namespace AmplifyShaderEditor
 			m_masterNodeIconCoords.height = m_gpuInstanceOffTex.height * drawInfo.InvertedZoom;
 			GUI.DrawTexture( m_masterNodeIconCoords, m_gpuInstanceOffTex );
 		}
-		//public override void DrawProperties()
-		//{
-		//	base.DrawProperties();
-		//	//EditorGUILayout.LabelField( _shaderTypeLabel );
-		//}
+		
+		
+		
+		
+		
 
 		public override void WriteToString( ref string nodeInfo, ref string connectionsInfo )
 		{
 			base.WriteToString( ref nodeInfo, ref connectionsInfo );
-			//IOUtils.AddFieldValueToString( ref nodeInfo, m_isMainMasterNode );
+			
 			IOUtils.AddFieldValueToString( ref nodeInfo, m_shaderModelIdx );
 			IOUtils.AddFieldValueToString( ref nodeInfo, m_customInspectorName );
 			IOUtils.AddFieldValueToString( ref nodeInfo, m_shaderLOD );
@@ -546,7 +606,7 @@ namespace AmplifyShaderEditor
 
 			if( UIUtils.CurrentShaderVersion() >= 13001 )
 			{
-				//Debug.LogWarning( "Add correct version as soon as it is merged into master" );
+				
 				m_masterNodeCategory = Convert.ToInt32( GetCurrentParam( ref nodeParams ) );
 			}
 		}
@@ -590,7 +650,7 @@ namespace AmplifyShaderEditor
 			examinedNodes = null;
 		}
 
-		// What operation this node does
+		
 		public virtual void Execute( Shader selectedShader )
 		{
 			Execute( AssetDatabase.GetAssetPath( selectedShader ), false );
@@ -638,10 +698,10 @@ namespace AmplifyShaderEditor
 
 		protected void UpdateShaderAsset( ref string pathname, ref string shaderBody, bool isFullPath )
 		{
-			// Generate Graph info
+			
 			shaderBody += ContainerGraph.ParentWindow.GenerateGraphInfo();
 
-			//TODO: Remove current SaveDebugShader and uncomment SaveToDisk as soon as pathname is editable
+			
 			if( !String.IsNullOrEmpty( pathname ) )
 			{
 				IOUtils.StartSaveThread( shaderBody, ( isFullPath ? pathname : ( IOUtils.dataPath + pathname ) ) );
@@ -658,14 +718,14 @@ namespace AmplifyShaderEditor
 				CurrentShader = Shader.Find( ShaderName );
 			}
 
-			//else
-			//{
-			//	// need to always get asset datapath because a user can change and asset location from the project window 
-			//	AssetDatabase.ImportAsset( AssetDatabase.GetAssetPath( m_currentShader ) );
-			//	//ShaderUtil.UpdateShaderAsset( m_currentShader, ShaderBody );
-			//	//ShaderImporter importer = (ShaderImporter)ShaderImporter.GetAtPath( AssetDatabase.GetAssetPath( CurrentShader ) );
-			//	//importer.SaveAndReimport();
-			//}
+			
+			
+			
+			
+			
+			
+			
+			
 
 			if( m_currentShader != null )
 			{
@@ -675,15 +735,15 @@ namespace AmplifyShaderEditor
 					if( m_currentMaterial.shader != m_currentShader )
 						m_currentMaterial.shader = m_currentShader;
 
-					//m_currentDataCollector.UpdateMaterialOnPropertyNodes( m_currentMaterial );
-					//This master node UpdateMaterial is needed on Standard Surface node to update its internal properties
+					
+					
 					UpdateMaterial( m_currentMaterial );
 
 					UIUtils.CurrentWindow.OutsideGraph.UpdateMaterialOnPropertyNodes( m_currentMaterial );
 
 					FireMaterialChangedEvt();
-					// need to always get asset datapath because a user can change and asset location from the project window
-					//AssetDatabase.ImportAsset( AssetDatabase.GetAssetPath( m_currentMaterial ) );
+					
+					
 				}
 
 			}
@@ -700,7 +760,7 @@ namespace AmplifyShaderEditor
 
 		private void RefreshVisibleList( ref List<PropertyNode> allNodes )
 		{
-			// temp reference for lambda expression
+			
 			List<PropertyNode> nodes = allNodes;
 			m_propertyNodesVisibleList.Clear();
 
@@ -780,7 +840,7 @@ namespace AmplifyShaderEditor
 					{
 						ReorderList( ref nodes );
 						m_propertyOrderChanged = true;
-						//RecursiveLog();
+						
 					}
 				};
 				ReorderList( ref nodes );
@@ -811,7 +871,7 @@ namespace AmplifyShaderEditor
 			}
 
 			ReorderList( ref nodes );
-			//RecursiveLog();
+			
 		}
 
 		private void RecursiveLog()
@@ -829,7 +889,7 @@ namespace AmplifyShaderEditor
 
 		private void ReorderList( ref List<PropertyNode> nodes )
 		{
-			// clear lock list before reordering because of multiple sf being used
+			
 			for( int i = 0; i < nodes.Count; i++ )
 			{
 				ReordenatorNode rnode = nodes[ i ] as ReordenatorNode;
@@ -851,7 +911,7 @@ namespace AmplifyShaderEditor
 						if( renode.PropertyListCount > 0 )
 						{
 							propoffset += renode.RecursiveCount();
-							// the same reordenator can exist multiple times, apply ordering to all of them
+							
 							for( int j = 0; j < nodes.Count; j++ )
 							{
 								ReordenatorNode pnode = ( nodes[ j ] as ReordenatorNode );
@@ -1009,7 +1069,7 @@ namespace AmplifyShaderEditor
 
 		public string ShaderName
 		{
-			//get { return ( ( _isHidden ? "Hidden/" : string.Empty ) + ( String.IsNullOrEmpty( _shaderCategory ) ? "" : ( _shaderCategory + "/" ) ) + _shaderName ); }
+			
 			get { return m_shaderName; }
 			set
 			{

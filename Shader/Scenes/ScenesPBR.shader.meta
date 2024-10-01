@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 7e8696ce126519244a2a499f7cacba9f
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _RipplesNormalAtlas: {fileID: 2800000, guid: a6e49a766b3568e4eb66b720e93376e5,
+      type: 3}
+  - _FlowMap: {fileID: 2800000, guid: 1b28c8de5a0e75c42a955ff734a916b3, type: 3}
+  - _RaindropsGradientMap: {fileID: 2800000, guid: e89949843abf7004e84edac7b109710b,
+      type: 3}
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

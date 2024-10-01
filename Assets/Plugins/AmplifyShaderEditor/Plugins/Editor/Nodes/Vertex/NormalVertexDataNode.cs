@@ -1,10 +1,28 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 namespace AmplifyShaderEditor
 {
 	[System.Serializable]
-	[NodeAttributes( "Vertex Normal", "Vertex Data", "Vertex normal vector in object space, can be used in both local vertex offset and fragment outputs" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Vertex Normal"
+#else
+"顶点法线"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vertex Data"
+#else
+"顶点数据"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Vertex normal vector in object space, can be used in both local vertex offset and fragment outputs"
+#else
+"对象空间中的顶点法向量，可用于局部顶点偏移和片段输出"
+#endif
+)]
 	public sealed class NormalVertexDataNode : VertexDataNode
 	{
 		protected override void CommonInit( int uniqueId )

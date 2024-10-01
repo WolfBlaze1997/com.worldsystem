@@ -12,15 +12,22 @@ namespace WorldSystem.Runtime
 {
     public partial class WindZoneModule
     {
+        
+        public enum DynamicMode
+        {
+            CurveMode,
+            RandomMode
+        }
+
+        
+        #region Gizmos相关
+        
 #if UNITY_EDITOR
+        
         protected override void DrawGizmos()
         {
             if (property.windZone == null) return;
-            Color IconColor;
-            if(property.dynamicSpeed) 
-                IconColor = HelpFunc.Remap(property.windZone.windMain, property.minSpeed,property.maxSpeed,0f,1f) * Color.white;
-            else 
-                IconColor = Math.Clamp(property.windZone.windMain * 0.5f, 0, 1) * Color.white;
+            Color IconColor = HelpFunc.Remap(property.windZone.windMain, property.minSpeed,property.maxSpeed,0f,1f) * Color.white;
             Gizmos.DrawIcon(transform.position, "Packages/com.worldsystem//Textures/Icon/fan-icon.png",true, IconColor);
         }
         
@@ -69,7 +76,12 @@ namespace WorldSystem.Runtime
 
             Gizmos.color = Cache;
         }
-#endif        
+        
+#endif  
+        
+        #endregion
+        
+
     }
 
     [ExecuteAlways]
@@ -81,43 +93,67 @@ namespace WorldSystem.Runtime
         [Serializable]
         public class Property
         {
-            [LabelText("动态风向")][GUIColor(0.7f,0.7f,1f)]
-            public bool dynamicDirection = true;
-            [LabelText("    风向改变频率")] [ShowIf("dynamicDirection")][GUIColor(0.7f,0.7f,1f)]
+            [LabelText("动态模式")] [GUIColor(0.7f,0.7f,1f)]
+            public DynamicMode dynamicMode = DynamicMode.CurveMode;
+            
+            [LabelText("风向旋转曲线")] [GUIColor(1f,0.7f,1f)] [ShowIf("@dynamicMode == DynamicMode.CurveMode")]
+            [HorizontalGroup("directionRotateCurve", 0.9f, DisableAutomaticLabelWidth = true)]
+            public AnimationCurve directionRotateCurve = new AnimationCurve(new Keyframe(0,0), new Keyframe(1,0));
+            
+            [ShowIf("@dynamicMode == DynamicMode.CurveMode")] [HorizontalGroup("directionRotateCurve")][HideLabel][ReadOnly]
+            public float directionRotateCurve_Execute;
+            
+            [LabelText("风速曲线")] [GUIColor(1f,0.7f,0.7f)] [ShowIf("@dynamicMode == DynamicMode.CurveMode")]
+            [HorizontalGroup("WindSpeedCurve", 0.9f, DisableAutomaticLabelWidth = true)]
+            public AnimationCurve WindSpeedCurve = new AnimationCurve(new Keyframe(0,1), new Keyframe(1,1));
+            
+            [ShowIf("@dynamicMode == DynamicMode.CurveMode")] [HorizontalGroup("WindSpeedCurve")][HideLabel][ReadOnly]
+            public float WindSpeedCurve_Execute;
+            
+            [LabelText("风向改变频率")] [GUIColor(0.7f,0.7f,1f)][ShowIf("@dynamicMode == DynamicMode.RandomMode")]
             public int directionVaryingFreq = 6;
-            [LabelText("动态速度")][GUIColor(0.7f,0.7f,1f)]
-            public bool dynamicSpeed = true;
-            [LabelText("    速度改变频率")][ShowIf("dynamicSpeed")][GUIColor(0.7f,0.7f,1f)]
+            
+            [LabelText("速度改变频率")][GUIColor(0.7f,0.7f,1f)][ShowIf("@dynamicMode == DynamicMode.RandomMode")]
             public int SpeedVaryingFreq = 12;
-            [LabelText("    最小速度")][MinValue(0)] [ShowIf("dynamicSpeed")][GUIColor(1f,0.7f,0.7f)]
-            public float minSpeed = 0.0f;
-            [LabelText("    最大速度")][MinValue(0)] [ShowIf("dynamicSpeed")][GUIColor(1f,0.7f,0.7f)]
+            
+            [LabelText("    最小速度")][MinValue(0)] [GUIColor(1f,0.7f,0.7f)][ShowIf("@dynamicMode == DynamicMode.RandomMode")]
+            public float minSpeed;
+            
+            [LabelText("    最大速度")][MinValue(0)] [GUIColor(1f,0.7f,0.7f)][ShowIf("@dynamicMode == DynamicMode.RandomMode")]
             public float maxSpeed = 2.0f;
-            [LabelText("粒子影响")][MinValue(0)] [GUIColor(0.7f,0.7f,1f)]
-            public float vfxModifier = 1.0f;
+            
             [InlineEditor(InlineEditorObjectFieldModes.Boxed)]
             public WindZone windZone;
             
-            public WindData cloudWindData;
-            public WindData vfxWindData;
-            public struct WindData
-            {
-                public float speed;
-                public Vector3 direction;
-            }
-
+            [HideInInspector]
+            public float WindSpeed;
+            
+            [HideInInspector]
+            public Vector3 WindDirection;
+            
             public void LimitProperty()
             {
                 directionVaryingFreq = math.max(directionVaryingFreq, 2);
                 SpeedVaryingFreq = math.max(SpeedVaryingFreq, 2);
                 minSpeed = math.max(minSpeed, 0);
                 maxSpeed = math.max(maxSpeed, 0);
-                vfxModifier = math.max(vfxModifier, 0);
+            }
+            
+            public void ExecuteProperty()
+            {
+                if (WorldManager.Instance.timeModule is null) return;
+                if (!useLerp)
+                {
+                    WindSpeedCurve_Execute = WindSpeedCurve.Evaluate(WorldManager.Instance.timeModule.CurrentTime01);
+                }
+                directionRotateCurve_Execute = directionRotateCurve.Evaluate(WorldManager.Instance.timeModule.CurrentTime01);
             }
         }
         
         [HideLabel]
         public Property property = new();
+        
+        public static bool useLerp = false;
 
         #endregion
 
@@ -133,10 +169,10 @@ namespace WorldSystem.Runtime
             {
                 property.windZone = gameObject.GetComponent<WindZone>();
             }
-            
-            _RandomSpeed = Random.Range(property.minSpeed, property.maxSpeed);
-            _PreviousSpeed = property.windZone.windMain;
+            _randomSpeed = Random.Range(property.minSpeed, property.maxSpeed);
+            _previousSpeed = property.windZone.windMain;
         }
+        
         private void OnDestroy()
         {
             if(GetComponent<WindZone>() != null && gameObject.activeSelf && Time.frameCount != 0)
@@ -151,16 +187,19 @@ namespace WorldSystem.Runtime
         }
 #endif
         
-        
         [HideInInspector] public bool _Update;
+        
         private void Update()
         {
-            if (!_Update) return;
+            if (!_Update) 
+                return;
             
-            AutoWindDirection();
-            AutoWindSpeed();
-            property.cloudWindData = SetWindData(1);
-            property.vfxWindData = SetWindData(property.vfxModifier);
+            property.ExecuteProperty();
+            DynamicWindDirection();
+            DynamicWindSpeed();
+            property.WindDirection = property.windZone.transform.forward;
+            property.WindSpeed = property.windZone.windMain;
+            
         }
         
         #endregion
@@ -170,54 +209,62 @@ namespace WorldSystem.Runtime
         #region 重要函数
         
         //动态随机风方向
-        private float _PreviousTimeFactorDirection;
-        private float _RandomYRotation;
-        private Quaternion _PreviousRotation = Quaternion.identity;
-        private void AutoWindDirection()
+        private float _previousTimeFactorDirection;
+        private float _randomYRotation;
+        private Quaternion _previousRotation = Quaternion.identity;
+        //动态随机风速度
+        private float _previousTimeFactorSpeed;
+        private float _randomSpeed;
+        private float _previousSpeed;
+        
+        private void DynamicWindDirection()
         {
-            if (WorldManager.Instance?.timeModule is null || !property.dynamicDirection) return;
-            //将一天中的时间分为 directionVaryingFreq 份 0到1的值, 每一份为一个周期
-            float CurrentTimeFactor = WorldManager.Instance.timeModule.CurrentTime01 * property.directionVaryingFreq - (int)(WorldManager.Instance.timeModule.CurrentTime01 * property.directionVaryingFreq);
-            //当 当前的时间因子 小于 上一帧的时间因子 说明 周期改变进入下一个周期 ,进入下一个周期重新获得一个随机值, 并记录当前方向进行插值
-            if (CurrentTimeFactor < _PreviousTimeFactorDirection)
+            if (WorldManager.Instance?.timeModule is null) return;
+
+            if (property.dynamicMode == DynamicMode.RandomMode)
             {
-                _RandomYRotation = Random.Range(-90, 90);
-                _PreviousRotation = transform.rotation;
+                //将一天中的时间分为 directionVaryingFreq 份 0到1的值, 每一份为一个周期
+                float CurrentTimeFactor = WorldManager.Instance.timeModule.CurrentTime01 * property.directionVaryingFreq - (int)(WorldManager.Instance.timeModule.CurrentTime01 * property.directionVaryingFreq);
+                //当 当前的时间因子 小于 上一帧的时间因子 说明 周期改变进入下一个周期 ,进入下一个周期重新获得一个随机值, 并记录当前方向进行插值
+                if (CurrentTimeFactor < _previousTimeFactorDirection)
+                {
+                    _randomYRotation = Random.Range(-90, 90);
+                    _previousRotation = transform.rotation;
+                }
+                //当前周期的插值
+                transform.rotation = Quaternion.Lerp(_previousRotation,Quaternion.AngleAxis(_randomYRotation, transform.up), CurrentTimeFactor);
+                //将 当前时间因子 记录为 上一帧时间因子 退出函数
+                _previousTimeFactorDirection = CurrentTimeFactor;
             }
-            //当前周期的插值
-            transform.rotation = Quaternion.Lerp(_PreviousRotation,Quaternion.AngleAxis(_RandomYRotation, transform.up), CurrentTimeFactor);
-            //将 当前时间因子 记录为 上一帧时间因子 退出函数
-            _PreviousTimeFactorDirection = CurrentTimeFactor;
+            else
+            {
+                transform.rotation = Quaternion.AngleAxis(property.directionRotateCurve_Execute, transform.up);
+            }
         }
         
-        //动态随机风速度
-        private float _PreviousTimeFactorSpeed;
-        private float _RandomSpeed;
-        private float _PreviousSpeed;
-        private void AutoWindSpeed()
+        private void DynamicWindSpeed()
         {
-            if (WorldManager.Instance?.timeModule is null || !property.dynamicSpeed) return;
+            if (WorldManager.Instance?.timeModule is null ) return;
 
-            float CurrentTimeFactor = WorldManager.Instance.timeModule.CurrentTime01 * property.SpeedVaryingFreq - (int)(WorldManager.Instance.timeModule.CurrentTime01 * property.SpeedVaryingFreq);
-            if (CurrentTimeFactor < _PreviousTimeFactorSpeed)
+            if (property.dynamicMode == DynamicMode.RandomMode)
             {
-                _RandomSpeed = Random.Range(property.minSpeed, property.maxSpeed);
-                _PreviousSpeed = property.windZone.windMain;
+                float CurrentTimeFactor = WorldManager.Instance.timeModule.CurrentTime01 * property.SpeedVaryingFreq - (int)(WorldManager.Instance.timeModule.CurrentTime01 * property.SpeedVaryingFreq);
+                if (CurrentTimeFactor < _previousTimeFactorSpeed)
+                {
+                    _randomSpeed = Random.Range(property.minSpeed, property.maxSpeed);
+                    _previousSpeed = property.windZone.windMain;
+                }
+                property.windZone.windMain = math.lerp(_previousSpeed, _randomSpeed, CurrentTimeFactor);
+                _previousTimeFactorSpeed = CurrentTimeFactor;
+            }
+            else
+            {
+                property.windZone.windMain = property.WindSpeedCurve_Execute;
             }
             
-            property.windZone.windMain = math.lerp(_PreviousSpeed, _RandomSpeed, CurrentTimeFactor);
-            _PreviousTimeFactorSpeed = CurrentTimeFactor;
         }
         
-        private Property.WindData SetWindData(float modifier)
-        {
-            Property.WindData windData = new Property.WindData
-            {
-                speed = property.windZone.windMain * modifier,
-                direction = transform.forward
-            };
-            return windData;
-        }
+        
         #endregion
         
     }

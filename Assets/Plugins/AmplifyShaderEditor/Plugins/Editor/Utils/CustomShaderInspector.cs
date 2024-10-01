@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.Reflection;
@@ -27,7 +27,13 @@ namespace UnityEditor
 
 			public static GUIContent showFF = EditorGUIUtilityEx.TextContent( "Show generated code|Show generated code of a fixed function shader" );
 
-			public static GUIContent showCurrent = new GUIContent( "Compile and show code | ▾" );
+			public static GUIContent showCurrent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Compile and show code | ▾"
+#else
+"编译并显示代码|▾"
+#endif
+);
 
 			public static GUIStyle messageStyle = "CN StatusInfo";
 
@@ -50,7 +56,7 @@ namespace UnityEditor
 		const float kValueFieldWidth = 200.0f;
 		const float kArrayValuePopupBtnWidth = 25.0f;
 
-		private static readonly string[] kPropertyTypes = new string[]
+		private readonly static string[] kPropertyTypes = new string[]
 		{
 			"Color: ",
 			"Vector: ",
@@ -59,7 +65,7 @@ namespace UnityEditor
 			"Texture: "
 		};
 
-		private static readonly string[] kTextureTypes = new string[]
+		private readonly static string[] kTextureTypes = new string[]
 		{
 			"No Texture?: ",
 			"1D?: ",
@@ -70,7 +76,7 @@ namespace UnityEditor
 			"Any texture: "
 		};
 
-		private static readonly int kErrorViewHash = "ShaderErrorView".GetHashCode();
+		private readonly static int kErrorViewHash = "ShaderErrorView".GetHashCode();
 
 		private Vector2 m_ScrollPosition = Vector2.zero;
 
@@ -253,12 +259,24 @@ namespace UnityEditor
 			GUILayout.Space( 3 );
 			GUILayout.BeginHorizontal();
 			{
-				if ( GUILayout.Button( "Open in Shader Editor" ) )
+				if ( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Open in Shader Editor"
+#else
+"在着色器编辑器中打开"
+#endif
+) )
 				{
 					ASEPackageManagerHelper.SetupLateShader( shader );
 				}
 
-				if ( GUILayout.Button( "Open in Text Editor" ) )
+				if ( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Open in Text Editor"
+#else
+"在文本编辑器中打开"
+#endif
+) )
 				{
 					if( UIUtils.IsUnityNativeShader( shader ) )
 					{
@@ -277,10 +295,52 @@ namespace UnityEditor
 			this.ShowShaderCodeArea( shader );
 			if ( shader.isSupported )
 			{
-				EditorGUILayout.LabelField( "Cast shadows", ( !ShaderUtilEx.HasShadowCasterPass( shader ) ) ? "no" : "yes", new GUILayoutOption[ 0 ] );
-				EditorGUILayout.LabelField( "Render queue", ShaderUtilEx.GetRenderQueue( shader ).ToString( System.Globalization.CultureInfo.InvariantCulture ), new GUILayoutOption[ 0 ] );
+				EditorGUILayout.LabelField( 
+#if !WB_LANGUAGE_CHINESE
+"Cast shadows"
+#else
+"投射阴影"
+#endif
+, ( !ShaderUtilEx.HasShadowCasterPass( shader ) ) ? 
+#if !WB_LANGUAGE_CHINESE
+"no"
+#else
+"不"
+#endif
+: 
+#if !WB_LANGUAGE_CHINESE
+"yes"
+#else
+"对"
+#endif
+, new GUILayoutOption[ 0 ] );
+				EditorGUILayout.LabelField( 
+#if !WB_LANGUAGE_CHINESE
+"Render queue"
+#else
+"渲染队列"
+#endif
+, ShaderUtilEx.GetRenderQueue( shader ).ToString( System.Globalization.CultureInfo.InvariantCulture ), new GUILayoutOption[ 0 ] );
 				EditorGUILayout.LabelField( "LOD", ShaderUtilEx.GetLOD( shader ).ToString( System.Globalization.CultureInfo.InvariantCulture ), new GUILayoutOption[ 0 ] );
-				EditorGUILayout.LabelField( "Ignore projector", ( !ShaderUtilEx.DoesIgnoreProjector( shader ) ) ? "no" : "yes", new GUILayoutOption[ 0 ] );
+				EditorGUILayout.LabelField( 
+#if !WB_LANGUAGE_CHINESE
+"Ignore projector"
+#else
+"忽略投影仪"
+#endif
+, ( !ShaderUtilEx.DoesIgnoreProjector( shader ) ) ? 
+#if !WB_LANGUAGE_CHINESE
+"no"
+#else
+"不"
+#endif
+: 
+#if !WB_LANGUAGE_CHINESE
+"yes"
+#else
+"对"
+#endif
+, new GUILayoutOption[ 0 ] );
 				string label;
 				switch ( ShaderEx.GetDisableBatching( shader ) )
 				{
@@ -297,14 +357,26 @@ namespace UnityEditor
 					label = "unknown";
 					break;
 				}
-				EditorGUILayout.LabelField( "Disable batching", label, new GUILayoutOption[ 0 ] );
+				EditorGUILayout.LabelField( 
+#if !WB_LANGUAGE_CHINESE
+"Disable batching"
+#else
+"禁用批处理"
+#endif
+, label, new GUILayoutOption[ 0 ] );
 				ShowKeywords( shader );
 				srpCompatibilityCheckMaterial.SetPass( 0 );
 
 				int shaderActiveSubshaderIndex = ShaderUtilEx.GetShaderActiveSubshaderIndex( shader );
 				int sRPBatcherCompatibilityCode = ShaderUtilEx.GetSRPBatcherCompatibilityCode( shader, shaderActiveSubshaderIndex );
 				string label2 = ( sRPBatcherCompatibilityCode != 0 ) ? "not compatible" : "compatible";
-				EditorGUILayout.LabelField( "SRP Batcher", label2 );
+				EditorGUILayout.LabelField( 
+#if !WB_LANGUAGE_CHINESE
+"SRP Batcher"
+#else
+"SRP配料机"
+#endif
+, label2 );
 				if( sRPBatcherCompatibilityCode != 0 )
 				{
 					EditorGUILayout.HelpBox( ShaderUtilEx.GetSRPBatcherCompatibilityIssueReason( shader, shaderActiveSubshaderIndex, sRPBatcherCompatibilityCode ), MessageType.Info );
@@ -391,7 +463,13 @@ namespace UnityEditor
 					current.Use();
 					GenericMenu genericMenu = new GenericMenu();
 					int errorIndex = i;
-					genericMenu.AddItem( new GUIContent( "Copy error text" ), false, delegate
+					genericMenu.AddItem( new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Copy error text"
+#else
+"复制错误文本"
+#endif
+), false, delegate
 					   {
 						   string text = errors[ errorIndex ].message;
 						   if ( !string.IsNullOrEmpty( errors[ errorIndex ].messageDetails ) )
@@ -517,7 +595,13 @@ namespace UnityEditor
 			}
 			else
 			{
-				GUILayout.Button( "none (precompiled shader)", GUI.skin.label, new GUILayoutOption[ 0 ] );
+				GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"none (precompiled shader)"
+#else
+"无（预编译着色器）"
+#endif
+, GUI.skin.label, new GUILayoutOption[ 0 ] );
 			}
 			EditorGUILayout.EndHorizontal();
 		}
@@ -592,7 +676,7 @@ namespace UnityEditor
 		private bool m_LocalKeywordsExpended;
 		private float m_WindowWidth;
 
-		private static readonly GUIStyle m_Style = EditorStyles.miniLabel;
+		private readonly static GUIStyle m_Style = EditorStyles.miniLabel;
 
 		public KeywordsPopup( string[] globalKeywords, string[] localKeywords, float windowWidth )
 		{
@@ -638,9 +722,9 @@ namespace UnityEditor
 		}
 	}
 
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// UNITY EDITOR EXTENSIONS
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	
 
 	public enum DisableBatchingType
 	{

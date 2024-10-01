@@ -1,19 +1,37 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
-// 4x4 Invert by DBN in 
-// http://answers.unity3d.com/questions/218333/shader-inversefloat4x4-function.html?childToView=641391#answer-641391 
+
+
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Inverse", "Matrix Operators", "Inverse matrix of a matrix" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Inverse"
+#else
+"反向"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Matrix Operators"
+#else
+"矩阵运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Inverse matrix of a matrix"
+#else
+"矩阵的逆矩阵"
+#endif
+)]
 	public sealed class InverseOpNode : SingleInputOp
 	{
 		private string Inverse4x4Header = "Inverse4x4( {0} )";
 
-		//4x4
+		
 		private string[] Inverse4x4Function =
 		{
 			"{0}4x4 Inverse4x4({0}4x4 input)\n",
@@ -104,7 +122,7 @@ namespace AmplifyShaderEditor
 			{
 				if ( !dataCollector.HasFunction( Inverse4x4Header ) )
 				{
-					//Hack to be used util indent is properly used
+					
 					int currIndent = UIUtils.ShaderIndentLevel;
 
 					if ( dataCollector.IsTemplate )

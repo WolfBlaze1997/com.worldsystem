@@ -48,7 +48,7 @@ namespace AmplifyShaderEditor
 			return selectedIndex;
 		}
 
-		// GC free version
+		
 		public void DrawWidget<TEnum>( ref TEnum selectedIndex, ParentNode owner, Action<ParentNode> callback ) where TEnum : struct
 		{
 			if( owner.DropdownEditing )
@@ -68,24 +68,20 @@ namespace AmplifyShaderEditor
 			}
 		}
 
-		/* 
-		 * USE THIS OVERRIDE IN CASE THE NODE DOESN'T HAVE PREVIEW
-		 */
-		//public override void AfterCommonInit()
-		//{
-		//	base.AfterCommonInit();
-		//	if( PaddingTitleLeft == 0 )
-		//	{
-		//		PaddingTitleLeft = Constants.PropertyPickerWidth + Constants.IconsLeftRightMargin;
-		//		if( PaddingTitleRight == 0 )
-		//			PaddingTitleRight = Constants.PropertyPickerWidth + Constants.IconsLeftRightMargin;
-		//	}
-		//}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 
-		/* 
-		 * USE THE SOURCE CODE BELOW INTO THE NODE YOU WANT THE WIDGET TO SHOW
-		 */
-		//private UpperLeftWidgetHelper m_upperLeftWidget = new UpperLeftWidgetHelper();
+		
+		
 	}
 }

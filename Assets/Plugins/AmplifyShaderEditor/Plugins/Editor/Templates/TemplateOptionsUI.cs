@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using UnityEditor;
 
 namespace AmplifyShaderEditor
 {
-	// UI STRUCTURES
+	
 	[Serializable]
 	public class TemplateOptionUIItem
 	{
@@ -154,13 +154,13 @@ namespace AmplifyShaderEditor
 
 		public void CheckEnDisable( bool actionFromUser )
 		{
-			//string deb = string.Empty;// "-- Checked --" + m_options.Name+" "+ m_isVisible + " "+ m_wasVisible;
+			
 			if( m_isVisible )
 			{
 				if( !m_wasVisible )
 				{
-					//deb = "-- Enable --" + m_options.Name;
-					//Debug.Log( deb );
+					
+					
 					if( OnActionPerformedEvt != null )
 					{
 						if( m_invertActionOnDeselection )
@@ -175,8 +175,8 @@ namespace AmplifyShaderEditor
 						}
 
 						OnActionPerformedEvt( actionFromUser, false, false, this, m_options.ActionsPerOption[ m_currentOption ] );
-						//if( !m_isVisible )
-							//OnActionPerformedEvt( isRefreshing, false, this, m_options.ActionsPerOption[ m_options.DisableIdx ] );
+						
+							
 					}
 				}
 
@@ -184,8 +184,8 @@ namespace AmplifyShaderEditor
 			}
 			else if( m_wasVisible )
 			{
-				//deb = "-- Disable --" + m_options.Name;
-				//Debug.Log( deb );
+				
+				
 				m_wasVisible = false;
 
 				if( OnActionPerformedEvt != null )
@@ -280,8 +280,8 @@ namespace AmplifyShaderEditor
 			set
 			{
 				m_currentOption = Mathf.Clamp( value, 0, m_options.Options.Length - 1 );
-				// why refreshing here?
-				//Refresh();
+				
+				
 			}
 		}
 
@@ -302,9 +302,9 @@ namespace AmplifyShaderEditor
 				{
 					if( m_options.FieldValue.NodeId < -1 )
 					{
-						//This is quite the hack. The bug is related to if a user chooses an inline property on the field option, then the behavior is to comment the original property set on the template
-						// The problem is that, if the user sets an inline property and select its own internal property from there, then the behavior that will prevail without this hack is to call the actions associated with setting a new inline property
-						// Which is on all templates to comment the original template internal property leaving the property commented on the final code (This was detected on URP PBR)
+						
+						
+						
 						PropertyNode node = UIUtils.CurrentWindow.OutsideGraph.GetInternalTemplateNode( m_options.FieldValue.NodeId ) as PropertyNode;
 						if( node != null )
 						{
@@ -316,7 +316,7 @@ namespace AmplifyShaderEditor
 					}
 					else if( m_options.FieldValue.NodeId == -1 )
 					{
-						// If node id is -1 then no node is selected on the inline dropdown then we should also fallback to using its internal property
+						
 						return m_options.ActionsPerOption.Rows[ 0 ];
 					}
 				}

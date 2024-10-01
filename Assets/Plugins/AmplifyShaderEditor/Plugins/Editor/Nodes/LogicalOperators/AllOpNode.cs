@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "All", "Logical Operators", "Determines if all components of the specified value are non-zero." )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"All"
+#else
+"全部"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Logical Operators"
+#else
+"逻辑运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Determines if all components of the specified value are non-zero."
+#else
+"确定指定值的所有分量是否为非零。"
+#endif
+)]
 	public sealed class AllOpNode : ParentNode
 	{
 		protected override void CommonInit( int uniqueId )

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.Collections.Generic;
@@ -78,14 +78,14 @@ namespace AmplifyShaderEditor
 
 			m_passAmount = subShaderInfo.Passes.Count;
 
-			//if( !m_modules.PassTag.IsValid )
-			//{
-			//	m_modules.PassTag.StartIdx = subShaderData.Passes[ 0 ].GlobalStartIdx;
-			//	m_templateProperties.AddId( subShaderData.Data, m_modules.PassTag.Id, subShaderData.Passes[ 0 ].LocalStartIdx, m_modules.PassTag.SearchIndentation );
-			//	m_modules.PassTag.StartIdx -= m_templateProperties.PropertyDict[ m_modules.PassTag.Id ].Indentation.Length;
-			//	m_templateProperties.PropertyDict[ m_modules.PassTag.Id ].UseIndentationAtStart = true;
-			//	idManager.RegisterId( m_modules.PassTag.StartIdx, m_modules.UniquePrefix + m_modules.PassTag.Id, string.Empty );
-			//}
+			
+			
+			
+			
+			
+			
+			
+			
 
 			int firstVisible = -1;
 			int currAddedPassIdx = 0;
@@ -117,7 +117,7 @@ namespace AmplifyShaderEditor
 
 			if( m_mainPass < 0 )
 			{
-				// If no main pass was set then choose the first visible one
+				
 				m_mainPass = ( firstVisible < 0 ) ? 0 : firstVisible;
 				m_passes[ m_mainPass ].IsMainPass = true;
 			}

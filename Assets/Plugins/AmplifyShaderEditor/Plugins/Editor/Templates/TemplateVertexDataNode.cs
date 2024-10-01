@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -9,7 +9,25 @@ using System.Collections.Generic;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Template Vertex Data" , "Vertex Data" , "Select and use available vertex data from the template" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Template Vertex Data"
+#else
+"模板顶点数据"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vertex Data"
+#else
+"顶点数据"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Select and use available vertex data from the template"
+#else
+"从模板中选择并使用可用的顶点数据"
+#endif
+)]
 	public class TemplateVertexDataNode : TemplateNodeParent
 	{
 		private List<TemplateVertexData> m_interpolatorData = null;
@@ -65,7 +83,13 @@ namespace AmplifyShaderEditor
 					for( int i = 0 ; i < 4 ; i++ )
 						m_containerGraph.DeleteConnection( false , UniqueId , i , false , true );
 
-					m_headerColor = UIUtils.GetColorFromCategory( "Default" );
+					m_headerColor = UIUtils.GetColorFromCategory( 
+#if !WB_LANGUAGE_CHINESE
+"Default"
+#else
+"违约"
+#endif
+);
 					m_content.text = "None";
 					m_additionalContent.text = string.Empty;
 					m_outputPorts[ 0 ].ChangeProperties( "None" , WirePortDataType.OBJECT , false );

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 using System;
 using UnityEditor;
 using UnityEngine;
@@ -7,7 +7,25 @@ using UnityEngine;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Bone Blend Weights" , "Vertex Data" , "Bone blend weights for skinned Meshes" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Bone Blend Weights"
+#else
+"骨混合重量"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vertex Data"
+#else
+"顶点数据"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Bone blend weights for skinned Meshes"
+#else
+"蒙皮网格的骨骼混合权重"
+#endif
+)]
 	public sealed class BlendWeightsNode : VertexDataNode
 	{
 		private const string IncorrectUnityVersionMessage = "This info is only available on Unity 2019.1 or above.";

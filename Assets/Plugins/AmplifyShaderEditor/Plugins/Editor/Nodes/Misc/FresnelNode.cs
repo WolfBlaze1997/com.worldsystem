@@ -1,7 +1,7 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
-// http://kylehalladay.com/blog/tutorial/2014/02/18/Fresnel-Shaders-From-The-Ground-Up.html
-// http://http.developer.nvidia.com/CgTutorial/cg_tutorial_chapter07.html
+
+
+
+
 
 using System;
 using UnityEngine;
@@ -10,7 +10,25 @@ using UnityEditor;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Fresnel", "Surface Data", "Simple Fresnel effect" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Fresnel"
+#else
+"菲涅尔"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Surface Data"
+#else
+"地表数据"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Simple Fresnel effect"
+#else
+"简单菲涅耳效应"
+#endif
+)]
 	public sealed class FresnelNode : ParentNode
 	{
 		private const string FresnedFinalVar = "fresnelNode";
@@ -62,11 +80,41 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT3, false, "World Normal", -1, MasterNodePortCategory.Fragment, 0 );
-			AddInputPort( WirePortDataType.FLOAT3, false, "View Dir", -1, MasterNodePortCategory.Fragment, 4 );
-			AddInputPort( WirePortDataType.FLOAT, false, "Bias", -1, MasterNodePortCategory.Fragment, 1 );
-			AddInputPort( WirePortDataType.FLOAT, false, "Scale", -1, MasterNodePortCategory.Fragment, 2 );
-			AddInputPort( WirePortDataType.FLOAT, false, "Power", -1, MasterNodePortCategory.Fragment, 3 );
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"World Normal"
+#else
+"世界正常"
+#endif
+, -1, MasterNodePortCategory.Fragment, 0 );
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"View Dir"
+#else
+"查看目录"
+#endif
+, -1, MasterNodePortCategory.Fragment, 4 );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Bias"
+#else
+"偏见"
+#endif
+, -1, MasterNodePortCategory.Fragment, 1 );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Scale"
+#else
+"规模"
+#endif
+, -1, MasterNodePortCategory.Fragment, 2 );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Power"
+#else
+"电源"
+#endif
+, -1, MasterNodePortCategory.Fragment, 3 );
 			AddOutputPort( WirePortDataType.FLOAT, "Out" );
 
 			m_normalVecPort = m_inputPorts[ 0 ];
@@ -90,7 +138,7 @@ namespace AmplifyShaderEditor
 		{
 			base.SetPreviewInputs();
 
-			//m_mate
+			
 			PreviewMaterial.SetInt( "_FresnelType", (int)m_fresnelType );
 
 			if( m_normalType == NormalType.TangentNormal && m_normalVecPort.IsConnected )
@@ -116,9 +164,27 @@ namespace AmplifyShaderEditor
 			base.DrawProperties();
 
 			EditorGUI.BeginChangeCheck();
-			m_fresnelType = (FresnelType)EditorGUILayoutEnumPopup( "Type", m_fresnelType );
-			m_normalType = (NormalType)EditorGUILayoutEnumPopup( "Normal Vector", m_normalType );
-			m_viewType = (ViewType)EditorGUILayoutEnumPopup( "View Vector", m_viewType );
+			m_fresnelType = (FresnelType)EditorGUILayoutEnumPopup( 
+#if !WB_LANGUAGE_CHINESE
+"Type"
+#else
+"类型"
+#endif
+, m_fresnelType );
+			m_normalType = (NormalType)EditorGUILayoutEnumPopup( 
+#if !WB_LANGUAGE_CHINESE
+"Normal Vector"
+#else
+"法线矢量"
+#endif
+, m_normalType );
+			m_viewType = (ViewType)EditorGUILayoutEnumPopup( 
+#if !WB_LANGUAGE_CHINESE
+"View Vector"
+#else
+"查看矢量"
+#endif
+, m_viewType );
 			if( EditorGUI.EndChangeCheck() )
 			{
 				UpdatePort();
@@ -131,7 +197,13 @@ namespace AmplifyShaderEditor
 			if( !m_powerPort.IsConnected && m_powerPort.Visible )
 				m_powerPort.FloatInternalData = EditorGUILayoutFloatField( m_powerPort.Name, m_powerPort.FloatInternalData );
 
-			m_normalizeVectors = EditorGUILayoutToggle( "Normalize Vectors", m_normalizeVectors );
+			m_normalizeVectors = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Normalize Vectors"
+#else
+"规范化向量"
+#endif
+, m_normalizeVectors );
 			m_safePower = EditorGUILayoutToggle(  PowerNode.SafePowerLabel, m_safePower );
 		}
 
@@ -274,7 +346,7 @@ namespace AmplifyShaderEditor
 			}
 			else
 			{
-				// generate HV
+				
 				if( !m_normalVecPort.IsConnected )
 				{
 					string halfView = GeneratorUtils.GenerateViewDirection( ref dataCollector, UniqueId, ViewSpace.World );

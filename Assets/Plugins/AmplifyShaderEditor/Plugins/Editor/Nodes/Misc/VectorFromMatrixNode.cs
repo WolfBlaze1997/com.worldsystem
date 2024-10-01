@@ -11,11 +11,41 @@ namespace AmplifyShaderEditor
 	}
 
 	[Serializable]
-	[NodeAttributes( "Vector From Matrix", "Matrix Operators", "Retrieve vector data from a matrix" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Vector From Matrix"
+#else
+"矩阵向量"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Matrix Operators"
+#else
+"矩阵运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Retrieve vector data from a matrix"
+#else
+"从矩阵中检索矢量数据"
+#endif
+)]
 	public sealed class VectorFromMatrixNode : ParentNode
 	{
-		private const string IndexStr = "Index";
-		private const string ModeStr = "Mode";
+		private const string IndexStr = 
+#if !WB_LANGUAGE_CHINESE
+"Index"
+#else
+"索引"
+#endif
+;
+		private const string ModeStr = 
+#if !WB_LANGUAGE_CHINESE
+"Mode"
+#else
+"模式"
+#endif
+;
 
 		[SerializeField]
 		private eVectorFromMatrixMode m_mode = eVectorFromMatrixMode.Row;

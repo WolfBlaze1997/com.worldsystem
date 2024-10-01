@@ -1,7 +1,7 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
 
-//#define ASE_CONSOLE_WINDOW
+
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -76,17 +76,35 @@ namespace AmplifyShaderEditor
 						{
 							EditorGUILayout.Separator();
 
-							NodeUtils.DrawPropertyGroup( ref m_wikiAreaFoldout, "Wiki Helper", ShowWikiHelperFunctions );
+							NodeUtils.DrawPropertyGroup( ref m_wikiAreaFoldout, 
+#if !WB_LANGUAGE_CHINESE
+"Wiki Helper"
+#else
+"Wiki助手"
+#endif
+, ShowWikiHelperFunctions );
 
 							EditorGUILayout.Separator();
 
-							NodeUtils.DrawPropertyGroup( ref m_miscAreaFoldout, "Misc", ShowMiscFuntions );
+							NodeUtils.DrawPropertyGroup( ref m_miscAreaFoldout, 
+#if !WB_LANGUAGE_CHINESE
+"Misc"
+#else
+"其他"
+#endif
+, ShowMiscFuntions );
 
 							EditorGUILayout.Separator();
 						}
 						else
 						{
-							EditorGUILayout.LabelField( "Please open an ASE window to access debug options" );
+							EditorGUILayout.LabelField( 
+#if !WB_LANGUAGE_CHINESE
+"Please open an ASE window to access debug options"
+#else
+"请打开ASE窗口以访问调试选项"
+#endif
+);
 						}
 					}
 					EditorGUILayout.EndVertical();
@@ -101,13 +119,25 @@ namespace AmplifyShaderEditor
 			AmplifyShaderEditorWindow window = UIUtils.CurrentWindow;
 			EditorGUILayout.Separator();
 
-			if ( GUILayout.Button( "Nodes Screen Shots" ) )
+			if ( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Nodes Screen Shots"
+#else
+"节点屏幕截图"
+#endif
+) )
 			{
 				window.CurrentNodeExporterUtils.ActivateAutoScreenShot( m_root+"Shots/" ,0,-1 );
 			}
 
 			GUILayout.BeginHorizontal();
-			if( GUILayout.Button( "Nodes URLs" ) )
+			if( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Nodes URLs"
+#else
+"节点URL"
+#endif
+) )
 			{
 				window.CurrentNodeExporterUtils.ActivateNodesURL( m_minURLNode, m_maxURLNode );
 			}
@@ -116,20 +146,38 @@ namespace AmplifyShaderEditor
 			GUILayout.EndHorizontal();
 			EditorGUILayout.Separator();
 
-			if( GUILayout.Button( "Nodes CSV Export" ) )
+			if( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Nodes CSV Export"
+#else
+"节点CSV导出"
+#endif
+) )
 			{
 				window.CurrentNodeExporterUtils.GenerateNodesCSV( m_root );
 			}
 			EditorGUILayout.Separator();
 
-			if( GUILayout.Button( "Nodes Undo Test" ) )
+			if( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Nodes Undo Test"
+#else
+"节点撤消测试"
+#endif
+) )
 			{
 				window.CurrentNodeExporterUtils.ActivateAutoUndo();
 			}
 
 			EditorGUILayout.Separator();
 
-			if ( GUILayout.Button( "Nodes Info" ) )
+			if ( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Nodes Info"
+#else
+"节点信息"
+#endif
+) )
 			{
 				window.CurrentPaletteWindow.DumpAvailableNodes( false,  m_root );
 				window.CurrentPaletteWindow.DumpAvailableNodes( true, m_root );
@@ -137,7 +185,13 @@ namespace AmplifyShaderEditor
 
 			EditorGUILayout.Separator();
 
-			if ( GUILayout.Button( "Shortcuts Info" ) )
+			if ( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Shortcuts Info"
+#else
+"快捷方式信息"
+#endif
+) )
 			{
 				window.ShortcutManagerInstance.DumpShortcutsToDisk( Application.dataPath + "/../NodesInfo/" );
 			}
@@ -146,28 +200,52 @@ namespace AmplifyShaderEditor
 		void ShowMiscFuntions()
 		{
 			AmplifyShaderEditorWindow window = UIUtils.CurrentWindow;
-			if ( GUILayout.Button( "Force Example Shader Compilation" ) )
+			if ( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Force Example Shader Compilation"
+#else
+"强制着色器示例编译"
+#endif
+) )
 			{
 				UIUtils.ForceExampleShaderCompilation();
 			}
 			EditorGUILayout.Separator();
 
-			if ( GUILayout.Button( "Refresh Available Nodes" ) )
+			if ( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Refresh Available Nodes"
+#else
+"刷新可用节点"
+#endif
+) )
 			{
 				window.RefreshAvaibleNodes();
 			}
 
 			EditorGUILayout.Separator();
 
-			if ( GUILayout.Button( "Dump Uniform Names" ) )
+			if ( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Dump Uniform Names"
+#else
+"转储制服名称"
+#endif
+) )
 			{
-				//window.CurrentPaletteWindow.NewList()
+				
 				window.DuplicatePrevBufferInstance.DumpUniformNames();
 			}
 
 			EditorGUILayout.Separator();
 
-			if ( GUILayout.Button( "Force Palette Update" ) )
+			if ( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Force Palette Update"
+#else
+"强制调色板更新"
+#endif
+) )
 			{
 				Debug.Log( UIUtils.CurrentWindow.IsShaderFunctionWindow );
 				window.CurrentPaletteWindow.ForceUpdate = true;
@@ -175,7 +253,13 @@ namespace AmplifyShaderEditor
 
 			EditorGUILayout.Separator();
 
-			if( GUILayout.Button( "Detect Infinite Loops" ) )
+			if( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Detect Infinite Loops"
+#else
+"检测无限循环"
+#endif
+) )
 			{
 				if( window.IsShaderFunctionWindow )
 				{

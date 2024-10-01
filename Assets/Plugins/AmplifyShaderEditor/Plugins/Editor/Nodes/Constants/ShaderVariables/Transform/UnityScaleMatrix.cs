@@ -1,10 +1,34 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 namespace AmplifyShaderEditor
 {
 	[System.Serializable]
-	[NodeAttributes( "Scale Matrix", "Matrix Transform", "Scale Matrix",null, UnityEngine.KeyCode.None, true, true, "Object Scale" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Scale Matrix"
+#else
+"比例矩阵"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Matrix Transform"
+#else
+"矩阵变换"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Scale Matrix"
+#else
+"比例矩阵"
+#endif
+,null, UnityEngine.KeyCode.None, true, true, 
+#if !WB_LANGUAGE_CHINESE
+"Object Scale"
+#else
+"对象比例"
+#endif
+)]
 	public sealed class UnityScaleMatrix : ConstantShaderVariable
 	{
 		protected override void CommonInit( int uniqueId )

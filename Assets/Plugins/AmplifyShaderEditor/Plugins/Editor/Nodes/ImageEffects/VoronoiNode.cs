@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEditor;
@@ -8,10 +8,34 @@ using UnityEngine;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Voronoi", "Miscellaneous", "Voronoi", Tags = "noise" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Voronoi"
+#else
+"沃罗诺伊"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Voronoi"
+#else
+"沃罗诺伊"
+#endif
+, Tags = 
+#if !WB_LANGUAGE_CHINESE
+"noise"
+#else
+"噪音"
+#endif
+)]
 	public sealed class VoronoiNode : ParentNode
 	{
-		// Unity Voronoi
+		
 		private readonly string UnityVoronoiNoiseFunc = "UnityVoronoi({0},{1},{2},{3})";
 		private readonly string[] UnityVoroniNoiseFunctionsBody =
 		{
@@ -49,7 +73,7 @@ namespace AmplifyShaderEditor
 			"}\n",
 		};
 
-		////////////
+		
 
 		private const string VoronoiHashHeader = "float2 voronoihash{0}( float2 p )";
 		private readonly string[] VoronoiHashBody = { "p = p - 2 * floor( p / 2 );",
@@ -73,13 +97,13 @@ namespace AmplifyShaderEditor
 			" \t\tfloat2 o = voronoihash{0}( n + g );",
 			" \t\tfloat2 r = f - g - ( sin( 0 + o * 6.2831 ) * 0.5 + 0.5 );",
 			" \t\tfloat d = dot( r, r );",
-			" \t\tif( d<F1 ) {",//12
-			" \t\t\tF2 = F1;",//13
-			" \t\t\tF1 = d; mg = g; mr = r; id = o;",//14
-			" \t\t} else if( d<F2 ) {",//15
-			" \t\t\tF2 = d;",//16
-			"",//this is where we inject smooth Id
-			" \t\t}" ,//18
+			" \t\tif( d<F1 ) {",
+			" \t\t\tF2 = F1;",
+			" \t\t\tF1 = d; mg = g; mr = r; id = o;",
+			" \t\t} else if( d<F2 ) {",
+			" \t\t\tF2 = d;",
+			"",
+			" \t\t}" ,
 			" \t}",
 			"}",
 			"return F1;"
@@ -127,15 +151,33 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private bool m_applySmoothToIds = false;
 
-		private const string FunctionTypeStr = "Method";//"Function Type";
+		private const string FunctionTypeStr = 
+#if !WB_LANGUAGE_CHINESE
+"Method"
+#else
+"方法"
+#endif
+;
 		private readonly string[] m_functionTypeStr = { "Cells", "Crystal", "Glass", "Caustic", "Distance" };
 
-		private const string DistanceFunctionLabelStr = "Distance Function";
+		private const string DistanceFunctionLabelStr = 
+#if !WB_LANGUAGE_CHINESE
+"Distance Function"
+#else
+"距离函数"
+#endif
+;
 		private readonly string[] m_distanceFunctionStr = { "Euclidean\u00B2", "Euclidean", "Manhattan", "Chebyshev", "Minkowski" };
 
 		[SerializeField]
 		private int m_searchQuality = 0;
-		private const string SearchQualityLabelStr = "Search Quality";
+		private const string SearchQualityLabelStr = 
+#if !WB_LANGUAGE_CHINESE
+"Search Quality"
+#else
+"搜索质量"
+#endif
+;
 		private readonly string[] m_searchQualityStr = { "9 Cells", "25 Cells", "49 Cells" };
 
 
@@ -163,9 +205,27 @@ namespace AmplifyShaderEditor
 		{
 			base.CommonInit( uniqueId );
 			AddInputPort( WirePortDataType.FLOAT2, false, "UV" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Angle" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Scale" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Smoothness" );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Angle"
+#else
+"角度"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Scale"
+#else
+"规模"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Smoothness"
+#else
+"平滑度"
+#endif
+);
 
 			m_inputPorts[ 1 ].AutoDrawInternalData = true;
 			m_inputPorts[ 2 ].AutoDrawInternalData = true;
@@ -175,7 +235,7 @@ namespace AmplifyShaderEditor
 			AddOutputPort( WirePortDataType.FLOAT2, "ID" );
 			AddOutputPort( WirePortDataType.FLOAT2, "UV" );
 			m_textLabelWidth = 120;
-			//m_useInternalPortData = true;
+			
 			m_autoWrapProperties = true;
 			m_previewShaderGUID = "bc1498ccdade442479038b24982fc946";
 			ChangePorts();
@@ -248,10 +308,10 @@ namespace AmplifyShaderEditor
 
 		public override void RenderNodePreview()
 		{
-			//Runs at least one time
+			
 			if( !m_initialized )
 			{
-				// nodes with no preview don't update at all
+				
 				PreviewIsDirty = false;
 				return;
 			}
@@ -307,16 +367,28 @@ namespace AmplifyShaderEditor
 
 					m_searchQuality = EditorGUILayoutPopup( SearchQualityLabelStr, m_searchQuality, m_searchQualityStr );
 					m_octaves = EditorGUILayoutIntSlider( "Octaves", m_octaves, 1, 8 );
-					m_tileable = EditorGUILayoutToggle( "Tileable", m_tileable );
+					m_tileable = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Tileable"
+#else
+"可平铺"
+#endif
+, m_tileable );
 					EditorGUI.BeginDisabledGroup( !m_tileable );
 					m_tileScale = EditorGUILayoutIntField( "Tile Scale", m_tileScale );
 					EditorGUI.EndDisabledGroup();
 
-					//Only smoothing cells type for now
+					
 					if( m_functionType == 0 )
 					{
 						EditorGUI.BeginChangeCheck();
-						m_calculateSmoothValue = EditorGUILayoutToggle( "Smooth", m_calculateSmoothValue );
+						m_calculateSmoothValue = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Smooth"
+#else
+"光滑"
+#endif
+, m_calculateSmoothValue );
 						if( EditorGUI.EndChangeCheck() )
 						{
 							ChechSmoothPorts();
@@ -324,14 +396,26 @@ namespace AmplifyShaderEditor
 
 						if( m_calculateSmoothValue )
 						{
-							m_applySmoothToIds = EditorGUILayoutToggle( "  Apply To ID" , m_applySmoothToIds );
+							m_applySmoothToIds = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"  Apply To ID"
+#else
+"应用于ID"
+#endif
+, m_applySmoothToIds );
 						}
 					}
 				}
 				EditorGUI.EndDisabledGroup();
 
 				EditorGUI.BeginChangeCheck();
-				m_useUnity = EditorGUILayoutToggle( "Unity's Voronoi", m_useUnity );
+				m_useUnity = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Unity's Voronoi"
+#else
+"团结的沃罗诺伊"
+#endif
+, m_useUnity );
 				if( EditorGUI.EndChangeCheck() )
 				{
 					ChangePorts();
@@ -504,7 +588,7 @@ namespace AmplifyShaderEditor
 				dataCollector.AddFunction( VoronoiHashHeaderFormatted, voronoiHashFunc );
 
 				string smoothnessName = "0";
-				//need to add a local value to send to function since its an inout and sending a numeric value to it generates a compilation error
+				
 				string smoothIdName = "voronoiSmoothId" + OutputId;
 				dataCollector.AddLocalVariable( UniqueId , CurrentPrecisionType , WirePortDataType.FLOAT2 , smoothIdName , "0" );
 

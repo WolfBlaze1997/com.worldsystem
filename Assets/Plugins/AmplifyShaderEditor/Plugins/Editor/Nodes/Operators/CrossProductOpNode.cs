@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -7,14 +7,44 @@ using UnityEngine;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Cross", "Vector Operators", "Cross product of two three-component vectors ( A x B )", null, KeyCode.X )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Cross"
+#else
+"十字架"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vector Operators"
+#else
+"矢量运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Cross product of two three-component vectors ( A x B )"
+#else
+"两个三分量向量的叉积（A x B）"
+#endif
+, null, KeyCode.X )]
 	public sealed class CrossProductOpNode : ParentNode
 	{
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT3, false, "Lhs" );
-			AddInputPort( WirePortDataType.FLOAT3, false, "Rhs" );
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"Lhs"
+#else
+"Lhs"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"Rhs"
+#else
+"Rhs"
+#endif
+);
 			AddOutputPort( WirePortDataType.FLOAT3, "Out" );
 			m_useInternalPortData = true;
 			m_previewShaderGUID = "65a9be5cc7037654db8e148d669f03ee";

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 
 namespace AmplifyShaderEditor
@@ -50,12 +50,12 @@ namespace AmplifyShaderEditor
 		
 		public void GetInputData( ref MasterNodeDataCollector dataCollector, bool ignoreLocalvar )
 		{
-			//Conditional Operator ?: has some shenanigans
-			//If the first operand is of type bool, one of the following must hold for the second and third operands:
-			//Both operands have compatible structure types.
-			//Both operands are scalars with numeric or bool type.
-			//Both operands are vectors with numeric or bool type, where the two vectors are of the same size, which is less than or equal to four.
-			//If the first operand is a packed vector of bool, then the conditional selection is performed on an elementwise basis.Both the second and third operands must be numeric vectors of the same size as the first operand.
+			
+			
+			
+			
+			
+			
 			WirePortDataType compatibleInputType = m_mainInputType;
 			if ( m_mainInputType != WirePortDataType.FLOAT && m_mainInputType != WirePortDataType.INT && m_mainInputType != m_mainOutputType )
 			{

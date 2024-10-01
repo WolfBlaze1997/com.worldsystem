@@ -24,15 +24,33 @@ namespace AmplifyShaderEditor
 		private SerializedObject m_so;
 
 		private SerializedProperty m_packageContentsOrigin;
-		private GUIContent m_packageContentsOriginLabel = new GUIContent("Main Content");
+		private GUIContent m_packageContentsOriginLabel = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Main Content"
+#else
+"主要内容"
+#endif
+);
 
 		private SerializedProperty m_allExtras;
 
 		private SerializedProperty m_packageTargetPath;
-		private GUIContent m_packageTargetPathLabel = new GUIContent( "Target Path" );
+		private GUIContent m_packageTargetPathLabel = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Target Path"
+#else
+"目标路径"
+#endif
+);
 
 		private SerializedProperty m_packageTargetName;
-		private GUIContent m_packageTargetNameLabel = new GUIContent( "Target Name" );
+		private GUIContent m_packageTargetNameLabel = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Target Name"
+#else
+"目标名称"
+#endif
+);
 
 		private SerializedProperty m_allShaders;
 
@@ -194,11 +212,23 @@ namespace AmplifyShaderEditor
 			EditorGUILayout.BeginHorizontal();
 			{
 				EditorGUILayout.PropertyField( m_packageContentsOrigin, m_packageContentsOriginLabel );
-				if( GUILayout.Button( "Browse", GUILayout.MaxWidth( 55 ) ) )
+				if( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Browse"
+#else
+"浏览"
+#endif
+, GUILayout.MaxWidth( 55 ) ) )
 				{
 					m_packageContentsOrigin.stringValue = ASESaveBundleTool.FetchPath( "Folder Path" , m_packageContentsOrigin.stringValue );
 				}
-				if( GUILayout.Button( "Fetch" , GUILayout.MaxWidth( 45 ) ) )
+				if( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Fetch"
+#else
+"取回"
+#endif
+, GUILayout.MaxWidth( 45 ) ) )
 				{
 					FetchValidShadersFromPath( m_packageContentsOrigin.stringValue, false );
 				}
@@ -213,14 +243,26 @@ namespace AmplifyShaderEditor
 			EditorGUILayout.BeginHorizontal();
 			{
 				EditorGUILayout.PropertyField( m_packageTargetPath , m_packageTargetPathLabel );
-				if( GUILayout.Button( "Browse",GUILayout.MaxWidth(55) ))
+				if( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Browse"
+#else
+"浏览"
+#endif
+,GUILayout.MaxWidth(55) ))
 					m_packageTargetPath.stringValue = EditorUtility.OpenFolderPanel( "Folder Path" , m_packageTargetPath.stringValue , "" );
 			}
 			EditorGUILayout.EndHorizontal();
 			EditorGUILayout.PropertyField( m_packageTargetName, m_packageTargetNameLabel );
 
 			EditorGUILayout.Separator();
-			if( GUILayout.Button( "Clear" ) )
+			if( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Clear"
+#else
+"清除"
+#endif
+) )
 			{
 				m_allShaders.ClearArray();
 			}
@@ -238,7 +280,13 @@ namespace AmplifyShaderEditor
 
 	public class ASESaveBundleTool : EditorWindow
 	{
-		private const string UpdateAllStr = "Update All";
+		private const string UpdateAllStr = 
+#if !WB_LANGUAGE_CHINESE
+"Update All"
+#else
+"全部更新"
+#endif
+;
 		private const string UpdateAllStyle = "prebutton";
 
 
@@ -255,7 +303,13 @@ namespace AmplifyShaderEditor
 
 		ASESaveBundleAssetEditor m_editor;
 
-		private const string Title = "Batch Save and Pack";
+		private const string Title = 
+#if !WB_LANGUAGE_CHINESE
+"Batch Save and Pack"
+#else
+"批量保存和打包"
+#endif
+;
 
 		[NonSerialized]
 		private GUIStyle m_titleStyle;
@@ -369,8 +423,8 @@ namespace AmplifyShaderEditor
 					{
 						EditorGUI.BeginDisabledGroup( currentAsset.AllShaders.Count <= 0 );
 						{
-							// Update all shaders
-							if( GUILayout.Button( UpdateAllStr/* , UpdateAllStyle , GUILayout.Height( 20 )*/ ) )
+							
+							if( GUILayout.Button( UpdateAllStr ) )
 							{
 								m_updatingShaders = true;
 								string[] assetPaths = new string[ currentAsset.AllShaders.Count ];
@@ -381,12 +435,24 @@ namespace AmplifyShaderEditor
 								AmplifyShaderEditorWindow.LoadAndSaveList( assetPaths );
 							}
 
-							if( GUILayout.Button( "Remove Custom Inspector" ) )
+							if( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Remove Custom Inspector"
+#else
+"删除自定义检查器"
+#endif
+) )
 							{
 								int count = currentAsset.AllShaders.Count;
 								for( int i = 0 ; i < count ; i++ )
 								{
-									EditorUtility.DisplayProgressBar( "Removing custom inspector", currentAsset.AllShaders[i].name , i / ( count - 1 ) );
+									EditorUtility.DisplayProgressBar( 
+#if !WB_LANGUAGE_CHINESE
+"Removing custom inspector"
+#else
+"删除自定义检查器"
+#endif
+, currentAsset.AllShaders[i].name , i / ( count - 1 ) );
 									string path = AssetDatabase.GetAssetPath( currentAsset.AllShaders[ i ] );
 									string shaderBody = IOUtils.LoadTextFileFromDisk( path );
 									shaderBody = Regex.Replace( shaderBody , TemplateHelperFunctions.CustomInspectorPattern , string.Empty ,RegexOptions.Multiline );
@@ -402,17 +468,47 @@ namespace AmplifyShaderEditor
 
 						EditorGUI.BeginDisabledGroup( string.IsNullOrEmpty( currentAsset.PackageTargetName ) || string.IsNullOrEmpty( currentAsset.PackageTargetPath ) );
 						{
-							if( GUILayout.Button( "Export Unity Package" ) )
+							if( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Export Unity Package"
+#else
+"导出Unity包"
+#endif
+) )
 							{
 								ExportCurrent( currentAsset );
 							}
 						}
 						EditorGUI.EndDisabledGroup();
 						EditorGUILayout.Separator();
-						// Asset creation/load
+						
 						EditorGUILayout.BeginHorizontal();
-						m_asset = EditorGUILayout.ObjectField( "Asset Preset" , m_asset , typeof( ASESaveBundleAsset ) , false ) as ASESaveBundleAsset;
-						if( GUILayout.Button( m_asset != null ? "Save" : "Create" , "minibutton" , GUILayout.Width( 50 ) ) )
+						m_asset = EditorGUILayout.ObjectField( 
+#if !WB_LANGUAGE_CHINESE
+"Asset Preset"
+#else
+"资产预设"
+#endif
+, m_asset , typeof( ASESaveBundleAsset ) , false ) as ASESaveBundleAsset;
+						if( GUILayout.Button( m_asset != null ? 
+#if !WB_LANGUAGE_CHINESE
+"Save"
+#else
+"保存"
+#endif
+: 
+#if !WB_LANGUAGE_CHINESE
+"Create"
+#else
+"创建"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"minibutton"
+#else
+"迷你按钮"
+#endif
+, GUILayout.Width( 50 ) ) )
 						{
 							string defaultName = "ShaderBundlePreset";
 							string assetPath = string.Empty;

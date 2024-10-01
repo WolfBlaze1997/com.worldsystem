@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 using UnityEngine.VFX;
 using UnityEngine.VFX.Utility;
 
@@ -10,6 +11,9 @@ namespace WorldSystem.Runtime
 {
     public partial class VFXLightningEffect
     {
+        
+        #region Gizmos相关
+        
 #if UNITY_EDITOR
 
         protected void DrawGizmos()
@@ -37,15 +41,16 @@ namespace WorldSystem.Runtime
         }
 #endif
         
+        #endregion
+        
     }
 
 
     [ExecuteAlways]
     public partial class VFXLightningEffect : VFXOutputEventAbstractHandler
     {
-        public override bool canExecuteInEditor => true;
-
-
+        
+        
         #region 字段
         
         [Serializable]
@@ -84,7 +89,7 @@ namespace WorldSystem.Runtime
             public float lightningMaxLifetime = 0.75f;
 
             [LabelText("繁殖率(频率)")][GUIColor(1f,0.7f,0.7f)]
-            public float lightningSpawnRate = 0.0f;
+            public float lightningSpawnRate;
             
             public void LimitProperty()
             {
@@ -95,17 +100,37 @@ namespace WorldSystem.Runtime
                 lightningMaxLifetime = Math.Max(lightningMaxLifetime, 0.3f);
                 lightningSpawnRate = Math.Max(lightningSpawnRate, 0.0f);
             }
+            
         }
         
         [HideLabel]
         public Property property = new();
+
+        public static bool IsBeInLightning;
+        public override bool canExecuteInEditor => true;
+        
+        [FormerlySerializedAs("_Update")] [HideInInspector] 
+        public bool update;
+        
+        private float _previousTime;
+        
+        private Vector4[] _lightningArray = new Vector4[2];
+
+        private static readonly int position = Shader.PropertyToID("position");
+        private static readonly int lifetime = Shader.PropertyToID("lifetime");
+        private readonly int SpawnRate = Shader.PropertyToID("Spawn Rate");
+        private readonly int Length = Shader.PropertyToID("Length");
+        private readonly int MinLifetime = Shader.PropertyToID("MinLifetime");
+        private readonly int MaxLifetime = Shader.PropertyToID("MaxLifetime");
+        private readonly int AltosLightningArray = Shader.PropertyToID("altos_LightningArray");
+        private readonly int AltosLightningArraySize = Shader.PropertyToID("altos_LightningArraySize");
         
         #endregion
         
         
         
         #region 安装属性
-
+        
         private void SetupStaticProperty()
         {
             if (property.lightningLit != null) property.lightningLit.intensity = property.lightningLightStrength;
@@ -117,7 +142,6 @@ namespace WorldSystem.Runtime
             }
         }
         
-        private Vector4[] _lightningArray = new Vector4[2];
         private void SetupDynamicProperty()
         {
             int lightningArraySize = 0;
@@ -127,27 +151,21 @@ namespace WorldSystem.Runtime
                     data.Position.z, data.Intensity);
                 lightningArraySize++;
             }
-            
             Shader.SetGlobalVectorArray(AltosLightningArray, _lightningArray);
             Shader.SetGlobalInt(AltosLightningArraySize, lightningArraySize);
-            
             m_VisualEffect?.SetFloat(SpawnRate, property.lightningSpawnRate);
         }
+        
         private void ClearDynamicLightningProperty()
         {
             Shader.SetGlobalInt(AltosLightningArraySize, 0);
         }
-        private readonly int SpawnRate = Shader.PropertyToID("Spawn Rate");
-        private readonly int Length = Shader.PropertyToID("Length");
-        private readonly int MinLifetime = Shader.PropertyToID("MinLifetime");
-        private readonly int MaxLifetime = Shader.PropertyToID("MaxLifetime");
-        private readonly int AltosLightningArray = Shader.PropertyToID("altos_LightningArray");
-        private readonly int AltosLightningArraySize = Shader.PropertyToID("altos_LightningArraySize");
+        
         
         #endregion
         
         
-
+        
         #region 事件函数
         
         protected override void OnEnable()
@@ -194,6 +212,7 @@ namespace WorldSystem.Runtime
                 property.lightningLit.enabled = false;
             }
         }
+        
         protected override void OnDisable()
         {
             base.OnDisable();
@@ -220,26 +239,38 @@ namespace WorldSystem.Runtime
                 CoreUtils.Destroy(gameObject.GetComponentInChildren<Light>(true).gameObject);
             property.lightningLit = null;
         }
+        
         public void OnValidate()
         {
             property.LimitProperty();
             SetupStaticProperty();
         }
         
-        
-        [HideInInspector] public bool _Update;
-        private float _previousTime;
         void Update()
         {
-            if (!_Update) return;
+            if (!update) return;
 
-            //根据SpawnRate决定启用或禁用
+#if UNITY_EDITOR
+            if (property.lightningDataObjectArray[0] == null ||
+                property.lightningDataObjectArray[property.lightningDataObjectArray.Length - 1] == null)
+            {
+                LightningData[] LightningDataObjectArray = GetComponentsInChildren<LightningData>(true);
+                GameObject[] LightningData = new GameObject[LightningDataObjectArray.Length];
+                for (var index = 0; index < LightningDataObjectArray.Length; index++)
+                {
+                    LightningData[index] = LightningDataObjectArray[index].gameObject;
+                }
+                property.lightningDataObjectArray = LightningData;
+            }
+#endif
+            
             if (property.lightningSpawnRate > 0.1) 
                 m_VisualEffect.enabled = true;
             else
             {
-                 m_VisualEffect.enabled = false;
                  property.lightningLit.enabled = false;
+                 m_VisualEffect.enabled = false;
+                 IsBeInLightning = false;
                  ClearDynamicLightningProperty();
                  return;
             }
@@ -247,8 +278,8 @@ namespace WorldSystem.Runtime
             if (WorldManager.Instance?.volumeCloudOptimizeModule is not null)
             {
                 var vector3 = transform.position;
-                vector3.y = WorldManager.Instance.volumeCloudOptimizeModule.property._Modeling_Position_CloudThickness * 150 / 1000 +
-                            WorldManager.Instance.volumeCloudOptimizeModule.property._Modeling_Position_CloudHeight;
+                vector3.y = WorldManager.Instance.volumeCloudOptimizeModule.property.modelingPositionCloudThickness * 150 / 1000 +
+                            WorldManager.Instance.volumeCloudOptimizeModule.property.modelingPositionCloudHeight;
                 transform.position = vector3;
             }
 
@@ -266,20 +297,61 @@ namespace WorldSystem.Runtime
                     property.lightningLifetimeArray[i] = float.NegativeInfinity;
                     ClearDynamicLightningProperty();
                     property.lightningLit.enabled = false;
+                    IsBeInLightning = false;
                 }
                 else
+                {
                     property.lightningLifetimeArray[i] -= dt;
+                    IsBeInLightning = true;
+                }
             }
-
             _previousTime = Time.time;
         }
         
+#if UNITY_EDITOR
+        private void Start()
+        {
+            WorldManager.Instance?.weatherListModule?.weatherList?.SetupPropertyFromActive();
+        }
+#endif
+        public override void OnVFXOutputEvent(VFXEventAttribute eventAttribute)
+        {
+            int availableInstanceId = -1;
+            for (int i = 0; i < property.lightningDataObjectArray.Length; i++)
+            {
+                if (!property.lightningDataObjectArray[i].activeSelf)
+                {
+                    availableInstanceId = i;
+                    break;
+                }
+            }
         
+            if (availableInstanceId != -1)
+            {
+                var availableInstance = property.lightningDataObjectArray[availableInstanceId];
+                availableInstance.SetActive(true);
+                if (eventAttribute.HasVector3(position))
+                {
+                    availableInstance.transform.localPosition = eventAttribute.GetVector3(position);
+                    //旋转闪电照明并激活
+                    if (property.mainCamera != null) property.lightningLit.transform.forward = (property.mainCamera.transform.position - availableInstance.transform.position).normalized;
+                    float dis = (property.mainCamera.transform.position - availableInstance.transform.position).magnitude;
+                    property.lightningLit.intensity = property.lightningLightStrength * (float)Math.Pow(Math.E, -dis / 3000);
+                    property.lightningLit.enabled = true;
+                }
+        
+                if (eventAttribute.HasFloat(lifetime)) property.lightningLifetimeArray[availableInstanceId] = eventAttribute.GetFloat(lifetime);
+        
+                SetupDynamicProperty();
+            }
+        }
         
         #endregion
         
-
+        
+        
         #region 重要函数
+        
         void CreateLightningDataObjectArray()
         {
             if (property.prefab == null) return;
@@ -302,51 +374,24 @@ namespace WorldSystem.Runtime
                 property.lightningLifetimeArray[i] = float.NegativeInfinity;
             }
         }
+        
         void DestroyLightningDataObjectArray()
         {
             foreach (var instance in GetComponentsInChildren<LightningData>(true))
             {
                 CoreUtils.Destroy(instance.gameObject);
             }
+
+            property.lightningDataObjectArray = null;
+            property.lightningLifetimeArray = null;
             
         }
+        
+        
         #endregion
-        
-        
-        public override void OnVFXOutputEvent(VFXEventAttribute eventAttribute)
-        {
-            int availableInstanceId = -1;
-            for (int i = 0; i < property.lightningDataObjectArray.Length; i++)
-            {
-                // Debug.Log(property.lightningDataObjectArray[i]);
-                if (!property.lightningDataObjectArray[i].activeSelf)
-                {
-                    availableInstanceId = i;
-                    break;
-                }
-            }
-        
-            if (availableInstanceId != -1)
-            {
-                var availableInstance = property.lightningDataObjectArray[availableInstanceId];
-                availableInstance.SetActive(true);
-                if (eventAttribute.HasVector3(k_PositionID))
-                {
-                    availableInstance.transform.localPosition = eventAttribute.GetVector3(k_PositionID);
-                    //旋转闪电照明并激活
-                    if (property.mainCamera != null) property.lightningLit.transform.forward = (property.mainCamera.transform.position - availableInstance.transform.position).normalized;
-                    float dis = (property.mainCamera.transform.position - availableInstance.transform.position).magnitude;
-                    property.lightningLit.intensity = property.lightningLightStrength * (float)Math.Pow(Math.E, -dis / 3000);
-                    property.lightningLit.enabled = true;
-                }
-        
-                if (eventAttribute.HasFloat(k_LifetimeID)) property.lightningLifetimeArray[availableInstanceId] = eventAttribute.GetFloat(k_LifetimeID);
-        
-                SetupDynamicProperty();
-            }
-        }
-        static readonly int k_PositionID = Shader.PropertyToID("position");
-        static readonly int k_LifetimeID = Shader.PropertyToID("lifetime");
+
+
+
     }
 
     

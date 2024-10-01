@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -15,10 +15,34 @@ namespace AmplifyShaderEditor
 	}
 
 	[Serializable]
-	[NodeAttributes( "Standard Surface Light", "Lighting", "Provides a way to create a standard surface light model in custom lighting mode", NodeAvailabilityFlags = (int)NodeAvailability.CustomLighting )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Standard Surface Light"
+#else
+"标准表面灯"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Lighting"
+#else
+"照明"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Provides a way to create a standard surface light model in custom lighting mode"
+#else
+"提供了一种在自定义照明模式下创建标准表面光模型的方法"
+#endif
+, NodeAvailabilityFlags = (int)NodeAvailability.CustomLighting )]
 	public sealed class CustomStandardSurface : ParentNode
 	{
-		private const string WorkflowStr = "Workflow";
+		private const string WorkflowStr = 
+#if !WB_LANGUAGE_CHINESE
+"Workflow"
+#else
+"工作流程"
+#endif
+;
 
 		[SerializeField]
 		private ASEStandardSurfaceWorkflow m_workflow = ASEStandardSurfaceWorkflow.Metallic;
@@ -32,13 +56,49 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT3, false, "Albedo" );
-			AddInputPort( WirePortDataType.FLOAT3, false, "Normal" );
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"Albedo"
+#else
+"阿尔伯多"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"Normal"
+#else
+"正常"
+#endif
+);
 			m_inputPorts[ 1 ].Vector3InternalData = Vector3.forward;
-			AddInputPort( WirePortDataType.FLOAT3, false, "Emission" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Metallic" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Smoothness" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Occlusion" );
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"Emission"
+#else
+"排放"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Metallic"
+#else
+"金属漆"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Smoothness"
+#else
+"平滑度"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Occlusion"
+#else
+"闭塞"
+#endif
+);
 			m_inputPorts[ 5 ].FloatInternalData = 1;
 			AddOutputPort( WirePortDataType.FLOAT3, "RGB" );
 			m_autoWrapProperties = true;
@@ -65,10 +125,22 @@ namespace AmplifyShaderEditor
 			}
 
 			EditorGUI.BeginChangeCheck();
-			m_normalSpace = (ViewSpace)EditorGUILayoutEnumPopup( "Normal Space", m_normalSpace );
+			m_normalSpace = (ViewSpace)EditorGUILayoutEnumPopup( 
+#if !WB_LANGUAGE_CHINESE
+"Normal Space"
+#else
+"正常空间"
+#endif
+, m_normalSpace );
 			if( m_normalSpace != ViewSpace.World || !m_inputPorts[ 1 ].IsConnected )
 			{
-				m_normalize = EditorGUILayoutToggle("Normalize", m_normalize);
+				m_normalize = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Normalize"
+#else
+"正常化"
+#endif
+, m_normalize);
 			}
 			if( EditorGUI.EndChangeCheck() )
 			{
@@ -156,12 +228,12 @@ namespace AmplifyShaderEditor
 			dataCollector.AddLocalVariable( UniqueId, "gi" + OutputId + " = UnityGlobalIllumination( data, s" + OutputId + ".Occlusion, s" + OutputId + ".Normal, g" + OutputId + " );" );
 			dataCollector.AddLocalVariable( UniqueId, "#endif\n", true );
 			dataCollector.AddLocalVariable( UniqueId, "float3 surfResult" + OutputId + " = LightingStandard" + specularMode + " ( s" + OutputId + ", viewDir, gi" + OutputId + " ).rgb;" );
-			//Emission must be always added to trick Unity, so it knows what needs to be created p.e. world pos
+			
 			dataCollector.AddLocalVariable( UniqueId, "surfResult" + OutputId + " += s" + OutputId + ".Emission;\n" );
 
 			m_outputPorts[ 0 ].SetLocalValue( "surfResult" + OutputId, dataCollector.PortCategory );
 			
-			//Remove emission contribution from Forward Add
+			
 			dataCollector.AddLocalVariable( UniqueId, "#ifdef UNITY_PASS_FORWARDADD//" + OutputId );
 			dataCollector.AddLocalVariable( UniqueId, string.Format( "surfResult{0} -= s{0}.Emission;", OutputId ));
 			dataCollector.AddLocalVariable( UniqueId, "#endif//" + OutputId );

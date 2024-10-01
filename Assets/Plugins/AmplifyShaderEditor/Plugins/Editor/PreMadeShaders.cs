@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 
@@ -8,7 +8,7 @@ namespace AmplifyShaderEditor
 {
 	public class PreMadeShaders
 	{
-		public static readonly string FlatColorSequenceId = "Flat Color";
+		public readonly static string FlatColorSequenceId = "Flat Color";
 		private Dictionary<string, ActionSequence> m_actionLib;
 		public PreMadeShaders()
 		{

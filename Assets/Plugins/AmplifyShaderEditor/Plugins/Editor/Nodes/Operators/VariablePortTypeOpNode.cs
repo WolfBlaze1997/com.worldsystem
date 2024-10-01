@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -9,7 +9,13 @@ namespace AmplifyShaderEditor
 {
 	public class VariablePortTypeOpNode : ParentNode
 	{
-		private const string InputTypeStr = "Input type";
+		private const string InputTypeStr = 
+#if !WB_LANGUAGE_CHINESE
+"Input type"
+#else
+"输入类型"
+#endif
+;
 
 		[SerializeField]
 		protected WirePortDataType m_selectedType = WirePortDataType.FLOAT;

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -7,11 +7,35 @@ using UnityEngine;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Power", "Math Operators", "Base to the Exp-th power of scalars and vectors", null, KeyCode.E )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Power"
+#else
+"电源"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Base to the Exp-th power of scalars and vectors"
+#else
+"基于标量和向量的幂次方"
+#endif
+, null, KeyCode.E )]
 	public sealed class PowerNode : ParentNode
 	{
-		public const string SafePowerStr = "abs( {0} )";//"max( {0} , 0.0001 )";
-		public const string SafePowerLabel = "Safe Power";
+		public const string SafePowerStr = "abs( {0} )";
+		public const string SafePowerLabel = 
+#if !WB_LANGUAGE_CHINESE
+"Safe Power"
+#else
+"安全电源"
+#endif
+;
 
 		[SerializeField]
 		private bool m_safePower = false;
@@ -19,8 +43,20 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT, false, "Base" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Exp" );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Base"
+#else
+"基地"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Exp"
+#else
+"费用"
+#endif
+);
 			m_inputPorts[ 1 ].FloatInternalData = 1;
 			AddOutputPort( WirePortDataType.FLOAT, Constants.EmptyPortValue );
 			m_useInternalPortData = true;

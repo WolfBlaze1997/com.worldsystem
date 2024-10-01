@@ -1,18 +1,36 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Object To Clip Pos", "Object Transform", "Transforms a point from object space to the camera’s clip space in homogeneous coordinates" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Object To Clip Pos"
+#else
+"要剪切位置的对象"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Object Transform"
+#else
+"对象变换"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Transforms a point from object space to the camera’s clip space in homogeneous coordinates"
+#else
+"在齐次坐标系中将点从对象空间变换到摄影机的剪辑空间"
+#endif
+)]
 	public sealed class UnityObjToClipPosHlpNode : HelperParentNode
 	{
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
 			m_funcType = "UnityObjectToClipPos";
-			//TODO: revisit this later
+			
 			m_funcLWFormatOverride = "TransformWorldToHClip(TransformObjectToWorld({0}))";
 			m_funcHDFormatOverride = "TransformWorldToHClip(TransformObjectToWorld({0}))";
 			m_inputPorts[ 0 ].ChangeType( WirePortDataType.FLOAT3, false );

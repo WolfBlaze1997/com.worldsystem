@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEditor;
@@ -8,7 +8,25 @@ using UnityEngine;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Grab Screen Position", "Camera And Screen", "Screen position correctly transformed to be used with Grab Screen Color" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Grab Screen Position"
+#else
+"抓取屏幕位置"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Camera And Screen"
+#else
+"摄像头和屏幕"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Screen position correctly transformed to be used with Grab Screen Color"
+#else
+"屏幕位置已正确转换，可与抓取屏幕颜色一起使用"
+#endif
+)]
 	public sealed class GrabScreenPosition : ParentNode
 	{
 		private readonly string[] m_outputTypeStr = { "Normalized", "Screen" };
@@ -62,7 +80,13 @@ namespace AmplifyShaderEditor
 			base.DrawProperties();
 
 			EditorGUI.BeginChangeCheck();
-			m_outputTypeInt = EditorGUILayoutPopup( "Type", m_outputTypeInt, m_outputTypeStr );
+			m_outputTypeInt = EditorGUILayoutPopup( 
+#if !WB_LANGUAGE_CHINESE
+"Type"
+#else
+"类型"
+#endif
+, m_outputTypeInt, m_outputTypeStr );
 			if( EditorGUI.EndChangeCheck() )
 			{
 				ConfigureHeader();

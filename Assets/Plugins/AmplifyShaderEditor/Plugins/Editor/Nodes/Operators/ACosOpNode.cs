@@ -1,12 +1,36 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "ACos", "Trigonometry Operators", "Arccosine of scalars and vectors" , tags: "arccosine" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"ACos"
+#else
+"ACos"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Trigonometry Operators"
+#else
+"三角运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Arccosine of scalars and vectors"
+#else
+"标量和向量的反正弦"
+#endif
+, tags: 
+#if !WB_LANGUAGE_CHINESE
+"arccosine"
+#else
+"反余弦"
+#endif
+)]
 	public sealed class ACosOpNode : SingleInputOp
 	{
 		protected override void CommonInit( int uniqueId )

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
@@ -8,7 +8,25 @@ using UnityEngine;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Switch by Face", "Miscellaneous", "Switch which automaticaly uses a Face variable to select which input to use" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Switch by Face"
+#else
+"按面部切换"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Switch which automaticaly uses a Face variable to select which input to use"
+#else
+"切换哪个自动使用Face变量来选择要使用的输入"
+#endif
+)]
 	public class SwitchByFaceNode : DynamicTypeNode
 	{
 		private const string SwitchOp = "((({0}>0)?({1}):({2})))";

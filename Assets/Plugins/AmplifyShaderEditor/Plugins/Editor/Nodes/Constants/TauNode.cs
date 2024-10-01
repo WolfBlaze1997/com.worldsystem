@@ -1,8 +1,8 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
-//
-// Custom Node TAU
-// Donated by The Four Headed Cat - @fourheadedcat
+
+
+
+
+
 
 using UnityEngine;
 using System;
@@ -10,7 +10,31 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Tau", "Constants And Properties", "Tau constant (2*PI): 6.28318530718", null, KeyCode.None, true, false, null,null, "The Four Headed Cat - @fourheadedcat" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Tau"
+#else
+"陶"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Constants And Properties"
+#else
+"常数和属性"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Tau constant (2*PI): 6.28318530718"
+#else
+"Tau常数（2*PI）：6.28318530718"
+#endif
+, null, KeyCode.None, true, false, null,null, 
+#if !WB_LANGUAGE_CHINESE
+"The Four Headed Cat - @fourheadedcat"
+#else
+"四头猫-@fourheaddcat"
+#endif
+)]
 	public sealed class TauNode : ParentNode
 	{
 		private readonly string Tau = ( 2.0 * Mathf.PI ).ToString();

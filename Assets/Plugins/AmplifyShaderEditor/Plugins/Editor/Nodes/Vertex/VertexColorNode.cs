@@ -1,10 +1,28 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 namespace AmplifyShaderEditor
 {
 	[System.Serializable]
-	[NodeAttributes( "Vertex Color", "Vertex Data", "Vertex color interpolated on fragment" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Vertex Color"
+#else
+"顶点颜色"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vertex Data"
+#else
+"顶点数据"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Vertex color interpolated on fragment"
+#else
+"在片段上插值顶点颜色"
+#endif
+)]
 	public sealed class VertexColorNode : VertexDataNode
 	{
 		protected override void CommonInit( int uniqueId )

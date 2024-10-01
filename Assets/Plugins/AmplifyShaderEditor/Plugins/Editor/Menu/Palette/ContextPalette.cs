@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using System.Collections.Generic;
@@ -41,8 +41,8 @@ namespace AmplifyShaderEditor
 
 		public override void Draw( Rect parentPosition, Vector2 mousePosition, int mouseButtonId, bool hasKeyboadFocus )
 		{
-			//if ( !_isActive )
-			//	return;
+			
+			
 
 			if ( Event.current.type == EventType.MouseDown && !IsInside( Event.current.mousePosition ) )
 			{
@@ -64,14 +64,14 @@ namespace AmplifyShaderEditor
 		}
 
 
-		// This override is removing focus from our window ... need to figure out a workaround before re-using it
-		//public override bool CheckButton( GUIContent content, GUIStyle style, int buttonId )
-		//{
-		//	if ( buttonId != m_validButtonId )
-		//		return false;
+		
+		
+		
+		
+		
 
-		//	return GUILayout.Button( content, style );
-		//}
+		
+		
 
 		void OnOptionSelected( System.Type type, string name, AmplifyShaderFunction function )
 		{

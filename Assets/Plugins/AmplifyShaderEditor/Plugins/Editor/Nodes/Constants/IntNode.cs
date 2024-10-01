@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -8,7 +8,19 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Int", "Constants And Properties", "Int property", null, KeyCode.Alpha0 )]
+	[NodeAttributes( "Int",            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Constants And Properties"
+#else
+"常数和属性"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Int property"
+#else
+"Int物业"
+#endif
+, null, KeyCode.Alpha0 )]
 	public sealed class IntNode : PropertyNode
 	{
 		[SerializeField]
@@ -97,7 +109,13 @@ namespace AmplifyShaderEditor
 		private void DrawSetAsUINT()
 		{
 			EditorGUI.BeginChangeCheck();
-			m_setAsUINT = EditorGUILayoutToggle( "Set as UINT", m_setAsUINT );
+			m_setAsUINT = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Set as UINT"
+#else
+"设置为UINT"
+#endif
+, m_setAsUINT );
 			if( EditorGUI.EndChangeCheck() )
 			{
 				WirePortDataType portType = m_setAsUINT ? WirePortDataType.UINT : WirePortDataType.INT;

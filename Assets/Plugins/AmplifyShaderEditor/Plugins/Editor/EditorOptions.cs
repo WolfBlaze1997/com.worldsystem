@@ -14,7 +14,7 @@ namespace AmplifyShaderEditor
 		public OptionsWindow( AmplifyShaderEditorWindow parentWindow )
 		{
 			m_parentWindow = parentWindow;
-			//Load ();
+			
 		}
 
 		public void Init()

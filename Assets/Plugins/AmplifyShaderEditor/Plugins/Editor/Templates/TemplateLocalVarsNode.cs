@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 using UnityEngine;
 using UnityEditor;
 using System;
@@ -8,7 +8,25 @@ using System.Collections.Generic;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Template Local Var Data" , "Surface Data" , "Select and use available local variable data from the template" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Template Local Var Data"
+#else
+"模板本地变量数据"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Surface Data"
+#else
+"地表数据"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Select and use available local variable data from the template"
+#else
+"从模板中选择并使用可用的局部变量数据"
+#endif
+)]
 	public sealed class TemplateLocalVarsNode : TemplateNodeParent
 	{
 		private List<TemplateLocalVarData> m_localVarsData = null;
@@ -62,7 +80,13 @@ namespace AmplifyShaderEditor
 					for( int i = 0 ; i < 4 ; i++ )
 						m_containerGraph.DeleteConnection( false , UniqueId , i , false , true );
 
-					m_headerColor = UIUtils.GetColorFromCategory( "Default" );
+					m_headerColor = UIUtils.GetColorFromCategory( 
+#if !WB_LANGUAGE_CHINESE
+"Default"
+#else
+"违约"
+#endif
+);
 					m_content.text = "None";
 					m_additionalContent.text = string.Empty;
 					m_outputPorts[ 0 ].ChangeProperties( "None" , WirePortDataType.OBJECT , false );
@@ -71,7 +95,19 @@ namespace AmplifyShaderEditor
 				}
 
 				bool areCompatible = TemplateHelperFunctions.CheckIfCompatibles( m_outputPorts[ 0 ].DataType , m_localVarsData[ m_currentDataIdx ].DataType );
-				string category = m_localVarsData[ m_currentDataIdx ].Category == MasterNodePortCategory.Fragment ? "Surface Data" : "Vertex Data";
+				string category = m_localVarsData[ m_currentDataIdx ].Category == MasterNodePortCategory.Fragment ?            
+#if !WB_LANGUAGE_CHINESE
+"Surface Data"
+#else
+"地表数据"
+#endif
+ : 
+#if !WB_LANGUAGE_CHINESE
+"Vertex Data"
+#else
+"顶点数据"
+#endif
+;
 				m_headerColor = UIUtils.GetColorFromCategory( category );
 				switch( m_localVarsData[ m_currentDataIdx ].DataType )
 				{

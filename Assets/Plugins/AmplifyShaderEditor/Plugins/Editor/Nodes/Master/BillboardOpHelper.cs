@@ -1,8 +1,8 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
 
-// Billboard based on:
-// https://gist.github.com/renaudbedard/7a90ec4a5a7359712202
+
+
+
+
 using System;
 using UnityEngine;
 using System.Collections.Generic;
@@ -18,31 +18,55 @@ namespace AmplifyShaderEditor
 	[Serializable]
 	public class BillboardOpHelper
 	{
-		public static readonly string BillboardTitleStr = " Billboard";
-		public static readonly string BillboardTypeStr = "Type";
-		public static readonly string BillboardRotIndStr = "Ignore Rotation";
-		public static readonly string BillboardAffectNormalTangentStr = "Affect Normal/Tangent";
+		public readonly static string BillboardTitleStr = 
+#if !WB_LANGUAGE_CHINESE
+" Billboard"
+#else
+"广告牌"
+#endif
+;
+		public readonly static string BillboardTypeStr = 
+#if !WB_LANGUAGE_CHINESE
+"Type"
+#else
+"类型"
+#endif
+;
+		public readonly static string BillboardRotIndStr = 
+#if !WB_LANGUAGE_CHINESE
+"Ignore Rotation"
+#else
+"忽略旋转"
+#endif
+;
+		public readonly static string BillboardAffectNormalTangentStr = 
+#if !WB_LANGUAGE_CHINESE
+"Affect Normal/Tangent"
+#else
+"影响法线/切线"
+#endif
+;
 
-		public static readonly string[] BillboardCylindricalInstructions = { "//Calculate new billboard vertex position and normal",
+		public readonly static string[] BillboardCylindricalInstructions = { "//Calculate new billboard vertex position and normal",
 																			"float3 upCamVec = float3( 0, 1, 0 )"};
 
-		public static readonly string[] BillboardSphericalInstructions = {   "//Calculate new billboard vertex position and normal",
+		public readonly static string[] BillboardSphericalInstructions = {   "//Calculate new billboard vertex position and normal",
 																			"float3 upCamVec = normalize ( UNITY_MATRIX_V._m10_m11_m12 )"};
 
 
-		public static readonly string[] BillboardCommonInstructions = { "float3 forwardCamVec = -normalize ( UNITY_MATRIX_V._m20_m21_m22 )",
+		public readonly static string[] BillboardCommonInstructions = { "float3 forwardCamVec = -normalize ( UNITY_MATRIX_V._m20_m21_m22 )",
 																		"float3 rightCamVec = normalize( UNITY_MATRIX_V._m00_m01_m02 )",
 																		"float4x4 rotationCamMatrix = float4x4( rightCamVec, 0, upCamVec, 0, forwardCamVec, 0, 0, 0, 0, 1 )",
 																		"{0} = normalize( mul( float4( {0} , 0 ), rotationCamMatrix )).xyz"};
 
-		public static readonly string[] BillboardRotDependent = {   "//This unfortunately must be made to take non-uniform scaling into account",
+		public readonly static string[] BillboardRotDependent = {   "//This unfortunately must be made to take non-uniform scaling into account",
 																	"//Transform to world coords, apply rotation and transform back to local",
 																	"{0} = mul( {1} , unity_ObjectToWorld ){2}",
 																	"{0} = mul( {1} , rotationCamMatrix ){2}",
 																	"{0} = mul( {1} , unity_WorldToObject ){2}"};
 
 
-		public static readonly string[] BillboardRotIndependent = { "{0}.x *= length( unity_ObjectToWorld._m00_m10_m20 )",
+		public readonly static string[] BillboardRotIndependent = { "{0}.x *= length( unity_ObjectToWorld._m00_m10_m20 )",
 																	"{0}.y *= length( unity_ObjectToWorld._m01_m11_m21 )",
 																	"{0}.z *= length( unity_ObjectToWorld._m02_m12_m22 )",
 																	"{0} = mul( {0}, rotationCamMatrix )",
@@ -52,22 +76,22 @@ namespace AmplifyShaderEditor
 
 
 
-		public static readonly string[] BillboardHDRotDependent = {   "//This unfortunately must be made to take non-uniform scaling into account",
+		public readonly static string[] BillboardHDRotDependent = {   "//This unfortunately must be made to take non-uniform scaling into account",
 																	"//Transform to world coords, apply rotation and transform back to local",
 																	"{0} = mul( {1} , GetObjectToWorldMatrix() ){2}",
 																	"{0} = mul( {1} , rotationCamMatrix ){2}",
 																	"{0} = mul( {1} , GetWorldToObjectMatrix() ){2}"};
 
 
-		public static readonly string[] BillboardHDRotIndependent = { "{0}.x *= length( GetObjectToWorldMatrix()._m00_m10_m20 )",
+		public readonly static string[] BillboardHDRotIndependent = { "{0}.x *= length( GetObjectToWorldMatrix()._m00_m10_m20 )",
 																	"{0}.y *= length( GetObjectToWorldMatrix()._m01_m11_m21 )",
 																	"{0}.z *= length( GetObjectToWorldMatrix()._m02_m12_m22 )",
 																	"{0} = mul( {0}, rotationCamMatrix )",
-																	//Comment this next one out in HDRP since it was moving the vertices to incorrect locations
-																	// Over HDRP the correct results are achievied without having to do this operation
-																	//This is because the vertex position variable is a float3 and an implicit cast is done to float4
-																	//with w set to 0, this makes the multiplication below only affects rotation and not translation
-																	//thus no adding the world translation is needed to counter the GetObjectToWorldMatrix() operation
+																	
+																	
+																	
+																	
+																	
 																	"{0}.xyz += GetObjectToWorldMatrix()._m03_m13_m23",
 																	"//Need to nullify rotation inserted by generated surface shader",
 																	"{0} = mul( GetWorldToObjectMatrix(), {0} )"};
@@ -117,14 +141,14 @@ namespace AmplifyShaderEditor
 				WirePortDataType vertexSize = dataCollector.TemplateDataCollectorInstance.GetVertexPositionDataType();
 				if( vertexSize != WirePortDataType.FLOAT4 )
 				{
-					// the {0}.xyz += GetObjectToWorldMatrix()._m03_m13_m23 must only be done over float4 vertices for the reason stated above for HDRP
-					// on all others can be commented out
+					
+					
 					value = "//" + value;
 				}
 			}
 		}
 
-		// This should be called after the Vertex Offset and Vertex Normal ports are analised
+		
 		public static void FillDataCollector( ref MasterNodeDataCollector dataCollector, BillboardType billboardType, bool rotationIndependent, string vertexPosValue, string vertexNormalValue,string vertexTangentValue, bool vertexIsFloat3, bool affectNormalTangent )
 		{
 			vertexTangentValue = vertexTangentValue + ".xyz";
@@ -211,14 +235,14 @@ namespace AmplifyShaderEditor
 
 		public string[] GetInternalMultilineInstructions()
 		{
-			// This method is only used on Surface ... no HD variation is needed
+			
 			return GetMultilineInstructions( m_billboardType, m_rotationIndependent, "v.vertex", "v.normal", "v.tangent",m_affectNormalTangent );
 		}
 
 		public static string[] GetMultilineInstructions( BillboardType billboardType, bool rotationIndependent, string vertexPosValue, string vertexNormalValue, string vertexTangentValue, bool affectNormalTangent )
 		{
 			vertexTangentValue += ".xyz";
-			// This method is only used on Surface ... no HD variation is needed
+			
 			List<string> body = new List<string>();
 			switch( billboardType )
 			{

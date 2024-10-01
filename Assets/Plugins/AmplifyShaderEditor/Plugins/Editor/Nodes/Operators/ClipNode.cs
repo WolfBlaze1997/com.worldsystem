@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Clip", "Miscellaneous", "Conditionally kill a pixel before output" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Clip"
+#else
+"削减"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Conditionally kill a pixel before output"
+#else
+"在输出前有条件地杀死一个像素"
+#endif
+)]
 	public sealed class ClipNode : ParentNode
 	{
 		private const string ClipOpFormat = "clip( {0} );";
@@ -15,8 +33,20 @@ namespace AmplifyShaderEditor
 		{
 			base.CommonInit( uniqueId );
 			AddInputPort( WirePortDataType.FLOAT, false, Constants.EmptyPortValue );
-			AddInputPort( WirePortDataType.FLOAT, false, "Alpha" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Threshold" );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Alpha"
+#else
+"阿尔法"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Threshold"
+#else
+"门槛"
+#endif
+);
 			AddOutputPort( WirePortDataType.FLOAT, Constants.EmptyPortValue );
 			m_useInternalPortData = true;
 

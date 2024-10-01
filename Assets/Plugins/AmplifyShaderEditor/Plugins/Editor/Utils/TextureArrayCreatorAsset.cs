@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.Collections.Generic;
@@ -49,7 +49,13 @@ public class TextureArrayCreatorAsset : ScriptableObject
 	private string m_folderPath = "Assets/";
 
 	[SerializeField]
-	private string m_fileName = "NewTextureArray";
+	private string m_fileName = 
+#if !WB_LANGUAGE_CHINESE
+"NewTextureArray"
+#else
+"NewTextureArray"
+#endif
+;
 
 	[SerializeField]
 	private bool m_filenameChanged = false;

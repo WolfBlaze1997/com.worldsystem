@@ -1,11 +1,29 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Encode Float RGBA", "Miscellaneous", "Encodes [0..1] range float into RGBA color, for storage in low precision render target" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Encode Float RGBA"
+#else
+"对浮点数RGBA进行编码"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Encodes [0..1] range float into RGBA color, for storage in low precision render target"
+#else
+"将[0..1]范围浮点数编码为RGBA颜色，以存储在低精度渲染目标中"
+#endif
+)]
 	public sealed class EncodeFloatRGBAHlpNode : HelperParentNode
 	{
 		protected override void CommonInit( int uniqueId )

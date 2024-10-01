@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEditor;
@@ -7,10 +7,28 @@ using UnityEngine;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Sin Time", "Time", "Unity sin time" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Sin Time"
+#else
+"罪恶时刻"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Time"
+#else
+"时间"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Unity sin time"
+#else
+"团结一心"
+#endif
+)]
 	public sealed class SinTimeNode : ConstVecShaderVariable
 	{
-		//double m_time;
+		
 		private readonly string[] SRPTime =
 		{
 			"sin( _TimeParameters.x * 0.125 )",

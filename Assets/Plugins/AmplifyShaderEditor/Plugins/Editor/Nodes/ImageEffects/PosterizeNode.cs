@@ -1,7 +1,7 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
 
-//https://www.shadertoy.com/view/ldX3D4
+
+
+
 using UnityEngine;
 using UnityEditor;
 using System;
@@ -9,7 +9,25 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Posterize", "Image Effects", "Converts a continuous gradation of tones to multiple regions of fewer tones" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Posterize"
+#else
+"背面"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Image Effects"
+#else
+"图像效果"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Converts a continuous gradation of tones to multiple regions of fewer tones"
+#else
+"将连续的色调渐变转换为色调较少的多个区域"
+#endif
+)]
 	public sealed class PosterizeNode : ParentNode
 	{
 		private const string PosterizationPowerStr = "Power";
@@ -20,7 +38,13 @@ namespace AmplifyShaderEditor
 		{
 			base.CommonInit( uniqueId );
 			AddInputPort( WirePortDataType.COLOR, false, "RGBA", -1, MasterNodePortCategory.Fragment, 1 );
-			AddInputPort( WirePortDataType.INT, false, "Power", -1, MasterNodePortCategory.Fragment, 0 );
+			AddInputPort( WirePortDataType.INT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Power"
+#else
+"电源"
+#endif
+, -1, MasterNodePortCategory.Fragment, 0 );
 			m_inputPorts[ 1 ].AutoDrawInternalData = true;
 			AddOutputPort( WirePortDataType.COLOR, Constants.EmptyPortValue );
 			m_textLabelWidth = 60;

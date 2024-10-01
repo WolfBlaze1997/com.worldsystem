@@ -1,8 +1,8 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
-//
-// Custom Node Compare (A == B) 
-// Donated by The Four Headed Cat - @fourheadedcat
+
+
+
+
+
 
 using UnityEngine;
 using System;
@@ -10,7 +10,37 @@ using System;
 namespace AmplifyShaderEditor
 {
     [Serializable]
-	[NodeAttributes( "Compare (A = B)", "Logical Operators", "Check if A is equal to B. If true return value of True else return value of False", null, KeyCode.None, true, true, "Compare", typeof( Compare ), "The Four Headed Cat - @fourheadedcat" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Compare (A = B)"
+#else
+"比较（A=B）"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Logical Operators"
+#else
+"逻辑运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Check if A is equal to B. If true return value of True else return value of False"
+#else
+"检查A是否等于B。如果为真，返回值为true；否则返回值为False"
+#endif
+, null, KeyCode.None, true, true, 
+#if !WB_LANGUAGE_CHINESE
+"Compare"
+#else
+"比较"
+#endif
+, typeof( Compare ), 
+#if !WB_LANGUAGE_CHINESE
+"The Four Headed Cat - @fourheadedcat"
+#else
+"四头猫-@fourheaddcat"
+#endif
+)]
     public sealed class TFHCCompareEqual : TFHCStub
 	{
 		protected override void CommonInit( int uniqueId )
@@ -18,8 +48,20 @@ namespace AmplifyShaderEditor
 			base.CommonInit( uniqueId );
 			m_inputPorts[ 0 ].Name = "A";
 			m_inputPorts[ 1 ].Name = "B";
-			AddInputPort( WirePortDataType.FLOAT, false, "True" );
-			AddInputPort( WirePortDataType.FLOAT, false, "False" );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"True"
+#else
+"没错"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"False"
+#else
+"错误的"
+#endif
+);
 			m_textLabelWidth = 100;
 			m_useInternalPortData = true;
 			m_previewShaderGUID = "6904de6cf8c08e7439672390b425ab50";

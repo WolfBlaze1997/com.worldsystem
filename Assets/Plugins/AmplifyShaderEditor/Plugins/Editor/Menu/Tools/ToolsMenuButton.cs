@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -74,7 +74,7 @@ namespace AmplifyShaderEditor
 
 			if ( m_style == null )
 			{
-				m_style = new GUIStyle( /*UIUtils.Button*/ GUIStyle.none );
+				m_style = new GUIStyle(  GUIStyle.none );
 				m_style.normal.background = m_buttonTexture[ 0 ];
 
 				m_style.hover.background = m_buttonTexture[ 0 ];
@@ -178,10 +178,10 @@ namespace AmplifyShaderEditor
 				GUI.Label( m_buttonArea, m_content, m_style );
 			}
 
-			//if ( GUI.Button( m_buttonArea, m_content, m_style ) && ToolButtonPressedEvt != null )
-			//{
-			//	ToolButtonPressedEvt( m_buttonType );
-			//}
+			
+			
+			
+			
 		}
 
 		public override void Draw( Vector2 pos )

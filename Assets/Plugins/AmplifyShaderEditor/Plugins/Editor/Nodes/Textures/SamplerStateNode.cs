@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.Collections.Generic;
@@ -9,17 +9,77 @@ using UnityEditor;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Sampler State", "Textures", "Creates a custom sampler state or returns the default one of a selected texture object" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Sampler State"
+#else
+"取样器状态"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Textures"
+#else
+"纹理"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Creates a custom sampler state or returns the default one of a selected texture object"
+#else
+"创建自定义采样器状态或返回选定纹理对象的默认状态"
+#endif
+)]
 	public class SamplerStateNode : ParentNode
 	{
 		private readonly string[] Dummy = { string.Empty };
-		private const string WrapModeStr = "Wrap Mode";
-		private const string UAxisStr = "U axis";
-		private const string VAxisStr = "V axis";
-		private const string FilterModeStr = "Filter Mode";
-		private const string AnisotropicFilteringStr = "Aniso. Filtering";
-		private const string MessageMacrosOFF = "Sampling Macros option is turned OFF, this node will not generate any sampler state";
-		private const string MessageTextureObject = "Only Texture Objects that are actually being sampled within the shader generate valid sampler states.\n\nPlease make sure the referenced Texture Object is being sampled otherwise the shader will fail to compile.";
+		private const string WrapModeStr = 
+#if !WB_LANGUAGE_CHINESE
+"Wrap Mode"
+#else
+"循环模式"
+#endif
+;
+		private const string UAxisStr = 
+#if !WB_LANGUAGE_CHINESE
+"U axis"
+#else
+"U轴"
+#endif
+;
+		private const string VAxisStr = 
+#if !WB_LANGUAGE_CHINESE
+"V axis"
+#else
+"V轴"
+#endif
+;
+		private const string FilterModeStr = 
+#if !WB_LANGUAGE_CHINESE
+"Filter Mode"
+#else
+"过滤模式"
+#endif
+;
+		private const string AnisotropicFilteringStr = 
+#if !WB_LANGUAGE_CHINESE
+"Aniso. Filtering"
+#else
+"阿尼索。过滤"
+#endif
+;
+		private const string MessageMacrosOFF = 
+#if !WB_LANGUAGE_CHINESE
+"Sampling Macros option is turned OFF, this node will not generate any sampler state"
+#else
+"采样宏选项已关闭，此节点将不会生成任何采样器状态"
+#endif
+;
+		private const string MessageTextureObject = 
+#if !WB_LANGUAGE_CHINESE
+"Only Texture Objects that are actually being sampled within the shader generate valid sampler states.\n\nPlease make sure the referenced Texture Object is being sampled otherwise the shader will fail to compile."
+#else
+"只有在着色器中实际采样的纹理对象才能生成有效的采样器状态。\n\n请确保正在对引用的纹理对象进行采样，否则着色器将无法编译。"
+#endif
+;
 		private const string MessageUnitSuppport = "Unity support for sampler states in versions below Unity 2018.1 is limited.\n\nNotably, only vertex/frag shaders support it and not surfaces shaders and sampler states can only be reused and not created if the version is below 2017.1";
 
 		[SerializeField]
@@ -73,7 +133,13 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.SAMPLER2D, false, "Tex" );
+			AddInputPort( WirePortDataType.SAMPLER2D, false, 
+#if !WB_LANGUAGE_CHINESE
+"Tex"
+#else
+"特克斯"
+#endif
+);
 			m_inputPorts[ 0 ].CreatePortRestrictions( WirePortDataType.SAMPLER1D, WirePortDataType.SAMPLER2D, WirePortDataType.SAMPLER3D, WirePortDataType.SAMPLERCUBE, WirePortDataType.SAMPLER2DARRAY );
 			AddOutputPort( WirePortDataType.SAMPLERSTATE, "Out" );
 			m_texPort = m_inputPorts[ 0 ];

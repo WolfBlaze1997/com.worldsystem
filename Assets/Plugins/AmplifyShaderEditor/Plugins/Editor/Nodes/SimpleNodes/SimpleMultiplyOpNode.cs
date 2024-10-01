@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using System;
@@ -7,7 +7,25 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Multiply", "Math Operators", "Multiplication of two or more values ( A * B * .. )\nIt also handles Matrices multiplication", null, KeyCode.M )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Multiply"
+#else
+"乘"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Multiplication of two or more values ( A * B * .. )\nIt also handles Matrices multiplication"
+#else
+"两个或多个值的乘法（A*B*..）\n它还处理矩阵乘法"
+#endif
+, null, KeyCode.M )]
 	public sealed class SimpleMultiplyOpNode : DynamicTypeNode
 	{
 		protected override void CommonInit( int uniqueId )
@@ -59,7 +77,7 @@ namespace AmplifyShaderEditor
 
 
 				WirePortDataType autoCast = WirePortDataType.OBJECT;
-				// Check matrix on first input
+				
 				if( m_inputPorts[ 0 ].DataType == WirePortDataType.FLOAT3x3 )
 				{
 					switch( m_inputPorts[ 1 ].DataType )
@@ -110,7 +128,7 @@ namespace AmplifyShaderEditor
 					}
 				}
 
-				// Check matrix on second input
+				
 				if( m_inputPorts[ 1 ].DataType == WirePortDataType.FLOAT3x3 )
 				{
 					switch( m_inputPorts[ 0 ].DataType )

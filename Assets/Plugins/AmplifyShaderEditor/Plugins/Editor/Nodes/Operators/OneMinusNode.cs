@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -7,7 +7,25 @@ using UnityEngine;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "One Minus", "Math Operators", "1 - input value", null, KeyCode.O )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"One Minus"
+#else
+"减1"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"1 - input value"
+#else
+"1-输入值"
+#endif
+, null, KeyCode.O )]
 	public sealed class OneMinusNode : ParentNode
 	{
 		protected override void CommonInit( int uniqueId )

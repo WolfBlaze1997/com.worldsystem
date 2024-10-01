@@ -1,9 +1,9 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
-//
-// Custom Node Swizzle 
-// Donated by Tobias Pott - @ Tobias Pott
-// www.tobiaspott.de
+
+
+
+
+
+
 
 using System;
 using UnityEditor;
@@ -12,11 +12,41 @@ using UnityEngine;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Swizzle", "Vector Operators", "Swizzle components of vector types", null, KeyCode.Z, true, false, null, null, "Tobias Pott - @TobiasPott" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Swizzle"
+#else
+"旋转"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vector Operators"
+#else
+"矢量运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Swizzle components of vector types"
+#else
+"矢量类型的旋转分量"
+#endif
+, null, KeyCode.Z, true, false, null, null, 
+#if !WB_LANGUAGE_CHINESE
+"Tobias Pott - @TobiasPott"
+#else
+"托拜厄斯·波特-@TobiasPott"
+#endif
+)]
 	public sealed class SwizzleNode : SingleInputOp
 	{
 
-		private const string OutputTypeStr = "Output type";
+		private const string OutputTypeStr = 
+#if !WB_LANGUAGE_CHINESE
+"Output type"
+#else
+"输出类型"
+#endif
+;
 
 		[SerializeField]
 		private WirePortDataType m_selectedOutputType = WirePortDataType.FLOAT4;
@@ -209,7 +239,7 @@ namespace AmplifyShaderEditor
 			}
 			EditorGUILayout.EndVertical();
 
-			// Draw base properties
+			
 			base.DrawProperties();
 
 			EditorGUILayout.BeginVertical();
@@ -312,12 +342,12 @@ namespace AmplifyShaderEditor
 				break;
 			}
 
-			//for ( int i = 0; i < count; i++ )
-			//{
-				//m_selectedOutputSwizzleTypes[ i ] = Mathf.Clamp( m_selectedOutputSwizzleTypes[ i ], 0, inputMaxChannelId );
-			//}
+			
+			
+				
+			
 
-			// Update Title
+			
 			string additionalText = string.Empty;
 			for ( int i = 0; i < count; i++ )
 			{

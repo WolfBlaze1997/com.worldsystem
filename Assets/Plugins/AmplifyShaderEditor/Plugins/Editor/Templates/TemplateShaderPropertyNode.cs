@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.Collections.Generic;
@@ -16,14 +16,56 @@ namespace AmplifyShaderEditor
 	}
 
 	[Serializable]
-	[NodeAttributes( "Template Parameter" , "Constants And Properties" , "Select and use one of the pre-existing properties given by the template" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Template Parameter"
+#else
+"模板参数"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Constants And Properties"
+#else
+"常数和属性"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Select and use one of the pre-existing properties given by the template"
+#else
+"选择并使用模板提供的预先存在的属性之一"
+#endif
+)]
 	public sealed class TemplateShaderPropertyNode : TemplateNodeParent
 	{
-		private const string CurrentScopeStr = "Scope";
+		private const string CurrentScopeStr = 
+#if !WB_LANGUAGE_CHINESE
+"Scope"
+#else
+"范围"
+#endif
+;
 		private const string WarningStr = "Preview doesn't work with global variables";
-		private const string PropertyLabelStr = "Parameter";
-		private const string TypeLabelStr = "Type: ";
-		private const string PropertyNameStr = "Property Name: ";
+		private const string PropertyLabelStr = 
+#if !WB_LANGUAGE_CHINESE
+"Parameter"
+#else
+"参数"
+#endif
+;
+		private const string TypeLabelStr = 
+#if !WB_LANGUAGE_CHINESE
+"Type: "
+#else
+"类型："
+#endif
+;
+		private const string PropertyNameStr = 
+#if !WB_LANGUAGE_CHINESE
+"Property Name: "
+#else
+"物业名称："
+#endif
+;
 
 		private int IntPropertyId;
 		private int FloatPropertyId;
@@ -55,7 +97,7 @@ namespace AmplifyShaderEditor
 
 		private UpperLeftWidgetHelper m_upperLeftWidgetHelper = new UpperLeftWidgetHelper();
 
-		//Multi-Pass only properties
+		
 		[SerializeField]
 		private ShaderPropertyScope m_currentScope = ShaderPropertyScope.Shader;
 
@@ -153,7 +195,13 @@ namespace AmplifyShaderEditor
 			}
 
 			EditorGUI.BeginChangeCheck();
-			m_advancedView = EditorGUILayoutToggle( "Advanced View" , m_advancedView );
+			m_advancedView = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Advanced View"
+#else
+"高级视图"
+#endif
+, m_advancedView );
 			if( EditorGUI.EndChangeCheck() )
 			{
 				if( m_advancedView )
@@ -465,7 +513,13 @@ namespace AmplifyShaderEditor
 					for( int i = 0 ; i < 4 ; i++ )
 						m_containerGraph.DeleteConnection( false , UniqueId , i , false , true );
 
-					m_headerColor = UIUtils.GetColorFromCategory( "Default" );
+					m_headerColor = UIUtils.GetColorFromCategory( 
+#if !WB_LANGUAGE_CHINESE
+"Default"
+#else
+"违约"
+#endif
+);
 					m_content.text = "None";
 					m_additionalContent.text = string.Empty;
 					m_previewMaterialPassId = 1;
@@ -487,27 +541,57 @@ namespace AmplifyShaderEditor
 					case WirePortDataType.SAMPLERCUBE:
 					case WirePortDataType.SAMPLER2DARRAY:
 					m_outputPorts[ 0 ].ChangeProperties( "Tex" , m_shaderProperties[ m_currentPropertyIdx ].PropertyDataType , false );
-					m_headerColor = UIUtils.GetColorFromCategory( "Textures" );
+					m_headerColor = UIUtils.GetColorFromCategory( 
+#if !WB_LANGUAGE_CHINESE
+"Textures"
+#else
+"纹理"
+#endif
+);
 					break;
 					case WirePortDataType.INT:
 					case WirePortDataType.FLOAT:
 					m_outputPorts[ 0 ].ChangeProperties( Constants.EmptyPortValue , m_shaderProperties[ m_currentPropertyIdx ].PropertyDataType , false );
-					m_headerColor = UIUtils.GetColorFromCategory( "Constants And Properties" );
+					m_headerColor = UIUtils.GetColorFromCategory(            
+#if !WB_LANGUAGE_CHINESE
+"Constants And Properties"
+#else
+"常数和属性"
+#endif
+ );
 					break;
 					case WirePortDataType.FLOAT4:
 					m_outputPorts[ 0 ].ChangeProperties( "XYZW" , m_shaderProperties[ m_currentPropertyIdx ].PropertyDataType , false );
-					m_headerColor = UIUtils.GetColorFromCategory( "Constants And Properties" );
+					m_headerColor = UIUtils.GetColorFromCategory(            
+#if !WB_LANGUAGE_CHINESE
+"Constants And Properties"
+#else
+"常数和属性"
+#endif
+ );
 					break;
 					case WirePortDataType.COLOR:
 					m_outputPorts[ 0 ].ChangeProperties( "RGBA" , m_shaderProperties[ m_currentPropertyIdx ].PropertyDataType , false );
-					m_headerColor = UIUtils.GetColorFromCategory( "Constants And Properties" );
+					m_headerColor = UIUtils.GetColorFromCategory(            
+#if !WB_LANGUAGE_CHINESE
+"Constants And Properties"
+#else
+"常数和属性"
+#endif
+ );
 					break;
 					default:
 					case WirePortDataType.OBJECT:
 					case WirePortDataType.FLOAT3x3:
 					case WirePortDataType.FLOAT4x4:
 					m_outputPorts[ 0 ].ChangeProperties( "Out" , m_shaderProperties[ m_currentPropertyIdx ].PropertyDataType , false );
-					m_headerColor = UIUtils.GetColorFromCategory( "Constants And Properties" );
+					m_headerColor = UIUtils.GetColorFromCategory(            
+#if !WB_LANGUAGE_CHINESE
+"Constants And Properties"
+#else
+"常数和属性"
+#endif
+ );
 					break;
 				}
 
@@ -566,7 +650,7 @@ namespace AmplifyShaderEditor
 
 		string GenerateTitle( params float[] values )
 		{
-			//string finalResult = "( ";
+			
 			string finalResult = string.Empty;
 			if( values.Length == 1 )
 			{
@@ -581,7 +665,7 @@ namespace AmplifyShaderEditor
 						finalResult += ",";
 				}
 			}
-			//finalResult += " )";
+			
 			return finalResult;
 		}
 
@@ -672,7 +756,7 @@ namespace AmplifyShaderEditor
 				}
 				FetchShaderProperties();
 				FetchPropertyId();
-				//m_containerGraph.DeleteConnection( false, UniqueId, 0, false, true );
+				
 			}
 		}
 

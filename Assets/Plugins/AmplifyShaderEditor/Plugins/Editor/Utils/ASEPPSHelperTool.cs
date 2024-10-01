@@ -1,10 +1,10 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 using System;
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
-//using UnityEngine.Rendering.PostProcessing;
+
 
 
 namespace AmplifyShaderEditor
@@ -61,12 +61,12 @@ namespace AmplifyShaderEditor
 		private const string PPSPropertiesDecl = "/*PPSPropertiesDeclaration*/";
 		private const string PPSPropertySet = "/*PPSPropertySet*/";
 
-		public static readonly string PPSPropertySetFormat = "\t\tsheet.properties.{0}( \"{1}\", settings.{1} );\n";
-		public static readonly string PPSPropertySetNullPointerCheckFormat = "\t\tif(settings.{1}.value != null) sheet.properties.{0}( \"{1}\", settings.{1} );\n";
-		public static readonly string PPSPropertyDecFormat =
+		public readonly static string PPSPropertySetFormat = "\t\tsheet.properties.{0}( \"{1}\", settings.{1} );\n";
+		public readonly static string PPSPropertySetNullPointerCheckFormat = "\t\tif(settings.{1}.value != null) sheet.properties.{0}( \"{1}\", settings.{1} );\n";
+		public readonly static string PPSPropertyDecFormat =
 		"\t[{0}Tooltip( \"{1}\" )]\n" +
 		"\tpublic {2} {3} = new {2} {{ {4} }};\n";
-		public static readonly Dictionary<WirePortDataType, string> WireToPPSType = new Dictionary<WirePortDataType, string>()
+		public readonly static Dictionary<WirePortDataType, string> WireToPPSType = new Dictionary<WirePortDataType, string>()
 		{
 			{ WirePortDataType.FLOAT,"FloatParameter"},
 			{ WirePortDataType.FLOAT2,"Vector4Parameter"},
@@ -80,7 +80,7 @@ namespace AmplifyShaderEditor
 			{ WirePortDataType.SAMPLER2DARRAY,"TextureParameter"}
 		};
 
-		public static readonly Dictionary<WirePortDataType, string> WireToPPSValueSet = new Dictionary<WirePortDataType, string>()
+		public readonly static Dictionary<WirePortDataType, string> WireToPPSValueSet = new Dictionary<WirePortDataType, string>()
 		{
 			{ WirePortDataType.FLOAT,"SetFloat"},
 			{ WirePortDataType.FLOAT2,"SetVector"},
@@ -94,7 +94,7 @@ namespace AmplifyShaderEditor
 			{ WirePortDataType.SAMPLER2DARRAY,"SetTexture"}
 		};
 
-		public static readonly Dictionary<UnityEditor.ShaderUtil.ShaderPropertyType, string> ShaderPropertyToPPSType = new Dictionary<UnityEditor.ShaderUtil.ShaderPropertyType, string>()
+		public readonly static Dictionary<UnityEditor.ShaderUtil.ShaderPropertyType, string> ShaderPropertyToPPSType = new Dictionary<UnityEditor.ShaderUtil.ShaderPropertyType, string>()
 		{
 			{ UnityEditor.ShaderUtil.ShaderPropertyType.Float,"FloatParameter"},
 			{ UnityEditor.ShaderUtil.ShaderPropertyType.Range,"FloatParameter"},
@@ -104,7 +104,7 @@ namespace AmplifyShaderEditor
 		};
 
 
-		public static readonly Dictionary<UnityEditor.ShaderUtil.ShaderPropertyType, string> ShaderPropertyToPPSSet = new Dictionary<UnityEditor.ShaderUtil.ShaderPropertyType, string>()
+		public readonly static Dictionary<UnityEditor.ShaderUtil.ShaderPropertyType, string> ShaderPropertyToPPSSet = new Dictionary<UnityEditor.ShaderUtil.ShaderPropertyType, string>()
 		{
 			{ UnityEditor.ShaderUtil.ShaderPropertyType.Float,"SetFloat"},
 			{ UnityEditor.ShaderUtil.ShaderPropertyType.Range,"SetFloat"},
@@ -128,7 +128,13 @@ namespace AmplifyShaderEditor
 		private string m_rendererClassName = "PPSRenderer";
 
 		[SerializeField]
-		private string m_settingsClassName = "PPSSettings";
+		private string m_settingsClassName = 
+#if !WB_LANGUAGE_CHINESE
+"PPSSettings"
+#else
+"PPS设置"
+#endif
+;
 
 		[SerializeField]
 		private string m_folderPath = "Assets/";
@@ -171,7 +177,7 @@ namespace AmplifyShaderEditor
 			int propertyCount = UnityEditor.ShaderUtil.GetPropertyCount( m_currentShader );
 			for( int i = 0; i < propertyCount; i++ )
 			{
-				//UnityEditor.ShaderUtil.ShaderPropertyType type = UnityEditor.ShaderUtil.GetPropertyType( m_currentShader, i );
+				
 				string name = UnityEditor.ShaderUtil.GetPropertyName( m_currentShader, i );
 				string description = UnityEditor.ShaderUtil.GetPropertyDescription( m_currentShader, i );
 
@@ -191,14 +197,26 @@ namespace AmplifyShaderEditor
 
 			EditorGUILayout.BeginVertical( m_contentStyle );
 			EditorGUI.BeginChangeCheck();
-			m_currentShader = EditorGUILayout.ObjectField( "Shader", m_currentShader, typeof( Shader ), false ) as Shader;
+			m_currentShader = EditorGUILayout.ObjectField( 
+#if !WB_LANGUAGE_CHINESE
+"Shader"
+#else
+"着色器"
+#endif
+, m_currentShader, typeof( Shader ), false ) as Shader;
 			if( EditorGUI.EndChangeCheck() )
 			{
 				GetInitialInfo( m_currentShader );
 			}
 
 			EditorGUILayout.Separator();
-			EditorGUILayout.LabelField( "Path and Filename" );
+			EditorGUILayout.LabelField( 
+#if !WB_LANGUAGE_CHINESE
+"Path and Filename"
+#else
+"路径和文件名"
+#endif
+);
 			EditorGUILayout.BeginHorizontal();
 			m_pathButtonContent.text = m_folderPath;
 			Vector2 buttonSize = m_pathButtonStyle.CalcSize( m_pathButtonContent );
@@ -216,15 +234,33 @@ namespace AmplifyShaderEditor
 
 			EditorGUILayout.LabelField( ".cs", GUILayout.MaxWidth( 40 ) );
 			EditorGUILayout.EndHorizontal();
-			EditorGUILayout.HelpBox( "The path for the generated script should be outside of Amplify Shader Editor folder structure due to use of Assembly Definition files which will conflict and prevent to compile correctly.", MessageType.Warning );
+			EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"The path for the generated script should be outside of Amplify Shader Editor folder structure due to use of Assembly Definition files which will conflict and prevent to compile correctly."
+#else
+"由于使用了程序集定义文件，生成的脚本的路径应位于Amplify Shader Editor文件夹结构之外，这将导致冲突并妨碍正确编译。"
+#endif
+, MessageType.Warning );
 
 			EditorGUILayout.Separator();
 
-			m_menuEntry = EditorGUILayout.TextField( "Name", m_menuEntry );
+			m_menuEntry = EditorGUILayout.TextField( 
+#if !WB_LANGUAGE_CHINESE
+"Name"
+#else
+"姓名"
+#endif
+, m_menuEntry );
 
 			EditorGUILayout.Separator();
 
-			m_allowInSceneView = EditorGUILayout.Toggle( "Allow In Scene View", m_allowInSceneView );
+			m_allowInSceneView = EditorGUILayout.Toggle( 
+#if !WB_LANGUAGE_CHINESE
+"Allow In Scene View"
+#else
+"允许场景内视图"
+#endif
+, m_allowInSceneView );
 
 			EditorGUILayout.Separator();
 
@@ -232,7 +268,13 @@ namespace AmplifyShaderEditor
 
 			EditorGUILayout.Separator();
 
-			m_tooltipsFoldout = EditorGUILayout.Foldout( m_tooltipsFoldout, "Tooltips" );
+			m_tooltipsFoldout = EditorGUILayout.Foldout( m_tooltipsFoldout, 
+#if !WB_LANGUAGE_CHINESE
+"Tooltips"
+#else
+"工具提示"
+#endif
+);
 			if( m_tooltipsFoldout )
 			{
 				EditorGUI.indentLevel++;
@@ -245,7 +287,13 @@ namespace AmplifyShaderEditor
 
 			EditorGUILayout.Separator();
 
-			if( GUILayout.Button( "Build" ) )
+			if( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Build"
+#else
+"构建"
+#endif
+) )
 			{
 				System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
 				string propertiesDecl = string.Empty;
@@ -314,13 +362,13 @@ namespace AmplifyShaderEditor
 				}
 
 				int propertyCount = UnityEditor.ShaderUtil.GetPropertyCount( m_currentShader );
-				//string allProperties = string.Empty;
+				
 				int validIds = 0;
 				for( int i = 0; i < propertyCount; i++ )
 				{
 					UnityEditor.ShaderUtil.ShaderPropertyType type = UnityEditor.ShaderUtil.GetPropertyType( m_currentShader, i );
 					string name = UnityEditor.ShaderUtil.GetPropertyName( m_currentShader, i );
-					//string description = UnityEditor.ShaderUtil.GetPropertyDescription( m_currentShader, i );
+					
 					if( m_excludedProperties.ContainsKey( name ))
 						continue;
 
@@ -439,7 +487,7 @@ namespace AmplifyShaderEditor
 
 			m_pathButtonStyle = null;
 
-			//GetInitialInfo();
+			
 		}
 
 		private void OnDestroy()

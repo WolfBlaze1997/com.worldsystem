@@ -16,7 +16,13 @@ namespace AmplifyShaderEditor
 	[Serializable]
 	public class TemplatePassSelectorHelper
 	{
-		private const string Label = " Available Passes";
+		private const string Label = 
+#if !WB_LANGUAGE_CHINESE
+" Available Passes"
+#else
+"可用通行证"
+#endif
+;
 
 		[SerializeField]
 		private bool m_foldout;

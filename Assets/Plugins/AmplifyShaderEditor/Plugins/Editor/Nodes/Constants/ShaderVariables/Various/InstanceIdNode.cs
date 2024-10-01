@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Instance ID", "Vertex Data", "Indicates the per-instance identifier" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Instance ID"
+#else
+"实例ID"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vertex Data"
+#else
+"顶点数据"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Indicates the per-instance identifier"
+#else
+"指示每个实例的标识符"
+#endif
+)]
 	public class InstanceIdNode : ParentNode
 	{
 		private readonly string[] InstancingVariableAttrib =
@@ -39,7 +57,13 @@ namespace AmplifyShaderEditor
 
 			if( !m_containerGraph.IsStandardSurface )
 			{
-				m_useSVSemantic = EditorGUILayoutToggle( "Use SV semantic" , m_useSVSemantic );
+				m_useSVSemantic = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Use SV semantic"
+#else
+"使用SV语义"
+#endif
+, m_useSVSemantic );
 			}
 			
 		}

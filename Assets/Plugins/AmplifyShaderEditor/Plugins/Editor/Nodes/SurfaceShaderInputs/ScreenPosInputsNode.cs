@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -8,7 +8,25 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Screen Position", "Camera And Screen", "Screen space position, you can either get the <b>Screen</b> position as is or <b>Normalize</b> it to have it at the [0,1] range" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Screen Position"
+#else
+"屏幕位置"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Camera And Screen"
+#else
+"摄像头和屏幕"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Screen space position, you can either get the <b>Screen</b> position as is or <b>Normalize</b> it to have it at the [0,1] range"
+#else
+"屏幕空间位置，您可以按原样获取<b>屏幕</b>位置，也可以将<b>归一化</b>使其位于[0,1]范围内"
+#endif
+)]
 	public sealed class ScreenPosInputsNode : SurfaceShaderINParentNode
 	{
 		private const string ProjectStr = "Project";
@@ -56,10 +74,16 @@ namespace AmplifyShaderEditor
 
 		public override void DrawProperties()
 		{
-			//base.DrawProperties();
+			
 
 			EditorGUI.BeginChangeCheck();
-			m_outputTypeInt = EditorGUILayoutPopup( "Type", m_outputTypeInt, m_outputTypeStr );
+			m_outputTypeInt = EditorGUILayoutPopup( 
+#if !WB_LANGUAGE_CHINESE
+"Type"
+#else
+"类型"
+#endif
+, m_outputTypeInt, m_outputTypeStr );
 			if( EditorGUI.EndChangeCheck() )
 			{
 				ConfigureHeader();

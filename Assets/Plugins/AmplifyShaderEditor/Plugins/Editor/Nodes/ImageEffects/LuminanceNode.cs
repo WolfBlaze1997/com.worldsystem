@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Luminance", "Image Effects", "Calculates Luminance value from input")]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Luminance"
+#else
+"亮度"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Image Effects"
+#else
+"图像效果"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Calculates Luminance value from input"
+#else
+"根据输入计算亮度值"
+#endif
+)]
 	public sealed class LuminanceNode : ParentNode
 	{
 		protected override void CommonInit( int uniqueId )

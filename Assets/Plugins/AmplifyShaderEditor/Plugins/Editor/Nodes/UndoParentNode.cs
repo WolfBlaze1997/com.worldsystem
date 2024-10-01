@@ -77,7 +77,7 @@ namespace AmplifyShaderEditor
 			if( !newValue.ToString().Equals( selected.ToString() ) )
 			{
 				UndoRecordObject( string.Concat( "Changing value ", label, " on node ", ( ( m_nodeAttribs != null ) ? m_nodeAttribs.Name : GetType().ToString() ) ) );
-				//UndoRecordObject(string.Format( MessageFormat, label, ( ( m_nodeAttribs != null ) ? m_nodeAttribs.Name : GetType().ToString() ) ) );
+				
 			}
 			return newValue;
 		}
@@ -88,7 +88,7 @@ namespace AmplifyShaderEditor
 			if( !newValue.ToString().Equals( selected.ToString() ) )
 			{
 				UndoRecordObject( string.Concat( "Changing value ", label, " on node ", ( ( m_nodeAttribs != null ) ? m_nodeAttribs.Name : GetType().ToString() ) ) );
-				//UndoRecordObject(string.Format( MessageFormat, label, ( ( m_nodeAttribs != null ) ? m_nodeAttribs.Name : GetType().ToString() ) ) );
+				
 			}
 			return newValue;
 		}
@@ -99,7 +99,7 @@ namespace AmplifyShaderEditor
 			if( !newValue.ToString().Equals( selected.ToString() ) )
 			{
 				UndoRecordObject( string.Concat( "Changing value EditorGUILayoutEnumPopup on node ", ( ( m_nodeAttribs != null ) ? m_nodeAttribs.Name : GetType().ToString() ) ) );
-				//UndoRecordObject(string.Format( MessageFormat, "EditorGUILayoutEnumPopup", ( ( m_nodeAttribs != null ) ? m_nodeAttribs.Name : GetType().ToString() ) ) );
+				
 			}
 			return newValue;
 		}
@@ -563,7 +563,7 @@ namespace AmplifyShaderEditor
 			if( !newValue.ToString().Equals( selected.ToString() ) )
 			{
 				UndoRecordObject( string.Concat( "Changing value EditorGUIEnumPopup on node ", ( ( m_nodeAttribs != null ) ? m_nodeAttribs.Name : GetType().ToString() ) ) );
-				//UndoRecordObject(string.Format( MessageFormat, "EditorGUIEnumPopup", ( ( m_nodeAttribs != null ) ? m_nodeAttribs.Name : GetType().ToString() ) ) );
+				
 			}
 			return newValue;
 		}
@@ -574,7 +574,7 @@ namespace AmplifyShaderEditor
 			if( !newValue.ToString().Equals( selected.ToString() ) )
 			{
 				UndoRecordObject( string.Concat( "Changing value EditorGUIEnumPopup on node ", ( ( m_nodeAttribs != null ) ? m_nodeAttribs.Name : GetType().ToString() ) ) );
-				//UndoRecordObject(string.Format( MessageFormat, "EditorGUIEnumPopup", ( ( m_nodeAttribs != null ) ? m_nodeAttribs.Name : GetType().ToString() ) ) );
+				
 			}
 			return newValue;
 		}
@@ -689,9 +689,9 @@ namespace AmplifyShaderEditor
 			return value;
 		}
 
-		/// <summary>
-		/// It's the graph the node exists in, this is set after node creation and it's not available on CommonInit
-		/// </summary>
+		
+		
+		
 		public ParentGraph ContainerGraph
 		{
 			get { return m_containerGraph; }

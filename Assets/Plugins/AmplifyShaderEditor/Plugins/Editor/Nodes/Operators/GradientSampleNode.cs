@@ -7,7 +7,25 @@ using System.Collections.Generic;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Gradient Sample", "Miscellaneous", "Samples a gradient" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Gradient Sample"
+#else
+"梯度样本"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Samples a gradient"
+#else
+"对梯度进行采样"
+#endif
+)]
 	public sealed class GradientSampleNode : ParentNode
 	{
 		private string m_functionHeader = "SampleGradient( {0}, {1} )";
@@ -32,7 +50,13 @@ namespace AmplifyShaderEditor
 		{
 			base.CommonInit( uniqueId );
 			AddInputPort( WirePortDataType.OBJECT, true, Constants.EmptyPortValue );
-			AddInputPort( WirePortDataType.FLOAT, false, "Time" );
+			AddInputPort( WirePortDataType.FLOAT, false,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Time"
+#else
+"时间"
+#endif
+/*<C!>*/ );
 			AddOutputColorPorts( "RGBA", true );
 			m_gradPort = m_inputPorts[ 0 ];
 			m_useInternalPortData = true;
@@ -120,23 +144,23 @@ namespace AmplifyShaderEditor
 		}
 
 
-		//public override void OnNodeLogicUpdate( DrawInfo drawInfo )
-		//{
-		//	base.OnNodeLogicUpdate( drawInfo );
+		
+		
+		
 
-		//	if( m_gradPort.IsConnected )
-		//	{
-		//		if( m_gradientNode == null )
-		//		{
-		//			m_gradientNode = RecursiveBackCheck( m_gradPort.GetOutputNode( 0 ) );
-		//			PreviewIsDirty = true;
-		//		}
-		//	}
-		//	else
-		//	{
-		//		m_gradientNode = null;
-		//	}
-		//}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 		GradientNode RecursiveBackCheck( ParentNode node )
 		{

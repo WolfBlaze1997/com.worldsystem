@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace AmplifyShaderEditor
 {
-	// PORT CONTROLLERS
+	
 	[Serializable]
 	public class TemplateOptionPortItem
 	{
@@ -66,7 +66,7 @@ namespace AmplifyShaderEditor
 
 								nodes[ nodeIdx ].OptionsDefineContainer.AddDirective( defineValue ,false, isPragma );
 							}
-							//dataCollector.AddToDefines( -1, m_options.ActionsPerOption[ optionId ][ i ].ActionData );
+							
 						}
 						break;
 						case AseOptionsActionType.SetUndefine:
@@ -77,7 +77,7 @@ namespace AmplifyShaderEditor
 							{
 								nodes[ nodeIdx ].OptionsDefineContainer.AddDirective( "#undef " + m_options.ActionsPerOption[ optionId ][ i ].ActionData, false );
 							}
-							//dataCollector.AddToDefines( -1, m_options.ActionsPerOption[ optionId ][ i ].ActionData, false );
+							
 						}
 						break;
 						case AseOptionsActionType.SetShaderProperty:
@@ -98,7 +98,7 @@ namespace AmplifyShaderEditor
 		public void SubShaderFillDataCollector( TemplateMultiPassMasterNode owner, ref MasterNodeDataCollector dataCollector )
 		{
 
-			//TemplateMultiPassMasterNode targetNode = string.IsNullOrEmpty(m_options.Id) ? owner:owner.ContainerGraph.GetMasterNodeOfPass( m_options.Id , owner.LODIndex );
+			
 			TemplateMultiPassMasterNode targetNode = string.IsNullOrEmpty( m_options.Id ) ?
 														owner.ContainerGraph.GetMainMasterNodeOfLOD( owner.LODIndex ) :
 														owner.ContainerGraph.GetMasterNodeOfPass( m_options.Id , owner.LODIndex );

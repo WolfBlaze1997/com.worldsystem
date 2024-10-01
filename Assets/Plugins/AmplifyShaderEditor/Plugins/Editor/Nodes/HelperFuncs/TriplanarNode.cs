@@ -6,7 +6,25 @@ using System.Collections.Generic;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Triplanar Sample", "Textures", "Triplanar Mapping" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Triplanar Sample"
+#else
+"三平面样品"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Textures"
+#else
+"纹理"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Triplanar Mapping"
+#else
+"三平面测绘"
+#endif
+)]
 	public sealed class TriplanarNode : ParentNode
 	{
 		[SerializeField]
@@ -14,7 +32,13 @@ namespace AmplifyShaderEditor
 
 		private bool m_editPropertyNameMode = false;
 		[SerializeField]
-		private string m_propertyInspectorName = "Triplanar Sampler";
+		private string m_propertyInspectorName = 
+#if !WB_LANGUAGE_CHINESE
+"Triplanar Sampler"
+#else
+"三平面取样器"
+#endif
+;
 
 		private enum TriplanarType { Spherical, Cylindrical }
 
@@ -82,7 +106,7 @@ namespace AmplifyShaderEditor
 
 		private readonly List<string> m_functionSamplingBodyProj = new List<string>() {
 			"float3 projNormal = ( pow( abs( worldNormal ), falloff ) );",
-			"projNormal /= ( projNormal.x + projNormal.y + projNormal.z ) + 0.00001;",// 0.00001 is to prevent division by 0
+			"projNormal /= ( projNormal.x + projNormal.y + projNormal.z ) + 0.00001;",
 			"float3 nsign = sign( worldNormal );"
 		};
 
@@ -173,19 +197,79 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.SAMPLER2D, false, "Top", -1, MasterNodePortCategory.Fragment, 0 );
+			AddInputPort( WirePortDataType.SAMPLER2D, false, 
+#if !WB_LANGUAGE_CHINESE
+"Top"
+#else
+"顶部"
+#endif
+, -1, MasterNodePortCategory.Fragment, 0 );
 			m_inputPorts[ 0 ].CreatePortRestrictions( WirePortDataType.SAMPLER2D, WirePortDataType.SAMPLER2DARRAY );
-			AddInputPort( WirePortDataType.FLOAT, false, "Top Index", -1, MasterNodePortCategory.Fragment, 5 );
-			AddInputPort( WirePortDataType.SAMPLER2D, false, "Middle", -1, MasterNodePortCategory.Fragment, 1 );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Top Index"
+#else
+"顶级指数"
+#endif
+, -1, MasterNodePortCategory.Fragment, 5 );
+			AddInputPort( WirePortDataType.SAMPLER2D, false, 
+#if !WB_LANGUAGE_CHINESE
+"Middle"
+#else
+"中间"
+#endif
+, -1, MasterNodePortCategory.Fragment, 1 );
 			m_inputPorts[ 2 ].CreatePortRestrictions( WirePortDataType.SAMPLER2D, WirePortDataType.SAMPLER2DARRAY );
-			AddInputPort( WirePortDataType.FLOAT, false, "Mid Index", -1, MasterNodePortCategory.Fragment, 6 );
-			AddInputPort( WirePortDataType.SAMPLER2D, false, "Bottom", -1, MasterNodePortCategory.Fragment, 2 );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Mid Index"
+#else
+"中等指数"
+#endif
+, -1, MasterNodePortCategory.Fragment, 6 );
+			AddInputPort( WirePortDataType.SAMPLER2D, false, 
+#if !WB_LANGUAGE_CHINESE
+"Bottom"
+#else
+"底部"
+#endif
+, -1, MasterNodePortCategory.Fragment, 2 );
 			m_inputPorts[ 4 ].CreatePortRestrictions( WirePortDataType.SAMPLER2D, WirePortDataType.SAMPLER2DARRAY );
-			AddInputPort( WirePortDataType.FLOAT, false, "Bot Index", -1, MasterNodePortCategory.Fragment, 7 );
-			AddInputPort( WirePortDataType.FLOAT3, false, "Pos", -1, MasterNodePortCategory.Fragment, 9 );
-			AddInputPort( WirePortDataType.FLOAT3, false, "Scale", -1, MasterNodePortCategory.Fragment, 8 );
-			AddInputPort( WirePortDataType.FLOAT2, false, "Tiling", -1, MasterNodePortCategory.Fragment, 3 );
-			AddInputPort( WirePortDataType.FLOAT, false, "Falloff", -1, MasterNodePortCategory.Fragment, 4 );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Bot Index"
+#else
+"机器人索引"
+#endif
+, -1, MasterNodePortCategory.Fragment, 7 );
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"Pos"
+#else
+"销售时点情报系统"
+#endif
+, -1, MasterNodePortCategory.Fragment, 9 );
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"Scale"
+#else
+"规模"
+#endif
+, -1, MasterNodePortCategory.Fragment, 8 );
+			AddInputPort( WirePortDataType.FLOAT2, false, 
+#if !WB_LANGUAGE_CHINESE
+"Tiling"
+#else
+"瓷砖"
+#endif
+, -1, MasterNodePortCategory.Fragment, 3 );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Falloff"
+#else
+"Falloff"
+#endif
+, -1, MasterNodePortCategory.Fragment, 4 );
 			AddOutputColorPorts( "RGBA" );
 			m_useInternalPortData = true;
 			m_topTexPort = InputPorts[ 0 ];
@@ -214,13 +298,13 @@ namespace AmplifyShaderEditor
 			m_showPreview = true;
 			m_autoDrawInternalPortData = false;
 			m_textLabelWidth = 125;
-			//m_propertyInspectorName = "Triplanar Sampler";
+			
 			m_previewShaderGUID = "8723015ec59743143aadfbe480e34391";
 		}
 
 		public void ReadPropertiesData()
 		{
-			// Top
+			
 			if( UIUtils.IsUniformNameAvailable( m_tempTopName ) )
 			{
 				UIUtils.ReleaseUniformName( UniqueId, m_topTexture.PropertyName );
@@ -235,9 +319,9 @@ namespace AmplifyShaderEditor
 			m_topTexture.DefaultTextureValue = m_tempTopDefaultValue;
 			m_topTexture.OrderIndex = m_tempTopOrderIndex;
 			m_topTexture.DefaultValue = m_tempTopDefaultTexture;
-			//m_topTexture.SetMaterialMode( UIUtils.CurrentWindow.CurrentGraph.CurrentMaterial, true );
+			
 
-			// Mid
+			
 			if( UIUtils.IsUniformNameAvailable( m_tempMidName ) )
 			{
 				UIUtils.ReleaseUniformName( UniqueId, m_midTexture.PropertyName );
@@ -251,7 +335,7 @@ namespace AmplifyShaderEditor
 			m_midTexture.OrderIndex = m_tempMidOrderIndex;
 			m_midTexture.DefaultValue = m_tempMidDefaultTexture;
 
-			// Bot
+			
 			if( UIUtils.IsUniformNameAvailable( m_tempBotName ) )
 			{
 				UIUtils.ReleaseUniformName( UniqueId, m_botTexture.PropertyName );
@@ -285,7 +369,7 @@ namespace AmplifyShaderEditor
 			else
 				m_texturesInitialize = true;
 
-			// Top
+			
 			if( m_topTexture == null )
 			{
 				m_topTexture = ScriptableObject.CreateInstance<TexturePropertyNode>();
@@ -296,7 +380,7 @@ namespace AmplifyShaderEditor
 			m_topTexture.DrawAutocast = false;
 			m_topTexture.CurrentParameterType = PropertyType.Property;
 
-			// Mid
+			
 			if( m_midTexture == null )
 			{
 				m_midTexture = ScriptableObject.CreateInstance<TexturePropertyNode>();
@@ -307,7 +391,7 @@ namespace AmplifyShaderEditor
 			m_midTexture.DrawAutocast = false;
 			m_midTexture.CurrentParameterType = PropertyType.Property;
 
-			// Bot
+			
 			if( m_botTexture == null )
 			{
 				m_botTexture = ScriptableObject.CreateInstance<TexturePropertyNode>();
@@ -333,14 +417,14 @@ namespace AmplifyShaderEditor
 		{
 			base.Destroy();
 
-			//UIUtils.UnregisterPropertyNode( m_topTexture );
-			//UIUtils.UnregisterTexturePropertyNode( m_topTexture );
+			
+			
 
-			//UIUtils.UnregisterPropertyNode( m_midTexture );
-			//UIUtils.UnregisterTexturePropertyNode( m_midTexture );
+			
+			
 
-			//UIUtils.UnregisterPropertyNode( m_botTexture );
-			//UIUtils.UnregisterTexturePropertyNode( m_botTexture );
+			
+			
 			if( m_topTexture != null )
 				m_topTexture.Destroy();
 			m_topTexture = null;
@@ -581,35 +665,95 @@ namespace AmplifyShaderEditor
 		public override void DrawProperties()
 		{
 			base.DrawProperties();
-			NodeUtils.DrawPropertyGroup( ref m_propertiesFoldout, "Parameters", DrawMainOptions );
+			NodeUtils.DrawPropertyGroup( ref m_propertiesFoldout, 
+#if !WB_LANGUAGE_CHINESE
+"Parameters"
+#else
+"参数"
+#endif
+, DrawMainOptions );
 			DrawInternalDataGroup();
 			if( m_selectedTriplanarType == TriplanarType.Spherical && !m_topTexPort.IsConnected )
-				NodeUtils.DrawPropertyGroup( ref m_topTextureFoldout, "Texture", DrawTopTextureOptions );
+				NodeUtils.DrawPropertyGroup( ref m_topTextureFoldout, 
+#if !WB_LANGUAGE_CHINESE
+"Texture"
+#else
+"纹理"
+#endif
+, DrawTopTextureOptions );
 			else if( !m_topTexPort.IsConnected )
-				NodeUtils.DrawPropertyGroup( ref m_topTextureFoldout, "Top Texture", DrawTopTextureOptions );
+				NodeUtils.DrawPropertyGroup( ref m_topTextureFoldout, 
+#if !WB_LANGUAGE_CHINESE
+"Top Texture"
+#else
+"顶部纹理"
+#endif
+, DrawTopTextureOptions );
 
 			if( m_selectedTriplanarType == TriplanarType.Cylindrical )
 			{
 				if( !m_midTexPort.IsConnected )
-					NodeUtils.DrawPropertyGroup( ref m_midTextureFoldout, "Middle Texture", DrawMidTextureOptions );
+					NodeUtils.DrawPropertyGroup( ref m_midTextureFoldout, 
+#if !WB_LANGUAGE_CHINESE
+"Middle Texture"
+#else
+"中间纹理"
+#endif
+, DrawMidTextureOptions );
 				if( !m_botTexPort.IsConnected )
-					NodeUtils.DrawPropertyGroup( ref m_botTextureFoldout, "Bottom Texture", DrawBotTextureOptions );
+					NodeUtils.DrawPropertyGroup( ref m_botTextureFoldout, 
+#if !WB_LANGUAGE_CHINESE
+"Bottom Texture"
+#else
+"底部纹理"
+#endif
+, DrawBotTextureOptions );
 			}
 		}
 
 		void DrawMainOptions()
 		{
 			EditorGUI.BeginChangeCheck();
-			m_propertyInspectorName = EditorGUILayoutTextField( "Name", m_propertyInspectorName );
+			m_propertyInspectorName = EditorGUILayoutTextField( 
+#if !WB_LANGUAGE_CHINESE
+"Name"
+#else
+"姓名"
+#endif
+, m_propertyInspectorName );
 
-			m_selectedTriplanarType = (TriplanarType)EditorGUILayoutEnumPopup( "Mapping", m_selectedTriplanarType );
+			m_selectedTriplanarType = (TriplanarType)EditorGUILayoutEnumPopup( 
+#if !WB_LANGUAGE_CHINESE
+"Mapping"
+#else
+"地图绘制"
+#endif
+, m_selectedTriplanarType );
 
-			m_selectedTriplanarSpace = (TriplanarSpace)EditorGUILayoutEnumPopup( "Space", m_selectedTriplanarSpace );
+			m_selectedTriplanarSpace = (TriplanarSpace)EditorGUILayoutEnumPopup( 
+#if !WB_LANGUAGE_CHINESE
+"Space"
+#else
+"空间"
+#endif
+, m_selectedTriplanarSpace );
 
-			m_normalCorrection = EditorGUILayoutToggle( "Normal Map", m_normalCorrection );
+			m_normalCorrection = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Normal Map"
+#else
+"法线贴图"
+#endif
+, m_normalCorrection );
 
 			if( m_normalCorrection )
-				m_normalSpace = (ViewSpace)EditorGUILayoutEnumPopup( "Output Normal Space", m_normalSpace );
+				m_normalSpace = (ViewSpace)EditorGUILayoutEnumPopup( 
+#if !WB_LANGUAGE_CHINESE
+"Output Normal Space"
+#else
+"输出正常空间"
+#endif
+, m_normalSpace );
 
 			if( EditorGUI.EndChangeCheck() )
 			{
@@ -676,31 +820,31 @@ namespace AmplifyShaderEditor
 		public override void OnEnable()
 		{
 			base.OnEnable();
-			//if( !m_afterDeserialize )
-			//Init(); //Generate texture properties
-			//else
-			//m_afterDeserialize = false;
+			
+			
+			
+			
 
-			//if( m_topTexture != null )
-			//	m_topTexture.ReRegisterName = true;
+			
+			
 
-			//if( m_selectedTriplanarType == TriplanarType.Cylindrical )
-			//{
-			//	if( m_midTexture != null )
-			//		m_midTexture.ReRegisterName = true;
+			
+			
+			
+			
 
-			//	if( m_botTexture != null )
-			//		m_botTexture.ReRegisterName = true;
-			//}
+			
+			
+			
 		}
 
-		//bool m_afterDeserialize = false;
+		
 
-		//public override void OnAfterDeserialize()
-		//{
-		//	base.OnAfterDeserialize();
-		//	m_afterDeserialize = true;
-		//}
+		
+		
+		
+		
+		
 
 
 		public override void OnNodeLogicUpdate( DrawInfo drawInfo )
@@ -928,7 +1072,7 @@ namespace AmplifyShaderEditor
 
 			if( drawInfo.CurrentEventType == EventType.Repaint )
 			{
-				// Top
+				
 				if( m_topTexPort.IsConnected )
 				{
 					EditorGUI.DrawPreviewTexture( startPickerClone, m_topTexPort.GetOutputConnection( 0 ).OutputPreviewTexture, null, ScaleMode.ScaleAndCrop );
@@ -937,22 +1081,40 @@ namespace AmplifyShaderEditor
 				{
 					EditorGUI.DrawPreviewTexture( startPickerClone, m_topTexture.Value, null, ScaleMode.ScaleAndCrop );
 					if( ContainerGraph.LodLevel <= ParentGraph.NodeLOD.LOD2 )
-						GUI.Label( pickerButtonClone, "Select", UIUtils.MiniSamplerButton );
+						GUI.Label( pickerButtonClone, 
+#if !WB_LANGUAGE_CHINESE
+"Select"
+#else
+"选择"
+#endif
+, UIUtils.MiniSamplerButton );
 				}
 				else
 				{
 					GUI.Label( startPickerClone, string.Empty, UIUtils.ObjectFieldThumb );
 					if( ContainerGraph.LodLevel <= ParentGraph.NodeLOD.LOD2 )
 					{
-						GUI.Label( startPickerClone, "None (Texture2D)", UIUtils.MiniObjectFieldThumbOverlay );
-						GUI.Label( pickerButtonClone, "Select", UIUtils.MiniSamplerButton );
+						GUI.Label( startPickerClone, 
+#if !WB_LANGUAGE_CHINESE
+"None (Texture2D)"
+#else
+"无（纹理2D）"
+#endif
+, UIUtils.MiniObjectFieldThumbOverlay );
+						GUI.Label( pickerButtonClone, 
+#if !WB_LANGUAGE_CHINESE
+"Select"
+#else
+"选择"
+#endif
+, UIUtils.MiniSamplerButton );
 					}
 				}
 				GUI.Label( startPickerClone, string.Empty, UIUtils.GetCustomStyle( CustomStyle.SamplerFrame ) );
 
 				if( m_selectedTriplanarType == TriplanarType.Cylindrical )
 				{
-					// Mid
+					
 					startPickerClone.y += startPickerClone.height;
 					pickerButtonClone.y += startPickerClone.height;
 					if( m_midTexPort.IsConnected )
@@ -963,20 +1125,38 @@ namespace AmplifyShaderEditor
 					{
 						EditorGUI.DrawPreviewTexture( startPickerClone, m_midTexture.Value, null, ScaleMode.ScaleAndCrop );
 						if( ContainerGraph.LodLevel <= ParentGraph.NodeLOD.LOD2 )
-							GUI.Label( pickerButtonClone, "Select", UIUtils.MiniSamplerButton );
+							GUI.Label( pickerButtonClone, 
+#if !WB_LANGUAGE_CHINESE
+"Select"
+#else
+"选择"
+#endif
+, UIUtils.MiniSamplerButton );
 					}
 					else
 					{
 						GUI.Label( startPickerClone, string.Empty, UIUtils.ObjectFieldThumb );
 						if( ContainerGraph.LodLevel <= ParentGraph.NodeLOD.LOD2 )
 						{
-							GUI.Label( startPickerClone, "None (Texture2D)", UIUtils.MiniObjectFieldThumbOverlay );
-							GUI.Label( pickerButtonClone, "Select", UIUtils.MiniSamplerButton );
+							GUI.Label( startPickerClone, 
+#if !WB_LANGUAGE_CHINESE
+"None (Texture2D)"
+#else
+"无（纹理2D）"
+#endif
+, UIUtils.MiniObjectFieldThumbOverlay );
+							GUI.Label( pickerButtonClone, 
+#if !WB_LANGUAGE_CHINESE
+"Select"
+#else
+"选择"
+#endif
+, UIUtils.MiniSamplerButton );
 						}
 					}
 					GUI.Label( startPickerClone, string.Empty, UIUtils.GetCustomStyle( CustomStyle.SamplerFrame ) );
 
-					// Bot
+					
 					startPickerClone.y += startPickerClone.height;
 					startPickerClone.height = 42 * drawInfo.InvertedZoom;
 					pickerButtonClone.y += startPickerClone.height;
@@ -988,15 +1168,33 @@ namespace AmplifyShaderEditor
 					{
 						EditorGUI.DrawPreviewTexture( startPickerClone, m_botTexture.Value, null, ScaleMode.ScaleAndCrop );
 						if( ContainerGraph.LodLevel <= ParentGraph.NodeLOD.LOD2 )
-							GUI.Label( pickerButtonClone, "Select", UIUtils.MiniSamplerButton );
+							GUI.Label( pickerButtonClone, 
+#if !WB_LANGUAGE_CHINESE
+"Select"
+#else
+"选择"
+#endif
+, UIUtils.MiniSamplerButton );
 					}
 					else
 					{
 						GUI.Label( startPickerClone, string.Empty, UIUtils.ObjectFieldThumb );
 						if( ContainerGraph.LodLevel <= ParentGraph.NodeLOD.LOD2 )
 						{
-							GUI.Label( startPickerClone, "None (Texture2D)", UIUtils.MiniObjectFieldThumbOverlay );
-							GUI.Label( pickerButtonClone, "Select", UIUtils.MiniSamplerButton );
+							GUI.Label( startPickerClone, 
+#if !WB_LANGUAGE_CHINESE
+"None (Texture2D)"
+#else
+"无（纹理2D）"
+#endif
+, UIUtils.MiniObjectFieldThumbOverlay );
+							GUI.Label( pickerButtonClone, 
+#if !WB_LANGUAGE_CHINESE
+"Select"
+#else
+"选择"
+#endif
+, UIUtils.MiniSamplerButton );
 						}
 					}
 					GUI.Label( startPickerClone, string.Empty, UIUtils.GetCustomStyle( CustomStyle.SamplerFrame ) );
@@ -1474,7 +1672,7 @@ namespace AmplifyShaderEditor
 
 			IOUtils.AddFieldValueToString( ref nodeInfo, m_propertyInspectorName );
 
-			//IOUtils.AddFieldValueToString( ref nodeInfo, m_arraySupport );
+			
 			IOUtils.AddFieldValueToString( ref nodeInfo, m_normalSpace );
 		}
 		public override void RefreshOnUndo()

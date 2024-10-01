@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Transpose", "Matrix Operators", "Transpose matrix of a matrix" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Transpose"
+#else
+"换位思考"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Matrix Operators"
+#else
+"矩阵运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Transpose matrix of a matrix"
+#else
+"矩阵的转置矩阵"
+#endif
+)]
 	public sealed class TransposeOpNode : SingleInputOp
 	{
 		protected override void CommonInit( int uniqueId )

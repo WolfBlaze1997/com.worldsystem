@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using System;
@@ -7,7 +7,25 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Panner", "UV Coordinates", "Pans UV texture coordinates according to its inputs" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Panner"
+#else
+"潘纳"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"UV Coordinates"
+#else
+"UV坐标"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Pans UV texture coordinates according to its inputs"
+#else
+"根据输入平移UV纹理坐标"
+#endif
+)]
 	public sealed class PannerNode : ParentNode
 	{
 		private const string _speedXStr = "Speed X";
@@ -19,8 +37,20 @@ namespace AmplifyShaderEditor
 		{
 			base.CommonInit( uniqueId );
 			AddInputPort( WirePortDataType.FLOAT2, false, "UV" ,-1,MasterNodePortCategory.Fragment,0);
-			AddInputPort( WirePortDataType.FLOAT2, false, "Speed", -1, MasterNodePortCategory.Fragment, 2 );
-			AddInputPort( WirePortDataType.FLOAT, false, "Time", -1, MasterNodePortCategory.Fragment, 1 );
+			AddInputPort( WirePortDataType.FLOAT2, false, 
+#if !WB_LANGUAGE_CHINESE
+"Speed"
+#else
+"速度"
+#endif
+, -1, MasterNodePortCategory.Fragment, 2 );
+			AddInputPort( WirePortDataType.FLOAT, false,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Time"
+#else
+"时间"
+#endif
+/*<C!>*/, -1, MasterNodePortCategory.Fragment, 1 );
 			AddOutputPort( WirePortDataType.FLOAT2, "Out" );
 			m_textLabelWidth = 70;
 			m_useInternalPortData = true;
@@ -83,8 +113,8 @@ namespace AmplifyShaderEditor
 			base.ReadFromString( ref nodeParams );
 			if( UIUtils.CurrentShaderVersion() < 13107 )
 			{
-				// The internal data for the new port can be set in here since it didn't existed
-				// on older shader versions
+				
+				
 				float speedX = Convert.ToSingle( GetCurrentParam( ref nodeParams ) );
 				float speedY = Convert.ToSingle( GetCurrentParam( ref nodeParams ) );
 				m_inputPorts[ 1 ].Vector2InternalData = new Vector2( speedX, speedY );
@@ -96,8 +126,8 @@ namespace AmplifyShaderEditor
 			base.ReadInputDataFromString( ref nodeParams );
 			if( UIUtils.CurrentShaderVersion() < 13107 )
 			{
-				//Time Port must be rewritten after internal data is read
-				// already existed in previous shaders 
+				
+				
 				m_inputPorts[ 2 ].FloatInternalData = 1;
 			}
 		}

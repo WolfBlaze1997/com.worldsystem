@@ -5,10 +5,34 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Matrix From Vectors", "Matrix Operators", "Matrix From Vectors" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Matrix From Vectors"
+#else
+"向量矩阵"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Matrix Operators"
+#else
+"矩阵运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Matrix From Vectors"
+#else
+"向量矩阵"
+#endif
+)]
 	public sealed class MatrixFromVectors : ParentNode
 	{
-		private const string RowFromVector = "Input to Row";
+		private const string RowFromVector = 
+#if !WB_LANGUAGE_CHINESE
+"Input to Row"
+#else
+"输入到行"
+#endif
+;
 		[SerializeField]
 		private WirePortDataType m_selectedOutputType = WirePortDataType.FLOAT3x3;
 
@@ -84,7 +108,13 @@ namespace AmplifyShaderEditor
 			base.DrawProperties();
 
 			EditorGUI.BeginChangeCheck();
-			m_selectedOutputTypeInt = EditorGUILayoutPopup( "Output type", m_selectedOutputTypeInt, _outputValueTypes );
+			m_selectedOutputTypeInt = EditorGUILayoutPopup( 
+#if !WB_LANGUAGE_CHINESE
+"Output type"
+#else
+"输出类型"
+#endif
+, m_selectedOutputTypeInt, _outputValueTypes );
 			if( EditorGUI.EndChangeCheck() )
 			{
 				switch( m_selectedOutputTypeInt )

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEditor;
@@ -35,15 +35,21 @@ namespace AmplifyShaderEditor
 		@switch,
 		vulkan,
 		nomrt,
-		ps5,        // @diogo: added in 19100
+		ps5,        
 		all
 	}
 
 	[Serializable]
 	public class RenderingPlatformOpHelper
 	{
-		private const string RenderingPlatformsStr = " Rendering Platforms";
-		public static readonly RenderPlatformInfo[] RenderingPlatformsInfo =
+		private const string RenderingPlatformsStr = 
+#if !WB_LANGUAGE_CHINESE
+" Rendering Platforms"
+#else
+"渲染平台"
+#endif
+;
+		public readonly static RenderPlatformInfo[] RenderingPlatformsInfo =
 		{
 			new RenderPlatformInfo(){Label = " Direct3D 11/12", Value = RenderPlatforms.d3d11},
 			new RenderPlatformInfo(){Label = " OpenGL 3.x/4.x", Value = RenderPlatforms.glcore},
@@ -59,8 +65,8 @@ namespace AmplifyShaderEditor
 			new RenderPlatformInfo(){Label = " Nintendo Switch", Value = RenderPlatforms.@switch},
 		};
 
-		// Values from this dictionary must be the indices corresponding from the list above
-		public static readonly Dictionary<RenderPlatforms, int> PlatformToIndex = new Dictionary<RenderPlatforms, int>()
+		
+		public readonly static Dictionary<RenderPlatforms, int> PlatformToIndex = new Dictionary<RenderPlatforms, int>()
 		{
 			{RenderPlatforms.d3d11,			0},
 			{RenderPlatforms.glcore,		1},
@@ -77,7 +83,7 @@ namespace AmplifyShaderEditor
 		};
 
 		
-		public static readonly List<RenderPlatforms> LegacyIndexToPlatform = new List<RenderPlatforms>()
+		public readonly static List<RenderPlatforms> LegacyIndexToPlatform = new List<RenderPlatforms>()
 		{
 			RenderPlatforms.d3d9,
 			RenderPlatforms.d3d11,
@@ -247,7 +253,7 @@ namespace AmplifyShaderEditor
 							m_renderingPlatformValues[ i ] = false;
 						}
 
-						// @diogo: should have been designed as exclude, instead of include, to avoid stuff like this...
+						
 						if ( UIUtils.CurrentShaderVersion() < 19100 )
 						{
 							m_renderingPlatformValues[ PlatformToIndex[ RenderPlatforms.ps5 ] ] = true;
@@ -297,7 +303,7 @@ namespace AmplifyShaderEditor
 			m_renderingPlatformValues = null;
 		}
 
-		//TEMPLATE SPECIFIC 
+		
 		[SerializeField]
 		private bool m_loadedFromTemplate = false;
 

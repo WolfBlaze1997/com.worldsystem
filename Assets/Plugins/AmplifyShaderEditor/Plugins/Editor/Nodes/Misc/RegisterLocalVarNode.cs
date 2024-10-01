@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -9,18 +9,54 @@ using System.Collections.Generic;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Register Local Var", "Miscellaneous", "Forces a local variable to be written with the given name. Can then be fetched at any place with a <b>Get Local Var</b> node.", null, KeyCode.R )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Register Local Var"
+#else
+"注册本地变量"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Forces a local variable to be written with the given name. Can then be fetched at any place with a <b>Get Local Var</b> node."
+#else
+"强制使用给定名称写入局部变量。然后可以使用<b>Get Local Var</b>节点在任何地方获取。"
+#endif
+, null, KeyCode.R )]
 	public sealed class RegisterLocalVarNode : ParentNode
 	{
 		private const double MaxEditingTimestamp = 1;
 
 		private const string LocalDefaultNameStr = "myVarName";
-		private const string LocalVarNameStr = "Var Name";
+		private const string LocalVarNameStr = 
+#if !WB_LANGUAGE_CHINESE
+"Var Name"
+#else
+"变量名称"
+#endif
+;
 		private const string OrderIndexStr = "Order Index";
 		private const string AutoOrderIndexStr = "Auto Order";
-		private const string ReferencesStr = "References";
+		private const string ReferencesStr = 
+#if !WB_LANGUAGE_CHINESE
+"References"
+#else
+"工具书类"
+#endif
+;
 
-		private const string GetLocalVarLabel = "( {0} ) Get Local Var";
+		private const string GetLocalVarLabel = 
+#if !WB_LANGUAGE_CHINESE
+"( {0} ) Get Local Var"
+#else
+"（｛0｝）获取本地变量"
+#endif
+;
 		private string m_oldName = string.Empty;
 		private bool m_reRegisterName = false;
 		private int m_autoOrderIndex = int.MaxValue;
@@ -112,7 +148,7 @@ namespace AmplifyShaderEditor
 			{
 				m_editingTimestampFlag = true;
 				m_editingTimestamp = EditorApplication.timeSinceStartup;
-				//CheckAndChangeName();
+				
 			}
 
 			DrawPrecisionProperty();
@@ -167,21 +203,39 @@ namespace AmplifyShaderEditor
 				{
 					EditorGUILayout.BeginHorizontal();
 					EditorGUILayout.LabelField( string.Format( GetLocalVarLabel, m_registeredGetLocalVars[ i ].UniqueId ) );
-					if( GUILayout.Button( "\u25BA", "minibutton", GUILayout.Width( 17 ) ) )
+					if( GUILayout.Button( "\u25BA", 
+#if !WB_LANGUAGE_CHINESE
+"minibutton"
+#else
+"迷你按钮"
+#endif
+, GUILayout.Width( 17 ) ) )
 					{
 						m_containerGraph.ParentWindow.FocusOnNode( m_registeredGetLocalVars[ i ], 0, false );
 					}
 					EditorGUILayout.EndHorizontal();
 				}
 
-				if( GUILayout.Button( "Back" ) )
+				if( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Back"
+#else
+"< 返回"
+#endif
+) )
 				{
 					m_containerGraph.ParentWindow.FocusOnNode( this, 0, false );
 				}
 			}
 			else
 			{
-				EditorGUILayout.HelpBox( "This node is not being referenced by any Get Local Var.", MessageType.Info );
+				EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"This node is not being referenced by any Get Local Var."
+#else
+"此节点未被任何Get Local Var引用。"
+#endif
+, MessageType.Info );
 			}
 		}
 
@@ -189,7 +243,7 @@ namespace AmplifyShaderEditor
 		{
 			NodeUtils.DrawPropertyGroup( ref m_propertiesFoldout, Constants.ParameterLabelStr, DrawMainProperties );
 			NodeUtils.DrawPropertyGroup( ref m_referencesVisible, ReferencesStr, DrawReferences );
-			//EditorGUILayout.LabelField(ConnStatus.ToString()+" "+m_activeConnections);
+			
 		}
 
 		public override void OnEnable()
@@ -339,7 +393,7 @@ namespace AmplifyShaderEditor
 			int count = m_registeredGetLocalVars.Count;
 			for( int i = 0; i < count; i++ )
 			{
-				//GetLocalVarNode node =  m_containerGraph.GetNode( m_registeredGetLocalVars[ i ] ) as GetLocalVarNode;
+				
 				if( m_registeredGetLocalVars[ i ] != null )
 					m_registeredGetLocalVars[ i ].ResetReference();
 			}

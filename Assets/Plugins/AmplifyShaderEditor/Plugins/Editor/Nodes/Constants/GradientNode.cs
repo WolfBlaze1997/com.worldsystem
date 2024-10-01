@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -9,7 +9,25 @@ using System.Reflection;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Gradient", "Constants And Properties", "Gradient property" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Gradient"
+#else
+"梯度"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Constants And Properties"
+#else
+"常数和属性"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Gradient property"
+#else
+"渐变属性"
+#endif
+)]
 	public sealed class GradientNode : ParentNode
 	{
 		[SerializeField]

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -58,66 +58,66 @@ namespace AmplifyShaderEditor
 
 		private readonly string[] ApplyMeshModificationFunctionSRP =
 		{
-			/*0 - struct name 1 - var name*/"{0} ApplyMeshModification( {0} {1} )\n",
+			"{0} ApplyMeshModification( {0} {1} )\n",
 			"{\n",
 			"#ifdef UNITY_INSTANCING_ENABLED\n",
-			/* 0 vertex position*/"\tfloat2 patchVertex = {0}.xy;\n",
+			"\tfloat2 patchVertex = {0}.xy;\n",
 			"\tfloat4 instanceData = UNITY_ACCESS_INSTANCED_PROP( Terrain, _TerrainPatchInstanceData );\n",
 			"\tfloat2 sampleCoords = ( patchVertex.xy + instanceData.xy ) * instanceData.z;\n",
 			"\tfloat height = UnpackHeightmap( _TerrainHeightmapTexture.Load( int3( sampleCoords, 0 ) ) );\n",
-			/*0 - vertex position*/"\t{0}.xz = sampleCoords* _TerrainHeightmapScale.xz;\n",
-			/*0 - vertex position*/"\t{0}.y = height* _TerrainHeightmapScale.y;\n",
+			"\t{0}.xz = sampleCoords* _TerrainHeightmapScale.xz;\n",
+			"\t{0}.y = height* _TerrainHeightmapScale.y;\n",
 			"\t#ifdef ENABLE_TERRAIN_PERPIXEL_NORMAL\n",
-			/* 0 - vertex normal*/"\t\t{0} = float3(0, 1, 0);\n",
+			"\t\t{0} = float3(0, 1, 0);\n",
 			"\t#else\n",
-			/* 0 - vertex normal*/"\t\t{0} = _TerrainNormalmapTexture.Load(int3(sampleCoords, 0)).rgb* 2 - 1;\n",
+			"\t\t{0} = _TerrainNormalmapTexture.Load(int3(sampleCoords, 0)).rgb* 2 - 1;\n",
 			"\t#endif\n",
-			"",//"#ifdef ENABLE_TERRAIN_PERPIXEL_NORMAL\n",
-			"",///* 0 - tex coord*/"\t{0}.xy = sampleCoords;\n",
-			"",//"#else\n",
-			/* 0 - tex coord*/"\t{0}.xy = sampleCoords* _TerrainHeightmapRecipSize.zw;\n",
-			"",//"#endif\n",
+			"",
+			"",
+			"",
+			"\t{0}.xy = sampleCoords* _TerrainHeightmapRecipSize.zw;\n",
+			"",
 			"#endif\n",
-			/* 0 - var name*/"\treturn {0};\n",
+			"\treturn {0};\n",
 			"}\n"
 		};
-		//{
-		//	/*0 - struct name 1 - var name*/"{0} ApplyMeshModification( {0} {1} )\n",
-		//	"{\n",
-		//	"#ifdef UNITY_INSTANCING_ENABLED\n",
-		//	/* 0 vertex position*/"\tfloat2 patchVertex = {0}.xy;\n",
-		//	"\t\tfloat4 instanceData = UNITY_ACCESS_INSTANCED_PROP( Terrain, _TerrainPatchInstanceData );\n",
-		//	"\t\tfloat2 sampleCoords = ( patchVertex.xy + instanceData.xy ) * instanceData.z;\n",
-		//	"\t\tfloat height = UnpackHeightmap( _TerrainHeightmapTexture.Load( int3( sampleCoords, 0 ) ) );\n",
-		//	/*0 - vertex position*/"\t\t{0}.xz = sampleCoords* _TerrainHeightmapScale.xz;\n",
-		//	/*0 - vertex position*/"\t\t{0}.y = height* _TerrainHeightmapScale.y;\n",
-		//	"# ifdef ATTRIBUTES_NEED_NORMAL\n",
-		//	/* 0 - vertex normal*/"\t\t{0} = _TerrainNormalmapTexture.Load(int3(sampleCoords, 0)).rgb* 2 - 1;\n",
-		//	"\t#endif\n",
-		//	"\t#if defined(VARYINGS_NEED_TEXCOORD0) || defined(VARYINGS_DS_NEED_TEXCOORD0)\n",
-		//	"\t\t#ifdef ENABLE_TERRAIN_PERPIXEL_NORMAL\n",
-		//	/* 0 - tex coord*/"\t\t\t{0} = sampleCoords;\n",
-		//	"\t\t#else\n",
-		//	/* 0 - tex coord*/"\t\t\t{0}.xy = sampleCoords* _TerrainHeightmapRecipSize.zw;\n",
-		//	"\t\t#endif\n",
-		//	"\t#endif\n",
-		//	"#endif\n",
-		//	"#ifdef ATTRIBUTES_NEED_TANGENT\n",
-		//	/* 0 - tangent 1 - normal*/"\t\t{0}.xyz = cross( {1}, float3(0, 0, 1));\n",
-		//	/*0 - tangent*/"\t{0}.w = -1;\n",
-		//	"#endif\n",
-		//	/* 0 - var name*/"\treturn {0};\n",
-		//	"}\n"
-		//};
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 
 
 		private readonly string[] ApplyMeshModificationFunctionDefaultTemplate =
 		{
-			/* 0 vertex struct */"{0} ApplyMeshModification( {0} {1} )",
+			"{0} ApplyMeshModification( {0} {1} )",
 			"{\n",
 			"#ifdef UNITY_INSTANCING_ENABLED\n",
-			/*0 - vertex pos*/"\tfloat2 patchVertex = {0}.xy;\n",
+			"\tfloat2 patchVertex = {0}.xy;\n",
 			"\tfloat4 instanceData = UNITY_ACCESS_INSTANCED_PROP( Terrain, _TerrainPatchInstanceData );\n",
 			
             "\tfloat4 uvscale = instanceData.z * _TerrainHeightmapRecipSize;\n" +
@@ -125,13 +125,13 @@ namespace AmplifyShaderEditor
 			"\tuvoffset.xy += 0.5f * _TerrainHeightmapRecipSize.xy;\n" +
 			"\tfloat2 sampleCoords = (patchVertex.xy * uvscale.xy + uvoffset.xy);\n",
 
-			/* 0 - tex coords*/"\t{0} = float4( (patchVertex.xy * uvscale.zw + uvoffset.zw), 0, 0 );\n",
-			/* 0 - tex coords*/"\tfloat height = UnpackHeightmap( tex2Dlod( _TerrainHeightmapTexture, {0} ) );\n",
-			/* 0 - vertex pos*/"\t{0}.xz = (patchVertex.xy + instanceData.xy) * _TerrainHeightmapScale.xz * instanceData.z;\n",
-			/* 0  - vertex pos*/"\t{0}.y = height * _TerrainHeightmapScale.y;\n",
-			/* 0 - normal 1 - tex coord*/"\t{0} = tex2Dlod( _TerrainNormalmapTexture, {1} ).rgb * 2 - 1;\n",
+			"\t{0} = float4( (patchVertex.xy * uvscale.zw + uvoffset.zw), 0, 0 );\n",
+			"\tfloat height = UnpackHeightmap( tex2Dlod( _TerrainHeightmapTexture, {0} ) );\n",
+			"\t{0}.xz = (patchVertex.xy + instanceData.xy) * _TerrainHeightmapScale.xz * instanceData.z;\n",
+			"\t{0}.y = height * _TerrainHeightmapScale.y;\n",
+			"\t{0} = tex2Dlod( _TerrainNormalmapTexture, {1} ).rgb * 2 - 1;\n",
 			"#endif\n",
-			/* var name*/"return {0};\n",
+			"return {0};\n",
 			"}\n"
 		};
 
@@ -170,7 +170,13 @@ namespace AmplifyShaderEditor
 			"Hidden/Nature/Terrain/Utilities/PICKING",
 			"Hidden/Nature/Terrain/Utilities/SELECTION"
 		};
-		private readonly string DrawInstancedLabel = "Instanced Terrain";
+		private readonly string DrawInstancedLabel = 
+#if !WB_LANGUAGE_CHINESE
+"Instanced Terrain"
+#else
+"实例化地形"
+#endif
+;
 
 		[SerializeField]
 		private bool m_enable = false;
@@ -200,37 +206,37 @@ namespace AmplifyShaderEditor
 					TemplateFunctionData functionData = dataCollector.TemplateDataCollectorInstance.CurrentTemplateData.VertexFunctionData;
 					string uvCoord = dataCollector.TemplateDataCollectorInstance.GetUV( 0, MasterNodePortCategory.Vertex );
 					string vertexNormal = dataCollector.TemplateDataCollectorInstance.GetVertexNormal( PrecisionType.Float, false, MasterNodePortCategory.Vertex );
-					//string vertexTangent = dataCollector.TemplateDataCollectorInstance.GetVertexTangent( WirePortDataType.FLOAT4, PrecisionType.Float, false, MasterNodePortCategory.Vertex );
+					
 					string vertexPos = dataCollector.TemplateDataCollectorInstance.GetVertexPosition( WirePortDataType.OBJECT, PrecisionType.Float, false, MasterNodePortCategory.Vertex );
 
 					string functionHeader = string.Format( ApplyMeshModificationFunctionSRP[ 0 ], functionData.InVarType, functionData.InVarName );
 
-					//string functionBody = functionHeader +
-					//					ApplyMeshModificationFunctionSRP[ 1 ] +
-					//					ApplyMeshModificationFunctionSRP[ 2 ] +
-					//					string.Format( ApplyMeshModificationFunctionSRP[ 3 ], vertexPos ) +
-					//					ApplyMeshModificationFunctionSRP[ 4 ] +
-					//					ApplyMeshModificationFunctionSRP[ 5 ] +
-					//					ApplyMeshModificationFunctionSRP[ 6 ] +
-					//					string.Format( ApplyMeshModificationFunctionSRP[ 7 ], vertexPos ) +
-					//					string.Format( ApplyMeshModificationFunctionSRP[ 8 ], vertexPos ) +
-					//					ApplyMeshModificationFunctionSRP[ 9 ] +
-					//					string.Format( ApplyMeshModificationFunctionSRP[ 10 ], vertexNormal ) +
-					//					ApplyMeshModificationFunctionSRP[ 11 ] +
-					//					ApplyMeshModificationFunctionSRP[ 12 ] +
-					//					ApplyMeshModificationFunctionSRP[ 13 ] +
-					//					string.Format( ApplyMeshModificationFunctionSRP[ 14 ], uvCoord ) +
-					//					ApplyMeshModificationFunctionSRP[ 15 ] +
-					//					string.Format( ApplyMeshModificationFunctionSRP[ 16 ], uvCoord ) +
-					//					ApplyMeshModificationFunctionSRP[ 17 ] +
-					//					ApplyMeshModificationFunctionSRP[ 18 ] +
-					//					ApplyMeshModificationFunctionSRP[ 19 ] +
-					//					ApplyMeshModificationFunctionSRP[ 20 ] +
-					//					string.Format( ApplyMeshModificationFunctionSRP[ 21 ], vertexTangent, vertexNormal ) +
-					//					string.Format( ApplyMeshModificationFunctionSRP[ 22 ], vertexTangent ) +
-					//					ApplyMeshModificationFunctionSRP[ 23 ] +
-					//					string.Format( ApplyMeshModificationFunctionSRP[ 24 ], functionData.InVarName ) +
-					//					ApplyMeshModificationFunctionSRP[ 25 ];
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
 					string functionBody = functionHeader +
 					ApplyMeshModificationFunctionSRP[ 1 ] +
 					ApplyMeshModificationFunctionSRP[ 2 ] +
@@ -326,27 +332,27 @@ namespace AmplifyShaderEditor
 				}
 				IOUtils.CloseFunctionBody( ref functionBody );
 
-				//string inputName = "input";
-				//string uvCoord = "input.texcoord";
-				//string vertexNormal = "input.normal";
-				//string vertexPos = "input.vertex";
+				
+				
+				
+				
 
-				//string functionHeader = string.Format( ApplyMeshModificationFunctionDefaultTemplate[ 0 ], dataCollector.SurfaceVertexStructure, inputName );
-				//IOUtils.AddFunctionHeader( ref functionBody, functionHeader );
-				//IOUtils.AddFunctionLine( ref functionBody, ApplyMeshModificationFunctionDefaultTemplate[ 1 ] );
-				//IOUtils.AddFunctionLine( ref functionBody,ApplyMeshModificationFunctionDefaultTemplate[ 2 ] );
-				//IOUtils.AddFunctionLine( ref functionBody,string.Format( ApplyMeshModificationFunctionDefaultTemplate[ 3 ], vertexPos ) );
-				//IOUtils.AddFunctionLine( ref functionBody,ApplyMeshModificationFunctionDefaultTemplate[ 4 ] );
-				//IOUtils.AddFunctionLine( ref functionBody,ApplyMeshModificationFunctionDefaultTemplate[ 5 ] );
-				//IOUtils.AddFunctionLine( ref functionBody,string.Format( ApplyMeshModificationFunctionDefaultTemplate[ 6 ], uvCoord ) );
-				//IOUtils.AddFunctionLine( ref functionBody,string.Format( ApplyMeshModificationFunctionDefaultTemplate[ 7 ], uvCoord ) );
-				//IOUtils.AddFunctionLine( ref functionBody,string.Format( ApplyMeshModificationFunctionDefaultTemplate[ 8 ], vertexPos ) );
-				//IOUtils.AddFunctionLine( ref functionBody,string.Format( ApplyMeshModificationFunctionDefaultTemplate[ 9 ], vertexPos ) );
-				//IOUtils.AddFunctionLine( ref functionBody,string.Format( ApplyMeshModificationFunctionDefaultTemplate[ 10 ], vertexNormal, uvCoord ) );
-				//IOUtils.AddFunctionLine( ref functionBody,ApplyMeshModificationFunctionDefaultTemplate[ 11 ] );
-				//IOUtils.AddFunctionLine( ref functionBody,string.Format( ApplyMeshModificationFunctionDefaultTemplate[ 12 ], inputName ) );
-				//IOUtils.AddFunctionLine( ref functionBody, ApplyMeshModificationFunctionDefaultTemplate[ 13 ] );
-				//IOUtils.CloseFunctionBody( ref functionBody );
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 
 				dataCollector.AddFunction( functionHeader, functionBody );
 				for( int i = 0; i < InstancedGlobalsDefault.Length; i++ )

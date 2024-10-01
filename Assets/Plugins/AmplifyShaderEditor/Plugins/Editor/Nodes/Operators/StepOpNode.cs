@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Step", "Math Operators", "Step function returning either zero or one" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Step"
+#else
+"步骤"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Step function returning either zero or one"
+#else
+"阶跃函数返回零或一"
+#endif
+)]
 	public sealed class StepOpNode : DynamicTypeNode
 	{
 		protected override void CommonInit( int uniqueId )

@@ -1,24 +1,60 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Camera Depth Fade", "Camera And Screen", "Outputs a 0 - 1 gradient representing the distance between the surface of this object and camera near plane" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Camera Depth Fade"
+#else
+"相机深度衰减"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Camera And Screen"
+#else
+"摄像头和屏幕"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Outputs a 0 - 1 gradient representing the distance between the surface of this object and camera near plane"
+#else
+"输出一个0-1的渐变，表示该对象表面和相机近平面之间的距离"
+#endif
+)]
 	public sealed class CameraDepthFade : ParentNode
 	{
-		//{0} - Eye Depth
-		//{1} - Offset
-		//{2} - Distance
+		
+		
+		
 		private const string CameraDepthFadeFormat = "(( {0} -_ProjectionParams.y - {1} ) / {2})";
 
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT3, false, "Vertex Position", -1, MasterNodePortCategory.Fragment, 2 );
-			AddInputPort( WirePortDataType.FLOAT, false, "Length", -1, MasterNodePortCategory.Fragment, 0 );
-			AddInputPort( WirePortDataType.FLOAT, false, "Offset", -1, MasterNodePortCategory.Fragment, 1 );
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"Vertex Position"
+#else
+"顶点位置"
+#endif
+, -1, MasterNodePortCategory.Fragment, 2 );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Length"
+#else
+"长度"
+#endif
+, -1, MasterNodePortCategory.Fragment, 0 );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Offset"
+#else
+"抵消"
+#endif
+, -1, MasterNodePortCategory.Fragment, 1 );
 			GetInputPortByUniqueId( 0 ).FloatInternalData = 1;
 			AddOutputPort( WirePortDataType.FLOAT, "Out" );
 			m_useInternalPortData = true;
@@ -78,7 +114,7 @@ namespace AmplifyShaderEditor
 					vertexVarName = Constants.VertexShaderInputStr + ".vertex.xyz";
 				}
 
-				//dataCollector.AddVertexInstruction( "float cameraDepthFade" + UniqueId + " = (( -UnityObjectToViewPos( " + Constants.VertexShaderInputStr + ".vertex.xyz ).z -_ProjectionParams.y - " + offset + " ) / " + distance + ");", UniqueId );
+				
 				value = string.Format( CameraDepthFadeFormat, "-UnityObjectToViewPos( " + vertexVarName + " ).z", offset, distance );
 				RegisterLocalVariable( 0, value, ref dataCollector, "cameraDepthFade" + OutputId );
 				return m_outputPorts[ 0 ].LocalValue( dataCollector.PortCategory );
@@ -122,7 +158,7 @@ namespace AmplifyShaderEditor
 
 			value = string.Format( CameraDepthFadeFormat, eyeDepth, offset, distance );
 			RegisterLocalVariable( 0, value, ref dataCollector, "cameraDepthFade" + OutputId );
-			//dataCollector.AddToLocalVariables( UniqueId, "float cameraDepthFade" + UniqueId + " = (( " + Constants.InputVarStr + ".eyeDepth -_ProjectionParams.y - "+ offset + " ) / " + distance + ");" );
+			
 
 			return m_outputPorts[ 0 ].LocalValue( dataCollector.PortCategory );
 		}

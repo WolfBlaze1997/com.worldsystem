@@ -1,10 +1,28 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 namespace AmplifyShaderEditor
 {
 	[System.Serializable]
-	[NodeAttributes( "Model View Projection Matrix", "Matrix Transform", "Current model * view * projection matrix" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Model View Projection Matrix"
+#else
+"模型视图投影矩阵"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Matrix Transform"
+#else
+"矩阵变换"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Current model * view * projection matrix"
+#else
+"当前模型*视图*投影矩阵"
+#endif
+)]
 	public sealed class MVPMatrixNode : ConstantShaderVariable
 	{
 		protected override void CommonInit( int uniqueId )

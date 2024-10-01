@@ -1,10 +1,28 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 namespace AmplifyShaderEditor
 {
 	[System.Serializable]
-	[NodeAttributes( "Camera To World Matrix", "Matrix Transform", "Current camera to world matrix" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Camera To World Matrix"
+#else
+"相机到世界矩阵"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Matrix Transform"
+#else
+"矩阵变换"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Current camera to world matrix"
+#else
+"当前相机到世界矩阵"
+#endif
+)]
 	public sealed class CameraToWorldMatrix : ConstantShaderVariable
 	{
 		protected override void CommonInit( int uniqueId )

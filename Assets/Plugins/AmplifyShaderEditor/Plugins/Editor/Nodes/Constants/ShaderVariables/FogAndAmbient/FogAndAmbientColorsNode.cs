@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -17,10 +17,34 @@ namespace AmplifyShaderEditor
 	}
 
 	[Serializable]
-	[NodeAttributes( "Fog And Ambient Colors", "Lighting", "Fog and Ambient colors" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Fog And Ambient Colors"
+#else
+"雾和环境色"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Lighting"
+#else
+"照明"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Fog and Ambient colors"
+#else
+"雾和环境色"
+#endif
+)]
 	public sealed class FogAndAmbientColorsNode : ShaderVariablesNode
 	{
-		private const string ColorLabelStr = "Color";
+		private const string ColorLabelStr = 
+#if !WB_LANGUAGE_CHINESE
+"Color"
+#else
+"颜色"
+#endif
+;
 		private readonly string[] ColorValuesStr = {
 														"Ambient light ( Legacy )",
 														"Sky ambient light",

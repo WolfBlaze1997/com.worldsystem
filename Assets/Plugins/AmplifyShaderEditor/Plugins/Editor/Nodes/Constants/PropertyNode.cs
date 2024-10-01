@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.Collections.Generic;
@@ -43,27 +43,93 @@ namespace AmplifyShaderEditor
 	{
 		private const string LongNameEnder = "... )";
 		protected int m_longNameSize = 200;
-		//private const string InstancedPropertyWarning = "Instanced Property option shouldn't be used on official SRP templates as all property variables are already declared as instanced inside a CBuffer.\nPlease consider changing to Property option.";
+		
 		private const string TooltipFormatter = "{0}\n\nName: {1}\nValue: {2}";
 		private const string InvalidAttributeFormatter = "Attribute {0} not found on node {1}. Please click on this message to select node and review its attributes section";
-		protected string GlobalTypeWarningText = "Global variables must be set via a C# script using the Shader.SetGlobal{0}(...) method.\nPlease note that setting a global variable will affect all shaders which are using it.";
-		private const string HybridInstancedStr = "Hybrid Instanced";
-		private const string AutoRegisterStr = "Auto-Register";
-		private const string IgnoreVarDeclarationStr = "Variable Mode";
+		protected string GlobalTypeWarningText = 
+#if !WB_LANGUAGE_CHINESE
+"Global variables must be set via a C# script using the Shader.SetGlobal{0}(...) method.\nPlease note that setting a global variable will affect all shaders which are using it."
+#else
+"全局变量必须使用着色器通过C#脚本设置。SetGlobal｛0｝（…）方法。\n请注意，设置全局变量将影响使用它的所有着色器。"
+#endif
+;
+		private const string HybridInstancedStr = 
+#if !WB_LANGUAGE_CHINESE
+"Hybrid Instanced"
+#else
+"混合实例"
+#endif
+;
+		private const string AutoRegisterStr = 
+#if !WB_LANGUAGE_CHINESE
+"Auto-Register"
+#else
+"自动注册"
+#endif
+;
+		private const string IgnoreVarDeclarationStr = 
+#if !WB_LANGUAGE_CHINESE
+"Variable Mode"
+#else
+"可变模式"
+#endif
+;
 		private const string IsPropertyStr = "Is Property";
-		private const string PropertyNameStr = "Property Name";
-		private const string PropertyInspectorStr = "Name";
-		protected const string EnumsStr = "Enums";
-		protected const string CustomAttrStr = "Custom Attributes";
-		protected const string HeaderAttrStr = "Headers";
-		protected const string ParameterTypeStr = "Type";
+		private const string PropertyNameStr = 
+#if !WB_LANGUAGE_CHINESE
+"Property Name"
+#else
+"物业名称"
+#endif
+;
+		private const string PropertyInspectorStr = 
+#if !WB_LANGUAGE_CHINESE
+"Name"
+#else
+"姓名"
+#endif
+;
+		protected const string EnumsStr = 
+#if !WB_LANGUAGE_CHINESE
+"Enums"
+#else
+"枚举类型"
+#endif
+;
+		protected const string CustomAttrStr = 
+#if !WB_LANGUAGE_CHINESE
+"Custom Attributes"
+#else
+"自定义属性"
+#endif
+;
+		protected const string HeaderAttrStr = 
+#if !WB_LANGUAGE_CHINESE
+"Headers"
+#else
+"标题"
+#endif
+;
+		protected const string ParameterTypeStr = 
+#if !WB_LANGUAGE_CHINESE
+"Type"
+#else
+"类型"
+#endif
+;
 		private const string PropertyTextfieldControlName = "PropertyName";
 		private const string PropertyInspTextfieldControlName = "PropertyInspectorName";
 		private const string OrderIndexStr = "Order Index";
 		protected const double MaxTimestamp = 2;
 		private const double MaxPropertyTimestamp = 2;
 		private const double MaxGlobalFetchTimestamp = 2;
-		protected readonly string[] LabelToolbarTitle = { "Material", "Default" };
+		protected readonly string[] LabelToolbarTitle = { "Material", 
+#if !WB_LANGUAGE_CHINESE
+"Default"
+#else
+"违约"
+#endif
+};
 		protected readonly string[] EnumModesStr = { "Create Enums", "Use Engine Enum Class" };
 		protected readonly int[] EnumModeIntValues = { 0, 1 };
 		private const string FetchToCreateDuplicatesMsg = "Reverting property name from '{0}' to '{1}' as it is registered to another property node.";
@@ -171,7 +237,7 @@ namespace AmplifyShaderEditor
 
 		private bool m_reRegisterName = false;
 		protected bool m_allowPropertyDuplicates = false;
-		//protected bool m_useCustomPrefix = false;
+		
 		protected string m_customPrefix = null;
 
 		protected int m_propertyTab = 0;
@@ -179,7 +245,7 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private string m_uniqueName;
 
-		// Property Attributes
+		
 		private const float ButtonLayoutWidth = 15;
 
 		protected bool m_visibleAttribsFoldout;
@@ -195,7 +261,7 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		protected List<int> m_selectedAttribs = new List<int>();
 
-		//Title editing 
+		
 		protected bool m_isEditing;
 		protected bool m_stopEditing;
 		protected bool m_startEditing;
@@ -384,10 +450,10 @@ namespace AmplifyShaderEditor
 
 			if( parameterType == PropertyType.InstancedProperty )
 			{
-				//if( m_containerGraph.IsSRP )
-				//{					
-				//	UIUtils.ShowMessage( InstancedPropertyWarning,MessageSeverity.Warning );
-				//}
+				
+				
+				
+				
 
 				UIUtils.CurrentWindow.OutsideGraph.AddInstancePropertyCount();
 			}
@@ -442,7 +508,7 @@ namespace AmplifyShaderEditor
 			}
 
 			int attribCount = m_selectedAttribs.Count;
-			// Add new port
+			
 			if( GUILayout.Button( string.Empty, UIUtils.PlusStyle, GUILayout.Width( ButtonLayoutWidth ) ) )
 			{
 				m_visibleAttribsFoldout = true;
@@ -450,7 +516,7 @@ namespace AmplifyShaderEditor
 				OnAtrributesChanged();
 			}
 
-			//Remove port
+			
 			if( GUILayout.Button( string.Empty, UIUtils.MinusStyle, GUILayout.Width( ButtonLayoutWidth ) ) )
 			{
 				if( attribCount > 0 )
@@ -487,7 +553,7 @@ namespace AmplifyShaderEditor
 
 		void DrawEnumAddRemoveButtons()
 		{
-			// Add new port
+			
 			if( GUILayout.Button( string.Empty, UIUtils.PlusStyle, GUILayout.Width( ButtonLayoutWidth ) ) && m_enumModeInt == 0 )
 			{
 				m_enumNames.Add( "Option" + ( m_enumValues.Count + 1 ) );
@@ -496,7 +562,7 @@ namespace AmplifyShaderEditor
 				m_visibleEnumsFoldout = true;
 			}
 
-			//Remove port
+			
 			if( GUILayout.Button( string.Empty, UIUtils.MinusStyle, GUILayout.Width( ButtonLayoutWidth ) ) && m_enumModeInt == 0 )
 			{
 				if( m_enumNames.Count - 1 > -1 )
@@ -515,7 +581,13 @@ namespace AmplifyShaderEditor
 			if( m_enumModeInt == 0 )
 			{
 				if( m_enumNames.Count == 0 )
-					EditorGUILayout.HelpBox( "Your list is Empty!\nUse the plus button to add more.", MessageType.Info );
+					EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"Your list is Empty!\nUse the plus button to add more."
+#else
+"您的列表为空！\n使用加号按钮添加更多内容。"
+#endif
+, MessageType.Info );
 
 				float cacheLabelSize = EditorGUIUtility.labelWidth;
 				EditorGUIUtility.labelWidth = 50;
@@ -524,7 +596,13 @@ namespace AmplifyShaderEditor
 				{
 					EditorGUI.BeginChangeCheck();
 					EditorGUILayout.BeginHorizontal();
-					m_enumNames[ i ] = EditorGUILayoutTextField( "Name", m_enumNames[ i ] );
+					m_enumNames[ i ] = EditorGUILayoutTextField( 
+#if !WB_LANGUAGE_CHINESE
+"Name"
+#else
+"姓名"
+#endif
+, m_enumNames[ i ] );
 					m_enumValues[ i ] = Mathf.Max( 0, EditorGUILayoutIntField( "Value", m_enumValues[ i ], GUILayout.Width( 100 ) ) );
 					EditorGUILayout.EndHorizontal();
 					if( EditorGUI.EndChangeCheck() )
@@ -549,7 +627,13 @@ namespace AmplifyShaderEditor
 			else
 			{
 				EditorGUILayout.BeginHorizontal();
-				m_enumClassName = EditorGUILayoutTextField( "Class Name", m_enumClassName );
+				m_enumClassName = EditorGUILayoutTextField( 
+#if !WB_LANGUAGE_CHINESE
+"Class Name"
+#else
+"班级名称"
+#endif
+, m_enumClassName );
 
 				if( GUILayout.Button( string.Empty, UIUtils.InspectorPopdropdownFallback, GUILayout.Width( 17 ), GUILayout.Height( 19 ) ) )
 				{
@@ -578,16 +662,16 @@ namespace AmplifyShaderEditor
 
 		protected void DrawCustomAttrAddRemoveButtons()
 		{
-			// Add new port
+			
 			if( GUILayout.Button( string.Empty, UIUtils.PlusStyle, GUILayout.Width( ButtonLayoutWidth ) ) )
 			{
 				m_customAttr.Add( "" );
 				m_customAttrCount++;
-				//m_enumCount++;
+				
 				m_visibleCustomAttrFoldout = true;
 			}
 
-			//Remove port
+			
 			if( GUILayout.Button( string.Empty, UIUtils.MinusStyle, GUILayout.Width( ButtonLayoutWidth ) ) )
 			{
 				if( m_customAttr.Count - 1 > -1 )
@@ -603,7 +687,13 @@ namespace AmplifyShaderEditor
 			for( int i = 0; i < m_customAttrCount; i++ )
 			{
 				EditorGUI.BeginChangeCheck();
-				m_customAttr[ i ] = EditorGUILayoutTextField( "Attribute " + i, m_customAttr[ i ] );
+				m_customAttr[ i ] = EditorGUILayoutTextField( 
+#if !WB_LANGUAGE_CHINESE
+"Attribute "
+#else
+"属性"
+#endif
++ i, m_customAttr[ i ] );
 				if( EditorGUI.EndChangeCheck() )
 				{
 					m_customAttr[ i ] = UIUtils.RemoveInvalidAttrCharacters( m_customAttr[ i ] );
@@ -612,7 +702,13 @@ namespace AmplifyShaderEditor
 
 			if( m_customAttrCount <= 0 )
 			{
-				EditorGUILayout.HelpBox( "Your list is Empty!\nUse the plus button to add more.", MessageType.Info );
+				EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"Your list is Empty!\nUse the plus button to add more."
+#else
+"您的列表为空！\n使用加号按钮添加更多内容。"
+#endif
+, MessageType.Info );
 				return;
 			}
 
@@ -624,14 +720,14 @@ namespace AmplifyShaderEditor
 		
 		protected void DrawHeaderAttrAddRemoveButtons()
 		{
-			// Add new port
+			
 			if( GUILayout.Button( string.Empty, UIUtils.PlusStyle, GUILayout.Width( ButtonLayoutWidth ) ) )
 			{
 				m_headerAttributeValues.Add( "" );
 				m_visibleHeaderAttrFoldout = true;
 			}
 
-			//Remove port
+			
 			if( GUILayout.Button( string.Empty, UIUtils.MinusStyle, GUILayout.Width( ButtonLayoutWidth ) ) )
 			{
 				if( m_headerAttributeValues.Count > 0 )
@@ -647,7 +743,13 @@ namespace AmplifyShaderEditor
 			for( int i = 0; i < count; i++ )
 			{
 				EditorGUI.BeginChangeCheck();
-				m_headerAttributeValues[ i ] = EditorGUILayoutTextField( "Header " + i, m_headerAttributeValues[ i ] );
+				m_headerAttributeValues[ i ] = EditorGUILayoutTextField( 
+#if !WB_LANGUAGE_CHINESE
+"Header "
+#else
+"头球"
+#endif
++ i, m_headerAttributeValues[ i ] );
 				if( EditorGUI.EndChangeCheck() )
 				{
 					m_headerAttributeValues[ i ] = UIUtils.RemoveHeaderAttrCharacters( m_headerAttributeValues[ i ] );
@@ -659,7 +761,13 @@ namespace AmplifyShaderEditor
 
 			if( count <= 0 )
 			{
-				EditorGUILayout.HelpBox( "Your list is Empty!\nUse the plus button to add more.", MessageType.Info );
+				EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"Your list is Empty!\nUse the plus button to add more."
+#else
+"您的列表为空！\n使用加号按钮添加更多内容。"
+#endif
+, MessageType.Info );
 				return;
 			}
 
@@ -706,56 +814,56 @@ namespace AmplifyShaderEditor
 
 				m_customAttrCount = m_customAttr.Count;
 			}
-			//m_customAttrCount = EditorGUILayoutToggleLeft( "Custom Attribute", m_customAttrCount == 0 ? false : true ) == 0 ? false : true;
+			
 
-			//if( attribCount == 0 )
-			//{
-			//	EditorGUILayout.HelpBox( "Your list is Empty!\nUse the plus button to add more.", MessageType.Info );
-			//}
+			
+			
+			
+			
 
-			//bool actionAllowed = true;
-			//int deleteItem = -1;
+			
+			
 
-			//for ( int i = 0; i < attribCount; i++ )
-			//{
-			//	EditorGUI.BeginChangeCheck();
-			//	{
-			//		m_selectedAttribs[ i ] = EditorGUILayoutPopup( m_selectedAttribs[ i ], m_availableAttribsArr );
-			//	}
-			//	if ( EditorGUI.EndChangeCheck() )
-			//	{
-			//		OnAtrributesChanged();
-			//	}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 
-			//	EditorGUILayout.BeginHorizontal();
-			//	GUILayout.Label( " " );
-			//	// Add After
-			//	if ( GUILayout.Button( string.Empty, UIUtils.PlusStyle, GUILayout.Width( ButtonLayoutWidth ) ) )
-			//	{
-			//		if ( actionAllowed )
-			//		{
-			//			m_selectedAttribs.Insert( i, m_selectedAttribs[ i ] );
-			//			actionAllowed = false;
-			//			OnAtrributesChanged();
-			//		}
-			//	}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 
-			//	// Remove Current
-			//	if ( GUILayout.Button( string.Empty, UIUtils.MinusStyle, GUILayout.Width( ButtonLayoutWidth ) ) )
-			//	{
-			//		if ( actionAllowed )
-			//		{
-			//			actionAllowed = false;
-			//			deleteItem = i;
-			//		}
-			//	}
-			//	EditorGUILayout.EndHorizontal();
-			//}
-			//if ( deleteItem > -1 )
-			//{
-			//	m_selectedAttribs.RemoveAt( deleteItem );
-			//	OnAtrributesChanged();
-			//}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		}
 		public virtual void DrawMainPropertyBlock()
 		{
@@ -903,11 +1011,11 @@ namespace AmplifyShaderEditor
 
 		public void ShowToolbar()
 		{
-			//if ( !CanDrawMaterial )
-			//{
-			//	ShowDefaults();
-			//	return;
-			//}
+			
+			
+			
+			
+			
 
 			EditorGUILayout.BeginHorizontal();
 			GUILayout.Space( 20 );
@@ -976,7 +1084,7 @@ namespace AmplifyShaderEditor
 				m_propertyName = EditorGUILayoutTextField( PropertyNameStr, m_propertyName );
 				if( EditorGUI.EndChangeCheck() )
 				{
-					//BeginPropertyFromInspectorCheck();
+					
 					m_checkDuplicateProperty = true;
 					m_checkDuplicatePropertyTimestamp = EditorApplication.timeSinceStartup;
 				}
@@ -1039,14 +1147,14 @@ namespace AmplifyShaderEditor
 
 		public override void DrawTitle( Rect titlePos )
 		{
-			//base.DrawTitle( titlePos );
+			
 		}
 
 		public override void Draw( DrawInfo drawInfo )
 		{
 			base.Draw( drawInfo );
 
-			// Custom Editable Title
+			
 			if( ContainerGraph.LodLevel <= ParentGraph.NodeLOD.LOD3 )
 			{
 				if( !m_isEditing && ( ( !ContainerGraph.ParentWindow.MouseInteracted && drawInfo.CurrentEventType == EventType.MouseDown && m_titleClickArea.Contains( drawInfo.MousePosition ) ) ) )
@@ -1080,8 +1188,8 @@ namespace AmplifyShaderEditor
 
 					if( m_startEditing )
 						EditorGUI.FocusTextInControl( m_uniqueName );
-					//if( m_stopEditing )
-					//	GUI.FocusControl( null );
+					
+					
 				}
 
 				if( drawInfo.CurrentEventType == EventType.Repaint )
@@ -1120,7 +1228,7 @@ namespace AmplifyShaderEditor
 
 		public override void OnNodeLayout( DrawInfo drawInfo )
 		{
-			//base.OnNodeLayout( drawInfo );
+			
 			if( m_reRegisterName )
 			{
 				m_reRegisterName = false;
@@ -1137,23 +1245,23 @@ namespace AmplifyShaderEditor
 				if( m_currentParameterType != PropertyType.Constant )
 				{
 					SetClippedTitle( m_propertyInspectorName, m_longNameSize );
-					//bool globalHandler = false;
-					//if( globalHandler )
-					//{
+					
+					
+					
 					string currValue = ( m_currentParameterType == PropertyType.Global && m_globalDefaultBehavior ) ? "<GLOBAL>" : GetPropertyValStr();
 					SetClippedAdditionalTitle( string.Format( m_useVarSubtitle ? Constants.SubTitleVarNameFormatStr : Constants.SubTitleValueFormatStr, currValue ), m_longNameSize, LongNameEnder );
-					//}
-					//else
-					//{
-					//	if( m_currentParameterType == PropertyType.Global )
-					//	{
-					//		SetAdditonalTitleText( "Global" );
-					//	}
-					//	else
-					//	{
-					//		SetAdditonalTitleText( string.Format( m_useVarSubtitle ? Constants.SubTitleVarNameFormatStr : Constants.SubTitleValueFormatStr, GetPropertyValStr() ) );
-					//	}
-					//}
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
 				}
 				else
 				{
@@ -1164,7 +1272,7 @@ namespace AmplifyShaderEditor
 
 			CheckPropertyFromInspector();
 			CheckDuplicateProperty();
-			// RUN LAYOUT CHANGES AFTER TITLES CHANGE
+			
 			base.OnNodeLayout( drawInfo );
 
 			m_titleClickArea = m_titlePos;
@@ -1178,7 +1286,7 @@ namespace AmplifyShaderEditor
 			if( !m_isVisible )
 				return;
 
-			// Fixed Title ( only renders when not editing )
+			
 			if( m_showTitleWhenNotEditing && !m_isEditing && !m_startEditing && ContainerGraph.LodLevel <= ParentGraph.NodeLOD.LOD3 )
 			{
 				GUI.Label( m_titleClickArea, m_content, UIUtils.GetCustomStyle( CustomStyle.NodeTitle ) );
@@ -1294,8 +1402,8 @@ namespace AmplifyShaderEditor
 
 		public virtual void CheckIfAutoRegister( ref MasterNodeDataCollector dataCollector )
 		{
-			// Also testing inside shader function because node can be used indirectly over a custom expression and directly over a Function Output node 
-			// That isn't being used externaly making it to not be registered ( since m_connStatus it set to Connected by being connected to an output node
+			
+			
 			if( CurrentParameterType != PropertyType.Constant && m_autoRegister && ( m_connStatus != NodeConnectionStatus.Connected || InsideShaderFunction ) )
 			{
 				RegisterProperty( ref dataCollector );
@@ -1314,7 +1422,7 @@ namespace AmplifyShaderEditor
 			{
 				case PropertyType.Property:
 				{
-					//Debug.Log( this.GetInstanceID()+" "+ OrderIndex+" "+GetPropertyValue() );
+					
 					dataCollector.AddToProperties( UniqueId, GetPropertyValue(), OrderIndex );
 					string dataType = string.Empty;
 					string dataName = string.Empty;
@@ -1335,7 +1443,7 @@ namespace AmplifyShaderEditor
 					{
 						dataCollector.AddToDotsProperties( m_outputPorts[ 0 ].DataType, UniqueId, m_propertyName, OrderIndex, CurrentPrecisionType );
 					}
-					//dataCollector.AddToUniforms( m_uniqueId, GetUniformValue() );
+					
 				}
 				break;
 				case PropertyType.InstancedProperty:
@@ -1364,7 +1472,7 @@ namespace AmplifyShaderEditor
 							dataCollector.AddToUniforms( UniqueId, dataType, dataName, m_addGlobalToSRPBatcher, m_excludeUniform );
 						}
 					}
-					//dataCollector.AddToUniforms( m_uniqueId, GetUniformValue() );
+					
 				}
 				break;
 				case PropertyType.Constant: break;
@@ -1373,7 +1481,7 @@ namespace AmplifyShaderEditor
 			if( m_currentParameterType == PropertyType.InstancedProperty && !m_outputPorts[ 0 ].IsLocalValue( dataCollector.PortCategory ) )
 			{
 				string instancedVar = dataCollector.IsSRP ?
-					//m_propertyName :
+					
 					string.Format( IOUtils.LWSRPInstancedPropertiesData, dataCollector.InstanceBlockName, m_propertyName ) :
 					string.Format( IOUtils.InstancedPropertiesData, m_propertyName );
 
@@ -1491,7 +1599,7 @@ namespace AmplifyShaderEditor
 				if( isSRP )
 				{
 					return string.Format( IOUtils.LWSRPInstancedPropertiesElement, UIUtils.PrecisionWirePortToCgType( CurrentPrecisionType, m_outputPorts[ 0 ].DataType ), m_propertyName );
-					//return GetUniformValue();
+					
 				}
 				else
 				{
@@ -1508,7 +1616,7 @@ namespace AmplifyShaderEditor
 			{
 				if( isSRP )
 				{
-					//return GetUniformValue( dataType, value );
+					
 					return string.Format( IOUtils.LWSRPInstancedPropertiesElement, UIUtils.PrecisionWirePortToCgType( CurrentPrecisionType, dataType ), value );
 				}
 				else
@@ -1756,9 +1864,9 @@ namespace AmplifyShaderEditor
 
 		public virtual void ReleaseRansomedProperty()
 		{
-			if( m_variableMode == VariableMode.Fetch/* && m_autoGlobalName */)
+			if( m_variableMode == VariableMode.Fetch)
 			{
-				//Fooling setter to have a different value 
+				
 				m_variableMode = VariableMode.Create;
 				CurrentVariableMode = VariableMode.Fetch;
 			}
@@ -1825,7 +1933,7 @@ namespace AmplifyShaderEditor
 					m_variableMode = value;
 					if( value == VariableMode.Fetch )
 					{
-						// Release ownership on name
+						
 						if( UIUtils.CheckUniformNameOwner( m_oldName ) == UniqueId )
 						{
 							UIUtils.ReleaseUniformName( UniqueId , m_oldName );
@@ -1884,7 +1992,13 @@ namespace AmplifyShaderEditor
 
 		public void ShowGlobalValueButton()
 		{
-			if( GUILayout.Button( "Set Global Value" ) )
+			if( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Set Global Value"
+#else
+"设置全局值"
+#endif
+) )
 			{
 				SetGlobalValue();
 			}
@@ -1897,7 +2011,7 @@ namespace AmplifyShaderEditor
 				m_propertyInspectorName.IndexOf( text, StringComparison.CurrentCultureIgnoreCase ) >= 0;
 		}
 
-		//This should only be used on template internal properties
+		
 		public void PropertyNameFromTemplate( TemplateShaderPropertyData data )
 		{
 			m_propertyName = data.PropertyName;

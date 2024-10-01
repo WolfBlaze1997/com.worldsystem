@@ -1,12 +1,36 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Cosh", "Trigonometry Operators", "Hyperbolic cosine of scalars and vectors",tags: "hyperbolic cosine" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Cosh"
+#else
+"科斯"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Trigonometry Operators"
+#else
+"三角运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Hyperbolic cosine of scalars and vectors"
+#else
+"标量和向量的双曲余弦"
+#endif
+,tags: 
+#if !WB_LANGUAGE_CHINESE
+"hyperbolic cosine"
+#else
+"双曲余弦"
+#endif
+)]
 	public sealed class CoshOpNode : SingleInputOp
 	{
 		protected override void CommonInit( int uniqueId )

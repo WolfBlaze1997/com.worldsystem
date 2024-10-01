@@ -1,12 +1,36 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Radians", "Trigonometry Operators", "Converts values of scalars and vectors from degrees to radians",tags: "degrees" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Radians"
+#else
+"辐射"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Trigonometry Operators"
+#else
+"三角运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Converts values of scalars and vectors from degrees to radians"
+#else
+"将标量和向量的值从度数转换为弧度"
+#endif
+,tags: 
+#if !WB_LANGUAGE_CHINESE
+"degrees"
+#else
+"度"
+#endif
+)]
 	public sealed class RadiansOpNode : SingleInputOp
 	{
 		protected override void CommonInit( int uniqueId )

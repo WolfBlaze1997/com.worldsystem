@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Exp2", "Math Operators", "Base-2 exponential of scalars and vectors" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Exp2"
+#else
+"Exp2"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Base-2 exponential of scalars and vectors"
+#else
+"标量和向量的基2指数"
+#endif
+)]
 	public sealed class Exp2OpNode : SingleInputOp
 	{
 		protected override void CommonInit( int uniqueId )

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -7,11 +7,35 @@ using UnityEditor;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Billboard", "Miscellaneous", "Calculates new Vertex positions and normals to achieve a billboard effect." )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Billboard"
+#else
+"广告牌"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Calculates new Vertex positions and normals to achieve a billboard effect."
+#else
+"计算新的顶点位置和法线以实现公告牌效果。"
+#endif
+)]
 	public sealed class BillboardNode : ParentNode
 	{
 		private const string ErrorMessage = "Billboard node should only be connected to vertex ports.";
-		private const string WarningMessage = "This node is a bit different from all others as it injects the necessary code into the vertex body and writes directly on the vertex position and normal.\nIt outputs a value of 0 so it can be connected directly to a vertex port.\n[Only if that port is a relative vertex offset].";
+		private const string WarningMessage = 
+#if !WB_LANGUAGE_CHINESE
+"This node is a bit different from all others as it injects the necessary code into the vertex body and writes directly on the vertex position and normal.\nIt outputs a value of 0 so it can be connected directly to a vertex port.\n[Only if that port is a relative vertex offset]."
+#else
+"此节点与其他节点略有不同，因为它将必要的代码注入顶点体，并直接在顶点位置和法线上写入。\n它输出值0，因此可以直接连接到顶点端口。\n[仅当该端口是相对顶点偏移时]。"
+#endif
+;
 
 		[SerializeField]
 		private BillboardType m_billboardType = BillboardType.Cylindrical;

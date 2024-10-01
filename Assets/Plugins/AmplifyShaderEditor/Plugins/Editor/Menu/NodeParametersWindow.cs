@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -11,7 +11,13 @@ namespace AmplifyShaderEditor
 	public sealed class NodeParametersWindow : MenuParent
 	{
 		private int m_lastSelectedNode = -1;
-		private const string TitleStr = "Node Properties";
+		private const string TitleStr = 
+#if !WB_LANGUAGE_CHINESE
+"Node Properties"
+#else
+"节点属性"
+#endif
+;
 		private GUIStyle m_nodePropertiesStyle;
 		private GUIContent m_dummyContent = new GUIContent();
 		private GUIStyle m_propertyAdjustment;
@@ -33,7 +39,7 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private List<PropertyNode> m_propertyReordableNodes = new List<PropertyNode>();
 
-		// width and height are between [0,1] and represent a percentage of the total screen area
+		
 		public NodeParametersWindow( AmplifyShaderEditorWindow parentWindow ) : base( parentWindow, 0, 0, 285, 0, string.Empty, MenuAnchor.TOP_LEFT, MenuAutoSize.MATCH_VERTICAL )
 		{
 			SetMinimizedArea( -225, 0, 260, 0 );
@@ -100,10 +106,10 @@ namespace AmplifyShaderEditor
 
 				GUILayout.BeginArea( m_transformedArea, m_content, m_style );
 				{
-					//Draw selected node parameters
+					
 					if ( selectedNode != null )
 					{
-						// this hack is need because without it the several FloatFields/Textfields/... would show wrong values ( different from the ones they were assigned to show )
+						
 						if ( m_lastSelectedNode != selectedNode.UniqueId )
 						{
 							m_lastSelectedNode = selectedNode.UniqueId;
@@ -115,7 +121,13 @@ namespace AmplifyShaderEditor
 							EditorGUILayout.Separator();
 							if ( selectedNode.UniqueId == ParentWindow.CurrentGraph.CurrentMasterNodeId )
 							{
-								m_dummyContent.text = "Output Node";
+								m_dummyContent.text = 
+#if !WB_LANGUAGE_CHINESE
+"Output Node"
+#else
+"输出节点"
+#endif
+;
 							}
 							else
 							{
@@ -126,7 +138,13 @@ namespace AmplifyShaderEditor
 								}
 								else if ( selectedNode is CommentaryNode )
 								{
-									m_dummyContent.text = "Commentary";
+									m_dummyContent.text = 
+#if !WB_LANGUAGE_CHINESE
+"Commentary"
+#else
+"评论"
+#endif
+;
 								}
 								else
 								{
@@ -137,12 +155,12 @@ namespace AmplifyShaderEditor
 							EditorGUILayout.LabelField( m_dummyContent, m_nodePropertiesStyle );
 
 							EditorGUILayout.Separator();
-							//UIUtils.RecordObject( selectedNode , "Changing properties on node " + selectedNode.UniqueId);
+							
 							m_currentScrollPos = EditorGUILayout.BeginScrollView( m_currentScrollPos, GUILayout.Width( 0 ), GUILayout.Height( 0 ) );
 							float labelWidth = EditorGUIUtility.labelWidth;
-							//if( selectedNode.TextLabelWidth > 0 )
-							//	EditorGUIUtility.labelWidth = selectedNode.TextLabelWidth;
-							//else
+							
+							
+							
 								EditorGUIUtility.labelWidth = TransformedArea.width * 0.42f;
 
 							changeCheck = selectedNode.SafeDrawProperties();
@@ -159,11 +177,17 @@ namespace AmplifyShaderEditor
 					}
 					else
 					{
-						//Draw Graph Params
+						
 						EditorGUILayout.BeginVertical();
 						{
 							EditorGUILayout.Separator();
-							EditorGUILayout.LabelField( "Graph Properties", m_nodePropertiesStyle );
+							EditorGUILayout.LabelField( 
+#if !WB_LANGUAGE_CHINESE
+"Graph Properties"
+#else
+"图形属性"
+#endif
+, m_nodePropertiesStyle );
 							EditorGUILayout.Separator();
 
 							m_currentScrollPos = EditorGUILayout.BeginScrollView( m_currentScrollPos, GUILayout.Width( 0 ), GUILayout.Height( 0 ) );
@@ -171,30 +195,60 @@ namespace AmplifyShaderEditor
 							EditorGUIUtility.labelWidth = 90;
 
 							bool generalIsVisible = m_parentWindow.InnerWindowVariables.ExpandedGeneralShaderOptions;
-							NodeUtils.DrawPropertyGroup( ref generalIsVisible, " General", DrawGeneralFunction );
+							NodeUtils.DrawPropertyGroup( ref generalIsVisible, 
+#if !WB_LANGUAGE_CHINESE
+" General"
+#else
+"概述"
+#endif
+, DrawGeneralFunction );
 							m_parentWindow.InnerWindowVariables.ExpandedGeneralShaderOptions = generalIsVisible;
 							AmplifyShaderFunction function = ParentWindow.CurrentGraph.CurrentShaderFunction;
 							if( function != null )
 							{
-								//function.AdditionalIncludes.Draw( ParentWindow.CurrentGraph.CurrentOutputNode );
-								//function.AdditionalPragmas.Draw( ParentWindow.CurrentGraph.CurrentOutputNode );
+								
+								
 								function.AdditionalDirectives.Draw( ParentWindow.CurrentGraph.CurrentOutputNode );
 							}
 
 							bool inputIsVisible = m_parentWindow.InnerWindowVariables.ExpandedFunctionInputs;
-							NodeUtils.DrawPropertyGroup( ref inputIsVisible, " Function Inputs", DrawFunctionInputs );
+							NodeUtils.DrawPropertyGroup( ref inputIsVisible, 
+#if !WB_LANGUAGE_CHINESE
+" Function Inputs"
+#else
+"功能输入"
+#endif
+, DrawFunctionInputs );
 							m_parentWindow.InnerWindowVariables.ExpandedFunctionInputs = inputIsVisible;
 
 							bool swicthIsVisible = m_parentWindow.InnerWindowVariables.ExpandedFunctionSwitches;
-							NodeUtils.DrawPropertyGroup( ref swicthIsVisible, " Function Switches", DrawFunctionSwitches );
+							NodeUtils.DrawPropertyGroup( ref swicthIsVisible, 
+#if !WB_LANGUAGE_CHINESE
+" Function Switches"
+#else
+"功能开关"
+#endif
+, DrawFunctionSwitches );
 							m_parentWindow.InnerWindowVariables.ExpandedFunctionSwitches = swicthIsVisible;
 
 							bool outputIsVisible = m_parentWindow.InnerWindowVariables.ExpandedFunctionOutputs;
-							NodeUtils.DrawPropertyGroup( ref outputIsVisible, " Function Outputs", DrawFunctionOutputs );
+							NodeUtils.DrawPropertyGroup( ref outputIsVisible, 
+#if !WB_LANGUAGE_CHINESE
+" Function Outputs"
+#else
+"功能输出"
+#endif
+, DrawFunctionOutputs );
 							m_parentWindow.InnerWindowVariables.ExpandedFunctionOutputs = outputIsVisible;
 
 							bool properties = ParentWindow.InnerWindowVariables.ExpandedProperties;
-							NodeUtils.DrawPropertyGroup( ref properties, " Material Properties", DrawFunctionProperties );
+							NodeUtils.DrawPropertyGroup( ref properties, 
+#if !WB_LANGUAGE_CHINESE
+" Material Properties"
+#else
+"材料特性"
+#endif
+, DrawFunctionProperties );
 							ParentWindow.InnerWindowVariables.ExpandedProperties = properties;
 
 							EditorGUIUtility.labelWidth = labelWidth;
@@ -203,7 +257,7 @@ namespace AmplifyShaderEditor
 						EditorGUILayout.EndVertical();
 					}
 				}
-				// Close window area
+				
 				GUILayout.EndArea();
 			}
 
@@ -225,31 +279,79 @@ namespace AmplifyShaderEditor
 			if ( serializedObject != null )
 			{
 				SerializedProperty temo = serializedObject.FindProperty( "m_description" );
-				EditorGUILayout.PropertyField( temo, new GUIContent( "    Description" ) );
+				EditorGUILayout.PropertyField( temo, new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"    Description"
+#else
+"说明"
+#endif
+) );
 
 				SerializedProperty url = serializedObject.FindProperty( "m_url" );
-				EditorGUILayout.PropertyField( url , new GUIContent( "Custom URL" ) );
+				EditorGUILayout.PropertyField( url , new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Custom URL"
+#else
+"自定义URL"
+#endif
+) );
 
 				SerializedProperty cat = serializedObject.FindProperty( "m_nodeCategory" );
 				SerializedProperty ppos = serializedObject.FindProperty( "m_previewPosition" );
 				
-				EditorGUILayout.PropertyField( ppos, new GUIContent( "Preview Position" ) );
-				cat.intValue = ParentWindow.CurrentGraph.CurrentOutputNode.EditorGUILayoutPopup( "Category", cat.intValue, UIUtils.CategoryPresets );
+				EditorGUILayout.PropertyField( ppos, new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Preview Position"
+#else
+"预览位置"
+#endif
+) );
+				cat.intValue = ParentWindow.CurrentGraph.CurrentOutputNode.EditorGUILayoutPopup( 
+#if !WB_LANGUAGE_CHINESE
+"Category"
+#else
+"类别"
+#endif
+, cat.intValue, UIUtils.CategoryPresets );
 
 				if( cat.enumValueIndex == 0 )
 				{
 					SerializedProperty custCat = serializedObject.FindProperty( "m_customNodeCategory" );
-					EditorGUILayout.PropertyField( custCat, new GUIContent( "Custom" ) );
+					EditorGUILayout.PropertyField( custCat, new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Custom"
+#else
+"自定义"
+#endif
+) );
 				}
 				SerializedProperty hidden = serializedObject.FindProperty( "m_hidden" );
-				EditorGUILayout.PropertyField( hidden, new GUIContent( "Hidden" ) );
+				EditorGUILayout.PropertyField( hidden, new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Hidden"
+#else
+"隐藏"
+#endif
+) );
 
 				SerializedProperty customHeader = serializedObject.FindProperty( "m_headerStyle" );
-				EditorGUILayout.PropertyField( customHeader, new GUIContent( "Header Style" ) );
+				EditorGUILayout.PropertyField( customHeader, new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Header Style"
+#else
+"标题样式"
+#endif
+) );
 				if ( customHeader.intValue == ( int )AmplifyShaderFunction.HeaderStyle.Custom )
 				{
 					SerializedProperty headerColor = serializedObject.FindProperty( "m_headerColor" );
-					EditorGUILayout.PropertyField( headerColor, new GUIContent( "Header Color" ) );
+					EditorGUILayout.PropertyField( headerColor, new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Header Color"
+#else
+"标题颜色"
+#endif
+) );
 				}				
 
 				serializedObject.ApplyModifiedProperties();
@@ -278,10 +380,10 @@ namespace AmplifyShaderEditor
 
 				m_functionInputsReordableList.onChangedCallback = ( list ) =>
 				{
-					//for ( int i = 0; i < functionInputNodes.Count; i++ )
-					//{
-					//	functionInputNodes[ i ].OrderIndex = i;
-					//}
+					
+					
+					
+					
 					ForceInputReorder( ref functionInputNodes );
 				};
 
@@ -404,7 +506,7 @@ namespace AmplifyShaderEditor
 
 		private void RefreshVisibleList( ref List<PropertyNode> allNodes )
 		{
-			// temp reference for lambda expression
+			
 			List<PropertyNode> nodes = allNodes;
 			m_propertyReordableNodes.Clear();
 
@@ -481,7 +583,7 @@ namespace AmplifyShaderEditor
 
 			List<FunctionSwitch> functionSwitchNodes = UIUtils.FunctionSwitchList();
 			ForceSwitchesReorder( ref functionSwitchNodes );
-			//RecursiveLog();
+			
 		}
 
 		private void RecursiveLog()
@@ -500,7 +602,7 @@ namespace AmplifyShaderEditor
 
 		private void ReorderList( ref List<PropertyNode> nodes )
 		{
-			// clear lock list before reordering because of multiple sf being used
+			
 			for( int i = 0; i < nodes.Count; i++ )
 			{
 				ReordenatorNode rnode = nodes[ i ] as ReordenatorNode;
@@ -523,7 +625,7 @@ namespace AmplifyShaderEditor
 						{
 							propoffset += renode.RecursiveCount();
 
-							// the same reordenator can exist multiple times, apply ordering to all of them
+							
 							for( int j = 0; j < nodes.Count; j++ )
 							{
 								ReordenatorNode pnode = ( nodes[ j ] as ReordenatorNode );

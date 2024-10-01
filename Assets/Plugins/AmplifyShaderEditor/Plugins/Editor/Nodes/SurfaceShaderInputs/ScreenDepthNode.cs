@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -8,7 +8,25 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Screen Depth", "Camera And Screen", "Given a screen position returns the depth of the scene to the object as seen by the camera" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Screen Depth"
+#else
+"屏幕深度"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Camera And Screen"
+#else
+"摄像头和屏幕"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Given a screen position returns the depth of the scene to the object as seen by the camera"
+#else
+"给定屏幕位置，将场景的深度返回给相机看到的对象"
+#endif
+)]
 	public sealed class ScreenDepthNode : ParentNode
 	{
 		[SerializeField]
@@ -17,7 +35,13 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private int m_viewSpaceInt = 0;
 
-		private const string ConvertToLinearStr = "Convert To Linear";
+		private const string ConvertToLinearStr = 
+#if !WB_LANGUAGE_CHINESE
+"Convert To Linear"
+#else
+"转换为线性"
+#endif
+;
 
 		private readonly string[] m_viewSpaceStr = { "Eye Space", "0-1 Space" };
 
@@ -28,7 +52,13 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT4, false, "Pos" );
+			AddInputPort( WirePortDataType.FLOAT4, false, 
+#if !WB_LANGUAGE_CHINESE
+"Pos"
+#else
+"销售时点情报系统"
+#endif
+);
 			AddOutputPort( WirePortDataType.FLOAT, "Depth" );
 			m_autoWrapProperties = true;
 			m_hasLeftDropdown = true;
@@ -67,7 +97,13 @@ namespace AmplifyShaderEditor
 		{
 			base.DrawProperties();
 			EditorGUI.BeginChangeCheck();
-			m_viewSpaceInt = EditorGUILayoutPopup( "View Space", m_viewSpaceInt, m_viewSpaceStr );
+			m_viewSpaceInt = EditorGUILayoutPopup( 
+#if !WB_LANGUAGE_CHINESE
+"View Space"
+#else
+"查看空间"
+#endif
+, m_viewSpaceInt, m_viewSpaceStr );
 			if( EditorGUI.EndChangeCheck() )
 			{
 				SetAdditonalTitleText( string.Format( Constants.SubTitleSpaceFormatStr, m_viewSpaceStr[ m_viewSpaceInt ] ) );
@@ -94,8 +130,8 @@ namespace AmplifyShaderEditor
 			{
 				if( dataCollector.IsTemplate && dataCollector.CurrentSRPType == TemplateSRPType.URP )
 				{
-					//dataCollector.AddToUniforms( UniqueId, Constants.CameraDepthTextureSRPVar );
-					//dataCollector.AddToUniforms( UniqueId, Constants.CameraDepthTextureSRPSampler );
+					
+					
 					dataCollector.AddToDirectives( Constants.CameraDepthTextureLWEnabler, -1, AdditionalLineType.Define );
 					if ( ASEPackageManagerHelper.PackageSRPVersion < ( int )ASESRPBaseline.ASE_SRP_16 )
 					{

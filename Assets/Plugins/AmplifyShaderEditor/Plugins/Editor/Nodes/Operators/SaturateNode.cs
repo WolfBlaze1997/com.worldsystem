@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Saturate", "Math Operators", "Saturate clamps the input values into the [0,1] range" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Saturate"
+#else
+"浸透"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Saturate clamps the input values into the [0,1] range"
+#else
+"饱和将输入值限制在[0,1]范围内"
+#endif
+)]
 	public sealed class SaturateNode : SingleInputOp
 	{
 		protected override void CommonInit( int uniqueId )

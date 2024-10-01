@@ -33,7 +33,7 @@ namespace AmplifyShaderEditor
 			m_localVarName = localVarName;
 			m_position = position;
 			m_category = category;
-			//Debug.Log( m_localVarName + " " + m_inputData.PortCategory + " " + m_inputData.PortName );
+			
 		}
 
 		public TemplateLocalVarData( TemplateInfoOnSematics specialVarType,string id, WirePortDataType dataType, MasterNodePortCategory category, string localVarName, int position )
@@ -45,7 +45,7 @@ namespace AmplifyShaderEditor
 			m_specialVarType = specialVarType;
 			m_isSpecialVar = true;
 			m_category = category;
-			//Debug.Log( m_localVarName + " " + m_inputData.PortCategory + " " + m_inputData.PortName );
+			
 		}
 		
 		public WirePortDataType DataType { get { return m_dataType; } }

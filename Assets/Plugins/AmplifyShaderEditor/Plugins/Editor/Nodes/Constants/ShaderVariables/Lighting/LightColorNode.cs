@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 
 namespace AmplifyShaderEditor
 {
 	[System.Serializable]
-	[NodeAttributes( "Light Color", "Lighting", "Light Color, RGB value already contains light intensity while A only contains light intensity" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Light Color"
+#else
+"亮色"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Lighting"
+#else
+"照明"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Light Color, RGB value already contains light intensity while A only contains light intensity"
+#else
+"灯光颜色，RGB值已包含灯光强度，而A仅包含灯光强度"
+#endif
+)]
 	public sealed class LightColorNode : ShaderVariablesNode
 	{
 		private const string m_lightColorValue = "_LightColor0";
@@ -25,10 +43,10 @@ namespace AmplifyShaderEditor
 
 		public override void RenderNodePreview()
 		{
-			//Runs at least one time
+			
 			if( !m_initialized )
 			{
-				// nodes with no preview don't update at all
+				
 				PreviewIsDirty = false;
 				return;
 			}
@@ -84,8 +102,8 @@ namespace AmplifyShaderEditor
 				dataCollector.AddLocalVariable( UniqueId, CurrentPrecisionType, WirePortDataType.FLOAT4, m_localColorVar, m_lightColorValue );
 				dataCollector.AddLocalVariable( UniqueId, "#endif //aselc" );
 			}
-			//else if( ContainerGraph.CurrentStandardSurface.CurrentLightingModel == StandardShaderLightModel.CustomLighting )
-			//	finalVar = "gi.light.color";
+			
+			
 
 			switch ( outputId )
 			{

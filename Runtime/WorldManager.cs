@@ -1,13 +1,9 @@
-using System;
-using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using Unity.Collections;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.Serialization;
 
 // using WorldSystem.Editor;
 
@@ -15,11 +11,11 @@ namespace WorldSystem.Runtime
 {
     public partial class WorldManager
     {
+        
 #if UNITY_EDITOR
-
-        #region 编辑器
         
         #region 模块开关
+        
         [PropertyOrder(-100)]
         [ShowIf("timModuleToggle")]
         [FoldoutGroup("昼夜与天气")]
@@ -31,6 +27,7 @@ namespace WorldSystem.Runtime
             timModuleToggle = false;
             OnValidate();
         }
+        
         [PropertyOrder(-100)]
         [HideIf("timModuleToggle")]
         [VerticalGroup("昼夜与天气/Split/01")]
@@ -274,6 +271,46 @@ namespace WorldSystem.Runtime
         
         
         [PropertyOrder(-100)]
+        [ShowIf("lightingScatterModuleToggle")]
+        [VerticalGroup("昼夜与天气/Split03/05")]
+        [Button(ButtonSizes.Large, Name = "光照散射模块"), GUIColor(0.3f, 1f, 0.3f)]
+        private void LightingScatterModuleToggle_Off()
+        {
+            lightingScatterModuleToggle = false;
+            OnValidate();
+        }
+        [PropertyOrder(-100)]
+        [HideIf("lightingScatterModuleToggle")]
+        [VerticalGroup("昼夜与天气/Split03/05")]
+        [Button(ButtonSizes.Large, Name = "光照散射雾模块"), GUIColor(0.5f, 0.2f, 0.2f)]
+        private void LightingScatterModuleToggle_On()
+        {
+            UniverseBackgroundModuleToggle_On();
+            lightingScatterModuleToggle = true;
+            OnValidate();
+        }
+        
+        [PropertyOrder(-100)]
+        [ShowIf("postprocessAdjustModuleToggle")]
+        [VerticalGroup("昼夜与天气/Split03/06")]
+        [Button(ButtonSizes.Large, Name = "后处理调整模块"), GUIColor(0.3f, 1f, 0.3f)]
+        private void PostprocessAdjustModuleToggle_Off()
+        {
+            postprocessAdjustModuleToggle = false;
+            OnValidate();
+        }
+        [PropertyOrder(-100)]
+        [HideIf("postprocessAdjustModuleToggle")]
+        [VerticalGroup("昼夜与天气/Split03/06")]
+        [Button(ButtonSizes.Large, Name = "后处理调整模块"), GUIColor(0.5f, 0.2f, 0.2f)]
+        private void PostprocessAdjustModuleToggle_On()
+        {
+            UniverseBackgroundModuleToggle_On();
+            postprocessAdjustModuleToggle = true;
+            OnValidate();
+        }
+        
+        [PropertyOrder(-100)]
         [ShowIf("fpsDisplayModuleToggle")]
         [FoldoutGroup("实用工具")]
         [HorizontalGroup("实用工具/Split03",0.195f)]
@@ -295,25 +332,48 @@ namespace WorldSystem.Runtime
         }
         
 #if UNITY_EDITOR
-        [PropertyOrder(-100)]
+        
+        [PropertyOrder(-100)] [ReadOnly]
+        [ShowIf("baiduInputMethodPhraseToggle")]
+        [FoldoutGroup("实用工具")]
+        [HorizontalGroup("实用工具/Split03",0.195f)]
+        [VerticalGroup("实用工具/Split03/04")]
+        [Button(ButtonSizes.Large, Name = "百度输入法短语"), GUIColor(0.3f, 1f, 0.3f)]
+        private void BaiduInputMethodPhraseToggle_Off()
+        {
+            // baiduInputMethodPhraseToggle = false;
+            // OnValidate();
+        }
+        [PropertyOrder(-100)] [ReadOnly]
+        [HideIf("baiduInputMethodPhraseToggle")]
+        [VerticalGroup("实用工具/Split03/04")]
+        [Button(ButtonSizes.Large, Name = "百度输入法短语"), GUIColor(0.5f, 0.2f, 0.2f)]
+        private void BaiduInputMethodPhraseToggle_On()
+        {
+            // baiduInputMethodPhraseToggle = true;
+            // OnValidate();
+        }
+        
+        [PropertyOrder(-100)] [ReadOnly]
         [ShowIf("packageManagerToggle")]
         [HorizontalGroup("实用工具/Split03",0.195f)]
         [VerticalGroup("实用工具/Split03/02")]
         [Button(ButtonSizes.Large, Name = "包管理器模块"), GUIColor(0.3f, 1f, 0.3f)]
         private void PackageManagerToggle_Off()
         {
-            packageManagerToggle = false;
-            OnValidate();
+            // packageManagerToggle = false;
+            // OnValidate();
         }
-        [PropertyOrder(-100)]
+        [PropertyOrder(-100)] [ReadOnly]
         [HideIf("packageManagerToggle")]
         [VerticalGroup("实用工具/Split03/02")]
         [Button(ButtonSizes.Large, Name = "包管理器模块"), GUIColor(0.5f, 0.2f, 0.2f)]
         private void PackageManagerToggle_On()
         {
-            packageManagerToggle = true;
-            OnValidate();
+            // packageManagerToggle = true;
+            // OnValidate();
         }
+        
 #endif
         
         
@@ -321,12 +381,11 @@ namespace WorldSystem.Runtime
 
         
         #region GUI帮助函数
-        [HideInInspector] public bool hideFlagToggle;
-
         
-        [Button(ButtonSizes.Medium, Name = "开发者模式已开启")]
-        [ShowIf("hideFlagToggle")]
-        [GUIColor("white")]
+        [HideInInspector] 
+        public bool hideFlagToggle;
+        
+        [Button(ButtonSizes.Medium, Name = "开发者模式已开启")] [ShowIf("hideFlagToggle")] [GUIColor("white")]
         private void HideFlagToggleChild()
         {
             if (timeModule != null ||
@@ -344,9 +403,7 @@ namespace WorldSystem.Runtime
             }
         }
         
-        [Button(ButtonSizes.Medium, Name = "开发者模式已关闭")]
-        [HideIf("hideFlagToggle")]
-        [GUIColor("gray")]
+        [Button(ButtonSizes.Medium, Name = "开发者模式已关闭")] [HideIf("hideFlagToggle")] [GUIColor("gray")]
         private void HideFlagToggleChild_Ref()
         {
             HideFlagToggleChild();
@@ -357,6 +414,7 @@ namespace WorldSystem.Runtime
 
         
         #region 绘制Gizmos
+        
         private void OnDrawGizmosSelected()
         {
             if (transform.childCount > 0)
@@ -371,12 +429,49 @@ namespace WorldSystem.Runtime
                 BroadcastMessage("DrawGizmos");
             
         }
-        #endregion
         
         #endregion
         
 #endif
+        
+        #region 帮助函数
+        
+        private T AppendOrDestroyModule<T>(bool moduleToggle, bool useChildObject = false, Vector3 offset = default) where T : MonoBehaviour
+        {
+            if (moduleToggle)
+            {
+                if (useChildObject)
+                {
+                    if (gameObject.GetComponentInChildren<T>() != null)
+                        return gameObject.GetComponentInChildren<T>();
+                    GameObject child = new GameObject();
+                    child.transform.position = transform.position + offset;
+                    child.transform.parent = transform;
+                    string[] strings = typeof(T).ToString().Split(".");
+                    child.name = strings[^1];
+                    return child.AddComponent<T>();
+                }
 
+                if (gameObject.GetComponent<T>() != null)
+                    return gameObject.GetComponent<T>();
+                return gameObject.AddComponent<T>();
+            }
+
+            if (useChildObject)
+            {
+                if(gameObject.GetComponentInChildren<T>() != null)
+                    CoreUtils.Destroy(gameObject.GetComponentInChildren<T>().gameObject);
+                return null;
+            }
+
+            if(gameObject.GetComponent<T>() != null)
+                CoreUtils.Destroy(gameObject.GetComponent<T>());
+            return null;
+        }
+        
+        #endregion
+
+        
     }
     
     [AddComponentMenu("WorldSystem/WorldManager")]
@@ -388,7 +483,9 @@ namespace WorldSystem.Runtime
         /// 2- 注意CPU时间, 将最大可能改为异步执行
         /// 3- 以当前天空盒渲染循环所需的 FrameCount 来决定下一个天空盒渲染循环将分散到N帧, 如果在N帧还未渲染完成,则等待渲染完成在发出渲染命令(会重新计算分散的N帧数)
 
+        
         #region 字段
+        
         public static WorldManager Instance { get; set; }
         
         [HideInInspector] public bool timModuleToggle;
@@ -440,32 +537,57 @@ namespace WorldSystem.Runtime
 
         [HideInInspector] public bool moistAccumulatedWaterModuleToggle;
         [FoldoutGroup("昼夜与天气/湿润积水模块")][InlineEditor(InlineEditorObjectFieldModes.Hidden)][ShowIf("moistAccumulatedWaterModuleToggle")]
-        [ShowIf("@(moistAccumulatedWaterModuleToggle && !weatherSystemModuleToggle) || (moistAccumulatedWaterModuleToggle && (windZoneModule.hideFlags == HideFlags.None))")]
+        [ShowIf("@(moistAccumulatedWaterModuleToggle && !weatherSystemModuleToggle) || (moistAccumulatedWaterModuleToggle && (moistAccumulatedWaterModule.hideFlags == HideFlags.None))")]
         public MoistAccumulatedWaterModule moistAccumulatedWaterModule;
         
         [HideInInspector] public bool approxRealtimeGIModuleToggle;
         [FoldoutGroup("昼夜与天气/近似实时光照模块")][InlineEditor(InlineEditorObjectFieldModes.Hidden)][ShowIf("approxRealtimeGIModuleToggle")]
-        [ShowIf("@(approxRealtimeGIModuleToggle && !weatherSystemModuleToggle) || (approxRealtimeGIModuleToggle && (windZoneModule.hideFlags == HideFlags.None))")]
+        [ShowIf("@(approxRealtimeGIModuleToggle && !weatherSystemModuleToggle) || (approxRealtimeGIModuleToggle && (approxRealtimeGIModule.hideFlags == HideFlags.None))")]
         public ApproxRealtimeGIModule approxRealtimeGIModule;
         
         [HideInInspector] public bool fogModuleToggle;
-        [FoldoutGroup("昼夜与天气/近似实时光照模块")][InlineEditor(InlineEditorObjectFieldModes.Hidden)][ShowIf("fogModuleToggle")]
-        [ShowIf("@(fogModuleToggle && !weatherSystemModuleToggle) || (fogModuleToggle && (windZoneModule.hideFlags == HideFlags.None))")]
+        [FoldoutGroup("昼夜与天气/雾模块")][InlineEditor(InlineEditorObjectFieldModes.Hidden)][ShowIf("fogModuleToggle")]
+        [ShowIf("@(fogModuleToggle && !weatherSystemModuleToggle) || (fogModuleToggle && (fogModule.hideFlags == HideFlags.None))")]
         public FogModule fogModule;
+        
+        [HideInInspector] public bool lightingScatterModuleToggle;
+        [FoldoutGroup("昼夜与天气/光照散射模块")][InlineEditor(InlineEditorObjectFieldModes.Hidden)][ShowIf("lightingScatterModuleToggle")]
+        [ShowIf("@(lightingScatterModuleToggle && !weatherSystemModuleToggle) || (lightingScatterModuleToggle && (lightingScatterModule.hideFlags == HideFlags.None))")]
+        public LightingScatterModule lightingScatterModule;
+        
+        [HideInInspector] public bool postprocessAdjustModuleToggle;
+        [FoldoutGroup("昼夜与天气/后处理调整模块")][InlineEditor(InlineEditorObjectFieldModes.Hidden)][ShowIf("postprocessAdjustModuleToggle")]
+        [ShowIf("@(postprocessAdjustModuleToggle && !weatherSystemModuleToggle) || (postprocessAdjustModuleToggle && (postprocessAdjustModule.hideFlags == HideFlags.None))")]
+        public PostprocessAdjustModule postprocessAdjustModule;
         
         [HideInInspector] public bool fpsDisplayModuleToggle;
         [FoldoutGroup("实用工具/FPS显示")][InlineEditor(InlineEditorObjectFieldModes.Hidden)][ShowIf("fpsDisplayModuleToggle")]
         public FPSDisplayModule fpsDisplayModule;
         
 #if UNITY_EDITOR
-        [HideInInspector] public bool packageManagerToggle;
-        [FoldoutGroup("实用工具/包管理器")][InlineEditor(InlineEditorObjectFieldModes.Hidden)][ShowIf("packageManagerToggle")]
-        public PackageManager packageManager;
+        private const bool baiduInputMethodPhraseToggle = true;
+        [ShowInInspector][FoldoutGroup("实用工具/百度输入法短语")][InlineEditor(InlineEditorObjectFieldModes.Hidden)][ShowIf("baiduInputMethodPhraseToggle")]
+        private BaiduInputMethodPhrase baiduInputMethodPhraseModule;
+        
+        private const bool packageManagerToggle = true;
+        [ShowInInspector][FoldoutGroup("实用工具/包管理器")][InlineEditor(InlineEditorObjectFieldModes.Hidden)][ShowIf("packageManagerToggle")]
+        private PackageManager packageManager;
 #endif
+        
+        private float _timeCount;
+        
+        private static bool _update;
+        
+        private static bool _isSplitFrameRender;
+        
+        // private static int _SplitFrameMaxCount = 2;
         
         #endregion
 
+        
+        
         #region 事件函数
+        
         private void OnEnable()
         {
             gameObject.name = "WorldManager";
@@ -477,10 +599,10 @@ namespace WorldSystem.Runtime
                 Debug.Log("世界管理器只能有一个!");
             }
             
-            skyRenderPass ??= new SkyRenderPass();
-            atmosphereBlendPass ??= new AtmosphereBlendPass();
-            volumeCloudOptimizeShadowRenderPass ??= new VolumeCloudOptimizeShadowRenderPass();
-            
+            _skyRenderPass ??= new SkyRenderPass();
+            // atmosphereBlendPass ??= new AtmosphereBlendPass();
+            _volumeCloudOptimizeShadowRenderPass ??= new VolumeCloudOptimizeShadowRenderPass();
+            _postprocessPass ??= new PostprocessPass(); 
             OnValidate();
             
             RenderPipelineManager.beginCameraRendering -= AddRenderPasses;
@@ -498,9 +620,10 @@ namespace WorldSystem.Runtime
             if (Time.frameCount < 2)
                 return;
 #endif
-            skyRenderPass = null;
-            atmosphereBlendPass = null;
-            volumeCloudOptimizeShadowRenderPass = null;
+            _skyRenderPass = null;
+            // atmosphereBlendPass = null;
+            _postprocessPass = null;
+            _volumeCloudOptimizeShadowRenderPass = null;
             
             timModuleToggle = false;
             universeBackgroundModuleToggle = false;
@@ -513,9 +636,11 @@ namespace WorldSystem.Runtime
             moistAccumulatedWaterModuleToggle = false;
             approxRealtimeGIModuleToggle = false;
             fogModuleToggle = false;
-#if UNITY_EDITOR
-            packageManagerToggle = false;
-#endif
+            lightingScatterModuleToggle = false;
+            postprocessAdjustModuleToggle = false;
+// #if UNITY_EDITOR
+//             packageManagerToggle = false;
+// #endif
             OnValidate();
             
             timeModule = null;
@@ -529,12 +654,14 @@ namespace WorldSystem.Runtime
             moistAccumulatedWaterModule = null;
             approxRealtimeGIModule = null;
             fogModule = null;
+            lightingScatterModule = null;
+            postprocessAdjustModule = null;
 #if UNITY_EDITOR
+            baiduInputMethodPhraseModule = null;
             packageManager = null;
 #endif
             Instance = null;
         }
-        
         
         private void OnValidate()
         {
@@ -543,27 +670,22 @@ namespace WorldSystem.Runtime
             starModule = AppendOrDestroyModule<StarModule>(starModuleToggle);
             celestialBodyManager = AppendOrDestroyModule<CelestialBodyManager>(celestialBodyManagerToggle);
             atmosphereModule = AppendOrDestroyModule<AtmosphereModule>(atmosphereModuleToggle);
-            
             volumeCloudOptimizeModule = AppendOrDestroyModule<VolumeCloudOptimizeModule>(volumeCloudOptimizeModuleToggle);
-
             weatherEffectModule = AppendOrDestroyModule<WeatherEffectModule>(weatherEffectModuleToggle);
             windZoneModule = AppendOrDestroyModule<WindZoneModule>(windZoneModuleToggle, true, new Vector3(0,-2,0));
             weatherListModule = AppendOrDestroyModule<WeatherListModule>(weatherSystemModuleToggle);
             moistAccumulatedWaterModule = AppendOrDestroyModule<MoistAccumulatedWaterModule>(moistAccumulatedWaterModuleToggle);
             approxRealtimeGIModule = AppendOrDestroyModule<ApproxRealtimeGIModule>(approxRealtimeGIModuleToggle);
             fogModule = AppendOrDestroyModule<FogModule>(fogModuleToggle);
-            
+            lightingScatterModule = AppendOrDestroyModule<LightingScatterModule>(lightingScatterModuleToggle);
+            postprocessAdjustModule = AppendOrDestroyModule<PostprocessAdjustModule>(postprocessAdjustModuleToggle);
             fpsDisplayModule = AppendOrDestroyModule<FPSDisplayModule>(fpsDisplayModuleToggle);
 #if UNITY_EDITOR
+            baiduInputMethodPhraseModule = AppendOrDestroyModule<BaiduInputMethodPhrase>(baiduInputMethodPhraseToggle);
             packageManager = AppendOrDestroyModule<PackageManager>(packageManagerToggle);
 #endif
         }
-        #endregion
-
-        private float _timeCount;
-        private static bool _Update;
-        private static bool _IsSplitFrameRender;
-        // private static int _SplitFrameMaxCount = 2;
+        
         private void Update()
         {
             if (universeBackgroundModule is null) return;
@@ -573,50 +695,67 @@ namespace WorldSystem.Runtime
 #endif
             
             _timeCount += Time.deltaTime;
-            if (_timeCount >= 1f / (float)Instance.universeBackgroundModule.property._Render_AsyncUpdateRate && !_IsSplitFrameRender)
+            if (_timeCount >= 1f / (float)Instance.universeBackgroundModule.property.renderAsyncUpdateRate && !_isSplitFrameRender)
             {
-                _Update = true;
+                _update = true;
                 _timeCount = 0;
-                _IsSplitFrameRender = true;
+                _isSplitFrameRender = true;
             }
             else
             {
-                _Update = false;
+                _update = false;
             }
-            if(!Instance.universeBackgroundModule.property._Render_UseAsyncRender)
-                _Update = true;
+            if(!Instance.universeBackgroundModule.property.renderUseAsyncRender)
+                _update = true;
             
             if (Instance.timeModule is not null)
-                Instance.timeModule._Update = _Update;
+                Instance.timeModule.update = _update;
             if (Instance.starModule is not null)
-                Instance.starModule._Update = _Update;
+                Instance.starModule.update = _update;
             if(Instance.celestialBodyManager is not null)
-                Instance.celestialBodyManager._Update = _Update;
+                Instance.celestialBodyManager.update = _update;
             if (Instance.atmosphereModule is not null)
-                Instance.atmosphereModule._Update = _Update;
+                Instance.atmosphereModule.update = _update;
             if (Instance.volumeCloudOptimizeModule is not null)
-                Instance.volumeCloudOptimizeModule._Update = _Update;
+                Instance.volumeCloudOptimizeModule.update = _update;
             if (Instance.windZoneModule is not null)
-                Instance.windZoneModule._Update = _Update;
+                Instance.windZoneModule._Update = _update;
             if (Instance.weatherEffectModule is not null)
-                Instance.weatherEffectModule._Update = _Update;
+                Instance.weatherEffectModule.update = _update;
             if(Instance.weatherEffectModule?.rainEffect is not null)
-                Instance.weatherEffectModule.rainEffect._Update = _Update;
-            if(Instance.weatherEffectModule?.snowEffect is not null)
-                Instance.weatherEffectModule.snowEffect._Update = _Update;
-            if(Instance.weatherEffectModule?.lightningEffect is not null)
-                Instance.weatherEffectModule.lightningEffect._Update = _Update;
+                Instance.weatherEffectModule.rainEffect.update = _update;
+            if(Instance.weatherEffectModule?.rainSpatterEffect is not null)
+                Instance.weatherEffectModule.rainSpatterEffect.update = _update;
+            if(Instance.weatherEffectModule.snowEffect is not null)
+                Instance.weatherEffectModule.snowEffect.update = _update;
+            if(Instance.weatherEffectModule.lightningEffect is not null)
+                Instance.weatherEffectModule.lightningEffect.update = _update;
             if (Instance.weatherListModule is not null)
-                Instance.weatherListModule._Update = _Update;
+                Instance.weatherListModule.update = _update;
             if (Instance.moistAccumulatedWaterModule is not null)
-                Instance.moistAccumulatedWaterModule._Update = _Update;
+                Instance.moistAccumulatedWaterModule.update = _update;
             if (Instance.approxRealtimeGIModule is not null)
-                Instance.approxRealtimeGIModule._Update = _Update;
+                Instance.approxRealtimeGIModule.update = _update;
             if(Instance.fogModule is not null)
-                Instance.fogModule._Update = _Update;
+                Instance.fogModule.update = _update;
+            if(Instance.lightingScatterModule is not null)
+                Instance.lightingScatterModule.update = _update;
+            if(Instance.postprocessAdjustModule is not null)
+                Instance.postprocessAdjustModule.update = _update;
 
         }
+        
+        #endregion
 
+
+        
+        #region 渲染通道
+        
+        private SkyRenderPass _skyRenderPass;
+        
+        private VolumeCloudOptimizeShadowRenderPass _volumeCloudOptimizeShadowRenderPass;
+        
+        private PostprocessPass _postprocessPass;
         
         private void AddRenderPasses(ScriptableRenderContext context,Camera cam)
         {
@@ -628,68 +767,42 @@ namespace WorldSystem.Runtime
                 return;
             
             ScriptableRenderer scriptableRenderer = cam.GetUniversalAdditionalCameraData().scriptableRenderer;
-            scriptableRenderer.EnqueuePass(skyRenderPass);
-            scriptableRenderer.EnqueuePass(volumeCloudOptimizeShadowRenderPass);
-            scriptableRenderer.EnqueuePass(atmosphereBlendPass);
+            scriptableRenderer.EnqueuePass(_skyRenderPass);
+            scriptableRenderer.EnqueuePass(_volumeCloudOptimizeShadowRenderPass);
+            scriptableRenderer.EnqueuePass(_postprocessPass);
         }
-        
-        
-        private T AppendOrDestroyModule<T>(bool moduleToggle, bool useChildObject = false, Vector3 offset = default) where T : MonoBehaviour
-        {
-            if (moduleToggle)
-            {
-                if (useChildObject)
-                {
-                    if (gameObject.GetComponentInChildren<T>() != null)
-                        return gameObject.GetComponentInChildren<T>();
-                    GameObject child = new GameObject();
-                    child.transform.position = transform.position + offset;
-                    child.transform.parent = transform;
-                    string[] strings = typeof(T).ToString().Split(".");
-                    child.name = strings[^1];
-                    return child.AddComponent<T>();
-                }
-
-                if (gameObject.GetComponent<T>() != null)
-                    return gameObject.GetComponent<T>();
-                return gameObject.AddComponent<T>();
-            }
-
-            if (useChildObject)
-            {
-                if(gameObject.GetComponentInChildren<T>() != null)
-                    CoreUtils.Destroy(gameObject.GetComponentInChildren<T>().gameObject);
-                return null;
-            }
-
-            if(gameObject.GetComponent<T>() != null)
-                CoreUtils.Destroy(gameObject.GetComponent<T>());
-            return null;
-        }
-
-
-        private SkyRenderPass skyRenderPass;
-        private VolumeCloudOptimizeShadowRenderPass volumeCloudOptimizeShadowRenderPass;
-        private AtmosphereBlendPass atmosphereBlendPass;
-        
-        
         
         private class SkyRenderPass : ScriptableRenderPass
         {
+
+            #region 字段
+
+            private static int _splitFrameCount;
+            
+            private Matrix4x4 _viewMatrix;
+            
+            private float3 _cameraPosition;
+            
+            private RTHandle _activeRT;
+
+            // private Matrix4x4 _ViewMatrix_Inv;
+            
+            #endregion
+
+
+            #region 事件函数
+            
             public SkyRenderPass()
             {
                 renderPassEvent = RenderPassEvent.BeforeRenderingOpaques;
             }
+            
             public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
             {
-                if (_Update)
+                if (_update)
                     Instance?.volumeCloudOptimizeModule?.RenderCloudMap();
             }
-
-            private static int _SplitFrameCount;
-            private Matrix4x4 _ViewMatrix;
-            private float3 _CameraPosition;
-            // private Matrix4x4 _ViewMatrix_Inv;
+            
             public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
             {
                 
@@ -699,7 +812,7 @@ namespace WorldSystem.Runtime
                 CommandBuffer cmd = CommandBufferPool.Get("WorldSystem: SkyRender");
                 var dataCamera = renderingData.cameraData.camera;
                 
-                if (Instance.universeBackgroundModule.property._Render_UseAsyncRender)
+                if (Instance.universeBackgroundModule.property.renderUseAsyncRender)
                 {
                     //我现在希望分帧渲染只分为两帧,而不是分为多个帧,这样可以避免运动矢量的累加,降低复杂度
                     //我现在希望分帧渲染不止分为两帧,使用多帧分帧渲染,继续提高性能
@@ -709,51 +822,50 @@ namespace WorldSystem.Runtime
                     float cameraAspect = dataCamera.pixelRect.width / dataCamera.pixelRect.height;
                     
                     //缓存分帧渲染需要的ViewMatrix,Position,保证它在分帧渲染的过程中保持不变
-                    if (_SplitFrameCount == 0)
+                    if (_splitFrameCount == 0)
                     {
-                        _ViewMatrix = dataCamera.worldToCameraMatrix;
-                        _CameraPosition = dataCamera.transform.position;
+                        _viewMatrix = dataCamera.worldToCameraMatrix;
+                        _cameraPosition = dataCamera.transform.position;
                     }
                     
                     //重新设置矩阵,用于扩大视野和维持分帧渲染过程中,ViewMatrix不变
-                    var projectionMatrix = Matrix4x4.Perspective(Instance.universeBackgroundModule.property._Render_AsyncFOV, cameraAspect, dataCamera.nearClipPlane, dataCamera.farClipPlane);
+                    var projectionMatrix = Matrix4x4.Perspective(Instance.universeBackgroundModule.property.renderAsyncFOV, cameraAspect, dataCamera.nearClipPlane, dataCamera.farClipPlane);
                     projectionMatrix = GL.GetGPUProjectionMatrix(projectionMatrix, true);
-                    RenderingUtils.SetViewAndProjectionMatrices(cmd,_ViewMatrix, projectionMatrix, true);
-                    
+                    RenderingUtils.SetViewAndProjectionMatrices(cmd,_viewMatrix, projectionMatrix, true);
                     
                     Instance.universeBackgroundModule.SetupTaaMatrices_PerFrame(cmd,dataCamera.worldToCameraMatrix, projectionMatrix);
 
-                    if (_SplitFrameCount < 2 && _IsSplitFrameRender)
+                    if (_splitFrameCount < 2 && _isSplitFrameRender)
                     {
                         //初始化分帧缓存RT,分帧渲染的结果储存在此RT
-                        RenderingUtils.ReAllocateIfNeeded(ref Instance.universeBackgroundModule.skyRT, 
+                        RenderingUtils.ReAllocateIfNeeded(ref Instance.universeBackgroundModule.SkyRT, 
                                 new RenderTextureDescriptor(
-                                    renderingData.cameraData.cameraTargetDescriptor.width >> (int)Instance.universeBackgroundModule.property._Render_ResolutionOptions,
-                                    renderingData.cameraData.cameraTargetDescriptor.height >> (int)Instance.universeBackgroundModule.property._Render_ResolutionOptions,
+                                    renderingData.cameraData.cameraTargetDescriptor.width >> (int)Instance.universeBackgroundModule.property.renderResolutionOptions,
+                                    renderingData.cameraData.cameraTargetDescriptor.height >> (int)Instance.universeBackgroundModule.property.renderResolutionOptions,
                                     RenderTextureFormat.ARGBHalf), 
                                 name: "SkyRT");
                         
                         //计算当前渲染的矩形
-                        Rect renderTargetRect = new Rect(0,0,Instance.universeBackgroundModule.skyRT.rt.width, Instance.universeBackgroundModule.skyRT.rt.height);
+                        Rect renderTargetRect = new Rect(0,0,Instance.universeBackgroundModule.SkyRT.rt.width, Instance.universeBackgroundModule.SkyRT.rt.height);
                         float Width = renderTargetRect.width / 2;
-                        Rect currentRect = new Rect(_SplitFrameCount * Width, 0, Width, renderTargetRect.height);
+                        Rect currentRect = new Rect(_splitFrameCount * Width, 0, Width, renderTargetRect.height);
                         cmd.EnableScissorRect(currentRect);
                         
                         //渲染天空盒内容到分帧缓存RT
                         //渲染背景
-                        _ActiveRT = Instance.universeBackgroundModule.RenderBackground(cmd, ref renderingData, Instance.universeBackgroundModule.skyRT);
+                        _activeRT = Instance.universeBackgroundModule.RenderBackground(cmd, ref renderingData, Instance.universeBackgroundModule.SkyRT);
                         //渲染大气
-                        Instance.atmosphereModule?.RenderAtmosphere(cmd, ref renderingData, _ActiveRT, currentRect);
+                        Instance.atmosphereModule?.RenderAtmosphere(cmd, ref renderingData, _activeRT, currentRect);
                         //体积云
-                        Instance.volumeCloudOptimizeModule?.RenderVolumeCloud(cmd, ref renderingData, _ActiveRT);
+                        Instance.volumeCloudOptimizeModule?.RenderVolumeCloud(cmd, ref renderingData, _activeRT);
                         
-                        _ActiveRT = Instance.universeBackgroundModule.RenderUpScaleAndTaa_1(cmd,ref renderingData, _ActiveRT,_ViewMatrix, projectionMatrix, _SplitFrameCount);
+                        _activeRT = Instance.universeBackgroundModule.RenderUpScaleAndTaa(cmd,ref renderingData, _activeRT,_viewMatrix, projectionMatrix, _splitFrameCount);
                         //我们这里将星星和星体放在后面渲染,使用特别的方式正确混合,这是因为,大气体积云我们可以降低分辨率渲染,而星星星体为保持清晰度不可降低分辨率
                         //渲染星星
                         Instance.starModule?.RenderStar(cmd, ref renderingData);
                         
                         // //渲染星体
-                        Instance.celestialBodyManager?.RenderCelestialBodyList(cmd, _CameraPosition);
+                        Instance.celestialBodyManager?.RenderCelestialBodyList(cmd, _cameraPosition);
                         
                         //取消分帧矩形
                         cmd.DisableScissorRect();
@@ -763,29 +875,29 @@ namespace WorldSystem.Runtime
 #if UNITY_EDITOR
                         if (!EditorApplication.isPaused)
                         {
-                            _SplitFrameCount++;
+                            _splitFrameCount++;
                         }
 #else
-                            _SplitFrameCount++;
+                            _splitFrameCount++;
 #endif
                         
                         //当分裂计数器等于最大计数时,说明已经完成分帧渲染, 注意: 这个分帧渲染的结果是1帧之前的结果,必须将其修正到当前帧
-                        if (_SplitFrameCount == 2)
+                        if (_splitFrameCount == 2)
                         {
-                            _ActiveRT = Instance.universeBackgroundModule?.RenderFixupLate(cmd, _ActiveRT);
+                            _activeRT = Instance.universeBackgroundModule?.RenderFixupLate(cmd, _activeRT);
                             
-                            RenderingUtils.ReAllocateIfNeeded(ref Instance.universeBackgroundModule.splitFrameRT, _ActiveRT.rt.descriptor, name: "SplitFrameRT");
-                            cmd.CopyTexture(_ActiveRT, Instance.universeBackgroundModule.splitFrameRT);
-                            _ActiveRT = Instance.universeBackgroundModule.splitFrameRT;
+                            RenderingUtils.ReAllocateIfNeeded(ref Instance.universeBackgroundModule.SplitFrameRT, _activeRT.rt.descriptor, name: "SplitFrameRT");
+                            cmd.CopyTexture(_activeRT, Instance.universeBackgroundModule.SplitFrameRT);
+                            _activeRT = Instance.universeBackgroundModule.SplitFrameRT;
                             
-                            _SplitFrameCount = 0;
-                            _IsSplitFrameRender = false;
+                            _splitFrameCount = 0;
+                            _isSplitFrameRender = false;
                         }
                         else
                         {
                             //修正由于异步渲染造成的不跟手
-                            if (Instance.universeBackgroundModule.splitFrameRT != null)
-                                _ActiveRT = Instance.universeBackgroundModule?.RenderFixupLate(cmd, Instance.universeBackgroundModule.splitFrameRT);
+                            if (Instance.universeBackgroundModule.SplitFrameRT != null)
+                                _activeRT = Instance.universeBackgroundModule.RenderFixupLate(cmd, Instance.universeBackgroundModule.SplitFrameRT);
                         }
                         
                         
@@ -793,8 +905,8 @@ namespace WorldSystem.Runtime
                     else
                     {
                         //修正由于异步渲染造成的不跟手
-                        if (Instance.universeBackgroundModule.splitFrameRT != null)
-                            _ActiveRT = Instance.universeBackgroundModule?.RenderFixupLate(cmd, Instance.universeBackgroundModule.splitFrameRT);
+                        if (Instance.universeBackgroundModule.SplitFrameRT != null)
+                            _activeRT = Instance.universeBackgroundModule.RenderFixupLate(cmd, Instance.universeBackgroundModule.SplitFrameRT);
                     }
                     
                     //恢复矩阵
@@ -803,67 +915,53 @@ namespace WorldSystem.Runtime
                     context.ExecuteCommandBuffer(cmd);
                     cmd.Clear();
                     
+                    Instance.volumeCloudOptimizeModule?.RenderAddCloudMaskToDepth(cmd,ref renderingData, Instance.universeBackgroundModule.SplitFrameRT);
+                    
                     //修正视野范围
-                    if(_ActiveRT != null) 
-                        Instance.universeBackgroundModule.RenderFixupLateBlit(cmd,ref renderingData ,_ActiveRT, renderingData.cameraData.renderer.cameraColorTargetHandle);
-                    
-                    
+                    if(_activeRT != null) 
+                        Instance.universeBackgroundModule.RenderFixupLateBlit(cmd,ref renderingData ,_activeRT, renderingData.cameraData.renderer.cameraColorTargetHandle);
                     
                     context.ExecuteCommandBuffer(cmd);
                     cmd.Clear();
-                    
                 }
                 else
                 {
                     cmd.DisableScissorRect();
 
-                    RenderingUtils.ReAllocateIfNeeded(ref Instance.universeBackgroundModule.skyRT, 
+                    RenderingUtils.ReAllocateIfNeeded(ref Instance.universeBackgroundModule.SkyRT, 
                             new RenderTextureDescriptor(
-                                renderingData.cameraData.cameraTargetDescriptor.width >> (int)Instance.universeBackgroundModule.property._Render_ResolutionOptions,
-                                renderingData.cameraData.cameraTargetDescriptor.height >> (int)Instance.universeBackgroundModule.property._Render_ResolutionOptions,
+                                renderingData.cameraData.cameraTargetDescriptor.width >> (int)Instance.universeBackgroundModule.property.renderResolutionOptions,
+                                renderingData.cameraData.cameraTargetDescriptor.height >> (int)Instance.universeBackgroundModule.property.renderResolutionOptions,
                                 RenderTextureFormat.ARGBHalf), 
                             name: "SkyRT");
                     //渲染背景
-                    _ActiveRT = Instance.universeBackgroundModule.RenderBackground(cmd, ref renderingData, Instance.universeBackgroundModule.skyRT);
+                    _activeRT = Instance.universeBackgroundModule.RenderBackground(cmd, ref renderingData, Instance.universeBackgroundModule.SkyRT);
                     //渲染大气
-                    Instance.atmosphereModule?.RenderAtmosphere(cmd, ref renderingData, _ActiveRT);
+                    Instance.atmosphereModule?.RenderAtmosphere(cmd, ref renderingData, _activeRT);
                     //体积云
-                    Instance.volumeCloudOptimizeModule?.RenderVolumeCloud(cmd, ref renderingData, _ActiveRT);
+                    Instance.volumeCloudOptimizeModule?.RenderVolumeCloud(cmd, ref renderingData, _activeRT);
 
-                    _ActiveRT = Instance.universeBackgroundModule.RenderUpScaleAndTaa_1(cmd,ref renderingData, _ActiveRT, dataCamera.worldToCameraMatrix, dataCamera.projectionMatrix, _SplitFrameCount);
-                        
+                    _activeRT = Instance.universeBackgroundModule.RenderUpScaleAndTaa(cmd,ref renderingData, _activeRT, dataCamera.worldToCameraMatrix, dataCamera.projectionMatrix, _splitFrameCount);
+                    
+                    Instance.volumeCloudOptimizeModule?.RenderAddCloudMaskToDepth(cmd,ref renderingData, _activeRT);
+                    cmd.SetRenderTarget(_activeRT);
                     //我们这里将星星和星体放在后面渲染,使用特别的方式正确混合,这是因为,大气体积云我们可以降低分辨率渲染,而星星星体为保持清晰度不可降低分辨率
                     //渲染星星
                     Instance.starModule?.RenderStar(cmd, ref renderingData);
                     //渲染星体
                     Instance.celestialBodyManager?.RenderCelestialBodyList(cmd, ref renderingData);
                     
-                    Blitter.BlitCameraTexture(cmd, _ActiveRT, renderingData.cameraData.renderer.cameraColorTargetHandle);
+                    Blitter.BlitCameraTexture(cmd, _activeRT, renderingData.cameraData.renderer.cameraColorTargetHandle);
                     context.ExecuteCommandBuffer(cmd);
                     cmd.Clear();
                 }
                 
                 CommandBufferPool.Release(cmd);
             }
-            private RTHandle _ActiveRT;
-        }
-        
-        private class AtmosphereBlendPass : ScriptableRenderPass
-        {
-            public AtmosphereBlendPass()
-            {
-                renderPassEvent = RenderPassEvent.AfterRenderingTransparents;
-            }
             
-            public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
-            {
-                CommandBuffer cmd = CommandBufferPool.Get("Test: AtmosphereBlend");
-                
-                Instance.atmosphereModule?.RenderAtmosphereBlend(cmd, ref renderingData);
-                
-                context.ExecuteCommandBuffer(cmd);
-                CommandBufferPool.Release(cmd);
-            }
+            #endregion
+
+            
         }
         
         private class VolumeCloudOptimizeShadowRenderPass : ScriptableRenderPass
@@ -875,7 +973,7 @@ namespace WorldSystem.Runtime
                 
             public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
             {
-                CommandBuffer cmd = CommandBufferPool.Get("Test: VolumeCloudOptimizeShadowRender");
+                CommandBuffer cmd = CommandBufferPool.Get("WorldSystem: VolumeCloudOptimizeShadowRender");
                     
                 Instance?.volumeCloudOptimizeModule?.RenderVolumeCloudShadow(cmd,ref renderingData);
                     
@@ -883,16 +981,34 @@ namespace WorldSystem.Runtime
                 CommandBufferPool.Release(cmd);
             }
         }
-
         
-        
-	    public class BetterFogPass : ScriptableRenderPass
+	    public class PostprocessPass : ScriptableRenderPass
 		{
+            public PostprocessPass()
+            {
+                renderPassEvent = RenderPassEvent.BeforeRenderingPostProcessing;
+            }
+            
+            private ProfilingSampler _fogProfilingSampler = new ProfilingSampler("WorldSystem: Fog");
+            private ProfilingSampler _scatterProfilingSampler = new ProfilingSampler("WorldSystem: LightingScatter");
+
 			public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
 			{
-				
-			}
+                CommandBuffer cmd = CommandBufferPool.Get("WorldSystem: Postprocess");
+                _fogProfilingSampler.Begin(cmd);
+                WorldManager.Instance.fogModule?.RenderFog(cmd, ref renderingData);
+                _fogProfilingSampler.End(cmd);
+                
+                _scatterProfilingSampler.Begin(cmd);
+                WorldManager.Instance.lightingScatterModule?.RenderLightingScatter(cmd, ref renderingData);
+                _scatterProfilingSampler.End(cmd);
+
+                context.ExecuteCommandBuffer(cmd);
+                CommandBufferPool.Release(cmd);
+            }
         }
+        
+        #endregion
         
         
     }

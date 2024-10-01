@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Face", "Primitive", "Indicates whether the rendered surface is facing the camera (1), or facing away from the camera (0)" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Face"
+#else
+"面对"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Primitive"
+#else
+"原始"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Indicates whether the rendered surface is facing the camera (1), or facing away from the camera (0)"
+#else
+"指示渲染曲面是面向摄影机（1）还是背向摄影机（0）"
+#endif
+)]
 	public class FaceVariableNode : ParentNode
 	{
 		public const string FaceOnVertexWarning = "Face type nodes generates extra instructions when used on vertex ports since it needs to manually calculate the value";

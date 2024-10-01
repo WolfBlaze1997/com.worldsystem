@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -8,11 +8,47 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Keyword Switch", "Logical Operators", "Attributes a value according to the existance of a selected keyword", Deprecated = true, DeprecatedAlternativeType = typeof(StaticSwitch), DeprecatedAlternative = "Static Switch" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Keyword Switch"
+#else
+"关键字切换"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Logical Operators"
+#else
+"逻辑运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Attributes a value according to the existance of a selected keyword"
+#else
+"根据所选关键字的存在性赋予值"
+#endif
+, Deprecated = true, DeprecatedAlternativeType = typeof(StaticSwitch), DeprecatedAlternative = 
+#if !WB_LANGUAGE_CHINESE
+"Static Switch"
+#else
+"静态开关"
+#endif
+)]
 	public sealed class KeywordSwitchNode : ParentNode
 	{
-		private const string KeywordStr = "Keyword";
-		private const string CustomStr = "Custom";
+		private const string KeywordStr = 
+#if !WB_LANGUAGE_CHINESE
+"Keyword"
+#else
+"关键字"
+#endif
+;
+		private const string CustomStr = 
+#if !WB_LANGUAGE_CHINESE
+"Custom"
+#else
+"自定义"
+#endif
+;
 
 		[SerializeField]
 		private string m_currentKeyword = string.Empty;
@@ -26,8 +62,20 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT, false, "True" );
-			AddInputPort( WirePortDataType.FLOAT, false, "False" );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"True"
+#else
+"没错"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"False"
+#else
+"错误的"
+#endif
+);
 			AddOutputPort( WirePortDataType.FLOAT, Constants.EmptyPortValue );
 			m_textLabelWidth = 65;
 		}

@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Custom Add Node", "Debug", "Custom Node Debug ( Only for debug purposes)", null, UnityEngine.KeyCode.None, false )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Custom Add Node"
+#else
+"自定义添加节点"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Debug"
+#else
+"调试"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Custom Node Debug ( Only for debug purposes)"
+#else
+"自定义节点调试（仅用于调试目的）"
+#endif
+, null, UnityEngine.KeyCode.None, false )]
 	public sealed class CustomAddNode : CustomNode
 	{
 		protected override void CommonInit( int uniqueId )

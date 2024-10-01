@@ -1,11 +1,29 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Scale And Offset", "Math Operators", "Scales and offsets an input value\n( ( <b>Value</b> * <b>Scale</b> ) + <b>Offset</b> )" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Scale And Offset"
+#else
+"比例和偏移"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Scales and offsets an input value\n( ( <b>Value</b> * <b>Scale</b> ) + <b>Offset</b> )"
+#else
+"缩放和偏移输入值\n（（<b>值</b>*<b>缩放</b>）+<b>偏移</b>"
+#endif
+)]
 	public sealed class ScaleAndOffsetNode : ParentNode
 	{
 		private const string ScaleOffsetOpStr = "({0}*{1} + {2})";
@@ -13,9 +31,21 @@ namespace AmplifyShaderEditor
 		{
 			base.CommonInit( uniqueId );
 			AddInputPort( WirePortDataType.FLOAT, false, Constants.EmptyPortValue );
-			AddInputPort( WirePortDataType.FLOAT, false, "Scale" );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Scale"
+#else
+"规模"
+#endif
+);
 			m_inputPorts[ 1 ].FloatInternalData = 1;
-			AddInputPort( WirePortDataType.FLOAT, false, "Offset" );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Offset"
+#else
+"抵消"
+#endif
+);
 			AddOutputPort( WirePortDataType.FLOAT, " " );
 			m_useInternalPortData = true;
 			m_previewShaderGUID = "a1f1053d4d9c3be439e0382038b74771";
@@ -64,7 +94,7 @@ namespace AmplifyShaderEditor
 
             string value = m_inputPorts[ 0 ].GeneratePortInstructions( ref dataCollector );
 
-			// If scale or offset ports are floats then there's no need to cast them to any other type since they can be multiplied with everything
+			
 			WirePortDataType scaleType = ( m_inputPorts[ 1 ].ConnectionType() == WirePortDataType.FLOAT ) ? WirePortDataType.FLOAT : m_outputPorts[ 0 ].DataType;
 			string scale =  m_inputPorts[ 1 ].GenerateShaderForOutput( ref dataCollector, scaleType, ignoreLocalvar , true );
 

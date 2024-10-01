@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf83795128af58548beb207067018948, type: 3}
   m_Name: PresetWeatherList
   m_EditorClassIdentifier: 
-  SelectedWeatherDefine: {fileID: 11400000, guid: 885dd84f715f571498d3a7cd950b6a86,
+  selectedWeatherDefine: {fileID: 11400000, guid: bed25afbe01b8ef4fa63a48286d994bd,
     type: 2}
-  list:
-  - {fileID: 11400000, guid: df3876dc66406354a804ddf122eb9cc2, type: 2}
-  - {fileID: 11400000, guid: 4e06e02ee293f0f4286b1306775ba639, type: 2}
-  - {fileID: 11400000, guid: 8d40f5d353b2c434b9a98af4b358d287, type: 2}
-  - {fileID: 11400000, guid: 5a5af024b8079a64ca587f78dda3052c, type: 2}
-  - {fileID: 11400000, guid: f9fb58a4b32bc1d469243d4c9ced83ee, type: 2}
-  - {fileID: 11400000, guid: bb450c3a268370342a0e513bd7ae1105, type: 2}
-  - {fileID: 11400000, guid: 5eed3de5622d87e428b44501f3441d51, type: 2}
-  - {fileID: 11400000, guid: a2960502af64237449487a3a5fcae207, type: 2}
-  - {fileID: 11400000, guid: 9a4a5f4780fadd840b865f2c48149511, type: 2}
-  - {fileID: 11400000, guid: 0b129129e27bc53498856ad3fc501a00, type: 2}
+  weatherList:
+  - {fileID: 11400000, guid: fddc29da6f3955e4d88fc0bd11ab55af, type: 2}
+  - {fileID: 11400000, guid: 7736c47c8951a9141916f03c90e0cb18, type: 2}
+  - {fileID: 11400000, guid: 242f3ed8d98f975478e21b19a374858d, type: 2}
+  - {fileID: 11400000, guid: 94fa112b0a3640b4785fef23b0acfb13, type: 2}
+  - {fileID: 11400000, guid: c781b36b4a74f914e846a550ac85a3c5, type: 2}
+  - {fileID: 11400000, guid: 3a6164722bf31ab4594ac7a0fae9d097, type: 2}
+  - {fileID: 11400000, guid: 4e232f24df2f92e4a923f676406674d6, type: 2}
+  - {fileID: 11400000, guid: c704c2447873244469eea5f533111d52, type: 2}
+  - {fileID: 11400000, guid: 152c68a011495fd44a3734afac0ab081, type: 2}
+  - {fileID: 11400000, guid: c407f1cb4c3eb7d4ab68300127039b4e, type: 2}
+  - {fileID: 11400000, guid: 2242dd56c66c11e4b88246beee237e42, type: 2}

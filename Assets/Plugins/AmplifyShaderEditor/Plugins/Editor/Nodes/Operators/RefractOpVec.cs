@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Refract", "Vector Operators", "Computes a refraction vector" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Refract"
+#else
+"折射"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vector Operators"
+#else
+"矢量运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Computes a refraction vector"
+#else
+"计算折射矢量"
+#endif
+)]
 	public sealed class RefractOpVec : ParentNode
 	{
 		[UnityEngine.SerializeField]
@@ -15,8 +33,20 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT4, false , "Incident" );
-			AddInputPort( WirePortDataType.FLOAT4, false , "Normal" );
+			AddInputPort( WirePortDataType.FLOAT4, false , 
+#if !WB_LANGUAGE_CHINESE
+"Incident"
+#else
+"事故"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT4, false , 
+#if !WB_LANGUAGE_CHINESE
+"Normal"
+#else
+"正常"
+#endif
+);
 			AddInputPort( WirePortDataType.FLOAT, false, "Eta" );
 			AddOutputPort( WirePortDataType.FLOAT4, Constants.EmptyPortValue );
 			m_textLabelWidth = 67;

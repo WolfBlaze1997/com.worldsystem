@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -264,7 +264,7 @@ namespace AmplifyShaderEditor
 		public virtual void Draw( Rect parentPosition, Vector2 mousePosition, int mouseButtonId, bool hasKeyboadFocus )
 		{
 			InitDraw( parentPosition, mousePosition, mouseButtonId );
-			if ( ParentWindow.CurrentEvent.type == EventType.MouseDrag && ParentWindow.CurrentEvent.button > 0 /*catches both middle and right mouse button*/ )
+			if ( ParentWindow.CurrentEvent.type == EventType.MouseDrag && ParentWindow.CurrentEvent.button > 0  )
 			{
 				m_isMouseInside = IsInside( mousePosition );
 				if ( m_isMouseInside )
@@ -304,7 +304,7 @@ namespace AmplifyShaderEditor
 				GUI.Label( m_minimizeButtonPos, string.Empty, UIUtils.GetCustomStyle( m_isMaximized ? CustomStyle.MinimizeButton : CustomStyle.MaximizeButton ) );
 
 			if( m_parentWindow.CameraDrawInfo.CurrentEventType == EventType.MouseDown && buttonArea.Contains( m_parentWindow.CameraDrawInfo.MousePosition ) )
-			//if ( GUI.Button( buttonArea, string.Empty, m_empty ) )
+			
 			{
 				m_isMaximized = !m_isMaximized;
 				m_resizeDelta = 0;
@@ -330,7 +330,7 @@ namespace AmplifyShaderEditor
 
 				if ( m_realWidth < buttonArea.width )
 				{
-					// Auto-minimize
+					
 					m_isMaximized = false;
 					m_resizeDelta = 0;
 					m_isResizing = false;

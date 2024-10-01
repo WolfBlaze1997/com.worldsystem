@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -7,7 +7,25 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Gamma To Linear", "Image Effects", "Converts color from gamma space to linear space" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Gamma To Linear"
+#else
+"Gamma到线性"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Image Effects"
+#else
+"图像效果"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Converts color from gamma space to linear space"
+#else
+"将颜色从伽玛空间转换为线性空间"
+#endif
+)]
 	public sealed class GammaToLinearNode : HelperParentNode
 	{
 		public readonly static string[] ModeListStr = { "Fast sRGB to Linear", "Exact sRGB to Linear" };
@@ -43,12 +61,24 @@ namespace AmplifyShaderEditor
 			if( ContainerGraph.IsSRP )
 			{
 				m_selectedMode = EditorGUILayoutIntPopup( "Mode", m_selectedMode, ModeListStrLW, ModeListIntLW );
-				EditorGUILayout.HelpBox( "Fast sRGB: fast approximation from sRGB to Linear\n\nExact sRGB: a more expensive but exact calculation from sRGB to Linear.\n\nGamma 2.0: crude approximation from Gamma to Linear using a power of 2.0 gamma value\n\nGamma 2.2: an approximation from Gamma to Linear using a power of 2.2 gamma value", MessageType.None );
+				EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"Fast sRGB: fast approximation from sRGB to Linear\n\nExact sRGB: a more expensive but exact calculation from sRGB to Linear.\n\nGamma 2.0: crude approximation from Gamma to Linear using a power of 2.0 gamma value\n\nGamma 2.2: an approximation from Gamma to Linear using a power of 2.2 gamma value"
+#else
+"快速sRGB：从sRGB到线性的快速近似\n\n精确sRGB：一种更昂贵但更精确的从sRGB计算到线性的方法。\n\nGamma 2.0：使用2.0次幂的Gamma值从Gamma到Linear的粗略近似值\n\nGamma 2.2：使用2.2次幂的Gamma值从Gamma到Liner的近似值"
+#endif
+, MessageType.None );
 			}
 			else
 			{
 				m_selectedMode = EditorGUILayoutIntPopup( "Mode", m_selectedMode, ModeListStr, ModeListInt );
-				EditorGUILayout.HelpBox( "Fast sRGB: fast approximation from sRGB to Linear\n\nExact sRGB: a more expensive but exact calculation from sRGB to Linear.", MessageType.None );
+				EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"Fast sRGB: fast approximation from sRGB to Linear\n\nExact sRGB: a more expensive but exact calculation from sRGB to Linear."
+#else
+"快速sRGB：从sRGB到线性的快速近似\n\n精确sRGB：一种更昂贵但更精确的从sRGB计算到线性的方法。"
+#endif
+, MessageType.None );
 			}
 		}
 

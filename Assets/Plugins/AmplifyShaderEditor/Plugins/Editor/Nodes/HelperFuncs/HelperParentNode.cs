@@ -1,7 +1,7 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
 
-//https://docs.unity3d.com/Manual/SL-BuiltinFunctions.html
+
+
+
 
 using System;
 using UnityEngine;

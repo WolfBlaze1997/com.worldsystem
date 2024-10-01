@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -9,7 +9,31 @@ using System.Collections.Generic;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Texture Coordinates", "UV Coordinates", "Texture UV coordinates set, if <b>Tex</b> is connected to a texture object it will use that texture scale factors, otherwise uses <b>Tilling</b> and <b>Offset</b> port values", null, KeyCode.U, tags: "uv" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Texture Coordinates"
+#else
+"纹理坐标"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"UV Coordinates"
+#else
+"UV坐标"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Texture UV coordinates set, if <b>Tex</b> is connected to a texture object it will use that texture scale factors, otherwise uses <b>Tilling</b> and <b>Offset</b> port values"
+#else
+"纹理UV坐标集，如果<b>Tex</b>连接到纹理对象，它将使用该纹理比例因子，否则使用<b>Tilling</b>和<b>Offset</b>端口值"
+#endif
+, null, KeyCode.U, tags: 
+#if !WB_LANGUAGE_CHINESE
+"uv"
+#else
+"紫外线"
+#endif
+)]
 	public sealed class TextureCoordinatesNode : ParentNode
 	{
 
@@ -22,7 +46,13 @@ namespace AmplifyShaderEditor
 		private readonly string[] Dummy = { string.Empty };
 
 		private const string TilingStr = "Tiling";
-		private const string OffsetStr = "Offset";
+		private const string OffsetStr = 
+#if !WB_LANGUAGE_CHINESE
+"Offset"
+#else
+"抵消"
+#endif
+;
 		private const string TexCoordStr = "texcoord_";
 
 		[SerializeField]
@@ -34,8 +64,8 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private int m_textureCoordChannel = 0;
 
-		//[SerializeField]
-		//private int m_texcoordId = -1;
+		
+		
 
 		[SerializeField]
 		private int m_texcoordSize = 2;
@@ -57,14 +87,32 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.SAMPLER2D, false, "Tex", -1, MasterNodePortCategory.Fragment, 2 );
+			AddInputPort( WirePortDataType.SAMPLER2D, false, 
+#if !WB_LANGUAGE_CHINESE
+"Tex"
+#else
+"特克斯"
+#endif
+, -1, MasterNodePortCategory.Fragment, 2 );
 			m_texPort = m_inputPorts[ m_inputPorts.Count - 1 ];
 			m_texPort.CreatePortRestrictions( WirePortDataType.SAMPLER1D, WirePortDataType.SAMPLER2D, WirePortDataType.SAMPLER3D, WirePortDataType.SAMPLERCUBE, WirePortDataType.SAMPLER2DARRAY, WirePortDataType.OBJECT );
 
-			AddInputPort( WirePortDataType.FLOAT2, false, "Tiling", -1, MasterNodePortCategory.Fragment, 0 );
+			AddInputPort( WirePortDataType.FLOAT2, false, 
+#if !WB_LANGUAGE_CHINESE
+"Tiling"
+#else
+"瓷砖"
+#endif
+, -1, MasterNodePortCategory.Fragment, 0 );
 			m_tilingPort = m_inputPorts[ m_inputPorts.Count - 1 ];
 			m_tilingPort.Vector2InternalData = new Vector2( 1, 1 );
-			AddInputPort( WirePortDataType.FLOAT2, false, "Offset", -1, MasterNodePortCategory.Fragment, 1 );
+			AddInputPort( WirePortDataType.FLOAT2, false, 
+#if !WB_LANGUAGE_CHINESE
+"Offset"
+#else
+"抵消"
+#endif
+, -1, MasterNodePortCategory.Fragment, 1 );
 			m_offsetPort = m_inputPorts[ m_inputPorts.Count - 1 ];
 
 
@@ -244,11 +292,11 @@ namespace AmplifyShaderEditor
 			CheckReference();
 		}
 
-		//public override void Draw( DrawInfo drawInfo )
-		//{
-		//	base.Draw( drawInfo );
-		//	//CheckReference();
-		//}
+		
+		
+		
+		
+		
 
 		public override void Draw( DrawInfo drawInfo )
 		{
@@ -381,7 +429,7 @@ namespace AmplifyShaderEditor
 			{
 				if( m_inputPorts[ i ].IsConnected )
 				{
-					//m_inputPorts[ i ].GetOutputNode().PropagateNodeCategory( category );
+					
 					m_inputPorts[ i ].GetOutputNode().PropagateNodeData( nodeData, ref dataCollector );
 				}
 			}
@@ -422,7 +470,7 @@ namespace AmplifyShaderEditor
 				return "-1";
 			}
 
-			//bool isVertex = ( dataCollector.PortCategory == MasterNodePortCategory.Vertex || dataCollector.PortCategory == MasterNodePortCategory.Tessellation );
+			
 
 			string tiling = string.Empty;
 			string offset = string.Empty;
@@ -441,7 +489,7 @@ namespace AmplifyShaderEditor
 				}
 			}
 
-			//TEMPLATES
+			
 			if( dataCollector.MasterNodeCategory == AvailableShaderTypes.Template )
 			{
 				if( m_outputPorts[ 0 ].IsLocalValue( dataCollector.PortCategory ) )
@@ -509,7 +557,7 @@ namespace AmplifyShaderEditor
 					{
 						RegisterLocalVariable( 0, string.Format( Constants.TilingOffsetFormat, uvName, dummyPropertyTexcoords + ".xy", dummyPropertyTexcoords + ".zw" ), ref dataCollector, finalTexCoordName );
 					}
-					//RegisterLocalVariable( 0, string.Format( Constants.TilingOffsetFormat, uvName, dummyPropertyTexcoords+".xy", dummyPropertyTexcoords+".zw" ), ref dataCollector, finalTexCoordName );
+					
 				}
 				else
 				{
@@ -527,12 +575,12 @@ namespace AmplifyShaderEditor
 					{
 						RegisterLocalVariable( 0, string.Format( Constants.TilingOffsetFormat, uvName, tiling, offset ), ref dataCollector, finalTexCoordName );
 					}
-					//RegisterLocalVariable( 0, string.Format( Constants.TilingOffsetFormat, uvName, tiling, offset ), ref dataCollector, finalTexCoordName );
+					
 				}
 				return GetOutputVectorItem( 0, outputId, m_outputPorts[ 0 ].LocalValue( dataCollector.PortCategory ) );
 			}
 
-			//SURFACE
+			
 			string propertyName = GetValidPropertyName();
 			if( !string.IsNullOrEmpty( portProperty ) && portProperty != "0.0" )
 			{
@@ -552,7 +600,7 @@ namespace AmplifyShaderEditor
 			else
 				offset = m_offsetPort.GeneratePortInstructions( ref dataCollector );
 
-			if( !string.IsNullOrEmpty( propertyName ) /*m_referenceArrayId > -1*/ )
+			if( !string.IsNullOrEmpty( propertyName )  )
 			{
 				m_surfaceTexcoordName = GeneratorUtils.GenerateAutoUVs( ref dataCollector, UniqueId, m_textureCoordChannel, propertyName, m_outputPorts[ 0 ].DataType, tiling, offset, OutputId );
 			}
@@ -623,7 +671,7 @@ namespace AmplifyShaderEditor
 
 			if( m_texCoordsHelper != null )
 			{
-				//Not calling m_texCoordsHelper.Destroy() on purpose so UIUtils does not incorrectly unregister stuff
+				
 				DestroyImmediate( m_texCoordsHelper );
 				m_texCoordsHelper = null;
 			}

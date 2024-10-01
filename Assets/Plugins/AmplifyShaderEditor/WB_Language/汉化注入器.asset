@@ -1,0 +1,3134 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35169cd1432fba04fbfe063f5c11a04f, type: 3}
+  m_Name: "\u6C49\u5316\u6CE8\u5165\u5668"
+  m_EditorClassIdentifier: 
+  folder: {fileID: 102900000, guid: cc563dba350e53541b8da87211a7d465, type: 3}
+  textAsset:
+  - {fileID: 11500000, guid: d833dd0968f913f449477da6bcd56b48, type: 3}
+  - {fileID: 11500000, guid: 3f2c950b0ed192943b7484f6b551965f, type: 3}
+  - {fileID: 11500000, guid: 2cfa7290f61ad684f99f8d81328ad52c, type: 3}
+  - {fileID: 11500000, guid: 44cb06bc7bfe6e84aa8b5e8b702eb2dd, type: 3}
+  - {fileID: 11500000, guid: b4e28cbcd41f3b04ca36fc1b34d2c10f, type: 3}
+  - {fileID: 11500000, guid: 29204f353101f46439a93f1c503d3197, type: 3}
+  - {fileID: 11500000, guid: bc089a69595d8994cb89946a919517c2, type: 3}
+  - {fileID: 11500000, guid: 43bd963fa46ee9c4680dacff1d8dc0b9, type: 3}
+  - {fileID: 11500000, guid: fdf2e52babbbbf040b3b9f6df50243f3, type: 3}
+  - {fileID: 11500000, guid: 7a5504a2b7d04a846978416748dc6e0a, type: 3}
+  - {fileID: 11500000, guid: e1a000d43a26286499b39a7571e5c61b, type: 3}
+  - {fileID: 11500000, guid: 314af1bcecbba6c4d92cbb5843c221ba, type: 3}
+  - {fileID: 11500000, guid: 9a724dcf5c5ddef40bcef06f0b2c8ec0, type: 3}
+  - {fileID: 11500000, guid: 85da32683d237ac4f8665251e2ac38dc, type: 3}
+  - {fileID: 11500000, guid: 6344917ce0eed6b43840632b98a2ed57, type: 3}
+  - {fileID: 11500000, guid: 0b814c2a3cbebc047a566a92ed9d4340, type: 3}
+  - {fileID: 11500000, guid: c8bcac0d66f920e49803925a85beb0ed, type: 3}
+  - {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  - {fileID: 11500000, guid: 8b2d6d1320661374db53aeb8057312b2, type: 3}
+  - {fileID: 11500000, guid: 711db07e8265cb740940568c4bc7345f, type: 3}
+  - {fileID: 11500000, guid: 8850a8c4f3ca99f42bbf602c671ffb7f, type: 3}
+  - {fileID: 11500000, guid: 291cb40a04f835a4d89037cf3053c6a3, type: 3}
+  - {fileID: 11500000, guid: ed706353a579cbb46b300406107108b1, type: 3}
+  - {fileID: 11500000, guid: 417f409230c530b468b8ab67dd6e3b8b, type: 3}
+  - {fileID: 11500000, guid: 79d0d783b532b474192b191547bee1c1, type: 3}
+  - {fileID: 11500000, guid: 52308890136cd7746a5a073c9be8f028, type: 3}
+  - {fileID: 11500000, guid: 41c9bd09aea1377459c7e62910711c22, type: 3}
+  - {fileID: 11500000, guid: a4cfbb4204c63ca4e8f7cec73f6b3ef8, type: 3}
+  - {fileID: 11500000, guid: 5c34fc95a1ddd7d42bc74151061035f4, type: 3}
+  - {fileID: 11500000, guid: 5d535d3799a3ef547aea607fdc8b947b, type: 3}
+  - {fileID: 11500000, guid: d09f21096aa7c9f438e91a6e7f2621fb, type: 3}
+  - {fileID: 11500000, guid: bfbc736093c900c418a7668e3003663a, type: 3}
+  - {fileID: 11500000, guid: 20dad8f4196f0e643a9c56d1202e74dc, type: 3}
+  - {fileID: 11500000, guid: 708e90c98affcb04aa2fcfedf4329a7c, type: 3}
+  - {fileID: 11500000, guid: 672d96e3a4f68d44f9456d2fc53d4d73, type: 3}
+  - {fileID: 11500000, guid: cbdd03f297692584391b9dc0625a80ed, type: 3}
+  - {fileID: 11500000, guid: 15597b146a1fc154abd63ac75cffb73f, type: 3}
+  - {fileID: 11500000, guid: df4c2f840dca60a4cb118325ce2febfa, type: 3}
+  - {fileID: 11500000, guid: bc4f137f15efe1d42b7bcbf984ec1545, type: 3}
+  - {fileID: 11500000, guid: 63408b264ef8cb346a5ce9e559a5ed22, type: 3}
+  - {fileID: 11500000, guid: 890f4ed5c9f62af43bda6584705fa0be, type: 3}
+  - {fileID: 11500000, guid: a3bf3644c2c2fbb4fa0dd8b86effc6e1, type: 3}
+  - {fileID: 11500000, guid: b4c65a9d96791c34eb587cea9662161f, type: 3}
+  - {fileID: 11500000, guid: b1c1f3bedf849cb41a1648bf895bc0f7, type: 3}
+  - {fileID: 11500000, guid: 8c6dccc523e2ad440a82edd582b84a45, type: 3}
+  - {fileID: 11500000, guid: a957e66c7a41d6848966d526c9687347, type: 3}
+  - {fileID: 11500000, guid: 09c28ab321caf3b47839606e37d3cdd2, type: 3}
+  - {fileID: 11500000, guid: 48af68670bdba9147b4ed55138e4edf6, type: 3}
+  - {fileID: 11500000, guid: cc2e25b7c55e9284699ccad75e79a075, type: 3}
+  - {fileID: 11500000, guid: 309e413cfa89510429c67fa82c557da7, type: 3}
+  - {fileID: 11500000, guid: ec850a4093c249d449f22e0483040b9c, type: 3}
+  - {fileID: 11500000, guid: ab3a976b3cb79ad41986d2f7d4439642, type: 3}
+  - {fileID: 11500000, guid: 0e681455d27d2264fbc2683a1510df2c, type: 3}
+  - {fileID: 11500000, guid: 4e23c25f035ba604ea999f214c0a7833, type: 3}
+  - {fileID: 11500000, guid: 8b0dda023474c6e41a39c36e48af72b2, type: 3}
+  - {fileID: 11500000, guid: 08f1d9c1d8cbe5841a6429d565096eab, type: 3}
+  - {fileID: 11500000, guid: 6fdecc48f5be618428240490565e9d8b, type: 3}
+  - {fileID: 11500000, guid: c89fd369755de3e49a669e8e5daa8c2f, type: 3}
+  - {fileID: 11500000, guid: 36f40ed0b172d8f45810b3f6b8e2243d, type: 3}
+  - {fileID: 11500000, guid: 5b60c440b5db81c4d9df9c048aa22b48, type: 3}
+  - {fileID: 11500000, guid: cfeab503d3318794ea1af322505320ef, type: 3}
+  - {fileID: 11500000, guid: ec3cfdc3a4d1a7a4cb24c1c079e1750a, type: 3}
+  - {fileID: 11500000, guid: bd1aff8475f370d4380918491184aef5, type: 3}
+  - {fileID: 11500000, guid: 2aa06a21e7f64094c91da5dd60ef35cf, type: 3}
+  - {fileID: 11500000, guid: 9eb57a68790e6e343affe131e8a0f860, type: 3}
+  - {fileID: 11500000, guid: 33e0374f361d5c642a257b9957e4cfa0, type: 3}
+  - {fileID: 11500000, guid: 91aad2b9cfaf3954c8c450c32d218981, type: 3}
+  - {fileID: 11500000, guid: 2f92560b009046f4a86504e682834405, type: 3}
+  - {fileID: 11500000, guid: 6d517b63dc9604043985eb4a82d2d135, type: 3}
+  - {fileID: 11500000, guid: bcc69b2f388d45f43a9157ce814b5aae, type: 3}
+  - {fileID: 11500000, guid: 4b99bcf4cd965c648bbbc1de0d1b152a, type: 3}
+  - {fileID: 11500000, guid: 833b18e1479dbd24c80c5b990e16e2bb, type: 3}
+  - {fileID: 11500000, guid: 98100a8a545b8ce42bc5657fd40a24a5, type: 3}
+  - {fileID: 11500000, guid: 86df2da3da3b1eb4493b968b47030b17, type: 3}
+  - {fileID: 11500000, guid: b016176673832d3458c7e9923f5934d6, type: 3}
+  - {fileID: 11500000, guid: 01e5a5829caac674fa819ed229de31b6, type: 3}
+  - {fileID: 11500000, guid: 4fa5db614b9379b4da27edafa0a8f4e9, type: 3}
+  - {fileID: 11500000, guid: d31dc25864c509a4f967e32079a27d6f, type: 3}
+  - {fileID: 11500000, guid: 7a8a03953b97a594b81b2fb71d4a57ec, type: 3}
+  - {fileID: 11500000, guid: 5bbfd66571b12f84983b398231271694, type: 3}
+  - {fileID: 11500000, guid: e81453c5ad3b8224db874b56bf00cad2, type: 3}
+  - {fileID: 11500000, guid: b1d1a233ea65ccd478fb6caf4327da48, type: 3}
+  - {fileID: 11500000, guid: 1a6ded4f5e42f6d4684a6131a3cf4d33, type: 3}
+  - {fileID: 11500000, guid: 3c5be6f9c03445d4fb70955f594877dc, type: 3}
+  - {fileID: 11500000, guid: 6ca8f5d67cf4c5f428a6dd646099897c, type: 3}
+  - {fileID: 11500000, guid: 943f4b4fc1fa5214b8934bf4fb76474b, type: 3}
+  - {fileID: 11500000, guid: 3bc3c79c7cc57df49bedb9d9b64b0bea, type: 3}
+  - {fileID: 11500000, guid: 266391c3c4308014e9ce246e5484b917, type: 3}
+  - {fileID: 11500000, guid: 9102c0b554fd5ad4785acf870dcc17eb, type: 3}
+  - {fileID: 11500000, guid: 1eb723e6ceff9a345a9dbfe04aa3dc11, type: 3}
+  - {fileID: 11500000, guid: f776bdd36b750304c8e0de8ee1f31fc0, type: 3}
+  - {fileID: 11500000, guid: e5a9a010f1c8dda449c8ca7ee9e25869, type: 3}
+  - {fileID: 11500000, guid: f9431cdf8e81c1d4f902b3fa7d04f7ac, type: 3}
+  - {fileID: 11500000, guid: ba1ca8bace2c2dd4dafac6f73f4dfb1b, type: 3}
+  - {fileID: 11500000, guid: 2e593f23857d59643b5b5f6dd6264e1b, type: 3}
+  - {fileID: 11500000, guid: 972d92a6008896f4292a61726e18f667, type: 3}
+  - {fileID: 11500000, guid: 2765a41106f478f4982e859b978bdec4, type: 3}
+  - {fileID: 11500000, guid: e2bdfc2fa6fcd0640b01a8b7448a1a11, type: 3}
+  - {fileID: 11500000, guid: a3d8c31159e07bc419a7484ab5e894ed, type: 3}
+  - {fileID: 11500000, guid: 78916999fd7bc3c4e9767bc9cf0698c0, type: 3}
+  - {fileID: 11500000, guid: 11bf17b0757d57c47add2eb50c62c75e, type: 3}
+  - {fileID: 11500000, guid: 0820850e74009954188ff84e2f5cc4f2, type: 3}
+  - {fileID: 11500000, guid: 4e205b44d56609f459ffc558febe2792, type: 3}
+  - {fileID: 11500000, guid: 275270020c577924caf04492f73b2ea6, type: 3}
+  - {fileID: 11500000, guid: db94d973647dae9488d3ef5ee2fd95a4, type: 3}
+  - {fileID: 11500000, guid: 447e504f2ca5aaf4bbf0fdbce33596bc, type: 3}
+  - {fileID: 11500000, guid: 3ddde7ed1ab4f8044a9a6aa3891f5ca4, type: 3}
+  - {fileID: 11500000, guid: f36e4491ee33fe74fa51cfb5ad450c6e, type: 3}
+  - {fileID: 11500000, guid: 796acd44fcf330e4e921855630007b9b, type: 3}
+  - {fileID: 11500000, guid: d8c6b7bfb7784e14d8708ab6fb981268, type: 3}
+  - {fileID: 11500000, guid: 6accfe0f350cf064dae07041fe90446b, type: 3}
+  - {fileID: 11500000, guid: 0fdbc380972c44b489c5f948a40b8e69, type: 3}
+  - {fileID: 11500000, guid: 3a71f1e560487aa4c8484c4153941884, type: 3}
+  - {fileID: 11500000, guid: dd0c1c252c062184e9ad592b91e7fcd2, type: 3}
+  - {fileID: 11500000, guid: f6f151774e252dd4fb2b9ee440ec8eed, type: 3}
+  - {fileID: 11500000, guid: 503a386043991354eaca2410683d836a, type: 3}
+  - {fileID: 11500000, guid: 30c7936db4e6fe5488076d799841f857, type: 3}
+  - {fileID: 11500000, guid: 74e00fb3d8e161f498c078795184bae4, type: 3}
+  - {fileID: 11500000, guid: a0c0180a327eba54c832fbb695dd282f, type: 3}
+  - {fileID: 11500000, guid: 008fd07cf3f9a7140a9e23be43733f7c, type: 3}
+  - {fileID: 11500000, guid: f57a1d05f7a9c5847912566ff1605c6d, type: 3}
+  - {fileID: 11500000, guid: 9ef360a7c6005ad479d7a3e6db1d32f4, type: 3}
+  - {fileID: 11500000, guid: 6cf4950dda0f6e6438ace404fbef19a7, type: 3}
+  - {fileID: 11500000, guid: 02a9fb7a3a104974e941f4109567b97f, type: 3}
+  - {fileID: 11500000, guid: 5088261e4c0031f4aba961a253707b80, type: 3}
+  - {fileID: 11500000, guid: 274dde08d42e4b041b9be7a22a8c09d6, type: 3}
+  - {fileID: 11500000, guid: 04aad5172ee1d4d4795e20bfae0ff64d, type: 3}
+  - {fileID: 11500000, guid: 5762b195353d629448631bfb15fb8372, type: 3}
+  - {fileID: 11500000, guid: 6095e3e4dc186f146bc109813901ccc8, type: 3}
+  - {fileID: 11500000, guid: c3efd02b48473d94b92302654b671ddc, type: 3}
+  - {fileID: 11500000, guid: 28a04286716e19f4aa58954888374428, type: 3}
+  - {fileID: 11500000, guid: 5aa75cc5e6044a44a9a4439eac1d948b, type: 3}
+  - {fileID: 11500000, guid: fe26c99932382e047aebc05b7e67a3d0, type: 3}
+  - {fileID: 11500000, guid: 584bea5554dc1b64c8965d8fcfc54e23, type: 3}
+  - {fileID: 11500000, guid: d9e2a5077cc29de439d5c845eac35a04, type: 3}
+  - {fileID: 11500000, guid: b598d9ebc2d7be44a97270732f55f9bc, type: 3}
+  - {fileID: 11500000, guid: 7d1204234983b3c4499da752961185be, type: 3}
+  - {fileID: 11500000, guid: 4b4a6f07436b05a4cbc2559e4e704000, type: 3}
+  - {fileID: 11500000, guid: c449923583a9fbe4283acebc97756ea1, type: 3}
+  - {fileID: 11500000, guid: f96cf34c2936c96458403e9cf75e8e10, type: 3}
+  - {fileID: 11500000, guid: dd0af9fbbba750341a7b09316178f285, type: 3}
+  - {fileID: 11500000, guid: b0464d8b27caa7d4d8fa5d1828934da8, type: 3}
+  - {fileID: 11500000, guid: 72ff5c2a7e57017478e8d704282730f1, type: 3}
+  - {fileID: 11500000, guid: 119514e4302a18345ab7c227e052b0bc, type: 3}
+  - {fileID: 11500000, guid: ce37a30cae7677942ad44f0945ab7b77, type: 3}
+  - {fileID: 11500000, guid: aec376443deca354789bc36ba18af898, type: 3}
+  - {fileID: 11500000, guid: 96f38a9f14906ca49b505b8e305c37ec, type: 3}
+  - {fileID: 11500000, guid: 5fe7f4be962b9e8459eb156503b99d41, type: 3}
+  - {fileID: 11500000, guid: c220606396d6e6048a901f217be1435e, type: 3}
+  - {fileID: 11500000, guid: 1cc4e3c718669d54c97614ac6abcfaff, type: 3}
+  - {fileID: 11500000, guid: 2c5479ff48207cf43a308ec9f110fa9f, type: 3}
+  - {fileID: 11500000, guid: a965812ada2b83343a1f511273fcfc52, type: 3}
+  - {fileID: 11500000, guid: b3d1879d1e402b34f98b8e8cdf94d719, type: 3}
+  - {fileID: 11500000, guid: 94df47461b7e6244eaf92b0dab7cc7ee, type: 3}
+  - {fileID: 11500000, guid: 279c74ce44e24204d803be6ec743c290, type: 3}
+  - {fileID: 11500000, guid: a792f114a5433af499dce78ebe05a9e6, type: 3}
+  - {fileID: 11500000, guid: 284ebed5f88c13e45bc331b2df93aa75, type: 3}
+  - {fileID: 11500000, guid: cabbbe25e4b26b54c84e27007c08a7dd, type: 3}
+  - {fileID: 11500000, guid: 6532496dc1791d94cbb46004000bda61, type: 3}
+  - {fileID: 11500000, guid: d8bce5e7063ac6b4d93aaf15f7fd1b10, type: 3}
+  - {fileID: 11500000, guid: 17511ec398441ac479a2dd77d2531837, type: 3}
+  - {fileID: 11500000, guid: cb2775ac410d0134c85b7f1ac0a0399f, type: 3}
+  - {fileID: 11500000, guid: 0eba64bdadd330743894a0623677cb83, type: 3}
+  - {fileID: 11500000, guid: a5b8a474628aeca4e86b1599f0b26ebc, type: 3}
+  - {fileID: 11500000, guid: e8567c2e3eb634a428819fbdfbff110f, type: 3}
+  - {fileID: 11500000, guid: 0da9baf35c74c7e468cbe50c3d23ccf0, type: 3}
+  - {fileID: 11500000, guid: 590b8e54b63ad344f8d8c372e4fc5ed5, type: 3}
+  - {fileID: 11500000, guid: 96d8f50a7481d5247b16cb16c053d5f6, type: 3}
+  - {fileID: 11500000, guid: b2350150f3f2a0443827ca8925d5e759, type: 3}
+  - {fileID: 11500000, guid: 83b7d6fe57585b74d80c429aef719200, type: 3}
+  - {fileID: 11500000, guid: 74f44334b702bce4ba8e2681dc80fe3c, type: 3}
+  - {fileID: 11500000, guid: d3b0855152b8c5d478f236423cfb1959, type: 3}
+  - {fileID: 11500000, guid: 396e5bf33f08d3a42a19d7b161f573f2, type: 3}
+  - {fileID: 11500000, guid: c01e190d996825f42bdc81e1fab5e897, type: 3}
+  - {fileID: 11500000, guid: 5f35cf284cf7d2b47be5a32426fc7a77, type: 3}
+  - {fileID: 11500000, guid: 2134a58fb8235524d84046a051bce6b5, type: 3}
+  - {fileID: 11500000, guid: 61d7064bd5523634496fa412627603d7, type: 3}
+  - {fileID: 11500000, guid: 09fb0867c2a616c488bad8929f4f7ad7, type: 3}
+  - {fileID: 11500000, guid: eddae0a124877fc47b28ae8853286174, type: 3}
+  - {fileID: 11500000, guid: 3d992a68cff329a4a9bd1deb999fe691, type: 3}
+  - {fileID: 11500000, guid: c5f40d01acf184946b8660599f33109f, type: 3}
+  - {fileID: 11500000, guid: 6b82a8d1dffe4204fa03a09e2fe783b3, type: 3}
+  - {fileID: 11500000, guid: 7dc4667cd643835489312daa244a03b9, type: 3}
+  - {fileID: 11500000, guid: 4d24b838adbc80d4cb63e3fc4f5a1c79, type: 3}
+  - {fileID: 11500000, guid: 3f49defa61805f948a04775d391e507a, type: 3}
+  - {fileID: 11500000, guid: 3f888e3dadb5df94199547ab13cb74d2, type: 3}
+  - {fileID: 11500000, guid: 32d7b01a9f453d448abf3685a35c4a19, type: 3}
+  - {fileID: 11500000, guid: a3f99c25e876b164789b7612a63ec748, type: 3}
+  - {fileID: 11500000, guid: af02305604894ac49ab72d72193910ae, type: 3}
+  - {fileID: 11500000, guid: a33b9b92dad9a1645a72aedde6a55d15, type: 3}
+  - {fileID: 11500000, guid: ab308ada4f120144b8d44aef5c834fe6, type: 3}
+  - {fileID: 11500000, guid: 3deb719c04d269e49bcd2a2c365da6fb, type: 3}
+  - {fileID: 11500000, guid: 04eb50f45d1416e4bb61902a49f06d58, type: 3}
+  - {fileID: 11500000, guid: d6d04219b3c5c5a4282aa9a763b9ad3c, type: 3}
+  - {fileID: 11500000, guid: ff04934859005cd41ac644f2a9349e8b, type: 3}
+  - {fileID: 11500000, guid: b2792c240940c3349bdef401f5683f70, type: 3}
+  - {fileID: 11500000, guid: 1a70dcf76fe65a64ca70400d6d08563d, type: 3}
+  - {fileID: 11500000, guid: e1e66ddf48770134b806dd1f397e4ac3, type: 3}
+  - {fileID: 11500000, guid: 48f885e2f5fa775409b9f50be6aaf80a, type: 3}
+  - {fileID: 11500000, guid: e7d30ad11b781804ebd54834781a32d9, type: 3}
+  - {fileID: 11500000, guid: 1a3d561a45c21114c99f52c5432b25e9, type: 3}
+  - {fileID: 11500000, guid: 67238b98f61049c45b496af625863edf, type: 3}
+  - {fileID: 11500000, guid: 0801a5994efb46142ad8dcc0fe3c47f8, type: 3}
+  - {fileID: 11500000, guid: 74ff3d342e013f64198aaf767e623962, type: 3}
+  - {fileID: 11500000, guid: 3153b4d10effd174988d75b84b12d281, type: 3}
+  - {fileID: 11500000, guid: d830b2cc8bc5e174485077319135fc1e, type: 3}
+  - {fileID: 11500000, guid: 837b906a268babc49ac733573c5b3394, type: 3}
+  - {fileID: 11500000, guid: 8b59649a5f829e24cb4de8c1a715f8b4, type: 3}
+  - {fileID: 11500000, guid: 7a47d8101acb2e94d95016b69a1c2e41, type: 3}
+  - {fileID: 11500000, guid: bf65efd881afd1b4cbd2b27f3f17251b, type: 3}
+  - {fileID: 11500000, guid: 5ed32be99aefda24483c9e3499a5cd23, type: 3}
+  - {fileID: 11500000, guid: 2daff2983fe91ac43953017a8be984a7, type: 3}
+  - {fileID: 11500000, guid: cd5a03cee1255ba438e2062d215b70b6, type: 3}
+  - {fileID: 11500000, guid: 64064ea01705e084cbe00a3bbeef2c3d, type: 3}
+  - {fileID: 11500000, guid: 7b3de46feda5b0f4ea58c852c4a521a9, type: 3}
+  - {fileID: 11500000, guid: 6293b1f56d13d6c4ca6a8e2a8099cca9, type: 3}
+  - {fileID: 11500000, guid: 97d5e0cd26200a64fa9d127599406008, type: 3}
+  - {fileID: 11500000, guid: 2bd66b9ffd0acf84ab46c9f83300495c, type: 3}
+  - {fileID: 11500000, guid: 84a4868e0b1e8dd4bb0e71c8d9a9c130, type: 3}
+  - {fileID: 11500000, guid: 3b0e734d4c354c74999e20ce054628d2, type: 3}
+  - {fileID: 11500000, guid: 7fc2c839ab9f3a045877b59493c51502, type: 3}
+  - {fileID: 11500000, guid: d026d775ff431f34789437db3fb4abbb, type: 3}
+  - {fileID: 11500000, guid: d0900a4b7d1563e49b6184d7579dcbec, type: 3}
+  - {fileID: 11500000, guid: ed0ee3a73f11f344495d16b54bb3af29, type: 3}
+  - {fileID: 11500000, guid: 26d840af03d4f7b418e9c7bece143648, type: 3}
+  - {fileID: 11500000, guid: 50a1f03b042823f469cef7d97c73fdc3, type: 3}
+  - {fileID: 11500000, guid: 59e61f9559385a94a87d4d37dbd556f0, type: 3}
+  - {fileID: 11500000, guid: 0111d524dc809f14aa95e4e1ab93d37b, type: 3}
+  - {fileID: 11500000, guid: 935c69709205e1c4dbd54da410518cc6, type: 3}
+  - {fileID: 11500000, guid: c6fbad94b0fc6b948be3a3dc61232c05, type: 3}
+  - {fileID: 11500000, guid: d818a147712609646b8d6f0f7c2ae731, type: 3}
+  - {fileID: 11500000, guid: f35a3e26a28596b4f9b54a1f2689db06, type: 3}
+  - {fileID: 11500000, guid: 688412c534df41444ad49759fa2b6a62, type: 3}
+  - {fileID: 11500000, guid: a74e2c0a9306c0048bfcc733cb7d154d, type: 3}
+  - {fileID: 11500000, guid: f2507a764c07082458e350211d671334, type: 3}
+  - {fileID: 11500000, guid: bc524cd13743b6f49a2e331767646448, type: 3}
+  - {fileID: 11500000, guid: 91955bc593b0dc14d90b10cb3eb25355, type: 3}
+  - {fileID: 11500000, guid: efce529ed3c74854b9d0cece836991c3, type: 3}
+  - {fileID: 11500000, guid: 90801da82a0b4f74cae2f9387bd5ad92, type: 3}
+  - {fileID: 11500000, guid: 8b8af65130c9ed64f95976ec67ac1adf, type: 3}
+  - {fileID: 11500000, guid: a313774cf0e4d1e4289d7395e8e49067, type: 3}
+  - {fileID: 11500000, guid: 7c7321a370f1f1b499d4655cc25f457b, type: 3}
+  - {fileID: 11500000, guid: ebd1a3b3014ccdd40b8fa805b4281c6f, type: 3}
+  - {fileID: 11500000, guid: ef679ba7cdeda594aa3e5c02b25e66df, type: 3}
+  - {fileID: 11500000, guid: 6190b6c1a4cd29b48bfd36ff9b2ea773, type: 3}
+  - {fileID: 11500000, guid: da71cf021d98a7f468319e56eaefe6f1, type: 3}
+  - {fileID: 11500000, guid: ad88ed9f1b6010a4bb17685dec17a585, type: 3}
+  - {fileID: 11500000, guid: 3bb41488b4b3e034d838c73c2eb471f5, type: 3}
+  - {fileID: 11500000, guid: c7f6ffd9a8c958e449321777764784de, type: 3}
+  - {fileID: 11500000, guid: 31c07015a5f2aa44297aa7cfb80ffdd5, type: 3}
+  - {fileID: 11500000, guid: 35c70c67524c86049a25b7ebd0de6ae3, type: 3}
+  - {fileID: 11500000, guid: b91b2aefbfad5b444b25320e9ed53cac, type: 3}
+  - {fileID: 11500000, guid: 7a566d6bf220cd74b8385a91f690b683, type: 3}
+  - {fileID: 11500000, guid: 545417ad304cea84b9f625a3b6ad4e56, type: 3}
+  - {fileID: 11500000, guid: 11f04432b7f1ffb43b584adb226614c6, type: 3}
+  - {fileID: 11500000, guid: 8a25ccf8973bfae46ae3df2823f58229, type: 3}
+  - {fileID: 11500000, guid: 46aea6c13d71ec74da7f23abba3704d6, type: 3}
+  - {fileID: 11500000, guid: 8238f389c28938544b56035531b3f1be, type: 3}
+  - {fileID: 11500000, guid: 268ebf76d03c2e84f8c80a375773b46c, type: 3}
+  - {fileID: 11500000, guid: f5957d9ac2cc12146bc862cd0c92815a, type: 3}
+  - {fileID: 11500000, guid: d84f7e90e793aaa4891b4c1fe400dc4c, type: 3}
+  - {fileID: 11500000, guid: 555db3754f84db947846519630ea303b, type: 3}
+  - {fileID: 11500000, guid: 5d7101830aa0c524f9519fef95c90dc3, type: 3}
+  - {fileID: 11500000, guid: 78e9954f4d587b74fa38ae1dd9922d77, type: 3}
+  - {fileID: 11500000, guid: 85082b6932d1c9a4f8b64605534ef118, type: 3}
+  - {fileID: 11500000, guid: 2b50a187f488a004aaa2dabbe558ab3a, type: 3}
+  - {fileID: 11500000, guid: ee9c446e7e41d524f8b4c93e6a8886c5, type: 3}
+  - {fileID: 11500000, guid: 283bc0645ce925346b33c024ff5a7dad, type: 3}
+  - {fileID: 11500000, guid: 2e14c4a7c0be9f146ac912130c280b15, type: 3}
+  - {fileID: 11500000, guid: 722a2ad531fefdc4d8782d5c7cdfd012, type: 3}
+  - {fileID: 11500000, guid: 3d88a21f3ece742408c7748897a21c79, type: 3}
+  - {fileID: 11500000, guid: e5cded78687f09442895bc96cc5b683d, type: 3}
+  - {fileID: 11500000, guid: 4b8bd7fecbc728f4b89d398cef86ada8, type: 3}
+  - {fileID: 11500000, guid: c2bf0375fb75ce245b2f30857a111972, type: 3}
+  - {fileID: 11500000, guid: a9881734e0217bc45bb422dc83f6ee1a, type: 3}
+  - {fileID: 11500000, guid: 81ef96bc69f897d4e8bc21e2731e065f, type: 3}
+  - {fileID: 11500000, guid: 176154e86c6c3544fab0d67e098c645d, type: 3}
+  - {fileID: 11500000, guid: 599ae67e52ac45f46acc0efd9285b97c, type: 3}
+  - {fileID: 11500000, guid: fd6da00dbcdf3d04cb35a61cda01ae77, type: 3}
+  - {fileID: 11500000, guid: 2e17448829221b04bb3185bef727b19f, type: 3}
+  - {fileID: 11500000, guid: b90e416e2fa93a249952fabc78f659c8, type: 3}
+  - {fileID: 11500000, guid: 785830160e033d24280df9c5b4cec368, type: 3}
+  - {fileID: 11500000, guid: bb3fd570e41cfa24d93b53e80eac02d5, type: 3}
+  - {fileID: 11500000, guid: 1e38abf6e3c7dfa409a5fe40d2ce8a19, type: 3}
+  - {fileID: 11500000, guid: be47a76f1f42fbe47bf2568584c31196, type: 3}
+  - {fileID: 11500000, guid: b9489308aad1f794982afc1faf646013, type: 3}
+  - {fileID: 11500000, guid: 1ed2c12cea61a8c4fa67eebdc10d2a2a, type: 3}
+  - {fileID: 11500000, guid: 8804c7e5888738547b5a704f788fc18b, type: 3}
+  - {fileID: 11500000, guid: 01c91005470f6b94eba168a127cecd6c, type: 3}
+  - {fileID: 11500000, guid: fa6682c371754094f88b3c2a7e96ae26, type: 3}
+  - {fileID: 11500000, guid: 727743b66e17d7b4f9c2fbe7dde98bd9, type: 3}
+  - {fileID: 11500000, guid: 520a55839e863ce47b3558be612f4691, type: 3}
+  - {fileID: 11500000, guid: b6ca01d5c16f73c42996318c140eddb7, type: 3}
+  - {fileID: 11500000, guid: 2044eccbb1e8a0d4a9be200e343c2f5c, type: 3}
+  - {fileID: 11500000, guid: bcd77715f8db1564abc96d502312d476, type: 3}
+  - {fileID: 11500000, guid: c5bb608b83cdc894cab572c72baa5f84, type: 3}
+  - {fileID: 11500000, guid: f7b5f29bc7f6bb844ae4ea698404adc3, type: 3}
+  - {fileID: 11500000, guid: 513de50bd4766d0448bb471ca272608f, type: 3}
+  - {fileID: 11500000, guid: 9d56f68d94c889443af651140ef86948, type: 3}
+  - {fileID: 11500000, guid: b594feaa69ad03449b563f834fe0c18e, type: 3}
+  - {fileID: 11500000, guid: ec926b11f9c698c458f746e4e55fd7df, type: 3}
+  - {fileID: 11500000, guid: 429f407c2b590df45b215f0edfa49b97, type: 3}
+  - {fileID: 11500000, guid: f186e1b03a8ee2b4b9e45918576e8cf6, type: 3}
+  - {fileID: 11500000, guid: ed03e964ff9aa274cbf392769b61170b, type: 3}
+  - {fileID: 11500000, guid: 52092e3985c556943895f86c585bcd25, type: 3}
+  - {fileID: 11500000, guid: be2a11b08ee8cbb458dbcc4c1a61ad1b, type: 3}
+  - {fileID: 11500000, guid: 0f64eb769f843a349a0d249beacc6fc3, type: 3}
+  - {fileID: 11500000, guid: 4820b591b73a7fe4ab13261deebf76f7, type: 3}
+  - {fileID: 11500000, guid: c4305e64271097249a198b2e8aed3046, type: 3}
+  - {fileID: 11500000, guid: 792e48b83a6387a4d826d6445417372f, type: 3}
+  - {fileID: 11500000, guid: 535b4367719ca2146bb7ddac217dad94, type: 3}
+  - {fileID: 11500000, guid: 637508d44a97b5449a3d7223c461e58c, type: 3}
+  - {fileID: 11500000, guid: 928c21155a9c1a74b953da2d24269035, type: 3}
+  - {fileID: 11500000, guid: ba1613dad4af0da4b9f4619b90916cbf, type: 3}
+  - {fileID: 11500000, guid: 5f78e9a796a94d54482caa15d4971feb, type: 3}
+  - {fileID: 11500000, guid: 97be7adea7b8ae44c9bebb753277e0c2, type: 3}
+  - {fileID: 11500000, guid: 6ca9162ab6c708f40bbc21f0c22909fa, type: 3}
+  - {fileID: 11500000, guid: e80e305761a1e6c4898e401a64b17f84, type: 3}
+  - {fileID: 11500000, guid: 4ea5a2904ca58164086eeb8ef3084ed2, type: 3}
+  - {fileID: 11500000, guid: 1b19c8479d7a7a9458a6f556bf6545d5, type: 3}
+  - {fileID: 11500000, guid: 647081578ac7f014d98090d36b5b1bc8, type: 3}
+  - {fileID: 11500000, guid: 5785c326a26d2ba4ab642fc2bdd41e9a, type: 3}
+  - {fileID: 11500000, guid: 204f935dafd0a984297e242583de1da5, type: 3}
+  - {fileID: 11500000, guid: 6aacdecbe4e41f44988580058f7e0000, type: 3}
+  - {fileID: 11500000, guid: 8245233e0833c884b8a176943d80514b, type: 3}
+  - {fileID: 11500000, guid: 9e6450dc84bf1ed4cad27fcf99cad3fb, type: 3}
+  - {fileID: 11500000, guid: 3998227d1294c2d4d98caf969b04f89a, type: 3}
+  - {fileID: 11500000, guid: d6b42642ffce2754fba2cf8305e1da68, type: 3}
+  - {fileID: 11500000, guid: 391a18455087a034bb4c09be42caa46a, type: 3}
+  - {fileID: 11500000, guid: ee44f086d7aa7804ea035860c5735cfb, type: 3}
+  - {fileID: 11500000, guid: 47af62ad6a29d1b409d526d352b5e677, type: 3}
+  - {fileID: 11500000, guid: 2528fbf85b5823a4499871c2a6eecc0a, type: 3}
+  - {fileID: 11500000, guid: b266c7cca236bcb469d6d4f13df55df5, type: 3}
+  - {fileID: 11500000, guid: 52266d8a6f7f4fe428dcee2ddb0514ac, type: 3}
+  - {fileID: 11500000, guid: 32cea8ff65efa3844a0047477ec789da, type: 3}
+  - {fileID: 11500000, guid: 71628885b2fde0944bf7dd8e4eb2770f, type: 3}
+  - {fileID: 11500000, guid: 1a23decd88779d24f9af6ae30c3d5a5f, type: 3}
+  - {fileID: 11500000, guid: 73fb18e7d547d514695cb0b83a29f80e, type: 3}
+  - {fileID: 11500000, guid: 4755b85e957e31d4b96d341070b156b5, type: 3}
+  - {fileID: 11500000, guid: 891e3ffa10c12c54e83a1e40df03df2f, type: 3}
+  - {fileID: 11500000, guid: d61a084db19701c4fb3030ee953ac509, type: 3}
+  - {fileID: 11500000, guid: 850bb0065928b7f499b869b8adc1ce5c, type: 3}
+  - {fileID: 11500000, guid: bd82e1d90bd90fc4d924e97e5fdcc7de, type: 3}
+  - {fileID: 11500000, guid: e4f39f3a52f10644392decce9d1e6790, type: 3}
+  - {fileID: 11500000, guid: eceb6029efe39524d83b45c10a979943, type: 3}
+  - {fileID: 11500000, guid: b80a218ca12b89948b83d0dee41fc056, type: 3}
+  - {fileID: 11500000, guid: 08ddf1dd61719944b9e50d4bc87c0413, type: 3}
+  - {fileID: 11500000, guid: e228d03a789934a4f90f9587396692e3, type: 3}
+  - {fileID: 11500000, guid: 057d23b232d9c044cbf3f1d0b1a06909, type: 3}
+  - {fileID: 11500000, guid: 43b6f20fe0e24ff40bf9f25b001b40d8, type: 3}
+  - {fileID: 11500000, guid: 872b1da17041cd64482c826cbfd9c8c6, type: 3}
+  - {fileID: 11500000, guid: c1210b3dd22dafe418c5a998df2c3443, type: 3}
+  - {fileID: 11500000, guid: 4f9ca941b3f5014448e530c761a418d9, type: 3}
+  - {fileID: 11500000, guid: 38b8c76e7f2dc294581195a669942706, type: 3}
+  - {fileID: 11500000, guid: 72a1a810ace8ea440ba20d4a4f9086ce, type: 3}
+  - {fileID: 11500000, guid: ad04713692e9f124e86030d792c3e648, type: 3}
+  - {fileID: 11500000, guid: bacb12043c5bc504aa49e0a5a9bbc534, type: 3}
+  - {fileID: 11500000, guid: 08fd3dd8f623aca42b7eb9962a89753d, type: 3}
+  - {fileID: 11500000, guid: 839ecbdfc8ed4fd4d8a08ec07f7159fa, type: 3}
+  - {fileID: 11500000, guid: c2f0572db8612644b8e7fc2bcd16312b, type: 3}
+  - {fileID: 11500000, guid: cb9d9029b584a7645a3d4aa2b45e34ab, type: 3}
+  - {fileID: 11500000, guid: ca76669baa9fa204b8ce5200eb07c1db, type: 3}
+  - {fileID: 11500000, guid: 4c7b60515f9cf6043bf8d03531d268f9, type: 3}
+  - {fileID: 11500000, guid: ef1fe46d0cc472e45ad13ac737db2c1e, type: 3}
+  - {fileID: 11500000, guid: 24f267627c002964badad2901309c96a, type: 3}
+  - {fileID: 11500000, guid: fc77801277f0faf4ca0be33f565b5604, type: 3}
+  - {fileID: 11500000, guid: 1f79f23d5c10c9e4fb6a59c1ef70f6fc, type: 3}
+  - {fileID: 11500000, guid: b544118f39abfe84581b8249973d52c5, type: 3}
+  - {fileID: 11500000, guid: ebd7eb3a7f6149e4e9dacbcda2d8089f, type: 3}
+  - {fileID: 11500000, guid: b865968ce22b9d949993e5e60126eb11, type: 3}
+  - {fileID: 11500000, guid: 8ae297dac4e208f4e86c8f7a022fc5bd, type: 3}
+  - {fileID: 11500000, guid: 6271f602b9ab61e4c9a96a91e473c1e0, type: 3}
+  - {fileID: 11500000, guid: e5f8fa23e49e4be478b283a704459767, type: 3}
+  - {fileID: 11500000, guid: 3aca1dfe55df44d4cbaf99d5a40f7470, type: 3}
+  - {fileID: 11500000, guid: 9ecea5c13558ad4499dd4bc558670b8e, type: 3}
+  - {fileID: 11500000, guid: 5a83fb450d164d34bb756f46b3f4290e, type: 3}
+  - {fileID: 11500000, guid: 4b09c64ce2fd06a4cb4036d8cc0f8b2a, type: 3}
+  - {fileID: 11500000, guid: abe3e8fa4d49c9742a95ac801fd14d7d, type: 3}
+  - {fileID: 11500000, guid: 79c24faef1fec884d937e74bdc9209da, type: 3}
+  - {fileID: 11500000, guid: 35a7fdfdb9a6b0048aa322a9fe58a371, type: 3}
+  - {fileID: 11500000, guid: c6b57deeb826a674f9715fab4dfb4cb1, type: 3}
+  - {fileID: 11500000, guid: 0ab4c474dfddce2429da08f56e651ed4, type: 3}
+  - {fileID: 11500000, guid: 5360ba11600eeb44786246ca70212e25, type: 3}
+  - {fileID: 11500000, guid: de89b62c2bd8eec4b915a0decba936fb, type: 3}
+  - {fileID: 11500000, guid: 84e56f8cb109deb4da1945562567bf0c, type: 3}
+  - {fileID: 11500000, guid: 5fc48fb872ce5e74aa913f987a025ea4, type: 3}
+  - {fileID: 11500000, guid: e1d9e34bd7946e247aa6d28b2859c6b1, type: 3}
+  - {fileID: 11500000, guid: dcbce53ba2eeecd4a8f2c7f5f9a43b7a, type: 3}
+  - {fileID: 11500000, guid: b03340e569366ae4dbd502e14c62e225, type: 3}
+  - {fileID: 11500000, guid: c757602c408f7354b96c2a5eb21662a4, type: 3}
+  - {fileID: 11500000, guid: 4e8f3788c7c239042b3cc3d086311227, type: 3}
+  - {fileID: 11500000, guid: b12f2516af03f3443b1f2c08c72aa490, type: 3}
+  - {fileID: 11500000, guid: 91bbf209a618780459e775d6816a4b06, type: 3}
+  - {fileID: 11500000, guid: 2b53cc116abb0df45b028f41b8f0305e, type: 3}
+  - {fileID: 11500000, guid: 517aad6764d713946bc566f0a83cd44d, type: 3}
+  - {fileID: 11500000, guid: b0d2e93061ffcbd45b085a61e5000daa, type: 3}
+  - {fileID: 11500000, guid: 8f700ba5366bcda45beea5c0e2db9f3e, type: 3}
+  - {fileID: 11500000, guid: 4c6ad22d8633c7142ae0237479df76ed, type: 3}
+  - {fileID: 11500000, guid: f708a5bf672ab004a9363a4a71f48f28, type: 3}
+  - {fileID: 11500000, guid: 8bbd856408a816448a2686501df37397, type: 3}
+  - {fileID: 11500000, guid: da0b931bd234a1e43b65f684d4b59bfb, type: 3}
+  - {fileID: 11500000, guid: 144af5a201bd97542bf3a483976759db, type: 3}
+  - {fileID: 11500000, guid: 3aaabf1f5cb06414a8be17a89487e10f, type: 3}
+  - {fileID: 11500000, guid: 122447ac2bc376a448a42a0f5373e63b, type: 3}
+  - {fileID: 11500000, guid: 4214390aa7f66364bbab454dc15a04ac, type: 3}
+  - {fileID: 11500000, guid: fce684c26c654d14e927860863cd99dd, type: 3}
+  - {fileID: 11500000, guid: 58e4eb5fc3fed124384eef956c6c3ee1, type: 3}
+  - {fileID: 11500000, guid: b21cb297a12ef0a4281213619e3e76bf, type: 3}
+  - {fileID: 11500000, guid: 019dfacde4ed75a41851c7f15f69963f, type: 3}
+  - {fileID: 11500000, guid: 0f32755ee64bb1542ad9598810d9faf9, type: 3}
+  - {fileID: 11500000, guid: fa2d25bd070cde046876bd1fa77bf116, type: 3}
+  - {fileID: 11500000, guid: 081c72eb35d61c84e9a5c34522c3ff33, type: 3}
+  - {fileID: 11500000, guid: 389dcf32e61ce9d47b9a92ab691365d3, type: 3}
+  - {fileID: 11500000, guid: 1e6749bf88e2d0f4ab5812f084973f4c, type: 3}
+  - {fileID: 11500000, guid: 1340693b71fe44846bb72eb1035f138d, type: 3}
+  - {fileID: 11500000, guid: d5f63490d6402e9488add7cbdfdd6872, type: 3}
+  - {fileID: 11500000, guid: 3324f7aa07eb04d42bea8791af66cc15, type: 3}
+  - {fileID: 11500000, guid: 7c88941c5badfb7428059cc3ff0c0df9, type: 3}
+  - {fileID: 11500000, guid: 33fdd6a5fbc437a489acf58f5d82885c, type: 3}
+  - {fileID: 11500000, guid: 33c15b597b8db18499c1b4a76035a552, type: 3}
+  - {fileID: 11500000, guid: 7d16f1d82f69ac945ac524dd877ce7fe, type: 3}
+  - {fileID: 11500000, guid: 1579d32d6529f33418f210a5bd730436, type: 3}
+  - {fileID: 11500000, guid: 9f0aacdb47cf3b94ebbe9e72af9d3cf1, type: 3}
+  - {fileID: 11500000, guid: fa41b984209fa624aa1fdea5949d9d59, type: 3}
+  - {fileID: 11500000, guid: f4ff24a5a4c92f745a159f247574c07a, type: 3}
+  - {fileID: 11500000, guid: 905b4a4de4a974a489d7a8aac14e4fcb, type: 3}
+  - {fileID: 11500000, guid: d11e7a9026804bd46962c527fe30d933, type: 3}
+  - {fileID: 11500000, guid: 5eb32f2452052fb43b6b93c9baa8f02f, type: 3}
+  - {fileID: 11500000, guid: f48de3e34ed250945ba8c16d98b8ca0e, type: 3}
+  - {fileID: 11500000, guid: ccaa3765dae023d4b8657544c1aeef4a, type: 3}
+  - {fileID: 11500000, guid: e0d8dab404a624247bc5d60b401b28d4, type: 3}
+  - {fileID: 11500000, guid: 10b84d00b09113748ac1353969d01918, type: 3}
+  - {fileID: 11500000, guid: 3e7433fb42db4d9428571bfcd0da64f3, type: 3}
+  - {fileID: 11500000, guid: 436dc8bc09773454db57b9fbf799ec9d, type: 3}
+  - {fileID: 11500000, guid: a1c012872b428594f95e585bd19e5347, type: 3}
+  - {fileID: 11500000, guid: 641dff721f3c24c4188f01fea49484cb, type: 3}
+  - {fileID: 11500000, guid: d402e3c7d578ee046a5d0826b9a41c27, type: 3}
+  - {fileID: 11500000, guid: 7ab31d77d200c7a4ca43f4bf159de6b3, type: 3}
+  - {fileID: 11500000, guid: 87cfef50a69ad24479fb8b472dac6d6e, type: 3}
+  - {fileID: 11500000, guid: f4f4421f529503243bfef5076ae82512, type: 3}
+  - {fileID: 11500000, guid: 5e4654284143e4149873b379a6ea5adc, type: 3}
+  - {fileID: 11500000, guid: c71b815458d61e24184a60dbce19573d, type: 3}
+  - {fileID: 11500000, guid: d39b4c96fb4d7f847b3a21c377d4188d, type: 3}
+  - {fileID: 11500000, guid: f9b3f6c515f0e16469de89d9e22263c5, type: 3}
+  - {fileID: 11500000, guid: d036571a581792b44951e3723aef2c01, type: 3}
+  - {fileID: 11500000, guid: e5a7e5c0308e038448cd1a235bf840ca, type: 3}
+  - {fileID: 11500000, guid: fe831fe9de481bc4b9df1c1142bb9aa5, type: 3}
+  - {fileID: 11500000, guid: 6852cf9e70d26d54eb91f7b259b65dfb, type: 3}
+  - {fileID: 11500000, guid: 15917e71489c3ca4dbc5fdef9bb37433, type: 3}
+  - {fileID: 11500000, guid: 47f91343d4ad12542b3eb9511e2b310c, type: 3}
+  - {fileID: 11500000, guid: 565dc3c9725b0db49b7d5ea17d151682, type: 3}
+  - {fileID: 11500000, guid: 23e0210afe076544ca92d761094a9119, type: 3}
+  - {fileID: 11500000, guid: 89dee7566d97f1847b9fe114e1c9a1a2, type: 3}
+  - {fileID: 11500000, guid: 32dbececad3a67a4fbde694ae50ce82c, type: 3}
+  - {fileID: 11500000, guid: ad6ef05d39dc39e42b8bfe0bdb826b7a, type: 3}
+  - {fileID: 11500000, guid: 84d9a18b60b810c4c894886264a89da0, type: 3}
+  - {fileID: 11500000, guid: b52649079e4f9ef488724bd3c72449ed, type: 3}
+  - {fileID: 11500000, guid: 581602482686da34180d35b169cd357a, type: 3}
+  - {fileID: 11500000, guid: 7647d2525992b7748a587740fd596977, type: 3}
+  - {fileID: 11500000, guid: e8199169aaf7f404492a0f2353fb52f9, type: 3}
+  - {fileID: 11500000, guid: 82722ce1ba0df314490a9362e503727c, type: 3}
+  - {fileID: 11500000, guid: 499682ec40529f44480d58747ad7ab44, type: 3}
+  - {fileID: 11500000, guid: 4709687a4844c9545a254c2ddbf3ca63, type: 3}
+  - {fileID: 11500000, guid: 99fb607e60678c44da002d6b694400dc, type: 3}
+  universalFunction: {fileID: 11400000, guid: 3bd8f551476344447bd0c8b0fee2da1f, type: 2}
+  searcherList:
+  - isBuiltin: 1
+    name: "\u641C\u7D22\u51FD\u6570&\u7279\u6027"
+    customRegex: 
+    regexOp: 0
+    searchMode: 2
+    isBroadcast: 0
+    isFunctionInside: 0
+    nameIndex: 0
+    searchFunctionOrAttributeAPI:
+    - new GUIContent()
+    - GUILayout.Button()
+    - EditorGUILayout.LabelField()
+    - EditorGUILayout.HelpBox()
+    - EditorGUILayout.Foldout()
+    - EditorGUILayout.ObjectField()
+    - EditorGUILayout.IntField()
+    - EditorGUILayout.Popup()
+    - EditorGUILayout.Toggle()
+    - EditorUtility.DisplayProgressBar()
+    - NodeUtils.DrawPropertyGroup()
+    - EditorGUILayoutToggle()
+    - EditorGUILayoutTextField()
+    - NodeUtils.DrawNestedPropertyGroup()
+    - EditorGUILayoutPopup()
+    - GUILayoutToggle()
+    - new TemplateAdditionalDirectivesHelper()
+    - EditorGUILayoutEnumPopup()
+    - FloatField()
+    - SetStateOnButton()
+    - new ToolsMenuButton()
+    - AddInputPort()
+    - ChangeOutputName()
+    - RangedFloatField()
+    - CustomDrawer()
+    - NodeAttributes()
+    - GUI.Label()
+    - EditorGUILayout.TextField()
+    excludeFunctionOrAttributeAPI:
+    - EditorGUIUtility.IconContent()
+    - DefaultValue()
+    - new GUIStyle()
+    variableNameList: []
+  - isBuiltin: 1
+    name: "\u641C\u7D22\u5B57\u6BB5-\u6570\u7EC4\u5217\u8868\u7B49"
+    customRegex: 
+    regexOp: 0
+    searchMode: 1
+    isBroadcast: 0
+    isFunctionInside: 0
+    nameIndex: 0
+    searchFunctionOrAttributeAPI: []
+    excludeFunctionOrAttributeAPI: []
+    variableNameList:
+    - CategoryPresets
+  - isBuiltin: 1
+    name: "\u641C\u7D22\u5B57\u6BB5-\u5B57\u5178\u7B49"
+    customRegex: 
+    regexOp: 0
+    searchMode: 1
+    isBroadcast: 1
+    isFunctionInside: 0
+    nameIndex: 0
+    searchFunctionOrAttributeAPI: []
+    excludeFunctionOrAttributeAPI: []
+    variableNameList:
+    - m_nodeCategoryToColor
+  - isBuiltin: 1
+    name: "\u641C\u7D22\u5B57\u6BB5-\u5B57\u7B26\u4E32\u58F0\u660E(\u5355\u884C)"
+    customRegex: \b(?:public|private|protected|internal)(?:.*?)string\s*(\w+)\s*=(?:.*?)@?"(?:.*?)"\s*;
+    regexOp: 0
+    searchMode: 0
+    isBroadcast: 0
+    isFunctionInside: 1
+    nameIndex: 1
+    searchFunctionOrAttributeAPI: []
+    excludeFunctionOrAttributeAPI: []
+    variableNameList: []
+  functionHeadList:
+  - new GUIContent( "Default Value" )
+  - new GUIContent( "Material Value" )
+  - new GUIContent( "ASE is unable to load correctly due to some faulty other classes/plugin
+    in your project. We advise to review all your imported plugins.")
+  - new GUIContent( original )
+  - new GUIContent( "Shader Editor")
+  - new GUIContent()
+  - 'SetStateOnButton( ToolButtonType.Live, ( m_liveShaderEditing ) ? 1 : 0 )'
+  - 'SetStateOnButton( ToolButtonType.CleanUnusedNodes, hasUnusedConnNodes ? 1 :
+    0 )'
+  - 'SetStateOnButton( ToolButtonType.Update, ShaderIsModified ? 0 : 2, ShaderIsModified
+    ? ShaderIsModifiedMessage : ShaderIsNotModified)'
+  - SetStateOnButton( ToolButtonType.Update, 1, "Set an active Material in the Master
+    Node.")
+  - 'SetStateOnButton( ToolButtonType.OpenSourceCode, masterNode.CurrentShader !=
+    null ? 1 : 0 )'
+  - 'SetStateOnButton( ToolButtonType.Save, m_shaderIsModified ? 1 : 0 )'
+  - 'SetStateOnButton( ToolButtonType.Update, ShaderIsModified ? 0 : 2, ShaderIsModified
+    ? ShaderIsModifiedMessage : ShaderIsNotModified )'
+  - SetStateOnButton( ToolButtonType.Update, 1 )
+  - 'SetStateOnButton( ToolButtonType.Update, m_shaderIsModified ? 0 : 2 )'
+  - GUI.Label( new Rect(Screen.width - 60, 40, 60, 50), m_fpsDisplay )
+  - GUI.Label( transformedArea, "", UIUtils.Box )
+  - new TemplateAdditionalDirectivesHelper( " Additional Directives")
+  - GUILayout.Button( "Open in Shader Editor")
+  - GUILayout.Button( "Search Direct Dependencies")
+  - GUILayout.Button( m_dependencies[ i ].AssetName, "minibuttonleft")
+  - GUILayout.Button( "edit", "minibuttonright", GUILayout.Width(100) )
+  - GUILayout.Button( "Open and Save All")
+  - EditorGUILayout.HelpBox( m_target.Description, MessageType.Info )
+  - GUI.Label( m_area, string.Empty, m_style )
+  - new GUIContent( GUIContent.none )
+  - GUILayout.Button( m_yesStr, m_buttonStyle )
+  - GUILayout.Button( m_noStr, m_buttonStyle )
+  - EditorGUILayout.LabelField( m_currentMessage, m_labelStyle )
+  - new GUIContent( "\u2261", "Toggle Message Box")
+  - new GUIContent( "\u00D7", "Clear Messages")
+  - 'new GUIContent( m_parentWindow.Messages.Count + ": " + itemMessage )'
+  - new GUIContent( messages[ i ].ItemMessage )
+  - 'GUILayout.Button( ( count - i ) + ": " + messages[ i ].ItemMessage, labelStyle
+    )'
+  - GUI.Label( rect, gc, msgstyle )
+  - new GUIContent( m_nameWithShortcut, m_description )
+  - GUILayout.Button( "Nodes Screen Shots")
+  - GUILayout.Button( "Nodes URLs")
+  - GUILayout.Button( "Nodes CSV Export")
+  - GUILayout.Button( "Nodes Undo Test")
+  - GUILayout.Button( "Nodes Info")
+  - GUILayout.Button( "Shortcuts Info")
+  - GUILayout.Button( "Force Example Shader Compilation")
+  - GUILayout.Button( "Refresh Available Nodes")
+  - GUILayout.Button( "Dump Uniform Names")
+  - GUILayout.Button( "Force Palette Update")
+  - GUILayout.Button( "Detect Infinite Loops")
+  - EditorGUILayout.LabelField( "Please open an ASE window to access debug options")
+  - EditorGUILayout.IntField( m_minURLNode )
+  - EditorGUILayout.IntField( m_maxURLNode )
+  - NodeUtils.DrawPropertyGroup( ref m_wikiAreaFoldout, "Wiki Helper", ShowWikiHelperFunctions
+    )
+  - NodeUtils.DrawPropertyGroup( ref m_miscAreaFoldout, "Misc", ShowMiscFuntions
+    )
+  - NodeAttributes( allFunctions[ i ].FunctionName, allFunctions[ i ].CustomNodeCategory,
+    allFunctions[ i ].Description, KeyCode.None, true, 0, int.MaxValue, typeof( AmplifyShaderFunction
+    ) )
+  - GUI.Label( m_transformedArea, m_content, m_style )
+  - 'GUI.Label( m_minimizeButtonPos, string.Empty, UIUtils.GetCustomStyle( m_isMaximized
+    ? CustomStyle.MinimizeButton : CustomStyle.MaximizeButton ) )'
+  - new GUIContent( "    Description")
+  - new GUIContent( "Custom URL")
+  - new GUIContent( "Preview Position")
+  - new GUIContent( "Custom")
+  - new GUIContent( "Hidden")
+  - new GUIContent( "Header Style")
+  - new GUIContent( "Header Color")
+  - EditorGUILayout.LabelField( m_dummyContent, m_nodePropertiesStyle )
+  - EditorGUILayout.LabelField( "Graph Properties", m_nodePropertiesStyle )
+  - NodeUtils.DrawPropertyGroup( ref generalIsVisible, " General", DrawGeneralFunction
+    )
+  - NodeUtils.DrawPropertyGroup( ref inputIsVisible, " Function Inputs", DrawFunctionInputs
+    )
+  - NodeUtils.DrawPropertyGroup( ref swicthIsVisible, " Function Switches", DrawFunctionSwitches
+    )
+  - NodeUtils.DrawPropertyGroup( ref outputIsVisible, " Function Outputs", DrawFunctionOutputs
+    )
+  - NodeUtils.DrawPropertyGroup( ref properties, " Material Properties", DrawFunctionProperties
+    )
+  - EditorGUILayoutPopup( "Category", cat.intValue, UIUtils.CategoryPresets )
+  - new GUIContent( "Helper", "Shows helper info for ASE users")
+  - GUILayout.Button( "Wiki Page")
+  - EditorGUILayout.LabelField( UIUtils.GetNameForDataType( type ), m_labelStyle
+    )
+  - EditorGUILayout.LabelField( NoASEWindowWarning )
+  - EditorGUILayout.LabelField( m_lockedStr, m_labelStyle )
+  - EditorGUILayout.Foldout( m_nodeDescriptionsInfo[ i ].FoldoutValue, m_nodeDescriptionsInfo[
+    i ].Category, m_nodeInfoFoldoutStyle )
+  - NodeUtils.DrawPropertyGroup( ref m_portAreaFoldout, PortLegendTitle, DrawPortInfo
+    )
+  - NodeUtils.DrawPropertyGroup( ref m_editorShortcutAreaFoldout, EditorShortcutsTitle,
+    DrawEditorShortcuts )
+  - NodeUtils.DrawPropertyGroup( ref m_menuShortcutAreaFoldout, MenuShortcutsTitle,
+    DrawMenuShortcuts )
+  - NodeUtils.DrawPropertyGroup( ref m_nodesShortcutAreaFoldout, NodesShortcutsTitle,
+    DrawNodesShortcuts )
+  - NodeUtils.DrawPropertyGroup( ref m_compatibleAssetsFoldout, CompatibleAssetsTitle,
+    DrawCompatibleAssets )
+  - NodeUtils.DrawPropertyGroup( ref m_nodesDescriptionAreaFoldout, NodesDescTitle,
+    DrawNodeDescriptions )
+  - GUI.Label( m_leftButtonRect, m_leftAuxContent, m_leftButtonStyle )
+  - GUI.Label( m_rightButtonRect, m_rightAuxContent, m_rightButtonStyle )
+  - GUILayout.Button( string.Empty, UIUtils.MainSkin.customStyles[ 8 ] )
+  - GUILayout.Button( string.Empty, UIUtils.MainSkin.customStyles[ 9 ] )
+  - GUILayout.Button( string.Empty, UIUtils.MainSkin.customStyles[ 7 ] )
+  - GUILayout.Button( string.Empty, UIUtils.MainSkin.customStyles[ 6 ] )
+  - GUILayout.Button( m_shaders[ i ], UIUtils.MainSkin.customStyles[ 10 ] )
+  - EditorGUILayout.LabelField( "Shader Library", UIUtils.MainSkin.customStyles[
+    5 ] )
+  - new GUIContent( m_searchFilterStr )
+  - EditorGUILayout.TextField( m_searchFilterStr, m_searchFilter )
+  - new GUIContent( "Test Label")
+  - GUI.Label( m_areaSettings, m_content, m_style )
+  - GUI.Label( m_areaSettings, m_labelContent, m_fontStyle )
+  - GUILayout.Button( m_content, m_style )
+  - SetStateOnButton( m_bufferedState )
+  - SetStateOnButton( m_bufferedState, m_bufferedTooltip )
+  - SetStateOnButton( int state, string tooltip )
+  - SetStateOnButton( state, tooltip )
+  - SetStateOnButton( int state )
+  - SetStateOnButton( state )
+  - GUI.Label( m_buttonArea, m_content, m_style )
+  - new GUIContent( text, tooltip )
+  - new GUIContent( itemName )
+  - SetStateOnButton( ToolButtonType button, int state, string tooltip )
+  - SetStateOnButton( ToolButtonType button, int state )
+  - new ToolsMenuButton( m_parentWindow, ToolButtonType.Update, 0, 0, -1, -1, IOUtils.UpdateOutdatedGUID,
+    string.Empty, "Create and apply shader to material.", 5 )
+  - new ToolsMenuButton( m_parentWindow, ToolButtonType.Live, 0, 0, -1, -1, IOUtils.LiveOffGUID,
+    string.Empty, "Automatically saves shader when canvas is changed.", 50 )
+  - new ToolsMenuButton( m_parentWindow, ToolButtonType.OpenSourceCode, 0, 0, -1,
+    -1, IOUtils.OpenSourceCodeOFFGUID, string.Empty, "Open shader file in your default
+    shader editor.", 80, false )
+  - new ToolsMenuButton( m_parentWindow, ToolButtonType.CleanUnusedNodes, 0, 0, -1,
+    -1, IOUtils.CleanupOFFGUID, string.Empty, "Remove all nodes not connected to
+    the master node.", 77 )
+  - new ToolsMenuButton( m_parentWindow, ToolButtonType.FocusOnMasterNode, 0, 0,
+    -1, -1, IOUtils.FocusNodeGUID, string.Empty, "Focus on active master node.",
+    -1, false )
+  - new ToolsMenuButton( m_parentWindow, ToolButtonType.FocusOnSelection, 0, 0, -1,
+    -1, IOUtils.FitViewGUID, string.Empty, "Focus on selection or fit to screen if
+    none selected.")
+  - new ToolsMenuButton( m_parentWindow, ToolButtonType.Share, 0, 0, -1, -1, IOUtils.ShareOFFGUID,
+    string.Empty, "Share selection", 100 )
+  - new ToolsMenuButton( m_parentWindow, ToolButtonType.TakeScreenshot, 0, 0, -1,
+    -1, IOUtils.TakeScreenshotOFFGUID, string.Empty, "Take ScreenShot (WINDOWS ONLY).",
+    100 )
+  - new ToolsMenuButton( m_parentWindow, ToolButtonType.ShowInfoWindow, 0, 0, -1,
+    -1, IOUtils.ShowInfoWindowGUID, string.Empty, "Open Helper Window.")
+  - new ToolsMenuButton( m_parentWindow, ToolButtonType.ShowTipsWindow, 0, 0, -1,
+    -1, IOUtils.ShowTipsWindowGUID, string.Empty, "Open Quick Tips!")
+  - new ToolsMenuButton( m_parentWindow, ToolButtonType.ShowConsole, 0, 0, -1, -1,
+    IOUtils.ShowConsoleWindowGUID, string.Empty, "Show internal console", 74 )
+  - GUI.Label( m_searchBarSize, m_searchBarValue, UIUtils.ToolbarSearchTextfield
+    )
+  - GUI.Label( m_searchBarSize, string.Empty, UIUtils.ToolbarSearchCancelButton )
+  - GUI.Label( m_borderRect, shaderName, m_borderStyle )
+  - GUI.Label( m_boxRect, shaderName, UIUtils.ToolbarMainTitle )
+  - EditorGUILayout.HelpBox( InfoText, MessageType.Info )
+  - "NodeUtils.DrawPropertyGroup( ref m_propertiesFoldout, Constants.ParameterLabelStr,()=>\r\n\t\t\t{\r\n\t\t\t\tEditorGUI.BeginChangeCheck();\r\n\t\t\t\tm_titleText
+    = EditorGUILayoutTextField( \"Frame Title\", m_titleText );\r\n\t\t\t\tif ( EditorGUI.EndChangeCheck()
+    )\r\n\t\t\t\t{\r\n\t\t\t\t\tm_checkTitleText = true;\r\n\t\t\t\t}\r\n\t\t\t\tEditorGUI.BeginChangeCheck();\r\n\t\t\t\tm_commentText
+    = EditorGUILayoutTextField( CommentaryTitle, m_commentText );\r\n\t\t\t\tif (
+    EditorGUI.EndChangeCheck() )\r\n\t\t\t\t{\r\n\t\t\t\t\tm_checkCommentText = true;\r\n\t\t\t\t}\r\n\r\n\t\t\t\tm_frameColor
+    = EditorGUILayoutColorField( \"Frame Color\", m_frameColor );\r\n\t\t\t} )"
+  - EditorGUILayoutTextField( "Frame Title", m_titleText )
+  - EditorGUILayoutTextField( CommentaryTitle, m_commentText )
+  - GUI.Label( m_globalPosition, string.Empty, UIUtils.GetCustomStyle( CustomStyle.CommentaryBackground
+    ) )
+  - GUI.Label( m_headerPosition, string.Empty, UIUtils.GetCustomStyle( CustomStyle.NodeHeader
+    ) )
+  - GUI.Label( m_commentArea, m_commentText, UIUtils.CommentaryTitle )
+  - GUI.Label( m_resizeLeftIconCoords, string.Empty, UIUtils.GetCustomStyle( CustomStyle.CommentaryResizeButtonInv
+    ) )
+  - GUI.Label( m_resizeRightIconCoords, string.Empty, UIUtils.GetCustomStyle( CustomStyle.CommentaryResizeButton
+    ) )
+  - GUI.Label( m_globalPosition, string.Empty, UIUtils.GetCustomStyle( CustomStyle.NodeWindowOn
+    ) )
+  - GUI.Label( titleRect, m_titleText, UIUtils.GetCustomStyle( CustomStyle.CommentarySuperTitle
+    ) )
+  - NodeAttributes( "Custom Add Node", "Debug", "Custom Node Debug ( Only for debug
+    purposes)", null, UnityEngine.KeyCode.None, false )
+  - AddInputPort( WirePortDataType.OBJECT, false, name )
+  - AddInputPort( WirePortDataType.FLOAT, false, "A" )
+  - AddInputPort( WirePortDataType.FLOAT, false, "B" )
+  - AddInputPort( m_mainDataType, false, ( ( char ) ( 'A' + m_inputCount - 1 ) ).ToString()
+    )
+  - AddInputPort( m_mainDataType, false, ( ( char ) ( 'A' + i ) ).ToString() )
+  - NodeAttributes( string name, string category, string description, System.Type
+    castType = null, KeyCode shortcutKey = KeyCode.None, bool available = true, bool
+    deprecated = false, string deprecatedAlternative = null, System.Type deprecatedAlternativeType
+    = null, string community = null, string customCategoryColor = null, int sortOrderPriority
+    = -1, int nodeAvailabilityFlags = int.MaxValue, string tags = null )
+  - NodeAttributes( string name, string category, string description, KeyCode shortcutKey,
+    bool available, int sortOrderPriority, int nodeAvailabilityFlags, params System.Type[]
+    castTypes )
+  - EditorGUILayout.Toggle( string.Empty, enabledValue, UIUtils.MenuItemEnableStyle,
+    GUILayout.Width( 16 ) )
+  - EditorGUILayoutToggle( string.Empty, enabledValue, UIUtils.MenuItemEnableStyle,
+    GUILayout.Width( 16 ) )
+  - GUILayoutToggle( enabledValue, string.Empty,UIUtils.MenuItemEnableStyle, GUILayout.Width(
+    16 ) )
+  - GUILayoutToggle( string.Empty, enabledValue, UIUtils.MenuItemEnableStyle, GUILayout.Width(
+    16 ) )
+  - GUI.Label( box, string.Empty, EditorStyles.helpBox )
+  - 'new GUIContent( "Precision", "Changes the precision of internal calculations,
+    using lower types saves some performance\nDefault: Float")'
+  - 'new GUIContent( errorTooltip ? m_errorMessageTooltip : m_tooltipText )'
+  - NodeUtils.DrawPropertyGroup( ref m_propertiesFoldout, Constants.ParameterLabelStr,
+    DrawProperties )
+  - "NodeUtils.DrawPropertyGroup( ref m_internalDataFoldout, Constants.InternalDataLabelStr,
+    () =>\r\n\t\t\t\t{\r\n\t\t\t\t\tfor( int i = 0; i < m_inputPorts.Count; i++ )\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\tif(
+    m_inputPorts[ i ].ValidInternalData && !m_inputPorts[ i ].IsConnected && m_inputPorts[
+    i ].Visible  )\r\n\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\tm_inputPorts[ i ].ShowInternalData(
+    this );\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t}\r\n\t\t\t\t} )"
+  - EditorGUILayoutPopup( PrecisionContent.text, (int)m_currentPrecisionType, PrecisionLabelsExtra
+    )
+  - EditorGUILayoutPopup( PrecisionContent.text, (int)m_currentPrecisionType, PrecisionLabels
+    )
+  - AddInputPort( WirePortDataType type, bool typeLocked, string name, int orderId
+    = -1, MasterNodePortCategory category = MasterNodePortCategory.Fragment, int
+    uniquePortId = -1 )
+  - AddInputPort( WirePortDataType type, bool typeLocked, string name, string dataName,
+    int orderId = -1, MasterNodePortCategory category = MasterNodePortCategory.Fragment,
+    int uniquePortId = -1 )
+  - ChangeOutputName( int outputArrayIdx, string newName )
+  - GUI.Label( titlePos, m_content, UIUtils.GetCustomStyle( CustomStyle.NodeTitle
+    ) )
+  - GUI.Label( m_globalPosition, string.Empty, UIUtils.NodeWindowOffSquare )
+  - GUI.Label( m_globalPosition, string.Empty, UIUtils.GetCustomStyle( CustomStyle.NodeWindowOff
+    ) )
+  - GUI.Label( m_headerPosition, string.Empty, UIUtils.NodeHeaderSquare )
+  - GUI.Label( m_addTitlePos, m_additionalContent, UIUtils.GetCustomStyle( CustomStyle.PropertyValuesTitle
+    ) )
+  - GUI.Label( m_dropdownRect, string.Empty, UIUtils.PropertyPopUp )
+  - 'GUI.Label( m_expandRect, string.Empty, ( m_showPreview ? UIUtils.PreviewCollapser
+    : UIUtils.PreviewExpander ) )'
+  - GUI.Label( m_inputPorts[ i ].Position, string.Empty, style )
+  - GUI.Label( m_inputPorts[ i ].LabelPosition, m_inputPorts[ i ].Name, UIUtils.InputPortLabel
+    )
+  - GUI.Label( backBox, string.Empty, UIUtils.InternalDataBackground )
+  - GUI.Label( internalBox, m_sizeContentAux, UIUtils.InternalDataOnPort )
+  - GUI.Label( m_outputPorts[ i ].Position, string.Empty, style )
+  - GUI.Label( m_outputPorts[ i ].LabelPosition, m_outputPorts[ i ].Name, UIUtils.OutputPortLabel
+    )
+  - GUI.Label( m_errorBox, string.Empty, UIUtils.Separator )
+  - GUI.Label( textBox, m_errorMessage, m_errorCurrentStyle )
+  - GUI.Label( textBox, m_errorIcon, m_errorCurrentStyle )
+  - GUI.Label( m_globalPosition, string.Empty, UIUtils.NodeWindowOnSquare )
+  - GUI.Label( globalTooltipPos, temp, UIUtils.TooltipBox )
+  - GUI.Label( link, WikiLinkStr, UIUtils.MainSkin.customStyles[ 52 ] )
+  - EditorGUILayout.HelpBox( WarningText, MessageType.Warning )
+  - "NodeUtils.DrawPropertyGroup( ref m_propertiesFoldout, Constants.ParameterLabelStr,()=>\r\n\t\t\t{\r\n\t\t\t\tEditorGUI.BeginChangeCheck();\r\n\t\t\t\tm_titleText
+    = EditorGUILayoutTextField( \"Frame Title\", m_titleText );\r\n\t\t\t\tif ( EditorGUI.EndChangeCheck()
+    )\r\n\t\t\t\t{\r\n\t\t\t\t\tm_checkTitleText = true;\r\n\t\t\t\t}\r\n\t\t\t\tEditorGUI.BeginChangeCheck();\r\n\t\t\t\tm_innerTitleText
+    = EditorGUILayoutTextField( NoteTitle, m_innerTitleText );\r\n\t\t\t\tif ( EditorGUI.EndChangeCheck()
+    )\r\n\t\t\t\t{\r\n\t\t\t\t\tm_checkCommentText = true;\r\n\t\t\t\t}\r\n\r\n\t\t\t\tm_noteText
+    = EditorGUILayoutTextArea(  m_noteText , UIUtils.MainSkin.textArea );\r\n\r\n\t\t\t\tm_frameColor
+    = EditorGUILayoutColorField( \"Frame Color\", m_frameColor );\r\n\t\t\t} )"
+  - EditorGUILayoutTextField( NoteTitle, m_innerTitleText )
+  - NodeAttributes( "Sticky Note",            "Miscellaneous", "Allows adding notes
+    into canvas")
+  - GUI.Label( m_innerTitleArea, m_innerTitleText, UIUtils.CommentaryTitle )
+  - GUI.Label( m_noteTextArea, m_noteText, UIUtils.StickyNoteText )
+  - GUILayout.Button( text, style, options )
+  - EditorGUILayout.Foldout( foldout, content )
+  - EditorGUILayout.ObjectField( label, obj, objType, allowSceneObjects, options
+    )
+  - EditorGUILayout.IntField( value, options )
+  - EditorGUILayout.IntField( label, value, options )
+  - EditorGUILayout.Popup( label, selectedIndex, displayedOptions, style, options
+    )
+  - EditorGUILayout.Popup( label, selectedIndex, displayedOptions, options )
+  - EditorGUILayout.Popup( selectedIndex, displayedOptions, options )
+  - EditorGUILayout.Toggle( label, value, options )
+  - EditorGUILayout.Toggle( label, value, style, options )
+  - EditorGUILayoutToggle( GUIContent label, bool value, params GUILayoutOption[]
+    options )
+  - EditorGUILayoutToggle( string label, bool value, params GUILayoutOption[] options
+    )
+  - EditorGUILayoutToggle( string label, bool value, GUIStyle style, params GUILayoutOption[]
+    options )
+  - EditorGUILayoutTextField( GUIContent label, string text, params GUILayoutOption[]
+    options )
+  - EditorGUILayoutTextField( string text, params GUILayoutOption[] options )
+  - EditorGUILayoutTextField( string label, string text, params GUILayoutOption[]
+    options )
+  - EditorGUILayoutPopup( string label, int selectedIndex, string[] displayedOptions,
+    GUIStyle style, params GUILayoutOption[] options )
+  - EditorGUILayoutPopup( GUIContent label, int selectedIndex, GUIContent[] displayedOptions,
+    params GUILayoutOption[] options )
+  - EditorGUILayoutPopup( GUIContent label, int selectedIndex, GUIContent[] displayedOptions,
+    GUIStyle style, params GUILayoutOption[] options )
+  - EditorGUILayoutPopup( int selectedIndex, string[] displayedOptions, params GUILayoutOption[]
+    options )
+  - EditorGUILayoutPopup( string label, int selectedIndex, string[] displayedOptions,
+    params GUILayoutOption[] options )
+  - GUILayoutToggle( GUIContent label, bool value, params GUILayoutOption[] options
+    )
+  - GUILayoutToggle( string label, bool value, params GUILayoutOption[] options )
+  - GUILayoutToggle( string label, bool value, GUIStyle style, params GUILayoutOption[]
+    options )
+  - GUILayoutToggle( bool value, string text, GUIStyle style, params GUILayoutOption[]
+    options )
+  - EditorGUILayoutEnumPopup( GUIContent label, Enum selected, params GUILayoutOption[]
+    options )
+  - EditorGUILayoutEnumPopup( string label, Enum selected, params GUILayoutOption[]
+    options )
+  - EditorGUILayoutEnumPopup( Enum selected, params GUILayoutOption[] options )
+  - FloatField( GUIContent label, float value, params GUILayoutOption[] options )
+  - FloatField( label, value, options )
+  - FloatField( string label, float value, params GUILayoutOption[] options )
+  - FloatField( string label, float value, float min, float max, params GUILayoutOption[]
+    options )
+  - FloatField( Rect position, string label, float value )
+  - FloatField( position, label, value )
+  - FloatField( Rect position, string label, float value, [UnityEngine.Internal.DefaultValue(
+    "EditorStyles.numberField" )] GUIStyle style )
+  - FloatField( position, label, value, style )
+  - FloatField( Rect position, float value, [UnityEngine.Internal.DefaultValue( "EditorStyles.numberField"
+    )] GUIStyle style )
+  - FloatField( position, value, style )
+  - RangedFloatField( string label, float value, float min, float max, params GUILayoutOption[]
+    options )
+  - EditorGUILayout.TextField( name, value, options )
+  - EditorGUILayout.TextField( label, text, options )
+  - EditorGUILayout.TextField( text, options )
+  - EditorGUILayoutToggle( AutoGammaToLinearStr, m_autoGammaToLinearConversion )
+  - GUILayoutToggle( AutoGammaToLinearStr, m_autoGammaToLinearConversion )
+  - NodeAttributes( "Color",            "Constants And Properties", "Color property",
+    null, KeyCode.Alpha5 )
+  - GUI.Label( m_propertyDrawPos, string.Empty, UIUtils.GetCustomStyle( CustomStyle.SamplerFrame
+    ) )
+  - EditorGUILayoutToggle( AutoRegisterStr , m_autoRegister )
+  - EditorGUILayoutToggle( IsJaggedStr , m_isJagged )
+  - EditorGUILayoutToggle( AutoRangeCheckStr , m_autoRangeCheck )
+  - EditorGUILayoutPopup( TypeStr , m_type , AvailableTypesLabel )
+  - EditorGUILayoutPopup( Constants.AvailableReferenceStr , m_referenceArrayId ,
+    arr )
+  - EditorGUILayoutPopup( Constants.ReferenceTypeStr , (int)m_referenceType , Constants.ReferenceArrayLabels
+    )
+  - GUILayoutToggle( AutoRegisterStr , m_autoRegister )
+  - GUILayoutToggle( IsJaggedStr , m_isJagged )
+  - GUILayoutToggle( AutoRangeCheckStr , m_autoRangeCheck )
+  - AddInputPort( WirePortDataType.INT , false , "Index", -1 , MasterNodePortCategory.Fragment
+    , 0 )
+  - AddInputPort( WirePortDataType.INT , false , "Index Y", -1 , MasterNodePortCategory.Fragment
+    , 2 )
+  - AddInputPort( WirePortDataType.INT , false , "Array Length", -1 , MasterNodePortCategory.Fragment
+    , 1 )
+  - AddInputPort( WirePortDataType.INT , false , "Array Length Y", -1 , MasterNodePortCategory.Fragment
+    , 3 )
+  - NodeAttributes( "Global Array",            "Constants And Properties", "The node
+    returns a value from a global array, which you can configure by entering the
+    name of the array in the node's settings.", null , KeyCode.None , true , false
+    , null , null , "Johann van Berkel")
+  - NodeAttributes( "Gradient",            "Constants And Properties", "Gradient
+    property")
+  - EditorGUILayoutToggle( "Set as UINT", m_setAsUINT )
+  - GUILayoutToggle( "Set as UINT", m_setAsUINT )
+  - NodeAttributes( "Int",            "Constants And Properties", "Int property",
+    null, KeyCode.Alpha0 )
+  - GUI.Label( fakeField, m_fieldText, UIUtils.MainSkin.textField )
+  - new GUIContent(m_inputPorts[CurrentSelectedInput].Name)
+  - NodeUtils.DrawPropertyGroup(ref m_propertiesFoldout, Constants.ParameterLabelStr,
+    PropertyGroup)
+  - NodeUtils.DrawPropertyGroup(ref m_visibleCustomAttrFoldout, CustomAttrStr, DrawCustomAttributes,
+    DrawCustomAttrAddRemoveButtons)
+  - EditorGUILayoutToggle(IsLocalStr, m_isLocal)
+  - EditorGUILayoutToggle(MaterialToggleStr, m_createToggle)
+  - EditorGUILayoutToggle(ToggleMaterialValueStr, m_materialValue == 1)
+  - EditorGUILayoutToggle(ToggleDefaultValueStr, m_defaultValue == 1)
+  - EditorGUILayoutTextField( "Item "+ i, m_keywordEnumList[i])
+  - EditorGUILayoutTextField(KeywordNameStr, m_currentKeyword)
+  - EditorGUILayoutPopup(Constants.AvailableReferenceStr, m_referenceArrayId, arr)
+  - EditorGUILayoutPopup(ToggleMaterialValueStr, m_materialValue, m_keywordEnumList)
+  - EditorGUILayoutPopup(ToggleDefaultValueStr, m_defaultValue, m_keywordEnumList)
+  - GUILayoutToggle(IsLocalStr, m_isLocal)
+  - GUILayoutToggle(MaterialToggleStr, m_createToggle)
+  - GUILayoutToggle(ToggleMaterialValueStr, m_materialValue == 1)
+  - GUILayoutToggle(ToggleDefaultValueStr, m_defaultValue == 1)
+  - EditorGUILayoutEnumPopup(ModeStr, CurrentVarMode)
+  - EditorGUILayoutEnumPopup(TypeStr, m_keywordModeType)
+  - EditorGUILayoutEnumPopup(StageStr, m_shaderStage)
+  - AddInputPort(WirePortDataType.FLOAT, false, "False", -1, MasterNodePortCategory.Fragment,
+    1)
+  - AddInputPort(WirePortDataType.FLOAT, false, "True", -1, MasterNodePortCategory.Fragment,
+    0)
+  - AddInputPort(WirePortDataType.FLOAT, false, m_defaultKeywordNames[i])
+  - NodeAttributes( "Static Switch LogicalSGUI",            "Logical Operators",
+    "Creates a shader keyword toggle", Available = true)
+  - GUI.Label(m_varRect, m_checkContent, UIUtils.GraphButtonIcon)
+  - GUI.Label(m_iconPos, string.Empty, UIUtils.GetCustomStyle(CustomStyle.SamplerTextureIcon))
+  - GUI.Label(m_varRect, GUIContent.none, UIUtils.GraphButton)
+  - GUI.Label(m_varRect, m_keywordEnumList[CurrentSelectedInput], UIUtils.GraphDropDown)
+  - GUI.Label(m_imgRect, m_popContent, UIUtils.GraphButtonIcon)
+  - GUI.Label(titlePos, StaticSwitchStr, UIUtils.GetCustomStyle(CustomStyle.NodeTitle))
+  - EditorGUILayout.TextField(KeywordNameStr, GetPropertyValStr())
+  - EditorGUILayout.LabelField( Constants.DefaultValueLabel )
+  - EditorGUILayout.LabelField( Constants.MaterialValueLabel )
+  - FloatField( string.Empty, m_defaultValue[ row, column ], GUILayout.MaxWidth(
+    76 ) )
+  - FloatField( string.Empty, m_materialValue[ row, column ], GUILayout.MaxWidth(
+    76 ) )
+  - FloatField( m_propertyDrawPos, string.Empty, value[ row, column ], UIUtils.MainSkin.textField
+    )
+  - NodeAttributes( "Matrix3X3",            "Constants And Properties", "Matrix3X3
+    property")
+  - GUI.Label( fakeField, m_fieldText[ row, column ], UIUtils.MainSkin.textField
+    )
+  - FloatField( string.Empty, m_defaultValue[ row, column ], GUILayout.MaxWidth(
+    55 ) )
+  - FloatField( string.Empty, m_materialValue[ row, column ], GUILayout.MaxWidth(
+    55 ) )
+  - NodeAttributes( "Matrix4X4",            "Constants And Properties", "Matrix4X4
+    property")
+  - AddInputPort( WirePortDataType.FLOAT, true, "Multiplier")
+  - 'NodeAttributes( "PI",            "Constants And Properties", "PI constant :
+    3.14159265359")'
+  - new GUIContent( newClass )
+  - GUILayout.Button( string.Empty, UIUtils.PlusStyle, GUILayout.Width( ButtonLayoutWidth
+    ) )
+  - GUILayout.Button( string.Empty, UIUtils.MinusStyle, GUILayout.Width( ButtonLayoutWidth
+    ) )
+  - GUILayout.Button( string.Empty, UIUtils.InspectorPopdropdownFallback, GUILayout.Width(
+    17 ), GUILayout.Height( 19 ) )
+  - GUILayout.Button( "Set Global Value")
+  - EditorGUILayout.HelpBox( "Your list is Empty!\nUse the plus button to add more.",
+    MessageType.Info )
+  - EditorGUILayout.HelpBox( GlobalTypeWarningText, MessageType.Warning )
+  - NodeUtils.DrawPropertyGroup( ref m_propertiesFoldout, Constants.ParameterLabelStr,
+    DrawMainPropertyBlock )
+  - NodeUtils.DrawPropertyGroup( ref m_visibleAttribsFoldout, Constants.AttributesLaberStr,
+    DrawAttributes )
+  - NodeUtils.DrawPropertyGroup( ref m_visibleEnumsFoldout, EnumsStr, DrawEnums,
+    DrawEnumAddRemoveButtons )
+  - NodeUtils.DrawPropertyGroup( ref m_visibleEnumsFoldout, EnumsStr, DrawEnums )
+  - NodeUtils.DrawPropertyGroup( ref m_visibleHeaderAttrFoldout, HeaderAttrStr, DrawHeaderAttributes,
+    DrawHeaderAttrAddRemoveButtons )
+  - NodeUtils.DrawPropertyGroup( ref m_visibleCustomAttrFoldout, CustomAttrStr, DrawCustomAttributes,
+    DrawCustomAttrAddRemoveButtons )
+  - EditorGUILayoutToggle( HybridInstancedStr, m_hybridInstanced )
+  - EditorGUILayoutToggle( AutoRegisterStr, m_autoRegister )
+  - EditorGUILayoutTextField( "Name", m_enumNames[ i ] )
+  - EditorGUILayoutTextField( "Class Name", m_enumClassName )
+  - EditorGUILayoutTextField( "Attribute "+ i, m_customAttr[ i ] )
+  - EditorGUILayoutTextField( "Header "+ i, m_headerAttributeValues[ i ] )
+  - EditorGUILayoutTextField( PropertyInspectorStr, m_propertyInspectorName )
+  - EditorGUILayoutTextField( PropertyNameStr, m_propertyName )
+  - GUILayoutToggle( HybridInstancedStr, m_hybridInstanced )
+  - GUILayoutToggle( AutoRegisterStr, m_autoRegister )
+  - EditorGUILayoutEnumPopup( ParameterTypeStr, m_currentParameterType )
+  - EditorGUILayoutEnumPopup( IgnoreVarDeclarationStr, m_variableMode )
+  - GUI.Label( m_titleClickArea, m_content, UIUtils.GetCustomStyle( CustomStyle.NodeTitle
+    ) )
+  - FloatField( MinValueStr, m_min )
+  - FloatField( MaxValueStr, m_max )
+  - FloatField( Constants.DefaultValueLabel, m_defaultValue )
+  - FloatField( Constants.MaterialValueLabel, m_materialValue )
+  - FloatField( minRect, m_min, UIUtils.MainSkin.textField )
+  - FloatField( valRect, value, UIUtils.MainSkin.textField )
+  - FloatField( maxRect, m_max, UIUtils.MainSkin.textField )
+  - NodeAttributes( "Float",            "Constants And Properties", "Float property",
+    null, KeyCode.Alpha1 )
+  - GUI.Label( fakeField, m_fieldText[ 0 ], UIUtils.MainSkin.textField )
+  - GUI.Label( minRect, m_fieldText[ 1 ], UIUtils.MainSkin.textField )
+  - GUI.Label( valRect, m_fieldText[ 0 ], UIUtils.MainSkin.textField )
+  - GUI.Label( maxRect, m_fieldText[ 2 ], UIUtils.MainSkin.textField )
+  - GUI.Label( sliderBackRect, string.Empty, UIUtils.GetCustomStyle( CustomStyle.SliderStyle
+    ) )
+  - GUI.Label( sliderValRect, string.Empty, UIUtils.RangedFloatSliderThumbStyle )
+  - new GUIContent( m_inputPorts[ CurrentSelectedInput ].Name )
+  - NodeUtils.DrawPropertyGroup( ref m_propertiesFoldout, Constants.ParameterLabelStr,
+    PropertyGroup )
+  - EditorGUILayoutToggle( IsLocalStr, m_isLocal )
+  - EditorGUILayoutToggle( MaterialToggleStr, m_createToggle )
+  - EditorGUILayoutToggle( ToggleMaterialValueStr, m_materialValue == 1 )
+  - EditorGUILayoutToggle( ToggleDefaultValueStr, m_defaultValue == 1 )
+  - EditorGUILayoutTextField( "Item "+ i, m_keywordEnumList[ i ] )
+  - EditorGUILayoutTextField( KeywordNameStr, m_currentKeyword )
+  - EditorGUILayoutTextField( CustomStr, m_currentKeyword )
+  - EditorGUILayoutPopup( Constants.AvailableReferenceStr, m_referenceArrayId, arr
+    )
+  - EditorGUILayoutPopup( KeywordStr, m_currentKeywordId, UIUtils.AvailableKeywords
+    )
+  - EditorGUILayoutPopup( ToggleMaterialValueStr, m_materialValue, m_keywordEnumList
+    )
+  - EditorGUILayoutPopup( ToggleDefaultValueStr, m_defaultValue, m_keywordEnumList
+    )
+  - GUILayoutToggle( IsLocalStr, m_isLocal )
+  - GUILayoutToggle( MaterialToggleStr, m_createToggle )
+  - GUILayoutToggle( ToggleMaterialValueStr, m_materialValue == 1 )
+  - GUILayoutToggle( ToggleDefaultValueStr, m_defaultValue == 1 )
+  - EditorGUILayoutEnumPopup( ModeStr, CurrentVarMode )
+  - EditorGUILayoutEnumPopup( TypeStr, m_keywordModeType )
+  - EditorGUILayoutEnumPopup( StageStr , m_shaderStage )
+  - AddInputPort( WirePortDataType.FLOAT, false, "False", -1, MasterNodePortCategory.Fragment,
+    1 )
+  - AddInputPort( WirePortDataType.FLOAT, false, "True", -1, MasterNodePortCategory.Fragment,
+    0 )
+  - AddInputPort( WirePortDataType.FLOAT, false, m_defaultKeywordNames[ i ] )
+  - NodeAttributes( "Static Switch",            "Logical Operators", "Creates a shader
+    keyword toggle", Available = true )
+  - GUI.Label( m_varRect, m_checkContent, UIUtils.GraphButtonIcon )
+  - GUI.Label( m_iconPos, string.Empty, UIUtils.GetCustomStyle( CustomStyle.SamplerTextureIcon
+    ) )
+  - GUI.Label( m_varRect, GUIContent.none, UIUtils.GraphButton )
+  - GUI.Label( m_varRect, m_keywordEnumList[ CurrentSelectedInput ], UIUtils.GraphDropDown
+    )
+  - GUI.Label( m_imgRect, m_popContent, UIUtils.GraphButtonIcon )
+  - GUI.Label( titlePos, StaticSwitchStr, UIUtils.GetCustomStyle( CustomStyle.NodeTitle
+    ) )
+  - EditorGUILayout.TextField( KeywordNameStr, GetPropertyValStr() )
+  - 'NodeAttributes( "Tau",            "Constants And Properties", "Tau constant
+    (2*PI): 6.28318530718", null, KeyCode.None, true, false, null,null, "The Four
+    Headed Cat - @fourheadedcat")'
+  - 'EditorGUILayout.HelpBox( "Warning: Derivative Mip Mode only works on some platforms
+    (D3D11 XBOXONE GLES3 GLCORE)", MessageType.Warning )'
+  - EditorGUILayoutToggle( "Normal Map", m_autoUnpackNormals )
+  - EditorGUILayoutPopup( "Mip Mode", (int)m_mipMode, m_mipOptions )
+  - EditorGUILayoutPopup( Constants.ReferenceTypeStr, (int)m_referenceType, Constants.ReferenceArrayLabels
+    )
+  - GUILayoutToggle( "Normal Map", m_autoUnpackNormals )
+  - FloatField( "Mip Level", m_lodPort.FloatInternalData )
+  - FloatField( "Index", m_indexPort.FloatInternalData )
+  - FloatField( NormalScaleStr, m_normalPort.FloatInternalData )
+  - AddInputPort( WirePortDataType.SAMPLER2D, false, "Tex", -1, MasterNodePortCategory.Fragment,
+    6 )
+  - AddInputPort( WirePortDataType.FLOAT2, false, "UV", -1, MasterNodePortCategory.Fragment,
+    0 )
+  - AddInputPort( WirePortDataType.FLOAT, false, "Index", -1, MasterNodePortCategory.Fragment,
+    1 )
+  - AddInputPort( WirePortDataType.FLOAT, false, "Level", -1, MasterNodePortCategory.Fragment,
+    2 )
+  - AddInputPort( WirePortDataType.FLOAT, false, NormalScaleStr, -1, MasterNodePortCategory.Fragment,
+    3 )
+  - AddInputPort( WirePortDataType.FLOAT2, false, "DDX", -1, MasterNodePortCategory.Fragment,
+    4 )
+  - AddInputPort( WirePortDataType.FLOAT2, false, "DDY", -1, MasterNodePortCategory.Fragment,
+    5 )
+  - NodeAttributes( "[Old]Texture Array",            "Textures", "Texture Array fetches
+    a texture from a texture2DArray asset file given a index value", null, KeyCode.None,
+    true, true, "SamplerNode", typeof( SamplerNode ) )
+  - GUI.Label( m_previewRect, string.Empty, UIUtils.GetCustomStyle( CustomStyle.SamplerFrame
+    ) )
+  - GUI.Label( newRect, string.Empty, UIUtils.ObjectFieldThumb )
+  - GUI.Label( newRect, m_labelText, UIUtils.ObjectFieldThumbOverlay )
+  - GUI.Label( smallButton, "Select", UIUtils.GetCustomStyle( CustomStyle.SamplerButton
+    ) )
+  - GUI.Label( newRect, string.Empty, UIUtils.GetCustomStyle( CustomStyle.SamplerFrame
+    ) )
+  - NodeAttributes( "Vector2",            "Constants And Properties", "Vector2 property",
+    null, KeyCode.Alpha2 )
+  - GUI.Label( fakeField, m_fieldText[ i ], UIUtils.MainSkin.textField )
+  - NodeAttributes( "Vector3",            "Constants And Properties", "Vector3 property",
+    null, KeyCode.Alpha3 )
+  - NodeAttributes( "Vector4",            "Constants And Properties", "Vector4 property",
+    null, KeyCode.Alpha4 )
+  - EditorGUILayoutPopup( _projMatrixLabelStr, (int)m_selectedType, _projMatrixValuesStr
+    )
+  - ChangeOutputName( 0, _projMatrixValuesStr[ (int)m_selectedType ] )
+  - NodeAttributes( "Projection Matrices",            "Camera And Screen", "Camera's
+    Projection/Inverse Projection matrix")
+  - EditorGUILayoutEnumPopup( LabelStr, m_selectedType )
+  - NodeAttributes( "Clip Planes",            "Camera And Screen", "Camera World
+    Clip Planes")
+  - ChangeOutputName( 1, "Ortho Cam Width")
+  - ChangeOutputName( 2, "Ortho Cam Height")
+  - ChangeOutputName( 3, "Unused")
+  - ChangeOutputName( 4, "Projection Mode")
+  - NodeAttributes( "Ortho Params",            "Camera And Screen", "Orthographic
+    Parameters")
+  - ChangeOutputName( 1, "Flipped")
+  - ChangeOutputName( 2, "Near Plane")
+  - ChangeOutputName( 3, "Far Plane")
+  - ChangeOutputName( 4, "1/Far Plane")
+  - NodeAttributes( "Projection Params",            "Camera And Screen", "Projection
+    Near/Far parameters")
+  - ChangeOutputName( 1, "RT Width")
+  - ChangeOutputName( 2, "RT Height")
+  - ChangeOutputName( 3, "1+1/Width")
+  - ChangeOutputName( 4, "1+1/Height")
+  - NodeAttributes( "Screen Params",            "Camera And Screen", "Camera's Render
+    Target size parameters")
+  - NodeAttributes( "World Space Camera Pos",            "Camera And Screen", "World
+    Space Camera position")
+  - ChangeOutputName( 1, "1-far/near")
+  - ChangeOutputName( 2, "far/near")
+  - ChangeOutputName( 3, "[0]/far" )
+  - ChangeOutputName( 4, "[1]/far" )
+  - NodeAttributes( "Z-Buffer Params",            "Camera And Screen", "Linearized
+    Z buffer values")
+  - EditorGUILayoutPopup( ColorLabelStr, ( int ) m_selectedType, ColorValuesStr )
+  - ChangeOutputName( 0, ColorValuesStr[ (int)m_selectedType ] )
+  - ChangeOutputName( 0, ColorValuesStr[ ( int ) m_selectedType ] )
+  - NodeAttributes( "Fog And Ambient Colors",            "Lighting", "Fog and Ambient
+    colors")
+  - ChangeOutputName( 1, "Density/Sqrt(Ln(2))")
+  - ChangeOutputName( 2, "Density/Ln(2)")
+  - ChangeOutputName( 3, "-1/(End-Start)")
+  - ChangeOutputName( 4, "End/(End-Start))
+  - NodeAttributes( "Fog Params",            "Lighting", "Parameters for fog calculation")
+  - EditorGUILayoutToggle( "Normalize", m_normalize)
+  - GUILayoutToggle( "Normalize", m_normalize)
+  - EditorGUILayoutEnumPopup( WorkflowStr, m_workflow )
+  - EditorGUILayoutEnumPopup( "Normal Space", m_normalSpace )
+  - AddInputPort( WirePortDataType.FLOAT3, false, "Albedo")
+  - AddInputPort( WirePortDataType.FLOAT3, false, "Normal")
+  - AddInputPort( WirePortDataType.FLOAT3, false, "Emission")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Metallic")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Smoothness")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Occlusion")
+  - NodeAttributes( "Standard Surface Light",            "Lighting", "Provides a
+    way to create a standard surface light model in custom lighting mode", NodeAvailabilityFlags
+    = (int)NodeAvailability.CustomLighting )
+  - NodeAttributes( "Indirect Diffuse Light",            "Lighting", "Indirect Lighting",
+    NodeAvailabilityFlags = (int)( NodeAvailability.CustomLighting | NodeAvailability.TemplateShader
+    ) )
+  - FloatField( m_inputPorts[ 1 ].Name, m_inputPorts[ 1 ].FloatInternalData )
+  - FloatField( m_inputPorts[ 2 ].Name, m_inputPorts[ 2 ].FloatInternalData )
+  - NodeAttributes( "Indirect Specular Light",            "Lighting", "Indirect Specular
+    Light", NodeAvailabilityFlags = (int)( NodeAvailability.CustomLighting | NodeAvailability.TemplateShader
+    ) )
+  - NodeAttributes( "Light Attenuation",            "Lighting", "Contains light attenuation
+    for all types of light", NodeAvailabilityFlags = (int)( NodeAvailability.CustomLighting
+    | NodeAvailability.TemplateShader ) )
+  - NodeAttributes( "Light Color",            "Lighting", "Light Color, RGB value
+    already contains light intensity while A only contains light intensity")
+  - EditorGUILayout.HelpBox( HelperText, MessageType.Info )
+  - NodeAttributes( "World Space Light Pos",            "Lighting", "Light Position")
+  - ChangeOutputName( 1, "t/8" )
+  - ChangeOutputName( 2, "t/4" )
+  - ChangeOutputName( 3, "t/2" )
+  - ChangeOutputName( 4, "t" )
+  - NodeAttributes( "Cos Time",            "Time", "Cosine of time")
+  - ChangeOutputName( 1, "dt")
+  - ChangeOutputName( 2, "1/dt")
+  - ChangeOutputName( 3, "smoothDt")
+  - ChangeOutputName( 4, "1/smoothDt")
+  - NodeAttributes( "Delta Time",            "Time", "Delta time")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Scale")
+  - NodeAttributes(            "Time",            "Time", "Time in seconds with a
+    scale multiplier")
+  - NodeAttributes( "Sin Time",            "Time", "Unity sin time")
+  - ChangeOutputName( 1, "t/20" )
+  - ChangeOutputName( 2, "t" )
+  - ChangeOutputName( 3, "t*2" )
+  - ChangeOutputName( 4, "t*3" )
+  - NodeAttributes( "Time Parameters",            "Time", "Time since level load")
+  - NodeAttributes( "Camera To World Matrix",            "Matrix Transform", "Current
+    camera to world matrix")
+  - NodeAttributes( "Inverse Projection Matrix",            "Matrix Transform", "Current
+    inverse projection matrix", NodeAvailabilityFlags = (int)( NodeAvailability.TemplateShader
+    ) )
+  - NodeAttributes( "Inverse Transpose Model View Matrix",            "Matrix Transform",
+    "All Transformation types")
+  - NodeAttributes( "Inverse View Matrix",            "Matrix Transform", "Current
+    inverse view matrix")
+  - NodeAttributes( "Inverse View Projection Matrix",            "Matrix Transform",
+    "Current view inverse projection matrix", NodeAvailabilityFlags = (int)( NodeAvailability.TemplateShader
+    ) )
+  - NodeAttributes( "Model Matrix",            "Matrix Transform", "Current model
+    matrix")
+  - NodeAttributes( "Model View Matrix",            "Matrix Transform", "Current
+    model * view matrix")
+  - NodeAttributes( "Model View Projection Matrix",            "Matrix Transform",
+    "Current model * view * projection matrix")
+  - NodeAttributes( "Object To World Matrix",            "Matrix Transform", "Current
+    model matrix")
+  - NodeAttributes( "Projection Matrix",            "Matrix Transform", "Current
+    projection matrix")
+  - NodeAttributes( "Texture 0 Matrix",            "Matrix Transform", "Texture 0
+    Matrix", null, UnityEngine.KeyCode.None, true, true )
+  - NodeAttributes( "Texture 1 Matrix",            "Matrix Transform", "Texture 1
+    Matrix", null, UnityEngine.KeyCode.None, true, true )
+  - NodeAttributes( "Texture 2 Matrix",            "Matrix Transform", "Texture 2
+    Matrix", null, UnityEngine.KeyCode.None, true, true )
+  - NodeAttributes( "Texture 3 Matrix",            "Matrix Transform", "Texture 3
+    Matrix", null, UnityEngine.KeyCode.None, true, true )
+  - EditorGUILayout.HelpBox( Constants.SafeNormalizeInfoStr , MessageType.Info )
+  - EditorGUILayoutToggle( NormalizeOptionStr, m_normalize )
+  - EditorGUILayoutToggle( SafeNormalizeOptionStr , m_safeNormalize )
+  - EditorGUILayoutPopup( FromStr, (int)m_from, m_spaceOptionsFrom )
+  - EditorGUILayoutPopup( ToStr, (int)m_to, m_spaceOptionsTo )
+  - GUILayoutToggle( NormalizeOptionStr, m_normalize )
+  - GUILayoutToggle( SafeNormalizeOptionStr , m_safeNormalize )
+  - EditorGUILayoutEnumPopup( InverseTBNStr, m_inverseTangentType )
+  - AddInputPort( WirePortDataType.FLOAT3, false, Constants.EmptyPortValue )
+  - NodeAttributes( "Transform Direction",            "Vector Operators", "Transforms
+    a direction vector from one space to another")
+  - EditorGUILayoutToggle( PerpectiveDivideStr, m_perspectiveDivide )
+  - GUILayoutToggle( PerpectiveDivideStr, m_perspectiveDivide )
+  - NodeAttributes( "Transform Position",            "Object Transform", "Transforms
+    a position value from one space to another")
+  - EditorGUILayoutPopup( MatrixLabelStr, ( int ) m_selectedType, ValuesStr )
+  - ChangeOutputName( 0, ValuesStr[ (int)m_selectedType ] )
+  - ChangeOutputName( 0, ValuesStr[ ( int ) m_selectedType ] )
+  - NodeAttributes( "Common Transform Matrices",            "Matrix Transform", "All
+    Transformation types")
+  - NodeAttributes( "Transpose Model View Matrix",            "Matrix Transform",
+    "Transpose of model * view matrix")
+  - NodeAttributes( "Projector Clip Matrix",            "Matrix Transform", "Current
+    Projector Clip matrix. To be used when working with Unity projector.")
+  - NodeAttributes( "Projector Matrix",            "Matrix Transform", "Current Projector
+    Clip matrix. To be used when working with Unity projector.")
+  - NodeAttributes( "Scale Matrix",            "Matrix Transform", "Scale Matrix",null,
+    UnityEngine.KeyCode.None, true, true, "Object Scale")
+  - NodeAttributes( "View Matrix",            "Matrix Transform", "Current view matrix")
+  - NodeAttributes( "View Projection Matrix",            "Matrix Transform", "Current
+    view * projection matrix.")
+  - NodeAttributes( "World To Camera Matrix",            "Matrix Transform", "Inverse
+    of current camera to world matrix")
+  - NodeAttributes( "World To Object Matrix",            "Matrix Transform", "Inverse
+    of current world matrix")
+  - NodeAttributes( "World To Tangent Matrix",            "Matrix Transform", "World
+    to tangent transform matrix")
+  - NodeAttributes( "Color Space Double",            "Miscellaneous", "Color Space
+    Double")
+  - NodeAttributes( "Face",            "Primitive", "Indicates whether the rendered
+    surface is facing the camera (1), or facing away from the camera (0)")
+  - EditorGUILayoutToggle( "Use SV semantic", m_useSVSemantic )
+  - GUILayoutToggle( "Use SV semantic", m_useSVSemantic )
+  - NodeAttributes( "Instance ID",            "Vertex Data", "Indicates the per-instance
+    identifier")
+  - EditorGUILayout.HelpBox( LegacyVarInfo , MessageType.Info )
+  - EditorGUILayoutToggle( LegacyVarLabel , m_legacyBehavior )
+  - GUILayoutToggle( LegacyVarLabel , m_legacyBehavior )
+  - ChangeOutputName( 1, "Fade[0...1]")
+  - ChangeOutputName( 2, "Fade[16Lvl]")
+  - ChangeOutputName( 4, "Unused")
+  - NodeAttributes( "LOD Fade",            "Miscellaneous", "LODFadeNode")
+  - NodeAttributes( "Primitive ID",            "Vertex Data", "Per-primitive identifier
+    automatically generated by the runtime")
+  - NodeAttributes( "Switch by Face",            "Miscellaneous", "Switch which automaticaly
+    uses a Face variable to select which input to use")
+  - AddInputPort( WirePortDataType.FLOAT, false, item.Item1 )
+  - NodeAttributes( "Switch by SRP Version",            "Miscellaneous", "Switch
+    between different inputs based on the currently installed SRP version")
+  - NodeAttributes( "Two Sided Sign",            "Primitive", "Indicates whether
+    the rendered surface is facing the camera (1), or facing away from the camera(-1)")
+  - NodeAttributes( "Vertex ID",            "Vertex Data", "Indicates current vertex
+    number")
+  - ChangeOutputName( 1, "X" )
+  - ChangeOutputName( 2, "Y" )
+  - ChangeOutputName( 3, "Z" )
+  - ChangeOutputName( 4, "W" )
+  - NodeAttributes( "World Transform Params",            "Object Transform", "World
+    Transform Params contains information about the transform, W is usually 1.0,
+    or -1.0 for odd-negative scale transforms")
+  - AddInputPort( WirePortDataType.FLOAT3, false, "Vertex Position", -1, MasterNodePortCategory.Fragment,
+    2 )
+  - AddInputPort( WirePortDataType.FLOAT, false, "Length", -1, MasterNodePortCategory.Fragment,
+    0 )
+  - AddInputPort( WirePortDataType.FLOAT, false, "Offset", -1, MasterNodePortCategory.Fragment,
+    1 )
+  - NodeAttributes( "Camera Depth Fade",            "Camera And Screen", "Outputs
+    a 0 - 1 gradient representing the distance between the surface of this object
+    and camera near plane")
+  - NodeAttributes( "Compute Grab Screen Pos",            "Camera And Screen", "Computes
+    texture coordinate for doing a screenspace-mapped texture sample. Input is clip
+    space position")
+  - EditorGUILayoutToggle( NormalizeStr, m_normalize )
+  - GUILayoutToggle( NormalizeStr, m_normalize )
+  - NodeAttributes( "Compute Screen Pos",            "Camera And Screen", "Computes
+    texture coordinate for doing a screenspace-mapped texture sample. Input is clip
+    space position")
+  - AddInputPort( WirePortDataType.FLOAT4, false, "Encoded")
+  - NodeAttributes( "Decode Depth Normal",            "Miscellaneous", "Decodes both
+    Depth and Normal from a previously encoded pixel value")
+  - NodeAttributes( "Decode Float RGBA",            "Miscellaneous", "Decodes RGBA
+    color into a float")
+  - NodeAttributes( "Decode Float RG",            "Miscellaneous", "Decodes a previously-encoded
+    RG float")
+  - AddInputPort( WirePortDataType.FLOAT4, false, "Value")
+  - AddInputPort( WirePortDataType.FLOAT4, false, "Instructions")
+  - NodeAttributes( "Decode Lightmap",            "Miscellaneous", "Decodes color
+    from Unity lightmap (RGBM or dLDR depending on platform)")
+  - NodeAttributes( "Decode View Normal Stereo",            "Miscellaneous", "Decodes
+    view space normal from enc4.xy")
+  - EditorGUILayoutToggle( ConvertToLinearStr, m_convertToLinear )
+  - EditorGUILayoutToggle( MirrorStr, m_mirror )
+  - EditorGUILayoutToggle( SaturateStr, m_saturate )
+  - GUILayoutToggle( ConvertToLinearStr, m_convertToLinear )
+  - GUILayoutToggle( MirrorStr, m_mirror )
+  - GUILayoutToggle( SaturateStr, m_saturate )
+  - AddInputPort( WirePortDataType.FLOAT3, false, "Vertex Position", -1, MasterNodePortCategory.Fragment,
+    1 )
+  - AddInputPort( WirePortDataType.FLOAT, false, "Distance",-1,MasterNodePortCategory.Fragment,0
+    )
+  - NodeAttributes( "Depth Fade",            "Surface Data", "Outputs a linear gradient
+    representing the distance between the surface of this object and geometry behind")
+  - NodeAttributes( "Diffuse And Specular From Metallic",            "Miscellaneous",
+    "Gets Diffuse and Specular values from Metallic. Uses DiffuseAndSpecularFromMetallic
+    function from UnityStandardUtils.")
+  - EditorGUILayoutToggle( "Screen Position", m_customScreenPos )
+  - EditorGUILayoutPopup( "Pattern", m_selectedPatternInt, PatternsStr )
+  - GUILayoutToggle( "Screen Position", m_customScreenPos )
+  - AddInputPort( WirePortDataType.FLOAT, false, Constants.EmptyPortValue )
+  - AddInputPort( WirePortDataType.SAMPLER2D, false, "Pattern")
+  - AddInputPort( WirePortDataType.FLOAT4, false, "Screen Position")
+  - AddInputPort( WirePortDataType.SAMPLERSTATE, false, "SS" )
+  - NodeAttributes( "Dither",            "Camera And Screen", "Generates a dithering
+    pattern")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Depth")
+  - NodeAttributes( "Encode Depth Normal",            "Miscellaneous", "Encodes both
+    Depth and Normal values into a Float4 value")
+  - NodeAttributes( "Encode Float RGBA",            "Miscellaneous", "Encodes [0..1]
+    range float into RGBA color, for storage in low precision render target")
+  - NodeAttributes( "Encode Float RG ",            "Miscellaneous", "Encodes [0..1]
+    range float into a float2")
+  - NodeAttributes( "Encode View Normal Stereo",            "Miscellaneous", "Encodes
+    view space normal into two numbers in [0..1] range")
+  - 'EditorGUILayout.HelpBox( "Fast sRGB: fast approximation from sRGB to Linear\n\nExact
+    sRGB: a more expensive but exact calculation from sRGB to Linear.\n\nGamma 2.0:
+    crude approximation from Gamma to Linear using a power of 2.0 gamma value\n\nGamma
+    2.2: an approximation from Gamma to Linear using a power of 2.2 gamma value",
+    MessageType.None )'
+  - 'EditorGUILayout.HelpBox( "Fast sRGB: fast approximation from sRGB to Linear\n\nExact
+    sRGB: a more expensive but exact calculation from sRGB to Linear.", MessageType.None
+    )'
+  - NodeAttributes( "Gamma To Linear",            "Image Effects", "Converts color
+    from gamma space to linear space")
+  - 'EditorGUILayout.HelpBox( "Fast Linear: fast approximation from Linear to sRGB\n\nExact
+    Linear: a more expensive but exact calculation from Linear to sRGB.\n\nLinear
+    2.0: crude approximation from Linear to Gamma using a power of 1/2.0 gamma value\n\nLinear
+    2.2: an approximation from Linear to Gamma using a power of 1/2.2 gamma value",
+    MessageType.None )'
+  - 'EditorGUILayout.HelpBox( "Fast Linear: fast approximation from Linear to sRGB\n\nExact
+    Linear: a more expensive but exact calculation from Linear to sRGB.", MessageType.None
+    )'
+  - NodeAttributes( "Linear To Gamma",            "Image Effects", "Converts color
+    from linear space to gamma space")
+  - NodeAttributes( "Luminance",            "Image Effects", "Converts color to luminance
+    (grayscale)", Deprecated = true, DeprecatedAlternativeType = typeof( TFHCGrayscale
+    ), DeprecatedAlternative = "Grayscale")
+  - NodeAttributes( "Object Space Light Dir",            "Lighting", "Computes object
+    space light direction (not normalized)")
+  - NodeAttributes( "Object Space View Dir",            "Object Transform", "Object
+    space direction (not normalized) from given object space vertex position towards
+    the camera")
+  - EditorGUILayout.HelpBox( "Normal type does a cheaper approximation thats view
+    dependent while Planar is more accurate but generates higher aliasing artifacts
+    at steep angles.", MessageType.None )
+  - EditorGUILayoutPopup( "Parallax Type", m_selectedParallaxTypeInt, m_parallaxTypeStr
+    )
+  - AddInputPort( WirePortDataType.FLOAT2, false, "UV" )
+  - AddInputPort( WirePortDataType.FLOAT, false, "Height")
+  - AddInputPort( WirePortDataType.FLOAT3, false, "ViewDir (tan)")
+  - NodeAttributes( "Parallax Mapping",            "UV Coordinates", "Calculates
+    offseted UVs for parallax mapping")
+  - EditorGUILayout.HelpBox( "WARNING:\nTex must be connected to a Texture Object
+    for this node to work\n\nMin and Max samples:\nControl the minimum and maximum
+    number of layers extruded\n\nSidewall Steps:\nThe number of interpolations done
+    to smooth the extrusion result on the side of the layer extrusions, min is used
+    at steep angles while max is used at orthogonal angles\n\n"+ "Ref Plane:\nReference
+    plane lets you adjust the starting reference height, 0 = deepen ground, 1 = raise
+    ground, any value above 0 might cause distortions at higher angles\n\n"+ "Clip
+    Edges:\nThis will clip the ends of your uvs to give a more 3D look at the edges.
+    It'll use the tilling given by your Heightmap input.\n\n"+ "Clip Silhouette:\nTurning
+    this on allows you to use the UV coordinates to clip the effect curvature in
+    U or V axis, useful for cylinders, works best with 'Clip Edges' turned OFF",
+    MessageType.None )
+  - EditorGUILayoutToggle( "Clip Edges", m_clipEnds )
+  - EditorGUILayoutToggle( "Clip Silhouette", m_useCurvature )
+  - EditorGUILayoutPopup( "Channel", m_selectedChannelInt, m_channelTypeStr )
+  - GUILayoutToggle( "Clip Edges", m_clipEnds )
+  - GUILayoutToggle( "Clip Silhouette", m_useCurvature )
+  - FloatField( "Array Index", m_arrayIndexPort.FloatInternalData )
+  - AddInputPort( WirePortDataType.FLOAT2, false, "UV",-1,MasterNodePortCategory.Fragment,0)
+  - AddInputPort( WirePortDataType.SAMPLER2D, false, "Tex", -1, MasterNodePortCategory.Fragment,
+    1 )
+  - AddInputPort( WirePortDataType.SAMPLERSTATE, false, "SS", -1, MasterNodePortCategory.Fragment,
+    7 )
+  - AddInputPort( WirePortDataType.FLOAT, false, "Scale", -1, MasterNodePortCategory.Fragment,
+    2 )
+  - AddInputPort( WirePortDataType.FLOAT3, false, "ViewDir (tan)", -1, MasterNodePortCategory.Fragment,
+    3 )
+  - AddInputPort( WirePortDataType.INT, false, "Min Samples", -1, MasterNodePortCategory.Fragment,
+    8 )
+  - AddInputPort( WirePortDataType.INT, false, "Max Samples", -1, MasterNodePortCategory.Fragment,
+    9 )
+  - AddInputPort( WirePortDataType.INT, false, "Sidewall Steps", -1, MasterNodePortCategory.Fragment,
+    10 )
+  - AddInputPort( WirePortDataType.FLOAT, false, "Ref Plane", -1, MasterNodePortCategory.Fragment,
+    4 )
+  - AddInputPort( WirePortDataType.FLOAT2, false, "Curvature", -1, MasterNodePortCategory.Fragment,
+    5 )
+  - AddInputPort( WirePortDataType.FLOAT, false, ArrayIndexStr, -1, MasterNodePortCategory.Fragment,
+    6 )
+  - CustomDrawer( ref inst, ( x ) => { m_inlineMinSamples.IntValue = EditorGUILayoutIntSlider(
+    "Min Samples", m_inlineMinSamples.IntValue, 1, 128 ); }, "Min Samples" )
+  - CustomDrawer( ref inst, ( x ) => { m_inlineMaxSamples.IntValue = EditorGUILayoutIntSlider(
+    "Max Samples", m_inlineMaxSamples.IntValue, 1, 128 ); }, "Max Samples" )
+  - NodeAttributes( "Parallax Occlusion Mapping",            "UV Coordinates", "Calculates
+    offseted UVs for parallax occlusion mapping")
+  - NodeAttributes( "Parallax Offset",            "UV Coordinates", "Calculates UV
+    offset for parallax normal mapping")
+  - EditorGUILayout.HelpBox( HelperMessage, MessageType.Info )
+  - NodeUtils.DrawPropertyGroup( ref m_propertiesFoldout, Constants.ParameterLabelStr,
+    DrawGeneralProperties )
+  - EditorGUILayoutToggle( IsSpotlight, m_enableSpotlight )
+  - GUILayoutToggle( IsSpotlight, m_enableSpotlight )
+  - AddInputPort( WirePortDataType.FLOAT4, false, "Vertex Position")
+  - AddInputPort( WirePortDataType.FLOAT3, false, "Vertex Normal")
+  - NodeAttributes( "Shade Vertex Lights",            "Lighting", "Computes illumination
+    from four per-vertex lights and ambient, given object space position & normal")
+  - EditorGUILayoutPopup( "View Space", m_viewSpaceInt, m_viewSpaceStr )
+  - AddInputPort( WirePortDataType.FLOAT3, false, "Vertex Position")
+  - NodeAttributes( "Surface Depth",            "Surface Data", "Returns the surface
+    view depth")
+  - NodeUtils.DrawPropertyGroup( ref m_propertiesFoldout, "Parameters", DrawMainOptions
+    )
+  - NodeUtils.DrawPropertyGroup( ref m_topTextureFoldout, "Texture", DrawTopTextureOptions
+    )
+  - NodeUtils.DrawPropertyGroup( ref m_topTextureFoldout, "Top Texture", DrawTopTextureOptions
+    )
+  - NodeUtils.DrawPropertyGroup( ref m_midTextureFoldout, "Middle Texture", DrawMidTextureOptions
+    )
+  - NodeUtils.DrawPropertyGroup( ref m_botTextureFoldout, "Bottom Texture", DrawBotTextureOptions
+    )
+  - EditorGUILayoutToggle( "Normal Map", m_normalCorrection )
+  - EditorGUILayoutTextField( "Name", m_propertyInspectorName )
+  - GUILayoutToggle( "Normal Map", m_normalCorrection )
+  - EditorGUILayoutEnumPopup( "Mapping", m_selectedTriplanarType )
+  - EditorGUILayoutEnumPopup( "Space", m_selectedTriplanarSpace )
+  - EditorGUILayoutEnumPopup( "Output Normal Space", m_normalSpace )
+  - AddInputPort( WirePortDataType.SAMPLER2D, false, "Top", -1, MasterNodePortCategory.Fragment,
+    0 )
+  - AddInputPort( WirePortDataType.FLOAT, false, "Top Index", -1, MasterNodePortCategory.Fragment,
+    5 )
+  - AddInputPort( WirePortDataType.SAMPLER2D, false, "Middle", -1, MasterNodePortCategory.Fragment,
+    1 )
+  - AddInputPort( WirePortDataType.FLOAT, false, "Mid Index", -1, MasterNodePortCategory.Fragment,
+    6 )
+  - AddInputPort( WirePortDataType.SAMPLER2D, false, "Bottom", -1, MasterNodePortCategory.Fragment,
+    2 )
+  - AddInputPort( WirePortDataType.FLOAT, false, "Bot Index", -1, MasterNodePortCategory.Fragment,
+    7 )
+  - AddInputPort( WirePortDataType.FLOAT3, false, "Pos", -1, MasterNodePortCategory.Fragment,
+    9 )
+  - AddInputPort( WirePortDataType.FLOAT3, false, "Scale", -1, MasterNodePortCategory.Fragment,
+    8 )
+  - AddInputPort( WirePortDataType.FLOAT2, false, "Tiling", -1, MasterNodePortCategory.Fragment,
+    3 )
+  - AddInputPort( WirePortDataType.FLOAT, false, "Falloff", -1, MasterNodePortCategory.Fragment,
+    4 )
+  - NodeAttributes( "Triplanar Sample",            "Textures", "Triplanar Mapping")
+  - GUI.Label( pickerButtonClone, "Select", UIUtils.MiniSamplerButton )
+  - GUI.Label( startPickerClone, string.Empty, UIUtils.ObjectFieldThumb )
+  - GUI.Label( startPickerClone, "None (Texture2D)", UIUtils.MiniObjectFieldThumbOverlay
+    )
+  - GUI.Label( startPickerClone, string.Empty, UIUtils.GetCustomStyle( CustomStyle.SamplerFrame
+    ) )
+  - "NodeAttributes( \"Object To Clip Pos\",            \"Object Transform\", \"Transforms
+    a point from object space to the camera\u2019s clip space in homogeneous coordinates\")"
+  - NodeAttributes( "Object To View Pos",            "Object Transform", "Transforms
+    a point from object space to view space")
+  - EditorGUILayout.HelpBox( "Having safe normalize ON makes sure your light vector
+    is not zero even if there's no lights in your scene.", MessageType.None )
+  - EditorGUILayoutToggle( NormalizeOptionStr, m_safeNormalize )
+  - GUILayoutToggle( NormalizeOptionStr, m_safeNormalize )
+  - NodeAttributes( "World Space Light Dir",            "Lighting", "Computes normalized
+    world space light direction")
+  - NodeAttributes( "World Space View Dir",            "Object Transform", "World
+    space direction (not normalized) from given object space vertex position towards
+    the camera")
+  - EditorGUILayoutToggle( SaturateResultStr, m_saturate )
+  - GUILayoutToggle( SaturateResultStr, m_saturate )
+  - EditorGUILayoutEnumPopup( BlendOpsModeStr, m_currentBlendOp )
+  - AddInputPort( WirePortDataType.COLOR, false, "Source")
+  - AddInputPort( WirePortDataType.COLOR, false, "Destiny")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Alpha")
+  - NodeAttributes( "Blend Operations",            "Image Effects", "Common layer
+    blending modes")
+  - AddInputPort( WirePortDataType.FLOAT3, false, "RGB" )
+  - AddInputPort( WirePortDataType.FLOAT, false, "Fraction")
+  - NodeAttributes( "Desaturate",            "Image Effects", "Generic desaturation
+    operation")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Hue")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Saturation")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Value")
+  - NodeAttributes( "HSV to RGB",            "Image Effects", "Converts from HSV
+    to RGB color space")
+  - NodeAttributes( "Luminance",            "Image Effects", "Calculates Luminance
+    value from input")
+  - EditorGUILayoutToggle( SetTo01RangeLabel, m_setTo01Range )
+  - EditorGUILayoutToggle( UseUnityVersionLabel, m_unityVersion )
+  - GUILayoutToggle( SetTo01RangeLabel, m_setTo01Range )
+  - GUILayoutToggle( UseUnityVersionLabel, m_unityVersion )
+  - EditorGUILayoutEnumPopup( TypeLabelStr, m_type )
+  - 'NodeAttributes( "Noise Generator",            "Miscellaneous", "Collection of
+    procedural noise generators", tags: "simplex gradient")'
+  - AddInputPort( WirePortDataType.COLOR, false, "RGBA", -1, MasterNodePortCategory.Fragment,
+    1 )
+  - AddInputPort( WirePortDataType.INT, false, "Power", -1, MasterNodePortCategory.Fragment,
+    0 )
+  - NodeAttributes( "Posterize",            "Image Effects", "Converts a continuous
+    gradation of tones to multiple regions of fewer tones")
+  - NodeAttributes( "RGB to HSV",            "Image Effects", "Converts from RGB
+    to HSV color space")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Value", -1, MasterNodePortCategory.Fragment,
+    0 )
+  - NodeAttributes( "Simple Contrast",            "Image Effects", "Simple contrast
+    matrix multiplication")
+  - EditorGUILayoutEnumPopup( NoiseTypeStr, m_type )
+  - AddInputPort( WirePortDataType.FLOAT3, false, "Position")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Width")
+  - NodeAttributes( "[Deprecated] Simplex Noise",            "Image Effects", "Noise
+    generated via the Simplex algorithm",null,KeyCode.None,false,true)
+  - 'EditorGUILayout.HelpBox( "Grayscale Old:\n\n - In: Image to convert.\n - Grayscale
+    Style: Select the grayscale style.\n\n - Out: Grayscale version of the image.",
+    MessageType.None )'
+  - EditorGUILayoutPopup( GrayscaleStyleStr, m_grayscaleStyle, m_GrayscaleStyleValues
+    )
+  - 'NodeAttributes( "Grayscale",            "Image Effects", "Convert image colors
+    to grayscale", null, KeyCode.None, true, false, null, null, "The Four Headed
+    Cat - @fourheadedcat", tags: "luminance")'
+  - "NodeUtils.DrawPropertyGroup( ref m_internalDataFoldout, Constants.InternalDataLabelStr,
+    () =>\r\n\t\t\t{\r\n\t\t\t\tfor( int i = 0; i < m_inputPorts.Count; i++ )\r\n\t\t\t\t{\r\n\t\t\t\t\tif(
+    m_inputPorts[ i ].ValidInternalData && !m_inputPorts[ i ].IsConnected && m_inputPorts[
+    i ].Visible && m_inputPorts[ i ].AutoDrawInternalData )\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\tm_inputPorts[
+    i ].ShowInternalData( this );\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t} )"
+  - EditorGUILayoutToggle( "Tileable", m_tileable )
+  - EditorGUILayoutToggle( "Smooth", m_calculateSmoothValue )
+  - EditorGUILayoutToggle( "  Apply To ID", m_applySmoothToIds )
+  - EditorGUILayoutToggle( "Unity's Voronoi", m_useUnity )
+  - EditorGUILayoutPopup( FunctionTypeStr, m_functionType, m_functionTypeStr )
+  - EditorGUILayoutPopup( DistanceFunctionLabelStr, m_distanceFunction, m_distanceFunctionStr
+    )
+  - EditorGUILayoutPopup( SearchQualityLabelStr, m_searchQuality, m_searchQualityStr
+    )
+  - GUILayoutToggle( "Tileable", m_tileable )
+  - GUILayoutToggle( "Smooth", m_calculateSmoothValue )
+  - GUILayoutToggle( "  Apply To ID", m_applySmoothToIds )
+  - GUILayoutToggle( "Unity's Voronoi", m_useUnity )
+  - AddInputPort( WirePortDataType.FLOAT, false, "Angle")
+  - NodeAttributes( "Voronoi",            "Miscellaneous", "Voronoi", Tags = "noise")
+  - NodeAttributes( "All",            "Logical Operators", "Determines if all components
+    of the specified value are non-zero.")
+  - NodeAttributes( "Any",            "Logical Operators", "Determines if any components
+    of the specified value are non-zero.")
+  - EditorGUILayoutEnumPopup( "", m_comparision )
+  - AddInputPort( WirePortDataType.FLOAT, false, "True")
+  - AddInputPort( WirePortDataType.FLOAT, false, "False")
+  - 'NodeAttributes( "Compare",            "Logical Operators", "Compare A to B given
+    the selected operator. If comparison is true return value of True else return
+    value of False", tags: "If Ternary Compare Less Equal Not Greater")'
+  - EditorGUILayoutToggle( UseUnityBranchesStr, m_useUnityBranch )
+  - GUILayoutToggle( UseUnityBranchesStr, m_useUnityBranch )
+  - FloatField( m_inputPorts[ 0 ].Name, m_inputPorts[ 0 ].FloatInternalData )
+  - AddInputPort( WirePortDataType.FLOAT, false, "A > B" )
+  - AddInputPort( WirePortDataType.FLOAT, false, "A == B" )
+  - AddInputPort( WirePortDataType.FLOAT, false, "A < B" )
+  - 'NodeAttributes( "If",            "Logical Operators", "Conditional comparison
+    between A with B.",tags: "branch")'
+  - NodeAttributes( "Keyword Switch",            "Logical Operators", "Attributes
+    a value according to the existance of a selected keyword", Deprecated = true,
+    DeprecatedAlternativeType = typeof(StaticSwitch), DeprecatedAlternative = "Static
+    Switch")
+  - NodeAttributes( "Compare (A = B)",            "Logical Operators", "Check if
+    A is equal to B. If true return value of True else return value of False", null,
+    KeyCode.None, true, true, "Compare", typeof( Compare ), "The Four Headed Cat
+    - @fourheadedcat")
+  - NodeAttributes( "Compare (A > B)",            "Logical Operators", "Check if
+    A is greater than B. If true return value of True else return value of False",
+    null, KeyCode.None, true, true, "Compare", typeof( Compare ), "The Four Headed
+    Cat - @fourheadedcat")
+  - NodeAttributes( "Compare (A \u2265 B)",            "Logical Operators", "Check
+    if A is greater than or equal to B. If true return value of True else return
+    value of False", null, KeyCode.None, true, true, "Compare", typeof(Compare),
+    "The Four Headed Cat - @fourheadedcat")
+  - NodeAttributes( "Compare (A < B)",            "Logical Operators", "Check if
+    A is lower than B. If true return value of True else return value of False",
+    null, KeyCode.None, true, true, "Compare", typeof( Compare ), "The Four Headed
+    Cat - @fourheadedcat")
+  - NodeAttributes( "Compare (A \u2264 B)",            "Logical Operators", "Check
+    if A is lower than or equal to B. If true return value of True else return value
+    of False", null, KeyCode.None, true, true, "Compare", typeof( Compare ), "The
+    Four Headed Cat - @fourheadedcat")
+  - NodeAttributes( "Compare (A \u2260 B)",            "Logical Operators", "Check
+    if A is not equal to B. If true return value of True else return value of False",
+    null, KeyCode.None, true, true, "Compare", typeof( Compare ), "The Four Headed
+    Cat - @fourheadedcat")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Range Max")
+  - NodeAttributes( "Compare With Range",            "Logical Operators", "Check
+    if A is in the range between Range Min and Range Max. If true return value of
+    True else return value of False", null, KeyCode.None, true, false, null, null,
+    "The Four Headed Cat - @fourheadedcat")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Equal Threshold")
+  - NodeAttributes( "If [Community]",            "Logical Operators", "Compare A
+    with B. If A is greater than B output the value of A > B port. If A is equal
+    to B output the value of A == B port. If A is lower than B output the value of
+    A < B port. Equal Threshold parameter will be used to check A == B adding and
+    subtracting this value to A.", null, KeyCode.None, true, false, null, null, "The
+    Four Headed Cat - @fourheadedcat")
+  - GUILayout.Button( string.Empty, UIUtils.PlusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth
+    ) )
+  - GUILayout.Button( string.Empty, UIUtils.MinusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth
+    ) )
+  - EditorGUILayout.HelpBox( "Please add your defines without the #define keywords",
+    MessageType.Info )
+  - NodeUtils.DrawPropertyGroup( ref value, AdditionalDefinesStr, DrawMainBody, DrawButtons
+    )
+  - EditorGUILayout.TextField( m_additionalDefines[ i ] )
+  - EditorGUILayout.HelpBox( "Please add your includes without the #include \"\"
+    keywords", MessageType.Info )
+  - NodeUtils.DrawPropertyGroup( ref value, AdditionalIncludesStr, DrawMainBody,
+    DrawButtons )
+  - EditorGUILayout.TextField( m_additionalIncludes[ i ] )
+  - EditorGUILayout.HelpBox( "Please add your pragmas without the #pragma keywords",
+    MessageType.Info )
+  - NodeUtils.DrawPropertyGroup( ref value, AdditionalPragmasStr, DrawMainBody, DrawButtons
+    )
+  - EditorGUILayout.TextField( m_additionalPragmas[ i ] )
+  - EditorGUILayout.HelpBox( "Your list is Empty!\nUse the plus button to add one.",
+    MessageType.Info )
+  - NodeUtils.DrawPropertyGroup( ref value, AdditionalOptionsStr, DrawMainBody, DrawButtons
+    )
+  - EditorGUILayout.TextField( "["+i+"] -", m_availableOptions[ i ] )
+  - "NodeUtils.DrawPropertyGroup( owner, ref visible, ref m_isBillboard, BillboardTitleStr,
+    () =>\r\n\t\t\t{\r\n\t\t\t\tm_billboardType = (BillboardType)owner.EditorGUILayoutEnumPopup(
+    BillboardTypeStr, m_billboardType );\r\n\t\t\t\tm_rotationIndependent = owner.EditorGUILayoutToggle(
+    BillboardRotIndStr, m_rotationIndependent );\r\n\t\t\t\tm_affectNormalTangent
+    = owner.EditorGUILayoutToggle( BillboardAffectNormalTangentStr , m_affectNormalTangent
+    );\r\n\t\t\t} )"
+  - EditorGUILayoutToggle( BillboardRotIndStr, m_rotationIndependent )
+  - EditorGUILayoutToggle( BillboardAffectNormalTangentStr , m_affectNormalTangent
+    )
+  - GUILayoutToggle( BillboardRotIndStr, m_rotationIndependent )
+  - GUILayoutToggle( BillboardAffectNormalTangentStr , m_affectNormalTangent )
+  - EditorGUILayoutEnumPopup( BillboardTypeStr, m_billboardType )
+  - EditorGUILayoutPopup( BlendModesRGBStr, m_currentIndex, m_commonBlendTypesArr
+    )
+  - EditorGUILayoutPopup( BlendOpsRGBStr, m_blendOpRGB.IntValue, BlendOpsLabels )
+  - EditorGUILayoutPopup( BlendModesAlphaStr, m_currentAlphaIndex, m_commonBlendTypesArr
+    )
+  - EditorGUILayoutPopup( BlendOpsAlphaStr, m_blendOpAlpha.IntValue, BlendOpsLabels
+    )
+  - EditorGUILayoutEnumPopup( SourceFactorStr, tempCast )
+  - EditorGUILayoutEnumPopup( DstFactorStr, tempCast )
+  - CustomDrawer( ref owner, ( x ) => { tempCast = (AvailableBlendFactor)x.EditorGUILayoutEnumPopup(
+    SourceFactorStr, tempCast ); }, SourceFactorStr )
+  - CustomDrawer( ref owner, ( x ) => { tempCast = (AvailableBlendFactor)x.EditorGUILayoutEnumPopup(
+    DstFactorStr, tempCast ); }, DstFactorStr )
+  - CustomDrawer( ref owner, ( x ) => { m_blendOpRGB.IntValue = x.EditorGUILayoutPopup(
+    BlendOpsRGBStr, m_blendOpRGB.IntValue, BlendOpsLabels ); }, BlendOpsRGBStr )
+  - CustomDrawer( ref owner, ( x ) => { m_blendOpAlpha.IntValue = x.EditorGUILayoutPopup(
+    BlendOpsAlphaStr, m_blendOpAlpha.IntValue, BlendOpsLabels ); }, BlendOpsAlphaStr
+    )
+  - 'new GUIContent( "Color Mask", "Sets color channel writing mask, turning all
+    off makes the object completely invisible\nDefault: RGBA")'
+  - EditorGUILayout.LabelField( ColorMaskContent, GUILayout.Width( 90 ) )
+  - GUILayoutToggle( m_colorMask[ 0 ], "R", m_leftToggleColorMask )
+  - GUILayoutToggle( m_colorMask[ 1 ], "G", m_middleToggleColorMask )
+  - GUILayoutToggle( m_colorMask[ 2 ], "B", m_middleToggleColorMask )
+  - GUILayoutToggle( m_colorMask[ 3 ], "A", m_rightToggleColorMask )
+  - CustomDrawer( ref owner, DrawColorMaskControls, ColorMaskContent.text )
+  - NodeUtils.DrawPropertyGroup( ref value, CustomTagsStr, DrawMainBody, DrawButtons
+    )
+  - EditorGUILayout.TextField( TagNameStr, m_availableTags[ i ].TagName )
+  - EditorGUILayout.TextField( TagValueStr, m_availableTags[ i ].TagValue )
+  - NodeUtils.DrawPropertyGroup( ref value, CustomDependencysStr, DrawMainBody, DrawButtons
+    )
+  - NodeUtils.DrawNestedPropertyGroup( ref value, CustomDependencysStr, DrawMainBody,
+    DrawButtons )
+  - EditorGUILayout.TextField( DependencyNameStr, m_availableDependencies[ i ].DependencyName
+    )
+  - EditorGUILayout.TextField( DependencyValueStr, m_availableDependencies[ i ].DependencyValue
+    )
+  - EditorGUILayoutTextField( FallbackShaderStr, m_fallbackShader )
+  - EditorGUILayoutToggle( "Auto Cast", m_autoCast )
+  - EditorGUILayoutTextField( "Name", m_inputName )
+  - EditorGUILayoutPopup( InputTypeStr, m_selectedInputTypeInt, m_inputValueTypes
+    )
+  - GUILayoutToggle( "Auto Cast", m_autoCast )
+  - NodeAttributes( "Function Input",            "Functions", "Function Input adds
+    an input port to the shader function", NodeAvailabilityFlags = (int)NodeAvailability.ShaderFunction
+    )
+  - EditorGUILayout.HelpBox( Function.Description, MessageType.Info )
+  - NodeUtils.DrawPropertyGroup( ref m_parametersFoldout, "Parameters", DrawDescription
+    )
+  - "NodeUtils.DrawPropertyGroup( ref m_internalDataFoldout, Constants.InternalDataLabelStr,
+    () =>\r\n\t\t\t\t{\r\n\t\t\t\t\tfor( int i = 0; i < m_inputPorts.Count; i++ )\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\tif(
+    m_inputPorts[ i ].ValidInternalData && !m_inputPorts[ i ].IsConnected && m_inputPorts[
+    i ].Visible && m_inputPorts[ i ].AutoDrawInternalData )\r\n\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\tEditorGUI.BeginChangeCheck();\r\n\t\t\t\t\t\t\tm_inputPorts[
+    i ].ShowInternalData( this );\r\n\t\t\t\t\t\t\tif( EditorGUI.EndChangeCheck()
+    )\r\n\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\tm_allFunctionInputs[ i ].PreviewIsDirty
+    = true;\r\n\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t}\r\n\t\t\t\t} )"
+  - AddInputPort( m_allFunctionInputs[ i ].SelectedInputType, false, m_allFunctionInputs[
+    i ].InputName )
+  - AddInputPort( m_allFunctionInputs[ i ].SelectedInputType, false, m_allFunctionInputs[
+    i ].InputName, -1, MasterNodePortCategory.Fragment, m_allFunctionInputs[ i ].UniqueId
+    )
+  - NodeAttributes( "Function Node",            "Functions", "Function Node", KeyCode.None,
+    false, 0, int.MaxValue, typeof( AmplifyShaderFunction ) )
+  - GUILayout.Button( "Set as Preview")
+  - EditorGUILayoutTextField( "Name", m_outputName )
+  - AddInputPort( WirePortDataType.FLOAT, false, "  " )
+  - NodeAttributes( "Function Output",            "Functions", "Function Output adds
+    an output port to the shader function, it's port type is determined automatically.",
+    NodeAvailabilityFlags = (int)NodeAvailability.ShaderFunction )
+  - EditorGUILayoutTextField( "Name", m_subtitle )
+  - NodeAttributes( "Function Subtitle",            "Functions", "Adds a subtitle
+    to its shader function", NodeAvailabilityFlags = (int)NodeAvailability.ShaderFunction
+    )
+  - new GUIContent( m_inputPorts[ m_currentSelectedInput ].Name )
+  - 'EditorGUILayoutToggle( m_optionLabel, ( m_currentSelectedInput != 0 ? true :
+    false ) )'
+  - EditorGUILayoutToggle( "Toggle Mode", m_toggleMode )
+  - 'EditorGUILayoutToggle( CurrSelectedStr, ( m_currentSelectedInput != 0 ? true
+    : false ) )'
+  - EditorGUILayoutTextField( "Option Label", m_optionLabel )
+  - EditorGUILayoutTextField( "Item "+ i, m_inputPorts[ i ].Name )
+  - 'GUILayoutToggle( m_optionLabel, ( m_currentSelectedInput != 0 ? true : false
+    ) )'
+  - GUILayoutToggle( "Toggle Mode", m_toggleMode )
+  - 'GUILayoutToggle( CurrSelectedStr, ( m_currentSelectedInput != 0 ? true : false
+    ) )'
+  - AddInputPort( WirePortDataType.FLOAT, false, InputPortNameStr + i )
+  - NodeAttributes( "Function Switch",            "Functions", "Function Switch allows
+    switching options at compile time for shader function", NodeAvailabilityFlags
+    = (int)NodeAvailability.ShaderFunction )
+  - GUI.Label( m_varRect, m_functionSwitchReference.AvailableInputsLabels[ m_currentSelectedInput
+    ], UIUtils.GraphDropDown )
+  - GUI.Label( m_varRect, AvailableInputsLabels[ m_currentSelectedInput ], UIUtils.GraphDropDown
+    )
+  - AddInputPort( WirePortDataType.FLOAT, false, "BiRP Surface", -1, MasterNodePortCategory.Fragment,
+    0 )
+  - AddInputPort( WirePortDataType.FLOAT, false, "BiRP VertFrag", -1, MasterNodePortCategory.Fragment,
+    3 )
+  - AddInputPort( WirePortDataType.FLOAT, false, "URP", -1, MasterNodePortCategory.Fragment,
+    1 )
+  - AddInputPort( WirePortDataType.FLOAT, false, "HDRP", -1, MasterNodePortCategory.Fragment,
+    2 )
+  - NodeAttributes( "Switch by Pipeline",            "Functions", "Executes branch
+    according to current pipeline", NodeAvailabilityFlags = (int)NodeAvailability.ShaderFunction
+    )
+  - EditorGUILayout.LabelField( InputAmountStr )
+  - AddInputPort( WirePortDataType.OBJECT, false, i.ToString() )
+  - NodeAttributes( "Log",            "Master", "Debug node to dump output to log",
+    null, KeyCode.None, false )
+  - new GUIContent( "Shader Type ", "Specify the shader type you want to be working
+    on")
+  - new GUIContent( ShaderNameStr, string.Empty )
+  - new GUIContent( "Surface")
+  - new GUIContent( templateData.Name )
+  - GUILayout.Button( string.Empty, m_addShaderKeywordStyle )
+  - GUILayout.Button( string.Empty, m_removeShaderKeywordStyle )
+  - EditorGUILayout.Foldout( m_shaderKeywordsFoldout, ShaderKeywordsStr )
+  - EditorGUILayoutToggle( "Use Sampling Macros", m_samplingMacros )
+  - EditorGUILayoutTextField( CustomInspectorStr, m_customInspectorName )
+  - EditorGUILayoutTextField( m_shaderNameContent, m_shaderName )
+  - EditorGUILayoutPopup( m_categoryLabel, m_masterNodeCategory, m_availableCategoryLabels
+    )
+  - GUILayoutToggle( "Use Sampling Macros", m_samplingMacros )
+  - GUILayoutToggle( ContainerGraph.ParentWindow.InnerWindowVariables.ExpandedProperties,
+    PropertyOrderFoldoutStr, UIUtils.MenuItemToggleStyle )
+  - GUILayoutToggle( ContainerGraph.ParentWindow.InnerWindowVariables.ExpandedProperties,
+    PropertyOrderTemplateFoldoutStr, UIUtils.MenuItemToggleStyle )
+  - EditorGUILayoutToggle( string.Empty, m_enabled, UIUtils.MenuItemEnableStyle,
+    GUILayout.Width( 16 ) )
+  - EditorGUILayoutToggle( NoFogStr, m_noFog )
+  - GUILayoutToggle( owner.ContainerGraph.ParentWindow.InnerWindowVariables.OutlineActiveMode
+    , EditorVariablesManager.OutlineActiveMode.LabelName, UIUtils.MenuItemToggleStyle,
+    GUILayout.ExpandWidth( true ) )
+  - GUILayoutToggle( string.Empty, m_enabled, UIUtils.MenuItemEnableStyle, GUILayout.Width(
+    16 ) )
+  - GUILayoutToggle( NoFogStr, m_noFog )
+  - EditorGUILayoutEnumPopup( ModePropertyStr, m_mode )
+  - FloatField( OutlineWidthLabel, m_outlineWidth )
+  - new GUIContent( "Emission GI Flag", "Modifies Emission GI flags")
+  - 'new GUIContent( " LOD Group Cross Fade", "Applies a dither crossfade to be used
+    with LOD groups for smoother transitions. Uses one interpolator\nDefault: OFF")'
+  - 'new GUIContent( "Disable Batching", "\nDisables objects to be batched and used
+    with DrawCallBatching Default: False")'
+  - 'new GUIContent( " Ignore Projector", "\nIf True then an object that uses this
+    shader will not be affected by Projectors Default: False")'
+  - 'new GUIContent( " Use Default Shadow Caster", "\nIf True always use surface
+    default shadow caster Default: False")'
+  - 'new GUIContent( " Force No Shadow Casting", "\nIf True then an object that is
+    rendered using this subshader will never cast shadows Default: False")'
+  - new GUIContent( " Force Enable Instancing", "\nIf True forces instancing on shader
+    independent of having instanced properties")
+  - new GUIContent( " Force Disable Instancing", "\nIf True forces disable instancing
+    on shader independent of having instanced properties")
+  - new GUIContent( " Fwd Specular Highlights Toggle", "\nIf True creates a material
+    toggle to set Unity's internal specular highlight rendering keyword")
+  - new GUIContent( " Fwd Reflections Toggle", "\nIf True creates a material toggle
+    to set Unity's internal reflections rendering keyword")
+  - "NodeUtils.DrawPropertyGroup( ref value, RenderingOptionsStr, () =>\r\n\t\t\t{\r\n\t\t\t\tint
+    codeGenCount = m_codeGenerationDataList.Count;\r\n\t\t\t\t\n\t\t\t\tfor( int
+    i = 4; i < codeGenCount; i++ )\r\n\t\t\t\t{\r\n\t\t\t\t\tm_codeGenerationDataList[
+    i ].IsActive = !owner.EditorGUILayoutToggleLeft( m_codeGenerationDataList[ i
+    ].Name, !m_codeGenerationDataList[ i ].IsActive );\r\n\t\t\t\t}\r\n\t\t\t\tm_lodCrossfade
+    = owner.EditorGUILayoutToggleLeft( LODCrossfadeContent, m_lodCrossfade );\r\n\t\t\t\tm_ignoreProjector
+    = owner.EditorGUILayoutToggleLeft( IgnoreProjectorContent, m_ignoreProjector
+    );\r\n\t\t\t\tEditorGUI.BeginDisabledGroup( !owner.CastShadows );\r\n\t\t\t\tm_useDefaultShadowCaster
+    = owner.EditorGUILayoutToggleLeft( UseDefaultCasterContent, m_useDefaultShadowCaster
+    );\r\n\t\t\t\tEditorGUI.EndDisabledGroup();\r\n\t\t\t\tm_forceNoShadowCasting
+    = owner.EditorGUILayoutToggleLeft( ForceNoShadowCastingContent, m_forceNoShadowCasting
+    );\r\n\t\t\t\tif( owner.ContainerGraph.IsInstancedShader )\r\n\t\t\t\t{\r\n\t\t\t\t\tGUI.enabled
+    = false;\r\n\t\t\t\t\towner.EditorGUILayoutToggleLeft( ForceEnableInstancingContent,
+    true );\r\n\t\t\t\t\tGUI.enabled = true;\r\n\t\t\t\t}\r\n\t\t\t\telse\r\n\t\t\t\t{\r\n\t\t\t\t\tm_forceEnableInstancing
+    = owner.EditorGUILayoutToggleLeft( ForceEnableInstancingContent, m_forceEnableInstancing
+    );\r\n\t\t\t\t}\r\n\r\n\t\t\t\tm_forceDisableInstancing = owner.EditorGUILayoutToggleLeft(
+    ForceDisableInstancingContent, m_forceDisableInstancing );\r\n\t\t\t\tm_specularHighlightToggle
+    = owner.EditorGUILayoutToggleLeft( SpecularHightlightsContent, m_specularHighlightToggle
+    );\r\n\t\t\t\tm_reflectionsToggle = owner.EditorGUILayoutToggleLeft( ReflectionsContent,
+    m_reflectionsToggle );\r\n\t\t\t\tm_disableBatching = (DisableBatchingTagValues)owner.EditorGUILayoutEnumPopup(
+    DisableBatchingContent, m_disableBatching );\r\n\t\t\t\tMaterial mat = owner.ContainerGraph.CurrentMaterial;\r\n\t\t\t\tif(
+    mat != null )\r\n\t\t\t\t{\r\n\t\t\t\t\tmat.globalIlluminationFlags = (MaterialGlobalIlluminationFlags)owner.EditorGUILayoutEnumPopup(
+    EmissionGIFlags, mat.globalIlluminationFlags );\r\n\t\t\t\t}\r\n\t\t\t} )"
+  - EditorGUILayoutEnumPopup( DisableBatchingContent, m_disableBatching )
+  - EditorGUILayoutEnumPopup( EmissionGIFlags, mat.globalIlluminationFlags )
+  - "NodeUtils.DrawPropertyGroup( ref value, RenderingPlatformsStr, () =>\r\n\t\t\t{\r\n\t\t\t\tfor(
+    int i = 0; i < m_renderingPlatformValues.Length; i++ )\r\n\t\t\t\t{\r\n\t\t\t\t\tm_renderingPlatformValues[
+    i ] = owner.EditorGUILayoutToggleLeft( RenderingPlatformsInfo[ i ].Label, m_renderingPlatformValues[
+    i ] );\r\n\t\t\t\t}\r\n\t\t\t} )"
+  - "NodeUtils.DrawNestedPropertyGroup( ref value , RenderingPlatformsStr , () =>\r\n\t\t\t{\r\n\t\t\t\tfor(
+    int i = 0 ; i < m_renderingPlatformValues.Length ; i++ )\r\n\t\t\t\t{\r\n\t\t\t\t\tm_renderingPlatformValues[
+    i ] = owner.EditorGUILayoutToggleLeft( RenderingPlatformsInfo[ i ].Label , m_renderingPlatformValues[
+    i ] );\r\n\t\t\t\t}\r\n\t\t\t} )"
+  - 'new GUIContent( "Render Path", "Selects and generates passes for the supported
+    rendering paths\nDefault: All")'
+  - 'new GUIContent( "Light Model", "Surface shader lighting model defines how the
+    surface reflects light\nDefault: Standard")'
+  - new GUIContent( "Shader LOD", "Shader LOD" )
+  - 'new GUIContent( "Cull Mode", "Polygon culling mode prevents rendering of either
+    back-facing or front-facing polygons to save performance, turn it off if you
+    want to render both sides\nDefault: Back")'
+  - 'new GUIContent( " Blend Mode", "Defines how the surface blends with the background\nDefault:
+    Opaque")'
+  - 'new GUIContent( "Mask Clip Value", "Default clip value to be compared with opacity
+    alpha ( 0 = fully Opaque, 1 = fully Masked )\nDefault: 0.5")'
+  - 'new GUIContent( "Cast Shadows", "Generates a shadow caster pass for vertex modifications
+    and point lights in forward rendering\nDefault: ON")'
+  - 'new GUIContent( "Receive Shadows", "Untick it to disable shadow receiving, this
+    includes self-shadowing (only for forward rendering) \nDefault: ON")'
+  - 'new GUIContent( "Queue Index", "Value to offset the render queue, accepts both
+    positive values to render later and negative values to render sooner\nDefault:
+    0")'
+  - 'new GUIContent( "Refraction Layer", "Use it to group or ungroup different refraction
+    shaders into the same or different grabpass (only for forward rendering) \nDefault:
+    0")'
+  - new GUIContent( "Alpha To Coverage", "" )
+  - 'new GUIContent( "Render Queue", "Base rendering queue index\n(Background = 1000,
+    Geometry = 2000, AlphaTest = 2450, Transparent = 3000, Overlay = 4000)\nDefault:
+    Geometry")'
+  - 'new GUIContent( "Render Type", "Categorizes shaders into several predefined
+    groups, usually to be used with screen shader effects\nDefault: Opaque")'
+  - EditorGUILayout.HelpBox( "Advanced options are only available for Custom blend
+    modes", MessageType.Warning )
+  - NodeUtils.DrawPropertyGroup( ref generalIsVisible, GeneralFoldoutStr, DrawGeneralOptions
+    )
+  - EditorGUILayoutToggle( CastShadowsContent, m_castShadows )
+  - EditorGUILayoutToggle( ReceiveShadowsContent, m_receiveShadows )
+  - EditorGUILayoutToggle( AlphaToCoverageStr, m_alphaToCoverage )
+  - EditorGUILayoutTextField( CustomRenderTypeStr, m_customRenderType )
+  - EditorGUILayoutPopup( ShaderModelStr, m_shaderModelIdx, ShaderModelTypeArr )
+  - EditorGUILayoutPopup( string.Empty, (int)m_alphaMode, FadeModeOptions, UIUtils.InspectorPopdropdownStyle,
+    GUILayout.Width( boxSize ), GUILayout.Height( 19 ) )
+  - GUILayoutToggle( CastShadowsContent, m_castShadows )
+  - GUILayoutToggle( ReceiveShadowsContent, m_receiveShadows )
+  - GUILayoutToggle( AlphaToCoverageStr, m_alphaToCoverage )
+  - EditorGUILayoutEnumPopup( LightModelContent, m_currentLightModel )
+  - EditorGUILayoutEnumPopup( CullModeContent, m_cullMode )
+  - EditorGUILayoutEnumPopup( RenderPathContent, m_renderPath )
+  - EditorGUILayoutEnumPopup( VertexModeStr, m_vertexMode )
+  - EditorGUILayoutEnumPopup( RenderTypeContent, m_renderType )
+  - EditorGUILayoutEnumPopup( RenderQueueContent, m_renderQueue )
+  - FloatField( OpacityMaskClipValueContent, m_opacityMaskClipValue )
+  - FloatField( ref inst, ChromaticAberrationStr, 0.0f,0.3f )
+  - AddInputPort( WirePortDataType.FLOAT3, false, AlbedoStr, vertexCorrection + 1,
+    MasterNodePortCategory.Fragment, 0 )
+  - AddInputPort( WirePortDataType.FLOAT3, false, NormalStr, vertexCorrection + 0,
+    MasterNodePortCategory.Fragment, 1 )
+  - AddInputPort( WirePortDataType.FLOAT3, false, EmissionStr, index++, MasterNodePortCategory.Fragment,
+    2 )
+  - AddInputPort( WirePortDataType.FLOAT, false, MetallicStr, index++, MasterNodePortCategory.Fragment,
+    3 )
+  - AddInputPort( WirePortDataType.FLOAT, false, SmoothnessStr, index++, MasterNodePortCategory.Fragment,
+    4 )
+  - AddInputPort( WirePortDataType.FLOAT, false, OcclusionLabelStr, OcclusionDataStr,
+    index++, MasterNodePortCategory.Fragment, 5 )
+  - AddInputPort( WirePortDataType.FLOAT3, false, SpecularStr, index++, MasterNodePortCategory.Fragment,
+    3 )
+  - AddInputPort( WirePortDataType.FLOAT, false, SpecularStr, index++, MasterNodePortCategory.Fragment,
+    3 )
+  - AddInputPort( WirePortDataType.FLOAT, false, GlossStr, index++, MasterNodePortCategory.Fragment,
+    4 )
+  - AddInputPort( WirePortDataType.FLOAT3, false, TransmissionStr, index++, MasterNodePortCategory.Fragment,
+    6 )
+  - AddInputPort( WirePortDataType.FLOAT3, false, TranslucencyStr, index++, MasterNodePortCategory.Fragment,
+    7 )
+  - AddInputPort( WirePortDataType.FLOAT, false, RefractionStr, index + 2, MasterNodePortCategory.Fragment,
+    8 )
+  - AddInputPort( WirePortDataType.FLOAT, false, AlphaStr, index++, MasterNodePortCategory.Fragment,
+    9 )
+  - AddInputPort( WirePortDataType.FLOAT, false, DiscardStr, index++, MasterNodePortCategory.Fragment,
+    10 )
+  - AddInputPort( WirePortDataType.FLOAT3, false, CustomLightingStr, index++, MasterNodePortCategory.Fragment,
+    13 )
+  - 'AddInputPort( WirePortDataType.FLOAT3, false, ( m_vertexMode == VertexMode.Relative
+    ? VertexDisplacementStr : VertexPositionStr ), VertexDataStr, 0, MasterNodePortCategory.Vertex,
+    11 )'
+  - AddInputPort( WirePortDataType.FLOAT3, false, VertexNormalStr, 1, MasterNodePortCategory.Vertex,
+    12 )
+  - AddInputPort( WirePortDataType.FLOAT4, false, VertexTangentStr, 2, MasterNodePortCategory.Vertex,
+    16 )
+  - AddInputPort( WirePortDataType.FLOAT4, false, TessellationOpHelper.TessellationPortStr,
+    index++, MasterNodePortCategory.Tessellation, 14 )
+  - AddInputPort( WirePortDataType.FLOAT3, false, DebugStr, index++, MasterNodePortCategory.Debug,
+    15 )
+  - RangedFloatField( ref inst, ChromaticAberrationStr, 0.0f,0.3f )
+  - CustomDrawer( ref inst, ( x ) => { m_cullMode = (CullMode)EditorGUILayoutEnumPopup(
+    CullModeContent, m_cullMode ); }, CullModeContent.text )
+  - CustomDrawer( ref inst, ( x ) => { m_opacityMaskClipValue = EditorGUILayoutFloatField(
+    OpacityMaskClipValueContent, m_opacityMaskClipValue ); }, OpacityMaskClipValueContent.text
+    )
+  - CustomDrawer( ref inst, ( x ) => { m_alphaToCoverage = EditorGUILayoutToggle(
+    AlphaToCoverageStr, m_alphaToCoverage ); }, AlphaToCoverageStr.text )
+  - NodeAttributes( "Standard Surface Output",            "Master", "Surface shader
+    generator output", null, KeyCode.None, false )
+  - new GUIContent( "Reference", "The value to be compared against (if Comparison
+    is anything else than always) and/or the value to be written to the buffer (if
+    either Pass, Fail or ZFail is set to replace)")
+  - new GUIContent( "Read Mask", "An 8 bit mask as an 0-255 integer, used when comparing
+    the reference value with the contents of the buffer (referenceValue & readMask)
+    comparisonFunction (stencilBufferValue & readMask)")
+  - new GUIContent( "Write Mask", "An 8 bit mask as an 0-255 integer, used when writing
+    to the buffer")
+  - "NodeUtils.DrawPropertyGroup( owner, ref foldoutValue, ref m_active, FoldoutLabelStr,
+    () =>\r\n\t\t\t{\r\n\t\t\t\tfloat cache = EditorGUIUtility.labelWidth;\r\n\t\t\t\tfloat
+    cache2 = EditorGUIUtility.fieldWidth;\r\n\t\t\t\tEditorGUIUtility.labelWidth
+    = 110;\r\n\t\t\t\tEditorGUIUtility.fieldWidth = 30;\r\n\t\t\t\tm_refValue.IntSlider(
+    ref owner, ReferenceValueContent, 0, 255 );\r\n\t\t\t\tm_readMask.IntSlider(
+    ref owner, ReadMaskContent, 0, 255 );\r\n\t\t\t\tm_writeMask.IntSlider( ref owner,
+    WriteMaskContent, 0, 255 );\r\n\t\t\t\t\n\t\t\t\tEditorGUIUtility.fieldWidth
+    = cache2;\r\n\t\t\t\tif( ( owner as StandardSurfaceOutputNode ).CurrentCullMode
+    == CullMode.Off )\r\n\t\t\t\t{\r\n\t\t\t\t\tm_comparisonFunctionIdx.EnumTypePopup(
+    ref owner, ComparisonFrontStr, StencilComparisonLabels );\r\n\t\t\t\t\tm_passStencilOpIdx.EnumTypePopup(
+    ref owner, PassFrontStr, StencilOpsLabels );\r\n\t\t\t\t\tm_failStencilOpIdx.EnumTypePopup(
+    ref owner, FailFrontStr, StencilOpsLabels );\r\n\t\t\t\t\tm_zFailStencilOpIdx.EnumTypePopup(
+    ref owner, ZFailFrontStr, StencilOpsLabels );\r\n\t\t\t\t\tEditorGUILayout.Separator();\r\n\t\t\t\t\tm_comparisonFunctionBackIdx.EnumTypePopup(
+    ref owner, ComparisonBackStr, StencilComparisonLabels );\r\n\t\t\t\t\tm_passStencilOpBackIdx.EnumTypePopup(
+    ref owner, PassBackStr, StencilOpsLabels );\r\n\t\t\t\t\tm_failStencilOpBackIdx.EnumTypePopup(
+    ref owner, FailBackStr, StencilOpsLabels );\r\n\t\t\t\t\tm_zFailStencilOpBackIdx.EnumTypePopup(
+    ref owner, ZFailBackStr, StencilOpsLabels );\r\n\t\t\t\t}\r\n\t\t\t\telse\r\n\t\t\t\t{\r\n\t\t\t\t\tm_comparisonFunctionIdx.EnumTypePopup(
+    ref owner, ComparisonStr, StencilComparisonLabels );\r\n\t\t\t\t\tm_passStencilOpIdx.EnumTypePopup(
+    ref owner, PassFrontStr, StencilOpsLabels );\r\n\t\t\t\t\tm_failStencilOpIdx.EnumTypePopup(
+    ref owner, FailFrontStr, StencilOpsLabels );\r\n\t\t\t\t\tm_zFailStencilOpIdx.EnumTypePopup(
+    ref owner, ZFailFrontStr, StencilOpsLabels );\r\n\t\t\t\t}\r\n\t\t\t\tEditorGUIUtility.labelWidth
+    = cache;\r\n\t\t\t} )"
+  - EditorGUILayoutToggle( DrawInstancedLabel, m_enable )
+  - GUILayoutToggle( DrawInstancedLabel, m_enable )
+  - 'new GUIContent( "Tess", "Tessellation factor\nDefault: 4")'
+  - 'new GUIContent( "Min", "Minimum tessellation distance\nDefault: 10")'
+  - 'new GUIContent( "Max", "Maximum tessellation distance\nDefault: 25")'
+  - 'new GUIContent( "Edge Length", "Tessellation levels ccomputed based on triangle
+    edge length on the screen\nDefault: 4")'
+  - new GUIContent( "Max Disp.", "Max Displacement")
+  - 'new GUIContent( "Phong", "Modifies positions of the subdivided faces so that
+    the resulting surface follows the mesh normals a bit\nDefault: OFF")'
+  - 'new GUIContent( "Strength", "Strength\nDefault: 0.5")'
+  - EditorGUILayoutToggle( PhongEnableContent, m_phongEnabled )
+  - GUILayoutToggle( PhongEnableContent, m_phongEnabled )
+  - FloatField( TessMinDistanceContent, m_tessMinDistance )
+  - FloatField( TessMaxDistanceContent, m_tessMaxDistance )
+  - FloatField( EdgeLengthTessMaxDisplacementContent, m_tessMaxDistance )
+  - NodeUtils.DrawPropertyGroup( ref foldoutValue, m_moduleName, DrawReordableList,
+    DrawButtons )
+  - NodeUtils.DrawNestedPropertyGroup( ref foldoutValue, m_moduleName, DrawReordableList,
+    DrawButtons )
+  - EditorGUILayout.HelpBox( "Depth Writing is only available for Opaque or Custom
+    blend modes", MessageType.Warning )
+  - EditorGUILayoutToggle( OffsetStr, m_offsetEnabled )
+  - EditorGUILayoutToggle( ExtraDepthPassStr, m_extraDepthPass )
+  - EditorGUILayoutPopup( DepthZTestStr, m_extrazTestMode, ZTestModeLabels )
+  - GUILayoutToggle( m_parentSurface.ContainerGraph.ParentWindow.InnerWindowVariables.ExpandedDepth,
+    DepthParametersStr, UIUtils.MenuItemToggleStyle )
+  - GUILayoutToggle( OffsetStr, m_offsetEnabled )
+  - GUILayoutToggle( ExtraDepthPassStr, m_extraDepthPass )
+  - FloatField( ref owner , OffsetFactorStr )
+  - FloatField( ref owner , OffsetUnitsStr )
+  - EditorGUILayoutPopup( OutputTypeStr, m_selectedOutputTypeInt, m_outputValueTypes
+    )
+  - FloatField( m_defaultValuesStr[ i ], m_defaultValues[ i ] )
+  - AddInputPort( WirePortDataType.FLOAT, false, "[0]" )
+  - AddInputPort( WirePortDataType.FLOAT, false, "[1]" )
+  - AddInputPort( WirePortDataType.FLOAT, false, "[2]" )
+  - AddInputPort( WirePortDataType.FLOAT, false, "[3]" )
+  - NodeAttributes( "[Old]Append",            "Vector Operators", "Append channels
+    to create a new component",null,KeyCode.V,true,true, "Append",typeof(DynamicAppendNode))
+  - EditorGUILayout.HelpBox( RenameInfo, MessageType.Warning )
+  - 'NodeAttributes( "Split",            "Vector Operators", "Formerly known as Break
+    To Components. Breaks the input data into its individual components", null, KeyCode.B,
+    tags: "split Break To Components")'
+  - EditorGUILayout.LabelField( CodeTitleStr )
+  - EditorGUILayout.HelpBox( CustomExpressionInfo , MessageType.Info )
+  - EditorGUILayout.HelpBox( WarningText , MessageType.Warning )
+  - NodeUtils.DrawPropertyGroup( ref m_propertiesFoldout , Constants.ParameterLabelStr
+    , DrawBaseProperties )
+  - NodeUtils.DrawPropertyGroup( ref m_visibleInputsFoldout , InputsStr , DrawReordableInputs
+    , DrawItemsAddRemoveInputs )
+  - EditorGUILayoutToggle( "Precision Suffix", m_precisionSuffix )
+  - EditorGUILayoutToggle( GenerateUniqueNameStr , m_generateUniqueName )
+  - EditorGUILayoutToggle( AutoRegisterStr , AutoRegisterMode )
+  - EditorGUILayoutTextField( ExpressionNameLabelStr , m_customExpressionName )
+  - NodeUtils.DrawNestedPropertyGroup( ref m_dependenciesFoldout , "Dependencies",
+    DrawDependencies , DrawDependenciesAddRemoveInputs )
+  - EditorGUILayoutPopup( OutputTypeStr , m_outputTypeIdx , AvailableOutputWireTypesStr
+    )
+  - GUILayoutToggle( "Precision Suffix", m_precisionSuffix )
+  - GUILayoutToggle( GenerateUniqueNameStr , m_generateUniqueName )
+  - GUILayoutToggle( AutoRegisterStr , AutoRegisterMode )
+  - EditorGUILayoutEnumPopup( FunctionCallModeStr , m_mode )
+  - AddInputPort( WirePortDataType.FLOAT , false , "In0" )
+  - AddInputPort( type , false , name )
+  - NodeAttributes( "Custom Expression",            "Miscellaneous", "Creates a custom
+    expression or function if <b>return</b> is detected in the written code.")
+  - GUI.Label( m_titleClickArea , m_content , UIUtils.GetCustomStyle( CustomStyle.NodeTitle
+    ) )
+  - AddInputPort( WirePortDataType.FLOAT, false, Constants.ChannelNamesVector[ 0
+    ] )
+  - AddInputPort( WirePortDataType.FLOAT, false, Constants.ChannelNamesVector[ 1
+    ] )
+  - AddInputPort( WirePortDataType.FLOAT, false, Constants.ChannelNamesVector[ 2
+    ] )
+  - AddInputPort( WirePortDataType.FLOAT, false, Constants.ChannelNamesVector[ 3
+    ] )
+  - 'NodeAttributes( "Append",            "Vector Operators", "Append channels to
+    create a new component", null, KeyCode.V, tags: "combine")'
+  - EditorGUILayoutToggle( "Normalize Vectors", m_normalizeVectors )
+  - EditorGUILayoutToggle(  PowerNode.SafePowerLabel, m_safePower )
+  - GUILayoutToggle( "Normalize Vectors", m_normalizeVectors )
+  - GUILayoutToggle(  PowerNode.SafePowerLabel, m_safePower )
+  - EditorGUILayoutEnumPopup( "Type", m_fresnelType )
+  - EditorGUILayoutEnumPopup( "Normal Vector", m_normalType )
+  - EditorGUILayoutEnumPopup( "View Vector", m_viewType )
+  - FloatField( m_biasPort.Name, m_biasPort.FloatInternalData )
+  - FloatField( m_scalePort.Name, m_scalePort.FloatInternalData )
+  - FloatField( m_powerPort.Name, m_powerPort.FloatInternalData )
+  - AddInputPort( WirePortDataType.FLOAT3, false, "World Normal", -1, MasterNodePortCategory.Fragment,
+    0 )
+  - AddInputPort( WirePortDataType.FLOAT3, false, "View Dir", -1, MasterNodePortCategory.Fragment,
+    4 )
+  - AddInputPort( WirePortDataType.FLOAT, false, "Bias", -1, MasterNodePortCategory.Fragment,
+    1 )
+  - AddInputPort( WirePortDataType.FLOAT, false, "Power", -1, MasterNodePortCategory.Fragment,
+    3 )
+  - NodeAttributes( "Fresnel",            "Surface Data", "Simple Fresnel effect")
+  - GUILayout.Button( "\u25C4", "minibutton", GUILayout.Width( 17 ) )
+  - EditorGUILayoutPopup( Constants.AvailableReferenceStr, m_referenceId, UIUtils.LocalVarNodeArr()
+    )
+  - AddInputPort( WirePortDataType.OBJECT, false, Constants.EmptyPortValue )
+  - NodeAttributes( "Get Local Var",            "Miscellaneous", "Use a registered
+    local variable", null, KeyCode.G )
+  - AddInputPort( WirePortDataType.FLOAT, false, string.Empty )
+  - NodeAttributes( "Layered Blend",            "Miscellaneous", "Mix all channels
+    through interpolation factors", null, KeyCode.None, true )
+  - EditorGUILayoutPopup( ViewSpaceLabel, m_currentOption, LinearModeLabels )
+  - NodeAttributes( "Linear Depth",            "Miscellaneous", "Converts depth values
+    given on logarithmic space to linear")
+  - EditorGUILayoutToggle( RowFromVector, m_rowsFromVector )
+  - EditorGUILayoutPopup( "Output type", m_selectedOutputTypeInt, _outputValueTypes
+    )
+  - GUILayoutToggle( RowFromVector, m_rowsFromVector )
+  - AddInputPort( WirePortDataType.FLOAT4, false, "[0]" )
+  - AddInputPort( WirePortDataType.FLOAT4, false, "[1]" )
+  - AddInputPort( WirePortDataType.FLOAT4, false, "[2]" )
+  - AddInputPort( WirePortDataType.FLOAT4, false, "[3]" )
+  - NodeAttributes( "Matrix From Vectors",            "Matrix Operators", "Matrix
+    From Vectors")
+  - AddInputPort( WirePortDataType.FLOAT4x4, true, Constants.EmptyPortValue )
+  - NodeAttributes( "Position From Transform",            "Matrix Operators", "Gets
+    the position vector from a transformation matrix")
+  - GUILayout.Button( "\u25BA", "minibutton", GUILayout.Width( 17 ) )
+  - GUILayout.Button( "Back")
+  - EditorGUILayout.LabelField( string.Format( GetLocalVarLabel, m_registeredGetLocalVars[
+    i ].UniqueId ) )
+  - EditorGUILayout.HelpBox( "This node is not being referenced by any Get Local
+    Var.", MessageType.Info )
+  - NodeUtils.DrawPropertyGroup( ref m_propertiesFoldout, Constants.ParameterLabelStr,
+    DrawMainProperties )
+  - NodeUtils.DrawPropertyGroup( ref m_referencesVisible, ReferencesStr, DrawReferences
+    )
+  - EditorGUILayoutTextField( LocalVarNameStr, m_variableName )
+  - NodeAttributes( "Register Local Var",            "Miscellaneous", "Forces a local
+    variable to be written with the given name. Can then be fetched at any place
+    with a <b>Get Local Var</b> node.", null, KeyCode.R )
+  - NodeAttributes( "Relay",            "Miscellaneous", "Relay")
+  - EditorGUILayoutToggle( NormalizeAxisStr, m_normalizeAxis )
+  - GUILayoutToggle( NormalizeAxisStr, m_normalizeAxis )
+  - 'AddInputPort( WirePortDataType.FLOAT3, false, m_normalizeAxis? NormalizeAxisLabel:
+    NonNormalizeAxisLabel )'
+  - AddInputPort( WirePortDataType.FLOAT, false, "Rotation Angle")
+  - AddInputPort( WirePortDataType.FLOAT3, false, "Pivot Point")
+  - NodeAttributes( "Rotate About Axis",            "Vector Operators", "Rotates
+    a vector around a normalized axis")
+  - NodeAttributes( "Summed Blend",            "Miscellaneous", "Mix all channels
+    through weighted sum", null, KeyCode.None, true )
+  - EditorGUILayout.HelpBox( Info, MessageType.Warning )
+  - NodeUtils.DrawPropertyGroup( ref m_propertiesFoldout, Constants.ParameterLabelStr,
+    DrawDebugOptions )
+  - AddInputPort( WirePortDataType.FLOAT, false, InputPortName + i )
+  - NodeAttributes( "Debug Switch",            "Logical Operators", "Hard Switch
+    between any of its input ports")
+  - GUI.Label( m_varRect, m_availableInputsLabels[ m_currentSelectedInput ], UIUtils.GraphDropDown
+    )
+  - EditorGUILayoutPopup( SwizzleChannelLabels[ i ], m_selectedOutputSwizzleTypes[
+    i ], SwizzleColorChannels )
+  - EditorGUILayoutPopup( SwizzleChannelLabels[ i ], m_selectedOutputSwizzleTypes[
+    i ], SwizzleVectorChannels )
+  - NodeAttributes( "Swizzle",            "Vector Operators", "Swizzle components
+    of vector types", null, KeyCode.Z, true, false, null, null, "Tobias Pott - @TobiasPott")
+  - EditorGUILayoutToggle( GenerateKeywordStr, m_generateKeyword )
+  - GUILayoutToggle( GenerateKeywordStr, m_generateKeyword )
+  - AddInputPort( m_mainDataType, false, InputPortName + "0" )
+  - AddInputPort( m_mainDataType, false, InputPortName + "1" )
+  - NodeAttributes( "Toggle Switch",            "Logical Operators", "Switch between
+    any of its input ports")
+  - EditorGUILayoutEnumPopup( ModeStr, m_mode )
+  - AddInputPort( WirePortDataType.FLOAT4x4, false, Constants.EmptyPortValue )
+  - NodeAttributes( "Vector From Matrix",            "Matrix Operators", "Retrieve
+    vector data from a matrix")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Weights")
+  - AddInputPort( WirePortDataType.FLOAT, false, AmountsStr[ 0 ] )
+  - AddInputPort( WirePortDataType.FLOAT, false, AmountsStr[ 1 ] )
+  - AddInputPort( WirePortDataType.FLOAT, false, AmountsStr[ 2 ] )
+  - AddInputPort( WirePortDataType.FLOAT, false, AmountsStr[ 3 ] )
+  - NodeAttributes( "Weighted Blend",            "Miscellaneous", "Mix all channels
+    through weighted average sum", null, KeyCode.None, true )
+  - AddInputPort( WirePortDataType.OBJECT, false, string.Empty )
+  - NodeAttributes( "Wire Node",            "Miscellaneous", "Wire Node", null, KeyCode.None,
+    false )
+  - NodeAttributes( "Object To World",            "Object Transform", "Transforms
+    input to World Space")
+  - AddInputPort( WirePortDataType.FLOAT4, false, string.Empty )
+  - NodeAttributes( "World To Object",            "Object Transform", "Transforms
+    input to Object Space")
+  - NodeAttributes( "Abs",            "Math Operators", "Absolute value of scalars
+    and vectors")
+  - 'NodeAttributes( "ACos",            "Trigonometry Operators", "Arccosine of scalars
+    and vectors", tags: "arccosine")'
+  - 'NodeAttributes( "ASin",            "Trigonometry Operators", "Arcsine of scalars
+    and vectors", tags: "arcsine")'
+  - 'NodeAttributes( "ATan2",            "Trigonometry Operators", "Arctangent of
+    y/x",tags: "arctangent2")'
+  - 'NodeAttributes( "ATan",            "Trigonometry Operators", "Arctangent of
+    scalars and vectors", tags: "Arctangent")'
+  - NodeAttributes( "Ceil",            "Math Operators", "Smallest integer not less
+    than a scalar or each vector component")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Min")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Max")
+  - NodeAttributes( "Clamp",            "Math Operators", "Value clamped to the range
+    [min,max]")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Threshold")
+  - NodeAttributes( "Clip",            "Miscellaneous", "Conditionally kill a pixel
+    before output")
+  - AddInputPort( WirePortDataType.FLOAT4, false, Constants.EmptyPortValue )
+  - NodeAttributes( "Component Mask",            "Vector Operators", "Mask certain
+    channels from vectors/color components", null, KeyCode.K )
+  - 'NodeAttributes( "Cosh",            "Trigonometry Operators", "Hyperbolic cosine
+    of scalars and vectors",tags: "hyperbolic cosine")'
+  - 'NodeAttributes( "Cos",            "Trigonometry Operators", "Cosine of scalars
+    and vectors",tags: "cosine")'
+  - AddInputPort( WirePortDataType.FLOAT3, false, "Lhs")
+  - AddInputPort( WirePortDataType.FLOAT3, false, "Rhs")
+  - NodeAttributes( "Cross",            "Vector Operators", "Cross product of two
+    three-component vectors ( A x B )", null, KeyCode.X )
+  - NodeAttributes( "DDX",            "Math Operators", "Approximate partial derivative
+    with respect to window-space X")
+  - NodeAttributes( "DDY",            "Math Operators", "Approximate partial derivative
+    with respect to window-space Y")
+  - 'NodeAttributes( "Degrees",            "Trigonometry Operators", "Converts values
+    of scalars and vectors from radians to degrees",tags: "radians")'
+  - NodeAttributes( "Determinant",            "Matrix Operators", "Scalar determinant
+    of a square matrix")
+  - NodeAttributes( "Distance",            "Vector Operators", "Euclidean distance
+    between two points")
+  - NodeAttributes( "Dot",            "Vector Operators", "Scalar dot product of
+    two vectors ( A . B )", null, KeyCode.Period )
+  - NodeAttributes( "Exp2",            "Math Operators", "Base-2 exponential of scalars
+    and vectors")
+  - NodeAttributes( "Exp",            "Math Operators", "Base-e exponential of scalars
+    and vectors")
+  - NodeAttributes( "Floor",            "Math Operators", "Largest integer not greater
+    than a scalar or each vector component")
+  - NodeAttributes( "Fmod",            "Math Operators", "Floating point remainder
+    of x/y with the same sign as x")
+  - NodeAttributes( "Fract",            "Math Operators", "Fractional portion of
+    a scalar or each vector component")
+  - NodeAttributes( "FWidth",            "Math Operators", "Sum of approximate window-space
+    partial derivatives magnitudes (Only valid on Fragment type ports)")
+  - AddInputPort( WirePortDataType.OBJECT, true, Constants.EmptyPortValue )
+  - AddInputPort( WirePortDataType.FLOAT, false,            "Time" )
+  - NodeAttributes( "Gradient Sample",            "Miscellaneous", "Samples a gradient")
+  - NodeAttributes( "Inverse",            "Matrix Operators", "Inverse matrix of
+    a matrix")
+  - NodeAttributes( "Length",            "Vector Operators", "Scalar Euclidean length
+    of a vector")
+  - NodeAttributes( "Lerp",            "Math Operators", "Linear interpolation of
+    two scalars or vectors based on a weight", null, KeyCode.L )
+  - NodeAttributes( "Log10",            "Math Operators", "Base-10 logarithm of scalars
+    and vectors")
+  - NodeAttributes( "Log2",            "Math Operators", "Base-2 logarithm of scalars
+    and vectors")
+  - NodeAttributes( "Log",            "Math Operators", "Natural logarithm of scalars
+    and vectors")
+  - NodeAttributes( "Negate",            "Math Operators", "Negate or invert an input
+    value")
+  - EditorGUILayout.HelpBox( Constants.SafeNormalizeInfoStr, MessageType.Info )
+  - EditorGUILayoutToggle( "Safe Normalize", m_safeNormalize )
+  - GUILayoutToggle( "Safe Normalize", m_safeNormalize )
+  - NodeAttributes( "Normalize",            "Vector Operators", "Normalizes a vector",
+    null, KeyCode.N )
+  - NodeAttributes( "One Minus",            "Math Operators", "1 - input value",
+    null, KeyCode.O )
+  - EditorGUILayoutToggle( SafePowerLabel, m_safePower )
+  - GUILayoutToggle( SafePowerLabel, m_safePower )
+  - AddInputPort( WirePortDataType.FLOAT, false, "Base")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Exp")
+  - NodeAttributes( "Power",            "Math Operators", "Base to the Exp-th power
+    of scalars and vectors", null, KeyCode.E )
+  - 'NodeAttributes( "Radians",            "Trigonometry Operators", "Converts values
+    of scalars and vectors from degrees to radians",tags: "degrees")'
+  - 'NodeAttributes( "Reciprocal",            "Math Operators", "Reciprocal of scalars
+    and vectors", tags: "rcp recip reciprocal")'
+  - 'NodeAttributes( "Reflect",            "Vector Operators", "Reflection vector
+    given an incidence vector and a normal vector", tags: "refl reflect reflection")'
+  - AddInputPort( WirePortDataType.FLOAT4, false , "Incident")
+  - AddInputPort( WirePortDataType.FLOAT4, false , "Normal")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Eta" )
+  - NodeAttributes( "Refract",            "Vector Operators", "Computes a refraction
+    vector")
+  - NodeAttributes( "Round",            "Math Operators", "Rounded value of scalars
+    or vectors")
+  - 'NodeAttributes( "Rsqrt",            "Math Operators", "Reciprocal square root
+    of scalars and vectors", tags: "reciprocal square root")'
+  - NodeAttributes( "Saturate",            "Math Operators", "Saturate clamps the
+    input values into the [0,1] range")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Offset")
+  - NodeAttributes( "Scale And Offset",            "Math Operators", "Scales and
+    offsets an input value\n( ( <b>Value</b> * <b>Scale</b> ) + <b>Offset</b> )")
+  - FloatField( ScaleFactorStr, m_scaleFactor )
+  - AddInputPort( WirePortDataType.FLOAT, false, " " )
+  - NodeAttributes( "Scale",            "Math Operators", "Scales input value by
+    a float factor")
+  - NodeAttributes( "Sign",            "Math Operators", "Sign of scalar or each
+    vector component")
+  - NodeAttributes( "Simplified Fmod",            "Math Operators", "Floating point
+    remainder of x/y")
+  - 'NodeAttributes( "Sinh",            "Trigonometry Operators", "Hyperbolic sine
+    of scalars and vectors",tags: "hyperbolic sine")'
+  - 'NodeAttributes( "Sin",            "Trigonometry Operators", "Sine of scalars
+    and vectors",tags: "sine")'
+  - AddInputPort( WirePortDataType.FLOAT, false, Constants.EmptyPortValue, -1, MasterNodePortCategory.Fragment,
+    0 )
+  - AddInputPort( WirePortDataType.FLOAT, false, "Min", -1, MasterNodePortCategory.Fragment,
+    1 )
+  - AddInputPort( WirePortDataType.FLOAT, false, "Max", -1, MasterNodePortCategory.Fragment,
+    2 )
+  - NodeAttributes( "Smoothstep",            "Math Operators", "Returns a smooth
+    Hermite interpolation between 0 and 1, if input is in the range [min, max].")
+  - 'NodeAttributes( "Sqrt",            "Math Operators", "Square root of scalars
+    and vectors", tags: "square root")'
+  - NodeAttributes( "Step",            "Math Operators", "Step function returning
+    either zero or one")
+  - 'NodeAttributes( "Tanh",            "Trigonometry Operators", "Hyperbolic tangent
+    of scalars and vectors", tags: "hyperbolic tangent")'
+  - 'NodeAttributes( "Tan",            "Trigonometry Operators", "Tangent of scalars
+    and vectors",tags: "tangent")'
+  - AddInputPort( WirePortDataType.FLOAT, false, "Max Old")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Min New")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Max New")
+  - NodeAttributes( "Remap",            "Math Operators", "Remap value from old min
+    - max range to new min - max range", null, KeyCode.None, true, false, null, null,
+    "The Four Headed Cat - @fourheadedcat")
+  - NodeAttributes( "Transform Vector",            "Math Operators", "Transforma
+    a vector into another", null, KeyCode.None, false )
+  - NodeAttributes( "Transpose",            "Matrix Operators", "Transpose matrix
+    of a matrix")
+  - NodeAttributes( "Trunc",            "Math Operators", "Largest integer not greater
+    than a scalar or each vector component")
+  - EditorGUILayout.LabelField( InputTypeStr )
+  - EditorGUILayoutEnumPopup( m_selectedType )
+  - AddInputPort( m_selectedType, true, i.ToString() )
+  - NodeAttributes( "Add",            "Math Operators", "Addition of two or more
+    values ( A + B + .. )", null, KeyCode.A )
+  - NodeAttributes( "Divide",            "Math Operators", "Division of two values
+    ( A / B )", null, KeyCode.D )
+  - NodeAttributes( "Max",            "Math Operators", "Maximum of two scalars or
+    each respective component of two vectors")
+  - NodeAttributes( "Min",            "Math Operators", "Minimum of two scalars or
+    each respective component of two vectors")
+  - NodeAttributes( "Multiply",            "Math Operators", "Multiplication of two
+    or more values ( A * B * .. )\nIt also handles Matrices multiplication", null,
+    KeyCode.M )
+  - 'NodeAttributes( "Remainder",            "Math Operators", "Remainder between
+    two int variables",tags: "modulo fmod")'
+  - NodeAttributes( "Subtract",            "Math Operators", "Subtraction of two
+    values ( A - B )", null, UnityEngine.KeyCode.S )
+  - EditorGUILayoutToggle( ApplyScalingStr, m_applyScaling )
+  - GUILayoutToggle( ApplyScalingStr, m_applyScaling )
+  - AddInputPort( WirePortDataType.FLOAT3, false, "World Position")
+  - AddInputPort( WirePortDataType.FLOAT3, false, "World Normal")
+  - AddInputPort( WirePortDataType.FLOAT2, false, "Static UV")
+  - AddInputPort( WirePortDataType.FLOAT2, false, "Dynamic UV")
+  - NodeAttributes( "SRP Baked GI",            "Miscellaneous", "Gets Baked GI info.")
+  - AddInputPort( WirePortDataType.FLOAT, false, "High")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Medium")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Low")
+  - NodeAttributes( "Material Quality",            "Logical Operators", "Choose between
+    separate branches according to currently selected Quality (SRP only) ", Available
+    = true )
+  - new GUIContent( label )
+  - EditorGUILayout.HelpBox( "While \"Default Inspector\" is turned ON you can't
+    reorder this property or change it's name, and you can only have one per shader,
+    use it only if you intend to share this shader with non-ASE users",MessageType.Info)
+  - EditorGUILayout.HelpBox(NodeErrorMsg, MessageType.Error )
+  - EditorGUILayoutToggle( "Default Inspector", m_defaultInspector )
+  - GUILayoutToggle( "Default Inspector", m_defaultInspector )
+  - NodeAttributes( "Diffusion Profile",            "Constants And Properties", "Returns
+    Diffusion Profile Hash Id. To be used on Diffusion Profile port on HDRP templates.",
+    KeyCode.None, true, 0, int.MaxValue )
+  - EditorGUILayout.HelpBox( NodeErrorMsg , MessageType.Error )
+  - EditorGUILayoutToggle( NormalizeColorLabel, m_normalizeColor )
+  - GUILayoutToggle( NormalizeColorLabel, m_normalizeColor )
+  - EditorGUILayoutEnumPopup( IntensityUnityLabel, m_intensityUnit )
+  - AddInputPort( WirePortDataType.FLOAT3, false, "Color")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Intensity")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Exposition Weight")
+  - NodeAttributes( "HD Emission",            "Miscellaneous", "Get emission HDR
+    Color. Only available on HDRP.")
+  - EditorGUILayout.HelpBox( InfoTransformSpace , MessageType.Info )
+  - AddInputPort( WirePortDataType.FLOAT3 , false , "View Dir")
+  - AddInputPort( WirePortDataType.FLOAT3 , false , "Normal")
+  - AddInputPort( WirePortDataType.FLOAT , false , "LOD" )
+  - NodeAttributes( "Reflection Probe",            "Miscellaneous", "Provides access
+    to the nearest Reflection Probe to the object. Only available on URP.")
+  - NodeAttributes( "Color",            "Surface Data", "Interpolated per-vertex
+    color", null, UnityEngine.KeyCode.None, true, true, "Vertex Color", typeof( VertexColorNode
+    ) )
+  - EditorGUILayoutPopup( "Type", m_outputTypeInt, m_outputTypeStr )
+  - NodeAttributes( "Grab Screen Position",            "Camera And Screen", "Screen
+    position correctly transformed to be used with Grab Screen Color")
+  - NodeAttributes( "[Deprecated] Local Position",            "Surface Data", "Interpolated
+    Vertex Position in Local Space", null, KeyCode.None, true, true, "Vertex Position",
+    typeof( PosVertexDataNode ) )
+  - EditorGUILayout.HelpBox( URP2DHelpBox , MessageType.Info )
+  - EditorGUILayoutToggle( "Custom Grab Pass", m_useCustomGrab )
+  - EditorGUILayoutToggle( "Normalize", m_normalize )
+  - EditorGUILayoutToggle( "Exposure", m_exposure )
+  - EditorGUILayoutToggle( "2D Renderer", m_isURP2D)
+  - GUILayoutToggle( "Custom Grab Pass", m_useCustomGrab )
+  - GUILayoutToggle( "Normalize", m_normalize )
+  - GUILayoutToggle( "Exposure", m_exposure )
+  - GUILayoutToggle( "2D Renderer", m_isURP2D)
+  - AddInputPort( WirePortDataType.FLOAT, false, "LOD" )
+  - NodeAttributes( "Grab Screen Color",            "Camera And Screen", "Grabed
+    pixel color value from screen")
+  - GUI.Label( titlePos, "Grab Screen Color", UIUtils.GetCustomStyle( CustomStyle.NodeTitle
+    ) )
+  - AddInputPort( WirePortDataType.FLOAT4, false, "Pos")
+  - NodeAttributes( "Screen Depth",            "Camera And Screen", "Given a screen
+    position returns the depth of the scene to the object as seen by the camera")
+  - NodeAttributes( "Screen Position",            "Camera And Screen", "Screen space
+    position, you can either get the <b>Screen</b> position as is or <b>Normalize</b>
+    it to have it at the [0,1] range")
+  - EditorGUILayoutPopup( Constants.AvailableReferenceStr, m_referenceSamplerId +
+    1, arr.ToArray() )
+  - EditorGUILayoutPopup( Constants.AvailableReferenceStr, m_referenceSamplerId,
+    Dummy )
+  - AddInputPort( WirePortDataType.SAMPLER2D, false, "Tex")
+  - ChangeOutputName( 1, "1/Width")
+  - ChangeOutputName( 2, "1/Height")
+  - ChangeOutputName( 3, "Width")
+  - ChangeOutputName( 4, "Height")
+  - NodeAttributes( "Texel Size",            "Textures", "Texel Size for a given
+    texture object")
+  - EditorGUILayout.HelpBox( "Having safe normalize ON makes sure your view vector
+    is not zero even if you are using your shader with no cameras.", MessageType.None
+    )
+  - EditorGUILayoutEnumPopup( SpaceStr, m_viewDirSpace )
+  - 'NodeAttributes( "View Dir",            "Camera And Screen", "View direction
+    vector, you can select between <b>World</b> space or <b>Tangent</b> space", tags:
+    "camera vector")'
+  - NodeAttributes( "[Deprecated] World Normal",            "Surface Data", "Vertex
+    Normal World", null, KeyCode.None, true, true, "World Normal", typeof( WorldNormalVector
+    ) )
+  - 'NodeAttributes( "World Normal",            "Surface Data", "Per pixel world
+    normal vector, accepts a <b>Normal</b> vector in tangent space (ie: normalmap)")'
+  - NodeAttributes( "World Position",            "Surface Data", "World space position")
+  - 'NodeAttributes( "World Reflection",            "Surface Data", "Per pixel world
+    reflection vector, accepts a <b>Normal</b> vector in tangent space (ie: normalmap)")'
+  - NodeAttributes( "[Deprecated] World Reflection",            "Surface Data", "World
+    reflection vector", null, KeyCode.None, true, true, "World Reflection", typeof(
+    WorldReflectionVector ) )
+  - "NodeUtils.DrawPropertyGroup( ref m_propertiesFoldout, Constants.ParameterLabelStr,
+    () =>\r\n\t\t\t\t{\r\n\t\t\t\t\tEditorGUI.BeginChangeCheck();\r\n\t\t\t\t\tm_selectedMode
+    = EditorGUILayoutIntPopup( \"Mode\", m_selectedMode, ModeListStr, ModeListInt
+    );\r\n\t\t\t\t\tif( EditorGUI.EndChangeCheck() )\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\tif(
+    m_selectedMode == 2 )\r\n\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\tm_inputPorts[ 2 ].Visible
+    = true;\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\telse\r\n\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\tm_inputPorts[
+    2 ].Visible = false;\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\tm_sizeIsDirty = true;\r\n\t\t\t\t\t}\r\n\t\t\t\t}
+    )"
+  - AddInputPort( WirePortDataType.FLOAT3, false, "Normal A")
+  - AddInputPort( WirePortDataType.FLOAT3, false, "Normal B")
+  - NodeAttributes( "Blend Normals",            "Textures", "Blend Normals")
+  - EditorGUILayout.HelpBox( PreventNaNInfo , MessageType.Info )
+  - EditorGUILayoutToggle( PreventNaNLabel , m_preventNaN )
+  - GUILayoutToggle( PreventNaNLabel , m_preventNaN )
+  - AddInputPort( WirePortDataType.FLOAT, false, "HeightMap")
+  - AddInputPort( WirePortDataType.FLOAT, false, "SplatMask")
+  - AddInputPort( WirePortDataType.FLOAT, false, "BlendStrength")
+  - NodeAttributes( "HeightMap Texture Blend",            "Textures", "Advanced Texture
+    Blending by using heightMap and splatMask, usefull for texture layering ", null,
+    KeyCode.None, true, false, null, null, "Rea")
+  - AddInputPort( WirePortDataType.FLOAT2, false, "UV" ,-1,MasterNodePortCategory.Fragment,0)
+  - AddInputPort( WirePortDataType.FLOAT2, false, "Speed", -1, MasterNodePortCategory.Fragment,
+    2 )
+  - AddInputPort( WirePortDataType.FLOAT, false,            "Time", -1, MasterNodePortCategory.Fragment,
+    1 )
+  - NodeAttributes( "Panner",            "UV Coordinates", "Pans UV texture coordinates
+    according to its inputs")
+  - AddInputPort( WirePortDataType.FLOAT2, false, "Anchor")
+  - NodeAttributes( "Rotator",            "UV Coordinates", "Rotates UVs or any Vector2
+    value from an Anchor point for a specified Time value")
+  - new GUIContent( string.Empty )
+  - EditorGUILayout.HelpBox( "Derivative and Bias mip modes for Texture Arrays only
+    works on some platforms (D3D11 XBOXONE GLES3 GLCORE)", MessageType.Warning )
+  - EditorGUILayout.HelpBox( m_errorMessageTooltip, MessageType.Warning )
+  - EditorGUILayoutToggle( "Unpack Normal Map", m_autoUnpackNormals )
+  - EditorGUILayoutPopup( "Reference Sampler", m_useSamplerArrayIdx, arr )
+  - GUILayoutToggle( "Unpack Normal Map", m_autoUnpackNormals )
+  - EditorGUILayoutEnumPopup( DefaultTextureStr, m_defaultTextureValue )
+  - EditorGUILayoutEnumPopup( AutoCastModeStr, m_autocastMode )
+  - EditorGUILayoutEnumPopup( MipModeStr, m_mipMode )
+  - 'FloatField( newMipMode == MipType.MipBias ? "Mip Bias": "Mip Level", m_lodPort.FloatInternalData
+    )'
+  - AddInputPort( WirePortDataType.FLOAT, false, "Level")
+  - AddInputPort( WirePortDataType.FLOAT2, false, "DDX" )
+  - AddInputPort( WirePortDataType.FLOAT2, false, "DDY" )
+  - AddInputPort( WirePortDataType.FLOAT, false, NormalScaleStr )
+  - AddInputPort( WirePortDataType.FLOAT, false, "Index")
+  - NodeAttributes( "Texture Sample",            "Textures", "Samples a chosen texture
+    and returns its color values, <b>Texture</b> and <b>UVs</b> can be overriden
+    and you can select different mip modes and levels. It can also unpack and scale
+    textures marked as normalmaps.", KeyCode.T, true, 0, int.MaxValue, typeof( Texture
+    ), typeof( Texture2D ), typeof( Texture3D ), typeof( Cubemap ), typeof( CustomRenderTexture
+    ), Tags = "Array")
+  - GUI.Label( newPos, string.Empty, UIUtils.GetCustomStyle( CustomStyle.SamplerFrame
+    ) )
+  - EditorGUILayout.HelpBox( MessageMacrosOFF, MessageType.Warning )
+  - EditorGUILayout.HelpBox( MessageTextureObject, MessageType.Info )
+  - EditorGUILayoutPopup( WrapModeStr, m_wrapMode, m_wrapModeStr )
+  - EditorGUILayoutEnumPopup( UAxisStr, m_wrapModeU )
+  - EditorGUILayoutEnumPopup( VAxisStr, m_wrapModeV )
+  - EditorGUILayoutEnumPopup( FilterModeStr, m_filterMode )
+  - EditorGUILayoutEnumPopup( AnisotropicFilteringStr , m_anisoMode )
+  - NodeAttributes( "Sampler State",            "Textures", "Creates a custom sampler
+    state or returns the default one of a selected texture object")
+  - EditorGUILayoutPopup( Constants.AvailableReferenceStr, m_referenceArrayId + 1,
+    arr.ToArray() )
+  - EditorGUILayoutPopup( Constants.AvailableReferenceStr, 0, Dummy )
+  - AddInputPort( WirePortDataType.SAMPLER2D, false, "Tex", -1, MasterNodePortCategory.Fragment,
+    2 )
+  - AddInputPort( WirePortDataType.FLOAT2, false, "Tiling", -1, MasterNodePortCategory.Fragment,
+    0 )
+  - AddInputPort( WirePortDataType.FLOAT2, false, "Offset", -1, MasterNodePortCategory.Fragment,
+    1 )
+  - 'NodeAttributes( "Texture Coordinates",            "UV Coordinates", "Texture
+    UV coordinates set, if <b>Tex</b> is connected to a texture object it will use
+    that texture scale factors, otherwise uses <b>Tilling</b> and <b>Offset</b> port
+    values", null, KeyCode.U, tags: "uv")'
+  - NodeAttributes( "Texture Object",            "Textures", "Represents a Texture
+    Asset. Can be used in samplers <b>Tex</b> inputs or shader function inputs to
+    reuse the same texture multiple times.", SortOrderPriority = 1 )
+  - EditorGUILayoutToggle( InstancedLabelStr, m_instanced )
+  - GUILayoutToggle( InstancedLabelStr, m_instanced )
+  - NodeAttributes( "Texture Transform",            "Textures", "Gives access to
+    texture tiling and offset as set on the material inspector")
+  - 'EditorGUILayout.HelpBox( "Flipbook UV Animation:\n\n  - UV: Texture Coordinates
+    to Flipbook.\n - Columns: number of Columns (X) of the Flipbook Texture.\n  -
+    Rows: number of Rows (Y) of the Flipbook Textures.\n  - Speed: speed of the animation.\n
+    - Texture Direction: set the vertical order of the texture tiles.\n - If Negative
+    Speed: set the behavior when speed is negative.\n\n - Out: UV Coordinates.",
+    MessageType.None )'
+  - EditorGUILayoutPopup( TextureVerticalDirectionStr, m_selectedTextureVerticalDirection,
+    m_textureVerticalDirectionValues )
+  - EditorGUILayoutPopup( NegativeSpeedBehaviorStr, m_negativeSpeedBehavior, m_negativeSpeedBehaviorValues
+    )
+  - AddInputPort( WirePortDataType.FLOAT, false, "Columns")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Rows")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Speed")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Start Frame")
+  - NodeAttributes( "Flipbook UV Animation",            "UV Coordinates", "Animate
+    a Flipbook Texture Modifying UV Coordinates.", null, KeyCode.None, true, false,
+    null, null, "The Four Headed Cat - @fourheadedcat")
+  - EditorGUILayout.HelpBox ( "Pixelate UV.\n\n  - UV is the Texture Coordinates
+    to pixelate.\n  - Pixels X is the number of horizontal pixels\n  - Pixels Y is
+    the number of vertical pixels.", MessageType.None)
+  - AddInputPort( WirePortDataType.FLOAT2, true, "UV" )
+  - AddInputPort( WirePortDataType.FLOAT, false, "Pixels X")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Pixels Y")
+  - NodeAttributes( "Pixelate UV",            "UV Coordinates", "Pixelate Texture
+    Modifying UV.", null, KeyCode.None, true, false, null, null, "The Four Headed
+    Cat - @fourheadedcat")
+  - EditorGUILayoutEnumPopup( "Type", m_inputMode )
+  - NodeAttributes( "Unpack Scale Normal",            "Textures", "Applies UnpackNormal/UnpackScaleNormal
+    function")
+  - EditorGUILayout.HelpBox( VirtualTextureObjectInfo, MessageType.Info )
+  - EditorGUILayoutPopup( VirtualChannelStr, m_selectedChannelInt, m_channelTypeStr
+    )
+  - EditorGUILayoutEnumPopup( VirtualPresetStr, m_virtualPreset )
+  - NodeAttributes( "Virtual Texture Object",            "Textures", "Represents
+    a Virtual Texture Asset", SortOrderPriority = 1 )
+  - EditorGUILayout.HelpBox( WarningMessage, MessageType.Warning )
+  - "NodeUtils.DrawPropertyGroup( ref m_propertiesFoldout, Constants.ParameterLabelStr,
+    () =>\r\n\t\t\t {\r\n\t\t\t\t EditorGUI.BeginChangeCheck();\r\n\t\t\t\t m_billboardType
+    = (BillboardType)EditorGUILayoutEnumPopup( BillboardOpHelper.BillboardTypeStr,
+    m_billboardType );\r\n\t\t\t\t if( EditorGUI.EndChangeCheck() )\r\n\t\t\t\t {\r\n\t\t\t\t\t
+    SetAdditonalTitleText( string.Format( Constants.SubTitleTypeFormatStr, m_billboardType
+    ) );\r\n\t\t\t\t }\r\n\t\t\t\t m_rotationIndependent = EditorGUILayoutToggle(
+    BillboardOpHelper.BillboardRotIndStr, m_rotationIndependent );\r\n\t\t\t\t m_affectNormalTangent
+    = EditorGUILayoutToggle( BillboardOpHelper.BillboardAffectNormalTangentStr ,
+    m_affectNormalTangent );\r\n\t\t\t } )"
+  - EditorGUILayoutToggle( BillboardOpHelper.BillboardRotIndStr, m_rotationIndependent
+    )
+  - EditorGUILayoutToggle( BillboardOpHelper.BillboardAffectNormalTangentStr , m_affectNormalTangent
+    )
+  - GUILayoutToggle( BillboardOpHelper.BillboardRotIndStr, m_rotationIndependent
+    )
+  - GUILayoutToggle( BillboardOpHelper.BillboardAffectNormalTangentStr , m_affectNormalTangent
+    )
+  - EditorGUILayoutEnumPopup( BillboardOpHelper.BillboardTypeStr, m_billboardType
+    )
+  - NodeAttributes( "Billboard",            "Miscellaneous", "Calculates new Vertex
+    positions and normals to achieve a billboard effect.")
+  - NodeAttributes( "Vertex Bitangent",            "Vertex Data", "Calculated bitangent
+    vector in object space, can be used in both local vertex offset and fragment
+    outputs. Already has tangent sign and object transform into account")
+  - NodeAttributes( "Bone Blend Indices",            "Vertex Data", "Bone indices
+    for skinned Meshes")
+  - NodeAttributes( "Bone Blend Weights",            "Vertex Data", "Bone blend weights
+    for skinned Meshes")
+  - NodeAttributes( "[VS] Vertex Color",            "Vertex Data", "Vertex color.
+    Only works on Vertex Shaders ports ( p.e. Local Vertex Offset Port ).", null,KeyCode.None,true,true,
+    "Vertex Color",typeof(VertexColorNode))
+  - NodeAttributes( "Vertex Normal",            "Vertex Data", "Vertex normal vector
+    in object space, can be used in both local vertex offset and fragment outputs")
+  - EditorGUILayoutToggle( RotationIndependentScaleStr, m_rotationIndependentScale
+    )
+  - GUILayoutToggle( RotationIndependentScaleStr, m_rotationIndependentScale )
+  - NodeAttributes( "Object Scale",            "Vertex Data", "Object Scale extracted
+    directly from its transform matrix")
+  - "NodeUtils.DrawPropertyGroup( ref m_propertiesFoldout, Constants.ParameterLabelStr,
+    () =>\r\n\t\t\t{\r\n\t\t\t\tEditorGUI.BeginChangeCheck();\r\n\t\t\t\tm_currentSelectedMode
+    = EditorGUILayoutIntPopup( \"Type\", m_currentSelectedMode, AvailableOutlineModes,
+    AvailableOutlineValues );\r\n\t\t\t\tif( EditorGUI.EndChangeCheck() )\r\n\t\t\t\t{\r\n\t\t\t\t\tSetAdditonalTitleText(
+    string.Format( Constants.SubTitleTypeFormatStr, AvailableOutlineModes[ m_currentSelectedMode
+    ] ) );\r\n\t\t\t\t\tUpdatePorts();\r\n\t\t\t\t}\r\n\r\n\t\t\t\tEditorGUI.BeginChangeCheck();\r\n\t\t\t\tm_currentAlphaMode
+    = (OutlineAlphaModes)EditorGUILayoutEnumPopup( OutlineAlphaModeStr, m_currentAlphaMode
+    );\r\n\t\t\t\tif( EditorGUI.EndChangeCheck() )\r\n\t\t\t\t{\r\n\t\t\t\t\tCheckAlphaPortVisibility();\r\n\t\t\t\t}\r\n\r\n\t\t\t\tif(
+    m_currentAlphaMode == OutlineAlphaModes.Masked )\r\n\t\t\t\t{\r\n\t\t\t\t\tif(
+    m_masterNode == null )\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\tm_masterNode = UIUtils.CurrentWindow.OutsideGraph.CurrentMasterNode
+    as StandardSurfaceOutputNode;\r\n\t\t\t\t\t}\r\n\r\n\t\t\t\t\tif( m_masterNode
+    != null )\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\tm_masterNode.ShowOpacityMaskValueUI();\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\r\n\t\t\t\tm_cullMode
+    = (CullMode)EditorGUILayoutEnumPopup( CullModePortNameStr, m_cullMode ); \r\n\t\t\t\tm_zWriteMode
+    = EditorGUILayoutPopup( ZBufferOpHelper.ZWriteModeStr, m_zWriteMode, ZBufferOpHelper.ZWriteModeValues
+    );\r\n\t\t\t\tm_zTestMode = EditorGUILayoutPopup( ZBufferOpHelper.ZTestModeStr,
+    m_zTestMode, ZBufferOpHelper.ZTestModeLabels );\r\n\t\t\t\tm_colorMaskHelper.Draw(
+    this );\r\n\t\t\t\tm_noFog = EditorGUILayoutToggle( \"No Fog\", m_noFog );\r\n\r\n\t\t\t}
+    )"
+  - EditorGUILayoutToggle( "No Fog", m_noFog )
+  - EditorGUILayoutPopup( ZBufferOpHelper.ZWriteModeStr, m_zWriteMode, ZBufferOpHelper.ZWriteModeValues
+    )
+  - EditorGUILayoutPopup( ZBufferOpHelper.ZTestModeStr, m_zTestMode, ZBufferOpHelper.ZTestModeLabels
+    )
+  - GUILayoutToggle( "No Fog", m_noFog )
+  - EditorGUILayoutEnumPopup( OutlineAlphaModeStr, m_currentAlphaMode )
+  - EditorGUILayoutEnumPopup( CullModePortNameStr, m_cullMode )
+  - AddInputPort( WirePortDataType.FLOAT3, false, "Color", -1, MasterNodePortCategory.Fragment,
+    0 )
+  - AddInputPort( WirePortDataType.FLOAT, false, "Alpha", -1, MasterNodePortCategory.Fragment,
+    2 )
+  - AddInputPort( WirePortDataType.FLOAT, false, "Width", -1, MasterNodePortCategory.Fragment,
+    1 )
+  - NodeAttributes( "Outline",            "Miscellaneous", "Uses vertices to simulate
+    an outline around the object")
+  - EditorGUILayoutPopup( PropertyLabel, m_sizeOption, SizeLabels )
+  - NodeAttributes( "Vertex Position",            "Vertex Data", "Vertex position
+    vector in object space, can be used in both local vertex offset and fragment
+    outputs")
+  - NodeAttributes( "Vertex Tangent Sign",            "Vertex Data", "Vertex tangent
+    sign in object space, return the W value of tangent vector that contains only
+    the sign of the tangent")
+  - NodeAttributes( "Vertex Tangent",            "Vertex Data", "Vertex tangent vector
+    in object space, can be used in both local vertex offset and fragment outputs")
+  - NodeAttributes( "[VS] Vertex TexCoord1",            "Vertex Data", "Second set
+    of vertex texture coordinates. Only works on Vertex Shaders ports ( p.e. Local
+    Vertex Offset Port ).",null,UnityEngine.KeyCode.None,true,true, "[VS] Vertex
+    TexCoord")
+  - 'NodeAttributes( "Vertex TexCoord",            "Vertex Data", "Vertex texture
+    coordinates, can be used in both local vertex offset and fragment outputs", tags:
+    "uv")'
+  - NodeAttributes( "World Bitangent",            "Surface Data", "Per pixel world
+    bitangent vector", null, KeyCode.None, true, false, null, null, "kebrus")
+  - NodeAttributes( "Vertex Color",            "Vertex Data", "Vertex color interpolated
+    on fragment")
+  - NodeAttributes( "World Tangent",            "Surface Data", "Per pixel world
+    tangent vector", null, KeyCode.None, true, false, null, null, "kebrus")
+  - EditorGUILayout.HelpBox( DisabledInterpolatorMsg, MessageType.Warning )
+  - EditorGUILayout.HelpBox( NoInterpolationUsageMsg, MessageType.Info )
+  - EditorGUILayout.HelpBox( SampleInfoMessage , MessageType.Info )
+  - EditorGUILayoutToggle( "No Interpolation", m_noInterpolation )
+  - EditorGUILayoutToggle( "Sample", m_sample )
+  - GUILayoutToggle( "No Interpolation", m_noInterpolation )
+  - GUILayoutToggle( "Sample", m_sample )
+  - NodeAttributes( "Vertex To Fragment",            "Miscellaneous", "Pass vertex
+    data to the pixel shader", null, KeyCode.None, true, false, null, null, "Jason
+    Booth - http://u3d.as/DND")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Factor")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Min Dist")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Max Dist")
+  - NodeAttributes( "Distance-based Tessellation",            "Miscellaneous", "Calculates
+    tessellation based on distance from camera")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Edge Length")
+  - AddInputPort( WirePortDataType.FLOAT, false, "Max Disp.")
+  - NodeAttributes( "Edge Length Tessellation With Cull",            "Miscellaneous",
+    "Tessellation level computed based on triangle edge length on the screen with
+    patch frustum culling")
+  - NodeAttributes( "Edge Length Tessellation",            "Miscellaneous", "Tessellation
+    level computed based on triangle edge length on the screen")
+  - new GUIContent( "Passes", "Template pass names separated by semicolon (;). Empty
+    means it will be included in all passes.")
+  - new GUIContent( "SRPVersion", "Valid SRP version numbers must have 6 digits and
+    be equal or higher than 100000, the lowest supported version.")
+  - GUILayout.Button( string.Empty, UIUtils.PlusStyle, GUILayout.Width( Constants.PlusMinusButtonLayoutWidth
+    ) )
+  - GUILayout.Button( string.Empty, UIUtils.MinusStyle, GUILayout.Width( Constants.PlusMinusButtonLayoutWidth
+    ) )
+  - EditorGUILayout.LabelField( m_nativeDirectives[ i ] )
+  - NodeUtils.DrawNestedPropertyGroup( ref m_nativeDirectivesFoldout, rect, NativeFoldoutStr,
+    DrawNativeItemsRect, 4 )
+  - EditorGUILayout.LabelField( m_nativeItems[i] )
+  - EditorGUILayout.HelpBox( m_helpBoxMessage, MessageType.Info )
+  - NodeUtils.DrawNestedPropertyGroup( ref foldout, m_moduleName, DrawMainBody, DrawButtons
+    )
+  - NodeUtils.DrawNestedPropertyGroup( ref m_nativeItemsFoldout, NativeFoldoutStr,
+    DrawNativeItems ,4)
+  - EditorGUILayout.TextField( m_additionalItems[ i ] )
+  - EditorGUILayoutToggle( AlphaToMaskStr, m_alphaToMask )
+  - GUILayoutToggle( AlphaToMaskStr, m_alphaToMask )
+  - CustomDrawer( ref owner, ( x ) => { m_alphaToMask = owner.EditorGUILayoutToggle(
+    AlphaToMaskStr, m_alphaToMask ); }, AlphaToMaskStr )
+  - EditorGUILayoutToggle( Label, m_value )
+  - GUILayoutToggle( Label, m_value )
+  - EditorGUILayout.LabelField( "Color Mask"+ m_target, GUILayout.Width( EditorGUIUtility.labelWidth
+    - 3 ) )
+  - CustomDrawer( ref owner, DrawColorMaskControls, ColorMaskContent.text + m_target
+    )
+  - EditorGUILayoutEnumPopup( CullModeStr, m_cullMode )
+  - CustomDrawer( ref owner, ( x ) => { m_cullMode = (CullMode)owner.EditorGUILayoutEnumPopup(
+    CullModeStr, m_cullMode ); }, CullModeStr )
+  - NodeUtils.DrawPropertyGroup( ref foldoutValue, ZBufferOpHelper.DepthParametersStr,
+    base.ShowUnreadableDataMessage )
+  - "NodeUtils.DrawPropertyGroup( ref foldout, ZBufferOpHelper.DepthParametersStr,
+    () =>\r\n\t\t\t\t{\r\n\t\t\t\t\tEditorGUI.indentLevel++;\r\n\t\t\t\t\tDrawBlock(
+    owner );\r\n\t\t\t\t\tEditorGUI.indentLevel--;\r\n\t\t\t\t} )"
+  - EditorGUILayoutToggle( ZBufferOpHelper.OffsetStr, m_offsetEnabled )
+  - "NodeUtils.DrawNestedPropertyGroup( ref foldout, ZBufferOpHelper.DepthParametersStr,
+    () =>\r\n\t\t\t\t{\r\n\t\t\t\t\tDrawBlock( owner );\r\n\t\t\t\t} )"
+  - GUILayoutToggle( ZBufferOpHelper.OffsetStr, m_offsetEnabled )
+  - FloatField( ref owner, ZBufferOpHelper.OffsetFactorStr )
+  - FloatField( ref owner, ZBufferOpHelper.OffsetUnitsStr )
+  - EditorGUILayoutPopup( DataLabelStr , m_currentDataIdx , m_dataLabels )
+  - NodeAttributes( "Template Fragment Data",            "Surface Data", "Select
+    and use available interpolated fragment data from the template")
+  - NodeAttributes( "Template Local Var Data",            "Surface Data", "Select
+    and use available local variable data from the template")
+  - GUILayout.Button( OpenTemplateStr )
+  - AddInputPort( inputDataList[ i ].DataType, false, inputDataList[ i ].PortName,
+    inputDataList[ i ].OrderId, inputDataList[ i ].PortCategory, inputDataList[ i
+    ].PortUniqueId )
+  - NodeAttributes( "Template Master Node",            "Master", "Shader Generated
+    according to template rules", null, KeyCode.None, false, true, "Template MultiPass
+    Master Node", typeof( TemplateMultiPassMasterNode ) )
+  - EditorGUILayout.HelpBox( m_unreadableMessage, MessageType.Info )
+  - GUILayout.Button( ReloadTemplateStr )
+  - GUILayout.Button( "\u25C4" , GUILayout.Width( 18 ) , GUILayout.Height( 18 ) )
+  - GUILayout.Button( "\u25b6" , GUILayout.Width( 18 ) , GUILayout.Height( 18 ) )
+  - EditorGUILayout.LabelField( Pass.Modules.PassUniqueName )
+  - EditorGUILayout.HelpBox( NoSubShaderPropertyStr , MessageType.Info )
+  - NodeUtils.DrawPropertyGroup( ref m_propertiesFoldout , CommonPropertiesStr ,
+    DrawCommonProperties )
+  - NodeUtils.DrawPropertyGroup( ref m_subStringFoldout , SubShaderModuleStr , DrawSubShaderProperties
+    )
+  - NodeUtils.DrawPropertyGroup( ref m_passFoldout , PassModuleStr , DrawPassProperties
+    )
+  - EditorGUILayoutTextField( string.Empty , m_mainLODName , GUILayout.Width( 100
+    ) )
+  - EditorGUILayoutTextField( string.Empty , m_mainLODName )
+  - EditorGUILayoutTextField( PassNameStr , m_passName )
+  - NodeUtils.DrawNestedPropertyGroup( ref m_lodFoldout , AdditionalLODsStr , DrawLOD
+    , DrawLODAddRemoveButtons )
+  - EditorGUILayoutEnumPopup( HDSRPMaterialTypeStr , m_hdSrpMaterialType )
+  - AddInputPort( inputDataList[ i ].DataType , false , inputDataList[ i ].PortName
+    , inputDataList[ i ].OrderId , inputDataList[ i ].PortCategory , inputDataList[
+    i ].PortUniqueId )
+  - NodeAttributes( "Template Master Node",            "Master", "Shader Generated
+    according to template rules", null , KeyCode.None , false )
+  - AddInputPort( WirePortDataType.FLOAT , false , string.Format( InputLabelStr ,
+    subShaderIdx , passIdx ) )
+  - AddInputPort( WirePortDataType.FLOAT , false , "In" )
+  - AddInputPort( WirePortDataType.FLOAT , false , Constants.EmptyPortValue )
+  - NodeAttributes( "Template Multi-Pass Switch",            "Logical Operators",
+    "Relays, in compile time, the correct input port according to current analyzed
+    sub-shader/pass.")
+  - EditorGUILayoutPopup( SubShaderStr , m_subShaderIdx , m_availableSubshaders )
+  - EditorGUILayoutPopup( PassStr , m_passLocalArrayIdx , m_availablePassesLabels
+    )
+  - EditorGUILayoutToggle( m_options.Name, m_currentOption == 1 )
+  - EditorGUILayoutPopup( m_options.Name, m_currentOption, m_options.DisplayOptions
+    )
+  - GUILayoutToggle( m_options.Name, m_currentOption == 1 )
+  - FloatField( ref owner, m_options.Name )
+  - FloatField( m_options.Name, m_options.FieldValue.FloatValue )
+  - NodeUtils.DrawNestedPropertyGroup( ref m_passCustomOptionsFoldout, m_passCustomOptionsLabel,
+    DrawCustomOptionsBlock )
+  - "NodeUtils.DrawNestedPropertyGroup( ref m_foldout, Label, () =>\r\n\t\t\t{\r\n\t\t\t\tfor(
+    int i = 0; i < m_currentPasses.Length; i++ )\r\n\t\t\t\t{\r\n\t\t\t\t\tEditorGUI.BeginChangeCheck();\r\n\t\t\t\t\tm_currentPasses[
+    i ].Visible = owner.EditorGUILayoutToggleLeft( m_currentPasses[ i ].Name, m_currentPasses[
+    i ].Visible );\r\n\t\t\t\t\tif( EditorGUI.EndChangeCheck() )\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\towner.ContainerGraph.GetMultiPassMasterNodes(
+    owner.LODIndex)[ m_currentPasses[ i ].Idx ].IsInvisible = !m_currentPasses[ i
+    ].Visible;\r\n\t\t\t\t\t}\r\n\r\n\t\t\t\t}\r\n\t\t\t\tEditorGUILayout.Space();\r\n\t\t\t}
+    )"
+  - NodeUtils.DrawPropertyGroup( ref foldout, BlendModeStr, base.ShowUnreadableDataMessage
+    )
+  - "NodeUtils.DrawPropertyGroup( ref foldout, BlendModeStr + Target, () =>\r\n\t\t\t\t{\r\n\t\t\t\t\tDrawBlock(
+    owner, style );\r\n\t\t\t\t} )"
+  - "NodeUtils.DrawNestedPropertyGroup( ref foldout, BlendModeStr + Target, () =>\r\n\t\t\t\t{\r\n\t\t\t\t\tDrawBlock(
+    owner, style );\r\n\t\t\t\t} )"
+  - EditorGUILayoutPopup( BlendModesRGBStr, m_currentRGBIndex, m_commonBlendTypesArr
+    )
+  - EditorGUILayoutPopup( BlendOpsRGBStr, (int)m_blendOpRGB, BlendOpsHelper.BlendOpsLabels
+    )
+  - EditorGUILayoutPopup( BlendOpsAlphaStr, (int)m_blendOpAlpha, BlendOpsHelper.BlendOpsLabels
+    )
+  - EditorGUILayoutEnumPopup( SourceFactorStr, m_sourceFactorRGB )
+  - EditorGUILayoutEnumPopup( DstFactorStr, m_destFactorRGB )
+  - EditorGUILayoutEnumPopup( SourceFactorStr, m_sourceFactorAlpha )
+  - EditorGUILayoutEnumPopup( DstFactorStr, m_destFactorAlpha )
+  - CustomDrawer( ref owner, ( x ) => { m_sourceFactorRGB = (AvailableBlendFactor)x.EditorGUILayoutEnumPopup(
+    SourceFactorStr, m_sourceFactorRGB ); }, SourceFactorStr )
+  - CustomDrawer( ref owner, ( x ) => { m_destFactorRGB = (AvailableBlendFactor)x.EditorGUILayoutEnumPopup(
+    DstFactorStr, m_destFactorRGB ); }, DstFactorStr )
+  - CustomDrawer( ref owner, ( x ) => { m_blendOpRGB = (AvailableBlendOps)x.EditorGUILayoutPopup(
+    BlendOpsRGBStr, (int)m_blendOpRGB, BlendOpsHelper.BlendOpsLabels ); }, BlendOpsRGBStr
+    )
+  - CustomDrawer( ref owner, ( x ) => { m_sourceFactorAlpha = (AvailableBlendFactor)x.EditorGUILayoutEnumPopup(
+    SourceFactorStr, m_sourceFactorAlpha ); }, SourceFactorStr )
+  - CustomDrawer( ref owner, ( x ) => { m_destFactorAlpha = (AvailableBlendFactor)x.EditorGUILayoutEnumPopup(
+    DstFactorStr, m_destFactorAlpha ); }, DstFactorStr )
+  - CustomDrawer( ref owner, ( x ) => { m_blendOpAlpha = (AvailableBlendOps)x.EditorGUILayoutPopup(
+    BlendOpsAlphaStr, (int)m_blendOpAlpha, BlendOpsHelper.BlendOpsLabels ); }, BlendOpsAlphaStr
+    )
+  - EditorGUILayoutPopup( ShaderModelStr, m_shaderModelIdx, TemplateHelperFunctions.AvailableShaderModels
+    )
+  - EditorGUILayout.LabelField( m_typeName )
+  - EditorGUILayout.LabelField( m_propertyNameLabel )
+  - EditorGUILayoutToggle( "Advanced View", m_advancedView )
+  - EditorGUILayoutPopup( PropertyLabelStr , m_currentPropertyIdx , m_propertyLabels
+    )
+  - GUILayoutToggle( "Advanced View", m_advancedView )
+  - EditorGUILayoutEnumPopup( CurrentScopeStr , m_currentScope )
+  - NodeAttributes( "Template Parameter",            "Constants And Properties",
+    "Select and use one of the pre-existing properties given by the template")
+  - NodeUtils.DrawPropertyGroup( ref foldout, FoldoutLabelStr, base.ShowUnreadableDataMessage
+    )
+  - "NodeUtils.DrawPropertyGroup( ref foldout, FoldoutLabelStr, () =>\r\n\t\t\t\t{\r\n\t\t\t\t\tDrawBlock(
+    owner, cullMode );\r\n\t\t\t\t} )"
+  - "NodeUtils.DrawNestedPropertyGroup( owner, ref foldout, ref m_active, FoldoutLabelStr,
+    () =>\r\n\t\t\t\t{\r\n\t\t\t\t\tDrawBlock( owner, cullMode );\r\n\t\t\t\t} )"
+  - NodeUtils.DrawPropertyGroup( ref m_foldout, CustomTagsStr, base.ShowUnreadableDataMessage
+    )
+  - NodeUtils.DrawPropertyGroup( ref m_foldout, CustomTagsStr, DrawMainBody, DrawButtons
+    )
+  - EditorGUILayoutTextField( TagNameStr, m_availableTags[ i ].TagName )
+  - EditorGUILayoutTextField( CustomRenderTypeLabelStr, m_availableTags[ i ].TagValue
+    )
+  - EditorGUILayoutTextField( TagValueStr, m_availableTags[ i ].TagValue )
+  - NodeUtils.DrawNestedPropertyGroup( ref m_foldout, CustomTagsStr, DrawMainBody,
+    DrawButtons )
+  - EditorGUILayoutEnumPopup( RenderTypeLabelStr, m_availableTags[ i ].Batching )
+  - EditorGUILayoutEnumPopup( RenderTypeLabelStr, m_availableTags[ i ].RenderType
+    )
+  - EditorGUILayoutEnumPopup( QueueLabelStr, m_availableTags[ i ].RenderQueue, GUILayout.MinWidth(
+    150 ) )
+  - NodeAttributes( "Template Vertex Data",            "Vertex Data", "Select and
+    use available vertex data from the template")
+  - GUILayout.Button( m_pathButtonContent, m_pathButtonStyle, GUILayout.MaxWidth(
+    Mathf.Min( position.width * 0.5f, buttonSize.x ) ) )
+  - GUILayout.Button( "Build")
+  - EditorGUILayout.LabelField( "Path and Filename")
+  - EditorGUILayout.LabelField( ".cs", GUILayout.MaxWidth( 40 ) )
+  - EditorGUILayout.HelpBox( "The path for the generated script should be outside
+    of Amplify Shader Editor folder structure due to use of Assembly Definition files
+    which will conflict and prevent to compile correctly.", MessageType.Warning )
+  - EditorGUILayout.Foldout( m_tooltipsFoldout, "Tooltips")
+  - EditorGUILayout.ObjectField( "Shader", m_currentShader, typeof( Shader ), false
+    )
+  - EditorGUILayout.Toggle( "Allow In Scene View", m_allowInSceneView )
+  - EditorGUILayout.TextField( m_settingsClassName, GUILayout.ExpandWidth( true )
+    )
+  - EditorGUILayout.TextField( "Name", m_menuEntry )
+  - EditorGUILayout.TextField( m_tooltips[ i ].Name, m_tooltips[ i ].Tooltip )
+  - new GUIContent( "Main Content")
+  - new GUIContent( "Target Path")
+  - new GUIContent( "Target Name")
+  - GUILayout.Button( "Browse", GUILayout.MaxWidth( 55 ) )
+  - GUILayout.Button( "Fetch", GUILayout.MaxWidth( 45 ) )
+  - GUILayout.Button( "Browse",GUILayout.MaxWidth(55) )
+  - GUILayout.Button( "Clear")
+  - GUILayout.Button( UpdateAllStr )
+  - GUILayout.Button( "Remove Custom Inspector")
+  - GUILayout.Button( "Export Unity Package")
+  - 'GUILayout.Button( m_asset != null ? "Save": "Create", "minibutton", GUILayout.Width(
+    50 ) )'
+  - EditorGUILayout.LabelField( Title , m_titleStyle )
+  - EditorGUILayout.ObjectField( "Asset Preset", m_asset , typeof( ASESaveBundleAsset
+    ) , false )
+  - EditorUtility.DisplayProgressBar( "Removing custom inspector", currentAsset.AllShaders[i].name
+    , i / ( count - 1 ) )
+  - new GUIContent( "Shader Samples", "Import samples according to you project rendering
+    pipeline")
+  - new GUIContent( "Learning Resources", "Check the online wiki for various topics
+    about how to use ASE with node examples and explanations")
+  - new GUIContent( "Community", "Need help? Reach us through our discord server
+    or the official support Unity forum")
+  - new GUIContent( "Latest Update", "Check the lastest additions, improvements and
+    bug fixes done to ASE")
+  - new GUIContent( "Amplify Shader Editor", "Are you using the latest version? Now
+    you know")
+  - new GUIContent( " Manual", textIcon )
+  - new GUIContent( " Basic use tutorials", textIcon )
+  - new GUIContent( " Beginner Series", textIcon )
+  - new GUIContent( " Node List", textIcon )
+  - new GUIContent( " SRP HDRP/URP use", textIcon )
+  - new GUIContent( " Shader Functions", textIcon )
+  - new GUIContent( " Shader Templates", textIcon )
+  - new GUIContent( " Node API", textIcon )
+  - new GUIContent( " HDRP Samples", packageIcon )
+  - new GUIContent( " URP Samples", packageIcon )
+  - new GUIContent( " Built-In Samples", packageIcon )
+  - new GUIContent( " Discord", webIcon )
+  - new GUIContent( " Unity Forum", webIcon )
+  - new GUIContent( AssetDatabase.LoadAssetAtPath<Texture2D>( AssetDatabase.GUIDToAssetPath(
+    IconGUID ) ) )
+  - GUILayout.Button( HDRPbutton, m_buttonLeftStyle )
+  - GUILayout.Button( URPbutton, m_buttonLeftStyle )
+  - GUILayout.Button( BuiltInbutton, m_buttonStyle )
+  - GUILayout.Button( Manualbutton, m_buttonStyle )
+  - GUILayout.Button( Basicbutton, m_buttonStyle )
+  - GUILayout.Button( Beginnerbutton, m_buttonStyle )
+  - GUILayout.Button( Nodesbutton, m_buttonStyle )
+  - GUILayout.Button( SRPusebutton, m_buttonStyle )
+  - GUILayout.Button( Functionsbutton, m_buttonStyle )
+  - GUILayout.Button( Templatesbutton, m_buttonStyle )
+  - GUILayout.Button( APIbutton, m_buttonStyle )
+  - GUILayout.Button( DiscordButton, GUILayout.ExpandWidth( true ) )
+  - GUILayout.Button( ForumButton, GUILayout.ExpandWidth( true ) )
+  - GUILayout.Button( "Amplify", m_linkStyle )
+  - GUILayout.Button( "Asset Store", m_linkStyle )
+  - new GUIContent( "X" )
+  - new GUIContent( "Y" )
+  - new GUIContent( "Texture 3D")
+  - new GUIContent( "Linear")
+  - new GUIContent( "Format")
+  - GUILayout.Button( m_pathButtonContent, m_pathButtonStyle, GUILayout.MaxWidth(
+    Mathf.Min( Screen.width * 0.5f, buttonSize.x ) ) )
+  - GUILayout.Button( buildButtonStr, "prebutton", GUILayout.Height( 20 ) )
+  - GUILayout.Button( icon, "prebutton", GUILayout.Width( 28 ), GUILayout.Height(
+    20 ) )
+  - GUILayout.Button( "BUILD REPORT (click to hide):\n\n"+ m_message, "helpbox")
+  - EditorGUILayout.LabelField( "Path and Name")
+  - EditorGUILayout.LabelField( ".asset", GUILayout.MaxWidth( 40 ) )
+  - EditorGUILayout.ObjectField( "Asset Preset", m_asset, typeof( TextureArrayCreatorAsset
+    ), false )
+  - EditorGUILayout.Popup( "X", m_selectedSize.intValue, m_sizesStr )
+  - EditorGUILayout.Popup( "Y", m_selectedSize.intValue, m_sizesStr )
+  - EditorGUILayout.TextField( m_fileName.stringValue, GUILayout.ExpandWidth( true
+    ) )
+  - GUILayout.Button( CopyButtonStr )
+  - GUILayout.Button( PasteButtonStr )
+  - GUILayout.Button( "R" ,GUILayout.MaxWidth(17), GUILayout.MaxHeight( 13 ) )
+  - EditorGUILayout.HelpBox( info, MessageType.Info )
+  - EditorGUILayout.ObjectField( m_targetMesh, typeof( Mesh ), false, GUILayout.MaxWidth(
+    120 ) )
+  - "new GUIContent( \"Compile and show code | \u25BE\")"
+  - new GUIContent( "Copy error text")
+  - GUILayout.Button( "Open in Text Editor")
+  - GUILayout.Button( "none (precompiled shader)", GUI.skin.label, new GUILayoutOption[
+    0 ] )
+  - "GUILayout.Button( CustomShaderInspector.Styles.showSurface, EditorStyles.miniButton,
+    new GUILayoutOption[]\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\tGUILayout.ExpandWidth(false)\r\n\t\t\t\t\t}
+    )"
+  - GUILayout.Button( CustomShaderInspector.Styles.builtinShader, GUI.skin.label,
+    new GUILayoutOption[ 0 ] )
+  - GUILayout.Button( CustomShaderInspector.Styles.no, GUI.skin.label, new GUILayoutOption[
+    0 ] )
+  - "GUILayout.Button( CustomShaderInspector.Styles.showFF, EditorStyles.miniButton,
+    new GUILayoutOption[]\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\tGUILayout.ExpandWidth(false)\r\n\t\t\t\t\t}
+    )"
+  - 'EditorGUILayout.LabelField( "Cast shadows", ( !ShaderUtilEx.HasShadowCasterPass(
+    shader ) ) ? "no": "yes", new GUILayoutOption[ 0 ] )'
+  - EditorGUILayout.LabelField( "Render queue", ShaderUtilEx.GetRenderQueue( shader
+    ).ToString( System.Globalization.CultureInfo.InvariantCulture ), new GUILayoutOption[
+    0 ] )
+  - EditorGUILayout.LabelField( "LOD", ShaderUtilEx.GetLOD( shader ).ToString( System.Globalization.CultureInfo.InvariantCulture
+    ), new GUILayoutOption[ 0 ] )
+  - 'EditorGUILayout.LabelField( "Ignore projector", ( !ShaderUtilEx.DoesIgnoreProjector(
+    shader ) ) ? "no": "yes", new GUILayoutOption[ 0 ] )'
+  - EditorGUILayout.LabelField( "Disable batching", label, new GUILayoutOption[ 0
+    ] )
+  - EditorGUILayout.LabelField( "SRP Batcher", label2 )
+  - EditorGUILayout.LabelField( propertyName, label, new GUILayoutOption[ 0 ] )
+  - EditorGUILayout.LabelField( values[ i ], m_Style )
+  - EditorGUILayout.HelpBox( ShaderUtilEx.GetSRPBatcherCompatibilityIssueReason(
+    shader, shaderActiveSubshaderIndex, sRPBatcherCompatibilityCode ), MessageType.Info
+    )
+  - EditorGUILayout.Foldout( expended, name, true, m_Style )
+  - EditorGUILayout.Toggle( Styles.togglePreprocess, s_PreprocessOnly )
+  - EditorGUILayout.Toggle( Styles.toggleStripLineDirective, s_StripLineDirectives
+    )
+  - GUI.Label( rect, content, EditorStyles.miniLabel )
+  - GUI.Label( position, content2, EditorStyles.miniLabel )
+  - 'GUI.Label( position2, EditorGUIUtilityEx.TempContent( message, ( !flag ) ? CustomShaderInspector.Styles.errorIcon
+    : CustomShaderInspector.Styles.warningIcon ), CustomShaderInspector.Styles.messageStyle
+    )'
+  - GUILayout.Button( UIUtils.FloatIntIconON , UIUtils.FloatIntPickerONOFF , GUILayout.Width(
+    15 ) , GUILayout.Height( 15 ) )
+  - GUILayout.Button( UIUtils.FloatIntIconOFF , UIUtils.FloatIntPickerONOFF , GUILayout.Width(
+    15 ) , GUILayout.Height( 15 ) )
+  - EditorGUILayoutPopup( content , (int)m_value , displayOptions )
+  - FloatField( ref UndoParentNode owner , string content )
+  - FloatField( content , m_value )
+  - FloatField( ref UndoParentNode owner , string content , float min , float max
+    )
+  - FloatField( content , m_value , min , max )
+  - RangedFloatField( ref UndoParentNode owner , string content , float min , float
+    max )
+  - RangedFloatField( content , m_value , min , max )
+  - CustomDrawer( ref UndoParentNode owner , DrawPropertySection Drawer , string
+    content )
+  - new GUIContent( "Remove Invalid Data")
+  - GUILayout.Button( m_buttonContent, GUILayout.Width( 200 ) )
+  - new GUIContent( "Show start screen on Unity launch", "You can set if you want
+    to see the start screen everytime Unity launchs, only just when there's a new
+    version available or never.")
+  - new GUIContent( "Always Snap to Grid", "Always snap to grid when dragging nodes
+    around, instead of using control.")
+  - new GUIContent( "Enable Undo (unstable)", "Enables undo for actions within the
+    shader graph canvas. Currently unstable, use with caution.")
+  - new GUIContent( "Auto import SRP shader templates", "By default Amplify Shader
+    Editor checks for your SRP version and automatically imports the correct corresponding
+    shader templates.\nTurn this OFF if you prefer to import them manually.")
+  - new GUIContent( "Add Amplify Shader Editor define symbol", "Turning it OFF will
+    disable the automatic insertion of the define symbol and remove it from the list
+    while turning it ON will do the opposite.\nThis is used for compatibility with
+    other plugins, if you are not sure if you need this leave it ON.")
+  - new GUIContent( "Clear Log on Update", "Clears the previously generated log each
+    time the Update button is pressed")
+  - new GUIContent( "Log Shader Compile", "Log message to console when a shader compilation
+    is finished")
+  - new GUIContent( "Log Batch Compile", "Log message to console when a batch compilation
+    is finished")
+  - new GUIContent( "Update on Scene save (Ctrl+S)", "ASE is aware of Ctrl+S and
+    will use it to save shader")
+  - new GUIContent( "Disable Node Previews", "Disable preview on nodes from being
+    updated to boost up performance on large graphs")
+  - new GUIContent( "Force Template Min. Shader Model", "If active, when loading
+    a shader its shader model will be replaced by the one specified in template if
+    what is loaded is below the one set over the template.")
+  - new GUIContent( "Force Template Inline Properties", "If active, defaults all
+    inline properties to template values.")
+  - GUILayout.Button( "Reset and Forget All")
+  - EditorGUILayout.Toggle( AlwaysSnapToGrid, GlobalAlwaysSnapToGrid )
+  - EditorGUILayout.Toggle( EnableUndo, GlobalEnableUndo )
+  - EditorGUILayout.Toggle( AutoSRP, GlobalAutoSRP )
+  - EditorGUILayout.Toggle( DefineSymbol, GlobalDefineSymbol )
+  - EditorGUILayout.Toggle( ClearLog, GlobalClearLog )
+  - EditorGUILayout.Toggle( LogShaderCompile, GlobalLogShaderCompile )
+  - EditorGUILayout.Toggle( LogBatchCompile, GlobalLogBatchCompile )
+  - EditorGUILayout.Toggle( UpdateOnSceneSave, GlobalUpdateOnSceneSave )
+  - EditorGUILayout.Toggle( DisablePreviews, GlobalDisablePreviews )
+  - EditorGUILayout.Toggle( ForceTemplateMinShaderModel, GlobalForceTemplateMinShaderModel
+    )
+  - EditorGUILayout.Toggle( ForceTemplateInlineProperties, GlobalForceTemplateInlineProperties
+    )
+  - NodeUtils.DrawNestedPropertyGroup( ref m_visibleMainFoldout, InlineSamplerStateStr,
+    DrawMain )
+  - NodeUtils.DrawNestedPropertyGroup( ref m_visibleWrapsFoldout, AdditionalWrapsStr,
+    DrawAdditionalWrapModes, DrawAddRemoveButtons )
+  - EditorGUILayoutEnumPopup( m_filterMode )
+  - EditorGUILayoutEnumPopup( m_mainWrapMode.WrapMode )
+  - EditorGUILayoutEnumPopup( m_mainWrapMode.Coordinates )
+  - EditorGUILayoutEnumPopup( m_additionalWrapOptions[ i ].WrapMode ,GUILayout.MaxWidth(
+    maxWidth ) )
+  - EditorGUILayoutEnumPopup( m_additionalWrapOptions[ i ].Coordinates, GUILayout.MaxWidth(
+    maxWidth ) )
+  - GUI.Label( windowRect, string.Empty, GUI.skin.FindStyle( "flow node 0") )
+  - GUI.Label( titleRect, "Quick Tip!", GUI.skin.FindStyle( "TL Selection H2") )
+  - GUI.Label( textRect, AllTips[ m_currentTip ], GUI.skin.FindStyle( "WordWrappedLabel")
+    )
+  - GUI.Label( footerRect, (m_currentTip + 1) + " of "+ AllTips.Count + " tips")
+  - new GUIContent( EditorGUIUtility.IconContent( "LockIcon-On" ) )
+  - new GUIContent( EditorGUIUtility.IconContent( "LockIcon" ) )
+  - new GUIContent( EditorGUIUtility.IconContent( "CircularToggle_ON" ) )
+  - new GUIContent( EditorGUIUtility.IconContent( "CircularToggle_OFF" ) )
+  - FloatField( propertyDrawPos , "  " , value , UIUtils.MainSkin.textField )
+  - FloatField( rect, label, FloatInternalData )
+  - FloatField( label, FloatInternalData )
+  - GUI.Label( m_boundingBox, string.Empty, UIUtils.GetCustomStyle( CustomStyle.MainCanvasTitle
+    ))
+  - GUI.Label( textPos, m_name, style )
+  useBilingual: 0
+  reverseBilingual: 1
+  excludeList:
+  - minibutton
+  broadcastCacheList:
+  - Master
+  - Default
+  - Vertex Data
+  - Primitive
+  - Math Operators
+  - Logical Operators
+  - Trigonometry Operators
+  - Image Effects
+  - Miscellaneous
+  - Camera And Screen
+  - Constants And Properties
+  - Surface Data
+  - Matrix Transform
+  - Time
+  - Functions
+  - Vector Operators
+  - Matrix Operators
+  - Lighting
+  - Textures
+  - Commentary
+  - UV Coordinates
+  - Object Transform
+  - Vertex Transform
+  - ' Additional Use Passes'
+  - Output Node
+  broadcastList:
+  - ' Additional Use Passes'
+  - Output Node
+  textBox: "\u6211\u6B63\u5728\u8FDB\u884C\u6C49\u5316\u5DE5\u4F5C, \u8FD9\u662FUnity\u4E2D\u7684AmplifyShaderEditor\u63D2\u4EF6\u7684\u8BCD\u6761,
+    \u8BF7\u8003\u8651\u4F7F\u7528\u73AF\u5883\u548C\u4E0A\u4E0B\u6587\u7FFB\u8BD1\u4E3A\u6700\u4F73\u7684\u4E2D\u6587,
+    \u4E0D\u9002\u5408\u7FFB\u8BD1\u7684\u8BCD\u6761\u4E0D\u8FDB\u884C\u6C49\u5316,
+    \u6CE8\u610F\u683C\u5F0F, \u4E0D\u8981\u66F4\u6539\u539F\u6765\u82F1\u6587\u7684\u5B57\u7B26,
+    \u4F7F\u7528\u4EE3\u7801\u5757\u63D0\u4EA4\u7ED9\u6211, \u4E0D\u8981\u4F7F\u7528\u5927\u62EC\u53F7,
+    \u6700\u540E\u7684\u8BED\u53E5\u9700\u8981\u52A0\u4E0A\u9017\u53F7, \u8FD9\u6837\u6211\u590D\u5236\u8D77\u6765\u65B9\u4FBF\u4E00\u4E9B"
+  appIdSerialize: 20221018001399306
+  secretKeySerialize: pAmts8VwuxpdvvvhvSUA

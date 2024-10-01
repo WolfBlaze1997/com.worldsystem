@@ -1,29 +1,59 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Smoothstep", "Math Operators", "Returns a smooth Hermite interpolation between 0 and 1, if input is in the range [min, max]." )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Smoothstep"
+#else
+"平稳的步伐"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Returns a smooth Hermite interpolation between 0 and 1, if input is in the range [min, max]."
+#else
+"如果输入在[min，max]范围内，则返回0到1之间的平滑Hermite插值。"
+#endif
+)]
 	public sealed class SmoothstepOpNode : ParentNode
 	{
-		//[UnityEngine.SerializeField]
-		//private WirePortDataType m_mainDataType = WirePortDataType.FLOAT;
+		
+		
 		
 		private int m_alphaPortId = 0;
 		private int m_minPortId = 0;
 		private int m_maxPortId = 0;
-		private const string SmoothstepOpFormat = "smoothstep( {0} , {1} , {2})";//min max alpha
+		private const string SmoothstepOpFormat = "smoothstep( {0} , {1} , {2})";
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
 			AddInputPort( WirePortDataType.FLOAT, false, Constants.EmptyPortValue, -1, MasterNodePortCategory.Fragment, 0 );
 			m_alphaPortId = m_inputPorts.Count - 1;
-			AddInputPort( WirePortDataType.FLOAT, false, "Min", -1, MasterNodePortCategory.Fragment, 1 );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Min"
+#else
+"分钟"
+#endif
+, -1, MasterNodePortCategory.Fragment, 1 );
 			m_minPortId = m_inputPorts.Count - 1;
-			AddInputPort( WirePortDataType.FLOAT, false, "Max", -1, MasterNodePortCategory.Fragment, 2 );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Max"
+#else
+"马克斯"
+#endif
+, -1, MasterNodePortCategory.Fragment, 2 );
 			m_maxPortId = m_inputPorts.Count - 1;
 
 			GetInputPortByUniqueId( m_maxPortId ).FloatInternalData = 1;
@@ -59,49 +89,49 @@ namespace AmplifyShaderEditor
 			}
 		}
 
-		//public override void OnInputPortConnected( int portId, int otherNodeId, int otherPortId, bool activateNode = true )
-		//{
-		//	base.OnInputPortConnected( portId, otherNodeId, otherPortId, activateNode );
-		//	UpdateConnection( portId );
-		//}
+		
+		
+		
+		
+		
 
-		//public override void OnConnectedOutputNodeChanges( int inputPortId, int otherNodeId, int otherPortId, string name, WirePortDataType type )
-		//{
-		//	base.OnConnectedOutputNodeChanges( inputPortId, otherNodeId, otherPortId, name, type );
-		//	UpdateConnection( inputPortId );
-		//}
+		
+		
+		
+		
+		
 
-		//public override void OnInputPortDisconnected( int portId )
-		//{
-		//	base.OnInputPortDisconnected( portId );
-		//	UpdateConnection( portId );
-		//}
+		
+		
+		
+		
+		
 
-		//void UpdateConnection( int portId )
-		//{
-		//	WirePortDataType type1 = WirePortDataType.FLOAT;
-		//	if( m_inputPorts[ m_minPortId ].IsConnected )
-		//		type1 = m_inputPorts[ m_minPortId ].GetOutputConnection( 0 ).DataType;
+		
+		
+		
+		
+		
 
-		//	WirePortDataType type2 = WirePortDataType.FLOAT;
-		//	if( m_inputPorts[ m_maxPortId ].IsConnected )
-		//		type2 = m_inputPorts[ m_maxPortId ].GetOutputConnection( 0 ).DataType;
+		
+		
+		
 
-		//	m_mainDataType = UIUtils.GetPriority( type1 ) > UIUtils.GetPriority( type2 ) ? type1 : type2;
+		
 
-		//	if( !m_inputPorts[ m_minPortId ].IsConnected && !m_inputPorts[ m_maxPortId ].IsConnected && m_inputPorts[ m_alphaPortId ].IsConnected )
-		//		m_mainDataType = m_inputPorts[ m_alphaPortId ].GetOutputConnection( 0 ).DataType;
+		
+		
 
-		//	m_inputPorts[ m_minPortId ].ChangeType( m_mainDataType, false );
+		
 
-		//	m_inputPorts[ m_maxPortId ].ChangeType( m_mainDataType, false );
-		//	if( m_inputPorts[ m_alphaPortId ].IsConnected && m_inputPorts[ m_alphaPortId ].GetOutputConnection( 0 ).DataType == WirePortDataType.FLOAT )
-		//		m_inputPorts[ m_alphaPortId ].ChangeType( WirePortDataType.FLOAT, false );
-		//	else
-		//		m_inputPorts[ m_alphaPortId ].ChangeType( m_mainDataType, false );
+		
+		
+		
+		
+		
 
-		//	m_outputPorts[ 0 ].ChangeType( m_mainDataType, false );
-		//}
+		
+		
 
 		public override string GenerateShaderForOutput( int outputId, ref MasterNodeDataCollector dataCollector, bool ignoreLocalVar )
 		{

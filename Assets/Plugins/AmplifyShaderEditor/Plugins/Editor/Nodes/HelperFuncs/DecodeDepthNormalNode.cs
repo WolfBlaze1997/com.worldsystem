@@ -1,22 +1,46 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Decode Depth Normal", "Miscellaneous", "Decodes both Depth and Normal from a previously encoded pixel value" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Decode Depth Normal"
+#else
+"解码深度正常"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Decodes both Depth and Normal from a previously encoded pixel value"
+#else
+"从先前编码的像素值解码深度和法线"
+#endif
+)]
 	public sealed class DecodeDepthNormalNode : ParentNode
 	{
-		// URP will only have support for depth normals texture over v.10 ... must revisit this node when it comes out
+		
 		private const string SRPErrorMessage = "This node is only currently supported on the Built-in pipeline";
 		private const string DecodeDepthNormalFunc = "DecodeDepthNormal( {0}, {1}, {2} );";
 
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT4, false, "Encoded" );
+			AddInputPort( WirePortDataType.FLOAT4, false, 
+#if !WB_LANGUAGE_CHINESE
+"Encoded"
+#else
+"编码"
+#endif
+);
 			AddOutputPort( WirePortDataType.FLOAT, "Depth" );
 			AddOutputPort( WirePortDataType.FLOAT3, "Normal" );
 			m_previewShaderGUID = "dbf37c4d3ce0f0b41822584d6c9ba203";

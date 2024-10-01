@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -10,7 +10,13 @@ namespace AmplifyShaderEditor
 	[Serializable]
 	public sealed class TemplateShaderModelModule : TemplateModuleParent
 	{
-		private const string ShaderModelStr = "Shader Model";
+		private const string ShaderModelStr = 
+#if !WB_LANGUAGE_CHINESE
+"Shader Model"
+#else
+"着色器"
+#endif
+;
 		private const string ShaderModelFormatStr = "#pragma target ";
 		private const string ShaderModelEncapsulateFormatStr = "CGINCLUDE\n#pragma target {0}\nENDCG";
 

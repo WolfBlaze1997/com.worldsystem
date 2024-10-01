@@ -9,27 +9,51 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.Serialization;
 
 namespace WorldSystem.Runtime
 {
     public partial class CelestialBodyManager
     {
+
+        #region 枚举或帮助函数
+        
         public CelestialBody GetShadowCastCelestialBody()
         {
-            CelestialBody sun = property.celestialBodyList.Find(o=> o.property.type == CelestialBody.ObjectType.Sun);
-            CelestialBody moon = property.celestialBodyList.Find(o => o.property.type == CelestialBody.ObjectType.Moon);
-            if (sun is null && moon is null) return null;
-            if (sun is not null && moon is null) return sun;
-            if (sun is null) return moon;
-            if (sun.property.lightComponent is null && moon.property.lightComponent is null) return null;
-            if (sun.property.lightComponent is not null && moon.property.lightComponent is null) return sun;
-            if (moon.property.lightComponent is not null && sun.property.lightComponent is null) return moon;
-            if (moon.property.lightComponent is not null && sun.property.lightComponent is not null)
-                return sun.direction.y >= moon.direction.y ? sun : moon;
+            CelestialBody sunFind = property.celestialBodyList.Find(o=> o.property.type == CelestialBody.ObjectType.Sun);
+            CelestialBody moonFind = property.celestialBodyList.Find(o => o.property.type == CelestialBody.ObjectType.Moon);
+            if (sunFind is null && moonFind is null) return null;
+            if (sunFind is not null && moonFind is null) return sunFind;
+            if (sunFind is null) return moonFind;
+            if (sunFind.property.lightComponent is null && moonFind.property.lightComponent is null) return null;
+            if (sunFind.property.lightComponent is not null && moonFind.property.lightComponent is null) return sunFind;
+            if (moonFind.property.lightComponent is not null && sunFind.property.lightComponent is null) return moonFind;
+            if (moonFind.property.lightComponent is not null && sunFind.property.lightComponent is not null)
+                return sunFind.direction.y >= moonFind.direction.y ? sunFind : moonFind;
 
             return null;
         }
 
+        public CelestialBody GetSunCelestialBody()
+        { 
+            return property.celestialBodyList.Find(o => o.property.type == CelestialBody.ObjectType.Sun);
+        }
+        
+        public void LensFlareOperations()
+        {
+            if (WorldManager.Instance.volumeCloudOptimizeModule != null)
+            {
+                WorldManager.Instance.volumeCloudOptimizeModule.useAddCloudMaskToDepth = 
+                    property.celestialBodyList.Find(o => o.property.useLensFlare) != null;
+                WorldManager.Instance.volumeCloudOptimizeModule.OnValidate();
+            }
+        }
+
+        #endregion
+
+
+        #region Gizmos相关
+        
 #if UNITY_EDITOR
         protected override void DrawGizmosSelected()
         {
@@ -151,12 +175,15 @@ namespace WorldSystem.Runtime
         }
 #endif
         
+        #endregion
+
     }
 
 
     [ExecuteAlways]
     public partial class CelestialBodyManager : BaseModule
     {
+        
         #region 字段
 
         [Serializable]
@@ -234,21 +261,31 @@ namespace WorldSystem.Runtime
 #endif
             
             private readonly int _SkyObjectCount = Shader.PropertyToID("_SkyObjectCount");
+            
         }
         
         [HideLabel]
         public Property property = new();
 
+        [HideInInspector]
+        public CelestialBody sun;
+        
+        [HideInInspector] public bool update;
+
+        private readonly int _SkyObjectCount = Shader.PropertyToID("_SkyObjectCount");
+        private readonly int _Direction = Shader.PropertyToID("_Direction");
+        private readonly int _Color = Shader.PropertyToID("_Color");
+        private readonly int _Falloff = Shader.PropertyToID("_Falloff");
+        
         #endregion
-
-
+        
+        
         #region 安装参数
         
         private void SetupStaticProperty()
         {
             Shader.SetGlobalInteger(_SkyObjectCount, property.celestialBodyList?.Count ?? 0);
         }
-        private readonly int _SkyObjectCount = Shader.PropertyToID("_SkyObjectCount");
         
         private void SetupDynamicProperty()
         {
@@ -261,16 +298,13 @@ namespace WorldSystem.Runtime
             {
                 directions[i] = property.celestialBodyList[i].direction;
                 colors[i] = property.celestialBodyList[i].GetAtmosphereScatterColor();
-                falloffs[i] = property.celestialBodyList[i].falloffEvaluate;
+                falloffs[i] = property.celestialBodyList[i].property.falloffExecute;
             }
             Shader.SetGlobalVectorArray(_Direction, directions);
             Shader.SetGlobalVectorArray(_Color, colors);
             Shader.SetGlobalFloatArray(_Falloff, falloffs);
         }
-        private readonly int _Direction = Shader.PropertyToID("_Direction");
-        private readonly int _Color = Shader.PropertyToID("_Color");
-        private readonly int _Falloff = Shader.PropertyToID("_Falloff");
-
+        
         #endregion
         
 
@@ -282,6 +316,7 @@ namespace WorldSystem.Runtime
         
         public void OnValidate()
         {
+            sun = GetSunCelestialBody();
             SetupStaticProperty();
         }
         
@@ -303,10 +338,9 @@ namespace WorldSystem.Runtime
 #endif
 
         
-        [HideInInspector] public bool _Update;
         private void Update()
         {
-            if (!_Update) return;
+            if (!update) return;
 
             SetupDynamicProperty();
         }
@@ -336,8 +370,6 @@ namespace WorldSystem.Runtime
         }
         
         #endregion
-
-        
         
     }
 

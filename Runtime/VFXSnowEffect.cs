@@ -3,12 +3,15 @@ using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 using UnityEngine.VFX;
 
 namespace WorldSystem.Runtime
 {
     public class VFXSnowEffect : BaseModule
     {
+        
+        
         #region 字段
 
         [Serializable]
@@ -33,13 +36,23 @@ namespace WorldSystem.Runtime
         [HideLabel]
         public Property property = new();
 
-        #endregion
-        
         [HideInInspector]
         public VisualEffect snowEffect;
+        
         private bool _isActive;
         
+        [HideInInspector] 
+        public bool update;
+        
+        #endregion
+        
+        
+        
         #region 限制属性/安装属性
+        
+        private readonly int Static_Radius = Shader.PropertyToID("Static_Radius");
+        private readonly int SnowDynamic_Precipitation = Shader.PropertyToID("SnowDynamic_Precipitation");
+        private readonly int SnowDynamic_Size = Shader.PropertyToID("SnowDynamic_Size");
         
         private void SetupDynamicProperty()
         {
@@ -50,19 +63,19 @@ namespace WorldSystem.Runtime
             
             WorldManager.Instance?.weatherEffectModule?.SetupCommonDynamicProperty(snowEffect);
         }
+        
         private void SetupStaticProperty()
         {
             if (snowEffect == null) return;
             snowEffect.SetFloat(Static_Radius, property.snowRadius);
         }
-        private readonly int Static_Radius = Shader.PropertyToID("Static_Radius");
-        private readonly int SnowDynamic_Precipitation = Shader.PropertyToID("SnowDynamic_Precipitation");
-        private readonly int SnowDynamic_Size = Shader.PropertyToID("SnowDynamic_Size");
 
         #endregion
 
 
+        
         #region 事件函数
+        
         private void OnEnable()
         {
             if (gameObject.GetComponent<VisualEffect>() == null)
@@ -77,6 +90,7 @@ namespace WorldSystem.Runtime
                 snowEffect = gameObject.GetComponent<VisualEffect>();
             }
         }
+        
         private void OnDisable()
         {
             if (gameObject.GetComponent<VisualEffect>() != null)
@@ -87,19 +101,17 @@ namespace WorldSystem.Runtime
                     CoreUtils.Destroy(gameObject.GetComponent<VisualEffect>());
                 snowEffect = null;
             }
-            
         }
+        
         public void OnValidate()
         {
             property.LimitProperty();
             SetupStaticProperty();
         }
         
-        
-        [HideInInspector] public bool _Update;
         private void Update()
         {            
-            if (!_Update) return;
+            if (!update) return;
 
             //确定是否激活, 如果没有激活则跳出函数, 节约资源
             _isActive = !(property.snowPrecipitation <=0 && snowEffect.aliveParticleCount < 100);
@@ -108,6 +120,13 @@ namespace WorldSystem.Runtime
             
             SetupDynamicProperty(); 
         }
+        
+#if UNITY_EDITOR
+        private void Start()
+        {
+            WorldManager.Instance?.weatherListModule?.weatherList?.SetupPropertyFromActive();
+        }
+#endif
         
         #endregion
 

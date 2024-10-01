@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -14,7 +14,25 @@ namespace AmplifyShaderEditor
 	}
 
 	[Serializable]
-	[NodeAttributes( "Transform Direction", "Vector Operators", "Transforms a direction vector from one space to another" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Transform Direction"
+#else
+"变换方向"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vector Operators"
+#else
+"矢量运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Transforms a direction vector from one space to another"
+#else
+"将方向向量从一个空间转换到另一个空间"
+#endif
+)]
 	public sealed class TransformDirectionNode : ParentNode
 	{
 
@@ -33,10 +51,28 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private InverseTangentType m_inverseTangentType = InverseTangentType.Fast;
 
-		private string InverseTBNStr = "Inverse TBN";
+		private string InverseTBNStr = 
+#if !WB_LANGUAGE_CHINESE
+"Inverse TBN"
+#else
+"反向TBN"
+#endif
+;
 
-		private const string NormalizeOptionStr = "Normalize";
-		private const string SafeNormalizeOptionStr = "Safe";
+		private const string NormalizeOptionStr = 
+#if !WB_LANGUAGE_CHINESE
+"Normalize"
+#else
+"正常化"
+#endif
+;
+		private const string SafeNormalizeOptionStr = 
+#if !WB_LANGUAGE_CHINESE
+"Safe"
+#else
+"保险柜"
+#endif
+;
 
 		private const string AseObjectToWorldDirVarName = "objToWorldDir";
 		private const string AseObjectToWorldDirFormat = "mul( unity_ObjectToWorld, float4( {0}, 0 ) ).xyz";
@@ -60,7 +96,7 @@ namespace AmplifyShaderEditor
 		private const string AseViewToWorldDirVarName = "viewToWorldDir";
 		private const string AseViewToWorldDirFormat = "mul( UNITY_MATRIX_I_V, float4( {0}, 0 ) ).xyz";
 
-		///////////////////////////////////////////////////////////
+		
 		private const string AseObjectToClipDirVarName = "objectToClipDir";
 		private const string AseObjectToClipDirFormat = "mul(UNITY_MATRIX_VP, mul(unity_ObjectToWorld, float4({0}, 0.0)))";
 		private const string AseSRPObjectToClipDirFormat = "TransformWorldToHClipDir(TransformObjectToWorldDir({0}))";
@@ -72,7 +108,7 @@ namespace AmplifyShaderEditor
 		private const string AseViewToClipDirVarName = "viewToClipDir";
 		private const string AseViewToClipDirFormat = "mul(UNITY_MATRIX_P, float4({0}, 0.0))";
 		private const string AseSRPViewToClipDirFormat = "mul(GetViewToHClipMatrix(), float4({0}, 1.0))";
-		//
+		
 		private const string AseClipToObjectDirVarName = "clipToObjectDir";
 
 		private const string AseClipToObjectDirFormat = "mul( UNITY_MATRIX_IT_MV, mul( unity_CameraInvProjection,float4({0},0)) ).xyz";
@@ -87,7 +123,7 @@ namespace AmplifyShaderEditor
 		private const string AseHDClipToViewDirFormat = " mul( UNITY_MATRIX_I_P,float4({0},0)).xyz";
 		private const string AseClipToNDC = "{0}.xyz/{0}.w";
 
-		/////////////////////////////////////////////////////
+		
 		private const string AseObjectToTangentDirVarName = "objectToTangentDir";
 		private const string AseWorldToTangentDirVarName = "worldToTangentDir";
 		private const string AseViewToTangentDirVarName = "viewToTangentDir";
@@ -103,9 +139,21 @@ namespace AmplifyShaderEditor
 
 
 
-		///////////////////////////////////////////////////////////
-		private const string FromStr = "From";
-		private const string ToStr = "To";
+		
+		private const string FromStr = 
+#if !WB_LANGUAGE_CHINESE
+"From"
+#else
+"从"
+#endif
+;
+		private const string ToStr = 
+#if !WB_LANGUAGE_CHINESE
+"To"
+#else
+"致"
+#endif
+;
 		private const string SubtitleFormat = "{0} to {1}";
 
 		private readonly string[] m_spaceOptionsFrom =
@@ -289,55 +337,55 @@ namespace AmplifyShaderEditor
 					}
 				}
 				break;
-				//case TransformSpace.Clip:
-				//{
-				//	switch( to )
-				//	{
-				//		case TransformSpace.Object:
-				//		{
-				//			if( dataCollector.IsTemplate && dataCollector.TemplateDataCollectorInstance.CurrentSRPType == TemplateSRPType.HDRP )
-				//			{
-				//				result = string.Format( AseHDClipToObjectDirFormat, result );
-				//			}
-				//			else
-				//			{
-				//				result = string.Format( AseClipToObjectDirFormat, result );
-				//			}
-				//			varName = AseClipToObjectDirVarName + OutputId;
-				//		}
-				//		break;
-				//		case TransformSpace.World:
-				//		{
-				//			if( dataCollector.IsTemplate && dataCollector.TemplateDataCollectorInstance.CurrentSRPType == TemplateSRPType.HDRP )
-				//			{
-				//				result = string.Format( AseHDClipToWorldDirFormat, result );
-				//			}
-				//			else
-				//			{
-				//				result = string.Format( AseClipToWorldDirFormat, result );
-				//			}
-				//			varName = AseClipToWorldDirVarName + OutputId;
-				//		}
-				//		break;
-				//		case TransformSpace.View:
-				//		{
-				//			if( dataCollector.IsTemplate && dataCollector.TemplateDataCollectorInstance.CurrentSRPType == TemplateSRPType.HDRP )
-				//			{
-				//				result = string.Format( AseHDClipToViewDirFormat, result );
-				//			}
-				//			else
-				//			{
-				//				result = string.Format( AseClipToViewDirFormat, result );
-				//			}
-				//			varName = AseClipToViewDirVarName + OutputId;
-				//		}
-				//		break;
-				//		case TransformSpace.Clip: break;
-				//		default:
-				//		break;
-				//	}
-				//}
-				//break;
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				default: break;
 			}
 		}
@@ -453,38 +501,38 @@ namespace AmplifyShaderEditor
 					}
 				}
 				break;
-				//case TransformSpace.Clip:
-				//{
-				//	switch( m_to )
-				//	{
-				//		case TransformSpace.Object:
-				//		{
-				//			CalculateTransform( m_from, m_to, ref dataCollector, ref varName, ref result );
-				//		}
-				//		break;
-				//		case TransformSpace.World:
-				//		{
-				//			CalculateTransform( m_from, m_to, ref dataCollector, ref varName, ref result );
-				//		}
-				//		break;
-				//		case TransformSpace.View:
-				//		{
-				//			CalculateTransform( m_from, m_to, ref dataCollector, ref varName, ref result );
-				//		}
-				//		break;
-				//		case TransformSpace.Clip: break;
-				//		case TransformSpace.Tangent:
-				//		{
-				//			GeneratorUtils.GenerateWorldToTangentMatrix( ref dataCollector, UniqueId, CurrentPrecisionType );
-				//			CalculateTransform( m_from, TransformSpace.World, ref dataCollector, ref varName, ref result );
-				//			result = string.Format( ASEWorldToTangentFormat, result );
-				//			varName = AseClipToTangentDirVarName + OutputId;
-				//		}
-				//		break;
-				//		default:
-				//		break;
-				//	}
-				//}break;
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				case TransformSpaceFrom.Tangent:
 				{
 					string matrixVal = string.Empty;

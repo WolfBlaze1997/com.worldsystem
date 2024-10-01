@@ -2,21 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
-#if UNITY_EDITOR
-using Sirenix.Utilities.Editor;
-#endif
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.Serialization;
+#if UNITY_EDITOR
+using Sirenix.Utilities.Editor;
+#endif
 
 namespace WorldSystem.Runtime
 {
     
-    
     public partial class AtmosphereModule
     {
-        // 包含关于给定的一天关键帧的所有信息。
+        /// <summary>
+        /// 定义一天中的时段
+        /// </summary>
         [Serializable]
         public struct DayPeriods
         {
@@ -50,6 +52,9 @@ namespace WorldSystem.Runtime
             }
         }
 
+        /// <summary>
+        /// 定义大气颜色
+        /// </summary>
         [Serializable]
         public struct AtmosphereColor
         {
@@ -62,39 +67,13 @@ namespace WorldSystem.Runtime
             [HorizontalGroup("大气颜色")] [LabelText("地面颜色")][ColorUsage(true,true)]
             public Color groundColor;
         }
-        
-        
-        private Vector3 ToV3(float v)
-        {
-            return new Vector3(v, v, v);
-        }
-
-        private static readonly Vector3 RGB_LUMINANCE = new Vector3(0.2126f, 0.7152f, 0.0722f);
-
-        private Color Saturation(Color color, float saturation)
-        {
-            if (saturation == 1)
-                return color;
-
-            Vector3 c = new Vector3(color.r, color.g, color.b);
-            float luma = Vector3.Dot(c, RGB_LUMINANCE);
-            c = ToV3(luma) + (saturation * (c - ToV3(luma)));
-            return new Color(c.x, c.y, c.z);
-        }
-
-        private Color Exposure(Color color, float exposure)
-        {
-            return color * exposure;
-        }
-        
     }
-
-
-
+    
     
     [ExecuteAlways]
     public partial class AtmosphereModule : BaseModule
     {
+        
         #region 字段
 
         [Serializable]
@@ -140,10 +119,16 @@ namespace WorldSystem.Runtime
                     new Color32(26, 23, 26, 255))
             };
             
-            // [FoldoutGroup("颜色")] [LabelText("模拟实时GI强度")] 
-            // [GUIColor(1f,0.7f,1f)]
-            // public AnimationCurve realtimeGIStrengthCurve = new(new Keyframe(0, 1.0f), new Keyframe(1,1.0f));
+            [FoldoutGroup("颜色")] [LabelText("当前大气颜色")] [ReadOnly]
+            public AtmosphereColor currentAtmosphereColor;
             
+            [FoldoutGroup("光照")] [LabelText("当前云量")] [ReadOnly]
+            [ShowIf("@WorldManager.Instance?.atmosphereModule?.hideFlags == HideFlags.None")]
+            public float currentCloudiness;
+
+            [FoldoutGroup("光照")] [LabelText("当前降雨")] [ReadOnly]
+            [ShowIf("@WorldManager.Instance?.atmosphereModule?.hideFlags == HideFlags.None")]
+            public float currentPrecipitation;
             
             private protected virtual void DayPeriodsListAddFunc()
             {
@@ -157,6 +142,7 @@ namespace WorldSystem.Runtime
             {
                 dayPeriodsList.RemoveAt(Index);
             }
+            
 #if UNITY_EDITOR
             private protected virtual void DrawRefreshButton()
             {
@@ -167,40 +153,24 @@ namespace WorldSystem.Runtime
                 }
             }
 #endif
-            [FoldoutGroup("颜色")] [LabelText("当前大气颜色")] 
-            [ReadOnly]
-            public AtmosphereColor currentAtmosphereColor;
-            
-            [FoldoutGroup("光照")] [LabelText("当前云量")]
-            [ReadOnly]
-            [ShowIf("@WorldManager.Instance?.atmosphereModule?.hideFlags == HideFlags.None")]
-            public float currentCloudiness;
-
-            [FoldoutGroup("光照")] [LabelText("当前降雨")]
-            [ReadOnly]
-            [ShowIf("@WorldManager.Instance?.atmosphereModule?.hideFlags == HideFlags.None")]
-            public float currentPrecipitation;
-            
-            [FoldoutGroup("大气混合")][LabelText("使用大气混合")] 
-            [GUIColor(0.3f, 1f, 0.3f)]
-            public bool useAtmosphereBlend = true;
-
-            [FoldoutGroup("大气混合")][LabelText("    开始")] 
-            [Tooltip("设置大气混合的开始距离")][ShowIf("useAtmosphereBlend")][GUIColor(1f,0.7f,0.7f)]
-            public float start;
-
-            [FoldoutGroup("大气混合")][LabelText("    结束")] 
-            [Tooltip("设置大气混合结束距离")][ShowIf("useAtmosphereBlend")][GUIColor(1f,0.7f,0.7f)]
-            public float end = 20000;
             
         }
         
         [HideLabel]
         public Property property  = new();
 
+        [HideInInspector] 
+        public bool update;
+        
+        private readonly int _HasSkyTexture = Shader.PropertyToID("_HasSkyTexture");
+        private readonly int _HorizonColor = Shader.PropertyToID("_HorizonColor");
+        private readonly int _ZenithColor = Shader.PropertyToID("_ZenithColor");
+        private readonly int _SkyTexture = Shader.PropertyToID("_SkyTexture");
+
+        private RTHandle _atmosphereMixRT;
+        
         #endregion
-
-
+        
 
         #region 安装参数
 
@@ -208,24 +178,18 @@ namespace WorldSystem.Runtime
         {
             Shader.SetGlobalInt(_HasSkyTexture, 1);
         }
-        private readonly int _HasSkyTexture = Shader.PropertyToID("_HasSkyTexture");
 
         private void SetupDynamicProperty()
         {
             Shader.SetGlobalColor(_HorizonColor, property.currentAtmosphereColor.equatorColor);
             Shader.SetGlobalColor(_ZenithColor, property.currentAtmosphereColor.skyColor);
-            Shader.SetGlobalFloat(_BlendStart, property.start);
-            Shader.SetGlobalFloat(_Density, HelpFunc.GetDensityFromVisibilityDistance(property.end));
         }
-        private readonly int _HorizonColor = Shader.PropertyToID("_HorizonColor");
-        private readonly int _ZenithColor = Shader.PropertyToID("_ZenithColor");
-        private readonly int _BlendStart = Shader.PropertyToID("_BlendStart");
-        private readonly int _Density = Shader.PropertyToID("_Density");
-        
+
         #endregion
         
         
         #region 事件函数
+        
         private void OnEnable()
         {
 #if UNITY_EDITOR
@@ -286,10 +250,9 @@ namespace WorldSystem.Runtime
         }
 #endif
         
-        [HideInInspector] public bool _Update;
         private void Update()
         {
-            if (!_Update) return;
+            if (!update) return;
             
             if (property.dayPeriodsList.Count == 0 || property.dayPeriodsList == null) return;
             UpdatePeriod();
@@ -297,8 +260,8 @@ namespace WorldSystem.Runtime
             SetupDynamicProperty();
         }
 
-        private int _currentPeriod = 0;
-        private int _nextPeriod = 0;
+        private int _currentPeriod;
+        private int _nextPeriod;
         private void UpdatePeriod()
         {
             //根据时间获取当前时段
@@ -359,11 +322,7 @@ namespace WorldSystem.Runtime
         #endregion
 
         
-        
         #region 渲染函数
-        
-        public RTHandle _atmosphereMixRT;
-        private readonly int _SkyTexture = Shader.PropertyToID("_SkyTexture");
         
         public void RenderAtmosphere(CommandBuffer cmd, ref RenderingData renderingData, RTHandle activeRT, Rect renderRect)
         {
@@ -376,7 +335,7 @@ namespace WorldSystem.Runtime
             //渲染大气
             cmd.DrawMesh(property.mesh, transformMatrix, property.material, 0,0);
             
-            if (!property.useAtmosphereBlend) return;
+            // if (!property.useAtmosphereBlend) return;
             RenderingUtils.ReAllocateIfNeeded(ref _atmosphereMixRT, activeRT.rt.descriptor, name: "AtmosphereMix");
             cmd.CopyTexture(activeRT, 0,0, (int)renderRect.x, (int)renderRect.y, (int)renderRect.width, (int)renderRect.height, 
                 _atmosphereMixRT,0,0, (int)renderRect.x, (int)renderRect.y);
@@ -394,19 +353,10 @@ namespace WorldSystem.Runtime
             //渲染大气
             cmd.DrawMesh(property.mesh, transformMatrix, property.material, 0,0);
             
-            if (!property.useAtmosphereBlend) return;
+            // if (!property.useAtmosphereBlend) return;
             RenderingUtils.ReAllocateIfNeeded(ref _atmosphereMixRT, activeRT.rt.descriptor, name: "AtmosphereMix");
             cmd.CopyTexture(activeRT,_atmosphereMixRT);
             cmd.SetGlobalTexture(_SkyTexture, _atmosphereMixRT);
-        }
-        
-        public void RenderAtmosphereBlend(CommandBuffer cmd, ref RenderingData renderingData)
-        {
-            RTHandle source = renderingData.cameraData.renderer.cameraColorTargetHandle;
-            if (!property.useAtmosphereBlend || !isActiveAndEnabled) return;
-            cmd.SetRenderTarget(source);
-            Blitter.BlitTexture(cmd,new Vector4(1,1,0,0), property.atmosphereBlendMaterial,0);
-            
         }
         
         

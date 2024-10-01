@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -9,10 +9,34 @@ using System.CodeDom;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Compare", "Logical Operators", "Compare A to B given the selected operator. If comparison is true return value of True else return value of False", tags: "If Ternary Compare Less Equal Not Greater" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Compare"
+#else
+"比较"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Logical Operators"
+#else
+"逻辑运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Compare A to B given the selected operator. If comparison is true return value of True else return value of False"
+#else
+"在给定所选运算符的情况下，将A与B进行比较。如果比较结果为真，则返回值为真，否则返回值为假"
+#endif
+, tags: 
+#if !WB_LANGUAGE_CHINESE
+"If Ternary Compare Less Equal Not Greater"
+#else
+"如果三元比较较小相等不较大"
+#endif
+)]
 	public sealed class Compare : ParentNode
 	{
-		private static readonly string[] LabelsSTR = { "Equal", "Not Equal", "Greater", "Greater Or Equal", "Less", "Less Or Equal" };
+		private readonly static string[] LabelsSTR = { "Equal", "Not Equal", "Greater", "Greater Or Equal", "Less", "Less Or Equal" };
 
 		enum Comparision
 		{
@@ -39,8 +63,20 @@ namespace AmplifyShaderEditor
 			base.CommonInit( uniqueId );
 			AddInputPort( WirePortDataType.FLOAT, false, "A" );
 			AddInputPort( WirePortDataType.FLOAT, false, "B" );
-			AddInputPort( WirePortDataType.FLOAT, false, "True" );
-			AddInputPort( WirePortDataType.FLOAT, false, "False" );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"True"
+#else
+"没错"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"False"
+#else
+"错误的"
+#endif
+);
 			AddOutputPort( WirePortDataType.FLOAT, Constants.EmptyPortValue );
 			m_inputPorts[ 0 ].AutoDrawInternalData = true;
 			m_inputPorts[ 1 ].AutoDrawInternalData = true;
@@ -196,12 +232,12 @@ namespace AmplifyShaderEditor
 
 		public override string GenerateShaderForOutput( int outputId, ref MasterNodeDataCollector dataCollector, bool ignoreLocalvar )
 		{
-			//Conditional Operator ?: has some shenanigans
-			//If the first operand is of type bool, one of the following must hold for the second and third operands:
-			//Both operands have compatible structure types.
-			//Both operands are scalars with numeric or bool type.
-			//Both operands are vectors with numeric or bool type, where the two vectors are of the same size, which is less than or equal to four.
-			//If the first operand is a packed vector of bool, then the conditional selection is performed on an elementwise basis.Both the second and third operands must be numeric vectors of the same size as the first operand.
+			
+			
+			
+			
+			
+			
 			WirePortDataType compatibleInputType = m_mainInputType;
 			if( m_mainInputType != WirePortDataType.FLOAT && m_mainInputType != WirePortDataType.INT && m_mainInputType != m_mainOutputType )
 			{

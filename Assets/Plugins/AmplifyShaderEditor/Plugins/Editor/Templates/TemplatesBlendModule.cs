@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -11,17 +11,65 @@ namespace AmplifyShaderEditor
 	[Serializable]
 	public sealed class TemplatesBlendModule : TemplateModuleParent
 	{
-		private const string AlphaToMaskStr = "Alpha To Coverage"; 
-		private const string BlendModeStr = " Blend Mode";
+		private const string AlphaToMaskStr = 
+#if !WB_LANGUAGE_CHINESE
+"Alpha To Coverage"
+#else
+"Alpha到覆盖范围"
+#endif
+; 
+		private const string BlendModeStr = 
+#if !WB_LANGUAGE_CHINESE
+" Blend Mode"
+#else
+"混合模式"
+#endif
+;
 
-		private const string BlendModesRGBStr = "Blend RGB";
-		private const string BlendModesAlphaStr = "Blend Alpha";
+		private const string BlendModesRGBStr = 
+#if !WB_LANGUAGE_CHINESE
+"Blend RGB"
+#else
+"混合RGB"
+#endif
+;
+		private const string BlendModesAlphaStr = 
+#if !WB_LANGUAGE_CHINESE
+"Blend Alpha"
+#else
+"混合阿尔法"
+#endif
+;
 
-		private const string BlendOpsRGBStr = "Blend Op RGB";
-		private const string BlendOpsAlphaStr = "Blend Op Alpha";
+		private const string BlendOpsRGBStr = 
+#if !WB_LANGUAGE_CHINESE
+"Blend Op RGB"
+#else
+"混合操作RGB"
+#endif
+;
+		private const string BlendOpsAlphaStr = 
+#if !WB_LANGUAGE_CHINESE
+"Blend Op Alpha"
+#else
+"混合操作阿尔法"
+#endif
+;
 
-		private const string SourceFactorStr = "Src";
-		private const string DstFactorStr = "Dst";
+		private const string SourceFactorStr = 
+#if !WB_LANGUAGE_CHINESE
+"Src"
+#else
+"Src"
+#endif
+;
+		private const string DstFactorStr = 
+#if !WB_LANGUAGE_CHINESE
+"Dst"
+#else
+"Dst"
+#endif
+;
 
 		private const string AlphaToMaskFormat = "AlphaToMask {0}";
 		private const string BlendFactorOff = "Blend Off";
@@ -59,8 +107,8 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private bool m_blendModeEnabled = false;
 
-		// Blend Factor
-		// RGB
+		
+		
 		[SerializeField]
 		private int m_currentRGBIndex = 0;
 
@@ -74,7 +122,7 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private InlineProperty m_destFactorRGBInline = new InlineProperty();
 
-		//Alpha
+		
 		[SerializeField]
 		private int m_currentAlphaIndex = 0;
 
@@ -88,7 +136,7 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private InlineProperty m_destFactorAlphaInline = new InlineProperty();
 
-		//Blend Ops
+		
 		[SerializeField]
 		private bool m_blendOpEnabled = false;
 
@@ -291,7 +339,7 @@ namespace AmplifyShaderEditor
 
 				if( m_blendModeEnabled )
 				{
-					// RGB
+					
 					EditorGUI.BeginChangeCheck();
 					m_currentRGBIndex = owner.EditorGUILayoutPopup( BlendModesRGBStr, m_currentRGBIndex, m_commonBlendTypesArr );
 					if( EditorGUI.EndChangeCheck() )
@@ -321,14 +369,14 @@ namespace AmplifyShaderEditor
 					}
 
 					EditorGUILayout.BeginHorizontal();
-					//m_sourceFactorRGB = (AvailableBlendFactor)owner.EditorGUILayoutEnumPopup( SourceFactorStr, m_sourceFactorRGB );
+					
 					m_sourceFactorRGBInline.CustomDrawer( ref owner, ( x ) => { m_sourceFactorRGB = (AvailableBlendFactor)x.EditorGUILayoutEnumPopup( SourceFactorStr, m_sourceFactorRGB ); }, SourceFactorStr );
 					if( style )
 					{
 						EditorGUI.indentLevel--;
 						EditorGUIUtility.labelWidth = 25;
 					}
-					//m_destFactorRGB = (AvailableBlendFactor)owner.EditorGUILayoutEnumPopup( DstFactorStr, m_destFactorRGB );
+					
 					m_destFactorRGBInline.CustomDrawer( ref owner, ( x ) => { m_destFactorRGB = (AvailableBlendFactor)x.EditorGUILayoutEnumPopup( DstFactorStr, m_destFactorRGB ); }, DstFactorStr );
 					if( style )
 						EditorGUI.indentLevel++;
@@ -345,20 +393,20 @@ namespace AmplifyShaderEditor
 
 				if( m_blendOpEnabled )
 				{
-					// Both these tests should be removed on a later stage
-					// ASE v154dev004 changed AvailableBlendOps.OFF value from -1 to 0
-					// If importing the new package into an already opened ASE window makes 
-					// hotcode to preserve the -1 value on these variables
+					
+					
+					
+					
 					if( (int)m_blendOpRGB == -1 )
 						m_blendOpRGB = AvailableBlendOps.OFF;
 
-					//m_blendOpRGB = (AvailableBlendOps)owner.EditorGUILayoutEnumPopup( BlendOpsRGBStr, m_blendOpRGB );
+					
 					m_blendOpRGBInline.CustomDrawer( ref owner, ( x ) => { m_blendOpRGB = (AvailableBlendOps)x.EditorGUILayoutPopup( BlendOpsRGBStr, (int)m_blendOpRGB, BlendOpsHelper.BlendOpsLabels ); }, BlendOpsRGBStr );
 				}
 				
 				if( m_blendModeEnabled )
 				{
-					// Alpha
+					
 					EditorGUILayout.Separator();
 
 					EditorGUI.BeginChangeCheck();
@@ -389,14 +437,14 @@ namespace AmplifyShaderEditor
 						EditorGUIUtility.labelWidth = 25;
 					}
 					EditorGUILayout.BeginHorizontal();
-					//m_sourceFactorAlpha = (AvailableBlendFactor)owner.EditorGUILayoutEnumPopup( SourceFactorStr, m_sourceFactorAlpha );
+					
 					m_sourceFactorAlphaInline.CustomDrawer( ref owner, ( x ) => { m_sourceFactorAlpha = (AvailableBlendFactor)x.EditorGUILayoutEnumPopup( SourceFactorStr, m_sourceFactorAlpha ); }, SourceFactorStr );
 					if( style )
 					{
 						EditorGUI.indentLevel--;
 						EditorGUIUtility.labelWidth = 25;
 					}
-					//m_destFactorAlpha = (AvailableBlendFactor)owner.EditorGUILayoutEnumPopup( DstFactorStr, m_destFactorAlpha );
+					
 					m_destFactorAlphaInline.CustomDrawer( ref owner, ( x ) => { m_destFactorAlpha = (AvailableBlendFactor)x.EditorGUILayoutEnumPopup( DstFactorStr, m_destFactorAlpha ); }, DstFactorStr );
 					if( style )
 						EditorGUI.indentLevel++;
@@ -409,7 +457,7 @@ namespace AmplifyShaderEditor
 					}
 
 					EditorGUI.EndDisabledGroup();
-					//EditorGUILayout.Separator();
+					
 				}
 
 				if( m_blendOpEnabled )
@@ -417,7 +465,7 @@ namespace AmplifyShaderEditor
 					if( (int)m_blendOpAlpha == -1 )
 						m_blendOpAlpha = AvailableBlendOps.OFF;
 
-					//m_blendOpAlpha = (AvailableBlendOps)owner.EditorGUILayoutEnumPopup( BlendOpsAlphaStr, m_blendOpAlpha );
+					
 					m_blendOpAlphaInline.CustomDrawer( ref owner, ( x ) => { m_blendOpAlpha = (AvailableBlendOps)x.EditorGUILayoutPopup( BlendOpsAlphaStr, (int)m_blendOpAlpha, BlendOpsHelper.BlendOpsLabels ); }, BlendOpsAlphaStr );
 				}
 
@@ -467,13 +515,13 @@ namespace AmplifyShaderEditor
 
 		public void ReadAlphaToMaskFromString( ref uint index, ref string[] nodeParams )
 		{
-			//TODO: we should send this data to the alpha to mask module instead
+			
 			if( UIUtils.CurrentShaderVersion() > 16102 && UIUtils.CurrentShaderVersion() <= 18103)
 			{
 				bool validAlphaToMask = Convert.ToBoolean( nodeParams[ index++ ] );
 				if( validAlphaToMask )
 				{
-					/*bool alphaToMaskValue = */Convert.ToBoolean( nodeParams[ index++ ] );
+					Convert.ToBoolean( nodeParams[ index++ ] );
 				}
 			}
 		}
@@ -537,7 +585,7 @@ namespace AmplifyShaderEditor
 
 					if( UIUtils.CurrentShaderVersion() < 15404 )
 					{
-						// Now BlendOps enum starts at 0 and not -1
+						
 						m_blendOpRGBInline.FloatValue += 1;
 						m_blendOpAlphaInline.FloatValue += 1;
 					}
@@ -545,7 +593,7 @@ namespace AmplifyShaderEditor
 					m_blendOpRGB = (AvailableBlendOps)m_blendOpRGBInline.IntValue;
 					m_blendOpAlpha = (AvailableBlendOps)m_blendOpAlphaInline.IntValue;
 				}
-				//m_blendOpEnabled = ( m_blendOpRGB != AvailableBlendOps.OFF );
+				
 			}
 		}
 

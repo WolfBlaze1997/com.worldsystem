@@ -1,9 +1,9 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
 
-//https://www.shadertoy.com/view/XdS3RW
-//http://www.deepskycolors.com/archivo/2010/04/21/formulas-for-Photoshop-blending-modes.html
-//http://www.pegtop.net/delphi/articles/blendmodes/softlight.htm
+
+
+
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -34,33 +34,51 @@ namespace AmplifyShaderEditor
 		VividLight
 	}
 	[Serializable]
-	[NodeAttributes( "Blend Operations", "Image Effects", "Common layer blending modes" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Blend Operations"
+#else
+"混合操作"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Image Effects"
+#else
+"图像效果"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Common layer blending modes"
+#else
+"常见图层混合模式"
+#endif
+)]
 	public class BlendOpsNode : ParentNode
 	{
-		//private const string ASEHardLightCall = "ASEHardLight({0},{1})";
-		//private const string ASEHardLightFunc =
-		//"inline float ASEHardLight( float srcLocalVar, float dstLocalVar ){" +
-		//" return ( ( srcLocalVar > 0.5 ) ? ( 1.0 - ( 1.0 - 2.0 * ( srcLocalVar - 0.5 ) ) * ( 1.0 - dstLocalVar ) ) : ( 2.0 * srcLocalVar * dstLocalVar ) ); }";
+		
+		
+		
+		
 
-		//private const string ASELinearLightCall = "ASELinearLight({0},{1})";
-		//private const string ASELinearLightFunc =
-		//"inline float ASELinearLight( float srcLocalVar, float dstLocalVar ){" +
-		//" return ( ( srcLocalVar > 0.5 ) ? ( dstLocalVar + 2.0 * srcLocalVar - 1.0 ) : ( dstLocalVar + 2.0 * ( srcLocalVar - 0.5 ) ) ); }";
+		
+		
+		
+		
 
-		//private const string ASEOverlayCall = "ASEOverlay({0},{1})";
-		//private const string ASEOverlayFunc =
-		//"inline float ASEOverlay( float srcLocalVar, float dstLocalVar ){" +
-		//" return ( ( dstLocalVar > 0.5 ) ? ( 1.0 - ( 1.0 - 2.0 * ( dstLocalVar - 0.5 ) ) * ( 1.0 - srcLocalVar ) ) : ( 2.0 * dstLocalVar * srcLocalVar ) ); }";
-		////" return (dstLocalVar < 0.5) ? 2.0 * srcLocalVar * dstLocalVar : 1.0 - 2.0 * (1.0 - srcLocalVar) * (1.0 - dstLocalVar); }";
+		
+		
+		
+		
+		
 
-		//private const string ASEPinLightCall = "ASEPinLight({0},{1})";
-		//private const string ASEPinLightFunc =
-		//"inline float ASEPinLight( float srcLocalVar, float dstLocalVar ){" +
-		//" return ( ( srcLocalVar > 0.5 ) ? max( dstLocalVar , 2.0 * ( srcLocalVar - 0.5 ) ) : min( dstLocalVar , 2.0 * srcLocalVar ) ); }";
+		
+		
+		
+		
 
-		//private const string ASEVividLightCall = "ASEVividLight({0},{1})";
-		//private const string ASEVividLightFunc = "inline float ASEVividLight( float srcLocalVar, float dstLocalVar ){" +
-		//" return ( ( srcLocalVar > 0.5 ) ? ( dstLocalVar / ( ( 1.0 - srcLocalVar ) * 2.0 ) ) : ( 1.0 - ( ( ( 1.0 - dstLocalVar ) * 0.5 ) / srcLocalVar ) ) ); }";
+		
+		
+		
 
 		private const string ASEDarkerColorCall = "ASEDarkerColor{}({0},{1})";
 		private const string ASEDarkerColorFunc = "inline float ASEDarkerColor{0}( float srcLocalVar, float dstLocalVar ){" +
@@ -70,8 +88,20 @@ namespace AmplifyShaderEditor
 		private const string ASELighterColorFunc = "inline float ASELighterColor{0}( float srcLocalVar, float dstLocalVar ){" +
 		" return ({1} > {2}) ? s : d; }";
 
-		private const string BlendOpsModeStr = "Blend Op";
-		private const string SaturateResultStr = "Saturate";
+		private const string BlendOpsModeStr = 
+#if !WB_LANGUAGE_CHINESE
+"Blend Op"
+#else
+"混合操作"
+#endif
+;
+		private const string SaturateResultStr = 
+#if !WB_LANGUAGE_CHINESE
+"Saturate"
+#else
+"浸透"
+#endif
+;
 
 		[SerializeField]
 		private BlendOps m_currentBlendOp = BlendOps.ColorBurn;
@@ -87,9 +117,27 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.COLOR, false, "Source" );
-			AddInputPort( WirePortDataType.COLOR, false, "Destiny" );
-			AddInputPort( WirePortDataType.FLOAT, false,"Alpha" );
+			AddInputPort( WirePortDataType.COLOR, false, 
+#if !WB_LANGUAGE_CHINESE
+"Source"
+#else
+"来源"
+#endif
+);
+			AddInputPort( WirePortDataType.COLOR, false, 
+#if !WB_LANGUAGE_CHINESE
+"Destiny"
+#else
+"命运"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Alpha"
+#else
+"阿尔法"
+#endif
+);
 			m_inputPorts[ 2 ].FloatInternalData = 1;
 			AddOutputPort( WirePortDataType.COLOR, Constants.EmptyPortValue );
 			m_inputPorts[ 0 ].AddPortForbiddenTypes(	WirePortDataType.FLOAT3x3,
@@ -335,8 +383,8 @@ namespace AmplifyShaderEditor
 				case BlendOps.HardLight:
 				{
 					result = " (( " + srcLocalVar + " > 0.5 ) ? ( 1.0 - ( 1.0 - 2.0 * ( " + srcLocalVar + " - 0.5 ) ) * ( 1.0 - " + dstLocalVar + " ) ) : ( 2.0 * " + srcLocalVar + " * " + dstLocalVar + " ) )";
-					//dataCollector.AddFunction( ASEHardLightCall, UIUtils.ShaderIndentTabs + ASEHardLightFunc );
-					//result = CreateMultiChannel( ref dataCollector, ASEHardLightCall, srcLocalVar, dstLocalVar, "hardLightBlend" );
+					
+					
 				}
 				break;
 				case BlendOps.HardMix:
@@ -362,8 +410,8 @@ namespace AmplifyShaderEditor
 				case BlendOps.LinearLight:
 				{
 					result = "(( " + srcLocalVar + " > 0.5 )? ( " + dstLocalVar + " + 2.0 * " + srcLocalVar + " - 1.0 ) : ( " + dstLocalVar + " + 2.0 * ( " + srcLocalVar + " - 0.5 ) ) )";
-					//dataCollector.AddFunction( ASELinearLightCall, UIUtils.ShaderIndentTabs + ASELinearLightFunc );
-					//result = CreateMultiChannel( ref dataCollector, ASELinearLightCall, srcLocalVar, dstLocalVar, "linearLightBlend" );
+					
+					
 				}
 				break;
 				case BlendOps.Multiply:
@@ -373,17 +421,17 @@ namespace AmplifyShaderEditor
 				break;
 				case BlendOps.Overlay:
 				{
-					//result = "(( " + dstLocalVar + " > 0.5 ) ? ( 1.0 - ( 1.0 - 2.0 * ( " + dstLocalVar + " - 0.5 ) ) * ( 1.0 - " + srcLocalVar + " ) ) : ( 2.0 * " + dstLocalVar + " * " + srcLocalVar + " ) )";
+					
 					result = "(( " + dstLocalVar + " > 0.5 ) ? ( 1.0 - 2.0 * ( 1.0 - " + dstLocalVar + " ) * ( 1.0 - " + srcLocalVar + " ) ) : ( 2.0 * " + dstLocalVar + " * " + srcLocalVar + " ) )";
-					//dataCollector.AddFunction( ASEOverlayCall, UIUtils.ShaderIndentTabs + ASEOverlayFunc );
-					//result = CreateMultiChannel( ref dataCollector, ASEOverlayCall, srcLocalVar, dstLocalVar, "overlayBlend" );
+					
+					
 				}
 				break;
 				case BlendOps.PinLight:
 				{
 					result = "(( " + srcLocalVar + " > 0.5 ) ? max( " + dstLocalVar + ", 2.0 * ( " + srcLocalVar + " - 0.5 ) ) : min( " + dstLocalVar + ", 2.0 * " + srcLocalVar + " ) )";
-					//dataCollector.AddFunction( ASEPinLightCall, UIUtils.ShaderIndentTabs + ASEPinLightFunc );
-					//result = CreateMultiChannel( ref dataCollector, ASEPinLightCall, srcLocalVar, dstLocalVar, "pinLightBlend" );
+					
+					
 				}
 				break;
 				case BlendOps.Subtract:
@@ -399,8 +447,8 @@ namespace AmplifyShaderEditor
 				case BlendOps.VividLight:
 				{
 					result = string.Format( "(( {0} > 0.5 ) ? ( {1} / max( ( 1.0 - {0} ) * 2.0 ,0.00001) ) : ( 1.0 - ( ( ( 1.0 - {1} ) * 0.5 ) / max( {0},0.00001) ) ) )", srcLocalVar, dstLocalVar);
-					//dataCollector.AddFunction( ASEVividLightCall, UIUtils.ShaderIndentTabs + ASEVividLightFunc );
-					//result = CreateMultiChannel( ref dataCollector, ASEVividLightCall, srcLocalVar, dstLocalVar, "vividLightBlend" );
+					
+					
 				}
 				break;
 			}

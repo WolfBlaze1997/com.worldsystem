@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEditor;
 using UnityEngine;
 namespace AmplifyShaderEditor
 {
 	[System.Serializable]
-	[NodeAttributes( "World Space Light Pos", "Lighting", "Light Position" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"World Space Light Pos"
+#else
+"世界太空灯位置"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Lighting"
+#else
+"照明"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Light Position"
+#else
+"灯光位置"
+#endif
+)]
 	public sealed class WorldSpaceLightPos : ShaderVariablesNode
 	{
 		private const string HelperText =
@@ -63,10 +81,10 @@ namespace AmplifyShaderEditor
 
 		public override void RenderNodePreview()
 		{
-			//Runs at least one time
+			
 			if( !m_initialized )
 			{
-				// nodes with no preview don't update at all
+				
 				PreviewIsDirty = false;
 				return;
 			}

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -67,7 +67,13 @@ namespace AmplifyShaderEditor
 		private TemplateAdditionalPragmasHelper m_additionalPragmas = new TemplateAdditionalPragmasHelper();
 
 		[SerializeField]
-		private TemplateAdditionalDirectivesHelper m_additionalDirectives = new TemplateAdditionalDirectivesHelper(" Additional Directives");
+		private TemplateAdditionalDirectivesHelper m_additionalDirectives = new TemplateAdditionalDirectivesHelper( 
+#if !WB_LANGUAGE_CHINESE
+" Additional Directives"
+#else
+"附加指令"
+#endif
+);
 
 		[SerializeField]
 		private RenderingPlatformOpHelper m_renderingPlatforms = new RenderingPlatformOpHelper();
@@ -229,23 +235,23 @@ namespace AmplifyShaderEditor
 			if( module.PragmaTag.IsValid )
 			{
 				m_hasValidData = true;
-				//m_additionalPragmas.IsValid = true;
-				//m_additionalPragmas.FillNativeItems( module.IncludePragmaContainer.PragmasList );
+				
+				
 
-				//m_additionalIncludes.IsValid = true;
-				//m_additionalIncludes.FillNativeItems( module.IncludePragmaContainer.IncludesList );
+				
+				
 
-				//m_additionalDefines.IsValid = true;
-				//m_additionalDefines.FillNativeItems( module.IncludePragmaContainer.DefinesList );
+				
+				
 
 				m_additionalDirectives.FillNativeItems( module.IncludePragmaContainer.NativeDirectivesList );
 				m_additionalDirectives.IsValid = true;
 			}
 			else
 			{
-				//m_additionalPragmas.IsValid = false;
-				//m_additionalIncludes.IsValid = false;
-				//m_additionalDefines.IsValid = false;
+				
+				
+				
 				m_additionalDirectives.IsValid = false;
 			}
 
@@ -434,9 +440,9 @@ namespace AmplifyShaderEditor
 
 			if( currentModule.PragmaTag.IsValid )
 			{
-				//m_additionalDefines.Draw( owner );
-				//m_additionalIncludes.Draw( owner );
-				//m_additionalPragmas.Draw( owner );
+				
+				
+				
 				m_additionalDirectives.Draw( owner , false);
 			}
 
@@ -446,9 +452,9 @@ namespace AmplifyShaderEditor
 			}
 
 			m_isDirty = m_isDirty ||
-						//m_additionalDefines.IsDirty ||
-						//m_additionalIncludes.IsDirty ||
-						//m_additionalPragmas.IsDirty || 
+						
+						
+						
 						m_additionalDirectives.IsDirty;
 		}
 
@@ -727,9 +733,9 @@ namespace AmplifyShaderEditor
 			m_shaderModelHelper.WriteToString( ref nodeInfo );
 			m_renderingPlatforms.WriteToStringTemplate( ref nodeInfo );
 
-			//m_additionalDefines.WriteToString( ref nodeInfo );
-			//m_additionalPragmas.WriteToString( ref nodeInfo );
-			//m_additionalIncludes.WriteToString( ref nodeInfo );
+			
+			
+			
 
 			m_additionalDirectives.WriteToString( ref nodeInfo );
 		}
@@ -748,9 +754,9 @@ namespace AmplifyShaderEditor
 		public TemplateDepthModule DepthOphelper { get { return m_depthOphelper; } }
 		public TemplateTagsModule TagsHelper { get { return m_tagsHelper; } }
 		public TemplateShaderModelModule ShaderModelHelper { get { return m_shaderModelHelper; } }
-		//public TemplateAdditionalIncludesHelper AdditionalIncludes { get { return m_additionalIncludes; } }
-		//public TemplateAdditionalDefinesHelper AdditionalDefines { get { return m_additionalDefines; } }
-		//public TemplateAdditionalPragmasHelper AdditionalPragmas { get { return m_additionalPragmas; } }
+		
+		
+		
 		public TemplateAdditionalDirectivesHelper AdditionalDirectives { get { return m_additionalDirectives; } }
 		public RenderingPlatformOpHelper RenderingPlatforms { get { return m_renderingPlatforms; } }
 		public bool AllModulesMode { get { return m_allModulesMode; } }
@@ -776,13 +782,13 @@ namespace AmplifyShaderEditor
 					m_stencilBufferHelper.IsDirty = false;
 					m_tagsHelper.IsDirty = false;
 					m_shaderModelHelper.IsDirty = false;
-					//m_additionalDefines.IsDirty = false;
-					//m_additionalPragmas.IsDirty = false;
-					//m_additionalIncludes.IsDirty = false;
+					
+					
+					
 					m_additionalDirectives.IsDirty = false;
 				}
 			}
 		}
-		//	public bool Foldout { get { return m_foldout; } set { m_foldout = value;  } }
+		
 	}
 }

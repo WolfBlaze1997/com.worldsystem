@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -8,7 +8,25 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[System.Serializable]
-	[NodeAttributes( "Vector3", "Constants And Properties", "Vector3 property", null, KeyCode.Alpha3 )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Vector3"
+#else
+"矢量3"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Constants And Properties"
+#else
+"常数和属性"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Vector3 property"
+#else
+"Vector3属性"
+#endif
+, null, KeyCode.Alpha3 )]
 	public sealed class Vector3Node : PropertyNode
 	{
 		[SerializeField]
@@ -53,7 +71,7 @@ namespace AmplifyShaderEditor
 
 			if( EditorGUI.EndChangeCheck() )
 			{
-				//MarkForPreviewUpdate();
+				
 				if( m_materialMode )
 					m_requireMaterialUpdate = true;
 			}

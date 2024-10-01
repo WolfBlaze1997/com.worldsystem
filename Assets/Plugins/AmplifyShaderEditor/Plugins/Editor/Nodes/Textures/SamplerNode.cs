@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -7,7 +7,7 @@ using System;
 
 namespace AmplifyShaderEditor
 {
-	// Disabling Substance Deprecated warning
+	
 
 	public enum TexReferenceType
 	{
@@ -31,15 +31,51 @@ namespace AmplifyShaderEditor
 	}
 
 	[Serializable]
-	[NodeAttributes( "Texture Sample", "Textures", "Samples a chosen texture and returns its color values, <b>Texture</b> and <b>UVs</b> can be overriden and you can select different mip modes and levels. It can also unpack and scale textures marked as normalmaps.", KeyCode.T, true, 0, int.MaxValue, typeof( Texture ), typeof( Texture2D ), typeof( Texture3D ), typeof( Cubemap ), typeof( CustomRenderTexture ), Tags = "Array" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Texture Sample"
+#else
+"纹理示例"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Textures"
+#else
+"纹理"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Samples a chosen texture and returns its color values, <b>Texture</b> and <b>UVs</b> can be overriden and you can select different mip modes and levels. It can also unpack and scale textures marked as normalmaps."
+#else
+"对选定的纹理进行采样并返回其颜色值，可以覆盖<b>纹理</b>和<b>UV</b>，并且可以选择不同的mip模式和级别。它还可以解包和缩放标记为法线贴图的纹理。"
+#endif
+, KeyCode.T, true, 0, int.MaxValue, typeof( Texture ), typeof( Texture2D ), typeof( Texture3D ), typeof( Cubemap ), typeof( CustomRenderTexture ), Tags = 
+#if !WB_LANGUAGE_CHINESE
+"Array"
+#else
+"阵列"
+#endif
+)]
 	public sealed class SamplerNode : TexturePropertyNode
 	{
-		private const string MipModeStr = "Mip Mode";
+		private const string MipModeStr = 
+#if !WB_LANGUAGE_CHINESE
+"Mip Mode"
+#else
+"Mip模式"
+#endif
+;
 
 		private const string DefaultTextureUseSematicsStr = "Use Semantics";
 		private const string DefaultTextureIsNormalMapsStr = "Is Normal Map";
 
-		private const string NormalScaleStr = "Scale";
+		private const string NormalScaleStr = 
+#if !WB_LANGUAGE_CHINESE
+"Scale"
+#else
+"规模"
+#endif
+;
 
 		private float InstanceIconWidth = 19;
 		private float InstanceIconHeight = 19;
@@ -124,14 +160,32 @@ namespace AmplifyShaderEditor
 			}
 
 			m_defaultTextureValue = TexturePropertyValues.white;
-			AddInputPort( WirePortDataType.SAMPLER2D, false, "Tex" );
+			AddInputPort( WirePortDataType.SAMPLER2D, false, 
+#if !WB_LANGUAGE_CHINESE
+"Tex"
+#else
+"特克斯"
+#endif
+);
 			m_inputPorts[ 0 ].CreatePortRestrictions( WirePortDataType.SAMPLER1D, WirePortDataType.SAMPLER2D, WirePortDataType.SAMPLER3D, WirePortDataType.SAMPLERCUBE, WirePortDataType.SAMPLER2DARRAY, WirePortDataType.OBJECT );
 			AddInputPort( WirePortDataType.FLOAT2, false, "UV" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Level" );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Level"
+#else
+"级别"
+#endif
+);
 			AddInputPort( WirePortDataType.FLOAT2, false, "DDX" );
 			AddInputPort( WirePortDataType.FLOAT2, false, "DDY" );
 			AddInputPort( WirePortDataType.FLOAT, false, NormalScaleStr );
-			AddInputPort( WirePortDataType.FLOAT, false, "Index" );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Index"
+#else
+"索引"
+#endif
+);
 			AddInputPort( WirePortDataType.SAMPLERSTATE, false, "SS" );
 			m_inputPorts[ 7 ].CreatePortRestrictions( WirePortDataType.SAMPLERSTATE );
 
@@ -153,7 +207,7 @@ namespace AmplifyShaderEditor
 			m_normalPort.Visible = m_autoUnpackNormals;
 			m_normalPort.FloatInternalData = 1.0f;
 
-			//Remove output port (sampler)
+			
 			m_outputPortsDict.Remove( m_outputPorts[ 1 ].PortId );
 			m_outputPorts.RemoveAt( 1 );
 
@@ -163,7 +217,7 @@ namespace AmplifyShaderEditor
 			AddOutputColorPorts( "RGBA" );
 			m_colorPort = m_outputPorts[ 0 ];
 			m_currentParameterType = PropertyType.Property;
-			//	m_useCustomPrefix = true;
+			
 			m_customPrefix = "Texture Sample ";
 			m_referenceContent = new GUIContent( string.Empty );
 			m_freeType = false;
@@ -181,7 +235,7 @@ namespace AmplifyShaderEditor
 
 		public override void SetPreviewInputs()
 		{
-			//TODO: rewrite this to be faster
+			
 			base.SetPreviewInputs();
 
 			if( m_cachedUvsId == -1 )
@@ -305,7 +359,7 @@ namespace AmplifyShaderEditor
 				SetAdditonalTitleText( string.Format( Constants.PropertyValueLabel, GetPropertyValStr() ) );
 				ConfigureInputPorts();
 				ConfigureOutputPorts();
-				//ResizeNodeToPreview();
+				
 			}
 		}
 
@@ -330,7 +384,7 @@ namespace AmplifyShaderEditor
 		new void ShowDefaults()
 		{
 			m_defaultTextureValue = (TexturePropertyValues)EditorGUILayoutEnumPopup( DefaultTextureStr, m_defaultTextureValue );
-			//AutoCastType newAutoCast = (AutoCastType)EditorGUILayoutIntPopup( AutoCastModeStr, (int)m_autocastMode, AvailableAutoCastStr, AvailableAutoCast );
+			
 			AutoCastType newAutoCast = (AutoCastType)EditorGUILayoutEnumPopup( AutoCastModeStr, m_autocastMode );
 			if( newAutoCast != m_autocastMode )
 			{
@@ -386,10 +440,10 @@ namespace AmplifyShaderEditor
 				{
 					if( Constants.WireToTexture.TryGetValue( m_texPort.ConnectionType() , out m_currentType ) )
 					{
-						//m_currentType = Constants.WireToTexture[ m_texPort.ConnectionType() ];
+						
 						m_textureProperty = this;
-						// This cast fails only from within shader functions if connected to a Sampler Input
-						// and in this case property is set by what is connected to that input
+						
+						
 						UIUtils.UnregisterPropertyNode( this );
 						UIUtils.UnregisterTexturePropertyNode( this );
 					}
@@ -404,7 +458,7 @@ namespace AmplifyShaderEditor
 
 				ConfigureInputPorts();
 				ConfigureOutputPorts();
-				//ResizeNodeToPreview();
+				
 			}
 
 			UpdateTitle();
@@ -425,7 +479,7 @@ namespace AmplifyShaderEditor
 				}
 
 				ConfigureOutputPorts();
-				//ResizeNodeToPreview();
+				
 			}
 
 			UpdateTitle();
@@ -580,7 +634,13 @@ namespace AmplifyShaderEditor
 			{
 				arr[ i ] = contents[ i - 1 ];
 			}
-			m_useSamplerArrayIdx = EditorGUILayoutPopup( "Reference Sampler", m_useSamplerArrayIdx, arr );
+			m_useSamplerArrayIdx = EditorGUILayoutPopup( 
+#if !WB_LANGUAGE_CHINESE
+"Reference Sampler"
+#else
+"参考采样器"
+#endif
+, m_useSamplerArrayIdx, arr );
 			EditorGUI.EndDisabledGroup();
 		}
 
@@ -588,7 +648,13 @@ namespace AmplifyShaderEditor
 		{
 			if( !m_indexPort.IsConnected )
 			{
-				m_indexPort.FloatInternalData = EditorGUILayoutFloatField( "Index", m_indexPort.FloatInternalData );
+				m_indexPort.FloatInternalData = EditorGUILayoutFloatField( 
+#if !WB_LANGUAGE_CHINESE
+"Index"
+#else
+"索引"
+#endif
+, m_indexPort.FloatInternalData );
 			}
 
 			m_textureCoordSet = EditorGUILayoutIntPopup( Constants.AvailableUVSetsLabel, m_textureCoordSet, Constants.AvailableUVSetsStr, Constants.AvailableUVSets );
@@ -599,21 +665,45 @@ namespace AmplifyShaderEditor
 				m_mipMode = newMipMode;
 				ConfigureInputPorts();
 				ConfigureOutputPorts();
-				//ResizeNodeToPreview();
+				
 			}
 
 			if( !m_lodPort.IsConnected && m_lodPort.Visible )
 			{
-				m_lodPort.FloatInternalData = EditorGUILayoutFloatField( newMipMode == MipType.MipBias ? "Mip Bias" : "Mip Level", m_lodPort.FloatInternalData );
+				m_lodPort.FloatInternalData = EditorGUILayoutFloatField( newMipMode == MipType.MipBias ? 
+#if !WB_LANGUAGE_CHINESE
+"Mip Bias"
+#else
+"Mip偏差"
+#endif
+: 
+#if !WB_LANGUAGE_CHINESE
+"Mip Level"
+#else
+"Mip级别"
+#endif
+, m_lodPort.FloatInternalData );
 			}
 
 			if( m_currentType == TextureType.Texture2DArray && ( newMipMode == MipType.Derivative || newMipMode == MipType.MipBias ) && !UIUtils.CurrentWindow.OutsideGraph.IsSRP )
 			{
-				EditorGUILayout.HelpBox( "Derivative and Bias mip modes for Texture Arrays only works on some platforms (D3D11 XBOXONE GLES3 GLCORE)", MessageType.Warning );
+				EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"Derivative and Bias mip modes for Texture Arrays only works on some platforms (D3D11 XBOXONE GLES3 GLCORE)"
+#else
+"纹理阵列的导数和偏置mip模式仅适用于某些平台（HttpClient1 XBOXONE GLES3 GLCORE）"
+#endif
+, MessageType.Warning );
 			}
 
 			EditorGUI.BeginChangeCheck();
-			m_autoUnpackNormals = EditorGUILayoutToggle( "Unpack Normal Map", m_autoUnpackNormals );
+			m_autoUnpackNormals = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Unpack Normal Map"
+#else
+"解压缩法线贴图"
+#endif
+, m_autoUnpackNormals );
 			if( m_autoUnpackNormals && !m_normalPort.IsConnected )
 			{
 				m_normalPort.FloatInternalData = EditorGUILayoutFloatField( NormalScaleStr, m_normalPort.FloatInternalData );
@@ -623,7 +713,7 @@ namespace AmplifyShaderEditor
 			{
 				ConfigureInputPorts();
 				ConfigureOutputPorts();
-				//ResizeNodeToPreview();
+				
 			}
 			ShowSamplerUI();
 			if( m_showErrorMessage )
@@ -790,14 +880,14 @@ namespace AmplifyShaderEditor
 				case ReferenceState.Self:
 				{
 					m_drawPreview = false;
-					//SetTitleText( PropertyInspectorName /*m_propertyInspectorName*/ );
-					//small optimization, string format or concat on every frame generates garbage
-					//string tempVal = GetPropertyValStr();
-					//if ( !m_previousAdditionalText.Equals( tempVal ) )
-					//{
-					//	m_previousAdditionalText = tempVal;
-					//	m_additionalContent.text = string.Concat( "Value( ", tempVal, " )" );
-					//}
+					
+					
+					
+					
+					
+					
+					
+					
 
 					m_drawPicker = true;
 				}
@@ -810,10 +900,10 @@ namespace AmplifyShaderEditor
 					SetTitleText( m_previewTextProp.PropertyInspectorName + " (Input)" );
 					m_previousAdditionalText = m_previewTextProp.AdditonalTitleContent.text;
 					SetAdditonalTitleText( m_previousAdditionalText );
-					// Draw chain lock
+					
 					GUI.Label( m_iconPos, string.Empty, UIUtils.GetCustomStyle( CustomStyle.SamplerTextureIcon ) );
 
-					// Draw frame around preview
+					
 					GUI.Label( m_previewRect, string.Empty, UIUtils.GetCustomStyle( CustomStyle.SamplerFrame ) );
 				}
 				break;
@@ -822,9 +912,9 @@ namespace AmplifyShaderEditor
 					m_drawPreview = true;
 					m_drawPicker = false;
 
-					//SetTitleText( m_previewTextProp.PropertyInspectorName + Constants.InstancePostfixStr );
-					//m_previousAdditionalText = m_previewTextProp.AdditonalTitleContent.text;
-					//SetAdditonalTitleText( m_previousAdditionalText );
+					
+					
+					
 
 					SetTitleTextOnCallback( m_previewTextProp.PropertyInspectorName, ( instance, newTitle ) => instance.TitleContent.text = newTitle + Constants.InstancePostfixStr );
 					if( m_previewTextProp.AdditonalTitleContent.text != m_additionalContent.text )
@@ -833,10 +923,10 @@ namespace AmplifyShaderEditor
 					}
 					SetAdditonalTitleText( m_previewTextProp.AdditonalTitleContent.text );
 
-					// Draw chain lock
+					
 					GUI.Label( m_iconPos, string.Empty, UIUtils.GetCustomStyle( CustomStyle.SamplerTextureIcon ) );
 
-					// Draw frame around preview
+					
 					GUI.Label( m_previewRect, string.Empty, UIUtils.GetCustomStyle( CustomStyle.SamplerFrame ) );
 				}
 				break;
@@ -871,21 +961,21 @@ namespace AmplifyShaderEditor
 				else
 				{
 					m_texPort.DataType = m_referenceSampler.TexPort.DataType;
-					// Set current type
+					
 					TextureType newTextureType = m_referenceSampler.CurrentType;
 
-					// Set References Options
+					
 					AutoCastType newAutoCast = m_referenceSampler.AutocastMode;
 					if( newAutoCast != m_autocastMode || newTextureType != m_currentType )
 					{
 						m_currentType = newTextureType;
 						m_autocastMode = newAutoCast;
-						//if( m_autocastMode != AutoCastType.Auto )
+						
 						{
 							ConfigTextureData( m_currentType );
 							ConfigureInputPorts();
 							ConfigureOutputPorts();
-							//ResizeNodeToPreview();
+							
 						}
 					}
 				}
@@ -962,18 +1052,18 @@ namespace AmplifyShaderEditor
 			iconPos.y += 10 * drawInfo.InvertedZoom;
 			iconPos.x += m_globalPosition.width - iconPos.width - 5 * drawInfo.InvertedZoom;
 
-			//if ( GUI.Button( newPos, string.Empty, UIUtils.GetCustomStyle( CustomStyle.SamplerTextureRef )/* m_referenceStyle */) ||
-			//	GUI.Button( iconPos, string.Empty, m_referenceIconStyle )
-			//	)
-			//{
-			//	UIUtils.FocusOnNode( texProp, 1, true );
-			//}
+			
+			
+			
+			
+			
+			
 
 			if( texProp.Value != null )
 			{
 				DrawPreview( drawInfo, m_previewRect );
 				GUI.Label( newPos, string.Empty, UIUtils.GetCustomStyle( CustomStyle.SamplerFrame ) );
-				//UIUtils.GetCustomStyle( CustomStyle.SamplerButton ).fontSize = ( int )Mathf.Round( 9 * drawInfo.InvertedZoom );
+				
 			}
 		}
 
@@ -1207,8 +1297,8 @@ namespace AmplifyShaderEditor
 				}
 				else
 				{
-					//Need to see if the asset really exists because AssetDatabase.GUIDToAssetPath() can return a valid path if
-					// the asset was previously imported and deleted after that
+					
+					
 					UnityEngine.Object obj = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>( atPathname );
 					if( obj == null )
 					{
@@ -1219,23 +1309,23 @@ namespace AmplifyShaderEditor
 						if( m_colorPort.IsLocalValue( dataCollector.PortCategory ) )
 							return m_colorPort.LocalValue( dataCollector.PortCategory );
 
-						//string remapPortR = ".r";
-						//string remapPortG = ".g";
-						//string remapPortB = ".b";
-						//string remapPortA = ".a";
+						
+						
+						
+						
 
-						//if ( vtex.Channel == VirtualChannel.Occlusion )
-						//{
-						//	remapPortR = ".r"; remapPortG = ".r"; remapPortB = ".r"; remapPortA = ".r";
-						//}
-						//else if ( vtex.Channel == VirtualChannel.SpecMet && ( ContainerGraph.CurrentStandardSurface != null && ContainerGraph.CurrentStandardSurface.CurrentLightingModel == StandardShaderLightModel.Standard ) )
-						//{
-						//	remapPortR = ".r"; remapPortG = ".r"; remapPortB = ".r";
-						//}
-						//else if ( vtex.Channel == VirtualChannel.Height || vtex.Channel == VirtualChannel.Displacement )
-						//{
-						//	remapPortR = ".b"; remapPortG = ".b"; remapPortB = ".b"; remapPortA = ".b";
-						//}
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
 
 						dataCollector.AddToPragmas( UniqueId, IOUtils.VirtualTexturePragmaHeader );
 						dataCollector.AddToIncludes( UniqueId, atPathname );
@@ -1279,7 +1369,7 @@ namespace AmplifyShaderEditor
 									dataCollector.AddLocalVariable( UniqueId, CurrentPrecisionType, WirePortDataType.FLOAT4, "virtual_cast_" + OutputId, virtualVariable + ".b" );
 									virtualVariable = "virtual_cast_" + OutputId;
 								}
-								//virtualVariable = UIUtils.CastPortType( dataCollector.PortCategory, m_currentPrecisionType, new NodeCastInfo( UniqueId, outputId ), virtualVariable, WirePortDataType.FLOAT, WirePortDataType.FLOAT4, virtualVariable );
+								
 							}
 							break;
 							case VirtualChannel.Occlusion:
@@ -1295,29 +1385,29 @@ namespace AmplifyShaderEditor
 							break;
 						}
 
-						//for ( int i = 0; i < m_outputPorts.Count; i++ )
-						//{
-						//	if ( m_outputPorts[ i ].IsConnected )
-						//	{
+						
+						
+						
+						
 
-						//		//TODO: make the sampler not generate local variables at all times
-						//		m_textureFetchedValue = "virtualNode" + OutputId;
-						//		m_isTextureFetched = true;
+						
+						
+						
 
-						//		//dataCollector.AddToLocalVariables( m_uniqueId, m_precisionString + " " + m_textureFetchedValue + " = " + virtualSampler + ";" );
-						//		if ( dataCollector.PortCategory == MasterNodePortCategory.Vertex || dataCollector.PortCategory == MasterNodePortCategory.Tessellation )
-						//			dataCollector.AddToVertexLocalVariables( UniqueId, m_precisionString + " " + m_textureFetchedValue + " = " + virtualSampler + ";" );
-						//		else
-						//			dataCollector.AddToLocalVariables( UniqueId, m_precisionString + " " + m_textureFetchedValue + " = " + virtualSampler + ";" );
+						
+						
+						
+						
+						
 
-						//		m_colorPort.SetLocalValue( m_textureFetchedValue );
-						//		m_outputPorts[ m_colorPort.PortId + 1 ].SetLocalValue( m_textureFetchedValue + remapPortR );
-						//		m_outputPorts[ m_colorPort.PortId + 2 ].SetLocalValue( m_textureFetchedValue + remapPortG );
-						//		m_outputPorts[ m_colorPort.PortId + 3 ].SetLocalValue( m_textureFetchedValue + remapPortB );
-						//		m_outputPorts[ m_colorPort.PortId + 4 ].SetLocalValue( m_textureFetchedValue + remapPortA );
-						//		return m_textureFetchedValue;
-						//	}
-						//}
+						
+						
+						
+						
+						
+						
+						
+						
 
 						return virtualVariable;
 					}
@@ -1330,7 +1420,7 @@ namespace AmplifyShaderEditor
 			if( dataCollector.PortCategory == MasterNodePortCategory.Vertex || dataCollector.PortCategory == MasterNodePortCategory.Tessellation )
 			{
 				currMipMode = MipType.MipLevel;
-				//mipType = "lod";
+				
 			}
 
 			string samplerOp = SampleTexture( ref dataCollector, ignoreLocalVar, portProperty, currMipMode, propertyName , varMode );
@@ -1345,7 +1435,7 @@ namespace AmplifyShaderEditor
 					connectedPorts += 1;
 					if( connectedPorts > 1 || m_outputPorts[ i ].ConnectionCount > 1 )
 					{
-						// Create common local var and mark as fetched
+						
 						string textureFetchedValue = m_samplerType + "Node" + OutputId;
 
 						if( dataCollector.PortCategory == MasterNodePortCategory.Vertex || dataCollector.PortCategory == MasterNodePortCategory.Tessellation )
@@ -1370,7 +1460,7 @@ namespace AmplifyShaderEditor
 		{
 			bool isVertex = ( dataCollector.PortCategory == MasterNodePortCategory.Vertex || dataCollector.PortCategory == MasterNodePortCategory.Tessellation );
 
-			// make sure the final result is always a float4 with empty 0's in the middle
+			
 			string uvAppendix = ", ";
 			int coordSize = 3;
 			if( m_uvPort.DataType == WirePortDataType.FLOAT2 )
@@ -1386,18 +1476,18 @@ namespace AmplifyShaderEditor
 
 			string uvs = m_uvPort.GeneratePortInstructions( ref dataCollector );
 
-			// generate automatic UVs if not connected
+			
 			if( !m_uvPort.IsConnected )
 			{
 				string propertyName = CurrentPropertyReference;
 
-				// check for references
+				
 				if( !string.IsNullOrEmpty( portProperty ) && portProperty != "0.0" )
 					propertyName = portProperty;
 
 				int coordSet = ( ( m_textureCoordSet < 0 ) ? 0 : m_textureCoordSet );
 				string uvName = IOUtils.GetUVChannelName( propertyName, coordSet );
-				string dummyPropUV = "_tex" /*+ ( coordSize != 2 ? "" + coordSize : "" )*/ + "coord" + ( coordSet > 0 ? ( coordSet + 1 ).ToString() : "" );
+				string dummyPropUV = "_tex"  + "coord" + ( coordSet > 0 ? ( coordSet + 1 ).ToString() : "" );
 				string dummyUV = "uv" + ( coordSet > 0 ? ( coordSet + 1 ).ToString() : "" ) + dummyPropUV;
 
 				string attr = GetPropertyValue();
@@ -1519,7 +1609,7 @@ namespace AmplifyShaderEditor
 			}
 			else
 			{
-				if( ( m_mipMode == MipType.MipLevel || m_mipMode == MipType.MipBias ) /*&& m_lodPort.IsConnected*/ )
+				if( ( m_mipMode == MipType.MipLevel || m_mipMode == MipType.MipBias )  )
 				{
 					string lodLevel = m_lodPort.GeneratePortInstructions( ref dataCollector );
 					if( ( outsideGraph.SamplingMacros || m_currentType == TextureType.Texture2DArray ) && m_currentType != TextureType.Texture1D )
@@ -1673,7 +1763,7 @@ namespace AmplifyShaderEditor
 
 		public override int InputIdFromDeprecated( int oldInputId )
 		{
-			// this is not a good solution, it doesn't check for the deprecated type and thus assumes it always comes from texture array
+			
 			switch( oldInputId )
 			{
 				default:
@@ -1725,13 +1815,13 @@ namespace AmplifyShaderEditor
 					m_autoUnpackNormals = Convert.ToBoolean( GetCurrentParam( ref nodeParams ) );
 
 				m_currentType = TextureType.Texture2DArray;
-				//m_autocastMode = AutoCastType.LockedToTexture2DArray;
+				
 
 				if( m_defaultValue == null )
 				{
 					ConfigureInputPorts();
 					ConfigureOutputPorts();
-					//ResizeNodeToPreview();
+					
 				}
 				else
 				{
@@ -1752,7 +1842,7 @@ namespace AmplifyShaderEditor
 					ContainerGraph.SamplerNodes.UpdateDataOnNode( UniqueId, DataToArray );
 				}
 
-				// reading input data due to internal data being lost
+				
 				int count = 0;
 				if( UIUtils.CurrentShaderVersion() > 7003 )
 				{
@@ -1888,7 +1978,7 @@ namespace AmplifyShaderEditor
 			{
 				ConfigureInputPorts();
 				ConfigureOutputPorts();
-				//ResizeNodeToPreview();
+				
 			}
 			else
 			{
@@ -1979,7 +2069,7 @@ namespace AmplifyShaderEditor
 		public override int VersionConvertInputPortId( int portId )
 		{
 			int newPort = portId;
-			//change normal scale port to last
+			
 			if( UIUtils.CurrentShaderVersion() < 2407 )
 			{
 				if( portId == 1 )
@@ -1998,7 +2088,7 @@ namespace AmplifyShaderEditor
 		{
 			base.Destroy();
 
-			//Not calling m_texCoordsHelper.Destroy() on purpose so UIUtils does not incorrectly unregister stuff
+			
 			if( m_texCoordsHelper != null )
 			{
 				DestroyImmediate( m_texCoordsHelper );

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEditor;
 using System.Collections.Generic;
@@ -60,7 +60,13 @@ namespace AmplifyShaderEditor
 			availableArea.width *= 0.9f;
 			EditorGUILayout.BeginVertical();
 			{
-				EditorGUILayout.LabelField( "Shader Library", UIUtils.MainSkin.customStyles[ 5 ] );
+				EditorGUILayout.LabelField( 
+#if !WB_LANGUAGE_CHINESE
+"Shader Library"
+#else
+"着色器库"
+#endif
+, UIUtils.MainSkin.customStyles[ 5 ] );
 				GUILayout.Space( 10 );
 				EditorGUILayout.BeginHorizontal();
 				{

@@ -6,7 +6,25 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Texel Size", "Textures", "Texel Size for a given texture object" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Texel Size"
+#else
+"Texel尺寸"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Textures"
+#else
+"纹理"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Texel Size for a given texture object"
+#else
+"给定纹理对象的Texel大小"
+#endif
+)]
 	public sealed class TexelSizeNode : ParentNode
 	{
 		private readonly string[] Dummy = { string.Empty };
@@ -34,13 +52,43 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.SAMPLER2D, false, "Tex" );
+			AddInputPort( WirePortDataType.SAMPLER2D, false, 
+#if !WB_LANGUAGE_CHINESE
+"Tex"
+#else
+"特克斯"
+#endif
+);
 			m_inputPorts[ 0 ].CreatePortRestrictions( WirePortDataType.SAMPLER1D, WirePortDataType.SAMPLER2D, WirePortDataType.SAMPLER3D, WirePortDataType.SAMPLERCUBE, WirePortDataType.SAMPLER2DARRAY, WirePortDataType.OBJECT );
 			AddOutputVectorPorts( WirePortDataType.FLOAT4, Constants.EmptyPortValue );
-			ChangeOutputName( 1, "1/Width" );
-			ChangeOutputName( 2, "1/Height" );
-			ChangeOutputName( 3, "Width" );
-			ChangeOutputName( 4, "Height" );
+			ChangeOutputName( 1, 
+#if !WB_LANGUAGE_CHINESE
+"1/Width"
+#else
+"1/宽度"
+#endif
+);
+			ChangeOutputName( 2, 
+#if !WB_LANGUAGE_CHINESE
+"1/Height"
+#else
+"1/高度"
+#endif
+);
+			ChangeOutputName( 3, 
+#if !WB_LANGUAGE_CHINESE
+"Width"
+#else
+"宽度"
+#endif
+);
+			ChangeOutputName( 4, 
+#if !WB_LANGUAGE_CHINESE
+"Height"
+#else
+"身高"
+#endif
+);
 			m_textLabelWidth = 80;
 			m_autoWrapProperties = true;
 			m_hasLeftDropdown = true;

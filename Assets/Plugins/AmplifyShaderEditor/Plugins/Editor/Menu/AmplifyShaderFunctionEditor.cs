@@ -31,14 +31,20 @@ namespace AmplifyShaderEditor
 
 		public override void OnInspectorGUI()
 		{
-			//base.OnInspectorGUI();
-			//base.serializedObject.Update();
-			if( GUILayout.Button( "Open in Shader Editor" ) )
+			
+			
+			if( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Open in Shader Editor"
+#else
+"在着色器编辑器中打开"
+#endif
+) )
 			{
 				ASEPackageManagerHelper.SetupLateShaderFunction( m_target );
 			}
-			//EditorGUILayout.Separator();
-			//m_target.FunctionInfo = EditorGUILayout.TextArea( m_target.FunctionInfo );
+			
+			
 
 			if( m_target.Description.Length > 0 )
 			{
@@ -46,7 +52,13 @@ namespace AmplifyShaderEditor
 			}
 
 			EditorGUILayout.Space();
-			if( GUILayout.Button( "Search Direct Dependencies" ) )
+			if( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Search Direct Dependencies"
+#else
+"搜索直接依赖关系"
+#endif
+) )
 			{
 				m_dependencies.Clear();
 				string guid = AssetDatabase.AssetPathToGUID( AssetDatabase.GetAssetPath( m_target ) );
@@ -58,7 +70,7 @@ namespace AmplifyShaderEditor
 					bool found = SearchForGUID( guid, sfPath );
 					if( found )
 					{
-						//string n = Regex.Replace( sfPath, @"(\.\w+|[\w\d\/]+\/)", "" );
+						
 						string n = Regex.Replace( sfPath, @"[\w\d\/]+\/", "" );
 						m_dependencies.Add(new FunctionDependency( n, sfPath ) );
 					}
@@ -80,11 +92,29 @@ namespace AmplifyShaderEditor
 			for( int i = 0; i < m_dependencies.Count; i++ )
 			{
 				EditorGUILayout.BeginHorizontal();
-				if( GUILayout.Button( m_dependencies[ i ].AssetName, "minibuttonleft" ) )
+				if( GUILayout.Button( m_dependencies[ i ].AssetName, 
+#if !WB_LANGUAGE_CHINESE
+"minibuttonleft"
+#else
+"左小按钮"
+#endif
+) )
 				{
 					SelectAtPath( m_dependencies[ i ].AssetPath );
 				}
-				if( GUILayout.Button( "edit", "minibuttonright", GUILayout.Width(100) ) )
+				if( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"edit"
+#else
+"编辑"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"minibuttonright"
+#else
+"小按钮右"
+#endif
+, GUILayout.Width(100) ) )
 				{
 					if( m_dependencies[ i ].AssetName.EndsWith( ".asset" ) )
 					{
@@ -108,7 +138,13 @@ namespace AmplifyShaderEditor
 					assetPaths.Add( m_dependencies[ i ].AssetPath );
 				}
 
-				if( GUILayout.Button( "Open and Save All" ) )
+				if( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Open and Save All"
+#else
+"打开并保存全部"
+#endif
+) )
 				{
 					bool doit = EditorUtility.DisplayDialog( "Open and Save All", "This will try to open all shader function and shaders that use this shader function and save them in quick succession, this may irreversibly break your files if something goes wrong. Are you sure you want to try?", "Yes, I'll take the risk", "No, I'll do it myself" );
 					if( doit )

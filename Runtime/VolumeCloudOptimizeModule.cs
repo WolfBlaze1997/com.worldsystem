@@ -7,12 +7,15 @@ using UnityEngine.Experimental.Rendering;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using Random = UnityEngine.Random;
+// ReSharper disable UselessBinaryOperation
 
 namespace WorldSystem.Runtime
 {
 
     public partial class VolumeCloudOptimizeModule
     {
+
+        #region 枚举与帮助函数
         
         public enum CloudShadowResolution
         {
@@ -55,7 +58,6 @@ namespace WorldSystem.Runtime
             Enceladus,
             Custom
         }
-
         
         public enum ResolutionOptions
         {
@@ -63,14 +65,9 @@ namespace WorldSystem.Runtime
             Half
         }
         
-        
         /// <summary>
-        /// 加载体积纹理使用的函数
+        /// 加载体积纹理
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="quality"></param>
-        /// <param name="currentTexture"></param>
-        /// <returns></returns>
         private Texture3D LoadVolumeTexture(Noise3DTextureId id, TextureQuality quality, Texture3D currentTexture)
         {
 #if UNITY_EDITOR
@@ -114,19 +111,15 @@ namespace WorldSystem.Runtime
             }
 
             loadTarget += ".asset";
-            return UnityEditor.AssetDatabase.LoadAssetAtPath<Texture3D>(loadTarget);
+            return AssetDatabase.LoadAssetAtPath<Texture3D>(loadTarget);
 #else
             return currentTexture;
 #endif
         }
-
-
+        
         /// <summary>
         /// 一种辅助方法，我们将每个天体的半径编码为KM。
         /// </summary>
-        /// <param name="celestialBodySelection"></param>
-        /// <param name="currentVal"></param>
-        /// <returns></returns>
         private int GetRadiusFromCelestialBodySelection(CelestialBodySelection celestialBodySelection, int currentVal)
         {
             switch (celestialBodySelection)
@@ -151,12 +144,13 @@ namespace WorldSystem.Runtime
         public float GetAtmosphereVisibility()
         {
             //此处需要大气配置 大气混合 模块
-            float visibility = WorldManager.Instance?.atmosphereModule?.property?.end ?? 20000;
-
-            if (property._Lighting_UseAtmosphereVisibilityOverlay)
-            {
-                visibility = property._Lighting_AtmosphereVisibility;
-            }
+            // float visibility = WorldManager.Instance?.atmosphereModule?.property?.end ?? 20000;
+            // float visibility = 20000;
+            
+            // if (property._Lighting_UseAtmosphereVisibilityOverlay)
+            // {
+            float visibility = property.lightingAtmosphereVisibility;
+            // }
 
             const float factor = 3.912023005f;
             return factor / visibility;
@@ -171,11 +165,9 @@ namespace WorldSystem.Runtime
         {
             return new Vector3(Mathf.Floor(i.x), Mathf.Floor(i.y), Mathf.Floor(i.z));
         }
-
         
 #if UNITY_EDITOR
-        public static void ForGizmo(Vector3 pos, Vector3 direction, float arrowHeadLength = 0.25f,
-            float arrowHeadAngle = 20.0f)
+        public static void ForGizmo(Vector3 pos, Vector3 direction, float arrowHeadLength = 0.25f, float arrowHeadAngle = 20.0f)
         {
             direction += new Vector3(0.00001f, 0.00001f, 0.00001f);
             Gizmos.DrawRay(pos, direction);
@@ -194,21 +186,21 @@ namespace WorldSystem.Runtime
 
             Color Cache = Gizmos.color;
             Gizmos.color = Color.gray;
-            pos = SetupGizmosColorAndPosition(property._MotionBase_Speed);
+            pos = SetupGizmosColorAndPosition();
             Vector3 destination =
-                new Vector3(property._MotionBase_DynamicVector.x, 0, property._MotionBase_DynamicVector.y).normalized
-                * (float)((1 - Math.Pow(Math.E, -property._MotionBase_Speed)) * 2);
+                new Vector3(property.motionBaseDynamicVector.x, 0, property.motionBaseDynamicVector.y).normalized
+                * (float)((1 - Math.Pow(Math.E, -property.motionBaseSpeed)) * 2);
             ForGizmo(pos, destination);
 
-            _ = SetupGizmosColorAndPosition(property._MotionDetail_Speed);
-            Vector3 destination01 = property._MotionDetail_DynamicVector.normalized *
-                                    (float)((1 - Math.Pow(Math.E, -property._MotionDetail_Speed)) * 2);
+            _ = SetupGizmosColorAndPosition();
+            Vector3 destination01 = property.motionDetailDynamicVector.normalized *
+                                    (float)((1 - Math.Pow(Math.E, -property.motionDetailSpeed)) * 2);
             ForGizmo(pos, destination01);
 
             Gizmos.color = Cache;
         }
 
-        private Vector3 SetupGizmosColorAndPosition(float Speed)
+        private Vector3 SetupGizmosColorAndPosition()
         {
             Vector3 pos;
             if (WorldManager.Instance?.windZoneModule != null)
@@ -224,7 +216,7 @@ namespace WorldSystem.Runtime
         }
 
 #endif
-        
+        // ReSharper disable once UnusedMember.Local
         private Texture2DArray Texture2DToTexture2DArray(Texture2D[] blue)
         {
             Texture2DArray blueArray =
@@ -237,6 +229,9 @@ namespace WorldSystem.Runtime
             blueArray.Apply(false);
             return blueArray;
         }
+        
+        #endregion
+        
     }
 
     
@@ -245,106 +240,81 @@ namespace WorldSystem.Runtime
     /// </summary>
     public partial class VolumeCloudOptimizeModule
     {
+        
         #region 字段
         
         public partial class Property
         {
-            [Title("云图")] 
-            [FoldoutGroup("配置")] [LabelText("云图着色器")] 
-            [ReadOnly] [PropertyOrder(-20)] 
+            [Title("云图")] [FoldoutGroup("配置")] [LabelText("云图着色器")] [ReadOnly] [PropertyOrder(-20)] 
             [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            public Shader VolumeCloud_BaseTex_Shader;
-
-            [FoldoutGroup("配置")] [LabelText("云图材质")] 
-            [ReadOnly] [PropertyOrder(-20)] 
-            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            public Material VolumeCloud_BaseTex_Material;
-
-            [FoldoutGroup("渲染")] [LabelText("最大渲染距离(m)")] 
-            [GUIColor(0.7f, 0.7f, 1.0f)] [PropertyOrder(-10)] 
-            public float _Render_MaxRenderDistance = 20000f;
-
-            [FoldoutGroup("建模")]
-            [TitleGroup("建模/云量")] [LabelText("云量")][PropertyRange(0, 1)]
-            [GUIColor(1f, 0.7f, 0.7f)] [PropertyOrder(-10)]
-            public float _Modeling_Amount_CloudAmount = 0.6f;
-
-            [TitleGroup("建模/云量")] [LabelText("覆盖远程云量")] 
-            [GUIColor(0.7f, 0.7f, 1.0f)]
-            public bool _Modeling_Amount_UseFarOverlay = false;
-
-            [TitleGroup("建模/云量")] [LabelText("    开始距离(m)")]
-            [GUIColor(1f, 0.7f, 0.7f)]
-            [ShowIf("_Modeling_Amount_UseFarOverlay")]
-            public float _Modeling_Amount_OverlayStartDistance = 20000f;
-
-            [TitleGroup("建模/云量")] [LabelText("    云量")] [PropertyRange(0, 1)]
-            [GUIColor(1f, 0.7f, 0.7f)]
-            [ShowIf("_Modeling_Amount_UseFarOverlay")]
-            public float _Modeling_Amount_OverlayCloudAmount = 0.8f;
-
-            [TitleGroup("建模/位置")] [LabelText("星球半径预设")] 
-            [GUIColor(0.7f, 0.7f, 1f)]
-            public CelestialBodySelection _Modeling_Position_RadiusPreset;
-
-            [TitleGroup("建模/位置")] [LabelText("    星球半径(km)")] [MinValue(0)]
-            [GUIColor(0.7f, 0.7f, 1f)]
-            [EnableIf("@_Modeling_Position_RadiusPreset == CelestialBodySelection.Custom")]
-            public int _Modeling_Position_PlanetRadius = 6378;
-
-            [TitleGroup("建模/位置")] [LabelText("云层海拔(m)")] [MinValue(0)] 
-            [GUIColor(1f, 0.7f, 0.7f)]
-            public float _Modeling_Position_CloudHeight = 600f;
-
-            [TitleGroup("建模/位置")] [LabelText("云层厚度(m)")] [PropertyRange(100, 8000)] 
-            [GUIColor(1f, 0.7f, 0.7f)]
-            public float _Modeling_Position_CloudThickness = 4000f;
+            public Shader volumeCloudBaseTexShader;
             
-            [TitleGroup("建模/基础(云图)")] [LabelText("八度音程")] [PropertyRange(1, 6)] 
-            [GUIColor(0.7f, 0.7f, 1f)]
-            public int _Modeling_ShapeBase_Octaves = 3;
+            [FoldoutGroup("配置")] [LabelText("云图材质")] [ReadOnly] [PropertyOrder(-20)] 
+            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
+            public Material volumeCloudBaseTexMaterial;
+            
+            [FoldoutGroup("渲染")] [LabelText("最大渲染距离(m)")] [GUIColor(0.7f, 0.7f, 1.0f)] [PropertyOrder(-10)] 
+            public float renderMaxRenderDistance = 20000f;
 
-            [TitleGroup("建模/基础(云图)")] [LabelText("增益")] [PropertyRange(0, 1)] 
-            [GUIColor(1f, 0.7f, 0.7f)]
-            public float _Modeling_ShapeBase_Gain = 0.5f;
+            [FoldoutGroup("建模")] [TitleGroup("建模/云量")] [LabelText("云量")][PropertyRange(0, 1)] [GUIColor(1f, 0.7f, 0.7f)] [PropertyOrder(-10)]
+            public float modelingAmountCloudAmount = 0.6f;
 
-            [TitleGroup("建模/基础(云图)")] [LabelText("频率")] [PropertyRange(2, 5)] 
-            [GUIColor(0.7f, 0.7f, 1f)]
-            public float _Modeling_ShapeBase_Freq = 2f;
+            [TitleGroup("建模/云量")] [LabelText("覆盖远程云量")] [GUIColor(0.7f, 0.7f, 1.0f)]
+            public bool modelingAmountUseFarOverlay;
 
-            [TitleGroup("建模/基础(云图)")] [LabelText("比例")] 
-            [GUIColor(1f, 0.7f, 0.7f)]
-            public float _Modeling_ShapeBase_Scale = 5f;
+            [TitleGroup("建模/云量")] [LabelText("    开始距离(m)")] [GUIColor(1f, 0.7f, 0.7f)] [ShowIf("modelingAmountUseFarOverlay")]
+            public float modelingAmountOverlayStartDistance = 20000f;
 
-            [Title("基础(云图)")] 
-            [FoldoutGroup("运动")] [LabelText("动态矢量")] [PropertyOrder(-1)] 
-            [GUIColor(0.7f, 0.7f, 0.7f)]
-            public Vector2 _MotionBase_DynamicVector = Vector2.zero;
+            [TitleGroup("建模/云量")] [LabelText("    云量")] [PropertyRange(0, 1)] [GUIColor(1f, 0.7f, 0.7f)] [ShowIf("modelingAmountUseFarOverlay")]
+            public float modelingAmountOverlayCloudAmount = 0.8f;
 
-            [FoldoutGroup("运动")] [LabelText("方向")]
-            [GUIColor(0.7f, 0.7f, 1f)] [PropertyOrder(-1)]
+            [TitleGroup("建模/位置")] [LabelText("星球半径预设")] [GUIColor(0.7f, 0.7f, 1f)]
+            public CelestialBodySelection modelingPositionRadiusPreset;
+
+            [TitleGroup("建模/位置")] [LabelText("    星球半径(km)")] [MinValue(0)] [GUIColor(0.7f, 0.7f, 1f)] [EnableIf("@modelingPositionRadiusPreset == CelestialBodySelection.Custom")]
+            public int modelingPositionPlanetRadius = 6378;
+
+            [TitleGroup("建模/位置")] [LabelText("云层海拔(m)")] [MinValue(0)] [GUIColor(1f, 0.7f, 0.7f)]
+            public float modelingPositionCloudHeight = 600f;
+
+            [TitleGroup("建模/位置")] [LabelText("云层厚度(m)")] [PropertyRange(100, 8000)] [GUIColor(1f, 0.7f, 0.7f)]
+            public float modelingPositionCloudThickness = 4000f;
+            
+            [TitleGroup("建模/基础(云图)")] [LabelText("八度音程")] [PropertyRange(1, 6)] [GUIColor(0.7f, 0.7f, 1f)]
+            public int modelingShapeBaseOctaves = 3;
+            
+            [TitleGroup("建模/基础(云图)")] [LabelText("增益")] [PropertyRange(0, 1)] [GUIColor(1f, 0.7f, 0.7f)]
+            public float modelingShapeBaseGain = 0.5f;
+            
+            [TitleGroup("建模/基础(云图)")] [LabelText("频率")] [PropertyRange(2, 5)] [GUIColor(0.7f, 0.7f, 1f)]
+            public float modelingShapeBaseFreq = 2f;
+            
+            [TitleGroup("建模/基础(云图)")] [LabelText("比例")] [GUIColor(1f, 0.7f, 0.7f)]
+            public float modelingShapeBaseScale = 5f;
+
+            [Title("基础(云图)")] [FoldoutGroup("运动")] [LabelText("动态矢量")] [PropertyOrder(-1)] [GUIColor(0.7f, 0.7f, 0.7f)]
+            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
+            public Vector2 motionBaseDynamicVector = Vector2.zero;
+
+            [FoldoutGroup("运动")] [LabelText("方向")] [GUIColor(0.7f, 0.7f, 1f)] [PropertyOrder(-1)]
             [ShowIf("@WorldManager.Instance?.timeModule != null && WorldManager.Instance?.windZoneModule == null")]
-            public float _MotionBase_Direction;
+            public float motionBaseDirection;
 
             [FoldoutGroup("运动")] [LabelText("速度")] [PropertyRange(0, 5)]
-            [GUIColor(1f, 0.7f, 0.7f)] [PropertyOrder(-1)]
-            [ShowIf("@WorldManager.Instance?.timeModule != null")]
-            public float _MotionBase_Speed = 0.25f;
+            [GUIColor(1f, 0.7f, 0.7f)] [PropertyOrder(-1)] [ShowIf("@WorldManager.Instance?.timeModule != null")]
+            public float motionBaseSpeed = 0.25f;
 
             [FoldoutGroup("运动")] [LabelText("使用方向随机")]
-            [GUIColor(0.7f, 0.7f, 1f)] [PropertyOrder(-1)]
-            [ShowIf("@WorldManager.Instance?.timeModule != null && WorldManager.Instance?.windZoneModule != null")]
-            public bool _MotionBase_UseDirectionRandom = true;
+            [GUIColor(0.7f, 0.7f, 1f)] [PropertyOrder(-1)] [ShowIf("@WorldManager.Instance?.timeModule != null && WorldManager.Instance?.windZoneModule != null")]
+            public bool motionBaseUseDirectionRandom = true;
 
-            [FoldoutGroup("运动")] [LabelText("    随机范围")]
-            [GUIColor(0.7f, 0.7f, 1f)] [PropertyOrder(-1)]
-            [ShowIf("@WorldManager.Instance?.timeModule != null && WorldManager.Instance?.windZoneModule != null && _MotionBase_UseDirectionRandom")]
-            public float _MotionBase_DirectionRandomRange = 60;
+            [FoldoutGroup("运动")] [LabelText("    随机范围")] [GUIColor(0.7f, 0.7f, 1f)] [PropertyOrder(-1)]
+            [ShowIf("@WorldManager.Instance?.timeModule != null && WorldManager.Instance?.windZoneModule != null && motionBaseUseDirectionRandom")]
+            public float motionBaseDirectionRandomRange = 60;
 
-            [FoldoutGroup("运动")] [LabelText("    随机频率")]
-            [GUIColor(0.7f, 0.7f, 1f)][PropertyOrder(-1)]
-            [ShowIf("@WorldManager.Instance?.timeModule != null && WorldManager.Instance?.windZoneModule != null && _MotionBase_UseDirectionRandom")]
-            public float _MotionBase_DirectionRandomFreq = 12;
+            [FoldoutGroup("运动")] [LabelText("    随机频率")] [GUIColor(0.7f, 0.7f, 1f)][PropertyOrder(-1)]
+            [ShowIf("@WorldManager.Instance?.timeModule != null && WorldManager.Instance?.windZoneModule != null && motionBaseUseDirectionRandom")]
+            public float motionBaseDirectionRandomFreq = 12;
             
         }
         
@@ -352,34 +322,13 @@ namespace WorldSystem.Runtime
         #endregion
 
 
+        
         #region 安装属性
-
-        private void SetupStaticProperty_CloudBaseTex()
-        {
-            Shader.SetGlobalFloat(_Render_MaxRenderDistance_ID, property._Render_MaxRenderDistance);
-            Shader.SetGlobalFloat(_Modeling_Amount_UseFarOverlay_ID, property._Modeling_Amount_UseFarOverlay ? 1 : 0);
-            Shader.SetGlobalFloat(_Modeling_ShapeBase_Octaves_ID, property._Modeling_ShapeBase_Octaves);
-            Shader.SetGlobalFloat(_Modeling_ShapeBase_Freq_ID, property._Modeling_ShapeBase_Freq);
-        }
+        
         private readonly int _Render_MaxRenderDistance_ID = Shader.PropertyToID("_Render_MaxRenderDistance");
         private readonly int _Modeling_Amount_UseFarOverlay_ID = Shader.PropertyToID("_Modeling_Amount_UseFarOverlay");
         private readonly int _Modeling_ShapeBase_Octaves_ID = Shader.PropertyToID("_Modeling_ShapeBase_Octaves");
         private readonly int _Modeling_ShapeBase_Freq_ID = Shader.PropertyToID("_Modeling_ShapeBase_Freq");
-
-        
-        private void SetupDynamicProperty_CloudBaseTex()
-        {
-            Shader.SetGlobalFloat(_Modeling_Amount_CloudAmount_ID, property._Modeling_Amount_CloudAmount);
-
-            if (property._Modeling_Amount_UseFarOverlay)
-            {
-                Shader.SetGlobalFloat(_Modeling_Amount_OverlayStartDistance_ID, property._Modeling_Amount_OverlayStartDistance);
-                Shader.SetGlobalFloat(_Modeling_Amount_OverlayCloudAmount_ID, property._Modeling_Amount_OverlayCloudAmount);
-            }
-            Shader.SetGlobalFloat(_Modeling_ShapeBase_Gain_ID, property._Modeling_ShapeBase_Gain);
-            Shader.SetGlobalFloat(_Modeling_ShapeBase_Scale_ID, property._Modeling_ShapeBase_Scale);
-            Shader.SetGlobalVector(_MotionBase_Position_ID, _MotionBase_Position);
-        }
         private readonly int _Modeling_Amount_CloudAmount_ID = Shader.PropertyToID("_Modeling_Amount_CloudAmount");
         private readonly int _Modeling_Amount_OverlayStartDistance_ID = Shader.PropertyToID("_Modeling_Amount_OverlayStartDistance");
         private readonly int _Modeling_Amount_OverlayCloudAmount_ID = Shader.PropertyToID("_Modeling_Amount_OverlayCloudAmount");
@@ -387,37 +336,59 @@ namespace WorldSystem.Runtime
         private readonly int _Modeling_ShapeBase_Scale_ID = Shader.PropertyToID("_Modeling_ShapeBase_Scale");
         private readonly int _MotionBase_Position_ID = Shader.PropertyToID("_MotionBase_Position");
         
+        private void SetupStaticProperty_CloudBaseTex()
+        {
+            Shader.SetGlobalFloat(_Render_MaxRenderDistance_ID, property.renderMaxRenderDistance);
+            Shader.SetGlobalFloat(_Modeling_Amount_UseFarOverlay_ID, property.modelingAmountUseFarOverlay ? 1 : 0);
+            Shader.SetGlobalFloat(_Modeling_ShapeBase_Octaves_ID, property.modelingShapeBaseOctaves);
+            Shader.SetGlobalFloat(_Modeling_ShapeBase_Freq_ID, property.modelingShapeBaseFreq);
+        }
+        
+        private void SetupDynamicProperty_CloudBaseTex()
+        {
+            Shader.SetGlobalFloat(_Modeling_Amount_CloudAmount_ID, property.modelingAmountCloudAmount);
+            if (property.modelingAmountUseFarOverlay)
+            {
+                Shader.SetGlobalFloat(_Modeling_Amount_OverlayStartDistance_ID, property.modelingAmountOverlayStartDistance);
+                Shader.SetGlobalFloat(_Modeling_Amount_OverlayCloudAmount_ID, property.modelingAmountOverlayCloudAmount);
+            }
+            Shader.SetGlobalFloat(_Modeling_ShapeBase_Gain_ID, property.modelingShapeBaseGain);
+            Shader.SetGlobalFloat(_Modeling_ShapeBase_Scale_ID, property.modelingShapeBaseScale);
+            Shader.SetGlobalVector(_MotionBase_Position_ID, _motionBasePosition);
+        }
+        
         #endregion
 
 
+        
         #region 事件函数
 
         private void OnEnable_CloudMap()
         {
 #if UNITY_EDITOR
-            if (property.VolumeCloud_BaseTex_Shader == null)
-                property.VolumeCloud_BaseTex_Shader = AssetDatabase.LoadAssetAtPath<Shader>(
+            if (property.volumeCloudBaseTexShader == null)
+                property.volumeCloudBaseTexShader = AssetDatabase.LoadAssetAtPath<Shader>(
                     "Packages/com.worldsystem//Shader/VolumeClouds_V1_1_20240604/VolumeCloudBaseTex_V1_1_20240604.shader");
 #endif
-            if (property.VolumeCloud_BaseTex_Material == null)
-                property.VolumeCloud_BaseTex_Material =
-                    CoreUtils.CreateEngineMaterial(property.VolumeCloud_BaseTex_Shader);
+            if (property.volumeCloudBaseTexMaterial == null)
+                property.volumeCloudBaseTexMaterial =
+                    CoreUtils.CreateEngineMaterial(property.volumeCloudBaseTexShader);
 
-            CloudBaseTexRT ??= RTHandles.Alloc(new RenderTextureDescriptor(512, 512, GraphicsFormat.B10G11R11_UFloatPack32,0),
+            _cloudBaseTexRT ??= RTHandles.Alloc(new RenderTextureDescriptor(512, 512, GraphicsFormat.B10G11R11_UFloatPack32,0),
                 name: "CloudMapRT");
         }
 
         private void OnDisable_CloudMap()
         {
-            if (property.VolumeCloud_BaseTex_Shader != null)
-                Resources.UnloadAsset(property.VolumeCloud_BaseTex_Shader);
-            if (property.VolumeCloud_BaseTex_Material != null)
-                CoreUtils.Destroy(property.VolumeCloud_BaseTex_Material);
-            CloudBaseTexRT?.Release();
+            if (property.volumeCloudBaseTexShader != null)
+                Resources.UnloadAsset(property.volumeCloudBaseTexShader);
+            if (property.volumeCloudBaseTexMaterial != null)
+                CoreUtils.Destroy(property.volumeCloudBaseTexMaterial);
+            _cloudBaseTexRT?.Release();
 
-            property.VolumeCloud_BaseTex_Shader = null;
-            CloudBaseTexRT = null;
-            property.VolumeCloud_BaseTex_Material = null;
+            property.volumeCloudBaseTexShader = null;
+            _cloudBaseTexRT = null;
+            property.volumeCloudBaseTexMaterial = null;
         }
 
         private void OnValidate_CloudMap()
@@ -429,25 +400,31 @@ namespace WorldSystem.Runtime
         {
             SetupDynamicProperty_CloudBaseTex();
         }
+        
         #endregion
 
 
+        
         #region 渲染函数
+        
+        private RTHandle _cloudBaseTexRT;
+        
+        private readonly int CloudBaseTexRT_ID = Shader.PropertyToID("CloudBaseTexRT");
         
         public void RenderCloudMap()
         {
-            if (!isActiveAndEnabled || property._Modeling_Amount_CloudAmount < 0.25f) return;
+            if (!isActiveAndEnabled || property.modelingAmountCloudAmount < 0.25f) return;
             
             //渲染云图
-            Graphics.Blit(null, CloudBaseTexRT, property.VolumeCloud_BaseTex_Material, 0);
+            Graphics.Blit(null, _cloudBaseTexRT, property.volumeCloudBaseTexMaterial, 0);
 
             //将云图设置为全局参数
-            Shader.SetGlobalTexture(CloudBaseTexRT_ID, CloudBaseTexRT);
+            Shader.SetGlobalTexture(CloudBaseTexRT_ID, _cloudBaseTexRT);
         }
-        private RTHandle CloudBaseTexRT;
-        private readonly int CloudBaseTexRT_ID = Shader.PropertyToID("CloudBaseTexRT");
+        
         
         #endregion
+        
     }
 
 
@@ -466,249 +443,197 @@ namespace WorldSystem.Runtime
         [Serializable]
         public partial class Property
         {
-            [Title("体积云")]
-            [FoldoutGroup("配置")] [LabelText("体积云着色器")]
-            [ReadOnly] [PropertyOrder(-20)]
+            [Title("体积云")] [FoldoutGroup("配置")] [LabelText("体积云着色器")] [ReadOnly] [PropertyOrder(-20)]
             [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            public Shader VolumeCloud_Main_Shader;
-
-            [FoldoutGroup("配置")] [LabelText("体积云材质")]
-            [ReadOnly] [PropertyOrder(-20)]
+            public Shader volumeCloudMainShader;
+            
+            [FoldoutGroup("配置")] [LabelText("体积云材质")] [ReadOnly] [PropertyOrder(-20)]
             [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            public Material VolumeCloud_Main_Material;
+            public Material volumeCloudMainMaterial;
             
-            [FoldoutGroup("渲染")] [LabelText("粗略步进")] 
-            [GUIColor(0.7f, 0.7f, 1f)] [PropertyOrder(-10)] 
-            public int _Render_CoarseSteps = 32;
-
-            [FoldoutGroup("渲染")] [LabelText("细节步进")] 
-            [GUIColor(0.7f, 0.7f, 1f)] [PropertyOrder(-10)]
-            public int _Render_DetailSteps = 16;
-
-            [FoldoutGroup("渲染")] [LabelText("Blue噪音纹理数组")]
-            [GUIColor(0.7f, 0.7f, 1f)] [ReadOnly] [PropertyOrder(-10)]
+            [FoldoutGroup("配置")] [LabelText("添加云遮罩到深度着色器")] [ReadOnly] [PropertyOrder(-20)]
             [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            public Texture2DArray _Render_BlueNoiseArray;
-
-            [FoldoutGroup("渲染")] [LabelText("噪音")] [PropertyRange(0, 1)] 
-            [GUIColor(0.7f, 0.7f, 1f)] [PropertyOrder(-10)] 
-            public float _Render_BlueNoise = 1.0f;
-
-            [FoldoutGroup("渲染")] [LabelText("Mipmap距离")] 
-            [GUIColor(0.7f, 0.7f, 1f)] [PropertyOrder(-10)] 
-            public Vector2 _Render_MipmapDistance = new Vector2(4000, 8000);
+            public Shader volumeCloudAddCloudMaskToDepthShader;
             
+            [FoldoutGroup("配置")] [LabelText("添加云遮罩到深度材质")] [ReadOnly] [PropertyOrder(-20)]
+            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
+            public Material volumeCloudAddCloudMaskToDepthMaterial;
             
-            [TitleGroup("建模/细节")] [LabelText("3D噪音")] 
-            [GUIColor(0.7f, 0.7f, 0.7f)] [ReadOnly]
-            public Texture3D _Modeling_ShapeDetail_NoiseTexture3D = null;
+            [FoldoutGroup("渲染")] [LabelText("粗略步进")] [GUIColor(0.7f, 0.7f, 1f)] [PropertyOrder(-10)] 
+            public int renderCoarseSteps = 32;
 
-            [TitleGroup("建模/细节")] [LabelText("类型")] 
-            [GUIColor(0.7f, 0.7f, 1f)]
-            public Noise3DTextureId _Modeling_ShapeDetail_Type = Noise3DTextureId.Perlin;
+            [FoldoutGroup("渲染")] [LabelText("细节步进")] [GUIColor(0.7f, 0.7f, 1f)] [PropertyOrder(-10)]
+            public int renderDetailSteps = 16;
+            
+            [FoldoutGroup("渲染")] [LabelText("Blue噪音纹理数组")] [GUIColor(0.7f, 0.7f, 1f)] [ReadOnly] [PropertyOrder(-10)]
+            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
+            public Texture2DArray renderBlueNoiseArray;
 
-            [TitleGroup("建模/细节")] [LabelText("质量")] 
-            [GUIColor(0.7f, 0.7f, 1f)]
-            public TextureQuality _Modeling_ShapeDetail_Quality = TextureQuality.High;
+            [FoldoutGroup("渲染")] [LabelText("噪音")] [PropertyRange(0, 1)] [GUIColor(0.7f, 0.7f, 1f)] [PropertyOrder(-10)] 
+            public float renderBlueNoise = 1.0f;
 
-            [TitleGroup("建模/细节")] [LabelText("比例")] 
-            [GUIColor(1f, 0.7f, 0.7f)]
-            public Vector3 _Modeling_ShapeDetail_Scale = new(5, 5, 5);
+            [FoldoutGroup("渲染")] [LabelText("Mipmap距离")] [GUIColor(0.7f, 0.7f, 1f)] [PropertyOrder(-10)] 
+            public Vector2 renderMipmapDistance = new Vector2(4000, 8000);
+            
+            [TitleGroup("建模/细节")] [LabelText("3D噪音")] [GUIColor(0.7f, 0.7f, 0.7f)] [ReadOnly]
+            public Texture3D modelingShapeDetailNoiseTexture3D;
 
-            [FoldoutGroup("运动")] [LabelText("使用动态体积云")] 
-            [GUIColor(0.7f, 0.7f, 1f)] [PropertyOrder(-2)]
-            public bool _MotionBase_UseDynamicCloud = true;
+            [TitleGroup("建模/细节")] [LabelText("类型")] [GUIColor(0.7f, 0.7f, 1f)]
+            public Noise3DTextureId modelingShapeDetailType = Noise3DTextureId.Perlin;
 
-            [Title("细节")] 
-            [FoldoutGroup("运动")] [LabelText("动态矢量")] 
-            [GUIColor(0.7f, 0.7f, 0.7f)]
-            public Vector3 _MotionDetail_DynamicVector;
+            [TitleGroup("建模/细节")] [LabelText("质量")] [GUIColor(0.7f, 0.7f, 1f)]
+            public TextureQuality modelingShapeDetailQuality = TextureQuality.High;
 
-            [FoldoutGroup("运动")] [LabelText("方向")]
-            [GUIColor(0.7f, 0.7f, 1f)]
+            [TitleGroup("建模/细节")] [LabelText("比例")] [GUIColor(1f, 0.7f, 0.7f)]
+            public Vector3 modelingShapeDetailScale = new(5, 5, 5);
+
+            [FoldoutGroup("运动")] [LabelText("使用动态体积云")] [GUIColor(0.7f, 0.7f, 1f)] [PropertyOrder(-2)]
+            public bool motionBaseUseDynamicCloud = true;
+
+            [FoldoutGroup("运动")] [LabelText("风速影响")] [GUIColor(0.7f, 0.7f, 1f)] [PropertyOrder(-2)]
+            public float motionBaseWindSpeedCoeff = 1;
+            
+            [Title("细节")] [FoldoutGroup("运动")] [LabelText("动态矢量")] [GUIColor(0.7f, 0.7f, 0.7f)]
+            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
+            public Vector3 motionDetailDynamicVector;
+            
+            [FoldoutGroup("运动")] [LabelText("方向")] [GUIColor(0.7f, 0.7f, 1f)]
             [ShowIf("@WorldManager.Instance?.timeModule != null && WorldManager.Instance?.windZoneModule == null")]
-            public Vector2 _MotionDetail_Direction;
+            public Vector2 motionDetailDirection;
 
-            [FoldoutGroup("运动")] [LabelText("速度")]
-            [GUIColor(1f, 0.7f, 0.7f)]
-            [ShowIf("@WorldManager.Instance?.timeModule != null")]
-            public float _MotionDetail_Speed = 1;
-
-            [FoldoutGroup("运动")] [LabelText("使用随机")]
-            [GUIColor(0.7f, 0.7f, 1f)]
+            [FoldoutGroup("运动")] [LabelText("速度")] [GUIColor(1f, 0.7f, 0.7f)] [ShowIf("@WorldManager.Instance?.timeModule != null")]
+            public float motionDetailSpeed = 1;
+            
+            [FoldoutGroup("运动")] [LabelText("使用随机")] [GUIColor(0.7f, 0.7f, 1f)]
             [ShowIf("@WorldManager.Instance?.timeModule != null && WorldManager.Instance?.windZoneModule != null")]
-            public bool _MotionDetail_UseRandomDirection = true;
+            public bool motionDetailUseRandomDirection = true;
+            
+            [FoldoutGroup("运动")] [LabelText("    随机范围")] [GUIColor(0.7f, 0.7f, 1f)]
+            [ShowIf("@WorldManager.Instance?.timeModule != null && WorldManager.Instance?.windZoneModule != null && motionDetailUseRandomDirection")]
+            public Vector2 motionDetailDirectionRandomRange = new Vector2(40, 20);
+            
+            [FoldoutGroup("运动")] [LabelText("    随机频率")] [MinValue(2)] [GUIColor(0.7f, 0.7f, 1f)]
+            [ShowIf("@WorldManager.Instance?.timeModule != null && WorldManager.Instance?.windZoneModule != null && motionDetailUseRandomDirection")]
+            public float motionDetailDirectionRandomFreq = 12;
 
-            [FoldoutGroup("运动")] [LabelText("    随机范围")]
-            [GUIColor(0.7f, 0.7f, 1f)]
-            [ShowIf("@WorldManager.Instance?.timeModule != null && WorldManager.Instance?.windZoneModule != null && _MotionDetail_UseRandomDirection")]
-            public Vector2 _MotionDetail_DirectionRandomRange = new Vector2(40, 20);
+            [Title("基础")] [FoldoutGroup("光照")] [LabelText("反照率颜色")] [GUIColor(1f, 0.7f, 0.7f)]
+            public Color lightingAlbedoColor = new Color(1.0f, 0.964f, 0.92f);
 
-            [FoldoutGroup("运动")] [LabelText("    随机频率")] [MinValue(2)]
-            [GUIColor(0.7f, 0.7f, 1f)]
-            [ShowIf("@WorldManager.Instance?.timeModule != null && WorldManager.Instance?.windZoneModule != null && _MotionDetail_UseRandomDirection")]
-            public float _MotionDetail_DirectionRandomFreq = 12;
+            [FoldoutGroup("光照")] [LabelText("光照颜色过滤")] [GUIColor(1f, 0.7f, 0.7f)]
+            public Color lightingLightColorFilter = Color.white;
+            
+            [TitleGroup("光照/密度")] [LabelText("消光系数")] [GUIColor(1f, 0.7f, 0.7f)] 
+            [HorizontalGroup("光照/密度/_Lighting_ExtinctionCoeff", 0.9f, DisableAutomaticLabelWidth = true)]
+            public AnimationCurve lightingExtinctionCoeff = new AnimationCurve(new Keyframe(0,15f), new Keyframe(1,15f));
+            
+            [HorizontalGroup("光照/密度/_Lighting_ExtinctionCoeff")][HideLabel][ReadOnly]
+            public float lightingExtinctionCoeffExecute = 15f;
+            
+            [FoldoutGroup("光照")] [LabelText("密度影响")] [PropertyRange(0, 1)] [GUIColor(1f, 0.7f, 0.7f)]
+            public float lightingDensityInfluence = 1.0f;
 
-            [Title("基础")] 
-            [FoldoutGroup("光照")] [LabelText("反照率颜色")] 
-            [GUIColor(1f, 0.7f, 0.7f)]
-            public Color _Lighting_AlbedoColor = new Color(1.0f, 0.964f, 0.92f);
+            [FoldoutGroup("光照")] [LabelText("海拔密度影响")] [PropertyRange(0, 1)] [GUIColor(1f, 0.7f, 0.7f)]
+            public float lightingHeightDensityInfluence = 1.0f;
 
-            [FoldoutGroup("光照")] [LabelText("光照颜色过滤")] 
-            [GUIColor(1f, 0.7f, 0.7f)]
-            public Color _Lighting_LightColorFilter = Color.white;
+            [Title("环境")] [FoldoutGroup("光照")] [LabelText("廉价环境光照")] [GUIColor(0.7f, 0.7f, 1f)]
+            public bool lightingCheapAmbient = true;
 
-            [Title("密度")] 
-            [FoldoutGroup("光照")] [LabelText("消光系数")]
-            [GUIColor(1f, 0.7f, 0.7f)]
-            public float _Lighting_ExtinctionCoeff = 10f;
+            [FoldoutGroup("光照")] [LabelText("环境照明强度")] [GUIColor(1f, 0.7f, 0.7f)]
+            public float lightingAmbientExposure = 1.0f;
+            
+            [FoldoutGroup("光照")] [LabelText("可见度")] [GUIColor(1f, 0.7f, 0.7f)]
+            public float lightingAtmosphereVisibility = 30000f;
 
-            [FoldoutGroup("光照")] [LabelText("密度影响")] [PropertyRange(0, 1)] 
-            [GUIColor(1f, 0.7f, 0.7f)]
-            public float _Lighting_DensityInfluence = 1.0f;
+            [Title("照明")] [FoldoutGroup("光照")] [LabelText("HG强度")] [PropertyRange(0, 1)] [GUIColor(1f, 0.7f, 0.7f)]
+            public float lightingHgStrength = 1.0f;
 
-            [FoldoutGroup("光照")] [LabelText("海拔密度影响")] [PropertyRange(0, 1)] 
-            [GUIColor(1f, 0.7f, 0.7f)]
-            public float _Lighting_HeightDensityInfluence = 1.0f;
+            [FoldoutGroup("光照")] [LabelText("HG偏心度向前")] [PropertyRange(0f, 0.99f)] [GUIColor(1f, 0.7f, 0.7f)]
+            public float lightingHgEccentricityForward = 0.6f;
 
-            [Title("环境")] 
-            [FoldoutGroup("光照")] [LabelText("廉价环境光照")] 
-            [GUIColor(0.7f, 0.7f, 1f)]
-            public bool _Lighting_CheapAmbient = true;
+            [FoldoutGroup("光照")] [LabelText("HG偏心度向后")] [PropertyRange(-0.99f, 0.99f)] [GUIColor(1f, 0.7f, 0.7f)]
+            public float lightingHgEccentricityBackward = -0.2f;
 
-            [FoldoutGroup("光照")] [LabelText("环境照明强度")] 
-            [GUIColor(1f, 0.7f, 0.7f)]
-            public float _Lighting_AmbientExposure = 1.0f;
+            [FoldoutGroup("光照")] [LabelText("最大光照距离")] [GUIColor(1f, 0.7f, 0.7f)]
+            public int lightingMaxLightingDistance = 2000;
+            
+            [FoldoutGroup("光照")] [LabelText("着色强度衰减")] [PropertyRange(0, 1)] [GUIColor(1f, 0.7f, 0.7f)]
+            public float lightingShadingStrengthFalloff = 0.2f;
 
-            [FoldoutGroup("光照")] [LabelText("覆盖大气可见度")] 
-            [GUIColor(0.7f, 0.7f, 1f)]
-            public bool _Lighting_UseAtmosphereVisibilityOverlay;
+            [FoldoutGroup("光照")] [LabelText("散射乘数")] [GUIColor(1f, 0.7f, 0.7f)]
+            public float lightingScatterMultiplier = 100;
 
-            [FoldoutGroup("光照")] [LabelText("    可见度")]
-            [GUIColor(1f, 0.7f, 0.7f)]
-            [ShowIf("_Lighting_UseAtmosphereVisibilityOverlay")]
-            public float _Lighting_AtmosphereVisibility = 30000f;
-
-            [Title("照明")] 
-            [FoldoutGroup("光照")] [LabelText("HG强度")] [PropertyRange(0, 1)] 
-            [GUIColor(1f, 0.7f, 0.7f)]
-            public float _Lighting_HGStrength = 1.0f;
-
-            [FoldoutGroup("光照")] [LabelText("HG偏心度向前")] [PropertyRange(0f, 0.99f)] 
-            [GUIColor(1f, 0.7f, 0.7f)]
-            public float _Lighting_HGEccentricityForward = 0.6f;
-
-            [FoldoutGroup("光照")] [LabelText("HG偏心度向后")] [PropertyRange(-0.99f, 0.99f)] 
-            [GUIColor(1f, 0.7f, 0.7f)]
-            public float _Lighting_HGEccentricityBackward = -0.2f;
-
-            [FoldoutGroup("光照")] [LabelText("最大光照距离")] 
-            [GUIColor(1f, 0.7f, 0.7f)]
-            public int _Lighting_MaxLightingDistance = 2000;
-
-            [FoldoutGroup("光照")] [LabelText("着色强度衰减")] [PropertyRange(0, 1)] 
-            [GUIColor(1f, 0.7f, 0.7f)]
-            public float _Lighting_ShadingStrengthFalloff = 0.2f;
-
-            [FoldoutGroup("光照")] [LabelText("散射乘数")] 
-            [GUIColor(1f, 0.7f, 0.7f)]
-            public float _Lighting_ScatterMultiplier = 100;
-
-            [FoldoutGroup("光照")] [LabelText("散射强度")] [PropertyRange(0, 1)] 
-            [GUIColor(1f, 0.7f, 0.7f)]
-            public float _Lighting_ScatterStrength = 1.0f;
+            [FoldoutGroup("光照")] [LabelText("散射强度")] [PropertyRange(0, 1)] [GUIColor(1f, 0.7f, 0.7f)]
+            public float lightingScatterStrength = 1.0f;
 
             public void LimitProperty()
             {
-                _Render_MaxRenderDistance = math.max(_Render_MaxRenderDistance, 0);
-                _Modeling_Amount_CloudAmount = math.clamp(_Modeling_Amount_CloudAmount, 0,1);
-                _Modeling_Amount_OverlayStartDistance = math.max(_Modeling_Amount_OverlayStartDistance, 0);
-                _Modeling_Amount_OverlayCloudAmount = math.clamp(_Modeling_Amount_OverlayCloudAmount, 0,1);
-                _Modeling_Amount_OverlayCloudAmount = math.clamp(_Modeling_Amount_OverlayCloudAmount, 0,1);
-                _Modeling_ShapeBase_Octaves = math.clamp(_Modeling_ShapeBase_Octaves, 1,6);
-                _Modeling_ShapeBase_Gain = math.clamp(_Modeling_ShapeBase_Gain, 0,1);
-                _Modeling_ShapeBase_Freq = math.clamp(_Modeling_ShapeBase_Freq, 2,5);
-                _Modeling_ShapeBase_Scale = math.max(_Modeling_ShapeBase_Scale, 0);
-                _MotionBase_Direction = math.clamp(_MotionBase_Direction, 0,360);
-                _MotionBase_Speed  = math.clamp(_MotionBase_Speed, 0,5);
-                _MotionBase_DirectionRandomRange  = math.clamp(_MotionBase_DirectionRandomRange, 0,90);
-                _MotionBase_DirectionRandomFreq  = math.max(_MotionBase_DirectionRandomFreq, 2);
+                renderMaxRenderDistance = math.max(renderMaxRenderDistance, 0);
+                modelingAmountCloudAmount = math.clamp(modelingAmountCloudAmount, 0,1);
+                modelingAmountOverlayStartDistance = math.max(modelingAmountOverlayStartDistance, 0);
+                modelingAmountOverlayCloudAmount = math.clamp(modelingAmountOverlayCloudAmount, 0,1);
+                modelingAmountOverlayCloudAmount = math.clamp(modelingAmountOverlayCloudAmount, 0,1);
+                modelingShapeBaseOctaves = math.clamp(modelingShapeBaseOctaves, 1,6);
+                modelingShapeBaseGain = math.clamp(modelingShapeBaseGain, 0,1);
+                modelingShapeBaseFreq = math.clamp(modelingShapeBaseFreq, 2,5);
+                modelingShapeBaseScale = math.max(modelingShapeBaseScale, 0);
+                motionBaseDirection = math.clamp(motionBaseDirection, 0,360);
+                motionBaseSpeed  = math.clamp(motionBaseSpeed, 0,5);
+                motionBaseDirectionRandomRange  = math.clamp(motionBaseDirectionRandomRange, 0,90);
+                motionBaseDirectionRandomFreq  = math.max(motionBaseDirectionRandomFreq, 2);
                 
-                _Render_CoarseSteps = math.clamp(_Render_CoarseSteps, 0,128);
-                _Render_DetailSteps = math.clamp(_Render_DetailSteps, 0,256);
-                _Render_BlueNoise = math.clamp(_Render_BlueNoise, 0,1);
-                _Render_MipmapDistance = math.clamp(_Render_MipmapDistance, 0,new Vector2(10000, 20000));
-                // _Render_TemporalAAFactor = math.clamp(_Render_TemporalAAFactor, 0,1);
-                _Modeling_Position_PlanetRadius = math.max(_Modeling_Position_PlanetRadius, 0);
-                _Modeling_Position_CloudHeight = math.max(_Modeling_Position_CloudHeight, 0);
-                _Modeling_Position_CloudThickness = math.clamp(_Modeling_Position_CloudThickness, 100,8000);
-                _Modeling_ShapeDetail_Scale = math.max(_Modeling_ShapeDetail_Scale, 0);
-                _MotionDetail_Direction = math.clamp(_MotionDetail_Direction, new float2(-90,0),new float2(90,360));
-                _MotionDetail_Speed = math.max(_MotionDetail_Speed, 0);
-                _MotionDetail_DirectionRandomRange = math.clamp(_MotionDetail_DirectionRandomRange, 0,90);
-                _MotionDetail_DirectionRandomFreq = math.max(_MotionDetail_DirectionRandomFreq, 2);
-                _Lighting_ExtinctionCoeff = math.max(_Lighting_ExtinctionCoeff, 0);
-                _Lighting_DensityInfluence = math.clamp(_Lighting_DensityInfluence, 0,1);
-                _Lighting_HeightDensityInfluence = math.clamp(_Lighting_HeightDensityInfluence, 0,1);
-                _Lighting_AmbientExposure = math.max(_Lighting_AmbientExposure, 0);
-                _Lighting_AtmosphereVisibility = math.max(_Lighting_AtmosphereVisibility, 0);
-                _Lighting_HGStrength = math.clamp(_Lighting_HGStrength, 0,1);
-                _Lighting_HGEccentricityForward = math.clamp(_Lighting_HGEccentricityForward, 0,0.99f);
-                _Lighting_HGEccentricityBackward = math.clamp(_Lighting_HGEccentricityBackward, -0.99f,0.99f);
-                _Lighting_MaxLightingDistance = math.max(_Lighting_MaxLightingDistance, 0);
-                _Lighting_ShadingStrengthFalloff = math.clamp(_Lighting_ShadingStrengthFalloff, 0,1);
-                _Lighting_ScatterMultiplier = math.max(_Lighting_ScatterMultiplier, 0);
-                _Lighting_ScatterStrength = math.clamp(_Lighting_ScatterStrength, 0,1);
+                renderCoarseSteps = math.clamp(renderCoarseSteps, 0,128);
+                renderDetailSteps = math.clamp(renderDetailSteps, 0,256);
+                renderBlueNoise = math.clamp(renderBlueNoise, 0,1);
+                renderMipmapDistance = math.clamp(renderMipmapDistance, 0,new Vector2(10000, 20000));
+                modelingPositionPlanetRadius = math.max(modelingPositionPlanetRadius, 0);
+                modelingPositionCloudHeight = math.max(modelingPositionCloudHeight, 0);
+                modelingPositionCloudThickness = math.clamp(modelingPositionCloudThickness, 100,8000);
+                modelingShapeDetailScale = math.max(modelingShapeDetailScale, 0);
+                motionDetailDirection = math.clamp(motionDetailDirection, new float2(-90,0),new float2(90,360));
+                motionDetailSpeed = math.max(motionDetailSpeed, 0);
+                motionDetailDirectionRandomRange = math.clamp(motionDetailDirectionRandomRange, 0,90);
+                motionDetailDirectionRandomFreq = math.max(motionDetailDirectionRandomFreq, 2);
+                lightingDensityInfluence = math.clamp(lightingDensityInfluence, 0,1);
+                lightingHeightDensityInfluence = math.clamp(lightingHeightDensityInfluence, 0,1);
+                lightingAmbientExposure = math.max(lightingAmbientExposure, 0);
+                lightingAtmosphereVisibility = math.max(lightingAtmosphereVisibility, 0);
+                lightingHgStrength = math.clamp(lightingHgStrength, 0,1);
+                lightingHgEccentricityForward = math.clamp(lightingHgEccentricityForward, 0,0.99f);
+                lightingHgEccentricityBackward = math.clamp(lightingHgEccentricityBackward, -0.99f,0.99f);
+                lightingMaxLightingDistance = math.max(lightingMaxLightingDistance, 0);
+                lightingShadingStrengthFalloff = math.clamp(lightingShadingStrengthFalloff, 0,1);
+                lightingScatterMultiplier = math.max(lightingScatterMultiplier, 0);
+                lightingScatterStrength = math.clamp(lightingScatterStrength, 0,1);
                 
-                _Shadow_Distance = math.max(_Shadow_Distance, 0);
+                shadowDistance = math.max(shadowDistance, 0);
+            }
+
+            public void ExecuteProperty()
+            {
+                if (WorldManager.Instance.timeModule is null) return;
+                if (!UseLerp)
+                {
+                    //未插值时
+                    lightingExtinctionCoeffExecute =
+                        lightingExtinctionCoeff.Evaluate(WorldManager.Instance.timeModule.CurrentTime01);
+                }
             }
             
         }
         
         [HideLabel]
         public Property property = new();
+
+        public static bool UseLerp = false;
+        
+        public bool useAddCloudMaskToDepth;
+        
         #endregion
 
+        
 
         #region 安装属性
-
-        private void SetupStaticProperty_VolumeCloud()
-        {
-            Shader.SetGlobalFloat(_Render_CoarseSteps_ID, property._Render_CoarseSteps);
-            Shader.SetGlobalFloat(_Render_DetailSteps_ID, property._Render_DetailSteps);
-            Shader.SetGlobalTexture(_Render_BlueNoiseArray_ID, property._Render_BlueNoiseArray);
-            Shader.SetGlobalFloat(_Render_BlueNoise_ID, property._Render_BlueNoise);
-            Shader.SetGlobalVector(_Render_MipmapDistance_ID, property._Render_MipmapDistance);
-            Shader.SetGlobalFloat(_Modeling_Position_PlanetRadius_ID, property._Modeling_Position_PlanetRadius);
-            Shader.SetGlobalTexture(_Modeling_ShapeDetail_NoiseTexture3D_ID, property._Modeling_ShapeDetail_NoiseTexture3D);
-            Shader.SetGlobalFloat(_Lighting_CheapAmbient_ID, property._Lighting_CheapAmbient ? 1 : 0);
-
-            
-        }
-        private void SetupDynamicProperty_VolumeCloud()
-        {
-            Shader.SetGlobalFloat(_Render_BlueNoiseArrayIndices_ID, Time.renderedFrameCount % 64);
-            Shader.SetGlobalFloat(_Modeling_Position_CloudHeight_ID, property._Modeling_Position_CloudHeight);
-            Shader.SetGlobalFloat(_Modeling_Position_CloudThickness_ID, property._Modeling_Position_CloudThickness);
-            Shader.SetGlobalVector(_Modeling_ShapeDetail_Scale_ID, property._Modeling_ShapeDetail_Scale);
-            Shader.SetGlobalFloat(_Lighting_AmbientExposure_ID, property._Lighting_AmbientExposure);
-            Shader.SetGlobalVector(_MotionDetail_Position_ID, _MotionDetail_Position);
-            Shader.SetGlobalVector(_Lighting_AlbedoColor_ID, property._Lighting_AlbedoColor);
-            Shader.SetGlobalVector(_Lighting_LightColorFilter_ID, property._Lighting_LightColorFilter);
-            Shader.SetGlobalFloat(_Lighting_ExtinctionCoeff_ID, property._Lighting_ExtinctionCoeff);
-            Shader.SetGlobalFloat(_Lighting_DensityInfluence_ID, property._Lighting_DensityInfluence);
-            Shader.SetGlobalFloat(_Lighting_HeightDensityInfluence_ID, property._Lighting_HeightDensityInfluence);
-            Shader.SetGlobalFloat(_Lighting_AtmosphereVisibility_ID, GetAtmosphereVisibility()); //大气可见度
-            Shader.SetGlobalFloat(_Lighting_HGStrength_ID, property._Lighting_HGStrength);
-            Shader.SetGlobalFloat(_Lighting_HGEccentricityForward_ID, property._Lighting_HGEccentricityForward);
-            Shader.SetGlobalFloat(_Lighting_HGEccentricityBackward_ID, property._Lighting_HGEccentricityBackward);
-            Shader.SetGlobalFloat(_Lighting_MaxLightingDistance_ID, property._Lighting_MaxLightingDistance);
-            Shader.SetGlobalFloat(_Lighting_ShadingStrengthFalloff_ID, property._Lighting_ShadingStrengthFalloff);
-            Shader.SetGlobalFloat(_Lighting_ScatterMultiplier_ID, property._Lighting_ScatterMultiplier);
-            Shader.SetGlobalFloat(_Lighting_ScatterStrength_ID, property._Lighting_ScatterStrength);
-        }
         
-        private readonly int _ScreenTexture = Shader.PropertyToID("_ScreenTexture");
         private readonly int _Render_BlueNoiseArray_ID = Shader.PropertyToID("_Render_BlueNoiseArray");
         private readonly int _Render_BlueNoiseArrayIndices_ID = Shader.PropertyToID("_Render_BlueNoiseArrayIndices");
         private readonly int _Modeling_ShapeDetail_NoiseTexture3D_ID = Shader.PropertyToID("_Modeling_ShapeDetail_NoiseTexture3D");
@@ -738,26 +663,65 @@ namespace WorldSystem.Runtime
         private readonly int _Render_MipmapDistance_ID = Shader.PropertyToID("_Render_MipmapDistance");
         private readonly int _RenderTextureDimensions = Shader.PropertyToID("_RenderTextureDimensions");
         private readonly int _MotionDetail_Position_ID = Shader.PropertyToID("_MotionDetail_Position");
+        
+        private void SetupStaticProperty_VolumeCloud()
+        {
+            Shader.SetGlobalFloat(_Render_CoarseSteps_ID, property.renderCoarseSteps);
+            Shader.SetGlobalFloat(_Render_DetailSteps_ID, property.renderDetailSteps);
+            Shader.SetGlobalTexture(_Render_BlueNoiseArray_ID, property.renderBlueNoiseArray);
+            Shader.SetGlobalFloat(_Render_BlueNoise_ID, property.renderBlueNoise);
+            Shader.SetGlobalVector(_Render_MipmapDistance_ID, property.renderMipmapDistance);
+            Shader.SetGlobalFloat(_Modeling_Position_PlanetRadius_ID, property.modelingPositionPlanetRadius);
+            Shader.SetGlobalTexture(_Modeling_ShapeDetail_NoiseTexture3D_ID, property.modelingShapeDetailNoiseTexture3D);
+            Shader.SetGlobalFloat(_Lighting_CheapAmbient_ID, property.lightingCheapAmbient ? 1 : 0);
+        }
+        
+        private void SetupDynamicProperty_VolumeCloud()
+        {
+            Shader.SetGlobalFloat(_Render_BlueNoiseArrayIndices_ID, Time.renderedFrameCount % 64);
+            Shader.SetGlobalFloat(_Modeling_Position_CloudHeight_ID, property.modelingPositionCloudHeight);
+            Shader.SetGlobalFloat(_Modeling_Position_CloudThickness_ID, property.modelingPositionCloudThickness);
+            Shader.SetGlobalVector(_Modeling_ShapeDetail_Scale_ID, property.modelingShapeDetailScale);
+            Shader.SetGlobalFloat(_Lighting_AmbientExposure_ID, property.lightingAmbientExposure);
+            Shader.SetGlobalVector(_MotionDetail_Position_ID, _motionDetailPosition);
+            Shader.SetGlobalVector(_Lighting_AlbedoColor_ID, property.lightingAlbedoColor);
+            Shader.SetGlobalVector(_Lighting_LightColorFilter_ID, property.lightingLightColorFilter);
+            Shader.SetGlobalFloat(_Lighting_ExtinctionCoeff_ID, property.lightingExtinctionCoeffExecute);
+            Shader.SetGlobalFloat(_Lighting_DensityInfluence_ID, property.lightingDensityInfluence);
+            Shader.SetGlobalFloat(_Lighting_HeightDensityInfluence_ID, property.lightingHeightDensityInfluence);
+            Shader.SetGlobalFloat(_Lighting_AtmosphereVisibility_ID, GetAtmosphereVisibility()); //大气可见度
+            Shader.SetGlobalFloat(_Lighting_HGStrength_ID, property.lightingHgStrength);
+            Shader.SetGlobalFloat(_Lighting_HGEccentricityForward_ID, property.lightingHgEccentricityForward);
+            Shader.SetGlobalFloat(_Lighting_HGEccentricityBackward_ID, property.lightingHgEccentricityBackward);
+            Shader.SetGlobalFloat(_Lighting_MaxLightingDistance_ID, property.lightingMaxLightingDistance);
+            Shader.SetGlobalFloat(_Lighting_ShadingStrengthFalloff_ID, property.lightingShadingStrengthFalloff);
+            Shader.SetGlobalFloat(_Lighting_ScatterMultiplier_ID, property.lightingScatterMultiplier);
+            Shader.SetGlobalFloat(_Lighting_ScatterStrength_ID, property.lightingScatterStrength);
+        }
 
+        
         #endregion
 
+        
 
         #region 事件函数
+        
+        [HideInInspector] public bool update;
 
         private void OnEnable()
         {
 #if UNITY_EDITOR
 
-            if (property.VolumeCloud_Main_Shader == null)
-                property.VolumeCloud_Main_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/VolumeCloudMain_V1_1_20240604.shader");
+            if (property.volumeCloudMainShader == null)
+                property.volumeCloudMainShader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/VolumeCloudMain_V1_1_20240604.shader");
 
-            if (property._Render_BlueNoiseArray == null)
-                property._Render_BlueNoiseArray = AssetDatabase.LoadAssetAtPath<Texture2DArray>("Packages/com.worldsystem/Textures/Noise Textures/BlueNoise/_Render_BlueNoiseArray.asset");
+            if (property.renderBlueNoiseArray == null)
+                property.renderBlueNoiseArray = AssetDatabase.LoadAssetAtPath<Texture2DArray>("Packages/com.worldsystem/Textures/Noise Textures/BlueNoise/_Render_BlueNoiseArray.asset");
 
 #endif
 
-            if (property.VolumeCloud_Main_Material == null)
-                property.VolumeCloud_Main_Material = CoreUtils.CreateEngineMaterial(property.VolumeCloud_Main_Shader);
+            if (property.volumeCloudMainMaterial == null)
+                property.volumeCloudMainMaterial = CoreUtils.CreateEngineMaterial(property.volumeCloudMainShader);
             
             
             OnEnable_CloudMap();
@@ -767,19 +731,27 @@ namespace WorldSystem.Runtime
         
         private void OnDisable()
         {
-            if (property.VolumeCloud_Main_Shader != null)
-                Resources.UnloadAsset(property.VolumeCloud_Main_Shader);
-            if (property._Render_BlueNoiseArray != null)
-                Resources.UnloadAsset(property._Render_BlueNoiseArray);
+            if (property.volumeCloudMainShader != null)
+                Resources.UnloadAsset(property.volumeCloudMainShader);
+            if (property.renderBlueNoiseArray != null)
+                Resources.UnloadAsset(property.renderBlueNoiseArray);
             
-            if (property.VolumeCloud_Main_Material != null)
-                CoreUtils.Destroy(property.VolumeCloud_Main_Material);
+            if (property.volumeCloudMainMaterial != null)
+                CoreUtils.Destroy(property.volumeCloudMainMaterial);
             
+            if (property.volumeCloudAddCloudMaskToDepthShader != null)
+                Resources.UnloadAsset(property.volumeCloudAddCloudMaskToDepthShader);
+            if (property.volumeCloudAddCloudMaskToDepthMaterial != null)
+                CoreUtils.Destroy(property.volumeCloudAddCloudMaskToDepthMaterial);
             
-            property._Render_BlueNoiseArray = null;
-            property.VolumeCloud_Main_Shader = null;
-            property.VolumeCloud_Main_Material = null;
+            property.renderBlueNoiseArray = null;
+            property.volumeCloudMainShader = null;
+            property.volumeCloudMainMaterial = null;
+            property.volumeCloudAddCloudMaskToDepthShader = null;
+            property.volumeCloudAddCloudMaskToDepthMaterial = null;
             
+            _temporaryRTAddCloudMaskToDepth?.Release();
+            _temporaryRTAddCloudMaskToDepth = null;
 
             OnDisable_CloudMap();
             OnDisable_VolumeCloudShadow();
@@ -789,13 +761,40 @@ namespace WorldSystem.Runtime
         {
             property.LimitProperty();
             
-            property._Modeling_ShapeDetail_NoiseTexture3D = LoadVolumeTexture(property._Modeling_ShapeDetail_Type, property._Modeling_ShapeDetail_Quality, property._Modeling_ShapeDetail_NoiseTexture3D);
-            property._Modeling_Position_PlanetRadius = GetRadiusFromCelestialBodySelection(property._Modeling_Position_RadiusPreset, property._Modeling_Position_PlanetRadius);
+            property.modelingShapeDetailNoiseTexture3D = LoadVolumeTexture(property.modelingShapeDetailType, property.modelingShapeDetailQuality, property.modelingShapeDetailNoiseTexture3D);
+            property.modelingPositionPlanetRadius = GetRadiusFromCelestialBodySelection(property.modelingPositionRadiusPreset, property.modelingPositionPlanetRadius);
             
             SetupStaticProperty_VolumeCloud();
             
             OnValidate_CloudMap();
             OnValidate_VolumeCloudShadow();
+
+            if (useAddCloudMaskToDepth)
+            {
+#if UNITY_EDITOR
+            if (property.volumeCloudAddCloudMaskToDepthShader == null)
+                property.volumeCloudAddCloudMaskToDepthShader =
+                    AssetDatabase.LoadAssetAtPath<Shader>(
+                        "Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/AddCloudMaskToDepth.shader");
+#endif
+            if (property.volumeCloudAddCloudMaskToDepthMaterial == null)
+                property.volumeCloudAddCloudMaskToDepthMaterial =
+                    CoreUtils.CreateEngineMaterial(property.volumeCloudAddCloudMaskToDepthShader);
+            }
+            else
+            {
+                if (property.volumeCloudAddCloudMaskToDepthShader != null)
+                    Resources.UnloadAsset(property.volumeCloudAddCloudMaskToDepthShader);
+                if (property.volumeCloudAddCloudMaskToDepthMaterial != null)
+                    CoreUtils.Destroy(property.volumeCloudAddCloudMaskToDepthMaterial);
+                
+                property.volumeCloudAddCloudMaskToDepthShader = null;
+                property.volumeCloudAddCloudMaskToDepthMaterial = null;
+                _temporaryRTAddCloudMaskToDepth?.Release();
+                _temporaryRTAddCloudMaskToDepth = null;
+            }
+            
+            
         }
 
 #if UNITY_EDITOR
@@ -805,115 +804,112 @@ namespace WorldSystem.Runtime
         }
 #endif
         
-        [HideInInspector] public bool _Update;
         private void Update()
         {
-            if (!_Update) return;
-            
+            if (!update) return;
+            property.ExecuteProperty();
             UpdatePositions();
             SetupDynamicProperty_VolumeCloud();
-
             Update_CloudMap();
             Update_VolumeCloudShadow();
         }
-
-
+        
+        
+        
         #region 描述体积云的动态
 
-        private Vector2 _MotionBase_Position = Vector2.zero;
-        private Vector3 _MotionDetail_Position = Vector3.zero;
-
-        private float BaseTimeAdd;
-        private float BaseRandomValue;
-
-        private float DetailTimeAdd;
-        private Vector2 DetailRandomValue;
-
+        private Vector2 _motionBasePosition = Vector2.zero;
+        private Vector2 _detailRandomValue;
+        private Vector3 _motionDetailPosition = Vector3.zero;
+        private float _baseTimeAdd;
+        private float _baseRandomValue;
+        private float _detailTimeAdd;
         private float _previousTime;
+        
         private void UpdatePositions()
         {
-            if (!property._MotionBase_UseDynamicCloud || WorldManager.Instance?.timeModule is null)
+            if (!property.motionBaseUseDynamicCloud || WorldManager.Instance?.timeModule is null)
                 return;
 
             float deltaTime = Time.time - _previousTime;
             
             if (WorldManager.Instance?.windZoneModule is not null)
             {
-                float windSpeed = WorldManager.Instance.windZoneModule.property.cloudWindData.speed;
-                Vector3 windDir3 = WorldManager.Instance.windZoneModule.property.cloudWindData.direction;
+                float windSpeed = WorldManager.Instance.windZoneModule.property.WindSpeed * property.motionBaseWindSpeedCoeff;
+                Vector3 windDir3 = WorldManager.Instance.windZoneModule.property.WindDirection;
                 Vector2 windDir2 = new Vector2(windDir3.x, windDir3.z);
 
-                if (property._MotionBase_UseDirectionRandom)
+                if (property.motionBaseUseDirectionRandom)
                 {
                     float period = WorldManager.Instance.timeModule.dayNightCycleDurationMinute * 60 /
-                                   property._MotionBase_DirectionRandomFreq;
-                    BaseTimeAdd += deltaTime;
+                                   property.motionBaseDirectionRandomFreq;
+                    _baseTimeAdd += deltaTime;
                     //当累加的时间大于周期时,更新随机数,并重置累加
-                    if (BaseTimeAdd > period)
+                    if (_baseTimeAdd > period)
                     {
-                        BaseRandomValue = Random.Range(0, property._MotionBase_DirectionRandomRange);
-                        BaseTimeAdd = 0;
+                        _baseRandomValue = Random.Range(0, property.motionBaseDirectionRandomRange);
+                        _baseTimeAdd = 0;
                     }
 
                     //根据随机数在一个周期内旋转风方向
                     Vector3 cloudTexRandomVector = Quaternion.Euler(0,
-                        (float)Math.Sin(BaseTimeAdd * 2 * Math.PI / period) * BaseRandomValue, 0) * windDir3;
+                        (float)Math.Sin(_baseTimeAdd * 2 * Math.PI / period) * _baseRandomValue, 0) * windDir3;
                     //根据随机的风方向和速度计算最终的动态矢量
-                    property._MotionBase_DynamicVector = new Vector2(cloudTexRandomVector.x, cloudTexRandomVector.z) *
-                                                         (property._MotionBase_Speed * windSpeed);
+                    property.motionBaseDynamicVector = new Vector2(cloudTexRandomVector.x, cloudTexRandomVector.z) *
+                                                         (property.motionBaseSpeed * windSpeed);
                 }
                 else
                 {
-                    property._MotionBase_DynamicVector = windDir2 * (property._MotionBase_Speed * windSpeed);
+                    property.motionBaseDynamicVector = windDir2 * (property.motionBaseSpeed * windSpeed);
                 }
 
                 //应用动态矢量到位置
-                _MotionBase_Position += property._MotionBase_DynamicVector * (deltaTime * 0.1f);
+                _motionBasePosition += property.motionBaseDynamicVector * (deltaTime * 0.1f);
 
 
                 //注释见上,同理
-                if (property._MotionDetail_UseRandomDirection)
+                if (property.motionDetailUseRandomDirection)
                 {
                     float period = WorldManager.Instance.timeModule.dayNightCycleDurationMinute * 60 /
-                                   property._MotionDetail_DirectionRandomFreq;
-                    DetailTimeAdd += deltaTime;
-                    if (DetailTimeAdd > period)
+                                   property.motionDetailDirectionRandomFreq;
+                    _detailTimeAdd += deltaTime;
+                    if (_detailTimeAdd > period)
                     {
-                        DetailRandomValue = new Vector2(
-                            Random.Range(-property._MotionDetail_DirectionRandomRange.x,
-                                property._MotionDetail_DirectionRandomRange.x),
-                            Random.Range(-property._MotionDetail_DirectionRandomRange.y,
-                                property._MotionDetail_DirectionRandomRange.y));
-                        DetailTimeAdd = 0;
+                        _detailRandomValue = new Vector2(
+                            Random.Range(-property.motionDetailDirectionRandomRange.x,
+                                property.motionDetailDirectionRandomRange.x),
+                            Random.Range(-property.motionDetailDirectionRandomRange.y,
+                                property.motionDetailDirectionRandomRange.y));
+                        _detailTimeAdd = 0;
                     }
 
-                    var sin = (float)Math.Sin(DetailTimeAdd * 2 * Math.PI / period);
-                    var baseTexRandomVector = Quaternion.Euler(sin * DetailRandomValue.x,
-                        sin * DetailRandomValue.y, 0) * windDir3;
-                    property._MotionDetail_DynamicVector =
-                        baseTexRandomVector * (property._MotionDetail_Speed * windSpeed);
+                    var sin = (float)Math.Sin(_detailTimeAdd * 2 * Math.PI / period);
+                    var baseTexRandomVector = Quaternion.Euler(sin * _detailRandomValue.x,
+                        sin * _detailRandomValue.y, 0) * windDir3;
+                    property.motionDetailDynamicVector =
+                        baseTexRandomVector * (property.motionDetailSpeed * windSpeed);
                 }
                 else
                 {
-                    property._MotionDetail_DynamicVector = windDir3 * (property._MotionDetail_Speed * windSpeed);
+                    property.motionDetailDynamicVector = windDir3 * (property.motionDetailSpeed * windSpeed);
                 }
 
-                _MotionDetail_Position += property._MotionDetail_DynamicVector * (deltaTime * 0.05f);
+                _motionDetailPosition += property.motionDetailDynamicVector * (deltaTime * 0.05f);
             }
             else
             {
 #if UNITY_EDITOR
-                var rotation = Quaternion.Euler(0, property._MotionBase_Direction, 0) * Vector3.forward;
-                property._MotionBase_DynamicVector = new Vector2(rotation.x, rotation.z) * property._MotionBase_Speed;
+                var rotation = Quaternion.Euler(0, property.motionBaseDirection, 0) * Vector3.forward;
+                property.motionBaseDynamicVector = new Vector2(rotation.x, rotation.z) * property.motionBaseSpeed;
 #endif
-                _MotionBase_Position += property._MotionBase_DynamicVector * (deltaTime * 0.1f);
+                _motionBasePosition += property.motionBaseDynamicVector * (deltaTime * 0.1f);
 
 #if UNITY_EDITOR
-                property._MotionDetail_DynamicVector = Quaternion.Euler(property._MotionDetail_Direction.x,
-                    property._MotionDetail_Direction.y,
-                    0) * Vector3.forward * property._MotionDetail_Speed;
+                property.motionDetailDynamicVector = Quaternion.Euler(property.motionDetailDirection.x,
+                    property.motionDetailDirection.y,
+                    0) * Vector3.forward * property.motionDetailSpeed;
 #endif
-                _MotionDetail_Position += property._MotionDetail_DynamicVector * (deltaTime * 0.05f);
+                _motionDetailPosition += property.motionDetailDynamicVector * (deltaTime * 0.05f);
             }
 
             _previousTime = Time.time;
@@ -925,8 +921,12 @@ namespace WorldSystem.Runtime
         
         #endregion
 
+        
 
         #region 渲染函数
+        
+        private RTHandle _temporaryRTAddCloudMaskToDepth;
+
         public void RenderVolumeCloud(CommandBuffer cmd, ref RenderingData renderingData, RTHandle activeRT)
         {
             //绘制体积云
@@ -936,11 +936,26 @@ namespace WorldSystem.Runtime
                 activeRT.GetScaledSize().x,
                 activeRT.GetScaledSize().y));
             cmd.SetGlobalFloat(_ShadowPass, 0);
-                
-            Blitter.BlitTexture(cmd, new Vector4(1f, 1f, 0f, 0f), property.VolumeCloud_Main_Material, 0);
+            Blitter.BlitTexture(cmd, new Vector4(1f, 1f, 0f, 0f), property.volumeCloudMainMaterial, 0);
+            
+        }
+
+        public void RenderAddCloudMaskToDepth(CommandBuffer cmd, ref RenderingData renderingData, RTHandle activeRT)
+        {
+            if (!useAddCloudMaskToDepth) return;
+             RenderingUtils.ReAllocateIfNeeded(ref _temporaryRTAddCloudMaskToDepth,
+                new RenderTextureDescriptor(renderingData.cameraData.renderer.cameraColorTargetHandle.rt.width,
+                    renderingData.cameraData.renderer.cameraColorTargetHandle.rt.height, GraphicsFormat.R16_SFloat, 0), FilterMode.Point, TextureWrapMode.Clamp, name : "TemporaryRTAddCloudMaskToDepth");
+            cmd.SetGlobalTexture("_CloudNoFixupTex",activeRT);
+            cmd.SetRenderTarget(_temporaryRTAddCloudMaskToDepth);
+            Blitter.BlitTexture(cmd,new Vector4(1,1,0,0),property.volumeCloudAddCloudMaskToDepthMaterial,0);
+            cmd.SetGlobalTexture("_CameraDepthTextureAddCloudMask", _temporaryRTAddCloudMaskToDepth);
         }
         
+        
         #endregion
+        
+        
     }
 
 
@@ -954,50 +969,37 @@ namespace WorldSystem.Runtime
 
         public partial class Property
         {
-            [Title("阴影")] 
-            [FoldoutGroup("配置")] [LabelText("云阴影TAA着色器")] 
-            [ReadOnly] 
-            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            public Shader CloudShadows_TemporalAA_Shader;
-
-            [FoldoutGroup("配置")] [LabelText("云阴影TAA材质")] 
-            [ReadOnly] 
-            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            public Material CloudShadows_TemporalAA_Material;
-
-            [FoldoutGroup("配置")] [LabelText("屏幕阴影着色器")] 
-            [ReadOnly] 
-            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            public Shader CloudShadows_ScreenShadow_Shader;
-
-            [FoldoutGroup("配置")] [LabelText("屏幕阴影材质")]
-            [ReadOnly] 
-            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            public Material CloudShadows_ScreenShadow_Material;
             
-            [FoldoutGroup("阴影")] [LabelText("开启阴影铸造")] 
-            [GUIColor(0.3f, 1f, 0.3f)]
-            public bool _Shadow_UseCastShadow = false;
-
-            [FoldoutGroup("阴影")] [LabelText("阴影距离")] [MinValue(0)]
-            [GUIColor(0.7f, 0.7f, 1f)]
-            [ShowIf("_Shadow_UseCastShadow")]
-            public int _Shadow_Distance = 10000;
-
-            [FoldoutGroup("阴影")] [LabelText("阴影强度")]
-            [GUIColor(1f, 0.7f, 1f)]
-            [ShowIf("_Shadow_UseCastShadow")]
-            public AnimationCurve _Shadow_Strength = new();
+            [Title("阴影")] [FoldoutGroup("配置")] [LabelText("云阴影TAA着色器")] [ReadOnly] 
+            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
+            public Shader cloudShadowsTemporalAAShader;
             
-            [FoldoutGroup("阴影")] [LabelText("阴影分辨率")]
-            [GUIColor(0.7f, 0.7f, 1f)]
-            [ShowIf("_Shadow_UseCastShadow")]
-            public CloudShadowResolution _Shadow_Resolution = CloudShadowResolution.Medium;
-
-            [FoldoutGroup("阴影")] [LabelText("使用阴影TAA")] 
-            [GUIColor(0.7f, 0.7f, 1f)]
-            [ShowIf("_Shadow_UseCastShadow")] 
-            public bool _Shadow_UseShadowTaa = true;
+            [FoldoutGroup("配置")] [LabelText("云阴影TAA材质")] [ReadOnly] 
+            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
+            public Material cloudShadowsTemporalAAMaterial;
+            
+            [FoldoutGroup("配置")] [LabelText("屏幕阴影着色器")] [ReadOnly] 
+            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
+            public Shader cloudShadowsScreenShadowShader;
+            
+            [FoldoutGroup("配置")] [LabelText("屏幕阴影材质")] [ReadOnly] 
+            [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
+            public Material cloudShadowsScreenShadowMaterial;
+            
+            [FoldoutGroup("阴影")] [LabelText("开启阴影铸造")] [GUIColor(0.3f, 1f, 0.3f)]
+            public bool shadowUseCastShadow;
+            
+            [FoldoutGroup("阴影")] [LabelText("阴影距离")] [MinValue(0)] [GUIColor(0.7f, 0.7f, 1f)] [ShowIf("shadowUseCastShadow")]
+            public int shadowDistance = 10000;
+            
+            [FoldoutGroup("阴影")] [LabelText("阴影强度")] [GUIColor(1f, 0.7f, 1f)] [ShowIf("shadowUseCastShadow")]
+            public AnimationCurve shadowStrength = new();
+            
+            [FoldoutGroup("阴影")] [LabelText("阴影分辨率")] [GUIColor(0.7f, 0.7f, 1f)] [ShowIf("shadowUseCastShadow")]
+            public CloudShadowResolution shadowResolution = CloudShadowResolution.Medium;
+            
+            [FoldoutGroup("阴影")] [LabelText("使用阴影TAA")] [GUIColor(0.7f, 0.7f, 1f)] [ShowIf("shadowUseCastShadow")] 
+            public bool shadowUseShadowTaa = true;
             
         }
 
@@ -1005,21 +1007,28 @@ namespace WorldSystem.Runtime
         #endregion
         
         
+        
         #region 安装属性
+        
+        private readonly int _CloudShadowOrthoParams = Shader.PropertyToID("_CloudShadowOrthoParams");
+        private readonly int _ShadowmapResolution = Shader.PropertyToID("_ShadowmapResolution");
+        private readonly int _CloudShadowDistance = Shader.PropertyToID("_CloudShadowDistance");
+        private readonly int _CloudShadow_WorldToShadowMatrix = Shader.PropertyToID("_CloudShadow_WorldToShadowMatrix");
+        private readonly int _ShadowCasterCameraForward = Shader.PropertyToID("_ShadowCasterCameraForward");
+        private readonly int _ShadowCasterCameraPosition = Shader.PropertyToID("_ShadowCasterCameraPosition");
+        private readonly int _ShadowCasterCameraUp = Shader.PropertyToID("_ShadowCasterCameraUp");
+        private readonly int _ShadowCasterCameraRight = Shader.PropertyToID("_ShadowCasterCameraRight");
+        private readonly int _CloudShadowStrength = Shader.PropertyToID("_CloudShadowStrength");
         
         private void SetupStaticProperty_Shadow()
         {
             //设置静态全局参数
             const float zFar = 60000f;
-            Shader.SetGlobalVector(_CloudShadowOrthoParams, new Vector4(property._Shadow_Distance * 2, property._Shadow_Distance * 2, zFar, 0));
-            Shader.SetGlobalVector(_ShadowmapResolution, new Vector4((int)property._Shadow_Resolution, (int)property._Shadow_Resolution, 1f / (int)property._Shadow_Resolution, 1f / (int)property._Shadow_Resolution));
-            Shader.SetGlobalFloat(_CloudShadowDistance, property._Shadow_Distance);
+            Shader.SetGlobalVector(_CloudShadowOrthoParams, new Vector4(property.shadowDistance * 2, property.shadowDistance * 2, zFar, 0));
+            Shader.SetGlobalVector(_ShadowmapResolution, new Vector4((int)property.shadowResolution, (int)property.shadowResolution, 1f / (int)property.shadowResolution, 1f / (int)property.shadowResolution));
+            Shader.SetGlobalFloat(_CloudShadowDistance, property.shadowDistance);
         }
-
-        private readonly int _CloudShadowOrthoParams = Shader.PropertyToID("_CloudShadowOrthoParams");
-        private readonly int _ShadowmapResolution = Shader.PropertyToID("_ShadowmapResolution");
-        private readonly int _CloudShadowDistance = Shader.PropertyToID("_CloudShadowDistance");
-
+        
         private void SetupDynamicProperty_Shadow(CelestialBody celestialBodyShadowCast)
         {
             //计算全局参数
@@ -1028,14 +1037,14 @@ namespace WorldSystem.Runtime
             Vector3 shadowCasterCameraPosition =
                 sourcePosition - celestialBodyShadowCast.transform.forward * (zFar * 0.5f);
             Vector3 min = shadowCasterCameraPosition -
-                          property._Shadow_Distance * celestialBodyShadowCast.transform.right -
-                          property._Shadow_Distance * celestialBodyShadowCast.transform.up;
+                          property.shadowDistance * celestialBodyShadowCast.transform.right -
+                          property.shadowDistance * celestialBodyShadowCast.transform.up;
             Vector3 max = shadowCasterCameraPosition +
                           celestialBodyShadowCast.transform.forward * zFar +
-                          property._Shadow_Distance * celestialBodyShadowCast.transform.right +
-                          property._Shadow_Distance * celestialBodyShadowCast.transform.up;
+                          property.shadowDistance * celestialBodyShadowCast.transform.right +
+                          property.shadowDistance * celestialBodyShadowCast.transform.up;
             float radius = (new Vector2(max.x, max.z) - new Vector2(min.x, min.z)).magnitude / 2f;
-            float texelSize = radius / (0.25f * (int)property._Shadow_Resolution);
+            float texelSize = radius / (0.25f * (int)property.shadowResolution);
 
             sourcePosition = Floor(Div(sourcePosition, texelSize));
             sourcePosition *= texelSize;
@@ -1045,7 +1054,7 @@ namespace WorldSystem.Runtime
             Matrix4x4 viewMatrix = HelpFunc.SetupViewMatrix(shadowCasterCameraPosition,
                 celestialBodyShadowCast.transform.forward,
                 zFar, celestialBodyShadowCast.transform.up);
-            Matrix4x4 projectionMatrix = HelpFunc.SetupProjectionMatrix(property._Shadow_Distance, zFar);
+            Matrix4x4 projectionMatrix = HelpFunc.SetupProjectionMatrix(property.shadowDistance, zFar);
             Matrix4x4 worldToShadowMatrix = HelpFunc.ConvertToWorldToShadowMatrix(projectionMatrix, viewMatrix);
 
             //设置动态全局参数
@@ -1055,78 +1064,73 @@ namespace WorldSystem.Runtime
             Shader.SetGlobalVector(_ShadowCasterCameraUp, celestialBodyShadowCast.transform.up);
             Shader.SetGlobalVector(_ShadowCasterCameraRight, celestialBodyShadowCast.transform.right);
             
-            Shader.SetGlobalFloat(_CloudShadowStrength, property._Shadow_Strength.Evaluate(celestialBodyShadowCast.curveTime));
+            Shader.SetGlobalFloat(_CloudShadowStrength, property.shadowStrength.Evaluate(celestialBodyShadowCast.property.executeCoeff));
         }
-
-        private readonly int _CloudShadow_WorldToShadowMatrix = Shader.PropertyToID("_CloudShadow_WorldToShadowMatrix");
-        private readonly int _ShadowCasterCameraForward = Shader.PropertyToID("_ShadowCasterCameraForward");
-        private readonly int _ShadowCasterCameraPosition = Shader.PropertyToID("_ShadowCasterCameraPosition");
-        private readonly int _ShadowCasterCameraUp = Shader.PropertyToID("_ShadowCasterCameraUp");
-        private readonly int _ShadowCasterCameraRight = Shader.PropertyToID("_ShadowCasterCameraRight");
-        private readonly int _CloudShadowStrength = Shader.PropertyToID("_CloudShadowStrength");
 
         #endregion
 
 
+        
         #region 事件函数
+        
+        private CloudShadowResolution _cloudShadowResolutionCache;
 
         private void OnEnable_VolumeCloudShadow()
         {
-            if (!property._Shadow_UseCastShadow) return;
+            if (!property.shadowUseCastShadow) return;
 #if UNITY_EDITOR
 
-            if (property.CloudShadows_TemporalAA_Shader == null)
-                property.CloudShadows_TemporalAA_Shader =
+            if (property.cloudShadowsTemporalAAShader == null)
+                property.cloudShadowsTemporalAAShader =
                     AssetDatabase.LoadAssetAtPath<Shader>(
                         "Packages/com.worldsystem//Shader/VolumeClouds_V1_1_20240604/CloudShadowsTemporalAA_V1_1_20240604.shader");
-            if (property.CloudShadows_ScreenShadow_Shader == null)
-                property.CloudShadows_ScreenShadow_Shader =
+            if (property.cloudShadowsScreenShadowShader == null)
+                property.cloudShadowsScreenShadowShader =
                     AssetDatabase.LoadAssetAtPath<Shader>(
                         "Packages/com.worldsystem//Shader/VolumeClouds_V1_1_20240604/CloudShadowsScreenShadows_V1_1_20240604.shader");
 #endif
 
-            if (property.CloudShadows_TemporalAA_Material == null)
-                property.CloudShadows_TemporalAA_Material =
-                    CoreUtils.CreateEngineMaterial(property.CloudShadows_TemporalAA_Shader);
+            if (property.cloudShadowsTemporalAAMaterial == null)
+                property.cloudShadowsTemporalAAMaterial =
+                    CoreUtils.CreateEngineMaterial(property.cloudShadowsTemporalAAShader);
 
-            if (property.CloudShadows_ScreenShadow_Material == null)
-                property.CloudShadows_ScreenShadow_Material =
-                    CoreUtils.CreateEngineMaterial(property.CloudShadows_ScreenShadow_Shader);
+            if (property.cloudShadowsScreenShadowMaterial == null)
+                property.cloudShadowsScreenShadowMaterial =
+                    CoreUtils.CreateEngineMaterial(property.cloudShadowsScreenShadowShader);
             
-            _cloudShadowResolutionCache = property._Shadow_Resolution;
+            _cloudShadowResolutionCache = property.shadowResolution;
         }
-        private CloudShadowResolution _cloudShadowResolutionCache;
         
         private void OnDisable_VolumeCloudShadow()
         {
-            if (property.CloudShadows_TemporalAA_Shader != null)
-                Resources.UnloadAsset(property.CloudShadows_TemporalAA_Shader);
-            if (property.CloudShadows_ScreenShadow_Shader != null)
-                Resources.UnloadAsset(property.CloudShadows_ScreenShadow_Shader);
+            if (property.cloudShadowsTemporalAAShader != null)
+                Resources.UnloadAsset(property.cloudShadowsTemporalAAShader);
+            if (property.cloudShadowsScreenShadowShader != null)
+                Resources.UnloadAsset(property.cloudShadowsScreenShadowShader);
             
-            if (property.CloudShadows_TemporalAA_Material != null)
-                CoreUtils.Destroy(property.CloudShadows_TemporalAA_Material);
-            if (property.CloudShadows_ScreenShadow_Material != null)
-                CoreUtils.Destroy(property.CloudShadows_ScreenShadow_Material);
+            if (property.cloudShadowsTemporalAAMaterial != null)
+                CoreUtils.Destroy(property.cloudShadowsTemporalAAMaterial);
+            if (property.cloudShadowsScreenShadowMaterial != null)
+                CoreUtils.Destroy(property.cloudShadowsScreenShadowMaterial);
 
-            PreviousCloudShadowRT?.Release();
-            cloudShadowMapRT?.Release();
-            cloudShadowTaaRT?.Release();
+            _previousCloudShadowRT?.Release();
+            _cloudShadowMapRT?.Release();
+            _cloudShadowTaaRT?.Release();
             
-            property.CloudShadows_TemporalAA_Shader = null;
-            property.CloudShadows_ScreenShadow_Shader = null;
-            property.CloudShadows_TemporalAA_Material = null;
-            property.CloudShadows_ScreenShadow_Material = null;
-            PreviousCloudShadowRT = null;
-            cloudShadowMapRT = null;
-            cloudShadowTaaRT = null;
+            property.cloudShadowsTemporalAAShader = null;
+            property.cloudShadowsScreenShadowShader = null;
+            property.cloudShadowsTemporalAAMaterial = null;
+            property.cloudShadowsScreenShadowMaterial = null;
+            _previousCloudShadowRT = null;
+            _cloudShadowMapRT = null;
+            _cloudShadowTaaRT = null;
         }
 
         private void OnValidate_VolumeCloudShadow()
         {
             SetupStaticProperty_Shadow();
 
-            if (!property._Shadow_UseCastShadow)
+            if (!property.shadowUseCastShadow)
                 OnDisable_VolumeCloudShadow();
             else
                 OnEnable_VolumeCloudShadow();
@@ -1139,18 +1143,27 @@ namespace WorldSystem.Runtime
             SetupDynamicProperty_Shadow(celestialBodyShadowCast);
         }
 
+        
         #endregion
 
 
+        
         #region 渲染函数
 
+        private RTHandle _cloudShadowMapRT;
+        private RTHandle _previousCloudShadowRT;
+        private RTHandle _cloudShadowTaaRT;
+        private readonly int _CloudShadowmap = Shader.PropertyToID("_CloudShadowmap");
+        private readonly int _CURRENT_TAA_CLOUD_SHADOW = Shader.PropertyToID("_CURRENT_TAA_CLOUD_SHADOW");
+        private readonly int _PREVIOUS_TAA_CLOUD_SHADOW = Shader.PropertyToID("_PREVIOUS_TAA_CLOUD_SHADOW");
+        
         private bool IsDisableVolumeCloudShadow(out CelestialBody celestialBodyShadowCast)
         {
             //获取进行阴影铸造的星体
             celestialBodyShadowCast = WorldManager.Instance?.celestialBodyManager?.GetShadowCastCelestialBody();
             if (celestialBodyShadowCast is null) return true;
             
-            if (!isActiveAndEnabled || property._Modeling_Amount_CloudAmount < 0.25f || !property._Shadow_UseCastShadow) 
+            if (!isActiveAndEnabled || property.modelingAmountCloudAmount < 0.25f || !property.shadowUseCastShadow) 
                 return true;
             
             return false;
@@ -1162,72 +1175,66 @@ namespace WorldSystem.Runtime
             
             cmd.SetGlobalFloat(_ShadowPass, 1);
             cmd.SetGlobalVector(_RenderTextureDimensions,
-                new Vector4(1f / (int)property._Shadow_Resolution, 1f / (int)property._Shadow_Resolution,
-                    (int)property._Shadow_Resolution, (int)property._Shadow_Resolution));
+                new Vector4(1f / (int)property.shadowResolution, 1f / (int)property.shadowResolution,
+                    (int)property.shadowResolution, (int)property.shadowResolution));
             
             //渲染体积云阴影贴图
             //初始化RT
-            if (property._Shadow_Resolution != _cloudShadowResolutionCache || cloudShadowMapRT == null)
+            if (property.shadowResolution != _cloudShadowResolutionCache || _cloudShadowMapRT == null)
             {
                 RenderTextureDescriptor rtDescriptor =
-                    new RenderTextureDescriptor((int)property._Shadow_Resolution, (int)property._Shadow_Resolution,
+                    new RenderTextureDescriptor((int)property.shadowResolution, (int)property.shadowResolution,
                         GraphicsFormat.B10G11R11_UFloatPack32, 0);
-                cloudShadowMapRT?.Release();
-                cloudShadowMapRT = RTHandles.Alloc(rtDescriptor, name: "CloudShadowMapRT", filterMode: FilterMode.Bilinear);
-                _cloudShadowResolutionCache = property._Shadow_Resolution;
+                _cloudShadowMapRT?.Release();
+                _cloudShadowMapRT = RTHandles.Alloc(rtDescriptor, name: "CloudShadowMapRT", filterMode: FilterMode.Bilinear);
+                _cloudShadowResolutionCache = property.shadowResolution;
             }
-            cmd.SetRenderTarget(cloudShadowMapRT);
-            Blitter.BlitTexture(cmd, new Vector4(1, 1, 0, 0), property.VolumeCloud_Main_Material, 0);
+            cmd.SetRenderTarget(_cloudShadowMapRT);
+            Blitter.BlitTexture(cmd, new Vector4(1, 1, 0, 0), property.volumeCloudMainMaterial, 0);
 
             
-            if (property._Shadow_UseShadowTaa)
+            if (property.shadowUseShadowTaa)
             {
                 //将 原始体积云阴影贴图 设置为全局参数
-                cmd.SetGlobalTexture(_CURRENT_TAA_CLOUD_SHADOW, cloudShadowMapRT);
+                cmd.SetGlobalTexture(_CURRENT_TAA_CLOUD_SHADOW, _cloudShadowMapRT);
                 //在没有进行新的复制之前拿到的上一帧的TAA结果
-                if (PreviousCloudShadowRT == null)
+                if (_previousCloudShadowRT == null)
                 {
-                    PreviousCloudShadowRT = RTHandles.Alloc(cloudShadowMapRT.rt.descriptor, name: "PreviousCloudShadowRT", filterMode: FilterMode.Bilinear);
-                    cmd.SetGlobalTexture(_PREVIOUS_TAA_CLOUD_SHADOW, cloudShadowMapRT);
+                    _previousCloudShadowRT = RTHandles.Alloc(_cloudShadowMapRT.rt.descriptor, name: "PreviousCloudShadowRT", filterMode: FilterMode.Bilinear);
+                    cmd.SetGlobalTexture(_PREVIOUS_TAA_CLOUD_SHADOW, _cloudShadowMapRT);
                 }
                 else
                 {
-                    cmd.SetGlobalTexture(_PREVIOUS_TAA_CLOUD_SHADOW, PreviousCloudShadowRT);
+                    cmd.SetGlobalTexture(_PREVIOUS_TAA_CLOUD_SHADOW, _previousCloudShadowRT);
                 }
                 
-                cloudShadowTaaRT ??= RTHandles.Alloc(cloudShadowMapRT.rt.descriptor, name: "CloudShadowTaaRT", filterMode: FilterMode.Bilinear);
+                _cloudShadowTaaRT ??= RTHandles.Alloc(_cloudShadowMapRT.rt.descriptor, name: "CloudShadowTaaRT", filterMode: FilterMode.Bilinear);
                 //渲染体积云阴影贴图TAA
-                cmd.SetRenderTarget(cloudShadowTaaRT);
-                Blitter.BlitTexture(cmd, new Vector4(1, 1, 0, 0), property.CloudShadows_TemporalAA_Material, 0);
+                cmd.SetRenderTarget(_cloudShadowTaaRT);
+                Blitter.BlitTexture(cmd, new Vector4(1, 1, 0, 0), property.cloudShadowsTemporalAAMaterial, 0);
                 //将这一帧的TAA结果赋值给 cloudShadowTaaTexture 
-                cmd.CopyTexture(cloudShadowTaaRT, PreviousCloudShadowRT);
+                cmd.CopyTexture(_cloudShadowTaaRT, _previousCloudShadowRT);
                 //将 TAA之后的体积云阴影贴图 设置为全局参数
-                cmd.SetGlobalTexture(_CloudShadowmap, cloudShadowTaaRT);
+                cmd.SetGlobalTexture(_CloudShadowmap, _cloudShadowTaaRT);
             }
             else
             {
-                PreviousCloudShadowRT?.Release();
-                PreviousCloudShadowRT = null;
-                cloudShadowTaaRT?.Release();
-                cloudShadowTaaRT = null;
-                cmd.SetGlobalTexture(_CloudShadowmap, cloudShadowMapRT);
+                _previousCloudShadowRT?.Release();
+                _previousCloudShadowRT = null;
+                _cloudShadowTaaRT?.Release();
+                _cloudShadowTaaRT = null;
+                cmd.SetGlobalTexture(_CloudShadowmap, _cloudShadowMapRT);
             }
 
             
             //渲染屏幕空间云shadow
             cmd.SetRenderTarget(renderingData.cameraData.renderer.cameraColorTargetHandle);
-            Blitter.BlitTexture(cmd, new Vector4(1, 1, 0, 0), property.CloudShadows_ScreenShadow_Material, 0);
+            Blitter.BlitTexture(cmd, new Vector4(1, 1, 0, 0), property.cloudShadowsScreenShadowMaterial, 0);
         }
 
-        private RTHandle cloudShadowMapRT;
-        private RTHandle PreviousCloudShadowRT;
-        private RTHandle cloudShadowTaaRT;
-        private readonly int _CloudShadowmap = Shader.PropertyToID("_CloudShadowmap");
-        private readonly int _CURRENT_TAA_CLOUD_SHADOW = Shader.PropertyToID("_CURRENT_TAA_CLOUD_SHADOW");
-        private readonly int _PREVIOUS_TAA_CLOUD_SHADOW = Shader.PropertyToID("_PREVIOUS_TAA_CLOUD_SHADOW");
         
-
         #endregion
+        
     }
 
     

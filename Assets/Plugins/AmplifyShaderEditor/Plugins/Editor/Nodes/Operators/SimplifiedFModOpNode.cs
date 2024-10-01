@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Simplified Fmod", "Math Operators", "Floating point remainder of x/y" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Simplified Fmod"
+#else
+"简化格式"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Floating point remainder of x/y"
+#else
+"x/y的浮点余数"
+#endif
+)]
 	public sealed class SimplifiedFModOpNode : DynamicTypeNode
 	{
 		private const string FmodCustomOp = "frac({0}/{1})*{1}";

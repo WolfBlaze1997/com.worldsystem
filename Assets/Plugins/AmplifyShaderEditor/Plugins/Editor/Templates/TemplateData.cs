@@ -1,7 +1,7 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
 
-// THIS FILE IS DEPRECATED AND SHOULD NOT BE USED
+
+
+
 
 using System;
 using UnityEngine;
@@ -70,9 +70,9 @@ namespace AmplifyShaderEditor
 		private List<TemplateInputData> m_inputDataList = new List<TemplateInputData>();
 		private Dictionary<int, TemplateInputData> m_inputDataDict = new Dictionary<int, TemplateInputData>();
 
-		//[SerializeField]
-		//private List<TemplateCodeSnippetBase> m_snippetElementsList = new List<TemplateCodeSnippetBase>();
-		//private Dictionary<string, TemplateCodeSnippetBase> m_snippetElementsDict = new Dictionary<string, TemplateCodeSnippetBase>();
+		
+		
+		
 
 		[SerializeField]
 		private List<TemplateLocalVarData> m_localVarsList = new List<TemplateLocalVarData>();
@@ -212,20 +212,20 @@ namespace AmplifyShaderEditor
 				m_localVarsList.Clear();
 			}
 
-			//if( m_snippetElementsDict != null )
-			//{
-			//	m_snippetElementsDict.Clear();
-			//}
+			
+			
+			
+			
 
-			//if( m_snippetElementsList != null )
-			//{
-			//	for( int i = 0; i < m_snippetElementsList.Count; i++ )
-			//	{
-			//		GameObject.DestroyImmediate( m_snippetElementsList[ i ] );
-			//		m_snippetElementsList[ i ] = null;
-			//	}
-			//	m_snippetElementsList.Clear();
-			//}
+			
+			
+			
+			
+			
+			
+			
+			
+			
 
 			string datapath = AssetDatabase.GUIDToAssetPath( m_guid );
 			string body = string.Empty;
@@ -258,22 +258,22 @@ namespace AmplifyShaderEditor
 				return;
 			}
 
-			//Fetching common tags
+			
 			FetchCommonTags();
 
-			//Fetch function code areas
+			
 			FetchCodeAreas( TemplatesManager.TemplateVertexCodeBeginArea, MasterNodePortCategory.Vertex );
 			FetchCodeAreas( TemplatesManager.TemplateFragmentCodeBeginArea, MasterNodePortCategory.Fragment );
 
-			//Fetching inputs
+			
 			FetchInputs( MasterNodePortCategory.Fragment );
 			FetchInputs( MasterNodePortCategory.Vertex );
 
 
-			//Fetch local variables must be done after fetching code areas as it needs them to see is variable is on vertex or fragment
+			
 			TemplateHelperFunctions.FetchLocalVars( m_templateBody, ref m_localVarsList, m_vertexFunctionData, m_fragmentFunctionData );
 
-			//Fetch snippets
+			
 		}
 
 		void FetchSubShaderProperties()
@@ -288,7 +288,7 @@ namespace AmplifyShaderEditor
 			int endSubShader = match.Groups[ 0 ].Index;
 			if( beginSubShader > 0 && endSubShader > 0 && endSubShader > beginSubShader )
 			{
-				// ADD A PLACE TO INSERT GRAB PASSES
+				
 				int passIndex = m_templateBody.IndexOf( TemplatesManager.TemplatePassTag );
 				if( passIndex < 0 )
 				{
@@ -312,9 +312,9 @@ namespace AmplifyShaderEditor
 					}
 				}
 
-				// GET ALL THE MODULES
+				
 				string subBody = m_templateBody.Substring( beginSubShader, endSubShader - beginSubShader );
-				//CULL MODE
+				
 				{
 					int cullIdx = subBody.IndexOf( "Cull" );
 					if( cullIdx > 0 )
@@ -327,7 +327,7 @@ namespace AmplifyShaderEditor
 							AddId( cullParams, false, string.Empty );
 					}
 				}
-				//COLOR MASK
+				
 				{
 					int colorMaskIdx = subBody.IndexOf( "ColorMask" );
 					if( colorMaskIdx > 0 )
@@ -340,7 +340,7 @@ namespace AmplifyShaderEditor
 							AddId( colorMaskParams, false );
 					}
 				}
-				//BlEND MODE
+				
 				{
 					int blendModeIdx = subBody.IndexOf( "Blend" );
 					if( blendModeIdx > 0 )
@@ -355,7 +355,7 @@ namespace AmplifyShaderEditor
 						}
 					}
 				}
-				//BLEND OP
+				
 				{
 					int blendOpIdx = subBody.IndexOf( "BlendOp" );
 					if( blendOpIdx > 0 )
@@ -373,7 +373,7 @@ namespace AmplifyShaderEditor
 					m_blendData.DataCheck = ( m_blendData.ValidBlendMode || m_blendData.ValidBlendOp ) ? TemplateDataCheck.Valid : TemplateDataCheck.Invalid;
 				}
 
-				//STENCIL
+				
 				{
 					int stencilIdx = subBody.IndexOf( "Stencil" );
 					if( stencilIdx > -1 )
@@ -392,7 +392,7 @@ namespace AmplifyShaderEditor
 					}
 				}
 
-				//ZWRITE
+				
 				{
 					int zWriteOpIdx = subBody.IndexOf( "ZWrite" );
 					if( zWriteOpIdx > -1 )
@@ -410,7 +410,7 @@ namespace AmplifyShaderEditor
 					}
 				}
 
-				//ZTEST
+				
 				{
 					int zTestOpIdx = subBody.IndexOf( "ZTest" );
 					if( zTestOpIdx > -1 )
@@ -428,7 +428,7 @@ namespace AmplifyShaderEditor
 					}
 				}
 
-				//ZOFFSET
+				
 				{
 					int zOffsetIdx = subBody.IndexOf( "Offset" );
 					if( zOffsetIdx > -1 )
@@ -448,7 +448,7 @@ namespace AmplifyShaderEditor
 					m_depthData.SetDataCheck(); 
 				}
 				
-				//TAGS
+				
 				{
 					int tagsIdx = subBody.IndexOf( "Tags" );
 					if( tagsIdx > -1 )
@@ -477,13 +477,13 @@ namespace AmplifyShaderEditor
 
 		void FetchCommonTags()
 		{
-			// Name
+			
 			try
 			{
 				int nameBegin = m_templateBody.IndexOf( TemplatesManager.TemplateShaderNameBeginTag );
 				if( nameBegin < 0 )
 				{
-					// Not a template
+					
 					return;
 				}
 
@@ -492,7 +492,7 @@ namespace AmplifyShaderEditor
 				int defaultLength = nameEnd - defaultBegin;
 				m_defaultShaderName = m_templateBody.Substring( defaultBegin, defaultLength );
 				int[] nameIdx = m_defaultShaderName.AllIndexesOf( "\"" );
-				nameIdx[ 0 ] += 1; // Ignore the " character from the string
+				nameIdx[ 0 ] += 1; 
 				m_defaultShaderName = m_defaultShaderName.Substring( nameIdx[ 0 ], nameIdx[ 1 ] - nameIdx[ 0 ] );
 				m_shaderNameId = m_templateBody.Substring( nameBegin, nameEnd + TemplatesManager.TemplateFullEndTag.Length - nameBegin );
 				AddId( m_shaderNameId, false );
@@ -505,7 +505,7 @@ namespace AmplifyShaderEditor
 			}
 
 			FetchSubShaderProperties();
-			// Vertex Data
+			
 			{
 				int vertexDataTagBegin = m_templateBody.IndexOf( TemplatesManager.TemplateVertexDataTag );
 				if( vertexDataTagBegin > -1 )
@@ -523,7 +523,7 @@ namespace AmplifyShaderEditor
 				}
 			}
 
-			// Available interpolators
+			
 			try
 			{
 				int interpDataBegin = m_templateBody.IndexOf( TemplatesManager.TemplateInterpolatorBeginTag );
@@ -553,7 +553,7 @@ namespace AmplifyShaderEditor
 				Dictionary<string, TemplateShaderPropertyData> duplicatesHelper = new Dictionary<string, TemplateShaderPropertyData>();
 				m_availableShaderProperties = new List<TemplateShaderPropertyData>();
 
-				// Common Tags
+				
 				for( int i = 0; i < TemplatesManager.CommonTags.Length; i++ )
 				{
 					int idx = m_templateBody.IndexOf( TemplatesManager.CommonTags[ i ].Id );
@@ -564,81 +564,81 @@ namespace AmplifyShaderEditor
 						TemplateCommonTagId commonTagId = (TemplateCommonTagId)i;
 						switch( commonTagId )
 						{
-							// Properties
+							
 							case TemplateCommonTagId.Property:
 							{
 								TemplateHelperFunctions.CreateShaderPropertiesList( m_templateBody.Substring( 0, idx + TemplatesManager.CommonTags[ i ].Id.Length ), ref m_availableShaderProperties, ref duplicatesHelper,-1,-1 );
 							}
 							break;
-							// Globals
+							
 							case TemplateCommonTagId.Global:
 							{
 								TemplateHelperFunctions.CreateShaderGlobalsList( m_templateBody.Substring( 0, idx + TemplatesManager.CommonTags[ i ].Id.Length ), ref m_availableShaderProperties, ref duplicatesHelper,-1,-1 );
 							}
 							break;
 
-							//Tags
-							//case TemplateCommonTagId.Tag:
-							//{
-							//	m_propertyList[ m_propertyList.Count - 1 ].Indentation = " ";
-							//}
-							//break;
-							//case TemplateCommonTagId.CullMode:
-							//{
-							//	int newId = idx + TemplatesManager.CommonTags[ i ].Id.Length;
-							//	int end = m_templateBody.IndexOf( TemplatesManager.TemplateNewLine, newId );
-							//	string cullParams = m_templateBody.Substring( newId, end - newId );
-							//	currentId = m_templateBody.Substring( idx, end - idx );
-							//	m_cullModeData.CullModeId = currentId;
-							//	TemplateHelperFunctions.CreateCullMode( cullParams, ref m_cullModeData );
-							//}
-							//break;
-							//Blend Mode
-							//case TemplateCommonTagId.BlendMode:
-							//{
-							//	int newId = idx + TemplatesManager.CommonTags[ i ].Id.Length;
-							//	int end = m_templateBody.IndexOf( TemplatesManager.TemplateNewLine, newId );
-							//	string blendParams = m_templateBody.Substring( newId, end - newId );
-							//	currentId = m_templateBody.Substring( idx, end - idx );
-							//	m_blendData.BlendModeId = currentId;
-							//	TemplateHelperFunctions.CreateBlendMode( blendParams, ref m_blendData );
-							//}break;
-							//case TemplateCommonTagId.BlendOp:
-							//{
-							//	int newId = idx + TemplatesManager.CommonTags[ i ].Id.Length;
-							//	int end = m_templateBody.IndexOf( TemplatesManager.TemplateNewLine, newId );
-							//	currentId = m_templateBody.Substring( idx, end - idx );
-							//	BlendData.BlendOpId = currentId;
-							//	TemplateHelperFunctions.CreateBlendOp( m_templateBody.Substring( newId, end - newId ), ref m_blendData );
-							//}break;
-							//case TemplateCommonTagId.ColorMask:
-							//{
-							//	int newId = idx + TemplatesManager.CommonTags[ i ].Id.Length;
-							//	int end = m_templateBody.IndexOf( TemplatesManager.TemplateNewLine, newId );
-							//	string colorMaskParams = m_templateBody.Substring( newId, end - newId );
-							//	currentId = m_templateBody.Substring( idx, end - idx );
-							//	m_colorMaskData.ColorMaskId = currentId;
-							//	TemplateHelperFunctions.CreateColorMask( colorMaskParams, ref m_colorMaskData );
-							//}
-							//break;
-							//case TemplateCommonTagId.StencilOp:
-							//{
-							//    int id = m_templateBody.LastIndexOf( "Stencil" );
-							//    if( id > -1 )
-							//    {
-							//        string stencilParams = m_templateBody.Substring( id, idx - id );
-							//        currentId = stencilParams + TemplatesManager.TemplateStencilOpTag;
-							//        m_stencilData.StencilBufferId = currentId;
-							//        TemplateHelperFunctions.CreateStencilOps( stencilParams, ref m_stencilData );
-							//    }
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
 
-							//}
-							//break;
+							
+							
 							default:
 							break;
 						}
 
-						//AddId( TemplatesManager.CommonTags[ i ] );
+						
 						AddId( currentId, TemplatesManager.CommonTags[ i ].SearchIndentation, TemplatesManager.CommonTags[ i ].CustomIndentation );
 					}
 				}
@@ -729,128 +729,128 @@ namespace AmplifyShaderEditor
 			}
 		}
 
-		//void FetchSnippets()
-		//{
-		//	int[] codeSnippetAttribBeginIndexes = m_templateBody.AllIndexesOf( TemplatesManager.TemplateCodeSnippetAttribBegin );
-		//	int[] codeSnippetAttribEndIndexes = m_templateBody.AllIndexesOf( TemplatesManager.TemplateCodeSnippetAttribEnd );
-		//	int[] codeSnippetEndIndexes = m_templateBody.AllIndexesOf( TemplatesManager.TemplateCodeSnippetEnd );
+		
+		
+		
+		
+		
 
-		//	if( codeSnippetAttribBeginIndexes != null && codeSnippetAttribBeginIndexes.Length > 0 &&
-		//			codeSnippetAttribEndIndexes != null && codeSnippetAttribEndIndexes.Length > 0 &&
-		//			codeSnippetEndIndexes != null && codeSnippetEndIndexes.Length > 0 &&
-		//			codeSnippetEndIndexes.Length == codeSnippetAttribBeginIndexes.Length &&
-		//			codeSnippetAttribBeginIndexes.Length == codeSnippetAttribEndIndexes.Length )
-		//	{
-		//		for( int i = 0; i < codeSnippetAttribBeginIndexes.Length; i++ )
-		//		{
-		//			// get attributes
-		//			int startAttribIndex = codeSnippetAttribBeginIndexes[ i ] + TemplatesManager.TemplateCodeSnippetAttribBegin.Length;
-		//			int lengthAttrib = codeSnippetAttribEndIndexes[ i ] - startAttribIndex;
-		//			string snippetAttribs = m_templateBody.Substring( startAttribIndex, lengthAttrib );
-		//			string[] snippetAttribsArr = snippetAttribs.Split( IOUtils.FIELD_SEPARATOR );
-		//			if( snippetAttribsArr != null && snippetAttribsArr.Length > 0 )
-		//			{
-		//				string attribName = snippetAttribsArr[ (int)TemplateCodeSnippetInfoIdx.Name ];
-		//				TemplateCodeSnippetType attribType = (TemplateCodeSnippetType)Enum.Parse( typeof( TemplateCodeSnippetType ), snippetAttribsArr[ (int)TemplateCodeSnippetInfoIdx.Type ] );
-		//				if( m_snippetElementsDict.ContainsKey( attribName ) )
-		//				{
-		//					if( m_snippetElementsDict[ attribName ].Type != attribType )
-		//					{
-		//						if( DebugConsoleWindow.DeveloperMode )
-		//							Debug.LogWarning( "Found incompatible types for snippet " + attribName );
-		//					}
-		//				}
-		//				else
-		//				{
-		//					switch( attribType )
-		//					{
-		//						case TemplateCodeSnippetType.Toggle:
-		//						{
-		//							//Register must be done by first instantiang the correct type and register it on both containers
-		//							//Overrides don't work if we use the container reference into the other
-		//							TemplateCodeSnippetToggle newSnippet = ScriptableObject.CreateInstance<TemplateCodeSnippetToggle>();
-		//							newSnippet.Init( attribName, attribType );
-		//							m_snippetElementsDict.Add( attribName, newSnippet );
-		//							m_snippetElementsList.Add( newSnippet );
-		//						}
-		//						break;
-		//					}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
-		//				}
-		//				// Add initial tag indentation
-		//				int indentationIndex = codeSnippetAttribBeginIndexes[ i ];
-		//				int lengthAdjust = 0;
-		//				for( ; indentationIndex > 0; indentationIndex--, lengthAdjust++ )
-		//				{
-		//					if( m_templateBody[ indentationIndex ] == TemplatesManager.TemplateNewLine )
-		//					{
-		//						indentationIndex += 1;
-		//						lengthAdjust -= 1;
-		//						break;
-		//					}
-		//				}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
-		//				if( indentationIndex > 0 )
-		//				{
-		//					string snippetId = m_templateBody.Substring( indentationIndex,
-		//																 codeSnippetEndIndexes[ i ] + TemplatesManager.TemplateCodeSnippetEnd.Length - codeSnippetAttribBeginIndexes[ i ] + lengthAdjust );
+		
+		
+		
+		
 
-		//					int snippetCodeStart = codeSnippetAttribEndIndexes[ i ] + TemplatesManager.TemplateCodeSnippetAttribEnd.Length;
-		//					int snippetCodeLength = codeSnippetEndIndexes[ i ] - snippetCodeStart;
-		//					//Remove possible identation characters present between tag and last instruction
-		//					if( m_templateBody[ snippetCodeStart + snippetCodeLength - 1 ] != TemplatesManager.TemplateNewLine )
-		//					{
-		//						for( ; snippetCodeLength > 0; snippetCodeLength-- )
-		//						{
-		//							if( m_templateBody[ snippetCodeStart + snippetCodeLength - 1 ] == TemplatesManager.TemplateNewLine )
-		//								break;
-		//						}
-		//					}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
-		//					if( snippetCodeLength > 0 )
-		//					{
-		//						string snippetCode = m_templateBody.Substring( snippetCodeStart, snippetCodeLength );
-		//						TemplateCodeSnippetElement element = new TemplateCodeSnippetElement( snippetId, snippetCode );
-		//						m_snippetElementsDict[ attribName ].AddSnippet( element );
-		//					}
-		//				}
-		//			}
-		//		}
-		//	}
-		//}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
-		//void RefreshSnippetInfo()
-		//{
-		//	if( m_snippetElementsDict == null )
-		//	{
-		//		m_snippetElementsDict = new Dictionary<string, TemplateCodeSnippetBase>();
-		//	}
+		
+		
+		
+		
+		
+		
 
-		//	if( m_snippetElementsDict.Count != m_snippetElementsList.Count )
-		//	{
-		//		m_snippetElementsDict.Clear();
-		//		for( int i = 0; i < m_snippetElementsList.Count; i++ )
-		//		{
-		//			m_snippetElementsDict.Add( m_snippetElementsList[ i ].NameId, m_snippetElementsList[ i ] );
-		//		}
-		//	}
-		//}
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
-		//public void DrawSnippetProperties( ParentNode owner )
-		//{
-		//	for( int i = 0; i < m_snippetElementsList.Count; i++ )
-		//	{
-		//		m_snippetElementsList[ i ].DrawProperties( owner );
-		//	}
-		//}
+		
+		
+		
+		
+		
+		
+		
 
-		//public void InsertSnippets( ref string shaderBody )
-		//{
-		//	for( int i = 0; i < m_snippetElementsList.Count; i++ )
-		//	{
-		//		m_snippetElementsList[ i ].InsertSnippet( ref shaderBody );
-		//	}
-		//}
+		
+		
+		
+		
+		
+		
+		
 
 		public void AddId( string ID, bool searchIndentation = true )
 		{
@@ -970,22 +970,22 @@ namespace AmplifyShaderEditor
 				m_localVarsList.Clear();
 				m_localVarsList = null;
 			}
-			//if( m_snippetElementsDict != null )
-			//{
-			//	m_snippetElementsDict.Clear();
-			//	m_snippetElementsDict = null;
-			//}
+			
+			
+			
+			
+			
 
-			//if( m_snippetElementsList != null )
-			//{
-			//	for( int i = 0; i < m_snippetElementsList.Count; i++ )
-			//	{
-			//		GameObject.DestroyImmediate( m_snippetElementsList[ i ] );
-			//		m_snippetElementsList[ i ] = null;
-			//	}
-			//	m_snippetElementsList.Clear();
-			//	m_snippetElementsList = null;
-			//}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 
 			m_alphaToMaskData = null;
 			m_cullModeData = null;
@@ -1048,7 +1048,7 @@ namespace AmplifyShaderEditor
 			return true;
 		}
 
-		// values must be unindented an without line feed
+		
 		public bool FillTemplateBody( string id, ref string body, params string[] values )
 		{
 			if( values.Length == 0 )
@@ -1069,7 +1069,7 @@ namespace AmplifyShaderEditor
 						string[] valuesArr = values[ i ].Split( '\n' );
 						for( int j = 0; j < valuesArr.Length; j++ )
 						{
-							//first value will be automatically indented by the string replace
+							
 							finalValue += ( ( i == 0 && j == 0 ) ? string.Empty : m_propertyDict[ id ].Indentation ) + valuesArr[ j ];
 							finalValue += TemplatesManager.TemplateNewLine;
 						}
@@ -1077,7 +1077,7 @@ namespace AmplifyShaderEditor
 					}
 					else
 					{
-						//first value will be automatically indented by the string replace
+						
 						finalValue += ( i == 0 ? string.Empty : m_propertyDict[ id ].Indentation ) + values[ i ];
 					}
 				}

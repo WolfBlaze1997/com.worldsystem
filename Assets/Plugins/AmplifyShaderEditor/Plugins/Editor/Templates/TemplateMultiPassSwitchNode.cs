@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -22,10 +22,34 @@ namespace AmplifyShaderEditor
 	}
 
 	[Serializable]
-	[NodeAttributes( "Template Multi-Pass Switch" , "Logical Operators" , "Relays, in compile time, the correct input port according to current analyzed sub-shader/pass." )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Template Multi-Pass Switch"
+#else
+"模板多通道开关"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Logical Operators"
+#else
+"逻辑运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Relays, in compile time, the correct input port according to current analyzed sub-shader/pass."
+#else
+"在编译时，根据当前分析的子着色器/通道中继正确的输入端口。"
+#endif
+)]
 	public sealed class TemplateMultiPassSwitchNode : TemplateNodeParent
 	{
-		private const string InputLabelStr = "SubShader {0} Pass {1}";
+		private const string InputLabelStr = 
+#if !WB_LANGUAGE_CHINESE
+"SubShader {0} Pass {1}"
+#else
+"子着色器｛0｝传递｛1｝"
+#endif
+;
 
 		[SerializeField]
 		private List<InputSwitchMPHelper> m_inputHelper = new List<InputSwitchMPHelper>();
@@ -239,7 +263,7 @@ namespace AmplifyShaderEditor
 		{
 			base.ReadFromString( ref nodeParams );
 			m_inputCountHelper = Convert.ToInt32( GetCurrentParam( ref nodeParams ) );
-			// Need to add ports here so read internal data is correct
+			
 			for( int i = 0 ; i < m_inputCountHelper ; i++ )
 			{
 				AddInputPort( WirePortDataType.FLOAT , false , Constants.EmptyPortValue );

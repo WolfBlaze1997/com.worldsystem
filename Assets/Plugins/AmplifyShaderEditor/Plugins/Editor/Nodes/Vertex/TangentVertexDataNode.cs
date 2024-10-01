@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 using System;
 using UnityEditor;
 using UnityEngine;
@@ -7,10 +7,34 @@ using UnityEngine;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Vertex Tangent", "Vertex Data", "Vertex tangent vector in object space, can be used in both local vertex offset and fragment outputs" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Vertex Tangent"
+#else
+"顶点切线"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vertex Data"
+#else
+"顶点数据"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Vertex tangent vector in object space, can be used in both local vertex offset and fragment outputs"
+#else
+"对象空间中的顶点切线向量，可用于局部顶点偏移和片段输出"
+#endif
+)]
 	public sealed class TangentVertexDataNode : VertexDataNode
 	{
-		private const string PropertyLabel = "Size";
+		private const string PropertyLabel = 
+#if !WB_LANGUAGE_CHINESE
+"Size"
+#else
+"尺寸"
+#endif
+;
 		private readonly string[] SizeLabels = { "XYZ", "XYZW" };
 
 		[SerializeField]

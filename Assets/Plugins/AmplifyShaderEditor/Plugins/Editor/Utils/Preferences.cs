@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System.Collections.Generic;
 using UnityEditor;
@@ -16,52 +16,196 @@ namespace AmplifyShaderEditor
 			Never = 2
 		}
 
-		private static readonly GUIContent StartUp = new GUIContent( "Show start screen on Unity launch", "You can set if you want to see the start screen everytime Unity launchs, only just when there's a new version available or never." );
-		public static readonly string PrefStartUp = "ASELastSession";
+		private readonly static GUIContent StartUp = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Show start screen on Unity launch"
+#else
+"Unity启动时显示开始屏幕"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"You can set if you want to see the start screen everytime Unity launchs, only just when there's a new version available or never."
+#else
+"您可以设置是否希望每次Unity启动时都能看到开始屏幕，只有在有新版本可用时才能看到，或者永远不会看到。"
+#endif
+);
+		public readonly static string PrefStartUp = "ASELastSession";
 		public static ShowOption GlobalStartUp { get; private set; } = 0;
 
-		private static readonly GUIContent AlwaysSnapToGrid = new GUIContent( "Always Snap to Grid", "Always snap to grid when dragging nodes around, instead of using control." );
-		public static readonly string PrefAlwaysSnapToGrid = "ASEAlwaysSnapToGrid";
+		private readonly static GUIContent AlwaysSnapToGrid = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Always Snap to Grid"
+#else
+"始终捕捉到网格"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Always snap to grid when dragging nodes around, instead of using control."
+#else
+"拖动节点时，始终捕捉到网格，而不是使用控件。"
+#endif
+);
+		public readonly static string PrefAlwaysSnapToGrid = "ASEAlwaysSnapToGrid";
 		public static bool GlobalAlwaysSnapToGrid { get; private set; } = false;
 
-		private static readonly GUIContent EnableUndo = new GUIContent( "Enable Undo (unstable)", "Enables undo for actions within the shader graph canvas. Currently unstable, use with caution." );
-		public static readonly string PrefEnableUndo = "ASEEnableUndo";
+		private readonly static GUIContent EnableUndo = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Enable Undo (unstable)"
+#else
+"启用撤消（不稳定）"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Enables undo for actions within the shader graph canvas. Currently unstable, use with caution."
+#else
+"启用着色器图形画布中操作的撤消。目前不稳定，请谨慎使用。"
+#endif
+);
+		public readonly static string PrefEnableUndo = "ASEEnableUndo";
 		public static bool GlobalEnableUndo { get; private set; } = false;
 
-		private static readonly GUIContent AutoSRP = new GUIContent( "Auto import SRP shader templates", "By default Amplify Shader Editor checks for your SRP version and automatically imports the correct corresponding shader templates.\nTurn this OFF if you prefer to import them manually." );
-		public static readonly string PrefAutoSRP = "ASEAutoSRP";
+		private readonly static GUIContent AutoSRP = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Auto import SRP shader templates"
+#else
+"自动导入SRP着色器模板"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"By default Amplify Shader Editor checks for your SRP version and automatically imports the correct corresponding shader templates.\nTurn this OFF if you prefer to import them manually."
+#else
+"默认情况下，Amplify Shader Editor会检查SRP版本，并自动导入正确的相应着色器模板。\n如果您希望手动导入，请关闭此选项。"
+#endif
+);
+		public readonly static string PrefAutoSRP = "ASEAutoSRP";
 		public static bool GlobalAutoSRP { get; private set; } = true;
 
-		private static readonly GUIContent DefineSymbol = new GUIContent( "Add Amplify Shader Editor define symbol", "Turning it OFF will disable the automatic insertion of the define symbol and remove it from the list while turning it ON will do the opposite.\nThis is used for compatibility with other plugins, if you are not sure if you need this leave it ON." );
-		public static readonly string PrefDefineSymbol = "ASEDefineSymbol";
+		private readonly static GUIContent DefineSymbol = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Add Amplify Shader Editor define symbol"
+#else
+"添加Amplify着色器编辑器定义符号"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Turning it OFF will disable the automatic insertion of the define symbol and remove it from the list while turning it ON will do the opposite.\nThis is used for compatibility with other plugins, if you are not sure if you need this leave it ON."
+#else
+"将其关闭将禁用定义符号的自动插入，并将其从列表中删除，而将其打开将执行相反的操作。\n这是为了与其他插件兼容，如果您不确定是否需要，请将其打开。"
+#endif
+);
+		public readonly static string PrefDefineSymbol = "ASEDefineSymbol";
 		public static bool GlobalDefineSymbol { get; private set; } = true;
 
-		private static readonly GUIContent ClearLog = new GUIContent( "Clear Log on Update", "Clears the previously generated log each time the Update button is pressed" );
-		public static readonly string PrefClearLog = "ASEClearLog";
+		private readonly static GUIContent ClearLog = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Clear Log on Update"
+#else
+"清除登录更新"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Clears the previously generated log each time the Update button is pressed"
+#else
+"每次按下“更新”按钮时，清除之前生成的日志"
+#endif
+);
+		public readonly static string PrefClearLog = "ASEClearLog";
 		public static bool GlobalClearLog { get; private set; } = true;
 
-		private static readonly GUIContent LogShaderCompile = new GUIContent( "Log Shader Compile", "Log message to console when a shader compilation is finished" );
-		public static readonly string PrefLogShaderCompile = "ASELogShaderCompile";
+		private readonly static GUIContent LogShaderCompile = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Log Shader Compile"
+#else
+"日志着色器编译"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Log message to console when a shader compilation is finished"
+#else
+"着色器编译完成时向控制台记录消息"
+#endif
+);
+		public readonly static string PrefLogShaderCompile = "ASELogShaderCompile";
 		public static bool GlobalLogShaderCompile { get; private set; } = false;
 
-		private static readonly GUIContent LogBatchCompile = new GUIContent( "Log Batch Compile", "Log message to console when a batch compilation is finished" );
-		public static readonly string PrefLogBatchCompile = "ASELogBatchCompile";
+		private readonly static GUIContent LogBatchCompile = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Log Batch Compile"
+#else
+"日志批量编译"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Log message to console when a batch compilation is finished"
+#else
+"批编译完成时向控制台记录消息"
+#endif
+);
+		public readonly static string PrefLogBatchCompile = "ASELogBatchCompile";
 		public static bool GlobalLogBatchCompile { get; private set; } = false;
 
-		private static readonly GUIContent UpdateOnSceneSave = new GUIContent( "Update on Scene save (Ctrl+S)", "ASE is aware of Ctrl+S and will use it to save shader" );
-		public static readonly string PrefUpdateOnSceneSave = "ASEUpdateOnSceneSave";
+		private readonly static GUIContent UpdateOnSceneSave = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Update on Scene save (Ctrl+S)"
+#else
+"场景保存更新（Ctrl+S）"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"ASE is aware of Ctrl+S and will use it to save shader"
+#else
+"ASE知道Ctrl+S，并将使用它来保存着色器"
+#endif
+);
+		public readonly static string PrefUpdateOnSceneSave = "ASEUpdateOnSceneSave";
 		public static bool GlobalUpdateOnSceneSave { get; private set; } = true;
 
-		private static readonly GUIContent DisablePreviews = new GUIContent( "Disable Node Previews", "Disable preview on nodes from being updated to boost up performance on large graphs" );
-		public static readonly string PrefDisablePreviews = "ASEActivatePreviews";
+		private readonly static GUIContent DisablePreviews = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Disable Node Previews"
+#else
+"禁用节点预览"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Disable preview on nodes from being updated to boost up performance on large graphs"
+#else
+"禁止更新节点预览以提高大型图形的性能"
+#endif
+);
+		public readonly static string PrefDisablePreviews = "ASEActivatePreviews";
 		public static bool GlobalDisablePreviews { get; private set; } = false;
 
-		private static readonly GUIContent ForceTemplateMinShaderModel = new GUIContent( "Force Template Min. Shader Model", "If active, when loading a shader its shader model will be replaced by the one specified in template if what is loaded is below the one set over the template." );
-		public static readonly string PrefForceTemplateMinShaderModel = "ASEForceTemplateMinShaderModel";
+		private readonly static GUIContent ForceTemplateMinShaderModel = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Force Template Min. Shader Model"
+#else
+"力模板最小着色器模型"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"If active, when loading a shader its shader model will be replaced by the one specified in template if what is loaded is below the one set over the template."
+#else
+"如果处于活动状态，则加载着色器时，如果加载的着色器模型低于模板上设置的着色器模型，则其着色器模型将被模板中指定的着色器模型替换。"
+#endif
+);
+		public readonly static string PrefForceTemplateMinShaderModel = "ASEForceTemplateMinShaderModel";
 		public static bool GlobalForceTemplateMinShaderModel { get; private set; } = true;
 
-		private static readonly GUIContent ForceTemplateInlineProperties = new GUIContent( "Force Template Inline Properties", "If active, defaults all inline properties to template values." );
-		public static readonly string PrefForceTemplateInlineProperties = "ASEForceTemplateInlineProperties";
+		private readonly static GUIContent ForceTemplateInlineProperties = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Force Template Inline Properties"
+#else
+"强制模板内联属性"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"If active, defaults all inline properties to template values."
+#else
+"如果处于活动状态，则将所有内联属性默认为模板值。"
+#endif
+);
+		public readonly static string PrefForceTemplateInlineProperties = "ASEForceTemplateInlineProperties";
 		public static bool GlobalForceTemplateInlineProperties { get; private set; } = false;
 
 
@@ -187,7 +331,13 @@ namespace AmplifyShaderEditor
 
 			EditorGUILayout.BeginHorizontal();
 			GUILayout.FlexibleSpace();
-			if( GUILayout.Button( "Reset and Forget All" ) )
+			if( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Reset and Forget All"
+#else
+"重置并全部忘记"
+#endif
+) )
 			{
 				ResetSettings();
 			}

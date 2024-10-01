@@ -1,10 +1,28 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 namespace AmplifyShaderEditor
 {
 	[System.Serializable]
-	[NodeAttributes( "Object To World", "Object Transform", "Transforms input to World Space" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Object To World"
+#else
+"反对世界"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Object Transform"
+#else
+"对象变换"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Transforms input to World Space"
+#else
+"将输入转换为世界空间"
+#endif
+)]
 	public sealed class ObjectToWorldTransfNode : ParentTransfNode
 	{
 		protected override void CommonInit( int uniqueId )

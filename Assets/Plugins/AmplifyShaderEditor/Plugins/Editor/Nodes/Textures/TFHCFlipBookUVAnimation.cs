@@ -1,8 +1,8 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
-//
-// Custom Node Flipbook UV Animation
-// Donated by The Four Headed Cat - @fourheadedcat
+
+
+
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -12,13 +12,49 @@ namespace AmplifyShaderEditor
 {
 
 	[Serializable]
-	[NodeAttributes( "Flipbook UV Animation", "UV Coordinates", "Animate a Flipbook Texture Modifying UV Coordinates.", null, KeyCode.None, true, false, null, null, "The Four Headed Cat - @fourheadedcat" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Flipbook UV Animation"
+#else
+"动画书UV动画"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"UV Coordinates"
+#else
+"UV坐标"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Animate a Flipbook Texture Modifying UV Coordinates."
+#else
+"为动画书纹理设置动画修改UV坐标。"
+#endif
+, null, KeyCode.None, true, false, null, null, 
+#if !WB_LANGUAGE_CHINESE
+"The Four Headed Cat - @fourheadedcat"
+#else
+"四头猫-@fourheaddcat"
+#endif
+)]
 	public sealed class TFHCFlipBookUVAnimation : ParentNode
 
 	{
 
-		private const string TextureVerticalDirectionStr = "Texture Direction";
-		private const string NegativeSpeedBehaviorStr = "If Negative Speed";
+		private const string TextureVerticalDirectionStr = 
+#if !WB_LANGUAGE_CHINESE
+"Texture Direction"
+#else
+"纹理方向"
+#endif
+;
+		private const string NegativeSpeedBehaviorStr = 
+#if !WB_LANGUAGE_CHINESE
+"If Negative Speed"
+#else
+"如果速度为负"
+#endif
+;
 
 		[SerializeField]
 		private int m_selectedTextureVerticalDirection = 0;
@@ -37,11 +73,41 @@ namespace AmplifyShaderEditor
 		{
 			base.CommonInit( uniqueId );
 			AddInputPort( WirePortDataType.FLOAT2, false, "UV" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Columns" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Rows" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Speed" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Start Frame" );
-            AddInputPort( WirePortDataType.FLOAT, false, "Time" );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Columns"
+#else
+"柱"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Rows"
+#else
+"排"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Speed"
+#else
+"速度"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Start Frame"
+#else
+"开始帧"
+#endif
+);
+            AddInputPort( WirePortDataType.FLOAT, false,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Time"
+#else
+"时间"
+#endif
+/*<C!>*/ );
 
             AddOutputVectorPorts( WirePortDataType.FLOAT2, "UV" );
 			m_outputPorts[ 1 ].Name = "U";
@@ -77,7 +143,13 @@ namespace AmplifyShaderEditor
 			m_selectedTextureVerticalDirection = EditorGUILayoutPopup( TextureVerticalDirectionStr, m_selectedTextureVerticalDirection, m_textureVerticalDirectionValues );
 			m_negativeSpeedBehavior = EditorGUILayoutPopup( NegativeSpeedBehaviorStr, m_negativeSpeedBehavior, m_negativeSpeedBehaviorValues );
 			EditorGUILayout.EndVertical();
-			EditorGUILayout.HelpBox( "Flipbook UV Animation:\n\n  - UV: Texture Coordinates to Flipbook.\n - Columns: number of Columns (X) of the Flipbook Texture.\n  - Rows: number of Rows (Y) of the Flipbook Textures.\n  - Speed: speed of the animation.\n - Texture Direction: set the vertical order of the texture tiles.\n - If Negative Speed: set the behavior when speed is negative.\n\n - Out: UV Coordinates.", MessageType.None );
+			EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"Flipbook UV Animation:\n\n  - UV: Texture Coordinates to Flipbook.\n - Columns: number of Columns (X) of the Flipbook Texture.\n  - Rows: number of Rows (Y) of the Flipbook Textures.\n  - Speed: speed of the animation.\n - Texture Direction: set the vertical order of the texture tiles.\n - If Negative Speed: set the behavior when speed is negative.\n\n - Out: UV Coordinates."
+#else
+"动画书UV动画：\n\n-UV：与动画书的纹理坐标。\n-列数：动画书纹理的列数（X）。\n-行数：动画书纹理的行数（Y）。\n-速度：动画的速度。\n-纹理方向：设置纹理块的垂直顺序。\n-如果速度为负：设置速度为负时的行为。\n\n-输出：UV坐标。"
+#endif
+, MessageType.None );
 		}
 
 		public override void ReadFromString( ref string[] nodeParams )
@@ -96,11 +168,11 @@ namespace AmplifyShaderEditor
 
 		public override string GenerateShaderForOutput( int outputId, ref MasterNodeDataCollector dataCollector, bool ignoreLocalvar )
 		{
-			// OPTIMIZATION NOTES
-			//
-			//  round( fmod( x, y ) ) can be replaced with a faster
-			//  floor( frac( x / y ) * y + 0.5 ) => div can be muls with 1/y, almost always static/constant
-			//
+			
+			
+			
+			
+			
 			if( m_outputPorts[ 0 ].IsLocalValue( dataCollector.PortCategory ) )
 				return GetOutputVectorItem( 0, outputId, m_outputPorts[ 0 ].LocalValue( dataCollector.PortCategory ) );
 
@@ -131,15 +203,15 @@ namespace AmplifyShaderEditor
 			string vtiling = "float2 fbtiling" + OutputId + " = float2(fbcolsoffset" + OutputId + ", fbrowsoffset" + OutputId + ");";
 			string vcomment6 = "// UV Offset - calculate current tile linear index, and convert it to (X * coloffset, Y * rowoffset)";
 			string vcomment7 = "// Calculate current tile linear index";
-			//float fbcurrenttileindex1 = round( fmod( fbspeed1 + _Float0, fbtotaltiles1 ) );
+			
 			string vcurrenttileindex = "float fbcurrenttileindex" + OutputId + " = round( fmod( fbspeed" + OutputId + " + " + startframe + ", fbtotaltiles" + OutputId + ") );";
 			string  vcurrenttileindex1 = "fbcurrenttileindex" + OutputId + " += ( fbcurrenttileindex" + OutputId + " < 0) ? fbtotaltiles" + OutputId + " : 0;";
-			//fbcurrenttileindex1 += ( fbcurrenttileindex1 < 0 ) ? fbtotaltiles1 : 0;
-			//string vcurrenttileindex = "int fbcurrenttileindex" + m_uniqueId + " = (int)fmod( fbspeed" + m_uniqueId + ", fbtotaltiles" + m_uniqueId + ") + " + startframe + ";";
+			
+			
 			string vcomment8 = "// Obtain Offset X coordinate from current tile linear index";
 
-			//float fblinearindextox1 = round( fmod( fbcurrenttileindex1, 5.0 ) );
-			//string voffsetx1 = "int fblinearindextox" + m_uniqueId + " = fbcurrenttileindex" + m_uniqueId + " % (int)" + columns + ";";
+			
+			
 			string voffsetx1 = "float fblinearindextox" + OutputId + " = round ( fmod ( fbcurrenttileindex" + OutputId + ", " + columns + " ) );";
 			string vcomment9 = String.Empty;
 			string voffsetx2 = String.Empty;
@@ -151,11 +223,11 @@ namespace AmplifyShaderEditor
 			string vcomment10 = "// Multiply Offset X by coloffset";
 			string voffsetx3 = "float fboffsetx" + OutputId + " = fblinearindextox" + OutputId + " * fbcolsoffset" + OutputId + ";";
 			string vcomment11 = "// Obtain Offset Y coordinate from current tile linear index";
-			//float fblinearindextoy1 = round( fmod( ( fbcurrenttileindex1 - fblinearindextox1 ) / 5.0, 5.0 ) );
+			
 			string voffsety1 = "float fblinearindextoy" + OutputId + " = round( fmod( ( fbcurrenttileindex" + OutputId + " - fblinearindextox" + OutputId + " ) / " + columns + ", " + rows + " ) );";
-			//string voffsety1 = "int fblinearindextoy" + m_uniqueId + " = (int)( ( fbcurrenttileindex" + m_uniqueId + " - fblinearindextox" + m_uniqueId + " ) / " + columns + " ) % (int)" + rows + ";";
-			//string vcomment10 = "// Reverse Y to get from Top to Bottom";
-			//string voffsety2 = "fblinearindextoy" + m_uniqueId + " = (int)" + rows + " - fblinearindextoy" + m_uniqueId + ";";
+			
+			
+			
 			string vcomment12 = String.Empty;
 			string voffsety2 = String.Empty;
 			if ( m_negativeSpeedBehavior == 0 )
@@ -185,7 +257,7 @@ namespace AmplifyShaderEditor
 			string voffsety3 = "float fboffsety" + OutputId + " = fblinearindextoy" + OutputId + " * fbrowsoffset" + OutputId + ";";
 			string vcomment14 = "// UV Offset";
 			string voffset = "float2 fboffset" + OutputId + " = float2(fboffsetx" + OutputId + ", fboffsety" + OutputId + ");";
-			//string voffset = "float2 fboffset" + m_uniqueId + " = float2( ( ( (int)fmod( fbspeed" + m_uniqueId + " , fbtotaltiles" +  m_uniqueId + ") % (int)" + columns + " ) * fbcolsoffset" + m_OutputId + " ) , ( ( (int)" + rows + " - ( (int)( ( (int)fmod( fbspeed" + m_uniqueId + " , fbtotaltiles" + m_uniqueId + " ) - ( (int)fmod( fbspeed" + m_uniqueId + " , fbtotaltiles" + m_uniqueId + " ) % (int)" + columns + " ) ) / " + columns + " ) % (int)" + rows + " ) ) * fbrowsoffset" + m_uniqueId + " ) );";
+			
 			string vcomment15 = "// Flipbook UV";
 			string vfbuv = "half2 fbuv" + OutputId + " = " + uv + " * fbtiling" + OutputId + " + fboffset" + OutputId + ";";
 			string vcomment16 = "// *** END Flipbook UV Animation vars ***";

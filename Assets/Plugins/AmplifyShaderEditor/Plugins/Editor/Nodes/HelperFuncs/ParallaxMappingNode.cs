@@ -5,7 +5,25 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Parallax Mapping", "UV Coordinates", "Calculates offseted UVs for parallax mapping" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Parallax Mapping"
+#else
+"视差映射"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"UV Coordinates"
+#else
+"UV坐标"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Calculates offseted UVs for parallax mapping"
+#else
+"计算用于视差贴图的偏移UV"
+#endif
+)]
 	public sealed class ParallaxMappingNode : ParentNode
 	{
 		private enum ParallaxType { Normal, Planar }
@@ -26,9 +44,27 @@ namespace AmplifyShaderEditor
 		{
 			base.CommonInit( uniqueId );
 			AddInputPort( WirePortDataType.FLOAT2, false, "UV" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Height" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Scale" );
-			AddInputPort( WirePortDataType.FLOAT3, false, "ViewDir (tan)" );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Height"
+#else
+"身高"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Scale"
+#else
+"规模"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"ViewDir (tan)"
+#else
+"ViewDir（棕褐色）"
+#endif
+);
 			AddOutputPort( WirePortDataType.FLOAT2, "Out" );
 			m_useInternalPortData = true;
 			m_autoDrawInternalPortData = true;
@@ -79,7 +115,7 @@ namespace AmplifyShaderEditor
 			}
 
 			dataCollector.AddLocalVariable( UniqueId, CurrentPrecisionType, m_outputPorts[ 0 ].DataType, localVarName, calculation );
-			//dataCollector.AddToLocalVariables( UniqueId, m_currentPrecisionType, m_outputPorts[ 0 ].DataType, localVarName, calculation );
+			
 			return GetOutputVectorItem( 0, outputId, localVarName );
 		}
 
@@ -105,7 +141,13 @@ namespace AmplifyShaderEditor
 			base.DrawProperties();
 			
 			EditorGUI.BeginChangeCheck();
-			m_selectedParallaxTypeInt = EditorGUILayoutPopup( "Parallax Type", m_selectedParallaxTypeInt, m_parallaxTypeStr );
+			m_selectedParallaxTypeInt = EditorGUILayoutPopup( 
+#if !WB_LANGUAGE_CHINESE
+"Parallax Type"
+#else
+"视差类型"
+#endif
+, m_selectedParallaxTypeInt, m_parallaxTypeStr );
 			if( EditorGUI.EndChangeCheck() )
 			{
 				switch( m_selectedParallaxTypeInt )
@@ -117,7 +159,13 @@ namespace AmplifyShaderEditor
 				UpdateTitle();
 			}
 
-			EditorGUILayout.HelpBox( "Normal type does a cheaper approximation thats view dependent while Planar is more accurate but generates higher aliasing artifacts at steep angles.", MessageType.None );
+			EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"Normal type does a cheaper approximation thats view dependent while Planar is more accurate but generates higher aliasing artifacts at steep angles."
+#else
+"法线类型做了一个更便宜的近似，它依赖于视图，而平面类型更准确，但在陡峭的角度会产生更高的混叠伪影。"
+#endif
+, MessageType.None );
 		}
 
 

@@ -1,8 +1,8 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
-//
-// Custom Node Vertex To Fragment
-// Donated by Jason Booth - http://u3d.as/DND
+
+
+
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -11,13 +11,55 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[System.Serializable]
-	[NodeAttributes( "Vertex To Fragment", "Miscellaneous", "Pass vertex data to the pixel shader", null, KeyCode.None, true, false, null, null, "Jason Booth - http://u3d.as/DND" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Vertex To Fragment"
+#else
+"顶点到碎片"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Pass vertex data to the pixel shader"
+#else
+"将顶点数据传递给像素着色器"
+#endif
+, null, KeyCode.None, true, false, null, null, 
+#if !WB_LANGUAGE_CHINESE
+"Jason Booth - http://u3d.as/DND"
+#else
+"杰森·布斯http://u3d.as/DND"
+#endif
+)]
 	public sealed class VertexToFragmentNode : SingleInputOp
 	{
-		private const string DisabledInterpolatorMsg = "No Interpolation option cannot be used over Standard Surface type as we must be able to directly control interpolators registry, which does't happen over this shader type. Please disable it.";
-		private const string NoInterpolationUsageMsg = "No interpolation is performed when passing value from vertex to fragment during rasterization. Please note this option will not work across all API's and can even throw compilation errors on some of them ( p.e. Metal and GLES 2.0 )";
+		private const string DisabledInterpolatorMsg = 
+#if !WB_LANGUAGE_CHINESE
+"No Interpolation option cannot be used over Standard Surface type as we must be able to directly control interpolators registry, which does't happen over this shader type. Please disable it."
+#else
+"“无插值”选项不能在“标准曲面”类型上使用，因为我们必须能够直接控制插值器注册表，而这在该着色器类型上不会发生。请禁用它。"
+#endif
+;
+		private const string NoInterpolationUsageMsg = 
+#if !WB_LANGUAGE_CHINESE
+"No interpolation is performed when passing value from vertex to fragment during rasterization. Please note this option will not work across all API's and can even throw compilation errors on some of them ( p.e. Metal and GLES 2.0 )"
+#else
+"在光栅化过程中将值从顶点传递到片段时，不会执行插值。请注意，此选项不适用于所有API，甚至可能在其中一些API上引发编译错误（p.e.Metal和GLES 2.0）"
+#endif
+;
 
-		private const string SampleInfoMessage = "Interpolate at sample location rather than at the pixel center. This causes the pixel shader to execute per-sample rather than per-pixel. Only available in shader model 4.1 or higher";
+		private const string SampleInfoMessage = 
+#if !WB_LANGUAGE_CHINESE
+"Interpolate at sample location rather than at the pixel center. This causes the pixel shader to execute per-sample rather than per-pixel. Only available in shader model 4.1 or higher"
+#else
+"在样本位置而不是像素中心进行插值。这会导致像素着色器按采样而不是按像素执行。仅在着色器模型4.1或更高版本中可用"
+#endif
+;
 
 		[SerializeField]
 		private bool m_noInterpolation;
@@ -49,7 +91,13 @@ namespace AmplifyShaderEditor
 			base.DrawProperties();
 			bool isSurface = ContainerGraph.IsStandardSurface;
 			EditorGUI.BeginDisabledGroup( isSurface && !m_noInterpolation );
-			m_noInterpolation = EditorGUILayoutToggle( "No Interpolation" , m_noInterpolation );
+			m_noInterpolation = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"No Interpolation"
+#else
+"无插值"
+#endif
+, m_noInterpolation );
 			EditorGUI.EndDisabledGroup();
 			if( m_noInterpolation  )
 			{
@@ -63,7 +111,13 @@ namespace AmplifyShaderEditor
 			}
 
 			EditorGUI.BeginDisabledGroup( isSurface && !m_sample );
-			m_sample = EditorGUILayoutToggle( "Sample" , m_sample );
+			m_sample = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Sample"
+#else
+"样品"
+#endif
+, m_sample );
 			EditorGUI.EndDisabledGroup();
 			if( m_sample )
 				EditorGUILayout.HelpBox( SampleInfoMessage , MessageType.Info ); 
@@ -89,83 +143,83 @@ namespace AmplifyShaderEditor
 
 			return varName;
 
-			////TEMPLATES
-			//if( dataCollector.IsTemplate )
-			//{
-			//	if( !dataCollector.IsFragmentCategory )
-			//		return m_inputPorts[ 0 ].GeneratePortInstructions( ref dataCollector );
+			
+			
+			
+			
+			
 
-			//	string varName = "vertexToFrag" + OutputId;
-			//	if( dataCollector.TemplateDataCollectorInstance.HasCustomInterpolatedData( varName ) )
-			//		return varName;
+			
+			
+			
 
-			//	MasterNodePortCategory category = dataCollector.PortCategory;
-			//	dataCollector.PortCategory = MasterNodePortCategory.Vertex;
-			//	bool dirtyVertexVarsBefore = dataCollector.DirtyVertexVariables;
-			//	ContainerGraph.ResetNodesLocalVariablesIfNot( this, MasterNodePortCategory.Vertex );
+			
+			
+			
+			
 
-			//	string data = m_inputPorts[ 0 ].GeneratePortInstructions( ref dataCollector );
+			
 
-			//	dataCollector.PortCategory = category;
-			//	if( !dirtyVertexVarsBefore && dataCollector.DirtyVertexVariables )
-			//	{
-			//		dataCollector.AddVertexInstruction( dataCollector.VertexLocalVariables, UniqueId, false );
-			//		dataCollector.ClearVertexLocalVariables();
-			//		ContainerGraph.ResetNodesLocalVariablesIfNot( this, MasterNodePortCategory.Vertex );
-			//	}
+			
+			
+			
+			
+			
+			
+			
 
-			//	ContainerGraph.ResetNodesLocalVariablesIfNot( this, MasterNodePortCategory.Fragment );
+			
 
-			//	dataCollector.TemplateDataCollectorInstance.RegisterCustomInterpolatedData( varName, m_inputPorts[ 0 ].DataType, m_currentPrecisionType, data );
-			//	//return varName;
+			
+			
 
-			//	m_outputPorts[ 0 ].SetLocalValue( varName );
-			//	return m_outputPorts[ 0 ].LocalValue;
-			//}
+			
+			
+			
 
-			////SURFACE 
-			//{
-			//	if( !dataCollector.IsFragmentCategory )
-			//	{
-			//		return m_inputPorts[ 0 ].GeneratePortInstructions( ref dataCollector );
-			//	}
+			
+			
+			
+			
+			
+			
 
-			//	if( dataCollector.TesselationActive )
-			//	{
-			//		UIUtils.ShowMessage( "Unable to use Vertex to Frag when Tessellation is active" );
-			//		return m_outputPorts[ 0 ].ErrorValue;
-			//	}
+			
+			
+			
+			
+			
 
 
-			//	string interpName = "data" + OutputId;
-			//	dataCollector.AddToInput( UniqueId, interpName, m_inputPorts[ 0 ].DataType, m_currentPrecisionType );
+			
+			
 
-			//	MasterNodePortCategory portCategory = dataCollector.PortCategory;
-			//	dataCollector.PortCategory = MasterNodePortCategory.Vertex;
+			
+			
 
-			//	bool dirtyVertexVarsBefore = dataCollector.DirtyVertexVariables;
+			
 
-			//	ContainerGraph.ResetNodesLocalVariablesIfNot( this, MasterNodePortCategory.Vertex );
+			
 
-			//	string vertexVarValue = m_inputPorts[ 0 ].GeneratePortInstructions( ref dataCollector );
-			//	dataCollector.AddLocalVariable( UniqueId, Constants.VertexShaderOutputStr + "." + interpName, vertexVarValue + ";" );
+			
+			
 
-			//	dataCollector.PortCategory = portCategory;
+			
 
-			//	if( !dirtyVertexVarsBefore && dataCollector.DirtyVertexVariables )
-			//	{
-			//		dataCollector.AddVertexInstruction( dataCollector.VertexLocalVariables, UniqueId, false );
-			//		dataCollector.ClearVertexLocalVariables();
-			//		ContainerGraph.ResetNodesLocalVariablesIfNot( this, MasterNodePortCategory.Vertex );
-			//	}
+			
+			
+			
+			
+			
+			
 
-			//	ContainerGraph.ResetNodesLocalVariablesIfNot( this, MasterNodePortCategory.Fragment );
+			
 
-			//	//return Constants.InputVarStr + "." + interpName;
+			
 
-			//	m_outputPorts[ 0 ].SetLocalValue( Constants.InputVarStr + "." + interpName );
-			//	return m_outputPorts[ 0 ].LocalValue;
-			//}
+			
+			
+			
 		}
 		public override void ReadFromString( ref string[] nodeParams )
 		{

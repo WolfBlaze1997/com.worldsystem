@@ -9,7 +9,7 @@ namespace AmplifyShaderEditor
 	[Serializable]
 	public class StencilBufferOpHelper
 	{
-		public static readonly string[] StencilComparisonValues =
+		public readonly static string[] StencilComparisonValues =
 		{
 			"<Default>",
 			"Greater" ,
@@ -22,7 +22,7 @@ namespace AmplifyShaderEditor
 			"Never"
 		};
 
-		public static readonly Dictionary<string,int> StencilComparisonValuesDict = new Dictionary<string, int>()
+		public readonly static Dictionary<string,int> StencilComparisonValuesDict = new Dictionary<string, int>()
 		{
 			{"Greater" , 1},
 			{"GEqual" ,	 2},
@@ -34,7 +34,7 @@ namespace AmplifyShaderEditor
 			{"Never"  ,  8},
 		};
 
-		public static readonly string[] StencilComparisonLabels =
+		public readonly static string[] StencilComparisonLabels =
 		{
 			"<Default>",
 			"Greater" ,
@@ -48,7 +48,7 @@ namespace AmplifyShaderEditor
 		};
 
 
-		public static readonly string[] StencilOpsValues =
+		public readonly static string[] StencilOpsValues =
 		{
 			"<Default>",
 			"Keep",
@@ -61,7 +61,7 @@ namespace AmplifyShaderEditor
 			"DecrWrap"
 		};
 
-		public static readonly Dictionary<string,int> StencilOpsValuesDict = new Dictionary<string, int>()
+		public readonly static Dictionary<string,int> StencilOpsValuesDict = new Dictionary<string, int>()
 		{
 			{"Keep",	1},
 			{"Zero",	2},
@@ -73,7 +73,7 @@ namespace AmplifyShaderEditor
 			{"DecrWrap",8},
 		};
 
-		public static readonly string[] StencilOpsLabels =
+		public readonly static string[] StencilOpsLabels =
 		{
 			"<Default>",
 			"Keep",
@@ -87,24 +87,126 @@ namespace AmplifyShaderEditor
 		};
 
 
-		private const string FoldoutLabelStr = " Stencil Buffer";
-		private GUIContent ReferenceValueContent = new GUIContent( "Reference", "The value to be compared against (if Comparison is anything else than always) and/or the value to be written to the buffer (if either Pass, Fail or ZFail is set to replace)" );
-		private GUIContent ReadMaskContent = new GUIContent( "Read Mask", "An 8 bit mask as an 0-255 integer, used when comparing the reference value with the contents of the buffer (referenceValue & readMask) comparisonFunction (stencilBufferValue & readMask)" );
-		private GUIContent WriteMaskContent = new GUIContent( "Write Mask", "An 8 bit mask as an 0-255 integer, used when writing to the buffer" );
-		private const string ComparisonStr = "Comparison";
-		private const string PassStr = "Pass";
+		private const string FoldoutLabelStr = 
+#if !WB_LANGUAGE_CHINESE
+" Stencil Buffer"
+#else
+"模板缓冲器"
+#endif
+;
+		private GUIContent ReferenceValueContent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Reference"
+#else
+"参考资料"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"The value to be compared against (if Comparison is anything else than always) and/or the value to be written to the buffer (if either Pass, Fail or ZFail is set to replace)"
+#else
+"要与之进行比较的值（如果Comparison不是总是这样）和/或要写入缓冲区的值（是否将Pass、Fail或ZFail设置为替换）"
+#endif
+);
+		private GUIContent ReadMaskContent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Read Mask"
+#else
+"读取掩码"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"An 8 bit mask as an 0-255 integer, used when comparing the reference value with the contents of the buffer (referenceValue & readMask) comparisonFunction (stencilBufferValue & readMask)"
+#else
+"一个8位掩码，作为0-255的整数，用于将参考值与缓冲区的内容进行比较（referenceValue和readMask）比较函数（stencilBufferValue和readMask）"
+#endif
+);
+		private GUIContent WriteMaskContent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Write Mask"
+#else
+"写入掩码"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"An 8 bit mask as an 0-255 integer, used when writing to the buffer"
+#else
+"8位掩码，作为0-255整数，在写入缓冲区时使用"
+#endif
+);
+		private const string ComparisonStr = 
+#if !WB_LANGUAGE_CHINESE
+"Comparison"
+#else
+"比较"
+#endif
+;
+		private const string PassStr = 
+#if !WB_LANGUAGE_CHINESE
+"Pass"
+#else
+"通过"
+#endif
+;
 		private const string FailStr = "Fail";
 		private const string ZFailStr = "ZFail";
 
-		private const string ComparisonFrontStr = "Comp. Front";
-		private const string PassFrontStr = "Pass Front";
-		private const string FailFrontStr = "Fail Front";
-		private const string ZFailFrontStr = "ZFail Front";
+		private const string ComparisonFrontStr = 
+#if !WB_LANGUAGE_CHINESE
+"Comp. Front"
+#else
+"Comp。正面"
+#endif
+;
+		private const string PassFrontStr = 
+#if !WB_LANGUAGE_CHINESE
+"Pass Front"
+#else
+"正面通行证"
+#endif
+;
+		private const string FailFrontStr = 
+#if !WB_LANGUAGE_CHINESE
+"Fail Front"
+#else
+"失败前线"
+#endif
+;
+		private const string ZFailFrontStr = 
+#if !WB_LANGUAGE_CHINESE
+"ZFail Front"
+#else
+"ZFail前部"
+#endif
+;
 
-		private const string ComparisonBackStr = "Comp. Back";
-		private const string PassBackStr = "Pass Back";
-		private const string FailBackStr = "Fail Back";
-		private const string ZFailBackStr = "ZFail Back";
+		private const string ComparisonBackStr = 
+#if !WB_LANGUAGE_CHINESE
+"Comp. Back"
+#else
+"Comp。< 返回"
+#endif
+;
+		private const string PassBackStr = 
+#if !WB_LANGUAGE_CHINESE
+"Pass Back"
+#else
+"返回"
+#endif
+;
+		private const string FailBackStr = 
+#if !WB_LANGUAGE_CHINESE
+"Fail Back"
+#else
+"失败返回"
+#endif
+;
+		private const string ZFailBackStr = 
+#if !WB_LANGUAGE_CHINESE
+"ZFail Back"
+#else
+"ZFail返回"
+#endif
+;
 
 		private const int ReferenceDefaultValue = 0;
 		private const int ReadMaskDefaultValue = 255;
@@ -124,25 +226,25 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private InlineProperty m_writeMask = new InlineProperty( WriteMaskDefaultValue );
 
-		//Comparison Function
+		
 		[SerializeField]
 		private InlineProperty m_comparisonFunctionIdx = new InlineProperty( ComparisonDefaultValue );
 		[SerializeField]
 		private InlineProperty m_comparisonFunctionBackIdx = new InlineProperty( ComparisonDefaultValue );
 
-		//Pass Stencil Op
+		
 		[SerializeField]
 		private InlineProperty m_passStencilOpIdx = new InlineProperty( PassStencilOpDefaultValue );
 		[SerializeField]
 		private InlineProperty m_passStencilOpBackIdx = new InlineProperty( PassStencilOpDefaultValue );
 
-		//Fail Stencil Op 
+		
 		[SerializeField]
 		private InlineProperty m_failStencilOpIdx = new InlineProperty( FailStencilOpDefaultValue );
 		[SerializeField]
 		private InlineProperty m_failStencilOpBackIdx = new InlineProperty( FailStencilOpDefaultValue );
 
-		//ZFail Stencil Op
+		
 		[SerializeField]
 		private InlineProperty m_zFailStencilOpIdx = new InlineProperty( ZFailStencilOpDefaultValue );
 		[SerializeField]
@@ -211,7 +313,7 @@ namespace AmplifyShaderEditor
 				m_refValue.IntSlider( ref owner, ReferenceValueContent, 0, 255 );
 				m_readMask.IntSlider( ref owner, ReadMaskContent, 0, 255 );
 				m_writeMask.IntSlider( ref owner, WriteMaskContent, 0, 255 );
-				//EditorGUIUtility.labelWidth = cache;
+				
 				EditorGUIUtility.fieldWidth = cache2;
 				if( ( owner as StandardSurfaceOutputNode ).CurrentCullMode == CullMode.Off )
 				{

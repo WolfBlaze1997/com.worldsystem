@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -8,7 +8,25 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Normalize", "Vector Operators", "Normalizes a vector", null, KeyCode.N )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Normalize"
+#else
+"正常化"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vector Operators"
+#else
+"矢量运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Normalizes a vector"
+#else
+"规范化向量"
+#endif
+, null, KeyCode.N )]
 	public sealed class NormalizeNode : SingleInputOp
 	{
 		[SerializeField]
@@ -42,7 +60,13 @@ namespace AmplifyShaderEditor
 		{
 			base.DrawProperties();
 			EditorGUI.BeginChangeCheck();
-			m_safeNormalize = EditorGUILayoutToggle( "Safe Normalize", m_safeNormalize );
+			m_safeNormalize = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Safe Normalize"
+#else
+"安全正常化"
+#endif
+, m_safeNormalize );
 			if ( EditorGUI.EndChangeCheck() )
 			{
 				UpdateSubtitle();

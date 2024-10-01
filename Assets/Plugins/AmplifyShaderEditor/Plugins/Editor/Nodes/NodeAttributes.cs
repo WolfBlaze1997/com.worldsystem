@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -24,14 +24,14 @@ namespace AmplifyShaderEditor
 		public string Category;
 		public KeyCode ShortcutKey;
 		public bool Available;
-		public System.Type[] CastType; // Type that will be converted to AttribType if dropped on the canvas ... p.e. dropping a texture2d on the canvas will generate a sampler2d node 
+		public System.Type[] CastType; 
 		public bool Deprecated;
 		public string DeprecatedAlternative;
 		public System.Type DeprecatedAlternativeType;
 		public bool FromCommunity;
-		public string CustomCategoryColor; // Color created via a string containing its hexadecimal representation
-		public int SortOrderPriority; // to be used when name comparing on sorting 
-		public int NodeAvailabilityFlags;// used to define where this node can be used 
+		public string CustomCategoryColor; 
+		public int SortOrderPriority; 
+		public int NodeAvailabilityFlags;
 		private string m_nodeUrl;
 		public string Community;
 		public string Tags;
@@ -62,7 +62,7 @@ namespace AmplifyShaderEditor
 			Tags = tags;
 			if( string.IsNullOrEmpty( tags ) )
 				Tags = string.Empty;
-			//m_nodeUrl = ( FromCommunity ? Constants.CommunityNodeCommonUrl : Constants.NodeCommonUrl ) + UIUtils.UrlReplaceInvalidStrings( Name );
+			
 		}
 
 		public NodeAttributes( string name, string category, string description, KeyCode shortcutKey, bool available, int sortOrderPriority, int nodeAvailabilityFlags, params System.Type[] castTypes )
@@ -79,7 +79,7 @@ namespace AmplifyShaderEditor
 			Available = available;
 			SortOrderPriority = sortOrderPriority;
 			NodeAvailabilityFlags = nodeAvailabilityFlags;
-			//m_nodeUrl = ( FromCommunity ? Constants.CommunityNodeCommonUrl : Constants.NodeCommonUrl ) + UIUtils.UrlReplaceInvalidStrings( Name );
+			
 		}
 
 		public string NodeUrl

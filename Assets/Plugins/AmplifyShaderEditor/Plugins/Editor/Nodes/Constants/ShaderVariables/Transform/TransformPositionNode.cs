@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -8,7 +8,25 @@ using UnityEditor;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Transform Position", "Object Transform", "Transforms a position value from one space to another" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Transform Position"
+#else
+"变换位置"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Object Transform"
+#else
+"对象变换"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Transforms a position value from one space to another"
+#else
+"将位置值从一个空间转换到另一个空间"
+#endif
+)]
 	public sealed class TransformPositionNode : ParentNode
 	{
 		[SerializeField]
@@ -28,7 +46,13 @@ namespace AmplifyShaderEditor
 
 		private const string AbsoluteWorldPosStr = "Absolute";
 
-		private string InverseTBNStr = "Inverse TBN";
+		private string InverseTBNStr = 
+#if !WB_LANGUAGE_CHINESE
+"Inverse TBN"
+#else
+"反向TBN"
+#endif
+;
 
 		private const string AseObjectToWorldPosVarName = "objToWorld";
 		private const string AseObjectToWorldPosFormat = "mul( unity_ObjectToWorld, float4( {0}, 1 ) ).xyz";
@@ -54,10 +78,10 @@ namespace AmplifyShaderEditor
 		private const string AseViewToWorldPosVarName = "viewToWorld";
 		private const string AseViewToWorldPosFormat = "mul( UNITY_MATRIX_I_V, float4( {0}, 1 ) ).xyz";
 
-		///////////////////////////////////////////////////////////
+		
 		private const string AseObjectToClipPosVarName = "objectToClip";
 		private const string AseObjectToClipPosFormat = "UnityObjectToClipPos({0})";
-		//private const string AseSRPObjectToClipPosFormat = "TransformWorldToHClip(TransformObjectToWorld({0}))";
+		
 		private const string AseSRPObjectToClipPosFormat = "TransformObjectToHClip({0})";
 
 		private const string AseWorldToClipPosVarName = "worldToClip";
@@ -67,7 +91,7 @@ namespace AmplifyShaderEditor
 		private const string AseViewToClipPosVarName = "viewToClip";
 		private const string AseViewToClipPosFormat = "mul(UNITY_MATRIX_P, float4({0}, 1.0))";
 		private const string AseSRPViewToClipPosFormat = "TransformWViewToHClip({0})";
-		//
+		
 
 		private const string AseClipToObjectPosVarName = "clipToObject";
 		private const string AseClipToObjectPosFormat = "mul( UNITY_MATRIX_IT_MV, mul( unity_CameraInvProjection,float4({0},1)) ).xyz";
@@ -81,7 +105,7 @@ namespace AmplifyShaderEditor
 		private const string AseClipToViewPosFormat = " mul( unity_CameraInvProjection,float4({0},1)).xyz";
 		private const string AseHDClipToViewPosFormat = " mul( UNITY_MATRIX_I_P,float4({0},1)).xyz";
 		private const string AseClipToNDC = "{0}.xyz/{0}.w";
-		/////////////////////////////////////////////////////
+		
 		private const string AseObjectToTangentPosVarName = "objectToTangentPos";
 		private const string AseWorldToTangentPosVarName = "worldToTangentPos";
 		private const string AseViewToTangentPosVarName = "viewToTangentPos";
@@ -96,10 +120,28 @@ namespace AmplifyShaderEditor
 		private const string ASEMulOpFormat = "mul( {0}, {1} )";
 
 
-		///////////////////////////////////////////////////////////
-		private const string FromStr = "From";
-		private const string ToStr = "To";
-		private const string PerpectiveDivideStr = "Perpective Divide";
+		
+		private const string FromStr = 
+#if !WB_LANGUAGE_CHINESE
+"From"
+#else
+"从"
+#endif
+;
+		private const string ToStr = 
+#if !WB_LANGUAGE_CHINESE
+"To"
+#else
+"致"
+#endif
+;
+		private const string PerpectiveDivideStr = 
+#if !WB_LANGUAGE_CHINESE
+"Perpective Divide"
+#else
+"永久性分歧"
+#endif
+;
 		private const string SubtitleFormat = "{0} to {1}";
 
 		private readonly string[] m_spaceOptionsFrom =
@@ -156,11 +198,11 @@ namespace AmplifyShaderEditor
 				m_perspectiveDivide = EditorGUILayoutToggle( PerpectiveDivideStr, m_perspectiveDivide );
 			}
 
-			//if( m_containerGraph.IsHDRP && ( m_from == TransformSpace.Object && m_to == TransformSpace.World ) ||
-			//	( m_from == TransformSpace.World && m_to == TransformSpace.Object ) )
-			//{
-			//	m_absoluteWorldPos = EditorGUILayoutToggle( AbsoluteWorldPosStr, m_absoluteWorldPos );
-			//}
+			
+			
+			
+			
+			
 		}
 
 		public override void PropagateNodeData( NodeData nodeData, ref MasterNodeDataCollector dataCollector )
@@ -323,55 +365,55 @@ namespace AmplifyShaderEditor
 					}
 				}
 				break;
-				//case TransformSpace.Clip:
-				//{
-				//	switch( to )
-				//	{
-				//		case TransformSpace.Object:
-				//		{
-				//			if( dataCollector.IsTemplate && dataCollector.TemplateDataCollectorInstance.CurrentSRPType == TemplateSRPType.HDRP )
-				//			{
-				//				result = string.Format( AseHDClipToObjectPosFormat, result );
-				//			}
-				//			else
-				//			{
-				//				result = string.Format( AseClipToObjectPosFormat, result );
-				//			}
-				//			varName = AseClipToObjectPosVarName + OutputId;
-				//		}
-				//		break;
-				//		case TransformSpace.World:
-				//		{
-				//			if( dataCollector.IsTemplate && dataCollector.TemplateDataCollectorInstance.CurrentSRPType == TemplateSRPType.HDRP )
-				//			{
-				//				result = string.Format( AseHDClipToWorldPosFormat, result );
-				//			}
-				//			else
-				//			{
-				//				result = string.Format( AseClipToWorldPosFormat, result );
-				//			}
-				//			varName = AseClipToWorldPosVarName + OutputId;
-				//		}
-				//		break;
-				//		case TransformSpace.View:
-				//		{
-				//			if( dataCollector.IsTemplate && dataCollector.TemplateDataCollectorInstance.CurrentSRPType == TemplateSRPType.HDRP )
-				//			{
-				//				result = string.Format( AseHDClipToViewPosFormat, result );
-				//			}
-				//			else
-				//			{
-				//				result = string.Format( AseClipToViewPosFormat, result );
-				//			}
-				//			varName = AseClipToViewPosVarName + OutputId;
-				//		}
-				//		break;
-				//		case TransformSpace.Clip: break;
-				//		default:
-				//		break;
-				//	}
-				//}
-				//break;
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				default: break;
 			}
 		}
@@ -489,39 +531,39 @@ namespace AmplifyShaderEditor
 					}
 				}
 				break;
-				//case TransformSpace.Clip:
-				//{
-				//	switch( m_to )
-				//	{
-				//		case TransformSpace.Object:
-				//		{
-				//			CalculateTransform( m_from, m_to, ref dataCollector, ref varName, ref result );
-				//		}
-				//		break;
-				//		case TransformSpace.World:
-				//		{
-				//			CalculateTransform( m_from, m_to, ref dataCollector, ref varName, ref result );
-				//		}
-				//		break;
-				//		case TransformSpace.View:
-				//		{
-				//			CalculateTransform( m_from, m_to, ref dataCollector, ref varName, ref result );
-				//		}
-				//		break;
-				//		case TransformSpace.Clip: break;
-				//		case TransformSpace.Tangent:
-				//		{
-				//			GeneratorUtils.GenerateWorldToTangentMatrix( ref dataCollector, UniqueId, CurrentPrecisionType );
-				//			CalculateTransform( m_from, TransformSpace.World, ref dataCollector, ref varName, ref result );
-				//			result = string.Format( ASEWorldToTangentFormat, result );
-				//			varName = AseClipToTangentPosVarName + OutputId;
-				//		}
-				//		break;
-				//		default:
-				//		break;
-				//	}
-				//}
-				//break;
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				case TransformSpaceFrom.Tangent:
 				{
 					string matrixVal = string.Empty;

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -45,7 +45,7 @@ namespace AmplifyShaderEditor
 
 		public int GetHashCode( WirePortDataType obj )
 		{
-			// you need to do some thinking here,
+			
 			return (int)obj;
 		}
 	}
@@ -137,7 +137,7 @@ namespace AmplifyShaderEditor
 			{
 				if( m_portRestrictions == 0 )
 				{
-					//if no previous restrictions are detected then we set up the bit array so we can set is bit correctly
+					
 					m_portRestrictions = int.MaxValue;
 				}
 
@@ -255,30 +255,30 @@ namespace AmplifyShaderEditor
 		{
 			Name = newName;
 			ChangeType( newType, invalidateConnections );
-			//if ( m_dataType != newType )
-			//{
-			//	DataType = newType;
-			//	if ( invalidateConnections )
-			//	{
-			//		InvalidateAllConnections();
-			//	}
-			//	else
-			//	{
-			//		NotifyExternalRefencesOnChange();
-			//	}
-			//}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		}
 
 		public void ChangeType( WirePortDataType newType, bool invalidateConnections )
 		{
 			if( m_dataType != newType )
 			{
-				//ParentNode node = UIUtils.GetNode( m_nodeId );
-				//if ( node )
-				//{
-				//	UndoUtils.RegisterCompleteObjectUndo( node.ContainerGraph.ParentWindow, Constants.UndoChangeTypeNodesId );
-				//	UndoUtils.RecordObject( node, Constants.UndoChangeTypeNodesId );
-				//}
+				
+				
+				
+				
+				
+				
 				DataType = newType;
 				if( invalidateConnections )
 				{
@@ -438,7 +438,7 @@ namespace AmplifyShaderEditor
 			{
 				GUI.Label( textPos, m_name, style );
 			}
-			//GUI.Label( textPos, string.Empty );
+			
 			return changeFlag;
 		}
 
@@ -519,10 +519,10 @@ namespace AmplifyShaderEditor
 			get { return m_locked; }
 			set
 			{
-				//if ( m_locked && IsConnected )
-				//{
-				//	ForceClearConnection();
-				//}
+				
+				
+				
+				
 				m_locked = value;
 			}
 		}

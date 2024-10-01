@@ -1,6 +1,6 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
-//#define NEW_TEXTURE_3D_METHOD
+
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -186,7 +186,13 @@ namespace AmplifyShaderEditor
 			EditorGUIUtility.labelWidth = cache;
 			EditorGUILayout.EndHorizontal();
 			EditorGUI.BeginChangeCheck();
-			EditorGUILayout.PropertyField( m_tex3DMode, new GUIContent( "Texture 3D" ) );
+			EditorGUILayout.PropertyField( m_tex3DMode, new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Texture 3D"
+#else
+"纹理3D"
+#endif
+) );
 			if( EditorGUI.EndChangeCheck() )
 			{
 				if( !m_filenameChanged.boolValue )
@@ -194,12 +200,24 @@ namespace AmplifyShaderEditor
 					m_fileName.stringValue = m_tex3DMode.boolValue ? Texture3DFilename : ArrayFilename;
 				}
 			}
-			EditorGUILayout.PropertyField( m_linearMode, new GUIContent( "Linear" ) );
+			EditorGUILayout.PropertyField( m_linearMode, new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Linear"
+#else
+"线性的"
+#endif
+) );
 			EditorGUILayout.PropertyField( m_mipMaps );
 			EditorGUILayout.PropertyField( m_wrapMode );
 			EditorGUILayout.PropertyField( m_filterMode );
 			m_anisoLevel.intValue = EditorGUILayout.IntSlider( "Aniso Level", m_anisoLevel.intValue, 0, 16 );
-			EditorGUILayout.PropertyField( m_selectedFormatEnum, new GUIContent( "Format" ) );
+			EditorGUILayout.PropertyField( m_selectedFormatEnum, new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Format"
+#else
+"格式"
+#endif
+) );
 
 			if( m_selectedFormatEnum.intValue == (int)TextureFormat.DXT1Crunched )
 			{
@@ -215,7 +233,13 @@ namespace AmplifyShaderEditor
 			m_quality.intValue = EditorGUILayout.IntSlider( "Format Quality", m_quality.intValue, 0, 100 );
 			EditorGUILayout.Separator();
 
-			EditorGUILayout.LabelField( "Path and Name" );
+			EditorGUILayout.LabelField( 
+#if !WB_LANGUAGE_CHINESE
+"Path and Name"
+#else
+"路径和名称"
+#endif
+);
 			EditorGUILayout.BeginHorizontal();
 			m_pathButtonContent.text = m_folderPath.stringValue;
 			Vector2 buttonSize = m_pathButtonStyle.CalcSize( m_pathButtonContent );
@@ -238,7 +262,13 @@ namespace AmplifyShaderEditor
 			EditorGUILayout.EndHorizontal();
 			EditorGUILayout.Separator();
 
-			if( GUILayout.Button( "Clear" ) )
+			if( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Clear"
+#else
+"清除"
+#endif
+) )
 			{
 				m_allTextures.ClearArray();
 			}
@@ -335,10 +365,16 @@ namespace AmplifyShaderEditor
 			EditorGUILayout.BeginVertical( m_contentStyle );
 
 			string buildButtonStr = currentAsset.Tex3DMode ? BuildTexture3DMessage : BuildArrayMessage;
-			// build button
+			
 			EditorGUILayout.BeginHorizontal();
 			EditorGUI.BeginDisabledGroup( currentAsset.AllTextures.Count <= 0 );
-			if( GUILayout.Button( buildButtonStr, "prebutton", GUILayout.Height( 20 ) ) )
+			if( GUILayout.Button( buildButtonStr, 
+#if !WB_LANGUAGE_CHINESE
+"prebutton"
+#else
+"预按钮"
+#endif
+, GUILayout.Height( 20 ) ) )
 			{
 				bool showWarning = false;
 				for( int i = 0; i < currentAsset.AllTextures.Count; i++ )
@@ -369,22 +405,64 @@ namespace AmplifyShaderEditor
 			EditorGUI.EndDisabledGroup();
 			EditorGUI.BeginDisabledGroup( m_lastSaved == null );
 			GUIContent icon = EditorGUIUtility.IconContent( "icons/d_ViewToolZoom.png" );
-			if( GUILayout.Button( icon, "prebutton", GUILayout.Width( 28 ), GUILayout.Height( 20 ) ) )
+			if( GUILayout.Button( icon, 
+#if !WB_LANGUAGE_CHINESE
+"prebutton"
+#else
+"预按钮"
+#endif
+, GUILayout.Width( 28 ), GUILayout.Height( 20 ) ) )
 			{
 				EditorGUIUtility.PingObject( m_lastSaved );
 			}
 			EditorGUI.EndDisabledGroup();
 			EditorGUILayout.EndHorizontal();
 
-			// message
+			
 			if( !string.IsNullOrEmpty( m_message ) )
-				if( GUILayout.Button( "BUILD REPORT (click to hide):\n\n" + m_message, "helpbox" ) )
+				if( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"BUILD REPORT (click to hide):\n\n"
+#else
+"构建报告（单击以隐藏）：\n\n"
+#endif
++ m_message, 
+#if !WB_LANGUAGE_CHINESE
+"helpbox"
+#else
+"帮助箱"
+#endif
+) )
 					m_message = string.Empty;
 
-			// asset
+			
 			EditorGUILayout.BeginHorizontal();
-			m_asset = EditorGUILayout.ObjectField( "Asset Preset", m_asset, typeof( TextureArrayCreatorAsset ), false ) as TextureArrayCreatorAsset;
-			if( GUILayout.Button( m_asset != null ? "Save" : "Create", "minibutton", GUILayout.Width( 50 ) ) )
+			m_asset = EditorGUILayout.ObjectField( 
+#if !WB_LANGUAGE_CHINESE
+"Asset Preset"
+#else
+"资产预设"
+#endif
+, m_asset, typeof( TextureArrayCreatorAsset ), false ) as TextureArrayCreatorAsset;
+			if( GUILayout.Button( m_asset != null ? 
+#if !WB_LANGUAGE_CHINESE
+"Save"
+#else
+"保存"
+#endif
+: 
+#if !WB_LANGUAGE_CHINESE
+"Create"
+#else
+"创建"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"minibutton"
+#else
+"迷你按钮"
+#endif
+, GUILayout.Width( 50 ) ) )
 			{
 				string defaultName = "ArrayPreset";
 				if( m_asset != null )
@@ -465,7 +543,7 @@ namespace AmplifyShaderEditor
 			texture3D.wrapMode = asset.WrapMode;
 			texture3D.filterMode = asset.FilterMode;
 			texture3D.anisoLevel = asset.AnisoLevel;
-			//texture3D.Apply( false );
+			
 			RenderTexture cache = RenderTexture.active;
 			RenderTexture rt = new RenderTexture( sizeX, sizeY, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default );
 			rt.Create();
@@ -473,7 +551,7 @@ namespace AmplifyShaderEditor
 
 			for( int i = 0; i < asset.AllTextures.Count; i++ )
 			{
-				// build report
+				
 				int widthChanges = asset.AllTextures[ i ].width < sizeX ? -1 : asset.AllTextures[ i ].width > sizeX ? 1 : 0;
 				int heightChanges = asset.AllTextures[ i ].height < sizeY ? -1 : asset.AllTextures[ i ].height > sizeY ? 1 : 0;
 				if( ( widthChanges < 0 && heightChanges <= 0 ) || ( widthChanges <= 0 && heightChanges < 0 ) )
@@ -483,7 +561,7 @@ namespace AmplifyShaderEditor
 				else if( ( widthChanges > 0 && heightChanges < 0 ) || ( widthChanges < 0 && heightChanges > 0 ) )
 					m_message += asset.AllTextures[ i ].name + " changed dimensions\n";
 
-				// blit image to upscale or downscale the image to any size
+				
 				RenderTexture.active = rt;
 
 				bool cachedsrgb = GL.sRGBWrite;
@@ -499,7 +577,7 @@ namespace AmplifyShaderEditor
 				if( isCompressed )
 				{
 					EditorUtility.CompressTexture( textures[ i ], asset.SelectedFormatEnum, asset.Quality );
-					//	t2d.Apply( false );
+					
 				}
 				textures[ i ].Apply( false );
 			}
@@ -574,7 +652,7 @@ namespace AmplifyShaderEditor
 
 			for( int i = 0; i < asset.AllTextures.Count; i++ )
 			{
-				// build report
+				
 				int widthChanges = asset.AllTextures[ i ].width < sizeX ? -1 : asset.AllTextures[ i ].width > sizeX ? 1 : 0;
 				int heightChanges = asset.AllTextures[ i ].height < sizeY ? -1 : asset.AllTextures[ i ].height > sizeY ? 1 : 0;
 				if( ( widthChanges < 0 && heightChanges <= 0 ) || ( widthChanges <= 0 && heightChanges < 0 ) )
@@ -584,7 +662,7 @@ namespace AmplifyShaderEditor
 				else if( ( widthChanges > 0 && heightChanges < 0 ) || ( widthChanges < 0 && heightChanges > 0 ) )
 					m_message += asset.AllTextures[ i ].name + " changed dimensions\n";
 
-				// blit image to upscale or downscale the image to any size
+				
 				RenderTexture.active = rt;
 
 				bool cachedsrgb = GL.sRGBWrite;
@@ -601,7 +679,7 @@ namespace AmplifyShaderEditor
 				if( isCompressed )
 				{
 					EditorUtility.CompressTexture( t2d, asset.SelectedFormatEnum, asset.Quality );
-					//	t2d.Apply( false );
+					
 				}
 				t2d.Apply( false );
 
@@ -665,7 +743,7 @@ namespace AmplifyShaderEditor
 
 			for( int i = 0; i < asset.AllTextures.Count; i++ )
 			{
-				// build report
+				
 				int widthChanges = asset.AllTextures[ i ].width < sizeX ? -1 : asset.AllTextures[ i ].width > sizeX ? 1 : 0;
 				int heightChanges = asset.AllTextures[ i ].height < sizeY ? -1 : asset.AllTextures[ i ].height > sizeY ? 1 : 0;
 				if( ( widthChanges < 0 && heightChanges <= 0 ) || ( widthChanges <= 0 && heightChanges < 0 ) )
@@ -675,7 +753,7 @@ namespace AmplifyShaderEditor
 				else if( ( widthChanges > 0 && heightChanges < 0 ) || ( widthChanges < 0 && heightChanges > 0 ) )
 					m_message += asset.AllTextures[ i ].name + " changed dimensions\n";
 
-				// blit image to upscale or downscale the image to any size
+				
 				RenderTexture.active = rt;
 
 				bool cachedsrgb = GL.sRGBWrite;
@@ -738,7 +816,7 @@ namespace AmplifyShaderEditor
 			rt.Create();
 			for( int i = 0; i < asset.AllTextures.Count; i++ )
 			{
-				// build report
+				
 				int widthChanges = asset.AllTextures[ i ].width < sizeX ? -1 : asset.AllTextures[ i ].width > sizeX ? 1 : 0;
 				int heightChanges = asset.AllTextures[ i ].height < sizeY ? -1 : asset.AllTextures[ i ].height > sizeY ? 1 : 0;
 				if( ( widthChanges < 0 && heightChanges <= 0 ) || ( widthChanges <= 0 && heightChanges < 0 ) )
@@ -748,7 +826,7 @@ namespace AmplifyShaderEditor
 				else if( ( widthChanges > 0 && heightChanges < 0 ) || ( widthChanges < 0 && heightChanges > 0 ) )
 					m_message += asset.AllTextures[ i ].name + " changed dimensions\n";
 
-				// blit image to upscale or downscale the image to any size
+				
 				RenderTexture.active = rt;
 
 				bool cachedsrgb = GL.sRGBWrite;

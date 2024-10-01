@@ -1,8 +1,8 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
-//
-// Custom Node HeightMap Texture Masking
-// Donated by Rea
+
+
+
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -11,19 +11,73 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "HeightMap Texture Blend", "Textures", "Advanced Texture Blending by using heightMap and splatMask, usefull for texture layering ", null, KeyCode.None, true, false, null, null, "Rea" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"HeightMap Texture Blend"
+#else
+"高度贴图纹理混合"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Textures"
+#else
+"纹理"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Advanced Texture Blending by using heightMap and splatMask, usefull for texture layering "
+#else
+"使用heightMap和splatMask进行高级纹理混合，用于纹理分层"
+#endif
+, null, KeyCode.None, true, false, null, null, 
+#if !WB_LANGUAGE_CHINESE
+"Rea"
+#else
+"雷亚"
+#endif
+)]
 	public sealed class HeightMapBlendNode : ParentNode
 	{
-		private const string PreventNaNLabel = "Prevent NaN";
-		private const string PreventNaNInfo = "Prevent NaN clamps negative base numbers over the internal pow instruction to 0 since these originate NaN.";
+		private const string PreventNaNLabel = 
+#if !WB_LANGUAGE_CHINESE
+"Prevent NaN"
+#else
+"防止NaN"
+#endif
+;
+		private const string PreventNaNInfo = 
+#if !WB_LANGUAGE_CHINESE
+"Prevent NaN clamps negative base numbers over the internal pow instruction to 0 since these originate NaN."
+#else
+"防止NaN将内部pow指令上的负基数箝位为0，因为这些数字是NaN的起源。"
+#endif
+;
 		[SerializeField]
 		private bool m_preventNaN = false;
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT, false, "HeightMap" );
-			AddInputPort( WirePortDataType.FLOAT, false, "SplatMask" );
-			AddInputPort( WirePortDataType.FLOAT, false, "BlendStrength" );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"HeightMap"
+#else
+"高度图"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"SplatMask"
+#else
+"SplatMask"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"BlendStrength"
+#else
+"混合强度"
+#endif
+);
 			AddOutputVectorPorts( WirePortDataType.FLOAT, Constants.EmptyPortValue );
 			m_textLabelWidth = 120;
 			m_useInternalPortData = true;
@@ -56,13 +110,7 @@ namespace AmplifyShaderEditor
 			RegisterLocalVariable( 0, HeightMask, ref dataCollector , varName );
 			return m_outputPorts[ 0 ].LocalValue( dataCollector.PortCategory );
 		}
-		/*
-         A = (heightMap * SplatMask)*4
-         B = SplatMask*2
-         C = pow(A+B,Blend)
-         saturate(C)
-         saturate(pow(((heightMap * SplatMask)*4)+(SplatMask*2),Blend));
-         */
+		
 
 		public override void ReadFromString( ref string[] nodeParams )
 		{

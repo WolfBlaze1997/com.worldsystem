@@ -1,17 +1,11 @@
 #if UNITY_EDITOR
-
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Windows;
 using UnityEditor;
-using UnityEditor.Callbacks;
 using System.IO;
 using System.Linq;
-using System.Net.Mime;
 using Sirenix.OdinInspector;
-using Unity.Plastic.Newtonsoft.Json;
-using UnityEngine.Serialization;
 using Directory = System.IO.Directory;
 using File = System.IO.File;
 
@@ -21,45 +15,50 @@ namespace WorldSystem.Runtime
     [ExecuteAlways]
     public class PackageManager : BaseModule
     {
+
+        #region 字段
         
-        [LabelText("包管理器")]
-        [ListDrawerSettings(HideRemoveButton = true)]
-        [TableList(AlwaysExpanded = true, DrawScrollView = false, HideToolbar = true)]
-        public PackageJson[] PJ;
+        [PropertyOrder(-100)]
+        [ShowIf("@UnityEditor.PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup).Contains(\"WB_LANGUAGE_CHINESE\")")]
+        [Button(ButtonSizes.Large, Name = "语言设置: 中文"), GUIColor(0.5f, 0.5f, 1f)]
+        private void SinicizationToggle_Off()
+        {
+            Language.Language.RemoveDefineSymbol();
+        }
         
-        [HideInInspector]public string[] Paths;
+        [PropertyOrder(-100)]
+        [HideIf("@UnityEditor.PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup).Contains(\"WB_LANGUAGE_CHINESE\")")]
+        [Button(ButtonSizes.Large, Name = "Language Settings: English"), GUIColor(0.5f, 0.2f, 0.2f)]
+        private void SinicizationToggle_On()
+        {
+            Language.Language.AddDefineSymbol();
+        }
+        
+        [LabelText("包管理器")] [ListDrawerSettings(HideRemoveButton = true)] [TableList(AlwaysExpanded = true, DrawScrollView = false, HideToolbar = true)]
+        public PackageJson[] pj;
+        
+        [HideInInspector]
+        public List<string> paths;
         
         [Serializable]
         public class PackageJson
         {
-            [Space(20)]
-            [VerticalGroup("启用")]
-            [LabelText(" ")] [TableColumnWidth(55, Resizable = false)]
+            [Space(20)] [VerticalGroup("启用")] [LabelText(" ")] [TableColumnWidth(55, Resizable = false)]
             public bool active;
             
-            [Space(3)]
-            [VerticalGroup("图标")][HideLabel]
-            [PreviewField(Alignment = ObjectFieldAlignment.Center)] [TableColumnWidth(57, Resizable = false)]
-            [EnableIf("@false")]
+            [Space(3)] [VerticalGroup("图标")][HideLabel] [PreviewField(Alignment = ObjectFieldAlignment.Center)] [TableColumnWidth(57, Resizable = false)] [EnableIf("@false")]
             public Texture2D icon;
             
-            [Space(3)]
-            [VerticalGroup("信息")][LabelText("名字")] [TableColumnWidth(180, Resizable = false)]
-            [EnableIf("@false")]
+            [Space(3)] [VerticalGroup("信息")][LabelText("名字")] [TableColumnWidth(180, Resizable = false)] [EnableIf("@false")]
             public string name;
             
-            [Space(-3)]
-            [VerticalGroup("信息")][LabelText("开发者")] 
-            [EnableIf("@false")]
+            [Space(-3)] [VerticalGroup("信息")][LabelText("开发者")] [EnableIf("@false")]
             public string creator;
             
-            [Space(-3)]
-            [VerticalGroup("信息")][LabelText("版本")] 
-            [EnableIf("@false")]
+            [Space(-3)] [VerticalGroup("信息")][LabelText("版本")] [EnableIf("@false")]
             public string version;
             
-            [VerticalGroup("描述")][HideLabel][Multiline(3)][Space(3)]
-            [EnableIf("@false")]
+            [VerticalGroup("描述")][HideLabel][Multiline(3)][Space(3)] [EnableIf("@false")]
             public string describe;
             
             [HideInInspector]
@@ -67,72 +66,78 @@ namespace WorldSystem.Runtime
 
         }
 
-        private string PackagesPath;
-        private string PluginsPath;
+        private string _packagesPath;
         
+        private string _pluginsPath;
+        
+        
+        #endregion
+
+
+        
+        #region 事件函数
         
         private void OnEnable()
         {
             if (Application.isPlaying) return;
             //获取包路径与插件路径
-            PackagesPath = UnityEngine.Windows.Directory.localFolder.Replace("LocalState", "Packages/com.worldsystem/Packages~").Replace("\\","/");  
-            PluginsPath = UnityEngine.Windows.Directory.localFolder.Replace("LocalState", "Packages/com.worldsystem/Assets/Plugins").Replace("\\","/");
+            _packagesPath = UnityEngine.Windows.Directory.localFolder.Replace("LocalState", "Packages/com.worldsystem/Packages~").Replace("\\","/");  
+            _pluginsPath = UnityEngine.Windows.Directory.localFolder.Replace("LocalState", "Packages/com.worldsystem/Assets/Plugins").Replace("\\","/");
             
             //获取所有包的路径
-            Paths = Directory.GetDirectories(PackagesPath);
+            paths = Directory.GetDirectories(_packagesPath).ToList();
+            paths.Remove(paths.Find(o => o.Contains("Library")));
             //初始化PJ
-            PJ = new PackageJson[Paths.Length];
+            pj = new PackageJson[paths.Count];
             
-            for (var index = 0; index < Paths.Length; index++)
+            for (var index = 0; index < paths.Count; index++)
             {
                 //反序列化包的SimplePackage.json
-                string PackageJson = File.ReadAllText(Paths[index] + "/SimplePackage.json");
-                PJ[index] = JsonUtility.FromJson<PackageJson>(PackageJson);
+                string PackageJson = File.ReadAllText(paths[index] + "/SimplePackage.json");
+                pj[index] = JsonUtility.FromJson<PackageJson>(PackageJson);
                 //处理包的图标
-                if (File.Exists(Paths[index] + "/Icon.png"))
+                if (File.Exists(paths[index] + "/Icon.png"))
                 {
-                    byte[] request = File.ReadAllBytes(Paths[index] + "/Icon.png");
+                    byte[] request = File.ReadAllBytes(paths[index] + "/Icon.png");
                     Texture2D texture = new Texture2D(64,64);
                     texture.LoadImage(request);
-                    PJ[index].icon = texture;
+                    pj[index].icon = texture;
                 }
                 else
                 {
-                    PJ[index].icon = Texture2D.blackTexture;
+                    pj[index].icon = Texture2D.blackTexture;
                 }
             }
             OnValidate();
         }
         
-        
-        
         private void OnValidate()
         {
             if (Application.isPlaying) return;
 
-            if (Paths.Length == 0 || PJ.Length == 0) return;
-            for (var index = 0; index < PJ.Length; index++)
+            if (paths.Count == 0 || pj.Length == 0) return;
+            for (var index = 0; index < pj.Length; index++)
             {
                 //如果更改了参数,重新将其写入Json
                 
                 //文件夹名字
-                string directoryName = Paths[index].Split("\\").Last();
+                string directoryName = paths[index].Split("\\").Last();
                 //包根目录下的SimplePackage.json文件
-                string simplePackageJson = Paths[index] + "/SimplePackage.json";
+                string simplePackageJson = paths[index] + "/SimplePackage.json";
 
                 //对应的包路径
-                string packagesDirectory = PackagesPath + "/"+ directoryName;
+                string packagesDirectory = _packagesPath + "/"+ directoryName;
                 //包文件夹的Meta文件
-                string packagesDirectoryMeta = PackagesPath + "/"+ directoryName + ".meta";
+                string packagesDirectoryMeta = _packagesPath + "/"+ directoryName + ".meta";
                 
                 //对应的插件路径
-                string pluginsDirectory = PluginsPath + "/" + directoryName;
+                string pluginsDirectory = _pluginsPath + "/" + directoryName;
                 //插件文件夹的Meta文件
-                string pluginsDirectoryMeta = PluginsPath + "/"+ directoryName + ".meta";
+                string pluginsDirectoryMeta = _pluginsPath + "/"+ directoryName + ".meta";
                 
                 RefreshJsonFile(index, simplePackageJson);
 
-                if (PJ[index].active)
+                if (pj[index].active)
                 {
                     //如果激活但不存在插件文件夹,则将其复制到插件文件夹
                     if (!Directory.Exists(pluginsDirectory) )
@@ -146,17 +151,17 @@ namespace WorldSystem.Runtime
                             string[] strings = Directory.GetDirectories(pluginsDirectory + "/Patch");
                             foreach (var VARIABLE in strings)
                             {
-                                CopyFileAndDir(VARIABLE, PluginsPath + "/" +  VARIABLE.Split("\\").Last());
+                                CopyFileAndDir(VARIABLE, _pluginsPath + "/" +  VARIABLE.Split("\\").Last());
                             }
 
                             //获取Patch文件夹内(包括子文件夹)的所有文件的路径
                             string[] files = Directory.GetFiles(pluginsDirectory + "/Patch", "*", SearchOption.AllDirectories);
                             for (int i = 0; i < files.Length; i++)
                             {
-                                files[i] = files[i].Replace("\\", "/").Replace(pluginsDirectory + "/Patch", PluginsPath);
+                                files[i] = files[i].Replace("\\", "/").Replace(pluginsDirectory + "/Patch", _pluginsPath);
                                 // Debug.Log(files[i]);
                             }
-                            PJ[index].patchFilePaths = files;
+                            pj[index].patchFilePaths = files;
                             
                             RefreshJsonFile(index, simplePackageJson);
                             
@@ -177,9 +182,9 @@ namespace WorldSystem.Runtime
                         if(File.Exists(pluginsDirectoryMeta))
                             File.Delete(pluginsDirectoryMeta);
 
-                        if (PJ[index].patchFilePaths.Length != 0)
+                        if (pj[index].patchFilePaths.Length != 0)
                         {
-                            foreach (var VARIABLE in PJ[index].patchFilePaths)
+                            foreach (var VARIABLE in pj[index].patchFilePaths)
                             {
                                 if(File.Exists(VARIABLE))
                                     File.Delete(VARIABLE);
@@ -191,21 +196,31 @@ namespace WorldSystem.Runtime
                     }
                 }
             }
+
+            // Language.Instance.languageSet = languageSettings;
+            // EditorUtility.SetDirty(Language.Instance);
+            // Language.Instance.OnValidate();
+            
             AssetDatabase.Refresh();
         }
 
+        #endregion
+
+
+        
+        #region 重要函数
+        
         private void RefreshJsonFile(int index, string simplePackageJson)
         {
             //PJ序列化为Json
-            string PJstring = JsonUtility.ToJson(PJ[index]).Replace("\",","\",\n");
+            string PJstring = JsonUtility.ToJson(pj[index]).Replace("\",","\",\n");
             //更新包根目录下的SimplePackage.json文件
             File.WriteAllText(simplePackageJson, PJstring);
             //重新反序列化为PJ
             PJstring = File.ReadAllText(simplePackageJson);
-            PJ[index] = JsonUtility.FromJson<PackageJson>(PJstring);
+            pj[index] = JsonUtility.FromJson<PackageJson>(PJstring);
         }
-
-
+        
         public static void DeleteDirectory(string targetDir)
         {
             string[] files = Directory.GetFiles(targetDir);
@@ -260,6 +275,10 @@ namespace WorldSystem.Runtime
                 }
             }
         }
+        
+        #endregion
+
+        
     }
 }
 

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -18,9 +18,21 @@ namespace AmplifyShaderEditor
 	[Serializable]
 	public sealed class CommentaryNode : ParentNode, ISerializationCallbackReceiver
 	{
-		private const string InfoText = "Press Alt + Left Mouse Click/Drag to make all Comment node area interactable.\nDouble click on the Comment at the node body to modify it directly from there.";
+		private const string InfoText = 
+#if !WB_LANGUAGE_CHINESE
+"Press Alt + Left Mouse Click/Drag to make all Comment node area interactable.\nDouble click on the Comment at the node body to modify it directly from there."
+#else
+"按Alt+鼠标左键单击/拖动可使所有注释节点区域可交互。\n双击节点主体上的注释，直接从那里进行修改。"
+#endif
+;
 
-		private const string CommentaryTitle = "Comment";
+		private const string CommentaryTitle = 
+#if !WB_LANGUAGE_CHINESE
+"Comment"
+#else
+"评论"
+#endif
+;
 		private const float BORDER_SIZE_X = 50;
 		private const float BORDER_SIZE_Y = 50;
 		private const float MIN_SIZE_X = 100;
@@ -30,7 +42,13 @@ namespace AmplifyShaderEditor
 		private readonly Vector2 ResizeButtonPos = new Vector2( 1, 1 );
 
 		[SerializeField]
-		private string m_commentText = "Comment";
+		private string m_commentText = 
+#if !WB_LANGUAGE_CHINESE
+"Comment"
+#else
+"评论"
+#endif
+;
 
 		[SerializeField]
 		private string m_titleText = string.Empty;
@@ -87,7 +105,13 @@ namespace AmplifyShaderEditor
 			m_reorderLocked = true;
 			m_rmbIgnore = true;
 			m_defaultInteractionMode = InteractionMode.Both;
-			m_headerColor = UIUtils.GetColorFromCategory( "Commentary" );
+			m_headerColor = UIUtils.GetColorFromCategory( 
+#if !WB_LANGUAGE_CHINESE
+"Commentary"
+#else
+"评论"
+#endif
+);
 			m_connStatus = NodeConnectionStatus.Island;
 			m_textLabelWidth = 90;
 		}
@@ -111,14 +135,14 @@ namespace AmplifyShaderEditor
 
 			for ( int i = 0; i < selectedNodes.Length; i++ )
 			{
-				//Check min
+				
 				if ( selectedNodes[ i ].Position.x < minPos.x )
 					minPos.x = selectedNodes[ i ].Position.x;
 
 				if ( selectedNodes[ i ].Position.y < minPos.y )
 					minPos.y = selectedNodes[ i ].Position.y;
 
-				//check max
+				
 				float nodeXMax = selectedNodes[ i ].Position.x + selectedNodes[ i ].Position.width;
 				if ( nodeXMax > maxPos.x )
 				{
@@ -131,8 +155,8 @@ namespace AmplifyShaderEditor
 					maxPos.y = nodeYMax;
 				}
 
-				//_nodesOnCommentary.Add( selectedNodes[ i ] );
-				//selectedNodes[ i ].OnNodeStoppedMovingEvent += NodeStoppedMoving;
+				
+				
 				AddNodeToCommentary( selectedNodes[ i ] );
 			}
 
@@ -257,7 +281,13 @@ namespace AmplifyShaderEditor
 			NodeUtils.DrawPropertyGroup( ref m_propertiesFoldout, Constants.ParameterLabelStr,()=>
 			{
 				EditorGUI.BeginChangeCheck();
-				m_titleText = EditorGUILayoutTextField( "Frame Title", m_titleText );
+				m_titleText = EditorGUILayoutTextField( 
+#if !WB_LANGUAGE_CHINESE
+"Frame Title"
+#else
+"框架标题"
+#endif
+, m_titleText );
 				if ( EditorGUI.EndChangeCheck() )
 				{
 					m_checkTitleText = true;
@@ -269,7 +299,13 @@ namespace AmplifyShaderEditor
 					m_checkCommentText = true;
 				}
 
-				m_frameColor = EditorGUILayoutColorField( "Frame Color", m_frameColor );
+				m_frameColor = EditorGUILayoutColorField( 
+#if !WB_LANGUAGE_CHINESE
+"Frame Color"
+#else
+"框架颜色"
+#endif
+, m_frameColor );
 			} );
 			EditorGUILayout.HelpBox( InfoText, MessageType.Info );
 		}
@@ -304,7 +340,7 @@ namespace AmplifyShaderEditor
 				}
 			}
 
-			//base.OnLayout( drawInfo );
+			
 			CalculatePositionAndVisibility( drawInfo );
 
 			m_headerPosition = m_globalPosition;
@@ -323,14 +359,14 @@ namespace AmplifyShaderEditor
 				m_resizeIconTex = UIUtils.GetCustomStyle( CustomStyle.CommentaryResizeButton ).normal.background;
 			}
 
-			// LEFT RESIZE BUTTON
+			
 			m_resizeLeftIconCoords = m_globalPosition;
 			m_resizeLeftIconCoords.x = m_globalPosition.x + 2;
 			m_resizeLeftIconCoords.y = m_globalPosition.y + m_globalPosition.height - 2 - ( m_resizeIconTex.height + ResizeButtonPos.y ) * drawInfo.InvertedZoom;
 			m_resizeLeftIconCoords.width = m_resizeIconTex.width * drawInfo.InvertedZoom;
 			m_resizeLeftIconCoords.height = m_resizeIconTex.height * drawInfo.InvertedZoom;
 
-			// RIGHT RESIZE BUTTON
+			
 			m_resizeRightIconCoords = m_globalPosition;
 			m_resizeRightIconCoords.x = m_globalPosition.x + m_globalPosition.width - 1 - ( m_resizeIconTex.width + ResizeButtonPos.x ) * drawInfo.InvertedZoom;
 			m_resizeRightIconCoords.y = m_globalPosition.y + m_globalPosition.height - 2 - ( m_resizeIconTex.height + ResizeButtonPos.y ) * drawInfo.InvertedZoom;
@@ -344,26 +380,26 @@ namespace AmplifyShaderEditor
 				return;
 
 			m_colorBuffer = GUI.color;
-			// Background
+			
 			GUI.color = Constants.NodeBodyColor * m_frameColor;
 			GUI.Label( m_globalPosition, string.Empty, UIUtils.GetCustomStyle( CustomStyle.CommentaryBackground ) );
 			
-			// Header
+			
 			GUI.color = m_headerColor * m_headerColorModifier * m_frameColor;
 			GUI.Label( m_headerPosition, string.Empty, UIUtils.GetCustomStyle( CustomStyle.NodeHeader ) );
 			GUI.color = m_colorBuffer;
 
-			// Fixed Title ( only renders when not editing )
+			
 			if ( !m_isEditing && !m_startEditing && ContainerGraph.LodLevel <= ParentGraph.NodeLOD.LOD3 )
 			{
 				GUI.Label( m_commentArea, m_commentText, UIUtils.CommentaryTitle );
 			}
 
-			// Buttons
+			
 			GUI.Label( m_resizeLeftIconCoords, string.Empty, UIUtils.GetCustomStyle( CustomStyle.CommentaryResizeButtonInv ) );
 			GUI.Label( m_resizeRightIconCoords, string.Empty, UIUtils.GetCustomStyle( CustomStyle.CommentaryResizeButton ) );
 
-			// Selection Box
+			
 			if ( m_selected )
 			{
 				GUI.color = Constants.NodeSelectedColor;
@@ -387,7 +423,7 @@ namespace AmplifyShaderEditor
 		{
 			base.Draw( drawInfo );
 
-			// Custom Editable Title
+			
 			if ( ContainerGraph.LodLevel <= ParentGraph.NodeLOD.LOD3 )
 			{
 				if ( !m_isEditing && ( ( !ContainerGraph.ParentWindow.MouseInteracted && drawInfo.CurrentEventType == EventType.MouseDown && m_commentArea.Contains( drawInfo.MousePosition ) ) ) )
@@ -436,7 +472,7 @@ namespace AmplifyShaderEditor
 
 			if ( drawInfo.CurrentEventType == EventType.MouseDown && drawInfo.LeftMouseButtonPressed )
 			{
-				// Left Button
+				
 				if( m_resizeLeftIconCoords.Contains( drawInfo.MousePosition ) && ContainerGraph.ParentWindow.CurrentEvent.modifiers != EventModifiers.Shift )
 				{
 					if ( !m_isResizingLeft )
@@ -447,7 +483,7 @@ namespace AmplifyShaderEditor
 					}
 				}
 
-				// Right Button
+				
 				if ( m_resizeRightIconCoords.Contains( drawInfo.MousePosition ) && ContainerGraph.ParentWindow.CurrentEvent.modifiers != EventModifiers.Shift )
 				{
 					if ( !m_isResizingRight )
@@ -461,7 +497,7 @@ namespace AmplifyShaderEditor
 
 			if ( drawInfo.CurrentEventType == EventType.Repaint || drawInfo.CurrentEventType == EventType.MouseUp )
 			{
-				// Left Button
+				
 				EditorGUIUtility.AddCursorRect( m_resizeLeftIconCoords, MouseCursor.ResizeUpRight );
 				if ( m_isResizingLeft )
 				{
@@ -474,7 +510,7 @@ namespace AmplifyShaderEditor
 					}
 					else
 					{
-						Vector2 currSize = ( drawInfo.TransformedMousePos - m_resizeStartPoint ) /*/ drawInfo.InvertedZoom*/;
+						Vector2 currSize = ( drawInfo.TransformedMousePos - m_resizeStartPoint ) ;
 						m_resizeStartPoint = drawInfo.TransformedMousePos;
 						if ( m_resizeAxis != eResizeAxis.Y_AXIS )
 						{
@@ -498,7 +534,7 @@ namespace AmplifyShaderEditor
 					}
 				}
 
-				// Right Button
+				
 				EditorGUIUtility.AddCursorRect( m_resizeRightIconCoords, MouseCursor.ResizeUpLeft );
 				if ( m_isResizingRight )
 				{
@@ -511,7 +547,7 @@ namespace AmplifyShaderEditor
 					}
 					else
 					{
-						Vector2 currSize = ( drawInfo.TransformedMousePos - m_resizeStartPoint ) /*/ drawInfo.InvertedZoom*/;
+						Vector2 currSize = ( drawInfo.TransformedMousePos - m_resizeStartPoint ) ;
 						m_resizeStartPoint = drawInfo.TransformedMousePos;
 						if ( m_resizeAxis != eResizeAxis.Y_AXIS )
 						{

@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Abs", "Math Operators", "Absolute value of scalars and vectors" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Abs"
+#else
+"防抱死制动系统"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Absolute value of scalars and vectors"
+#else
+"标量和向量的绝对值"
+#endif
+)]
 	public sealed class AbsOpNode : SingleInputOp
 	{
 		protected override void CommonInit( int uniqueId )

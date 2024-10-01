@@ -1,12 +1,12 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using System;
 
 namespace AmplifyShaderEditor
 {
-	//GENERICS DON'T WORK WITH HOT CODE RELOAD
+	
 	[Serializable]
 	public class FallbackVariable<T>
 	{

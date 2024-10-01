@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEditor;
@@ -8,13 +8,43 @@ using UnityEngine;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Toggle Switch", "Logical Operators", "Switch between any of its input ports" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Toggle Switch"
+#else
+"切换开关"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Logical Operators"
+#else
+"逻辑运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Switch between any of its input ports"
+#else
+"在其任何输入端口之间切换"
+#endif
+)]
 	public class ToggleSwitchNode : PropertyNode
 	{
 		private const string InputPortName = "In ";
-		private const string CurrSelectedStr = "Toggle Value";
-		private const string GenerateKeywordStr = "Generate Keyword"; 
-		//private const string LerpOp = "lerp({0},{1},{2})";
+		private const string CurrSelectedStr = 
+#if !WB_LANGUAGE_CHINESE
+"Toggle Value"
+#else
+"切换值"
+#endif
+;
+		private const string GenerateKeywordStr = 
+#if !WB_LANGUAGE_CHINESE
+"Generate Keyword"
+#else
+"生成关键字"
+#endif
+; 
+		
 		private const string LerpOp = "(( {2} )?( {1} ):( {0} ))";
 
 		[SerializeField]
@@ -55,7 +85,7 @@ namespace AmplifyShaderEditor
 			m_popContent.image = UIUtils.PopupIcon;
 
 			m_availableAttribs.Clear();
-			//Need to maintain this because of retrocompatibility reasons
+			
 			m_availableAttribs.Add( new PropertyAttributes( "Toggle", "[Toggle]" ) );
 
 			m_drawAttributes = false;
@@ -120,7 +150,7 @@ namespace AmplifyShaderEditor
 			m_inputPorts[ 1 ].ChangeType( m_mainDataType, false );
 
 
-			//m_outputPorts[ 0 ].ChangeProperties( m_out, m_mainDataType, false );
+			
 			m_outputPorts[ 0 ].ChangeType( m_mainDataType, false );
 		}
 
@@ -301,7 +331,7 @@ namespace AmplifyShaderEditor
 
 		public override string GetPropertyValStr()
 		{
-			return PropertyName;			//return m_currentSelectedInput.ToString();
+			return PropertyName;			
 		}
 	}
 }

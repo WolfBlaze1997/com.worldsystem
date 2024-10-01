@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -8,10 +8,40 @@ using UnityEditor;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Split", "Vector Operators", "Formerly known as Break To Components. Breaks the input data into its individual components", null, KeyCode.B, tags: "split Break To Components" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Split"
+#else
+"拆分"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vector Operators"
+#else
+"矢量运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Formerly known as Break To Components. Breaks the input data into its individual components"
+#else
+"以前称为“打断组件”。将输入数据分解为各个组件"
+#endif
+, null, KeyCode.B, tags: 
+#if !WB_LANGUAGE_CHINESE
+"split Break To Components"
+#else
+"拆分拆分到组件"
+#endif
+)]
 	public sealed class BreakToComponentsNode : ParentNode
 	{
-		private const string RenameInfo = "This node was formerly known as Break To Components and was renamed to Split to decrease its canvas size.";
+		private const string RenameInfo = 
+#if !WB_LANGUAGE_CHINESE
+"This node was formerly known as Break To Components and was renamed to Split to decrease its canvas size."
+#else
+"此节点以前称为“断开到组件”，并重命名为“拆分”以减小其画布大小。"
+#endif
+;
 		private WirePortDataType m_currentType = WirePortDataType.FLOAT;
 		private readonly string[] ColorPortNames = { "R", "G", "B", "A" };
 		private readonly string[] VectorPortNames = { "X", "Y", "Z", "W" };
@@ -34,10 +64,10 @@ namespace AmplifyShaderEditor
 
 		public override void RenderNodePreview()
 		{
-			//Runs at least one time
+			
 			if( !m_initialized )
 			{
-				// nodes with no preview don't update at all
+				
 				PreviewIsDirty = false;
 				return;
 			}
@@ -76,7 +106,7 @@ namespace AmplifyShaderEditor
 
 		void UpdateOutputs( WirePortDataType newType )
 		{
-			//this only happens when on initial load
+			
 			if( newType == WirePortDataType.OBJECT )
 				return;
 
@@ -244,7 +274,7 @@ namespace AmplifyShaderEditor
 			string varName = "break" + OutputId;
 			if( channelsUsed > 1 )
 			{
-				//RegisterLocalVariable( 0, value, ref dataCollector, varName );
+				
 				dataCollector.AddLocalVariable( UniqueId, CurrentPrecisionType, m_inputPorts[ 0 ].DataType, varName, value );
 				m_outputPorts[ 0 ].SetLocalValue( varName, dataCollector.PortCategory );
 

@@ -1,11 +1,29 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Compute Grab Screen Pos", "Camera And Screen", "Computes texture coordinate for doing a screenspace-mapped texture sample. Input is clip space position" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Compute Grab Screen Pos"
+#else
+"计算抓取屏幕位置"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Camera And Screen"
+#else
+"摄像头和屏幕"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Computes texture coordinate for doing a screenspace-mapped texture sample. Input is clip space position"
+#else
+"计算纹理坐标以进行屏幕空间映射纹理采样。输入是剪辑空间位置"
+#endif
+)]
 	public sealed class ComputeGrabScreenPosHlpNode : HelperParentNode
 	{
 		private readonly string[] ComputeGrabScreenPosFunction =

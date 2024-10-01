@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -8,7 +8,25 @@ using UnityEditor;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Indirect Diffuse Light", "Lighting", "Indirect Lighting", NodeAvailabilityFlags = (int)( NodeAvailability.CustomLighting | NodeAvailability.TemplateShader ) )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Indirect Diffuse Light"
+#else
+"间接漫射光"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Lighting"
+#else
+"照明"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Indirect Lighting"
+#else
+"间接照明"
+#endif
+, NodeAvailabilityFlags = (int)( NodeAvailability.CustomLighting | NodeAvailability.TemplateShader ) )]
 	public sealed class IndirectDiffuseLighting : ParentNode
 	{
 		[SerializeField]
@@ -33,13 +51,19 @@ namespace AmplifyShaderEditor
 			"}\n"
 		};
 
-		//void MixRealtimeAndBakedGI(inout Light light, half3 normalWS, inout half3 bakedGI, half4 shadowMask)
+		
 		private readonly string LWMixRealtimeWithGI = "MixRealtimeAndBakedGI({0}, {1}, {2}, half4(0,0,0,0));";
 
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT3, false, "Normal" );
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"Normal"
+#else
+"正常"
+#endif
+);
 			AddOutputPort( WirePortDataType.FLOAT3, "RGB" );
 			m_inputPorts[ 0 ].Vector3InternalData = Vector3.forward;
 			m_autoWrapProperties = true;
@@ -74,8 +98,8 @@ namespace AmplifyShaderEditor
 		public override void PropagateNodeData( NodeData nodeData, ref MasterNodeDataCollector dataCollector )
 		{
 			base.PropagateNodeData( nodeData, ref dataCollector );
-			// This needs to be rechecked
-			//if( m_inputPorts[ 0 ].IsConnected )
+			
+			
 			dataCollector.DirtyNormal = true;
 		}
 
@@ -84,10 +108,22 @@ namespace AmplifyShaderEditor
 			base.DrawProperties();
 
 			EditorGUI.BeginChangeCheck();
-			m_normalSpace = (ViewSpace)EditorGUILayoutEnumPopup( "Normal Space", m_normalSpace );
+			m_normalSpace = (ViewSpace)EditorGUILayoutEnumPopup( 
+#if !WB_LANGUAGE_CHINESE
+"Normal Space"
+#else
+"正常空间"
+#endif
+, m_normalSpace );
 			if( m_normalSpace != ViewSpace.World || !m_inputPorts[ 0 ].IsConnected )
 			{
-				m_normalize = EditorGUILayoutToggle("Normalize", m_normalize);
+				m_normalize = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Normalize"
+#else
+"正常化"
+#endif
+, m_normalize);
 			}
 			if( EditorGUI.EndChangeCheck() )
 			{
@@ -157,7 +193,7 @@ namespace AmplifyShaderEditor
 					TemplateVertexData shdata = dataCollector.TemplateDataCollectorInstance.RequestNewInterpolator( WirePortDataType.FLOAT3, false, "ase_sh" );
 					string worldPos = dataCollector.TemplateDataCollectorInstance.GetWorldPos( false, MasterNodePortCategory.Vertex );
 					string worldNormal = dataCollector.TemplateDataCollectorInstance.GetWorldNormal( PrecisionType.Float, false, MasterNodePortCategory.Vertex );
-					//Debug.Log( shdata );
+					
 					string shVarName = "ase_sh";
 					if( shdata != null )
 						shVarName = shdata.VarName;
@@ -175,7 +211,7 @@ namespace AmplifyShaderEditor
 					dataCollector.AddToVertexLocalVariables( UniqueId, "#endif //sh" );
 					dataCollector.AddToVertexLocalVariables( UniqueId, "#endif //nstalm" );
 
-					//dataCollector.AddToPragmas( UniqueId, "multi_compile_fwdbase" );
+					
 
 					string fragWorldNormal = string.Empty;
 					if( m_inputPorts[ 0 ].IsConnected )
@@ -266,10 +302,10 @@ namespace AmplifyShaderEditor
 							fragWorldNormal = dataCollector.TemplateDataCollectorInstance.GetWorldNormal( PrecisionType.Float, false, MasterNodePortCategory.Fragment );
 						}
 
-						//SAMPLE_GI
+						
 
-						//This function may not do full pixel and does not behave correctly with given normal thus is commented out
-						//dataCollector.AddLocalVariable( UniqueId, "float3 bakedGI" + OutputId + " = SAMPLE_GI( " + fInName + ".lightmapUVOrVertexSH.xy, " + fInName + ".lightmapUVOrVertexSH.xyz, " + fragWorldNormal + " );" );
+						
+						
 						dataCollector.AddFunction( LWIndirectDiffuseBody[ 0 ], LWIndirectDiffuseBody, false );
 						finalValue = "bakedGI" + OutputId;
 						string result = string.Format( LWIndirectDiffuseHeader, fInName + ".lightmapUVOrVertexSH.xy", fragWorldNormal );
@@ -324,7 +360,7 @@ namespace AmplifyShaderEditor
 							fragWorldNormal = dataCollector.TemplateDataCollectorInstance.GetWorldNormal( PrecisionType.Float, false, MasterNodePortCategory.Fragment );
 						}
 
-						//SAMPLE_GI
+						
 						dataCollector.AddLocalVariable( UniqueId, "float3 bakedGI" + OutputId + " = SampleBakedGI( " + worldPos + ", " + fragWorldNormal + ", " + fInName + ".ase_lightmapUVs.xy, " + fInName + ".ase_lightmapUVs.zw );" );
 						finalValue = "bakedGI" + OutputId;
 						m_outputPorts[ 0 ].SetLocalValue( finalValue, dataCollector.PortCategory );

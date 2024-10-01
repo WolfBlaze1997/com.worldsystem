@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -8,7 +8,25 @@ using UnityEditor;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Indirect Specular Light", "Lighting", "Indirect Specular Light", NodeAvailabilityFlags = (int)( NodeAvailability.CustomLighting | NodeAvailability.TemplateShader ) )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Indirect Specular Light"
+#else
+"间接镜面反射光"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Lighting"
+#else
+"照明"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Indirect Specular Light"
+#else
+"间接镜面反射光"
+#endif
+, NodeAvailabilityFlags = (int)( NodeAvailability.CustomLighting | NodeAvailability.TemplateShader ) )]
 	public sealed class IndirectSpecularLight : ParentNode
 	{
 		[SerializeField]
@@ -22,9 +40,27 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT3, false, "Normal" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Smoothness" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Occlusion" );
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"Normal"
+#else
+"正常"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Smoothness"
+#else
+"平滑度"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Occlusion"
+#else
+"闭塞"
+#endif
+);
 			m_inputPorts[ 0 ].Vector3InternalData = Vector3.forward;
 			m_inputPorts[ 1 ].FloatInternalData = 0.5f;
 			m_inputPorts[ 2 ].FloatInternalData = 1;
@@ -67,10 +103,22 @@ namespace AmplifyShaderEditor
 			base.DrawProperties();
 
 			EditorGUI.BeginChangeCheck();
-			m_normalSpace = (ViewSpace)EditorGUILayoutEnumPopup( "Normal Space", m_normalSpace );
+			m_normalSpace = (ViewSpace)EditorGUILayoutEnumPopup( 
+#if !WB_LANGUAGE_CHINESE
+"Normal Space"
+#else
+"正常空间"
+#endif
+, m_normalSpace );
 			if( m_normalSpace != ViewSpace.World || !m_inputPorts[ 0 ].IsConnected )
 			{
-				m_normalize = EditorGUILayoutToggle("Normalize", m_normalize);
+				m_normalize = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Normalize"
+#else
+"正常化"
+#endif
+, m_normalize);
 			}
 			if( EditorGUI.EndChangeCheck() )
 			{

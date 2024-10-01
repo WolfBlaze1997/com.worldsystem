@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
+using UnityEngine.VFX;
 
 namespace WorldSystem.Runtime
 {
@@ -11,7 +13,7 @@ namespace WorldSystem.Runtime
             HideFlagToggle();
         }
 
-        protected void HideFlagToggle()
+        protected internal void HideFlagToggle()
         {
             hideFlags = (WorldManager.Instance?.hideFlagToggle ?? false) ? HideFlags.None : HideFlags.HideInInspector;
 
@@ -19,7 +21,14 @@ namespace WorldSystem.Runtime
                 gameObject.hideFlags = (WorldManager.Instance?.hideFlagToggle ?? false)
                     ? HideFlags.None
                     : HideFlags.HideInHierarchy;
-            
+
+            GameObject Temporary = FindObjectsByType<VisualEffect>(FindObjectsSortMode.None)?.ToList().Find(o => o.name == "VFXRainSpatterEffect")?.gameObject;
+            if ( Temporary != null)
+            {
+                Temporary.hideFlags = (WorldManager.Instance?.hideFlagToggle ?? false)
+                    ? HideFlags.None
+                    : HideFlags.HideInHierarchy;
+            }
         }
 
         protected virtual void DrawGizmos()

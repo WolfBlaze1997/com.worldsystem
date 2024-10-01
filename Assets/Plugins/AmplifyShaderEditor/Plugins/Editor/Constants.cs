@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using System.Collections.Generic;
@@ -9,70 +9,12 @@ namespace AmplifyShaderEditor
 
 	public struct Constants
 	{
-		/*public readonly static string[] CustomASEStandardArgsMacros =
-		{
-			"#if defined(SHADER_API_D3D11) || defined(SHADER_API_XBOXONE) || defined(UNITY_COMPILER_HLSLCC)//ASE Args Macros",
-			"#define ASE_TEXTURE2D_ARGS(textureName) Texture2D textureName, SamplerState sampler##textureName",
-			"#define ASE_TEXTURE3D_ARGS(textureName) Texture3D textureName, SamplerState sampler##textureName",
-			"#define ASE_TEXTURECUBE_ARGS(textureName) TextureCube textureName, SamplerState sampler##textureName",
-			"#define ASE_TEXTURE2D_PARAMS(textureName) textureName, sampler##textureName",
-			"#define ASE_TEXTURE3D_PARAMS(textureName) textureName, sampler##textureName",
-			"#define ASE_TEXTURECUBE_PARAMS(textureName) textureName, sampler##textureName",
-			"#define ASE_TEXTURE2D_ARRAY_PARAMS(textureName) textureName, sampler##textureName",
-			"#else//ASE Args Macros",
-			"#define ASE_TEXTURE2D_ARGS(textureName) sampler2D textureName",
-			"#define ASE_TEXTURE3D_ARGS(textureName) sampler3D textureName",
-			"#define ASE_TEXTURECUBE_ARGS(textureName) samplerCUBE textureName",
-			"#define ASE_TEXTURE2D_PARAMS(textureName) textureName",
-			"#define ASE_TEXTURE3D_PARAMS(textureName) textureName",
-			"#define ASE_TEXTURECUBE_PARAMS(textureName) textureName",
-			"#define ASE_TEXTURE2D_ARRAY_PARAMS(textureName) textureName",
-			"#endif//ASE Args Macros\n"
-		};
 		
-		public readonly static string[] CustomASEDeclararionMacros =
-		{
-			"#define ASE_TEXTURE2D(textureName) {0}2D(textureName)",
-			"#define ASE_TEXTURE2D_ARRAY(textureName) {0}2D_ARRAY(textureName)",
-			"#define ASE_TEXTURE3D(textureName) {0}3D(textureName)",
-			"#define ASE_TEXTURECUBE(textureName) {0}CUBE(textureName)\n"
-		};
 
-		public readonly static string[] CustomASEStandarSamplingMacrosHelper =
-		{
-			"#if defined(SHADER_API_D3D11) || defined(SHADER_API_XBOXONE) || defined(UNITY_COMPILER_HLSLCC)//ASE Sampling Macros",
-			"#else//ASE Sampling Macros",
-			"#endif//ASE Sampling Macros\n"
-		};*/
+		
 
-		/*public readonly static string[] CustomASESamplingMacros =
-		{
-			"#define ASE_SAMPLE_TEXTURE2D(textureName,{0}coords) {1}2D{2}(textureName,{0}coords)",
-			"#define ASE_SAMPLE_TEXTURE2D_LOD(textureName, {0}coord2, lod) {1}2D{2}_LOD(textureName, {0}coord2, lod)",
-			"#define ASE_SAMPLE_TEXTURE2D_BIAS(textureName,{0}coord2, bias) {1}2D{2}_BIAS(textureName,{0}coord2, bias)",
-			"#define ASE_SAMPLE_TEXTURE2D_GRAD(textureName,{0}coord2, dpdx, dpdy) {1}2D{2}_GRAD(textureName,{0}coord2, dpdx, dpdy)",
-
-			"#define ASE_SAMPLE_TEXTURE3D(textureName,{0}coord3) {1}3D{2}(textureName,{0}coord3)",
-			"#define ASE_SAMPLE_TEXTURE3D_LOD(textureName,{0}coord3, lod) {1}3D{2}_LOD(textureName,{0}coord3, lod)",
-			"#define ASE_SAMPLE_TEXTURE3D_BIAS(textureName,{0}coord3, bias) {1}3D{2}_BIAS(textureName,{0}coord3, bias)",
-			"#define ASE_SAMPLE_TEXTURE3D_GRAD(textureName,{0}coord3, dpdx, dpdy) {1}3D{2}_GRAD(textureName,{0}coord3, dpdx, dpdy)",
-
-			"#define ASE_SAMPLE_TEXTURECUBE(textureName,{0}coord3) {1}CUBE{2}(textureName,{0}coord3)",
-			"#define ASE_SAMPLE_TEXTURECUBE_LOD(textureName,{0}coord3, lod) {1}CUBE{2}_LOD(textureName,{0}coord3, lod)",
-			"#define ASE_SAMPLE_TEXTURECUBE_BIAS(textureName,{0}coord3, bias) {1}CUBE{2}_BIAS(textureName,{0}coord3, bias)\n"
-		};*/
-
-		// SRP
-		/*public readonly static string[] CustomASESRPArgsMacros =
-		{
-			"#define ASE_TEXTURE2D_ARGS(textureName) TEXTURE2D(textureName), SAMPLER(textureName)",
-			"#define ASE_TEXTURE3D_ARGS(textureName) TEXTURE3D(textureName), SAMPLER(textureName)",
-			"#define ASE_TEXTURECUBE_ARGS(textureName) TEXTURECUBE(textureName), SAMPLER(textureName)",
-			"#define ASE_TEXTURE2D_PARAMS(textureName) textureName, sampler##textureName",
-			"#define ASE_TEXTURE3D_PARAMS(textureName) textureName, sampler##textureName",
-			"#define ASE_TEXTURECUBE_PARAMS(textureName) textureName, sampler##textureName",
-			"#define ASE_TEXTURE2D_ARRAY_PARAMS(textureName) textureName, sampler##textureName\n"
-		};*/
+		
+		
 
 		public readonly static RenderTextureFormat PreviewFormat = RenderTextureFormat.ARGBFloat;
 		public readonly static int PreviewSize = 128;
@@ -200,7 +142,7 @@ namespace AmplifyShaderEditor
 
 		public readonly static string SamplingMacrosDirective = "#define ASE_USING_SAMPLING_MACROS 1";
 
-		// STANDARD
+		
 		public readonly static string[] CustomASEStandarSamplingMacrosHelper =
 		{
 			"#if defined(SHADER_API_D3D11) || defined(SHADER_API_XBOXONE) || defined(UNITY_COMPILER_HLSLCC) || defined(SHADER_API_PSSL) || (defined(SHADER_TARGET_SURFACE_ANALYSIS) && !defined(SHADER_TARGET_SURFACE_ANALYSIS_MOJOSHADER))//ASE Sampler Macros",
@@ -354,7 +296,7 @@ namespace AmplifyShaderEditor
 		public readonly static string LocalValueDefWithoutIdent = "{0} {1} {2};";
 		public readonly static string TilingOffsetFormat = "{0} * {1} + {2}";
 		public static string InvalidPostProcessDatapath = "__DELETED_GUID_Trash";
-		//TEMPLATES
+		
 
 		public static float PlusMinusButtonLayoutWidth = 15;
 
@@ -363,7 +305,13 @@ namespace AmplifyShaderEditor
 		public static float NodeButtonDeltaX = 5;
 		public static float NodeButtonDeltaY = 11;
 
-		public readonly static string SafeNormalizeInfoStr = "With Safe Normalize division by 0 is prevented over the normalize operation at the expense of additional instructions on shader.";
+		public readonly static string SafeNormalizeInfoStr = 
+#if !WB_LANGUAGE_CHINESE
+"With Safe Normalize division by 0 is prevented over the normalize operation at the expense of additional instructions on shader."
+#else
+"使用安全规范化时，在规范化操作上防止除以0，但会以牺牲着色器上的额外指令为代价。"
+#endif
+;
 		public readonly static string ReservedPropertyNameStr = "Property name '{0}' is reserved and cannot be used";
 		public readonly static string NumericPropertyNameStr = "Property name '{0}' is numeric thus cannot be used";
 		public readonly static string DeprecatedMessageStr = "Node '{0}' is deprecated. Use node '{1}' instead.";
@@ -386,8 +334,20 @@ namespace AmplifyShaderEditor
 
 		public readonly static float MenuDragSpeed = -0.5f;
 		public readonly static string DefaultCustomInspector = "ASEMaterialInspector";
-		public readonly static string ReferenceTypeStr = "Mode";
-		public readonly static string AvailableReferenceStr = "Reference";
+		public readonly static string ReferenceTypeStr = 
+#if !WB_LANGUAGE_CHINESE
+"Mode"
+#else
+"模式"
+#endif
+;
+		public readonly static string AvailableReferenceStr = 
+#if !WB_LANGUAGE_CHINESE
+"Reference"
+#else
+"参考资料"
+#endif
+;
 		public readonly static string InstancePostfixStr = " (Reference) ";
 
 		public readonly static string ASEMenuName = "Amplify Shader";
@@ -402,8 +362,8 @@ namespace AmplifyShaderEditor
 		public readonly static string ATSharedLibGUID = "ba242738c4be3324aa88d126f7cc19f9";
 		public readonly static string CameraDepthTextureValue = "UNITY_DECLARE_DEPTH_TEXTURE( _CameraDepthTexture );";
 
-		//public readonly static string CameraDepthTextureSRPVar = "TEXTURE2D(_CameraDepthTexture);";
-		//public readonly static string CameraDepthTextureSRPSampler = "SAMPLER(sampler_CameraDepthTexture);";
+		
+		
 		public readonly static string CameraDepthTextureLWEnabler = "REQUIRE_DEPTH_TEXTURE 1";
 
 		public readonly static string CameraDepthTextureTexelSize = "uniform float4 _CameraDepthTexture_TexelSize;";
@@ -412,8 +372,8 @@ namespace AmplifyShaderEditor
 
 
 		public readonly static string HelpURL = "http://wiki.amplify.pt/index.php?title=Unity_Products:Amplify_Shader_Editor";
-		//public readonly static string NodeCommonUrl = "http://wiki.amplify.pt/index.php?title=Unity_Products:Amplify_Shader_Editor/Nodes#";
-		//public readonly static string CommunityNodeCommonUrl = "http://wiki.amplify.pt/index.php?title=Unity_Products:Amplify_Shader_Editor/Community_Nodes#";
+		
+		
 		public readonly static string NodeCommonUrl = "http://wiki.amplify.pt/index.php?title=Unity_Products:Amplify_Shader_Editor/";
 		public readonly static string CommunityNodeCommonUrl = "http://wiki.amplify.pt/index.php?title=Unity_Products:Amplify_Shader_Editor/";
 		public readonly static Color InfiniteLoopColor = Color.red;
@@ -437,7 +397,7 @@ namespace AmplifyShaderEditor
 
 		public readonly static int MINIMIZE_WINDOW_LOCK_SIZE = 630;
 
-		public readonly static int FoldoutMouseId = 0; // Left Mouse Button
+		public readonly static int FoldoutMouseId = 0; 
 
 		public readonly static float SNAP_SQR_DIST = 200f;
 		public readonly static int INVALID_NODE_ID = -1;
@@ -484,7 +444,13 @@ namespace AmplifyShaderEditor
 
 		public readonly static string SubTitleNameFormatStr = "Name( {0} )";
 		public readonly static string SubTitleSpaceFormatStr = "Space( {0} )";
-		public readonly static string SubTitleTypeFormatStr = "Type( {0} )";
+		public readonly static string SubTitleTypeFormatStr = 
+#if !WB_LANGUAGE_CHINESE
+"Type( {0} )"
+#else
+"类型（｛0｝）"
+#endif
+;
 		public readonly static string SubTitleValueFormatStr = "Value( {0} )";
 		public readonly static string SubTitleConstFormatStr = "Const( {0} )";
 		public readonly static string SubTitleVarNameFormatStr = "Var( {0} )";
@@ -525,20 +491,50 @@ namespace AmplifyShaderEditor
 
 		public readonly static string NoPropertiesLabel = "No assigned properties";
 
-		public readonly static string ValueLabel = "Value";
-		public readonly static string DefaultValueLabel = "Default Value";
-		public readonly static string MaterialValueLabel = "Material Value";
-		public readonly static GUIContent DefaultValueLabelContent = new GUIContent( "Default Value" );
-		public readonly static GUIContent MaterialValueLabelContent = new GUIContent( "Material Value" );
+		public readonly static string ValueLabel = 
+#if !WB_LANGUAGE_CHINESE
+"Value"
+#else
+"价值观"
+#endif
+;
+		public readonly static string DefaultValueLabel = 
+#if !WB_LANGUAGE_CHINESE
+"Default Value"
+#else
+"默认值"
+#endif
+;
+		public readonly static string MaterialValueLabel = 
+#if !WB_LANGUAGE_CHINESE
+"Material Value"
+#else
+"材料价值"
+#endif
+;
+		public readonly static GUIContent DefaultValueLabelContent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Default Value"
+#else
+"默认值"
+#endif
+ );
+		public readonly static GUIContent MaterialValueLabelContent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Material Value"
+#else
+"材料价值"
+#endif
+ );
 
-		public readonly static string InputVarStr = "i";//"input";
-		public readonly static string OutputVarStr = "o";//"output";
+		public readonly static string InputVarStr = "i";
+		public readonly static string OutputVarStr = "o";
 
 		public readonly static string CustomLightOutputVarStr = "s";
 		public readonly static string CustomLightStructStr = "Custom";
 
 		public readonly static string VertexShaderOutputStr = "o";
-		public readonly static string VertexShaderInputStr = "v";//"vertexData";
+		public readonly static string VertexShaderInputStr = "v";
 		public readonly static string VertexDataFunc = "vertexDataFunc";
 
 		public readonly static string VirtualCoordNameStr = "vcoord";
@@ -625,8 +621,8 @@ namespace AmplifyShaderEditor
 		public readonly static string NodeCreateUndoId = "NODE_CREATE_UNDO_ID";
 		public readonly static string NodeDestroyUndoId = "NODE_DESTROY_UNDO_ID";
 
-		// Custom node tags
-		//[InPortBegin:Id:Type:Name:InPortEnd]
+		
+		
 		public readonly static string CNIP = "#IP";
 
 		public readonly static float FLOAT_DRAW_HEIGHT_FIELD_SIZE = 16f;
@@ -656,17 +652,35 @@ namespace AmplifyShaderEditor
 		public readonly static string[] ColorSuffixes = { ".r", ".g", ".b", ".a" };
 
 
-		public const string InternalDataLabelStr = "Internal Data";
-		public const string AttributesLaberStr = "Attributes";
-		public const string ParameterLabelStr = "Parameters";
+		public const string InternalDataLabelStr = 
+#if !WB_LANGUAGE_CHINESE
+"Internal Data"
+#else
+"内部数据"
+#endif
+;
+		public const string AttributesLaberStr = 
+#if !WB_LANGUAGE_CHINESE
+"Attributes"
+#else
+"属性"
+#endif
+;
+		public const string ParameterLabelStr = 
+#if !WB_LANGUAGE_CHINESE
+"Parameters"
+#else
+"参数"
+#endif
+;
 
-		public static readonly string[] ReferenceArrayLabels = { "Object", "Reference" };
+		public readonly static string[] ReferenceArrayLabels = { "Object", "Reference" };
 
-		public static readonly string[] ChannelNamesVector = { "X", "Y", "Z", "W" };
-		public static readonly string[] ChannelNamesColor = { "R", "G", "B", "A" };
+		public readonly static string[] ChannelNamesVector = { "X", "Y", "Z", "W" };
+		public readonly static string[] ChannelNamesColor = { "R", "G", "B", "A" };
 
-		public static readonly string SamplerFormat = "sampler{0}";
-		public static readonly string SamplerDeclFormat = "SamplerState {0}";
-		public static readonly string SamplerDeclSRPFormat = "SAMPLER({0})";
+		public readonly static string SamplerFormat = "sampler{0}";
+		public readonly static string SamplerDeclFormat = "SamplerState {0}";
+		public readonly static string SamplerDeclSRPFormat = "SAMPLER({0})";
 	}
 }

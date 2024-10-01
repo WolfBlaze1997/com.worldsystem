@@ -7,13 +7,13 @@
 #include "Packages/com.unity.render-pipelines.core/Runtime/Utilities/Blit.hlsl"
 
 
-TEXTURE2D(_MainTex);
-SAMPLER(sampler_MainTex);
+TEXTURE2D(_FogCameraTex);
+SAMPLER(sampler_FogCameraTex);
 
-TEXTURE2D(_BaseTex);
-SAMPLER(sampler_BaseTex);
+TEXTURE2D(_SSMSBaseTex);
+SAMPLER(sampler_SSMSBaseTex);
 
-float2 _MainTex_TexelSize;
+float2 _FogCameraTex_TexelSize;
 float2 _BaseTex_TexelSize;
 
 float _PrefilterOffs;
@@ -26,14 +26,14 @@ float _Intensity;
 TEXTURE2D(_FadeTex);
 SAMPLER(sampler_FadeTex);
 
-TEXTURE2D(_FogFactor_RT);
-SAMPLER(sampler_FogFactor_RT);
+TEXTURE2D(_FogFactorTex);
+SAMPLER(sampler_FogFactorTex);
 
 float _Radius;
 float _BlurWeight;
 
-#pragma shader_feature ANTI_FLICKER_ON 
-#pragma shader_feature _HIGH_QUALITY_ON 
+// #pragma shader_feature _ ANTI_FLICKER_ON 
+// #pragma shader_feature _ _HIGH_QUALITY_ON 
 
 // Brightness function
 float Brightness(float3 c)
@@ -81,13 +81,13 @@ half4 SafeHDR(half4 c)
 // Downsample with a 4x4 box filter
 float3 DownsampleFilter(float2 uv)
 {
-    float4 d = _MainTex_TexelSize.xyxy * float4(-1, -1, +1, +1);
+    float4 d = _FogCameraTex_TexelSize.xyxy * float4(-1, -1, +1, +1);
 
     float3 s;
-    s  = ToFloat3(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv + d.xy));
-    s += ToFloat3(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv + d.zy));
-    s += ToFloat3(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv + d.xw));
-    s += ToFloat3(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv + d.zw));
+    s  = ToFloat3(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv + d.xy));
+    s += ToFloat3(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv + d.zy));
+    s += ToFloat3(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv + d.xw));
+    s += ToFloat3(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv + d.zw));
 
     return s * (1.0 / 4);
 }
@@ -95,12 +95,12 @@ float3 DownsampleFilter(float2 uv)
 // Downsample with a 4x4 box filter + anti-flicker filter
 float3 DownsampleAntiFlickerFilter(float2 uv)
 {
-    float4 d = _MainTex_TexelSize.xyxy * float4(-1, -1, +1, +1);
+    float4 d = _FogCameraTex_TexelSize.xyxy * float4(-1, -1, +1, +1);
 
-    float3 s1 = ToFloat3(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv + d.xy));
-    float3 s2 = ToFloat3(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv + d.zy));
-    float3 s3 = ToFloat3(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv + d.xw));
-    float3 s4 = ToFloat3(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv + d.zw));
+    float3 s1 = ToFloat3(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv + d.xy));
+    float3 s2 = ToFloat3(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv + d.zy));
+    float3 s3 = ToFloat3(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv + d.xw));
+    float3 s4 = ToFloat3(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv + d.zw));
 
     // Karis's luma weighted average (using brightness instead of luma)
     float s1w = 1 / (Brightness(s1) + 1);
@@ -116,31 +116,31 @@ float3 UpsampleFilter(float2 uv)
 {
 #ifdef _HIGH_QUALITY_ON
     // 9-tap bilinear upsampler (tent filter)
-    float4 d = _MainTex_TexelSize.xyxy * float4(1, 1, -1, 0) * _SampleScale;
+    float4 d = _FogCameraTex_TexelSize.xyxy * float4(1, 1, -1, 0) * _SampleScale;
 
     float3 s;
-    s  = ToFloat3(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv - d.xy));
-    s += ToFloat3(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv - d.wy)) * 2;
-    s += ToFloat3(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv - d.zy));
+    s  = ToFloat3(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv - d.xy));
+    s += ToFloat3(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv - d.wy)) * 2;
+    s += ToFloat3(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv - d.zy));
     
-    s += ToFloat3(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv + d.zw)) * 2;
-    s += ToFloat3(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv       )) * 4;
-    s += ToFloat3(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv + d.xw)) * 2;
+    s += ToFloat3(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv + d.zw)) * 2;
+    s += ToFloat3(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv       )) * 4;
+    s += ToFloat3(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv + d.xw)) * 2;
     
-    s += ToFloat3(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv + d.zy));
-    s += ToFloat3(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv + d.wy)) * 2;
-    s += ToFloat3(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv + d.xy));
+    s += ToFloat3(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv + d.zy));
+    s += ToFloat3(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv + d.wy)) * 2;
+    s += ToFloat3(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv + d.xy));
 
     return s * (1.0 / 16);
 #else
     // 4-tap bilinear upsampler
-    float4 d = _MainTex_TexelSize.xyxy * float4(-1, -1, +1, +1) * (_SampleScale * 0.5);
+    float4 d = _FogCameraTex_TexelSize.xyxy * float4(-1, -1, +1, +1) * (_SampleScale * 0.5);
 
     float3 s;
-    s  = ToFloat3(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv + d.xy));
-    s += ToFloat3(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv + d.zy));
-    s += ToFloat3(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv + d.xw));
-    s += ToFloat3(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv + d.zw));
+    s  = ToFloat3(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv + d.xy));
+    s += ToFloat3(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv + d.zy));
+    s += ToFloat3(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv + d.xw));
+    s += ToFloat3(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv + d.zw));
 
     return s * (1.0 / 4);
 #endif
@@ -197,19 +197,19 @@ float AdjustDepth(float4 d){
 
 float4 frag_prefilter(Varyings i) : SV_Target
 {
-	float2 uv = i.texcoord    + _MainTex_TexelSize.xy * _PrefilterOffs;
+	float2 uv = i.texcoord    + _FogCameraTex_TexelSize.xy * _PrefilterOffs;
 
     #ifdef ANTI_FLICKER_ON
-    float3 d = _MainTex_TexelSize.xyx * float3(1, 1, 0);
-    float4 s0 = SafeHDR(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv));
-    float3 s1 = SafeHDR(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv - d.xz).rgb);
-    float3 s2 = SafeHDR(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv + d.xz).rgb);
-    float3 s3 = SafeHDR(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv - d.zy).rgb);
-    float3 s4 = SafeHDR(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv + d.zy).rgb);
+    float3 d = _FogCameraTex_TexelSize.xyx * float3(1, 1, 0);
+    float4 s0 = SafeHDR(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv));
+    float3 s1 = SafeHDR(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv - d.xz).rgb);
+    float3 s2 = SafeHDR(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv + d.xz).rgb);
+    float3 s3 = SafeHDR(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv - d.zy).rgb);
+    float3 s4 = SafeHDR(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv + d.zy).rgb);
     float3 m = Median(Median(s0.rgb, s1, s2), s3, s4);
     
     #else
-    float4 s0 = SafeHDR(SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv));
+    float4 s0 = SafeHDR(SAMPLE_TEXTURE2D(_FogCameraTex, sampler_FogCameraTex, uv));
     float3 m = s0.rgb;
     #endif
 
@@ -224,7 +224,7 @@ float4 frag_prefilter(Varyings i) : SV_Target
     m *= max(rq, br - _Threshold) / max(br, 1e-5); 
 
     // SMSS 
-    float depth = AdjustDepth(SAMPLE_TEXTURE2D(_FogFactor_RT,sampler_FogFactor_RT, i.texcoord   )); 
+    float depth = AdjustDepth(SAMPLE_TEXTURE2D(_FogFactorTex,sampler_FogFactorTex, i.texcoord   )); 
 
     return ToFloat4(m * depth);
 }
@@ -250,7 +250,7 @@ float4 frag_downsample2(Varyings i) : SV_Target
 float4 frag_upsample(Varyings i) : SV_Target
 {
     UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
-    float3 base = ToFloat3(SAMPLE_TEXTURE2D(_BaseTex,sampler_BaseTex, i.texcoord   ));
+    float3 base = ToFloat3(SAMPLE_TEXTURE2D(_SSMSBaseTex,sampler_SSMSBaseTex, i.texcoord   ));
     float3 blur = UpsampleFilter(i.texcoord   );
 
     return ToFloat4(base + blur * (1 + _BlurWeight)) / (1 + (_BlurWeight * 0.735));
@@ -259,11 +259,11 @@ float4 frag_upsample(Varyings i) : SV_Target
 float4 frag_upsample_final(Varyings i) : SV_Target
 {
     UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
-	float4 base = SAMPLE_TEXTURE2D(_BaseTex,sampler_BaseTex, i.texcoord   );
+	float4 base = SAMPLE_TEXTURE2D(_SSMSBaseTex,sampler_SSMSBaseTex, i.texcoord   );
     float3 blur = UpsampleFilter(i.texcoord   );
 
     // SMSS
-    float depth = AdjustDepth(SAMPLE_TEXTURE2D(_FogFactor_RT,sampler_FogFactor_RT, i.texcoord   )); 
+    float depth = AdjustDepth(SAMPLE_TEXTURE2D(_FogFactorTex,sampler_FogFactorTex, i.texcoord   )); 
 
     return lerp(base, float4(blur,1) * (1 / _Radius), clamp(depth ,0,_Intensity));
 }

@@ -24,16 +24,16 @@ namespace AmplifyShaderEditor
 		public virtual void SetupNodeCategories()
 		{
 			ContainerGraph.ResetNodesData();
-			//int count = m_inputPorts.Count;
-			//for( int i = 0; i < count; i++ )
-			//{
-			//	if( m_inputPorts[ i ].IsConnected )
-			//	{
-			//		NodeData nodeData = new NodeData( m_inputPorts[ i ].Category );
-			//		ParentNode node = m_inputPorts[ i ].GetOutputNode();
-			//		node.PropagateNodeData( nodeData, ref collector );
-			//	}
-			//}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		}
 
 		public override void WriteToString( ref string nodeInfo, ref string connectionsInfo )

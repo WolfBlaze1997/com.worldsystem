@@ -4,7 +4,25 @@ using UnityEngine;
 namespace AmplifyShaderEditor
 {
     [Serializable]
-    [NodeAttributes( "Relay", "Miscellaneous", "Relay" )]
+    [NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Relay"
+#else
+"继电器"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Relay"
+#else
+"继电器"
+#endif
+)]
     public sealed class RelayNode : ParentNode
     {
         protected override void CommonInit( int uniqueId )

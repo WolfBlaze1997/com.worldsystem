@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -16,23 +16,47 @@ namespace AmplifyShaderEditor
 		UNITY_MATRIX_VP,
 		UNITY_MATRIX_T_MV,
 		UNITY_MATRIX_IT_MV,
-		//UNITY_MATRIX_TEXTURE0,
-		//UNITY_MATRIX_TEXTURE1,
-		//UNITY_MATRIX_TEXTURE2,
-		//UNITY_MATRIX_TEXTURE3,
+		
+		
+		
+		
 		_Object2World,
-		_World2Object//,
-		//unity_Scale
+		_World2Object
+		
 	}
 
 	[Serializable]
-	[NodeAttributes( "Common Transform Matrices", "Matrix Transform", "All Transformation types" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Common Transform Matrices"
+#else
+"常见变换矩阵"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Matrix Transform"
+#else
+"矩阵变换"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"All Transformation types"
+#else
+"所有转换类型"
+#endif
+)]
 	public sealed class TransformVariables : ShaderVariablesNode
 	{
 		[SerializeField]
 		private BuiltInShaderTransformTypes m_selectedType = BuiltInShaderTransformTypes.UNITY_MATRIX_MVP;
 		
-		private const string MatrixLabelStr = "Matrix";
+		private const string MatrixLabelStr = 
+#if !WB_LANGUAGE_CHINESE
+"Matrix"
+#else
+"矩阵"
+#endif
+;
 		private readonly string[] ValuesStr =  
 		{
 			"Model View Projection",

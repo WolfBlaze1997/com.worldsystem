@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -198,8 +198,8 @@ namespace AmplifyShaderEditor
 				tag.Replacement = tag.Output;
 			}
 
-			//finalShaderBody = finalShaderBody.Replace( TemplatesManager.TemplateExcludeFromGraphTag, string.Empty );
-			//finalShaderBody = finalShaderBody.Replace( TemplatesManager.TemplateMainPassTag, string.Empty );
+			
+			
 
 			return finalShaderBody;
 		}

@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Fract", "Math Operators", "Fractional portion of a scalar or each vector component" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Fract"
+#else
+"骨折"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Fractional portion of a scalar or each vector component"
+#else
+"标量或每个向量分量的分数部分"
+#endif
+)]
 	public sealed class FractNode : SingleInputOp
 	{
 		protected override void CommonInit( int uniqueId )

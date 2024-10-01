@@ -1,10 +1,22 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 namespace AmplifyShaderEditor
 {
 	[System.Serializable]
-	[NodeAttributes( "DDX", "Math Operators", "Approximate partial derivative with respect to window-space X" )]
+	[NodeAttributes( "DDX",            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Approximate partial derivative with respect to window-space X"
+#else
+"关于窗空间X的近似偏导数"
+#endif
+)]
 	public sealed class DdxOpNode : SingleInputOp
 	{
 		protected override void CommonInit( int uniqueId )

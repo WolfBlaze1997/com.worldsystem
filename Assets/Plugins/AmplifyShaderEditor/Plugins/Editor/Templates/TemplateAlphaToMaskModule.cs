@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -15,7 +15,13 @@ namespace AmplifyShaderEditor
 
 		public TemplateAlphaToMaskModule() : base( "Alpha To Coverage" ) { }
 
-        private static readonly string AlphaToMaskStr = "Alpha To Coverage";
+        private readonly static string AlphaToMaskStr = 
+#if !WB_LANGUAGE_CHINESE
+"Alpha To Coverage"
+#else
+"Alpha到覆盖范围"
+#endif
+;
 
 		[SerializeField]
 		private bool m_alphaToMask = false;
@@ -108,10 +114,10 @@ namespace AmplifyShaderEditor
 			m_inlineAlphaToMask = null;
 		}
 
-		//public string CurrentAlphaToMask
-		//{
-		//	get { return string.Format( AlphaToMaskFormat, m_alphaToMask ? "On" : "Off" ); }
-		//}
+		
+		
+		
+		
 
 		public bool AlphaToMask
 		{

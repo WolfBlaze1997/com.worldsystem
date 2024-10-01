@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -8,13 +8,43 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Float", "Constants And Properties", "Float property", null, KeyCode.Alpha1 )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Float"
+#else
+"浮动"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Constants And Properties"
+#else
+"常数和属性"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Float property"
+#else
+"浮动属性"
+#endif
+, null, KeyCode.Alpha1 )]
 	public sealed class RangedFloatNode : PropertyNode
 	{
 		private const int OriginalFontSize = 11;
 
-		private const string MinValueStr = "Min";
-		private const string MaxValueStr = "Max";
+		private const string MinValueStr = 
+#if !WB_LANGUAGE_CHINESE
+"Min"
+#else
+"分钟"
+#endif
+;
+		private const string MaxValueStr = 
+#if !WB_LANGUAGE_CHINESE
+"Max"
+#else
+"马克斯"
+#endif
+;
 
 		private const float LabelWidth = 8;
 
@@ -91,13 +121,13 @@ namespace AmplifyShaderEditor
 			m_floatMode = value;
 			if ( value )
 			{
-				m_insideSize.x = 50;// + ( m_showPreview ? 50 : 0 );
-				//m_firstPreviewDraw = true;
+				m_insideSize.x = 50;
+				
 			}
 			else
 			{
-				m_insideSize.x = 200;// + ( m_showPreview ? 0 : 0 );
-				//m_firstPreviewDraw = true;
+				m_insideSize.x = 200;
+				
 			}
 			m_sizeIsDirty = true;
 		}
@@ -153,7 +183,7 @@ namespace AmplifyShaderEditor
 			}
 			if ( EditorGUI.EndChangeCheck() )
 			{
-				//MarkForPreviewUpdate();
+				
 				if ( m_materialMode )
 					m_requireMaterialUpdate = true;
 			}
@@ -217,7 +247,7 @@ namespace AmplifyShaderEditor
 		{
 			if( m_floatMode )
 			{
-				//UIUtils.DrawFloat( this, ref m_propertyDrawPos, ref m_materialValue, LabelWidth * drawInfo.InvertedZoom );
+				
 				Rect fakeField = m_propertyDrawPos;
 				fakeField.xMin += LabelWidth * drawInfo.InvertedZoom;
 				if( GUI.enabled )
@@ -308,7 +338,7 @@ namespace AmplifyShaderEditor
 				{
 					if ( m_floatMode )
 					{
-						//UIUtils.DrawFloat( this, ref m_propertyDrawPos, ref m_defaultValue, LabelWidth * drawInfo.InvertedZoom );
+						
 						Rect fakeField = m_propertyDrawPos;
 						fakeField.xMin += LabelWidth * drawInfo.InvertedZoom;
 						Rect fakeLabel = m_propertyDrawPos;
@@ -337,7 +367,7 @@ namespace AmplifyShaderEditor
 			float rangeWidth = 30 * drawInfo.InvertedZoom;
 			float rangeSpacing = 5 * drawInfo.InvertedZoom;
 
-			//Min
+			
 			Rect minRect = m_propertyDrawPos;
 			minRect.width = rangeWidth;
 			EditorGUIUtility.AddCursorRect( minRect, MouseCursor.Text );
@@ -348,7 +378,7 @@ namespace AmplifyShaderEditor
 			}
 			GUI.Label( minRect, m_fieldText[ 1 ], UIUtils.MainSkin.textField );
 
-			//Value Area
+			
 			Rect valRect = m_propertyDrawPos;
 			valRect.width = rangeWidth;
 			valRect.x = m_propertyDrawPos.xMax - rangeWidth - rangeWidth - rangeSpacing;
@@ -360,7 +390,7 @@ namespace AmplifyShaderEditor
 			}
 			GUI.Label( valRect, m_fieldText[ 0 ], UIUtils.MainSkin.textField );
 
-			//Max
+			
 			Rect maxRect = m_propertyDrawPos;
 			maxRect.width = rangeWidth;
 			maxRect.x = m_propertyDrawPos.xMax - rangeWidth;
@@ -394,24 +424,24 @@ namespace AmplifyShaderEditor
 			float rangeWidth = 30 * drawInfo.InvertedZoom;
 			float rangeSpacing = 5 * drawInfo.InvertedZoom;
 
-			//Min
+			
 			Rect minRect = m_propertyDrawPos;
 			minRect.width = rangeWidth;
 			m_min = EditorGUIFloatField( minRect, m_min, UIUtils.MainSkin.textField );
 
-			//Value Area
+			
 			Rect valRect = m_propertyDrawPos;
 			valRect.width = rangeWidth;
 			valRect.x = m_propertyDrawPos.xMax - rangeWidth - rangeWidth - rangeSpacing;
 			value = EditorGUIFloatField( valRect, value, UIUtils.MainSkin.textField );
 
-			//Max
+			
 			Rect maxRect = m_propertyDrawPos;
 			maxRect.width = rangeWidth;
 			maxRect.x = m_propertyDrawPos.xMax - rangeWidth;
 			m_max = EditorGUIFloatField( maxRect, m_max, UIUtils.MainSkin.textField );
 
-			//Value Slider
+			
 			Rect sliderValRect = m_propertyDrawPos;
 			sliderValRect.x = minRect.xMax + rangeSpacing;
 			sliderValRect.xMax = valRect.xMin - rangeSpacing;

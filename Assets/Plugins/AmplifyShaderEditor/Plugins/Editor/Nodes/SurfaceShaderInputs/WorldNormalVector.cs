@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -7,13 +7,37 @@ using UnityEngine;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "World Normal", "Surface Data", "Per pixel world normal vector, accepts a <b>Normal</b> vector in tangent space (ie: normalmap)" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"World Normal"
+#else
+"世界正常"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Surface Data"
+#else
+"地表数据"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Per pixel world normal vector, accepts a <b>Normal</b> vector in tangent space (ie: normalmap)"
+#else
+"每像素世界法线向量，接受切线空间中的<b>法线</b>向量（即：法线贴图）"
+#endif
+)]
 	public sealed class WorldNormalVector : ParentNode
 	{
 		private const string NormalVecValStr = "newWorldNormal";
 		private const string NormalVecDecStr = "float3 {0} = {1};";
 
-		private const string NormalizeOptionStr = "Normalize";
+		private const string NormalizeOptionStr = 
+#if !WB_LANGUAGE_CHINESE
+"Normalize"
+#else
+"正常化"
+#endif
+;
 		private const string NormalizeFunc = "normalize( {0} )";
 
 		[SerializeField]
@@ -22,7 +46,13 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT3, false, "Normal" );
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"Normal"
+#else
+"正常"
+#endif
+);
 			AddOutputVectorPorts( WirePortDataType.FLOAT3, "XYZ" );
 			m_inputPorts[ 0 ].Vector3InternalData = Vector3.forward;
 			m_previewShaderGUID = "5f55f4841abb61e45967957788593a9d";

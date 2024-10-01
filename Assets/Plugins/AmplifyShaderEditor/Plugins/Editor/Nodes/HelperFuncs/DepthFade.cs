@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using System;
@@ -7,12 +7,48 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Depth Fade", "Surface Data", "Outputs a linear gradient representing the distance between the surface of this object and geometry behind" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Depth Fade"
+#else
+"深度褪色"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Surface Data"
+#else
+"地表数据"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Outputs a linear gradient representing the distance between the surface of this object and geometry behind"
+#else
+"输出一个线性渐变，表示此对象的曲面与后面的几何体之间的距离"
+#endif
+)]
 	public sealed class DepthFade : ParentNode
 	{
-		private const string ConvertToLinearStr = "Convert To Linear";
-		private const string SaturateStr = "Saturate";
-		private const string MirrorStr = "Mirror";
+		private const string ConvertToLinearStr = 
+#if !WB_LANGUAGE_CHINESE
+"Convert To Linear"
+#else
+"转换为线性"
+#endif
+;
+		private const string SaturateStr = 
+#if !WB_LANGUAGE_CHINESE
+"Saturate"
+#else
+"浸透"
+#endif
+;
+		private const string MirrorStr = 
+#if !WB_LANGUAGE_CHINESE
+"Mirror"
+#else
+"镜子"
+#endif
+;
 
 		[SerializeField]
 		private bool m_convertToLinear = true;
@@ -26,8 +62,20 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT3, false, "Vertex Position", -1, MasterNodePortCategory.Fragment, 1 );
-			AddInputPort( WirePortDataType.FLOAT, false, "Distance",-1,MasterNodePortCategory.Fragment,0 );
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"Vertex Position"
+#else
+"顶点位置"
+#endif
+, -1, MasterNodePortCategory.Fragment, 1 );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Distance"
+#else
+"距离"
+#endif
+,-1,MasterNodePortCategory.Fragment,0 );
 			GetInputPortByUniqueId(0).FloatInternalData = 1;
 			AddOutputPort( WirePortDataType.FLOAT, "Out" );
 			m_useInternalPortData = true;
@@ -52,8 +100,8 @@ namespace AmplifyShaderEditor
 			{
 				if( dataCollector.IsTemplate && dataCollector.CurrentSRPType == TemplateSRPType.URP )
 				{
-					//dataCollector.AddToUniforms( UniqueId, Constants.CameraDepthTextureSRPVar );
-					//dataCollector.AddToUniforms( UniqueId, Constants.CameraDepthTextureSRPSampler );
+					
+					
 					dataCollector.AddToDirectives( Constants.CameraDepthTextureLWEnabler, -1, AdditionalLineType.Define );
 					if ( ASEPackageManagerHelper.PackageSRPVersion < ( int )ASESRPBaseline.ASE_SRP_16 )
 					{

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.Text.RegularExpressions;
@@ -8,31 +8,11 @@ using UnityEngine;
 
 namespace AmplifyShaderEditor
 {
-	/*ase_pass_options OLDEST
-	DefineOnConnected:portId:definevalue	
-	DefineOnUnconnected:portId:definevalue
-	Options:name:defaultOption:opt0:opt1:opt2
-	SetVisible:PortId:OptionName:OptionValue
-	*/
+	
 
-	/*ase_pass_options OLD
-	Option:Option Name:UI Type:Default:Item0,Item1,Item3...ItemN
-	Action:Action Type:Action Data:ConditionA && ConditionB || ConditionC:
-	*/
+	
 
-	/*ase_pass_options:UniqueId:PropagateDataToHiddenPasses
-	Option:Color Offset:A,B,C:A
-		A:ShowPort:My Port Name
-		B,C:HidePort:My Port Name
-		B:SetDefine:MY_DEFINE
-		C:SetDefine:MY_COLOR_DEFINE
-	Option:My Other Option:True,False
-		True:ShowOption:Color Offset
-		False:HideOption:Color Offset
-	Port:My Port Name
-		On:SetDefine:MY_COLOR_DEFINE
-		Off:UnsetDefine:MY_COLOR_DEFINE
-	*/
+	
 	public enum AseOptionsUIWidget
 	{
 		Dropdown,
@@ -196,21 +176,21 @@ namespace AmplifyShaderEditor
 		public bool AllPasses = false;
 
 		public PropertyActionsEnum PropertyAction;
-		//CULL
+		
 		public CullMode ActionCullMode;
-		//COLOR MASK
+		
 		public ItemColorMask ColorMask = new ItemColorMask();
 		public ItemColorMask ColorMask1 = new ItemColorMask();
 		public ItemColorMask ColorMask2 = new ItemColorMask();
 		public ItemColorMask ColorMask3 = new ItemColorMask();
 
-		//DEPTH
+		
 		public ZWriteMode ActionZWrite;
 		public ZTestMode ActionZTest;
 		public float ActionZOffsetFactor;
 		public float ActionZOffsetUnits;
 
-		//BLEND OPS
+		
 		public AvailableBlendFactor ActionBlendRGBSource;
 		public AvailableBlendFactor ActionBlendRGBDest;
 		public AvailableBlendFactor ActionBlendAlphaSource;
@@ -239,7 +219,7 @@ namespace AmplifyShaderEditor
 		public AvailableBlendOps ActionBlendOpRGB3;
 		public AvailableBlendOps ActionBlendOpAlpha3;
 
-		//STENCIL 
+		
 		public int ActionStencilReference;
 		public int ActionStencilReadMask;
 		public int ActionStencilWriteMask;
@@ -440,11 +420,11 @@ namespace AmplifyShaderEditor
 
 	public class TemplateOptionsToolsHelper
 	{
-		//public const string PassOptionsMainPattern = @"\/\*ase_pass_options:([\w:= ]*)[\n]([\w: \t;\n&|,_\+-]*)\*\/";
-		//public const string SubShaderOptionsMainPattern = @"\/\*ase_subshader_options:([\w:= ]*)[\n]([\w: \t;\n&|,_\+-]*)\*\/";
+		
+		
 		public const string PassOptionsMainPattern = "\\/\\*ase_pass_options:([\\w:= ]*)[\n]([\\w: \t;\n&|,_\\+\\-\\(\\)\\[\\]\\\"\\=\\/\\.]*)\\*\\/";
 		public const string SubShaderOptionsMainPattern = "\\/\\*ase_subshader_options:([\\w:= ]*)[\n]([\\w: \t;\n&|,_\\+\\-\\(\\)\\[\\]\\\"\\=\\/\\.]*)\\*\\/";
-		public static readonly char OptionsDataSeparator = ',';
+		public readonly static char OptionsDataSeparator = ',';
 		public static Dictionary<string, AseOptionsSetup> AseOptionsSetupDict = new Dictionary<string, AseOptionsSetup>()
 		{
 			{ "CopyOptionsFromMainPass",AseOptionsSetup.CopyOptionsFromMainPass},
@@ -549,7 +529,7 @@ namespace AmplifyShaderEditor
 					Dictionary<string, int> optionItemToIndex = new Dictionary<string, int>();
 					TemplateOptionsItem currentOption = null;
 
-					//OPTIONS OVERALL SETUP
+					
 					string[] setupLines = match.Groups[ 1 ].Value.Split( ':' );
 					for( int i = 0; i < setupLines.Length; i++ )
 					{
@@ -576,7 +556,7 @@ namespace AmplifyShaderEditor
 						}
 					}
 
-					//AVAILABLE OPTIONS
+					
 					string body = match.Groups[ 2 ].Value.Replace( "\t", string.Empty );
 					string[] optionLines = body.Split( '\n' );
 					for( int oL = 0; oL < optionLines.Length; oL++ )
@@ -589,8 +569,8 @@ namespace AmplifyShaderEditor
 							{
 								case "Option":
 								{
-									//Fills previous option with its actions
-									//actionItemsList is cleared over here
+									
+									
 									FillOptionAction( currentOption, ref actionItemsList );
 
 									optionItemToIndex.Clear();
@@ -631,7 +611,7 @@ namespace AmplifyShaderEditor
 										if( ( currentOption.Options[ 0 ].Equals( "true" ) && currentOption.Options[ 1 ].Equals( "false" ) ) ||
 											( currentOption.Options[ 0 ].Equals( "false" ) && currentOption.Options[ 1 ].Equals( "true" ) ) )
 										{
-											// Toggle 0 is false and 1 is true
+											
 											currentOption.Options[ 0 ] = "false";
 											currentOption.Options[ 1 ] = "true";
 											currentOption.UIWidget = AseOptionsUIWidget.Toggle;
@@ -650,8 +630,8 @@ namespace AmplifyShaderEditor
 								break;
 								case "Port":
 								{
-									//Fills previous option with its actions
-									//actionItemsList is cleared over here
+									
+									
 									FillOptionAction( currentOption, ref actionItemsList );
 
 									optionItemToIndex.Clear();
@@ -680,8 +660,8 @@ namespace AmplifyShaderEditor
 								break;
 								case "Field":
 								{
-									//Fills previous option with its actions
-									//actionItemsList is cleared over here
+									
+									
 									FillOptionAction( currentOption, ref actionItemsList );
 
 									optionItemToIndex.Clear();
@@ -750,7 +730,7 @@ namespace AmplifyShaderEditor
 									}
 									else
 									{
-										//string[] ids = optionItems[ 0 ].Split( ',' );
+										
 										if( itemIds.Length > 1 )
 										{
 											for( int i = 0; i < itemIds.Length; i++ )
@@ -770,7 +750,7 @@ namespace AmplifyShaderEditor
 						}
 					}
 
-					//Fills last option with its actions
+					
 					FillOptionAction( currentOption, ref actionItemsList );
 
 					actionItemsList.Clear();
@@ -1151,9 +1131,9 @@ namespace AmplifyShaderEditor
 								{
 									if( arr.Length > 2 )
 									{
-										//Tag Name
+										
 										actionItem.ActionData = arr[ 1 ];
-										//Tag Value
+										
 										actionItem.ActionBuffer = arr[ 2 ];
 									}
 								}

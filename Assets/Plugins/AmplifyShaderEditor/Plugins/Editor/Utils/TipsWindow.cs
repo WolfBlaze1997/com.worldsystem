@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System.IO;
 using System.Reflection;
@@ -31,7 +31,7 @@ namespace AmplifyShaderEditor
 
 		public TipsWindow( AmplifyShaderEditorWindow parentWindow ) : base( parentWindow, 0, 0, 0, 64, "Tips", MenuAnchor.TOP_LEFT, MenuAutoSize.NONE )
 		{
-			//m_dontShowAtStart = EditorPrefs.GetBool( "DontShowTipAtStart", false );
+			
 		}
 
 		public override void Draw( Rect parentPosition, Vector2 mousePosition, int mouseButtonId, bool hasKeyboadFocus )
@@ -52,14 +52,32 @@ namespace AmplifyShaderEditor
 			windowRect.center = center;
 			Color temp = GUI.color;
 			GUI.color = Color.white;
-			GUI.Label( windowRect, string.Empty, GUI.skin.FindStyle( "flow node 0" ) );
+			GUI.Label( windowRect, string.Empty, GUI.skin.FindStyle( 
+#if !WB_LANGUAGE_CHINESE
+"flow node 0"
+#else
+"流节点0"
+#endif
+) );
 
 			if( Event.current.type == EventType.MouseDown && !windowRect.Contains( mousePosition ) )
 				m_showWindow = false;
 
 			Rect titleRect = windowRect;
 			titleRect.height = 35;
-			GUI.Label( titleRect, "Quick Tip!", GUI.skin.FindStyle( "TL Selection H2" ) );
+			GUI.Label( titleRect, 
+#if !WB_LANGUAGE_CHINESE
+"Quick Tip!"
+#else
+"快速提示！"
+#endif
+, GUI.skin.FindStyle( 
+#if !WB_LANGUAGE_CHINESE
+"TL Selection H2"
+#else
+"TL选择H2"
+#endif
+) );
 			Rect button = titleRect;
 			button.size = new Vector2( 14, 14 );
 			button.y += 2;
@@ -77,12 +95,30 @@ namespace AmplifyShaderEditor
 			
 			Rect textRect = windowRect;
 			textRect.yMin = titleRect.yMax;
-			GUI.Label( textRect, AllTips[ m_currentTip ], GUI.skin.FindStyle( "WordWrappedLabel" ) );
+			GUI.Label( textRect, AllTips[ m_currentTip ], GUI.skin.FindStyle( 
+#if !WB_LANGUAGE_CHINESE
+"WordWrappedLabel"
+#else
+"WordWrappedLabel"
+#endif
+) );
 
 			Rect footerRect = windowRect;
 			footerRect.yMin = footerRect.yMax - 18;
 			footerRect.x += 3;
-			GUI.Label( footerRect, (m_currentTip + 1) + " of " + AllTips.Count + " tips" );
+			GUI.Label( footerRect, (m_currentTip + 1) + 
+#if !WB_LANGUAGE_CHINESE
+" of "
+#else
+"属于"
+#endif
++ AllTips.Count + 
+#if !WB_LANGUAGE_CHINESE
+" tips"
+#else
+"提示"
+#endif
+);
 			footerRect.x += 170;
 			EditorGUI.BeginChangeCheck();
 			m_dontShowAtStart = GUI.Toggle( footerRect, m_dontShowAtStart, "Don't show at start" );
@@ -111,34 +147,34 @@ namespace AmplifyShaderEditor
 			else
 				m_showWindow = true;
 
-			//Test();
-			//ExportCompiledShaders();
+			
+			
 		}
 
-		//public static void Test()
-		//{
-		//	Shader shader = UIUtils.CurrentWindow.CurrentGraph.CurrentShader;
-		//	int mode = EditorPrefs.GetInt( "ShaderInspectorPlatformMode", 1 );
-		//	int mask = EditorPrefs.GetInt( "ShaderInspectorPlatformMask", 524287 );
-		//	bool strip = EditorPrefs.GetInt( "ShaderInspectorVariantStripping", 1 ) == 0;
-		//	ShaderUtilEx.OpenCompiledShader( shader, mode, mask, strip );
-		//}
+		
+		
+		
+		
+		
+		
+		
+		
 
-		//public static void ExportCompiledShaders()
-		//{
-		//	Shader shader = UIUtils.CurrentWindow.CurrentGraph.CurrentShader;
-		//	string shaderPath = AssetDatabase.GetAssetPath( shader );
-		//	SerializedObject so = new SerializedObject( shader );
-		//	SerializedProperty prop = so.FindProperty( "m_Script" );
-		//	var compiledShaderString = prop.stringValue;
-		//	Directory.CreateDirectory( Application.dataPath + "/../ShaderSource/" );
-		//	if( compiledShaderString == null )
-		//		return;
-		//	var outputPath = Application.dataPath + "/../ShaderSource/" + Path.GetFileNameWithoutExtension( shaderPath ) + "_compiled.shader";
-		//	var sw = File.CreateText( outputPath );
-		//	sw.Write( compiledShaderString );
-		//	sw.Close();
-		//}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 		public static void CloseWindow()
 		{

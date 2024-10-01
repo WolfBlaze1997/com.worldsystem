@@ -8,7 +8,13 @@ namespace AmplifyShaderEditor
 	[Serializable]
 	public class AdditionalIncludesHelper
 	{
-		private const string AdditionalIncludesStr = " Additional Includes";
+		private const string AdditionalIncludesStr = 
+#if !WB_LANGUAGE_CHINESE
+" Additional Includes"
+#else
+"其他包括"
+#endif
+;
 		private const float ShaderKeywordButtonLayoutWidth = 15;
 		private ParentNode m_currentOwner;
 
@@ -33,14 +39,14 @@ namespace AmplifyShaderEditor
 		{
 			EditorGUILayout.Separator();
 
-			// Add keyword
+			
 			if( GUILayout.Button( string.Empty, UIUtils.PlusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 			{
 				m_additionalIncludes.Add( string.Empty );
 				EditorGUI.FocusTextInControl( null );
 			}
 
-			//Remove keyword
+			
 			if( GUILayout.Button( string.Empty, UIUtils.MinusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 			{
 				if( m_additionalIncludes.Count > 0 )
@@ -54,22 +60,22 @@ namespace AmplifyShaderEditor
 		void DrawMainBody()
 		{
 			EditorGUILayout.Separator();
-			//if( OutsideList != null && OutsideList.Count > 0 )
-			//{
-			//	m_drawElements.Clear();
-			//	EditorGUI.BeginDisabledGroup( true );
-			//	int outsideCount = OutsideList.Count;
-			//	for( int i = 0; i < outsideCount; i++ )
-			//	{
-			//		if( !m_drawElements.Contains( OutsideList[ i ] ) )
-			//		{
-			//			m_drawElements.Add( OutsideList[ i ] );
-			//			EditorGUILayout.TextField( OutsideList[ i ] );
-			//		}
-			//	}
-			//	EditorGUI.EndDisabledGroup();
-			//	EditorGUILayout.Separator();
-			//}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			int itemCount = m_additionalIncludes.Count;
 			int markedToDelete = -1;
 			for( int i = 0; i < itemCount; i++ )
@@ -83,14 +89,14 @@ namespace AmplifyShaderEditor
 						m_additionalIncludes[ i ] = UIUtils.RemoveShaderInvalidCharacters( m_additionalIncludes[ i ] );
 					}
 
-					// Add new port
+					
 					if( m_currentOwner.GUILayoutButton( string.Empty, UIUtils.PlusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 					{
 						m_additionalIncludes.Insert( i + 1, string.Empty );
 						EditorGUI.FocusTextInControl( null );
 					}
 
-					//Remove port
+					
 					if( m_currentOwner.GUILayoutButton( string.Empty, UIUtils.MinusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 					{
 						markedToDelete = i;
@@ -108,7 +114,13 @@ namespace AmplifyShaderEditor
 				}
 			}
 			EditorGUILayout.Separator();
-			EditorGUILayout.HelpBox( "Please add your includes without the #include \"\" keywords", MessageType.Info );
+			EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"Please add your includes without the #include \"\" keywords"
+#else
+"请添加不带#include关键字的包含项"
+#endif
+, MessageType.Info );
 		}
 
 		public void ReadFromString( ref uint index, ref string[] nodeParams )

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using System;
@@ -7,7 +7,25 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Rotator", "UV Coordinates", "Rotates UVs or any Vector2 value from an Anchor point for a specified Time value")]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Rotator"
+#else
+"旋转器"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"UV Coordinates"
+#else
+"UV坐标"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Rotates UVs or any Vector2 value from an Anchor point for a specified Time value"
+#else
+"将UV或任何Vector2值从锚点旋转指定的时间值"
+#endif
+)]
 	public sealed class RotatorNode : ParentNode
 	{
 		private int m_cachedUsingEditorId = -1;
@@ -16,8 +34,20 @@ namespace AmplifyShaderEditor
 		{
 			base.CommonInit( uniqueId );
 			AddInputPort( WirePortDataType.FLOAT2, false, "UV" );
-			AddInputPort( WirePortDataType.FLOAT2, false, "Anchor" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Time" );
+			AddInputPort( WirePortDataType.FLOAT2, false, 
+#if !WB_LANGUAGE_CHINESE
+"Anchor"
+#else
+"锚"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Time"
+#else
+"时间"
+#endif
+/*<C!>*/ );
 			AddOutputPort( WirePortDataType.FLOAT2, "Out" );
 			m_useInternalPortData = true;
 			m_inputPorts[ 2 ].FloatInternalData = 1;

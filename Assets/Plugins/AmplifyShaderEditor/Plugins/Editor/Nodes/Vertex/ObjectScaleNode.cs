@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -7,10 +7,34 @@ using UnityEditor;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Object Scale", "Vertex Data", "Object Scale extracted directly from its transform matrix" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Object Scale"
+#else
+"对象比例"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vertex Data"
+#else
+"顶点数据"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Object Scale extracted directly from its transform matrix"
+#else
+"直接从变换矩阵中提取的对象比例"
+#endif
+)]
 	public class ObjectScaleNode : ParentNode
 	{
-		private const string RotationIndependentScaleStr = "Rotation Independent Scale";
+		private const string RotationIndependentScaleStr = 
+#if !WB_LANGUAGE_CHINESE
+"Rotation Independent Scale"
+#else
+"旋转无关比例"
+#endif
+;
 
 		[SerializeField]
 		private bool m_rotationIndependentScale = false;

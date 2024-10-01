@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,13 @@ namespace AmplifyShaderEditor
 	[Serializable]
 	public class AdditionalDefinesHelper
 	{
-		private const string AdditionalDefinesStr = " Additional Defines";
+		private const string AdditionalDefinesStr = 
+#if !WB_LANGUAGE_CHINESE
+" Additional Defines"
+#else
+"附加定义"
+#endif
+;
 		private const float ShaderKeywordButtonLayoutWidth = 15;
 		private ParentNode m_currentOwner;
 
@@ -35,14 +41,14 @@ namespace AmplifyShaderEditor
 		{
 			EditorGUILayout.Separator();
 
-			// Add keyword
+			
 			if( GUILayout.Button( string.Empty, UIUtils.PlusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 			{
 				m_additionalDefines.Add( string.Empty );
 				EditorGUI.FocusTextInControl( null );
 			}
 
-			//Remove keyword
+			
 			if( GUILayout.Button( string.Empty, UIUtils.MinusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 			{
 				if( m_additionalDefines.Count > 0 )
@@ -69,14 +75,14 @@ namespace AmplifyShaderEditor
 						m_additionalDefines[ i ] = UIUtils.RemoveShaderInvalidCharacters( m_additionalDefines[ i ] );
 					}
 
-					// Add new port
+					
 					if( m_currentOwner.GUILayoutButton( string.Empty, UIUtils.PlusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 					{
 						m_additionalDefines.Insert( i + 1, string.Empty );
 						EditorGUI.FocusTextInControl( null );
 					}
 
-					//Remove port
+					
 					if( m_currentOwner.GUILayoutButton( string.Empty, UIUtils.MinusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 					{
 						markedToDelete = i;
@@ -94,7 +100,13 @@ namespace AmplifyShaderEditor
 				}
 			}
 			EditorGUILayout.Separator();
-			EditorGUILayout.HelpBox( "Please add your defines without the #define keywords", MessageType.Info );
+			EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"Please add your defines without the #define keywords"
+#else
+"请添加不带#define关键字的定义"
+#endif
+, MessageType.Info );
 		}
 
 		public void ReadFromString( ref uint index, ref string[] nodeParams )

@@ -1,12 +1,36 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "ASin", "Trigonometry Operators", "Arcsine of scalars and vectors", tags: "arcsine" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"ASin"
+#else
+"ASin"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Trigonometry Operators"
+#else
+"三角运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Arcsine of scalars and vectors"
+#else
+"标量和向量的反正弦"
+#endif
+, tags: 
+#if !WB_LANGUAGE_CHINESE
+"arcsine"
+#else
+"正弦曲线"
+#endif
+)]
 	public sealed class ASinOpNode : SingleInputOp
 	{
 		protected override void CommonInit( int uniqueId )

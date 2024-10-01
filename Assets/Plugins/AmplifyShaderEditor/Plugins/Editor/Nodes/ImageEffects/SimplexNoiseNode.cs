@@ -1,7 +1,7 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
 
-//https://www.shadertoy.com/view/XsX3zB
+
+
+
 using System;
 using UnityEngine;
 using UnityEditor;
@@ -16,7 +16,25 @@ namespace AmplifyShaderEditor
 	}
 
 	[Serializable]
-	[NodeAttributes( "[Deprecated] Simplex Noise", "Image Effects", "Noise generated via the Simplex algorithm",null,KeyCode.None,false,true)]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"[Deprecated] Simplex Noise"
+#else
+"[已弃用]单工噪声"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Image Effects"
+#else
+"图像效果"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Noise generated via the Simplex algorithm"
+#else
+"通过单纯形算法产生的噪声"
+#endif
+,null,KeyCode.None,false,true)]
 	public sealed class SimplexNoiseNode : ParentNode
 	{
 		private string m_randomFuncBody;
@@ -27,7 +45,13 @@ namespace AmplifyShaderEditor
 		private const string Simplex3dfunctionHeader = "Simplex3d({0})";
 		private const string Simplex3dFractalfunctionHeader = "Simplex3dFractal( {0})";
 
-		private const string NoiseTypeStr = "Type";
+		private const string NoiseTypeStr = 
+#if !WB_LANGUAGE_CHINESE
+"Type"
+#else
+"类型"
+#endif
+;
 
 		[SerializeField]
 		private NoiseType m_type = NoiseType.Simplex3D;
@@ -48,8 +72,20 @@ namespace AmplifyShaderEditor
 			IOUtils.AddFunctionLine( ref m_simplex3dFractalFuncBody, "return (0.5333333*Simplex3d ( m ) + 0.2666667*Simplex3d ( 2.0*m ) + 0.1333333*Simplex3d ( 4.0*m ) + 0.0666667*Simplex3d ( 8.0*m )).xxx;" );
 			IOUtils.CloseFunctionBody( ref m_simplex3dFractalFuncBody );
 
-			AddInputPort( WirePortDataType.FLOAT3, false, "Position" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Width" );
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"Position"
+#else
+"职位"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Width"
+#else
+"宽度"
+#endif
+);
 			AddOutputPort( WirePortDataType.FLOAT3, Constants.EmptyPortValue );
 			m_textLabelWidth = 50;
 			m_useInternalPortData = true;

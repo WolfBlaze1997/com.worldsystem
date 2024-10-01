@@ -1,12 +1,36 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Cos", "Trigonometry Operators", "Cosine of scalars and vectors" ,tags: "cosine")]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Cos"
+#else
+"科斯"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Trigonometry Operators"
+#else
+"三角运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Cosine of scalars and vectors"
+#else
+"标量和向量的余弦"
+#endif
+,tags: 
+#if !WB_LANGUAGE_CHINESE
+"cosine"
+#else
+"余弦"
+#endif
+)]
 	public sealed class CosOpNode : SingleInputOp
 	{
 		protected override void CommonInit( int uniqueId )

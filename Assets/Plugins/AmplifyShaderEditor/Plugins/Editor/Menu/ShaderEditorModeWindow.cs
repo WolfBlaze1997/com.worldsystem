@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -8,19 +8,19 @@ namespace AmplifyShaderEditor
 {
 	public sealed class ShaderEditorModeWindow : MenuParent
 	{
-		private static readonly Color OverallColorOn = new Color( 1f, 1f, 1f, 0.9f );
-		private static readonly Color OverallColorOff = new Color( 1f, 1f, 1f, 0.3f );
-		private static readonly Color FontColorOff = new Color( 1f, 1f, 1f, 0.4f );
+		private readonly static Color OverallColorOn = new Color( 1f, 1f, 1f, 0.9f );
+		private readonly static Color OverallColorOff = new Color( 1f, 1f, 1f, 0.3f );
+		private readonly static Color FontColorOff = new Color( 1f, 1f, 1f, 0.4f );
 		private const float DeltaY = 15;
 		private const float DeltaX = 10;
 
 		private const float CollSizeX = 180;
 		private const float CollSizeY = 70;
 
-		//private static string MatFormat = "<size=20>MATERIAL</size>\n{0}";
-		//private static string ShaderFormat = "<size=20>SHADER</size>\n{0}";
-		//private const string CurrMatStr = "MATERIAL";
-		//private const string CurrShaderStr = "SHADER";
+		
+		
+		
+		
 
 		private const string NoMaterialStr = "No Material";
 		private const string NoShaderStr = "No Shader";
@@ -54,7 +54,7 @@ namespace AmplifyShaderEditor
 		}
 
 
-		public void Draw( Rect graphArea, Vector2 mousePos, Shader currentShader, Material currentMaterial, float usableArea, float leftPos, float rightPos /*, bool showLastSelection*/ )
+		public void Draw( Rect graphArea, Vector2 mousePos, Shader currentShader, Material currentMaterial, float usableArea, float leftPos, float rightPos  )
 		{
 			EventType currentEventType = Event.current.type;
 
@@ -77,7 +77,7 @@ namespace AmplifyShaderEditor
 			Color buffereredColor = GUI.color;
 
 			MasterNode currentMasterNode = ParentWindow.CurrentGraph.CurrentMasterNode;
-			// Shader Mode
+			
 			if ( currentMasterNode != null )
 			{
 				m_leftButtonStyle = UIUtils.GetCustomStyle( currentShader == null ? CustomStyle.ShaderModeNoShader : CustomStyle.ShaderModeTitle );
@@ -110,7 +110,7 @@ namespace AmplifyShaderEditor
 					EditorGUIUtility.PingObject( Selection.activeObject );
 				}
 
-				// Material Mode
+				
 				if ( currentMaterial != null )
 				{
 					m_rightButtonStyle = UIUtils.GetCustomStyle( CustomStyle.MaterialModeTitle );
@@ -146,7 +146,7 @@ namespace AmplifyShaderEditor
 				}
 			}
 
-			// Shader Function
+			
 			else if ( currentMasterNode == null && ParentWindow.CurrentGraph.CurrentOutputNode != null )
 			{
 				m_leftButtonStyle = UIUtils.GetCustomStyle( CustomStyle.ShaderFunctionMode );

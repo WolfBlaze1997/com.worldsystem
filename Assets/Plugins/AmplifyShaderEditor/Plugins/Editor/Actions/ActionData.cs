@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 
 using System;
@@ -13,8 +13,8 @@ namespace AmplifyShaderEditor
 		public virtual void ExecuteReverse() { }
 	}
 
-	// NODES
-	// Create node
+	
+	
 	public class CreateNodeActionData : ActionData
 	{
 		private int m_nodeId;
@@ -52,7 +52,7 @@ namespace AmplifyShaderEditor
 		}
 	}
 
-	// Destroy node
+	
 	public class DestroyNodeActionData : ActionData
 	{
 		private int m_nodeId;
@@ -89,7 +89,7 @@ namespace AmplifyShaderEditor
 		}
 	}
 
-	// Move node
+	
 	public class MoveNodeActionData : ActionData
 	{
 		private int m_nodeId;
@@ -123,8 +123,8 @@ namespace AmplifyShaderEditor
 		}
 	}
 
-	// CONNECTIONS
-	// Create connection
+	
+	
 	public class CreateConnectionActionData : ActionData
 	{
 		private int m_inputNodeId;
@@ -157,7 +157,7 @@ namespace AmplifyShaderEditor
 		}
 	}
 
-	// Destroy connection
+	
 	public class DestroyConnectionActionData : ActionData
 	{
 		private int m_inputNodeId;
@@ -190,7 +190,7 @@ namespace AmplifyShaderEditor
 		}
 	}
 
-	// Move connection
+	
 	public class MoveInputConnectionActionData : ActionData
 	{
 		private int m_oldInputNodeId;

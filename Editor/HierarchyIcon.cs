@@ -8,44 +8,36 @@ namespace WorldSystem.Editor
     [InitializeOnLoad]
     public class HierarchyIcon
     {
-        // 层级窗口项回调
-        private static readonly EditorApplication.HierarchyWindowItemCallback hiearchyItemCallback = DrawHierarchyIcon;
+        private static readonly EditorApplication.HierarchyWindowItemCallback HiearchyItemCallback = DrawHierarchyIcon;
         
-        
-        private static Texture2D hierarchyEventIcon;
+        private static Texture2D _hierarchyEventIcon;
         private static Texture2D HierarchyEventIcon
         {
             get
             {
-                if (hierarchyEventIcon == null)
+                if (_hierarchyEventIcon == null)
                 {
-                    hierarchyEventIcon = AssetDatabase.LoadAssetAtPath<Texture2D>("Packages/com.worldsystem//Textures/Icon/WorldManager-icon.png");
+                    _hierarchyEventIcon = AssetDatabase.LoadAssetAtPath<Texture2D>("Packages/com.worldsystem//Textures/Icon/WorldManager-icon.png");
                 }
-                return hierarchyEventIcon;
+                return _hierarchyEventIcon;
             }
         }
         
-        /// <summary>
-        /// 静态构造 Packages/com.worldsystem/
-        /// </summary>
         static HierarchyIcon()
         {
             EditorApplication.hierarchyWindowItemOnGUI = 
-                (EditorApplication.HierarchyWindowItemCallback)Delegate.Combine(EditorApplication.hierarchyWindowItemOnGUI, hiearchyItemCallback);
+                (EditorApplication.HierarchyWindowItemCallback)Delegate.Combine(EditorApplication.hierarchyWindowItemOnGUI, HiearchyItemCallback);
         }
-
         
-        // 绘制icon方法
+        /// <summary>
+        /// 绘制图标
+        /// </summary>
         private static void DrawHierarchyIcon(int instanceID, Rect selectionRect)
         {
             GameObject gameObject = EditorUtility.InstanceIDToObject(instanceID) as GameObject;
             if (gameObject != null && gameObject.name == "WorldManager")
             {
-                // 设置icon的位置与尺寸（Hierarchy窗口的左上角是起点）
                 Rect rect = new Rect(selectionRect.x, selectionRect.y, 16f, 16f);
-                // Rect rect = new Rect(selectionRect.x + selectionRect.width - 16f, selectionRect.y, 16f, 16f);
-                
-                // 画icon
                 GUI.DrawTexture(rect, HierarchyEventIcon);
             }
         }

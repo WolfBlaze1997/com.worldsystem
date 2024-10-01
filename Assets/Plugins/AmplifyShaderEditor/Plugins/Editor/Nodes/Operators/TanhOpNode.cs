@@ -1,12 +1,36 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Tanh", "Trigonometry Operators", "Hyperbolic tangent of scalars and vectors", tags: "hyperbolic tangent" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Tanh"
+#else
+"谭"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Trigonometry Operators"
+#else
+"三角运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Hyperbolic tangent of scalars and vectors"
+#else
+"标量和向量的双曲正切"
+#endif
+, tags: 
+#if !WB_LANGUAGE_CHINESE
+"hyperbolic tangent"
+#else
+"双曲正切"
+#endif
+)]
 	public sealed class TanhOpNode : SingleInputOp
 	{
 		protected override void CommonInit( int uniqueId )

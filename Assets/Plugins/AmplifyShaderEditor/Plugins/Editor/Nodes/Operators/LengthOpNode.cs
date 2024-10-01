@@ -1,10 +1,28 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 namespace AmplifyShaderEditor
 {
 	[System.Serializable]
-	[NodeAttributes( "Length", "Vector Operators", "Scalar Euclidean length of a vector" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Length"
+#else
+"长度"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vector Operators"
+#else
+"矢量运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Scalar Euclidean length of a vector"
+#else
+"向量的标量欧几里德长度"
+#endif
+)]
 	public sealed class LengthOpNode : SingleInputOp
 	{
 		protected override void CommonInit( int uniqueId )

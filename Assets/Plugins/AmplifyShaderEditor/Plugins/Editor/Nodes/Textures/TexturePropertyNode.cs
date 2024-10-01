@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -39,7 +39,25 @@ namespace AmplifyShaderEditor
 
 
 	[Serializable]
-	[NodeAttributes( "Texture Object", "Textures", "Represents a Texture Asset. Can be used in samplers <b>Tex</b> inputs or shader function inputs to reuse the same texture multiple times.", SortOrderPriority = 1 )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Texture Object"
+#else
+"纹理对象"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Textures"
+#else
+"纹理"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Represents a Texture Asset. Can be used in samplers <b>Tex</b> inputs or shader function inputs to reuse the same texture multiple times."
+#else
+"表示纹理资源。可以在采样器<b>Tex</b>输入或着色器函数输入中使用，以多次重用相同的纹理。"
+#endif
+, SortOrderPriority = 1 )]
 	public class TexturePropertyNode : PropertyNode
 	{
 		private const string ObjectSelectorCmdStr = "ObjectSelectorClosed";
@@ -50,8 +68,20 @@ namespace AmplifyShaderEditor
 		protected const int OriginalFontSizeUpper = 9;
 		protected const int OriginalFontSizeLower = 9;
 
-		protected const string DefaultTextureStr = "Default Texture";
-		protected const string AutoCastModeStr = "Auto-Cast Mode";
+		protected const string DefaultTextureStr = 
+#if !WB_LANGUAGE_CHINESE
+"Default Texture"
+#else
+"默认纹理"
+#endif
+;
+		protected const string AutoCastModeStr = 
+#if !WB_LANGUAGE_CHINESE
+"Auto-Cast Mode"
+#else
+"自动投射模式"
+#endif
+;
 
 		protected const string AutoUnpackNormalsStr = "Normal";
 
@@ -73,11 +103,11 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		protected int m_useSamplerArrayIdx = -1;
 
-		//[SerializeField]
-		//protected bool m_isTextureFetched;
+		
+		
 
-		//[SerializeField]
-		//protected string m_textureFetchedValue;
+		
+		
 
 		[SerializeField]
 		protected TextureType m_currentType = TextureType.Texture2D;
@@ -104,7 +134,13 @@ namespace AmplifyShaderEditor
 		protected int m_typeId = -1;
 
 		private TextureType m_previousType = TextureType.Texture2D;
-		private string m_labelText = "None (Texture2D)";
+		private string m_labelText = 
+#if !WB_LANGUAGE_CHINESE
+"None (Texture2D)"
+#else
+"无（纹理2D）"
+#endif
+;
 
 		protected bool m_isEditingPicker;
 
@@ -210,42 +246,42 @@ namespace AmplifyShaderEditor
 
 				m_previewMaterialPassId = 1; 
 				SetPreviewTexture( Value );
-				//if( Value is Cubemap )
-				//{
-				//	PreviewMaterial.SetInt( m_typeId, 3 );
+				
+				
+				
 
-				//	if( m_cachedSamplerIdCube == -1 )
-				//		m_cachedSamplerIdCube = Shader.PropertyToID( "_Cube" );
+				
+				
 
-				//	PreviewMaterial.SetTexture( m_cachedSamplerIdCube, Value as Cubemap );
-				//}
-				//else if( Value is Texture2DArray )
-				//{
-				//	PreviewMaterial.SetInt( m_typeId, 4 );
+				
+				
+				
+				
+				
 
-				//	if( m_cachedSamplerIdArray == -1 )
-				//		m_cachedSamplerIdArray = Shader.PropertyToID( "_Array" );
+				
+				
 
-				//	PreviewMaterial.SetTexture( m_cachedSamplerIdArray, Value as Texture2DArray );
-				//}
-				//else if( Value is Texture3D )
-				//{
-				//	PreviewMaterial.SetInt( m_typeId, 2 );
+				
+				
+				
+				
+				
 
-				//	if( m_cachedSamplerId3D == -1 )
-				//		m_cachedSamplerId3D = Shader.PropertyToID( "_Sampler3D" );
+				
+				
 
-				//	PreviewMaterial.SetTexture( m_cachedSamplerId3D, Value as Texture3D );
-				//}
-				//else
-				//{
-				//	PreviewMaterial.SetInt( m_typeId, 1 );
+				
+				
+				
+				
+				
 
-				//	if( m_cachedSamplerId == -1 )
-				//		m_cachedSamplerId = Shader.PropertyToID( "_Sampler" );
+				
+				
 
-				//	PreviewMaterial.SetTexture( m_cachedSamplerId, Value );
-				//}
+				
+				
 			}
 		}
 
@@ -337,7 +373,7 @@ namespace AmplifyShaderEditor
 			}
 		}
 
-		// Texture1D
+		
 		public string GetTexture1DPropertyValue()
 		{
 			return PropertyName + "(\"" + m_propertyInspectorName + "\", 2D) = \"" + m_defaultTextureValue + "\" {}";
@@ -348,7 +384,7 @@ namespace AmplifyShaderEditor
 			return "uniform sampler1D " + PropertyName + ";";
 		}
 
-		// Texture2D
+		
 		public string GetTexture2DPropertyValue()
 		{
 			return PropertyName + "(\"" + m_propertyInspectorName + "\", 2D) = \"" + m_defaultTextureValue + "\" {}";
@@ -362,7 +398,7 @@ namespace AmplifyShaderEditor
 				return GeneratorUtils.GetPropertyDeclaraction( PropertyName, TextureType.Texture2D, ";" );
 		}
 
-		//Texture3D
+		
 		public string GetTexture3DPropertyValue()
 		{
 			return PropertyName + "(\"" + m_propertyInspectorName + "\", 3D) = \"" + m_defaultTextureValue + "\" {}";
@@ -373,7 +409,7 @@ namespace AmplifyShaderEditor
 			return GeneratorUtils.GetPropertyDeclaraction( PropertyName, TextureType.Texture3D, ";" );
 		}
 
-		// Cube
+		
 		public string GetCubePropertyValue()
 		{
 			return PropertyName + "(\"" + m_propertyInspectorName + "\", CUBE) = \"" + m_defaultTextureValue + "\" {}";
@@ -384,7 +420,7 @@ namespace AmplifyShaderEditor
 			return GeneratorUtils.GetPropertyDeclaraction( PropertyName, TextureType.Cube, ";" );
 		}
 
-		// Texture2DArray
+		
 		public string GetTexture2DArrayPropertyValue()
 		{
 			return PropertyName + "(\"" + m_propertyInspectorName + "\", 2DArray) = \"" + m_defaultTextureValue + "\" {}";
@@ -647,11 +683,11 @@ namespace AmplifyShaderEditor
 					BeginDelayedDirtyProperty();
 					PreviewIsDirty = true;
 				}
-				//else if( drawInfo.CurrentEventType == EventType.ExecuteCommand )
-				//{
-				//	GUI.FocusControl( null );
-				//	m_isEditingPicker = false;
-				//}
+				
+				
+				
+				
+				
 
 				if( restoreMouse )
 				{
@@ -678,8 +714,8 @@ namespace AmplifyShaderEditor
 			Rect newRect = m_previewRect;
 			Texture currentValue = m_materialMode ? m_materialValue : m_defaultValue;
 
-			//???
-			//m_showPreview = true;
+			
+			
 			bool showButtons = m_currentParameterType != PropertyType.Global;
 
 			if( currentValue == null )
@@ -714,7 +750,13 @@ namespace AmplifyShaderEditor
 				}
 
 				if( showButtons )
-					GUI.Label( smallButton, "Select", UIUtils.GetCustomStyle( CustomStyle.SamplerButton ) );
+					GUI.Label( smallButton, 
+#if !WB_LANGUAGE_CHINESE
+"Select"
+#else
+"选择"
+#endif
+, UIUtils.GetCustomStyle( CustomStyle.SamplerButton ) );
 			}
 
 			GUI.Label( newRect, string.Empty, UIUtils.GetCustomStyle( CustomStyle.SamplerFrame ) );
@@ -722,8 +764,8 @@ namespace AmplifyShaderEditor
 
 		public override void CheckIfAutoRegister( ref MasterNodeDataCollector dataCollector )
 		{
-			// Also testing inside shader function because node can be used indirectly over a custom expression and directly over a Function Output node 
-			// That isn't being used externaly making it to not be registered ( since m_connStatus it set to Connected by being connected to an output node
+			
+			
 			if( CurrentParameterType != PropertyType.Constant && m_autoRegister && ( m_connStatus != NodeConnectionStatus.Connected || InsideShaderFunction ) )
 			{
 				RegisterProperty( ref dataCollector );
@@ -801,7 +843,7 @@ namespace AmplifyShaderEditor
 			}
 		}
 
-		public override bool UpdateShaderDefaults( ref Shader shader, ref TextureDefaultsDataColector defaultCol/* ref string metaStr */)
+		public override bool UpdateShaderDefaults( ref Shader shader, ref TextureDefaultsDataColector defaultCol)
 		{
 			if( m_defaultValue != null )
 			{
@@ -829,7 +871,7 @@ namespace AmplifyShaderEditor
 		public virtual void ReadAdditionalData( ref string[] nodeParams )
 		{
 			string defaultTextureGUID = GetCurrentParam( ref nodeParams );
-			//m_defaultValue = AssetDatabase.LoadAssetAtPath<Texture>( textureName );
+			
 			if( UIUtils.CurrentShaderVersion() > 14101 )
 			{
 				m_defaultValue = AssetDatabase.LoadAssetAtPath<Texture>( AssetDatabase.GUIDToAssetPath( defaultTextureGUID ) );
@@ -855,7 +897,7 @@ namespace AmplifyShaderEditor
 
 			ConfigTextureData( m_currentType );
 
-			//ConfigFromObject( m_defaultValue );
+			
 			if( m_materialValue == null )
 			{
 				ConfigFromObject( m_defaultValue );
@@ -899,7 +941,7 @@ namespace AmplifyShaderEditor
 
 		public virtual void WriteAdditionalToString( ref string nodeInfo, ref string connectionsInfo )
 		{
-			//IOUtils.AddFieldValueToString( ref nodeInfo, ( m_defaultValue != null ) ? AssetDatabase.GetAssetPath( m_defaultValue ) : Constants.NoStringValue );
+			
 			IOUtils.AddFieldValueToString( ref nodeInfo, ( m_defaultValue != null ) ? AssetDatabase.AssetPathToGUID( AssetDatabase.GetAssetPath( m_defaultValue ) ) : Constants.NoStringValue );
 			IOUtils.AddFieldValueToString( ref nodeInfo, ( m_materialValue != null ) ? AssetDatabase.AssetPathToGUID( AssetDatabase.GetAssetPath( m_materialValue ) ) : Constants.NoStringValue );
 			IOUtils.AddFieldValueToString( ref nodeInfo, m_isNormalMap.ToString() );
@@ -1013,7 +1055,7 @@ namespace AmplifyShaderEditor
 				}
 			}
 
-			//TODO: this is a hack and needs to be properly fixed
+			
 			if( PropertyName == "_CameraDepthTexture" )
 			{
 				if( m_containerGraph.ParentWindow.OutsideGraph.IsSRP )

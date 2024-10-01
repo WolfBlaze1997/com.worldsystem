@@ -4,7 +4,25 @@ using UnityEngine;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Wire Node", "Miscellaneous", "Wire Node", null, KeyCode.None, false )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Wire Node"
+#else
+"导线节点"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Wire Node"
+#else
+"导线节点"
+#endif
+, null, KeyCode.None, false )]
 	public sealed class WireNode : ParentNode
 	{
 		private bool m_markedToDelete = false;
@@ -180,12 +198,12 @@ namespace AmplifyShaderEditor
 				}
 
 				ChangeSizeFinished();
-				//ChangeSize();
+				
 			}
 
 			CalculatePositionAndVisibility( drawInfo );
 
-			// Input Ports
+			
 			{
 				m_currInputPortPos = m_globalPosition;
 				m_currInputPortPos.width = drawInfo.InvertedZoom * UIUtils.PortsSize.x;
@@ -197,7 +215,7 @@ namespace AmplifyShaderEditor
 				{
 					if( m_inputPorts[ i ].Visible )
 					{
-						// Button
+						
 						m_inputPorts[ i ].Position = m_currInputPortPos;
 
 						if( !m_inputPorts[ i ].Locked )
@@ -216,21 +234,21 @@ namespace AmplifyShaderEditor
 				}
 			}
 
-			// Output Ports
+			
 			{
 				m_currOutputPortPos = m_globalPosition;
 				m_currOutputPortPos.width = drawInfo.InvertedZoom * UIUtils.PortsSize.x;
 				m_currOutputPortPos.height = drawInfo.InvertedZoom * UIUtils.PortsSize.y;
 				m_currOutputPortPos.position = m_globalPosition.center - m_currOutputPortPos.size * 0.5f;
-				//m_currOutputPortPos.x += ( m_globalPosition.width - drawInfo.InvertedZoom * ( Constants.PORT_INITIAL_X + m_anchorAdjust ) );
-				//m_currOutputPortPos.y += drawInfo.InvertedZoom * Constants.PORT_INITIAL_Y;// + m_extraHeaderHeight * drawInfo.InvertedZoom;
+				
+				
 				int outputCount = m_outputPorts.Count;
 
 				for( int i = 0; i < outputCount; i++ )
 				{
 					if( m_outputPorts[ i ].Visible )
 					{
-						//Button
+						
 						m_outputPorts[ i ].Position = m_currOutputPortPos;
 
 						if( !m_outputPorts[ i ].Locked )
@@ -252,20 +270,20 @@ namespace AmplifyShaderEditor
 
 		public override void OnNodeRepaint( DrawInfo drawInfo )
 		{
-			//base.OnRepaint( drawInfo );
-			//return;
+			
+			
 			if( !m_isVisible )
 				return;
 
 			m_colorBuffer = GUI.color;
 
-			// Output Ports
+			
 			int outputCount = m_outputPorts.Count;
 			for( int i = 0; i < outputCount; i++ )
 			{
 				if( m_outputPorts[ i ].Visible )
 				{
-					// Output Port Icon
+					
 					if( ContainerGraph.LodLevel <= ParentGraph.NodeLOD.LOD4 )
 					{
 						if( m_outputPorts[ i ].Locked )
@@ -281,7 +299,7 @@ namespace AmplifyShaderEditor
 						GUI.color = m_colorBuffer;
 					}
 
-					// Output Port Label
+					
 					if( ContainerGraph.LodLevel <= ParentGraph.NodeLOD.LOD3 )
 					{
 						if( m_outputPorts[ i ].Locked )
@@ -298,7 +316,7 @@ namespace AmplifyShaderEditor
 				}
 			}
 
-			// Selection Box
+			
 			if( m_selected )
 			{
 				Rect selectionBox = m_globalPosition;
@@ -311,7 +329,7 @@ namespace AmplifyShaderEditor
 
 		public override void DrawGUIControls( DrawInfo drawInfo )
 		{
-			//base.DrawGUIControls( drawInfo );
+			
 		}
 
 		public override void Draw( DrawInfo drawInfo )
@@ -321,7 +339,7 @@ namespace AmplifyShaderEditor
 
 			if( drawInfo.CurrentEventType == EventType.Repaint )
 				OnNodeRepaint( drawInfo );
-			//base.Draw( drawInfo );
+			
 
 			if( drawInfo.CurrentEventType == EventType.Repaint )
 				TestIfValid();
@@ -360,7 +378,7 @@ namespace AmplifyShaderEditor
 				ParentNode otherInputNode = null;
 				ParentNode otherOutputNode = null;
 
-				//defaults to itself so it can still calculate tangents
+				
 				WirePort otherInputPort = m_outputPorts[ 0 ];
 				WirePort otherOutputPort = m_inputPorts[ 0 ];
 
@@ -376,7 +394,7 @@ namespace AmplifyShaderEditor
 					otherOutputPort = otherOutputNode.GetOutputPortByUniqueId( m_inputPorts[ 0 ].ExternalReferences[ 0 ].PortId );
 				}
 
-				//TODO: it still generates crooked lines if wire nodes get too close to non-wire nodes (the fix would be to calculate the non-wire nodes magnitude properly)
+				
 				float mag = Constants.HORIZONTAL_TANGENT_SIZE * ContainerGraph.ParentWindow.CameraDrawInfo.InvertedZoom;
 
 				Vector2 outPos;
@@ -458,14 +476,14 @@ namespace AmplifyShaderEditor
 
 		public override void Rewire()
 		{
-			//if ( m_inputPorts[ 0 ].ExternalReferences != null && m_inputPorts[ 0 ].ExternalReferences.Count > 0 )
-			//{
-			//WireReference backPort = m_inputPorts[ 0 ].ExternalReferences[ 0 ];
-			//for ( int i = 0; i < m_outputPorts[ 0 ].ExternalReferences.Count; i++ )
-			//{
-			//	UIUtils.CurrentWindow.ConnectInputToOutput( m_outputPorts[ 0 ].ExternalReferences[ i ].NodeId, m_outputPorts[ 0 ].ExternalReferences[ i ].PortId, backPort.NodeId, backPort.PortId );
-			//}
-			//}
+			
+			
+			
+			
+			
+			
+			
+			
 			MarkToDelete = true;
 			WireReference outputReference = FindNewValidInputNode( this );
 			WireReference inputReference = FindNewValidOutputNode( this );

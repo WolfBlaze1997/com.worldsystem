@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -8,10 +8,34 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Dither", "Camera And Screen", "Generates a dithering pattern" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Dither"
+#else
+"同上"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Camera And Screen"
+#else
+"摄像头和屏幕"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Generates a dithering pattern"
+#else
+"生成抖动图案"
+#endif
+)]
 	public sealed class DitheringNode : ParentNode
 	{
-		private const string InputTypeStr = "Pattern";
+		private const string InputTypeStr = 
+#if !WB_LANGUAGE_CHINESE
+"Pattern"
+#else
+"图案"
+#endif
+;
 		private const string CustomScreenPosStr = "screenPosition";
 
 		private string m_functionHeader = "Dither4x4Bayer( {0}, {1} )";
@@ -35,10 +59,22 @@ namespace AmplifyShaderEditor
 		{
 			base.CommonInit( uniqueId );
 			AddInputPort( WirePortDataType.FLOAT, false, Constants.EmptyPortValue );
-			AddInputPort( WirePortDataType.SAMPLER2D, false, "Pattern");
+			AddInputPort( WirePortDataType.SAMPLER2D, false, 
+#if !WB_LANGUAGE_CHINESE
+"Pattern"
+#else
+"图案"
+#endif
+);
 			m_inputPorts[ 1 ].CreatePortRestrictions( WirePortDataType.SAMPLER2D );
 			m_texPort = m_inputPorts[ 1 ];
-			AddInputPort( WirePortDataType.FLOAT4, false, "Screen Position" );
+			AddInputPort( WirePortDataType.FLOAT4, false, 
+#if !WB_LANGUAGE_CHINESE
+"Screen Position"
+#else
+"屏幕位置"
+#endif
+);
 
 			AddInputPort( WirePortDataType.SAMPLERSTATE, false, "SS" );
 			m_inputPorts[ 3 ].CreatePortRestrictions( WirePortDataType.SAMPLERSTATE );
@@ -96,13 +132,25 @@ namespace AmplifyShaderEditor
 		{
 			base.DrawProperties();
 			EditorGUI.BeginChangeCheck();
-			m_selectedPatternInt = EditorGUILayoutPopup( "Pattern", m_selectedPatternInt, PatternsStr );
+			m_selectedPatternInt = EditorGUILayoutPopup( 
+#if !WB_LANGUAGE_CHINESE
+"Pattern"
+#else
+"图案"
+#endif
+, m_selectedPatternInt, PatternsStr );
 			if ( EditorGUI.EndChangeCheck() )
 			{
 				UpdatePorts();
 			}
 			EditorGUI.BeginChangeCheck();
-			m_customScreenPos = EditorGUILayoutToggle( "Screen Position", m_customScreenPos );
+			m_customScreenPos = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Screen Position"
+#else
+"屏幕位置"
+#endif
+, m_customScreenPos );
 			if( EditorGUI.EndChangeCheck() )
 			{
 				UpdatePorts();
@@ -246,7 +294,7 @@ namespace AmplifyShaderEditor
 					{
 						ParentGraph outsideGraph = UIUtils.CurrentWindow.OutsideGraph;
 						noiseTex = m_texPort.GeneratePortInstructions( ref dataCollector );
-						//GeneratePattern( ref dataCollector );
+						
 						dataCollector.AddToUniforms( UniqueId, "float4 " + noiseTex + "_TexelSize;", dataCollector.IsSRP );
 						if( outsideGraph.SamplingMacros )
 						{
@@ -259,9 +307,9 @@ namespace AmplifyShaderEditor
 							{
 								sampler = GeneratorUtils.GenerateSamplerState( ref dataCollector, UniqueId, noiseTex, VariableMode.Create );
 							}
-							//if( outsideGraph.IsSRP )
-							//	functionResult = dataCollector.AddFunctions( m_functionHeader, m_functionBody, varName, noiseTex + ", " + sampler, noiseTex + "_TexelSize" );
-							//else
+							
+							
+							
 								functionResult = dataCollector.AddFunctions( m_functionHeader, m_functionBody, varName, noiseTex + ", " + sampler, noiseTex + "_TexelSize" );
 						}
 						else
@@ -281,7 +329,7 @@ namespace AmplifyShaderEditor
 				dataCollector.AddLocalVariable( UniqueId, "dither" + OutputId+" = step( dither"+ OutputId + ", "+ driver + " );" );
 			}
 
-			//RegisterLocalVariable( 0, functionResult, ref dataCollector, "dither" + OutputId );
+			
 			m_outputPorts[ 0 ].SetLocalValue( "dither" + OutputId, dataCollector.PortCategory );
 
 			return m_outputPorts[ 0 ].LocalValue( dataCollector.PortCategory );

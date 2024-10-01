@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.Collections.Generic;
@@ -13,8 +13,20 @@ namespace AmplifyShaderEditor
 	{
 		protected const string ErrorMessageStr = "This node can only be used inside a Template category!";
 		protected const string DataLabelStr = "Data";
-		protected const string SubShaderStr = "SubShader";
-		protected const string PassStr = "Pass";
+		protected const string SubShaderStr = 
+#if !WB_LANGUAGE_CHINESE
+"SubShader"
+#else
+"SubShader"
+#endif
+;
+		protected const string PassStr = 
+#if !WB_LANGUAGE_CHINESE
+"Pass"
+#else
+"通过"
+#endif
+;
 
 		[SerializeField]
 		private int m_subShaderIdx = 0;
@@ -136,7 +148,7 @@ namespace AmplifyShaderEditor
 			m_subShaderIdx = EditorGUILayoutPopup( SubShaderStr , m_subShaderIdx , m_availableSubshaders );
 			if( EditorGUI.EndChangeCheck() )
 			{
-				//UpdateSubShaderAmount();
+				
 				UpdatePassAmount();
 				OnSubShaderChange();
 			}
@@ -149,7 +161,7 @@ namespace AmplifyShaderEditor
 			if( EditorGUI.EndChangeCheck() )
 			{
 				m_passIdx = m_availablePassesValues[ m_passLocalArrayIdx ];
-				//UpdatePassAmount();
+				
 				OnPassChange();
 			}
 		}

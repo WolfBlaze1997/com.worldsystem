@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.IO;
@@ -103,7 +103,7 @@ namespace AmplifyShaderEditor
 
 		public void OnDestroy()
 		{
-			//Debug.Log( "Destoying directives" );
+			
 			LibObject = null;
 		}
 
@@ -169,7 +169,13 @@ namespace AmplifyShaderEditor
 	[Serializable]
 	public sealed class TemplateAdditionalDirectivesHelper : TemplateModuleParent
 	{
-		private string NativeFoldoutStr = "Native";
+		private string NativeFoldoutStr = 
+#if !WB_LANGUAGE_CHINESE
+"Native"
+#else
+"原住民"
+#endif
+;
 
 		[SerializeField]
 		private List<AdditionalDirectiveContainer> m_additionalDirectives = new List<AdditionalDirectiveContainer>();
@@ -186,10 +192,10 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private bool m_nativeDirectivesFoldout = false;
 
-		//ONLY USED BY SHADER FUNCTIONS
-		// Since AdditionalDirectiveContainer must be a ScriptableObject because of serialization shenanigans it will not serialize the info correctly into the shader function when saving it into a file ( it only saves the id )
-		// For it to properly work, each AdditionalDirectiveContainer should be added to the SF asset, but that would make it to have children ( which are seen on the project inspector )
-		// Must revisit this later on and come up with a proper solution
+		
+		
+		
+		
 		[SerializeField]
 		private List<AdditionalDirectiveContainerSaveItem> m_directivesSaveItems = new List<AdditionalDirectiveContainerSaveItem>();
 
@@ -203,20 +209,20 @@ namespace AmplifyShaderEditor
 
 		public TemplateAdditionalDirectivesHelper( string moduleName ) : base( moduleName ) { }
 
-		//public void AddShaderFunctionItem( AdditionalLineType type, string item )
-		//{
-		//	UpdateShaderFunctionDictionary();
-		//	string id = type + item;
-		//	if( !m_shaderFunctionDictionary.ContainsKey( id ) )
-		//	{
-		//		AdditionalDirectiveContainer newItem = ScriptableObject.CreateInstance<AdditionalDirectiveContainer>();
-		//		newItem.LineType = type;
-		//		newItem.LineValue = item;
-		//		newItem.hideFlags = HideFlags.HideAndDontSave;
-		//		m_shaderFunctionDirectives.Add( newItem );
-		//		m_shaderFunctionDictionary.Add( id, newItem );
-		//	}
-		//}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 		public void AddShaderFunctionItems( string ownerOutputId, List<AdditionalDirectiveContainer> functionList )
 		{
@@ -231,14 +237,14 @@ namespace AmplifyShaderEditor
 					m_shaderFunctionDirectives.Add( item );
 				}
 			}
-			//if( functionList.Count > 0 )
-			//{
+			
+			
 
-			//	m_shaderFunctionDirectives.AddRange( functionList );
-			//}
+			
+			
 		}
 
-		public void RemoveShaderFunctionItems( string ownerOutputId/*, List<AdditionalDirectiveContainer> functionList */)
+		public void RemoveShaderFunctionItems( string ownerOutputId)
 		{
 			List<AdditionalDirectiveContainer>  list = m_shaderFunctionDirectives.FindAll( ( x ) => x.OwnerId.Equals( ownerOutputId ));
 			for( int i = 0; i < list.Count; i++ )
@@ -249,16 +255,16 @@ namespace AmplifyShaderEditor
 			list.Clear();
 			list = null;
 
-			//for( int i = 0; i < functionList.Count; i++ )
-			//{
-			//	m_shaderFunctionDirectives.Remove( functionList[ i ] );
-			//}
+			
+			
+			
+			
 		}
 
-		//public void RemoveShaderFunctionItem( AdditionalLineType type, string item )
-		//{
-		//	m_shaderFunctionDirectives.RemoveAll( x => x.LineType == type && x.LineValue.Equals( item ) );
-		//}
+		
+		
+		
+		
 
 		public void AddItems( AdditionalLineType type, List<string> items )
 		{
@@ -283,8 +289,8 @@ namespace AmplifyShaderEditor
 					AdditionalDirectiveContainer newItem = ScriptableObject.CreateInstance<AdditionalDirectiveContainer>();
 					newItem.Origin = AdditionalContainerOrigin.Native;
 					newItem.hideFlags = HideFlags.HideAndDontSave;
-					//m_additionalDirectives.Add( newItem );
-					//m_nativeDirectivesIndex = m_additionalDirectives.Count - 1;
+					
+					
 					m_additionalDirectives.Insert( 0, newItem );
 					m_nativeDirectivesIndex = 0;
 				}
@@ -326,7 +332,7 @@ namespace AmplifyShaderEditor
 		{
 			EditorGUILayout.Separator();
 
-			// Add keyword
+			
 			if( GUILayout.Button( string.Empty, UIUtils.PlusStyle, GUILayout.Width( Constants.PlusMinusButtonLayoutWidth ) ) )
 			{
 				AdditionalDirectiveContainer newItem = ScriptableObject.CreateInstance<AdditionalDirectiveContainer>();
@@ -337,7 +343,7 @@ namespace AmplifyShaderEditor
 				m_isDirty = true;
 			}
 
-			//Remove keyword
+			
 			if( GUILayout.Button( string.Empty, UIUtils.MinusStyle, GUILayout.Width( Constants.PlusMinusButtonLayoutWidth ) ) )
 			{
 				if( m_additionalDirectives.Count > 0 )
@@ -371,21 +377,45 @@ namespace AmplifyShaderEditor
 				Rect condPos = rect;
 				condPos.height = EditorGUIUtility.singleLineHeight;
 
-				// List of passes to apply directive
+				
 				directive.Passes = ( directive.Passes != null ) ? directive.Passes : string.Empty;
 				condPos.x = rect.x + 23;
 				condPos.y += EditorGUIUtility.singleLineHeight + 2;
 				condPos.width = labelWidth;
-				EditorGUI.LabelField( condPos, new GUIContent( "Passes", "Template pass names separated by semicolon (;). Empty means it will be included in all passes." ) );
+				EditorGUI.LabelField( condPos, new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Passes"
+#else
+"通行证"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Template pass names separated by semicolon (;). Empty means it will be included in all passes."
+#else
+"模板传递名称，用分号（；）分隔。空意味着它将包含在所有通行证中。"
+#endif
+) );
 				condPos.x += labelWidth;
 				condPos.xMax = rect.xMax + 1;
 				directive.Passes = m_currOwner.EditorGUITextField( condPos, string.Empty, directive.Passes );
 
-				// Range of SRP versions to apply directive
+				
 				condPos.x = rect.x + 23;
 				condPos.y += EditorGUIUtility.singleLineHeight + 2;
 				condPos.width = labelWidth;
-				EditorGUI.LabelField( condPos, new GUIContent( "SRPVersion", "Valid SRP version numbers must have 6 digits and be equal or higher than 100000, the lowest supported version." ) );
+				EditorGUI.LabelField( condPos, new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"SRPVersion"
+#else
+"SRP版本"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Valid SRP version numbers must have 6 digits and be equal or higher than 100000, the lowest supported version."
+#else
+"有效的SRP版本号必须有6位数字，并且等于或高于100000，即支持的最低版本。"
+#endif
+) );
 				condPos.x += labelWidth;
 
 				condPos.width = versionEditWidth;
@@ -477,10 +507,10 @@ namespace AmplifyShaderEditor
 							{
 								if( m_additionalDirectives[ index ].GUIDToggle )
 								{
-									//if( m_additionalDirectives[ index ].LibObject == null && !string.IsNullOrEmpty( m_additionalDirectives[ index ].GUIDValue ) )
-									//{
-									//	m_additionalDirectives[ index ].LibObject = AssetDatabase.LoadAssetAtPath<TextAsset>( AssetDatabase.GUIDToAssetPath( m_additionalDirectives[ index ].GUIDValue ) );
-									//}
+									
+									
+									
+									
 
 									EditorGUI.BeginChangeCheck();
 									TextAsset obj = m_currOwner.EditorGUIObjectField( labelPos, m_additionalDirectives[ index ].LibObject, typeof( TextAsset ), false ) as TextAsset;
@@ -509,7 +539,7 @@ namespace AmplifyShaderEditor
 								m_additionalDirectives[ index ].LineValue = m_currOwner.EditorGUITextField( labelPos, string.Empty, m_additionalDirectives[ index ].LineValue );
 							}
 
-							//NodeUtils.DrawNestedPropertyGroup( ref m_additionalDirectives[ index ].ShowConditionals, rect, "TEMP", DrawConditionals, 4 );
+							
 
 							if ( GUI.Button( buttonPlusPos, string.Empty, UIUtils.PlusStyle ) )
 							{
@@ -573,67 +603,73 @@ namespace AmplifyShaderEditor
 					m_propertyAdjustment = new GUIStyle();
 					m_propertyAdjustment.padding.left = 17;
 				}
-				//EditorGUILayout.BeginVertical( m_propertyAdjustment );
+				
 				EditorGUILayout.Space();
 				if( m_nativeDirectives.Count > 0 )
 				{
-					//NodeUtils.DrawNestedPropertyGroup( ref m_nativeDirectivesFoldout, NativeFoldoutStr, DrawNativeItems, 4 );
+					
 				}
 				if( m_additionalDirectives.Count == 0 )
 				{
-					EditorGUILayout.HelpBox( "Your list is Empty!\nUse the plus button to add one.", MessageType.Info );
+					EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"Your list is Empty!\nUse the plus button to add one."
+#else
+"您的列表为空！\n使用加号按钮添加一个。"
+#endif
+, MessageType.Info );
 				}
 				else
 				{
 					m_reordableList.DoLayoutList();
 				}
 				EditorGUILayout.Space();
-				//EditorGUILayout.EndVertical();
+				
 			}
 		}
 
 		public void AddAllToDataCollector( ref MasterNodeDataCollector dataCollector, TemplatePass pass, TemplateIncludePragmaContainter nativesContainer )
 		{
-			//List<AdditionalDirectiveContainer> list = m_additionalDirectives;
-			//int count = list.FindIndex( x => x.Origin.Equals( AdditionalContainerOrigin.Native ) );
-			//for( int i = 0; i < count; i++ )
-			//{
-			//	switch( list[ i ].LineType )
-			//	{
-			//		case AdditionalLineType.Include:
-			//		{
-			//			string value = list[ i ].Value;
-			//			if( !string.IsNullOrEmpty( value ) &&
-			//			  !nativesContainer.HasInclude( value ) )
-			//			{
-			//				dataCollector.AddToMisc( list[ i ].FormattedValue );
-			//			}
-			//		}
-			//		break;
-			//		case AdditionalLineType.Define:
-			//		{
-			//			if( !string.IsNullOrEmpty( list[ i ].LineValue ) &&
-			//			  !nativesContainer.HasDefine( list[ i ].LineValue ) )
-			//			{
-			//				dataCollector.AddToMisc( list[ i ].FormattedValue );
-			//			}
-			//		}
-			//		break;
-			//		case AdditionalLineType.Pragma:
-			//		{
-			//			if( !string.IsNullOrEmpty( list[ i ].LineValue ) &&
-			//			  !nativesContainer.HasPragma( list[ i ].LineValue ) )
-			//			{
-			//				dataCollector.AddToMisc( list[ i ].FormattedValue );
-			//			}
-			//		}
-			//		break;
-			//		default:
-			//		case AdditionalLineType.Custom:
-			//		dataCollector.AddToMisc( list[ i ].LineValue );
-			//		break;
-			//	}
-			//}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 
 			AddToDataCollector( ref dataCollector, pass, nativesContainer, false );
 			AddToDataCollector( ref dataCollector, pass, nativesContainer, true );
@@ -852,7 +888,7 @@ namespace AmplifyShaderEditor
 			}
 		}
 
-		// read comment on m_directivesSaveItems declaration
+		
 		public void UpdateSaveItemsFromDirectives()
 		{
 			bool foundNull = false;
@@ -888,7 +924,7 @@ namespace AmplifyShaderEditor
 			}
 		}
 
-		// read comment on m_directivesSaveItems declaration
+		
 		public void UpdateDirectivesFromSaveItems()
 		{
 			if( m_directivesSaveItems.Count > 0 )
@@ -909,7 +945,7 @@ namespace AmplifyShaderEditor
 					m_additionalDirectives.Add( newItem );
 				}
 				UpdateNativeIndex();
-				//m_directivesSaveItems.Clear();
+				
 			}
 		}
 

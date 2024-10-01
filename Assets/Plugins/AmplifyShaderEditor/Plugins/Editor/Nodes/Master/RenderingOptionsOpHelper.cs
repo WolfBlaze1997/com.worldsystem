@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.Collections.Generic;
@@ -18,17 +18,143 @@ namespace AmplifyShaderEditor
 	[Serializable]
 	public class RenderingOptionsOpHelper
 	{
-		private const string RenderingOptionsStr = " Rendering Options";
-		private readonly static GUIContent EmissionGIFlags = new GUIContent( "Emission GI Flag", "Modifies Emission GI flags" );
-		private readonly static GUIContent LODCrossfadeContent = new GUIContent( " LOD Group Cross Fade", "Applies a dither crossfade to be used with LOD groups for smoother transitions. Uses one interpolator\nDefault: OFF" );
-		private readonly static GUIContent DisableBatchingContent = new GUIContent( "Disable Batching", "\nDisables objects to be batched and used with DrawCallBatching Default: False" );
-		private readonly static GUIContent IgnoreProjectorContent = new GUIContent( " Ignore Projector", "\nIf True then an object that uses this shader will not be affected by Projectors Default: False" );
-		private readonly static GUIContent UseDefaultCasterContent = new GUIContent( " Use Default Shadow Caster", "\nIf True always use surface default shadow caster Default: False" );
-		private readonly static GUIContent ForceNoShadowCastingContent = new GUIContent( " Force No Shadow Casting", "\nIf True then an object that is rendered using this subshader will never cast shadows Default: False" );
-		private readonly static GUIContent ForceEnableInstancingContent = new GUIContent( " Force Enable Instancing", "\nIf True forces instancing on shader independent of having instanced properties" );
-		private readonly static GUIContent ForceDisableInstancingContent = new GUIContent( " Force Disable Instancing", "\nIf True forces disable instancing on shader independent of having instanced properties" );
-		private readonly static GUIContent SpecularHightlightsContent = new GUIContent( " Fwd Specular Highlights Toggle", "\nIf True creates a material toggle to set Unity's internal specular highlight rendering keyword" );
-		private readonly static GUIContent ReflectionsContent = new GUIContent( " Fwd Reflections Toggle", "\nIf True creates a material toggle to set Unity's internal reflections rendering keyword" );
+		private const string RenderingOptionsStr = 
+#if !WB_LANGUAGE_CHINESE
+" Rendering Options"
+#else
+"渲染选项"
+#endif
+;
+		private readonly static GUIContent EmissionGIFlags = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Emission GI Flag"
+#else
+"排放GI标志"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Modifies Emission GI flags"
+#else
+"修改排放GI标志"
+#endif
+);
+		private readonly static GUIContent LODCrossfadeContent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+" LOD Group Cross Fade"
+#else
+"LOD组交叉褪色"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Applies a dither crossfade to be used with LOD groups for smoother transitions. Uses one interpolator\nDefault: OFF"
+#else
+"应用与LOD组一起使用的抖动交叉效果，以实现更平滑的过渡。使用一个插值器\n默认值：OFF"
+#endif
+);
+		private readonly static GUIContent DisableBatchingContent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Disable Batching"
+#else
+"禁用批处理"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"\nDisables objects to be batched and used with DrawCallBatching Default: False"
+#else
+"\n禁用要批处理并与DrawCallBatching一起使用的对象默认值：False"
+#endif
+);
+		private readonly static GUIContent IgnoreProjectorContent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+" Ignore Projector"
+#else
+"忽略投影仪"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"\nIf True then an object that uses this shader will not be affected by Projectors Default: False"
+#else
+"\n如果为True，则使用此着色器的对象将不受投影仪默认值的影响：False"
+#endif
+);
+		private readonly static GUIContent UseDefaultCasterContent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+" Use Default Shadow Caster"
+#else
+"使用默认阴影投射器"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"\nIf True always use surface default shadow caster Default: False"
+#else
+"\n如果为True，则始终使用曲面默认阴影投射器默认值：False"
+#endif
+);
+		private readonly static GUIContent ForceNoShadowCastingContent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+" Force No Shadow Casting"
+#else
+"强制不投射阴影"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"\nIf True then an object that is rendered using this subshader will never cast shadows Default: False"
+#else
+"\n如果为True，则使用此子着色器渲染的对象将永远不会投射阴影默认值：False"
+#endif
+);
+		private readonly static GUIContent ForceEnableInstancingContent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+" Force Enable Instancing"
+#else
+"强制启用实例化"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"\nIf True forces instancing on shader independent of having instanced properties"
+#else
+"\n如果True强制在着色器上实例化，而与实例化属性无关"
+#endif
+);
+		private readonly static GUIContent ForceDisableInstancingContent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+" Force Disable Instancing"
+#else
+"强制禁用实例化"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"\nIf True forces disable instancing on shader independent of having instanced properties"
+#else
+"\n如果True强制禁用着色器上的实例化，而与实例化属性无关"
+#endif
+);
+		private readonly static GUIContent SpecularHightlightsContent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+" Fwd Specular Highlights Toggle"
+#else
+"Fwd镜面反射高光切换"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"\nIf True creates a material toggle to set Unity's internal specular highlight rendering keyword"
+#else
+"\n如果为True，则创建材质切换以设置Unity的内部镜面高光渲染关键字"
+#endif
+);
+		private readonly static GUIContent ReflectionsContent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+" Fwd Reflections Toggle"
+#else
+"Fwd反射切换"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"\nIf True creates a material toggle to set Unity's internal reflections rendering keyword"
+#else
+"\n如果为True，则创建材质切换以设置Unity的内部反射渲染关键字"
+#endif
+);
 
 		[SerializeField]
 		private bool m_forceEnableInstancing = false;
@@ -88,7 +214,7 @@ namespace AmplifyShaderEditor
 			NodeUtils.DrawPropertyGroup( ref value, RenderingOptionsStr, () =>
 			{
 				int codeGenCount = m_codeGenerationDataList.Count;
-				// Starting from index 4 because other options are already contemplated with m_renderPath and add/receive shadows
+				
 				for( int i = 4; i < codeGenCount; i++ )
 				{
 					m_codeGenerationDataList[ i ].IsActive = !owner.EditorGUILayoutToggleLeft( m_codeGenerationDataList[ i ].Name, !m_codeGenerationDataList[ i ].IsActive );

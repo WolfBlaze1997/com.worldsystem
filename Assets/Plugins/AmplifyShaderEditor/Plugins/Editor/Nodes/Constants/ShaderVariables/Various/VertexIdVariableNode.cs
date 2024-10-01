@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Vertex ID", "Vertex Data", "Indicates current vertex number" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Vertex ID"
+#else
+"顶点ID"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vertex Data"
+#else
+"顶点数据"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Indicates current vertex number"
+#else
+"表示当前顶点编号"
+#endif
+)]
 	public class VertexIdVariableNode : ParentNode
 	{
 		private const string VertexIdVarName = "ase_vertexId";

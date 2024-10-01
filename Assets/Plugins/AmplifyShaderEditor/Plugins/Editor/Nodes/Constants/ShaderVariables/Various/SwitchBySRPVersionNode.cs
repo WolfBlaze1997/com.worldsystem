@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.Collections.Generic;
@@ -8,10 +8,28 @@ using UnityEngine;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Switch by SRP Version", "Miscellaneous", "Switch between different inputs based on the currently installed SRP version" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Switch by SRP Version"
+#else
+"按SRP版本切换"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Switch between different inputs based on the currently installed SRP version"
+#else
+"根据当前安装的SRP版本在不同输入之间切换"
+#endif
+)]
 	public class SwitchBySRPVersionNode : ParentNode
 	{
-		private static readonly Tuple<string, int>[] SRPVersionList = new Tuple<string, int>[]
+		private readonly static Tuple<string, int>[] SRPVersionList = new Tuple<string, int>[]
 		{
 			new Tuple<string, int>( "None", -1 ),
 			new Tuple<string, int>( "10.x", 100000 ),
@@ -24,14 +42,14 @@ namespace AmplifyShaderEditor
             new Tuple<string, int>( "17.x", 170000 )
         };
 
-		private static readonly string[] SRPTypeNames =
+		private readonly static string[] SRPTypeNames =
 		{
 			"Built-in",
 			"High Definition",
 			"Universal"
 		};
 
-		private static readonly int m_conditionId = Shader.PropertyToID( "_Condition" );
+		private readonly static int m_conditionId = Shader.PropertyToID( "_Condition" );
 
 		protected override void CommonInit( int uniqueId )
 		{

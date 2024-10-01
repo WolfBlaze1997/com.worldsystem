@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader vEditing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -8,7 +8,25 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Static Switch", "Logical Operators", "Creates a shader keyword toggle", Available = true )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Static Switch"
+#else
+"静态开关"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Logical Operators"
+#else
+"逻辑运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Creates a shader keyword toggle"
+#else
+"创建着色器关键字切换"
+#endif
+, Available = true )]
 	public sealed class StaticSwitch : PropertyNode
 	{
 		public enum ShaderStage
@@ -47,8 +65,20 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private bool m_lockKeyword = true;
 
-		private const string IsLocalStr = "Is Local";
-		private const string StageStr = "Stage";
+		private const string IsLocalStr = 
+#if !WB_LANGUAGE_CHINESE
+"Is Local"
+#else
+"是本地的"
+#endif
+;
+		private const string StageStr = 
+#if !WB_LANGUAGE_CHINESE
+"Stage"
+#else
+"舞台"
+#endif
+;
 
 		[SerializeField]
 		private bool m_isLocal = true;
@@ -89,23 +119,83 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private StaticSwitch m_reference = null;
 
-		private const string StaticSwitchStr = "Static Switch";
-		private const string MaterialToggleStr = "Material Toggle";
+		private const string StaticSwitchStr = 
+#if !WB_LANGUAGE_CHINESE
+"Static Switch"
+#else
+"静态开关"
+#endif
+;
+		private const string MaterialToggleStr = 
+#if !WB_LANGUAGE_CHINESE
+"Material Toggle"
+#else
+"材质切换"
+#endif
+;
 
-		private const string ToggleMaterialValueStr = "Material Value";
-		private const string ToggleDefaultValueStr = "Default Value";
+		private const string ToggleMaterialValueStr = 
+#if !WB_LANGUAGE_CHINESE
+"Material Value"
+#else
+"材料价值"
+#endif
+;
+		private const string ToggleDefaultValueStr = 
+#if !WB_LANGUAGE_CHINESE
+"Default Value"
+#else
+"默认值"
+#endif
+;
 
-		private const string AmountStr = "Amount";
-		private const string KeywordStr = "Keyword";
-		private const string CustomStr = "Custom";
+		private const string AmountStr = 
+#if !WB_LANGUAGE_CHINESE
+"Amount"
+#else
+"数量"
+#endif
+;
+		private const string KeywordStr = 
+#if !WB_LANGUAGE_CHINESE
+"Keyword"
+#else
+"关键字"
+#endif
+;
+		private const string CustomStr = 
+#if !WB_LANGUAGE_CHINESE
+"Custom"
+#else
+"自定义"
+#endif
+;
 		private const string ToggleTypeStr = "Toggle Type";
-		private const string TypeStr = "Type";
-		private const string ModeStr = "Mode";
+		private const string TypeStr = 
+#if !WB_LANGUAGE_CHINESE
+"Type"
+#else
+"类型"
+#endif
+;
+		private const string ModeStr = 
+#if !WB_LANGUAGE_CHINESE
+"Mode"
+#else
+"模式"
+#endif
+;
 		private const string KeywordTypeStr = "Keyword Type";
 
-		private const string KeywordNameStr = "Keyword Name";
-		public readonly static string[] KeywordTypeList = { "Shader Feature", "Multi Compile"/*, "Define Symbol"*/ };
-		public readonly static int[] KeywordTypeInt = { 0, 1/*, 2*/ };
+		private const string KeywordNameStr = 
+#if !WB_LANGUAGE_CHINESE
+"Keyword Name"
+#else
+"关键字名称"
+#endif
+;
+		public readonly static string[] KeywordTypeList = { "Shader Feature", "Multi Compile" };
+		public readonly static int[] KeywordTypeInt = { 0, 1 };
 
 		[SerializeField]
 		private string[] m_defaultKeywordNames = { "Key0", "Key1", "Key2", "Key3", "Key4", "Key5", "Key6", "Key7", "Key8" };
@@ -132,8 +222,20 @@ namespace AmplifyShaderEditor
 		{
 			base.CommonInit( uniqueId );
 			AddOutputPort( WirePortDataType.FLOAT, Constants.EmptyPortValue );
-			AddInputPort( WirePortDataType.FLOAT, false, "False", -1, MasterNodePortCategory.Fragment, 1 );
-			AddInputPort( WirePortDataType.FLOAT, false, "True", -1, MasterNodePortCategory.Fragment, 0 );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"False"
+#else
+"错误的"
+#endif
+, -1, MasterNodePortCategory.Fragment, 1 );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"True"
+#else
+"没错"
+#endif
+, -1, MasterNodePortCategory.Fragment, 0 );
 			for( int i = 2; i < 9; i++ )
 			{
 				AddInputPort( WirePortDataType.FLOAT, false, m_defaultKeywordNames[ i ] );
@@ -363,7 +465,7 @@ namespace AmplifyShaderEditor
 
 		public override void DrawProperties()
 		{
-			//base.DrawProperties();
+			
 			NodeUtils.DrawPropertyGroup( ref m_propertiesFoldout, Constants.ParameterLabelStr, PropertyGroup );
 			NodeUtils.DrawPropertyGroup( ref m_visibleCustomAttrFoldout, CustomAttrStr, DrawCustomAttributes, DrawCustomAttrAddRemoveButtons );
 			CheckPropertyFromInspector();
@@ -382,11 +484,17 @@ namespace AmplifyShaderEditor
 			for( int i = 0; i < m_keywordEnumList.Length; i++ )
 			{
 				EditorGUI.BeginChangeCheck();
-				m_keywordEnumList[ i ] = EditorGUILayoutTextField( "Item " + i, m_keywordEnumList[ i ] );
+				m_keywordEnumList[ i ] = EditorGUILayoutTextField( 
+#if !WB_LANGUAGE_CHINESE
+"Item "
+#else
+"项目"
+#endif
++ i, m_keywordEnumList[ i ] );
 				if( EditorGUI.EndChangeCheck() )
 				{
 					m_keywordEnumList[ i ] = UIUtils.RemoveInvalidEnumCharacters( m_keywordEnumList[ i ] );
-					m_keywordEnumList[ i ] = m_keywordEnumList[ i ].Replace( " ", "" ); // sad face :( does not support spaces
+					m_keywordEnumList[ i ] = m_keywordEnumList[ i ].Replace( " ", "" ); 
 					m_inputPorts[ i ].Name = m_keywordEnumList[ i ];
 					m_defaultKeywordNames[ i ] = m_inputPorts[ i ].Name;
 				}
@@ -534,7 +642,7 @@ namespace AmplifyShaderEditor
 
 			if( CurrentVarMode == StaticSwitchVariableMode.Fetch )
 			{
-				//ShowPropertyInspectorNameGUI();
+				
 				EditorGUI.BeginChangeCheck();
 				m_currentKeywordId = EditorGUILayoutPopup( KeywordStr, m_currentKeywordId, UIUtils.AvailableKeywords );
 				if( EditorGUI.EndChangeCheck() )
@@ -560,7 +668,7 @@ namespace AmplifyShaderEditor
 
 			m_shaderStage = (ShaderStage)EditorGUILayoutEnumPopup( StageStr , m_shaderStage );
 
-			//if( CurrentVarMode == StaticSwitchVariableMode.Create )
+			
 			{
 				ShowAutoRegister();
 			}
@@ -607,10 +715,10 @@ namespace AmplifyShaderEditor
 				}
 			}
 
-			//EditorGUILayout.HelpBox( "Keyword Type:\n" +
-			//	"The difference is that unused variants of \"Shader Feature\" shaders will not be included into game build while \"Multi Compile\" variants are included regardless of their usage.\n\n" +
-			//	"So \"Shader Feature\" makes most sense for keywords that will be set on the materials, while \"Multi Compile\" for keywords that will be set from code globally.\n\n" +
-			//	"You can set keywords using the material property using the \"Property Name\" or you can set the keyword directly using the \"Keyword Name\".", MessageType.None );
+			
+			
+			
+			
 		}
 
 		public override void CheckPropertyFromInspector( bool forceUpdate = false )
@@ -682,7 +790,7 @@ namespace AmplifyShaderEditor
 				m_iconPos.height = InstanceIconHeight * drawInfo.InvertedZoom;
 
 				m_iconPos.y += 10 * drawInfo.InvertedZoom;
-				m_iconPos.x += /*m_globalPosition.width - m_iconPos.width - */5 * drawInfo.InvertedZoom;
+				m_iconPos.x += 5 * drawInfo.InvertedZoom;
 			}
 
 		}
@@ -927,9 +1035,9 @@ namespace AmplifyShaderEditor
 
 			this.OrderIndex = node.RawOrderIndex;
 			this.OrderIndexOffset = node.OrderIndexOffset;
-			//if( m_keywordModeType == KeywordModeType.KeywordEnum )
+			
 
-			//node.RegisterPragmas( ref dataCollector );
+			
 
 			string outType = UIUtils.PrecisionWirePortToCgType( CurrentPrecisionType, m_outputPorts[ 0 ].DataType );
 
@@ -963,10 +1071,10 @@ namespace AmplifyShaderEditor
 				string falseCode = m_inputPorts[ 0 ].GeneratePortInstructions( ref dataCollector );
 				string trueCode = m_inputPorts[ 1 ].GeneratePortInstructions( ref dataCollector );
 
-				//if( node.CurrentVarMode == StaticSwitchVariableMode.Fetch )
+				
 					dataCollector.AddLocalVariable( UniqueId, "#ifdef " + node.CurrentKeyword, true );
-				//else
-				//	dataCollector.AddLocalVariable( UniqueId, "#ifdef " + node.PropertyName + OnOffStr, true );
+				
+				
 				dataCollector.AddLocalVariable( UniqueId, "\t" + outType + " staticSwitch" + OutputId + " = " + trueCode + ";", true );
 				dataCollector.AddLocalVariable( UniqueId, "#else", true );
 				dataCollector.AddLocalVariable( UniqueId, "\t" + outType + " staticSwitch" + OutputId + " = " + falseCode + ";", true );
@@ -1103,7 +1211,7 @@ namespace AmplifyShaderEditor
 			else
 			{
 				CurrentVarMode = (StaticSwitchVariableMode)m_variableMode;
-				//Resetting m_variableMode to its default value since it will no longer be used and interfere released ransom properties behavior
+				
 				m_variableMode = VariableMode.Create;
 			}
 
@@ -1141,12 +1249,12 @@ namespace AmplifyShaderEditor
 
 		public override void ReleaseRansomedProperty()
 		{
-			//on old ASE, the property node m_variableMode was used on defining the static switch type, now we have a specific m_staticSwitchVarMode over here
-			//the problem with this is the fix made to release ransomend property names( hash deb232819fff0f1aeaf029a21c55ef597b3424de ) uses m_variableMode and 
-			//makes old static switches to attempt and register an already registered name when doing this:
-			//CurrentVariableMode = VariableMode.Create;
-			//So we need to disable this release ransom property behavior as m_variableMode should never be on VariableMode.Create 
-			//The m_variableMode is set to its default value over the ReadFromString method after its value as been set over the new m_staticSwitchVarMode variable
+			
+			
+			
+			
+			
+			
 		}
 
 		void SetMaterialToggleRetrocompatibility()
@@ -1246,7 +1354,7 @@ namespace AmplifyShaderEditor
 		public KeywordModeType KeywordModeTypeValue { get { return m_keywordModeType; } }
 		public int DefaultValue { get { return m_defaultValue; } }
 		public int MaterialValue { get { return m_materialValue; } }
-		//public string CurrentKeyword { get { return m_currentKeyword; } }
+		
 		public string CurrentKeyword
 		{
 			get

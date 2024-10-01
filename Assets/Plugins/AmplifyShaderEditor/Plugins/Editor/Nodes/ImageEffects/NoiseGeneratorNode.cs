@@ -1,6 +1,6 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
-// Based on the work by https://github.com/keijiro/NoiseShader
+
+
+
 
 using System;
 using UnityEditor;
@@ -17,17 +17,59 @@ namespace AmplifyShaderEditor
 	};
 
 	[Serializable]
-	[NodeAttributes( "Noise Generator", "Miscellaneous", "Collection of procedural noise generators", tags: "simplex gradient" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Noise Generator"
+#else
+"噪声发生器"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Collection of procedural noise generators"
+#else
+"程序噪声发生器的收集"
+#endif
+, tags: 
+#if !WB_LANGUAGE_CHINESE
+"simplex gradient"
+#else
+"单纯形梯度"
+#endif
+)]
 	public sealed class NoiseGeneratorNode : ParentNode
 	{
-		private const string TypeLabelStr = "Type";
+		private const string TypeLabelStr = 
+#if !WB_LANGUAGE_CHINESE
+"Type"
+#else
+"类型"
+#endif
+;
 		private const string SetTo01RangeOpStr = "{0} = {0}*0.5 + 0.5;";
 		private const string SetToMinus1To1RangeOpStr = "{0} = {0}*2 - 1;";
-		private const string SetTo01RangeLabel = "0-1 Range";
+		private const string SetTo01RangeLabel = 
+#if !WB_LANGUAGE_CHINESE
+"0-1 Range"
+#else
+"0-1范围"
+#endif
+;
 		private const string SetTo01RangePreviewId = "_To01Range";
-		private const string UseUnityVersionLabel = "Use Unity Version";
+		private const string UseUnityVersionLabel = 
+#if !WB_LANGUAGE_CHINESE
+"Use Unity Version"
+#else
+"使用Unity版本"
+#endif
+;
 
-		// Simple
+		
 		private const string SimpleNoiseRandomValueFunc = "inline float noise_randomValue (float2 uv) { return frac(sin(dot(uv, float2(12.9898, 78.233)))*43758.5453); }";
 		private const string SimpleNoiseInterpolateFunc = "inline float noise_interpolate (float a, float b, float t) { return (1.0-t)*a + (t*b); }";
 		private const string SimpleValueNoiseHeader = "inline float valueNoise (float2 uv)";
@@ -68,7 +110,7 @@ namespace AmplifyShaderEditor
 														"\treturn t;\n",
 														"}\n"};
 
-		// Simplex 2D
+		
 		private const string Simplex2DFloat3Mod289Func = "float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }";
 		private const string Simplex2DFloat2Mod289Func = "float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }";
 		private const string Simplex2DPermuteFunc = "float3 permute( float3 x ) { return mod2D289( ( ( x * 34.0 ) + 1.0 ) * x ); }";
@@ -99,7 +141,7 @@ namespace AmplifyShaderEditor
 														"\tg.yz = a0.yz * x12.xz + h.yz * x12.yw;\n",
 														"\treturn 130.0 * dot( m, g );\n",
 														"}\n"};
-		// Simplex 3D
+		
 
 
 
@@ -156,7 +198,7 @@ namespace AmplifyShaderEditor
 			"}\n"
 		};
 
-		//Gradient Noise
+		
 		private readonly string UnityGradientNoiseFunc = "UnityGradientNoise({0},{1})";
 		private readonly string[] UnityGradientNoiseFunctionsBody =
 		{
@@ -222,7 +264,13 @@ namespace AmplifyShaderEditor
 		{
 			base.CommonInit( uniqueId );
 			AddInputPort( WirePortDataType.FLOAT2, false, "UV" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Scale" );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Scale"
+#else
+"规模"
+#endif
+);
 			m_inputPorts[ 1 ].FloatInternalData = 1;
 			AddOutputPort( WirePortDataType.FLOAT, Constants.EmptyPortValue );
 			m_useInternalPortData = true;
@@ -295,7 +343,7 @@ namespace AmplifyShaderEditor
 					ConfigurePorts();
 				}
 			}
-			//EditorGUILayout.HelpBox( "Node still under construction. Use with caution", MessageType.Info );
+			
 		}
 
 		private void ConfigurePorts()

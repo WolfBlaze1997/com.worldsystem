@@ -70,7 +70,7 @@ namespace AmplifyShaderEditor
 		{
 			EditorGUILayout.Separator();
 
-			// Add keyword
+			
 			if( GUILayout.Button( string.Empty, UIUtils.PlusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 			{
 				UsePassItem newItem = ScriptableObject.CreateInstance<UsePassItem>();
@@ -80,7 +80,7 @@ namespace AmplifyShaderEditor
 				m_isDirty = true;
 			}
 
-			//Remove keyword
+			
 			if( GUILayout.Button( string.Empty, UIUtils.MinusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 			{
 				if( m_items.Count > 0 )
@@ -241,7 +241,13 @@ namespace AmplifyShaderEditor
 
 				if( m_items.Count == 0 )
 				{
-					EditorGUILayout.HelpBox( "Your list is Empty!\nUse the plus button to add one.", MessageType.Info );
+					EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"Your list is Empty!\nUse the plus button to add one."
+#else
+"您的列表为空！\n使用加号按钮添加一个。"
+#endif
+, MessageType.Info );
 				}
 				else
 				{
@@ -259,7 +265,7 @@ namespace AmplifyShaderEditor
 				for( int i = 0; i < count; i++ )
 				{
 					string locationValue = nodeParams[ index++ ];
-					// REMOVE THIS TEST AFTER A COUPLE OF VERSIONS (curr v1.5.6 r02)
+					
 					if( locationValue.Equals( "Bellow" ) ) locationValue = "Below";
 
 					UsePassLocation location = (UsePassLocation)Enum.Parse( typeof( UsePassLocation ), locationValue );
@@ -346,7 +352,7 @@ namespace AmplifyShaderEditor
 			}
 		}
 
-		//public string ModuleName { set { m_moduleName = value; } }
+		
 		public void Destroy()
 		{
 			m_owner = null;

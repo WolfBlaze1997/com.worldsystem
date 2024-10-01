@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEditor;
 using UnityEngine;
@@ -21,8 +21,8 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private string[] m_localOutputValue = { string.Empty,string.Empty};
 
-		//[SerializeField]
-		//private int m_isLocalWithPortType = 0;
+		
+		
 
 		private RenderTexture m_outputPreview = null;
 		private Material m_outputMaskMaterial = null;
@@ -186,7 +186,7 @@ namespace AmplifyShaderEditor
 			string autoGraphId = currentGraph.GraphId > 0 ? "_g" + currentGraph.GraphId : string.Empty;
 			m_localOutputValue[idx] = string.IsNullOrEmpty( customName ) ? ( "temp_output_" + m_nodeId + "_" + PortId + autoGraphId ) : customName;
 			m_isLocalValue[idx] = true;
-			//m_isLocalWithPortType |= (int)category;
+			
 			return string.Format( Constants.LocalValueDecWithoutIdent, UIUtils.PrecisionWirePortToCgType( precisionType, DataType ), m_localOutputValue[idx], value );
 		}
 
@@ -195,7 +195,7 @@ namespace AmplifyShaderEditor
 			int idx = UIUtils.PortCategorytoAttayIdx( category );
 			m_isLocalValue[idx] = true;
 			m_localOutputValue[ idx ] = value;
-			//m_isLocalWithPortType |= (int)category;
+			
 		}
 
 		public void ResetLocalValue()
@@ -205,7 +205,7 @@ namespace AmplifyShaderEditor
 				m_localOutputValue[ i ] = string.Empty;
 				m_isLocalValue[i] = false;
 			}
-			//m_isLocalWithPortType = 0;
+			
 		}
 
 		public void ResetLocalValueIfNot( MasterNodePortCategory category )
@@ -232,7 +232,7 @@ namespace AmplifyShaderEditor
 		{
 			int idx = UIUtils.PortCategorytoAttayIdx( category );
 			return m_isLocalValue[ idx ];
-			//return ( m_isLocalWithPortType & (int)category ) != 0; ;
+			
 		}
 
 		public override void ForceClearConnection()
@@ -303,12 +303,12 @@ namespace AmplifyShaderEditor
 			{
 				if( m_outputMaskMaterial == null )
 				{
-					//m_outputMaskMaterial = new Material( AssetDatabase.LoadAssetAtPath<Shader>( AssetDatabase.GUIDToAssetPath( "9c34f18ebe2be3e48b201b748c73dec0" ) ) );
+					
 					m_outputMaskMaterial = new Material( UIUtils.MaskingShader );
 				}
 				return m_outputMaskMaterial;
 			}
-			//set { m_outputMaskMaterial = value; }
+			
 		}
 	}
 }

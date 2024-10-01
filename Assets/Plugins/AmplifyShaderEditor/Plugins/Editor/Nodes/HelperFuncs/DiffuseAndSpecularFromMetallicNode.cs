@@ -1,20 +1,50 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Diffuse And Specular From Metallic", "Miscellaneous", "Gets Diffuse and Specular values from Metallic. Uses DiffuseAndSpecularFromMetallic function from UnityStandardUtils." )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Diffuse And Specular From Metallic"
+#else
+"金属漫射和镜面反射"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Gets Diffuse and Specular values from Metallic. Uses DiffuseAndSpecularFromMetallic function from UnityStandardUtils."
+#else
+"从Metallic获取漫反射和镜面反射值。使用UnityStandardUtils的DiffuseAndSpecularFromMetallic函数。"
+#endif
+)]
 	public class DiffuseAndSpecularFromMetallicNode : ParentNode
 	{
-		//half3 DiffuseAndSpecularFromMetallic (half3 albedo, half metallic, out half3 specColor, out half oneMinusReflectivity)
+		
 		private const string FuncFormat = "DiffuseAndSpecularFromMetallic({0},{1},{2},{3})";
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT3, false, "Albedo" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Metallic" );
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"Albedo"
+#else
+"阿尔伯多"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Metallic"
+#else
+"金属漆"
+#endif
+);
 			AddOutputPort( WirePortDataType.FLOAT3, "Out" );
 			AddOutputPort( WirePortDataType.FLOAT3, "Spec Color" );
 			AddOutputPort( WirePortDataType.FLOAT, "One Minus Reflectivity" );

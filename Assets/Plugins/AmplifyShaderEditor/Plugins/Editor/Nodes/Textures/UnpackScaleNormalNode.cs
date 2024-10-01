@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -12,7 +12,25 @@ namespace AmplifyShaderEditor
 		Object
 	}
 
-	[NodeAttributes( "Unpack Scale Normal", "Textures", "Applies UnpackNormal/UnpackScaleNormal function" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Unpack Scale Normal"
+#else
+"开箱秤正常"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Textures"
+#else
+"纹理"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Applies UnpackNormal/UnpackScaleNormal function"
+#else
+"应用UnpackNormal/UnpackScaleNormal功能"
+#endif
+)]
 	[Serializable]
 	public class UnpackScaleNormalNode : ParentNode
 	{
@@ -23,8 +41,20 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT4, false, "Value" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Scale" );
+			AddInputPort( WirePortDataType.FLOAT4, false, 
+#if !WB_LANGUAGE_CHINESE
+"Value"
+#else
+"价值观"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Scale"
+#else
+"规模"
+#endif
+);
 			m_inputPorts[ 1 ].FloatInternalData = 1;
 			AddOutputVectorPorts( WirePortDataType.FLOAT3, "XYZ" );
 			m_useInternalPortData = true;
@@ -35,7 +65,13 @@ namespace AmplifyShaderEditor
 		public override void DrawProperties()
 		{
 			base.DrawProperties();
-			m_inputMode = (UnpackInputMode)EditorGUILayoutEnumPopup( "Type" , m_inputMode );
+			m_inputMode = (UnpackInputMode)EditorGUILayoutEnumPopup( 
+#if !WB_LANGUAGE_CHINESE
+"Type"
+#else
+"类型"
+#endif
+, m_inputMode );
 		}
 		public override string GenerateShaderForOutput( int outputId, ref MasterNodeDataCollector dataCollector, bool ignoreLocalvar )
 		{

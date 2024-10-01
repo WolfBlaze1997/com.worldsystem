@@ -10,6 +10,8 @@ namespace WorldSystem.Runtime
     
     public class VFXRainEffect : BaseModule
     {
+        
+        
         #region 字段
         
         [Serializable]
@@ -37,16 +39,22 @@ namespace WorldSystem.Runtime
         
         [HideLabel]
         public Property property  = new();
-
-        #endregion
-
+        
         [HideInInspector]
         public VisualEffect rainEffect;
         
         private bool _isActive;
         
+        #endregion
+        
+        
         
         #region 安装属性
+        
+        private readonly int Static_Radius = Shader.PropertyToID("Static_Radius");
+        private readonly int RainDynamic_Precipitation = Shader.PropertyToID("RainDynamic_Precipitation");
+        private readonly int RainDynamic_Size = Shader.PropertyToID("RainDynamic_Size");
+        private readonly int RainDynamic_DropLength = Shader.PropertyToID("RainDynamic_DropLength");
         
         private void SetupDynamicProperty()
         {
@@ -58,20 +66,19 @@ namespace WorldSystem.Runtime
             
             WorldManager.Instance?.weatherEffectModule?.SetupCommonDynamicProperty(rainEffect);
         }
+        
         private void SetupStaticProperty()
         {
             if (rainEffect == null) return;
             rainEffect.SetFloat(Static_Radius, property.rainRadius);
         }
-        private readonly int Static_Radius = Shader.PropertyToID("Static_Radius");
-        private readonly int RainDynamic_Precipitation = Shader.PropertyToID("RainDynamic_Precipitation");
-        private readonly int RainDynamic_Size = Shader.PropertyToID("RainDynamic_Size");
-        private readonly int RainDynamic_DropLength = Shader.PropertyToID("RainDynamic_DropLength");
-
+        
         #endregion
 
         
+        
         #region 事件函数
+        
         private void OnEnable()
         {
             if (gameObject.GetComponent<VisualEffect>() == null)
@@ -86,6 +93,7 @@ namespace WorldSystem.Runtime
                 rainEffect = gameObject.GetComponent<VisualEffect>();
             }
         }
+        
         public void OnDisable()
         {
             if (gameObject.GetComponent<VisualEffect>() != null)
@@ -96,19 +104,18 @@ namespace WorldSystem.Runtime
                     CoreUtils.Destroy(gameObject.GetComponent<VisualEffect>());
                 rainEffect = null;
             }
-            
         }
+        
         public void OnValidate()
         {
             property.LimitProperty();
             SetupStaticProperty();
         }
         
-        
-        [HideInInspector] public bool _Update;
+        [HideInInspector] public bool update;
         private void Update()
         {
-            if (!_Update) return;
+            if (!update) return;
 
             //确定是否激活, 如果没有激活则跳出函数, 节约资源
             _isActive = !(property.rainPrecipitation == 0 && rainEffect.aliveParticleCount < 100);
@@ -118,8 +125,15 @@ namespace WorldSystem.Runtime
             SetupDynamicProperty(); 
         }
         
+#if UNITY_EDITOR
+        private void Start()
+        {
+            WorldManager.Instance?.weatherListModule?.weatherList?.SetupPropertyFromActive();
+        }
+#endif
         
         #endregion
+        
 
     }
 }

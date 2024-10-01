@@ -33,7 +33,7 @@ namespace AmplifyShaderEditor
 
 	public class NodeExporterUtils
 	{
-		//Auto-Screenshot nodes
+		
 		private RenderTexture m_screenshotRT;
 		private Texture2D m_screenshotTex2D;
 		private List<ContextMenuItem> m_screenshotList = new List<ContextMenuItem>();
@@ -66,8 +66,8 @@ namespace AmplifyShaderEditor
 
 		public void CalculateShaderInstructions( Shader shader )
 		{
-			//Type shaderutilType = Type.GetType( "UnityEditor.ShaderUtil, UnityEditor" );
-			//shaderutilType.InvokeMember( "OpenCompiledShader", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.InvokeMethod, null, null, new object[] { shader, mode, customPlatformsMask, includeAllVariants } );
+			
+			
 		}
 
 		public void ActivateAutoScreenShot( string pathname, int from, int to )
@@ -143,7 +143,7 @@ namespace AmplifyShaderEditor
 			result.AppendLine( "Name,Updated" );
 			try
 			{
-				//IEnumerable<System.Type> availableTypes = AppDomain.CurrentDomain.GetAssemblies().ToList().SelectMany( type => type.GetTypes() );
+				
 				var mainAssembly = Assembly.GetExecutingAssembly();
 				Type[] availableTypes = GetTypesInNamespace( mainAssembly , "AmplifyShaderEditor" );
 				foreach( System.Type type in availableTypes )
@@ -266,7 +266,7 @@ namespace AmplifyShaderEditor
 					break;
 					case DebugScreenShotNodeState.FocusOnNode:
 					{
-						//m_window.FocusOnNode( m_node, 1, false );
+						
 						m_window.FocusOnPoint( m_node.TruePosition.center, 1, false );
 						m_screenShotState = DebugScreenShotNodeState.TakeScreenshot;
 					}

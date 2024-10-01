@@ -45,9 +45,27 @@ namespace AmplifyShaderEditor
     [Serializable]
     public class DependenciesHelper
     {
-        private const string CustomDependencysStr = " Dependencies";
-        private const string DependencyNameStr = "Name";
-        private const string DependencyValueStr = "Value";
+        private const string CustomDependencysStr = 
+#if !WB_LANGUAGE_CHINESE
+" Dependencies"
+#else
+"依赖关系"
+#endif
+;
+        private const string DependencyNameStr = 
+#if !WB_LANGUAGE_CHINESE
+"Name"
+#else
+"姓名"
+#endif
+;
+        private const string DependencyValueStr = 
+#if !WB_LANGUAGE_CHINESE
+"Value"
+#else
+"价值观"
+#endif
+;
 
         private const float ShaderKeywordButtonLayoutWidth = 15;
         private ParentNode m_currentOwner;
@@ -74,14 +92,14 @@ namespace AmplifyShaderEditor
         {
             EditorGUILayout.Separator();
 
-            // Add Dependency
+            
             if( GUILayout.Button( string.Empty, UIUtils.PlusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
             {
                 m_availableDependencies.Add( new DependenciesData() );
                 EditorGUI.FocusTextInControl( null );
             }
 
-            //Remove Dependency
+            
             if( GUILayout.Button( string.Empty, UIUtils.MinusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
             {
                 if( m_availableDependencies.Count > 0 )
@@ -99,7 +117,13 @@ namespace AmplifyShaderEditor
 
             if( itemCount == 0 )
             {
-                EditorGUILayout.HelpBox( "Your list is Empty!\nUse the plus button to add one.", MessageType.Info );
+                EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"Your list is Empty!\nUse the plus button to add one."
+#else
+"您的列表为空！\n使用加号按钮添加一个。"
+#endif
+, MessageType.Info );
             }
 
             int markedToDelete = -1;
@@ -111,7 +135,7 @@ namespace AmplifyShaderEditor
                 {
                     EditorGUI.indentLevel += 1;
                     EditorGUIUtility.labelWidth = 70;
-                    //Dependency Name
+                    
                     EditorGUI.BeginChangeCheck();
                     m_availableDependencies[ i ].DependencyName = EditorGUILayout.TextField( DependencyNameStr, m_availableDependencies[ i ].DependencyName );
                     if( EditorGUI.EndChangeCheck() )
@@ -119,7 +143,7 @@ namespace AmplifyShaderEditor
                         m_availableDependencies[ i ].DependencyName = UIUtils.RemoveShaderInvalidCharacters( m_availableDependencies[ i ].DependencyName );
                     }
 
-                    //Dependency Value
+                    
                     EditorGUI.BeginChangeCheck();
                     m_availableDependencies[ i ].DependencyValue = EditorGUILayout.TextField( DependencyValueStr, m_availableDependencies[ i ].DependencyValue );
                     if( EditorGUI.EndChangeCheck() )
@@ -132,14 +156,14 @@ namespace AmplifyShaderEditor
                     EditorGUILayout.BeginHorizontal();
                     {
                         GUILayout.Label( " " );
-                        // Add new port
+                        
                         if( m_currentOwner.GUILayoutButton( string.Empty, UIUtils.PlusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
                         {
                             m_availableDependencies.Insert( i + 1, new DependenciesData() );
                             EditorGUI.FocusTextInControl( null );
                         }
 
-                        //Remove port
+                        
                         if( m_currentOwner.GUILayoutButton( string.Empty, UIUtils.MinusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
                         {
                             markedToDelete = i;

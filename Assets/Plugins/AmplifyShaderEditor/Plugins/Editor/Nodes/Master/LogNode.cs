@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -7,10 +7,34 @@ using UnityEditor;
 namespace AmplifyShaderEditor
 {
 	[System.Serializable]
-	[NodeAttributes( "Log", "Master", "Debug node to dump output to log", null, KeyCode.None, false )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Log"
+#else
+"日志"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Master"
+#else
+"大师"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Debug node to dump output to log"
+#else
+"调试节点将输出转储到日志"
+#endif
+, null, KeyCode.None, false )]
 	public sealed class LogNode : MasterNode
 	{
-		private const string InputAmountStr = "Input amount";
+		private const string InputAmountStr = 
+#if !WB_LANGUAGE_CHINESE
+"Input amount"
+#else
+"输入金额"
+#endif
+;
 
 		[SerializeField]
 		private int m_inputCount = 1;

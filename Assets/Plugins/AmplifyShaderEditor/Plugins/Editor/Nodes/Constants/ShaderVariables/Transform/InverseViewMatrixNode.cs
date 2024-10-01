@@ -1,10 +1,28 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 namespace AmplifyShaderEditor
 {
 	[System.Serializable]
-	[NodeAttributes( "Inverse View Matrix", "Matrix Transform", "Current inverse view matrix" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Inverse View Matrix"
+#else
+"逆视图矩阵"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Matrix Transform"
+#else
+"矩阵变换"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Current inverse view matrix"
+#else
+"当前逆视图矩阵"
+#endif
+)]
 	public sealed class InverseViewMatrixNode : ConstantShaderVariable
 	{
 		protected override void CommonInit( int uniqueId )

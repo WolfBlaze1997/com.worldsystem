@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader vEditing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -7,7 +7,25 @@ using System;
 
 namespace AmplifyShaderEditor
 {
-	[NodeAttributes( "Material Quality", "Logical Operators", "Choose between separate branches according to currently selected Quality (SRP only) ", Available = true )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Material Quality"
+#else
+"材料质量"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Logical Operators"
+#else
+"逻辑运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Choose between separate branches according to currently selected Quality (SRP only) "
+#else
+"根据当前选定的质量在单独的分支之间进行选择（仅SRP）"
+#endif
+, Available = true )]
 	public class MaterialQualityNode : ParentNode
 	{
 		private const string SRPError = "Node intended to be used only on SRP templates as it makes use of keywords defined over that environment.";
@@ -26,9 +44,27 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT, false, "High" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Medium" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Low" );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"High"
+#else
+"高"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Medium"
+#else
+"中等"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Low"
+#else
+"低"
+#endif
+);
 			AddOutputPort( WirePortDataType.FLOAT, Constants.EmptyPortValue );
 			m_errorMessageTypeIsError = NodeMessageType.Error;
 			m_errorMessageTooltip = SRPError;
@@ -108,15 +144,15 @@ namespace AmplifyShaderEditor
 			string localVarName = "currQuality" + OutputId;
 			dataCollector.AddLocalVariable( UniqueId, CurrentPrecisionType, m_outputPorts[ 0 ].DataType, localVarName, "0" );
 
-			//High
+			
 			dataCollector.AddLocalVariable( UniqueId, MaterialCode[ 0 ], true );
 			dataCollector.AddLocalVariable( UniqueId, localVarName, maxQualityValue, false, true );
 			
-			//Medium
+			
 			dataCollector.AddLocalVariable( UniqueId, MaterialCode[ 1 ], true );
 			dataCollector.AddLocalVariable( UniqueId, localVarName, medQualityValue, false, true );
 
-			//Low
+			
 			dataCollector.AddLocalVariable( UniqueId, MaterialCode[ 2 ], true );
 			dataCollector.AddLocalVariable( UniqueId, localVarName, minQualityValue,false,true );
 			m_outputPorts[ 0 ].SetLocalValue( localVarName, dataCollector.PortCategory );

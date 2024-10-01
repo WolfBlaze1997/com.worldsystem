@@ -9,20 +9,20 @@ namespace AmplifyShaderEditor
 	[InitializeOnLoad]
 	public class InvalidDataChecker
 	{
-		private static string[] m_invalidData = {	"674ea7bed6b1cd94b8057074298096db", //"/Samples",
-													"2738539936eacef409be91f148b2a4a0", //"/Resources",
-													"c880e50f07f2be9499d414ac6f9f3a7a", //"/Templates",
-													"563f992b9989cf547ac59bf748442c17"};//"/Textures"};
-		//private static string m_ASEFolderPath;
+		private static string[] m_invalidData = {	"674ea7bed6b1cd94b8057074298096db", 
+													"2738539936eacef409be91f148b2a4a0", 
+													"c880e50f07f2be9499d414ac6f9f3a7a", 
+													"563f992b9989cf547ac59bf748442c17"};
+		
 		private static string m_invalidDataCollected = string.Empty;
 		static InvalidDataChecker()
 		{
 			bool foundInvalidData = false;
-			//m_ASEFolderPath = AssetDatabase.GUIDToAssetPath( IOUtils.ASEFolderGUID );
+			
 			int count = 0;
 			for ( int i = 0; i < m_invalidData.Length; i++ )
 			{
-				//m_invalidData[ i ] = m_ASEFolderPath + m_invalidData[ i ];
+				
 				m_invalidData[ i ] = AssetDatabase.GUIDToAssetPath( m_invalidData[ i ] );
 				if ( AssetDatabase.IsValidFolder( m_invalidData[ i ] ) )
 				{
@@ -67,7 +67,7 @@ namespace AmplifyShaderEditor
 					if( Time.realtimeSinceStartup < 10 )
 					{
 						show = (Preferences.ShowOption) EditorPrefs.GetInt( Preferences.PrefStartUp, 0 );
-						// check version here
+						
 						if( show == Preferences.ShowOption.OnNewVersion )
 						{
 							ASEStartScreen.StartBackgroundTask( StartRequest( ASEStartScreen.ChangelogURL, () =>
@@ -125,7 +125,13 @@ namespace AmplifyShaderEditor
 	
 	public class InvalidDataPopUp : EditorWindow
 	{
-		private readonly GUIContent m_buttonContent = new GUIContent( "Remove Invalid Data" );
+		private readonly GUIContent m_buttonContent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Remove Invalid Data"
+#else
+"删除无效数据"
+#endif
+);
 		private Vector2 m_scrollPosition = Vector2.zero;
 		public void OnGUI()
 		{

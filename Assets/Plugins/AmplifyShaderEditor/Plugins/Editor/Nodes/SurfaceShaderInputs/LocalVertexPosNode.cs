@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -7,7 +7,31 @@ using UnityEngine;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "[Deprecated] Local Position", "Surface Data", "Interpolated Vertex Position in Local Space", null, KeyCode.None, true, true, "Vertex Position", typeof( PosVertexDataNode ) )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"[Deprecated] Local Position"
+#else
+"[已弃用]本地位置"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Surface Data"
+#else
+"地表数据"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Interpolated Vertex Position in Local Space"
+#else
+"局部空间中的插值顶点位置"
+#endif
+, null, KeyCode.None, true, true, 
+#if !WB_LANGUAGE_CHINESE
+"Vertex Position"
+#else
+"顶点位置"
+#endif
+, typeof( PosVertexDataNode ) )]
 	public sealed class LocalVertexPosNode : ParentNode
 	{
 		private const string VertexVarName = "localVertexPos";

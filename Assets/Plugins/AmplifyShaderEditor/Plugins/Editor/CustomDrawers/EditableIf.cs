@@ -1,67 +1,67 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
-//
-// Donated by BinaryCats
-// https://forum.unity.com/threads/best-tool-asset-store-award-amplify-shader-editor-node-based-shader-creation-tool.430959/page-60#post-3414465
-//////////////////////
-// README / HOW TO USE
-//////////////////////
-// Examples:
-// 
-// Floats:
-// 
-// x Equals value
-// EditableIf( _float1, Equalto, 1)
-// This will allow the value to be edited, if the property _float1 is equal to 1. (_float1==1)
-// Note: NotEqualTo is also a valid argument which will do the opposite of this example.EditableIf(_float1, NotEqualTo, 1)  (NotEqualTo != 1)
-// 
-// x Greater than value
-// EditableIf(_Float1,GreaterThan,1)
-// This will allow the value to be edited if  the property _float1 is Greater than 1. (_float1>1)
-// 
-// x Greater Than Or Equal to value
-// EditableIf(_Float1,GreaterThanOrEqualTo,1)
-// This will allow the value to be edited if  the property _float1 is Greater than or equal to 1. (_float1>=1)
-// 
-// 
-// x Less Than value
-// EditableIf(_Float1,LessThan,1)
-// This will allow the value to be edited if  the property _float1 is Less than 1. (_float1<1)
-// 
-// x Less Than Or Equal to value
-// EditableIf(_Float1,LessThanOrEqualTo,1)
-// This will allow the value to be edited if  the property _float1 is Less than or equal to 1. (_float1<=1)
-// 
-// 
-// Colour:
-// 
-// x Equals r,g,b,a
-// EditableIf(_Color0,EqualTo,255,255,255,255)
-// This will allow the value to be edited, if the property _Color0 R,G,B and A value all Equal 255. (_Color0.R==255 && _Color0.G==255 & _Color0.B == 255 && _Color0.A == 255)
-// 
-// x Equals alpha
-// EditableIf(_Color0,EqualTo,null,null,null,255)
-// This will allow the value to be edited, if the property _Color0 Alpha value is Equal to 255. (_Color0.A == 255)
-// 
-// a Greater than blue
-// EditableIf(_Color0,GreaterThan,null,null,125)
-// This will allow the value to be edited, if the property _Color0 Blue value is Greater Than 125. (_Color0.B > 125)
-// Note: as I do not want to check the Red or Green Values, i have entered "null" for the parameter
-// Note: I have not inputted a value to check for Alpha, as i do not want to check it. Simularly, if I wanted to Only check the Red Value I could have used EditableIf(_Color0,GreaterThan,125)
-// 
-// Like wise with floats GreaterThanOrEqualTo, LessThan, LessThanOrEqualTo
-// 
-// Vector:
-// Vector Checks work the same as colour checks
-// 
-// Texture:
-// x Does Not have a Texture
-// EditableIf(_TextureSample0,Equals,null)
-// This will allow the value to be edited, if the property _TextureSample0 does NOT have a texture
-// 
-// x Does have a Texture
-// EditableIf(_TextureSample0,NotEqualTo,null)
-// This will allow the value to be edited, if the property _TextureSample0 does have a texture
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -164,7 +164,7 @@ public class EditableIf : MaterialPropertyDrawer
 		return x;
 	}
 
-	// Draw the property inside the given rect
+	
 	public override void OnGUI( Rect position, MaterialProperty prop, String label, MaterialEditor editor )
 	{
 		if( InputError )
@@ -269,9 +269,9 @@ public class EditableIf : MaterialPropertyDrawer
 			case ComparisonOperators.LessThan:
 			return ( (IComparable)LHS ).CompareTo( RHS ) < 0;
 			case ComparisonOperators.ContainsFlags:
-			return ( (int)LHS & (int)RHS ) != 0; // Dont trust LHS values, it has been casted to a char and then to an int again, first bit will be the sign
+			return ( (int)LHS & (int)RHS ) != 0; 
 			case ComparisonOperators.DoesNotContainsFlags:
-			return ( ( (int)LHS & (int)RHS ) == (int)LHS ); // Dont trust LHS values, it has been casted to a char and then to an int again, first bit will be the sign
+			return ( ( (int)LHS & (int)RHS ) == (int)LHS ); 
 
 			default:
 			break;

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System.Collections.Generic;
 using UnityEngine;
@@ -86,7 +86,7 @@ namespace AmplifyShaderEditor
 				}
 			}
 			node.IsOnGrid = true;
-			//DebugLimits();
+			
 		}
 
 		public void RemoveNodeFromGrid( ParentNode node, bool useCachedPos )
@@ -203,12 +203,12 @@ namespace AmplifyShaderEditor
 							}
 						}
 					}
-					// The += 1 is to maintain consistence with AddNodeToGrid() ceil op on max values
+					
 					m_xMax += 1;
 					m_yMax += 1;
 				}
 			}
-			//DebugLimits();
+			
 		}
 
 		public void DebugLimits()
@@ -216,7 +216,7 @@ namespace AmplifyShaderEditor
 			Debug.Log( "[ " + m_xMin + " , " + m_yMin + " ] " + "[ " + m_xMax + " , " + m_yMax + " ] " );
 		}
 		
-		//pos must be the transformed mouse position to local canvas coordinates
+		
 		public List<ParentNode> GetNodesOn( Vector2 pos )
 		{
 			int x = Mathf.FloorToInt( pos.x / GRID_SIZE_X );

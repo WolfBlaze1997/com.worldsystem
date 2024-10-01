@@ -1,10 +1,28 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 namespace AmplifyShaderEditor
 {
 	[System.Serializable]
-	[NodeAttributes( "Floor", "Math Operators", "Largest integer not greater than a scalar or each vector component" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Floor"
+#else
+"地板"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Largest integer not greater than a scalar or each vector component"
+#else
+"最大整数不大于标量或每个向量分量"
+#endif
+)]
 	public sealed class FloorOpNode : SingleInputOp
 	{
 		protected override void CommonInit( int uniqueId )

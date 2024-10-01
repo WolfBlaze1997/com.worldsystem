@@ -1,11 +1,29 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Object Space Light Dir", "Lighting", "Computes object space light direction (not normalized)" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Object Space Light Dir"
+#else
+"对象空间灯光方向"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Lighting"
+#else
+"照明"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Computes object space light direction (not normalized)"
+#else
+"计算对象空间光方向（未归一化）"
+#endif
+)]
 	public sealed class ObjSpaceLightDirHlpNode : HelperParentNode
 	{
 		protected override void CommonInit( int uniqueId )
@@ -29,7 +47,7 @@ namespace AmplifyShaderEditor
 		{
 			if( dataCollector.IsTemplate )
 			{
-				//Template must have its Light Mode correctly configured on tags to work as intended
+				
 				return GetOutputVectorItem( 0, outputId, dataCollector.TemplateDataCollectorInstance.GetObjectSpaceLightDir( CurrentPrecisionType ) );
 			}
 

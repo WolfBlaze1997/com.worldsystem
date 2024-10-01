@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 using UnityEngine;
 using UnityEditor;
 using System;
@@ -22,10 +22,40 @@ namespace AmplifyShaderEditor
 	}
 
 	[Serializable]
-	[NodeAttributes( "Append", "Vector Operators", "Append channels to create a new component", null, KeyCode.V, tags: "combine" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Append"
+#else
+"附录"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vector Operators"
+#else
+"矢量运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Append channels to create a new component"
+#else
+"附加通道以创建新组件"
+#endif
+, null, KeyCode.V, tags: 
+#if !WB_LANGUAGE_CHINESE
+"combine"
+#else
+"结合"
+#endif
+)]
 	public sealed class DynamicAppendNode : ParentNode
 	{
-		private const string OutputTypeStr = "Output type";
+		private const string OutputTypeStr = 
+#if !WB_LANGUAGE_CHINESE
+"Output type"
+#else
+"输出类型"
+#endif
+;
 		private const string OutputFormatStr = "({0}({1}))";
 
 		[SerializeField]
@@ -75,7 +105,7 @@ namespace AmplifyShaderEditor
 			int channelsRequired = UIUtils.GetChannelsAmount( onLoading ? inputPort.DataType : inputPort.ConnectionType( 0 ) );
 			int availableChannels = UIUtils.GetChannelsAmount( m_selectedOutputType );
 
-			// Invalidate previously used channels
+			
 			for( int i = 0; i < availableChannels; i++ )
 			{
 				if( m_occupiedChannels[ i ] == portId )
@@ -84,7 +114,7 @@ namespace AmplifyShaderEditor
 					m_inputPorts[ i ].Visible = true;
 				}
 			}
-			// Lock available channels to port
+			
 			int len = Mathf.Min( portId + channelsRequired, availableChannels );
 
 			int channelsUsed = 0;
@@ -120,7 +150,7 @@ namespace AmplifyShaderEditor
 		void NewUpdateBehaviorDisconn( int portId )
 		{
 			int availableChannels = UIUtils.GetChannelsAmount( m_selectedOutputType );
-			// Invalidate previously used channels
+			
 			for( int i = 0; i < availableChannels; i++ )
 			{
 				if( m_occupiedChannels[ i ] == portId )
@@ -342,13 +372,13 @@ namespace AmplifyShaderEditor
 
 			if( UIUtils.CurrentShaderVersion() < 13206 )
 			{
-				//TODO: MAKE THIS LESS BRUTE FORCE
+				
 				List<AppendData> reroutes = new List<AppendData>();
 				int availableChannel = 0;
 				for( int i = 0; i < 4 && availableChannel < 4; i++ )
 				{
 					int channelsAmount = UIUtils.GetChannelsAmount( m_inputPorts[ i ].DataType );
-					if( m_inputPorts[ i ].IsConnected /*&& availableChannel != i*/ )
+					if( m_inputPorts[ i ].IsConnected  )
 					{
 						reroutes.Add( new AppendData( m_inputPorts[ i ].DataType, i, availableChannel ) );
 					}

@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Max", "Math Operators", "Maximum of two scalars or each respective component of two vectors" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Max"
+#else
+"马克斯"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Maximum of two scalars or each respective component of two vectors"
+#else
+"最多两个标量或两个向量的每个分量"
+#endif
+)]
 	public sealed class SimpleMaxOpNode : DynamicTypeNode
 	{
 		protected override void CommonInit( int uniqueId )

@@ -1,10 +1,28 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 namespace AmplifyShaderEditor
 {
     [System.Serializable]
-    [NodeAttributes( "Projector Clip Matrix", "Matrix Transform", "Current Projector Clip matrix. To be used when working with Unity projector." )]
+    [NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Projector Clip Matrix"
+#else
+"投影仪剪辑矩阵"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Matrix Transform"
+#else
+"矩阵变换"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Current Projector Clip matrix. To be used when working with Unity projector."
+#else
+"当前投影仪剪辑矩阵。在使用Unity投影仪时使用。"
+#endif
+)]
     public sealed class UnityProjectorClipMatrixNode : ConstantShaderVariable
     {
         protected override void CommonInit( int uniqueId )

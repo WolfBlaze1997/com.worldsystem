@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,13 @@ namespace AmplifyShaderEditor
 	[Serializable]
 	public class AdditionalPragmasHelper
 	{
-		private const string AdditionalPragmasStr = " Additional Pragmas";
+		private const string AdditionalPragmasStr = 
+#if !WB_LANGUAGE_CHINESE
+" Additional Pragmas"
+#else
+"其他Pragmas"
+#endif
+;
 		private const float ShaderKeywordButtonLayoutWidth = 15;
 		private ParentNode m_currentOwner;
 
@@ -36,14 +42,14 @@ namespace AmplifyShaderEditor
 		{
 			EditorGUILayout.Separator();
 
-			// Add keyword
+			
 			if( GUILayout.Button( string.Empty, UIUtils.PlusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 			{
 				m_additionalPragmas.Add( string.Empty );
 				EditorGUI.FocusTextInControl( null );
 			}
 
-			//Remove keyword
+			
 			if( GUILayout.Button( string.Empty, UIUtils.MinusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 			{
 				if( m_additionalPragmas.Count > 0 )
@@ -70,14 +76,14 @@ namespace AmplifyShaderEditor
 						m_additionalPragmas[ i ] = UIUtils.RemoveShaderInvalidCharacters( m_additionalPragmas[ i ] );
 					}
 
-					// Add new port
+					
 					if( m_currentOwner.GUILayoutButton( string.Empty, UIUtils.PlusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 					{
 						m_additionalPragmas.Insert( i + 1, string.Empty );
 						EditorGUI.FocusTextInControl( null );
 					}
 
-					//Remove port
+					
 					if( m_currentOwner.GUILayoutButton( string.Empty, UIUtils.MinusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 					{
 						markedToDelete = i;
@@ -95,7 +101,13 @@ namespace AmplifyShaderEditor
 				}
 			}
 			EditorGUILayout.Separator();
-			EditorGUILayout.HelpBox( "Please add your pragmas without the #pragma keywords", MessageType.Info );
+			EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"Please add your pragmas without the #pragma keywords"
+#else
+"请添加不带#pragma关键字的pragmas"
+#endif
+, MessageType.Info );
 		}
 
 		public void ReadFromString( ref uint index, ref string[] nodeParams )

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.Collections.Concurrent;
@@ -354,7 +354,7 @@ namespace AmplifyShaderEditor
 			{
 				foreach( var item in vertexData )
 				{
-					//o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
+					
 					if( inputList.FindIndex( x => { return x.Contains( item.Value.VarName ); } ) > -1 )
 						value.Add( string.Format( "{0}.{1} = {2}[0].{1} * {3}.x + {2}[1].{1} * {3}.y + {2}[2].{1} * {3}.z;", OutVarName, item.Value.VarName, InVarName, BaryVarName ) );
 				}
@@ -455,11 +455,11 @@ namespace AmplifyShaderEditor
 		Pass = 5,
 		Params_Vert = 6,
 		Params_Frag = 7
-		//CullMode	= 8,
-		//BlendMode   = 9,
-		//BlendOp		= 10,
-		//ColorMask	= 11,
-		//StencilOp	= 12
+		
+		
+		
+		
+		
 	}
 
 	[Serializable]
@@ -467,84 +467,84 @@ namespace AmplifyShaderEditor
 	{
 		public static int MPShaderVersion = 14503;
 		
-		public static readonly string TemplateShaderNameBeginTag = "/*ase_name*/";
-		public static readonly string TemplateStencilTag = "/*ase_stencil*/\n";
-		public static readonly string TemplateRenderPlatformsTag = "/*ase_render_platforms*/";
-		public static readonly string TemplateAllModulesTag = "/*ase_all_modules*/\n";
-		public static readonly string TemplateMPSubShaderTag = "\\bSubShader\\b\\s*{";
-		//public static readonly string TemplateMPPassTag = "^\\s*Pass\b\\s*{";//"\\bPass\\b\\s*{";
-		public static readonly string TemplateMPPassTag = "\\bPass\\b\\s*{";
-		public static readonly string TemplateLocalVarTag = "/*ase_local_var*/";
-		public static readonly string TemplateDependenciesListTag = "/*ase_dependencies_list*/";
-		public static readonly string TemplatePragmaBeforeTag = "/*ase_pragma_before*/";
-		public static readonly string TemplatePragmaTag = "/*ase_pragma*/";
-		public static readonly string TemplatePassTag = "/*ase_pass*/";
-		public static readonly string TemplatePassesEndTag = "/*ase_pass_end*/";
-		public static readonly string TemplateLODsTag = "/*ase_lod*/";
-		//public static readonly string TemplatePassTagPattern = @"\s\/\*ase_pass\*\/";
-		public static readonly string TemplatePassTagPattern = @"\s\/\*ase_pass[:\*]+";
-		public static readonly string TemplatePropertyTag = "/*ase_props*/";
-		public static readonly string TemplateGlobalsTag = "/*ase_globals*/";
-		public static readonly string TemplateSRPBatcherTag = "/*ase_srp_batcher*/\n";
-		public static readonly string TemplateInterpolatorBeginTag = "/*ase_interp(";
-		public static readonly string TemplateVertexDataTag = "/*ase_vdata:";
+		public readonly static string TemplateShaderNameBeginTag = "/*ase_name*/";
+		public readonly static string TemplateStencilTag = "/*ase_stencil*/\n";
+		public readonly static string TemplateRenderPlatformsTag = "/*ase_render_platforms*/";
+		public readonly static string TemplateAllModulesTag = "/*ase_all_modules*/\n";
+		public readonly static string TemplateMPSubShaderTag = "\\bSubShader\\b\\s*{";
+		
+		public readonly static string TemplateMPPassTag = "\\bPass\\b\\s*{";
+		public readonly static string TemplateLocalVarTag = "/*ase_local_var*/";
+		public readonly static string TemplateDependenciesListTag = "/*ase_dependencies_list*/";
+		public readonly static string TemplatePragmaBeforeTag = "/*ase_pragma_before*/";
+		public readonly static string TemplatePragmaTag = "/*ase_pragma*/";
+		public readonly static string TemplatePassTag = "/*ase_pass*/";
+		public readonly static string TemplatePassesEndTag = "/*ase_pass_end*/";
+		public readonly static string TemplateLODsTag = "/*ase_lod*/";
+		
+		public readonly static string TemplatePassTagPattern = @"\s\/\*ase_pass[:\*]+";
+		public readonly static string TemplatePropertyTag = "/*ase_props*/";
+		public readonly static string TemplateGlobalsTag = "/*ase_globals*/";
+		public readonly static string TemplateSRPBatcherTag = "/*ase_srp_batcher*/\n";
+		public readonly static string TemplateInterpolatorBeginTag = "/*ase_interp(";
+		public readonly static string TemplateVertexDataTag = "/*ase_vdata:";
 
-		public static readonly string TemplateTessVControlTag = "/*ase_vcontrol*/";
-		public static readonly string TemplateTessControlCodeArea = "/*ase_control_code:";
-		public static readonly string TemplateTessDomainCodeArea = "/*ase_domain_code:";
+		public readonly static string TemplateTessVControlTag = "/*ase_vcontrol*/";
+		public readonly static string TemplateTessControlCodeArea = "/*ase_control_code:";
+		public readonly static string TemplateTessDomainCodeArea = "/*ase_domain_code:";
 
-		//public static readonly string TemplateExcludeFromGraphTag = "/*ase_hide_pass*/";
-		public static readonly string TemplateMainPassTag = "/*ase_main_pass*/";
+		
+		public readonly static string TemplateMainPassTag = "/*ase_main_pass*/";
 
-		public static readonly string TemplateFunctionsTag = "/*ase_funcs*/\n";
-		//public static readonly string TemplateTagsTag = "/*ase_tags*/";
+		public readonly static string TemplateFunctionsTag = "/*ase_funcs*/\n";
+		
 
-		//public static readonly string TemplateCullModeTag = "/*ase_cull_mode*/";
-		//public static readonly string TemplateBlendModeTag = "/*ase_blend_mode*/";
-		//public static readonly string TemplateBlendOpTag = "/*ase_blend_op*/";
-		//public static readonly string TemplateColorMaskTag = "/*ase_color_mask*/";
-		//public static readonly string TemplateStencilOpTag = "/*ase_stencil*/";
+		
+		
+		
+		
+		
 
-		public static readonly string TemplateCodeSnippetAttribBegin = "#CODE_SNIPPET_ATTRIBS_BEGIN#";
-		public static readonly string TemplateCodeSnippetAttribEnd = "#CODE_SNIPPET_ATTRIBS_END#\n";
-		public static readonly string TemplateCodeSnippetEnd = "#CODE_SNIPPET_END#\n";
+		public readonly static string TemplateCodeSnippetAttribBegin = "#CODE_SNIPPET_ATTRIBS_BEGIN#";
+		public readonly static string TemplateCodeSnippetAttribEnd = "#CODE_SNIPPET_ATTRIBS_END#\n";
+		public readonly static string TemplateCodeSnippetEnd = "#CODE_SNIPPET_END#\n";
 
-		public static readonly char TemplateNewLine = '\n';
+		public readonly static char TemplateNewLine = '\n';
 
-		// INPUTS AREA
-		public static readonly string TemplateInputsVertBeginTag = "/*ase_vert_out:";
-		public static readonly string TemplateInputsFragBeginTag = "/*ase_frag_out:";
-		public static readonly string TemplateInputsVertParamsTag = "/*ase_vert_input*/";
-		public static readonly string TemplateInputsFragParamsTag = "/*ase_frag_input*/";
-
-
-		// CODE AREA
-		public static readonly string TemplateVertexCodeBeginArea = "/*ase_vert_code:";
-		public static readonly string TemplateFragmentCodeBeginArea = "/*ase_frag_code:";
+		
+		public readonly static string TemplateInputsVertBeginTag = "/*ase_vert_out:";
+		public readonly static string TemplateInputsFragBeginTag = "/*ase_frag_out:";
+		public readonly static string TemplateInputsVertParamsTag = "/*ase_vert_input*/";
+		public readonly static string TemplateInputsFragParamsTag = "/*ase_frag_input*/";
 
 
-		public static readonly string TemplateEndOfLine = "*/\n";
-		public static readonly string TemplateEndSectionTag = "*/";
-		public static readonly string TemplateFullEndTag = "/*end*/";
+		
+		public readonly static string TemplateVertexCodeBeginArea = "/*ase_vert_code:";
+		public readonly static string TemplateFragmentCodeBeginArea = "/*ase_frag_code:";
 
-		public static readonly string NameFormatter = "\"{0}\"";
 
-		public static readonly TemplateTagData[] CommonTags = { new TemplateTagData( TemplatePropertyTag,true),
+		public readonly static string TemplateEndOfLine = "*/\n";
+		public readonly static string TemplateEndSectionTag = "*/";
+		public readonly static string TemplateFullEndTag = "/*end*/";
+
+		public readonly static string NameFormatter = "\"{0}\"";
+
+		public readonly static TemplateTagData[] CommonTags = { new TemplateTagData( TemplatePropertyTag,true),
 																new TemplateTagData( TemplateGlobalsTag,true),
 																new TemplateTagData( TemplateSRPBatcherTag,true),
 																new TemplateTagData( TemplateFunctionsTag,true),
-																//new TemplateTagData( TemplateTagsTag,false," "),
+																
 																new TemplateTagData( TemplatePragmaBeforeTag,true),
 																new TemplateTagData( TemplatePragmaTag,true),
 																new TemplateTagData( TemplatePassTag,true),
 																new TemplateTagData( TemplateInputsVertParamsTag,false),
 																new TemplateTagData( TemplateInputsFragParamsTag,false),
 																new TemplateTagData( TemplateLODsTag,true)
-																//new TemplateTagData( TemplateCullModeTag,false),
-																//new TemplateTagData( TemplateBlendModeTag,false),
-																//new TemplateTagData( TemplateBlendOpTag,false),
-																//new TemplateTagData( TemplateColorMaskTag,false),
-																//new TemplateTagData( TemplateStencilOpTag,true),
+																
+																
+																
+																
+																
 																};
 		public static string URPLitGUID = "94348b07e5e8bab40bd6c8a1e3df54cd";
 		public static string URPUnlitGUID = "2992e84f91cbeb14eab234972e07ea9d";
@@ -582,7 +582,7 @@ namespace AmplifyShaderEditor
 			{ HDRPUnlitGUID,"HDRP/Unlit"},
 		};
 
-		public static readonly string TemplateMenuItemsFileGUID = "da0b931bd234a1e43b65f684d4b59bfb";
+		public readonly static string TemplateMenuItemsFileGUID = "da0b931bd234a1e43b65f684d4b59bfb";
 
 		private Dictionary<string, TemplateDataParent> m_availableTemplates = new Dictionary<string, TemplateDataParent>();
 
@@ -636,7 +636,7 @@ namespace AmplifyShaderEditor
 				string[] allShaders = AssetDatabase.FindAssets( "t:shader" );
 				var templates = new Dictionary<string,TemplateDescriptor>();				
 				
-				// Add official templates first
+				
 				foreach ( KeyValuePair<string, string> kvp in OfficialTemplates )
 				{
 					string guid = kvp.Key;
@@ -653,7 +653,7 @@ namespace AmplifyShaderEditor
 					}
 				}
 
-				// Search for other possible templates on the project
+				
 				var candidates = new List<KeyValuePair<string, string>>( allShaders.Length );
 				var candidateBag = new ConcurrentBag<string>();
 
@@ -726,18 +726,18 @@ namespace AmplifyShaderEditor
 			}
 		}
 
-		//[MenuItem( "Window/Amplify Shader Editor/Create Menu Items", false, 1000 )]
-		//public static void ForceCreateTemplateMenuItems()
-		//{
-		//	UIUtils.CurrentWindow.TemplatesManagerInstance.CreateTemplateMenuItems();
-		//}
+		
+		
+		
+		
+		
 
 		public void CreateTemplateMenuItems()
 		{
 			if( m_sortedTemplates == null || m_sortedTemplates.Count == 0 )
 				return;
 
-			// change names for duplicates
+			
 			for( int i = 0; i < m_sortedTemplates.Count; i++ )
 			{
 				for( int j = 0; j < i; j++ )
@@ -761,7 +761,7 @@ namespace AmplifyShaderEditor
 				}
 			}
 
-			// Sort templates by name
+			
 			var sorted = new SortedDictionary<string, string>();
 			for ( int i = 0; i < m_sortedTemplates.Count; i++ )
 			{
@@ -782,9 +782,9 @@ namespace AmplifyShaderEditor
 			{
 				fileContents.AppendFormat( "\t\t[MenuItem( \"Assets/Create/Amplify Shader/{0}\", false, {1} )]\n", pair.Key, fixedPriority );
 				string itemName = UIUtils.RemoveInvalidCharacters( pair.Key );
-				fileContents.AppendFormat( "\t\tpublic static void ApplyTemplate{0}()\n", itemName/*i*/ );
+				fileContents.AppendFormat( "\t\tpublic static void ApplyTemplate{0}()\n", itemName );
 				fileContents.Append( "\t\t{\n" );
-				//fileContents.AppendFormat( "\t\t\tAmplifyShaderEditorWindow.CreateNewTemplateShader( \"{0}\" );\n", m_sortedTemplates[ i ].GUID );
+				
 				fileContents.AppendFormat( "\t\t\tAmplifyShaderEditorWindow.CreateConfirmationTemplateShader( \"{0}\" );\n", pair.Value );
 				fileContents.Append( "\t\t}\n" );
 			}
@@ -793,7 +793,7 @@ namespace AmplifyShaderEditor
 			string filePath = AssetDatabase.GUIDToAssetPath( TemplateMenuItemsFileGUID );
 			IOUtils.SaveTextfileToDisk( fileContents.ToString(), filePath, false );
 			m_filepath = filePath;
-			//AssetDatabase.ImportAsset( filePath );
+			
 		}
 
 		string m_filepath = string.Empty;

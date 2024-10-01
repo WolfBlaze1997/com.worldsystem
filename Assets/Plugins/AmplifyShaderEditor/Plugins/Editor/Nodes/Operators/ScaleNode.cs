@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -8,10 +8,34 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Scale", "Math Operators", "Scales input value by a float factor" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Scale"
+#else
+"规模"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Scales input value by a float factor"
+#else
+"按浮动因子缩放输入值"
+#endif
+)]
 	public sealed class ScaleNode : ParentNode
 	{
-		private const string ScaleFactorStr = "Scale";
+		private const string ScaleFactorStr = 
+#if !WB_LANGUAGE_CHINESE
+"Scale"
+#else
+"规模"
+#endif
+;
 
 		[SerializeField]
 		private float m_scaleFactor = 1;

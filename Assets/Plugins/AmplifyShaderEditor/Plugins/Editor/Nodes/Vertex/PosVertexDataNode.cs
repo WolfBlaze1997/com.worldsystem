@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -8,10 +8,34 @@ using UnityEditor;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Vertex Position", "Vertex Data", "Vertex position vector in object space, can be used in both local vertex offset and fragment outputs" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Vertex Position"
+#else
+"顶点位置"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vertex Data"
+#else
+"顶点数据"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Vertex position vector in object space, can be used in both local vertex offset and fragment outputs"
+#else
+"对象空间中的顶点位置向量，可用于局部顶点偏移和片段输出"
+#endif
+)]
 	public sealed class PosVertexDataNode : VertexDataNode
 	{
-		private const string PropertyLabel = "Size";
+		private const string PropertyLabel = 
+#if !WB_LANGUAGE_CHINESE
+"Size"
+#else
+"尺寸"
+#endif
+;
 		private readonly string[] SizeLabels = { "XYZ", "XYZW" };
 
 		[SerializeField]
@@ -89,34 +113,34 @@ namespace AmplifyShaderEditor
 			string vertexPosition = GeneratorUtils.GenerateVertexPosition( ref dataCollector, UniqueId, sizeType );
 			return GetOutputVectorItem( 0, outputId, vertexPosition );
 
-			//if ( dataCollector.PortCategory == MasterNodePortCategory.Vertex || dataCollector.PortCategory == MasterNodePortCategory.Tessellation )
-			//{
-			//	string vertexVar = base.GenerateShaderForOutput( 0, ref dataCollector, ignoreLocalVar );
-			//	if ( outputId != 0 )
-			//	{
-			//		return GetOutputVectorItem( 0, outputId, vertexVar );
-			//	}
-			//	else if ( m_sizeOption == 0 )
-			//	{
-			//		vertexVar += ".xyz";
-			//	}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 
-			//	return vertexVar;
-			//}
-			//else
-			//{
+			
+			
+			
+			
 
-			//	string vertexVar = GeneratorUtils.GenerateVertexPositionOnFrag( ref dataCollector, UniqueId, m_currentPrecisionType );
-			//	if ( outputId != 0 )
-			//	{
-			//		return GetOutputVectorItem( 0, outputId, vertexVar );
-			//	}
-			//	else if ( m_sizeOption == 0 )
-			//	{
-			//		vertexVar += ".xyz";
-			//	}
-			//	return GetOutputVectorItem( 0, outputId, vertexVar );
-			//}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		}
 
 		public override void ReadFromString( ref string[] nodeParams )

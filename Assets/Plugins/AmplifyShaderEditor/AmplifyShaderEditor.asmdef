@@ -1,7 +1,9 @@
 {
     "name": "AmplifyShaderEditor",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:054a673ff1bb9c34d9709032ada6707a"
+    ],
     "includePlatforms": [
         "Editor"
     ],

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -15,10 +15,34 @@ namespace AmplifyShaderEditor
 	};
 
 	[Serializable]
-	[NodeAttributes( "Parallax Occlusion Mapping", "UV Coordinates", "Calculates offseted UVs for parallax occlusion mapping" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Parallax Occlusion Mapping"
+#else
+"视差遮蔽贴图技术"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"UV Coordinates"
+#else
+"UV坐标"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Calculates offseted UVs for parallax occlusion mapping"
+#else
+"计算视差遮挡贴图的偏移UV"
+#endif
+)]
 	public sealed class ParallaxOcclusionMappingNode : ParentNode
 	{
-		private const string ArrayIndexStr = "Array Index";
+		private const string ArrayIndexStr = 
+#if !WB_LANGUAGE_CHINESE
+"Array Index"
+#else
+"数组索引"
+#endif
+;
 		private const string Tex3DSliceStr = "Tex3D Slice";
 
 		private readonly string[] m_channelTypeStr = { "Red Channel", "Green Channel", "Blue Channel", "Alpha Channel" };
@@ -27,11 +51,11 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private int m_selectedChannelInt = 0;
 
-		//[SerializeField]
-		//private int m_minSamples = 8;
+		
+		
 
-		//[SerializeField]
-		//private int m_maxSamples = 16;
+		
+		
 		[SerializeField]
 		private InlineProperty m_inlineMinSamples = new InlineProperty( 8 );
 
@@ -62,7 +86,7 @@ namespace AmplifyShaderEditor
 		private string m_functionHeader = "POM( {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14} )";
 		private string m_functionBody = string.Empty;
 
-		//private const string WorldDirVarStr = "worldViewDir";
+		
 		
 		private InputPort m_uvPort;
 		private InputPort m_texPort;
@@ -84,15 +108,63 @@ namespace AmplifyShaderEditor
 		{
 			base.CommonInit( uniqueId );
 			AddInputPort( WirePortDataType.FLOAT2, false, "UV",-1,MasterNodePortCategory.Fragment,0);
-			AddInputPort( WirePortDataType.SAMPLER2D, false, "Tex", -1, MasterNodePortCategory.Fragment, 1 );
+			AddInputPort( WirePortDataType.SAMPLER2D, false, 
+#if !WB_LANGUAGE_CHINESE
+"Tex"
+#else
+"特克斯"
+#endif
+, -1, MasterNodePortCategory.Fragment, 1 );
 			AddInputPort( WirePortDataType.SAMPLERSTATE, false, "SS", -1, MasterNodePortCategory.Fragment, 7 );
-			AddInputPort( WirePortDataType.FLOAT, false, "Scale", -1, MasterNodePortCategory.Fragment, 2 );
-			AddInputPort( WirePortDataType.FLOAT3, false, "ViewDir (tan)", -1, MasterNodePortCategory.Fragment, 3 );
-			AddInputPort( WirePortDataType.INT, false, "Min Samples", -1, MasterNodePortCategory.Fragment, 8 );
-			AddInputPort( WirePortDataType.INT, false, "Max Samples", -1, MasterNodePortCategory.Fragment, 9 );
-			AddInputPort( WirePortDataType.INT, false, "Sidewall Steps", -1, MasterNodePortCategory.Fragment, 10 );
-			AddInputPort( WirePortDataType.FLOAT, false, "Ref Plane", -1, MasterNodePortCategory.Fragment, 4 );
-			AddInputPort( WirePortDataType.FLOAT2, false, "Curvature", -1, MasterNodePortCategory.Fragment, 5 );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Scale"
+#else
+"规模"
+#endif
+, -1, MasterNodePortCategory.Fragment, 2 );
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"ViewDir (tan)"
+#else
+"ViewDir（棕褐色）"
+#endif
+, -1, MasterNodePortCategory.Fragment, 3 );
+			AddInputPort( WirePortDataType.INT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Min Samples"
+#else
+"最小样本数"
+#endif
+, -1, MasterNodePortCategory.Fragment, 8 );
+			AddInputPort( WirePortDataType.INT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Max Samples"
+#else
+"最大采样值"
+#endif
+, -1, MasterNodePortCategory.Fragment, 9 );
+			AddInputPort( WirePortDataType.INT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Sidewall Steps"
+#else
+"侧墙台阶"
+#endif
+, -1, MasterNodePortCategory.Fragment, 10 );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Ref Plane"
+#else
+"参考平面"
+#endif
+, -1, MasterNodePortCategory.Fragment, 4 );
+			AddInputPort( WirePortDataType.FLOAT2, false, 
+#if !WB_LANGUAGE_CHINESE
+"Curvature"
+#else
+"曲率"
+#endif
+, -1, MasterNodePortCategory.Fragment, 5 );
 			AddInputPort( WirePortDataType.FLOAT, false, ArrayIndexStr, -1, MasterNodePortCategory.Fragment, 6 );
 
 			AddOutputPort( WirePortDataType.FLOAT2, "Out" );
@@ -147,22 +219,52 @@ namespace AmplifyShaderEditor
 			base.DrawProperties();
 
 			EditorGUI.BeginChangeCheck();
-			m_selectedChannelInt = EditorGUILayoutPopup( "Channel", m_selectedChannelInt, m_channelTypeStr );
+			m_selectedChannelInt = EditorGUILayoutPopup( 
+#if !WB_LANGUAGE_CHINESE
+"Channel"
+#else
+"频道"
+#endif
+, m_selectedChannelInt, m_channelTypeStr );
 			if ( EditorGUI.EndChangeCheck() )
 			{
 				UpdateSampler();
 			}
-			//EditorGUIUtility.labelWidth = 105;
+			
 
-			//m_minSamples = EditorGUILayoutIntSlider( "Min Samples", m_minSamples, 1, 128 );
+			
 			UndoParentNode inst = this;
 			EditorGUI.BeginDisabledGroup( m_minSamplesPort.IsConnected );
-			m_inlineMinSamples.CustomDrawer( ref inst, ( x ) => { m_inlineMinSamples.IntValue = EditorGUILayoutIntSlider( "Min Samples", m_inlineMinSamples.IntValue, 1, 128 ); }, "Min Samples" );
+			m_inlineMinSamples.CustomDrawer( ref inst, ( x ) => { m_inlineMinSamples.IntValue = EditorGUILayoutIntSlider( 
+#if !WB_LANGUAGE_CHINESE
+"Min Samples"
+#else
+"最小样本数"
+#endif
+, m_inlineMinSamples.IntValue, 1, 128 ); }, 
+#if !WB_LANGUAGE_CHINESE
+"Min Samples"
+#else
+"最小样本数"
+#endif
+ );
 			EditorGUI.EndDisabledGroup();
 
-			//m_maxSamples = EditorGUILayoutIntSlider( "Max Samples", m_maxSamples, 1, 128 );
+			
 			EditorGUI.BeginDisabledGroup( m_maxSamplesPort.IsConnected );
-			m_inlineMaxSamples.CustomDrawer( ref inst, ( x ) => { m_inlineMaxSamples.IntValue = EditorGUILayoutIntSlider( "Max Samples", m_inlineMaxSamples.IntValue, 1, 128 ); }, "Max Samples" );
+			m_inlineMaxSamples.CustomDrawer( ref inst, ( x ) => { m_inlineMaxSamples.IntValue = EditorGUILayoutIntSlider( 
+#if !WB_LANGUAGE_CHINESE
+"Max Samples"
+#else
+"最大采样值"
+#endif
+, m_inlineMaxSamples.IntValue, 1, 128 ); }, 
+#if !WB_LANGUAGE_CHINESE
+"Max Samples"
+#else
+"最大采样值"
+#endif
+ );
 			EditorGUI.EndDisabledGroup();
 
 			EditorGUI.BeginDisabledGroup( m_sidewallStepsPort.IsConnected );
@@ -176,27 +278,45 @@ namespace AmplifyShaderEditor
 			EditorGUI.BeginDisabledGroup( m_refPlanePort.IsConnected );
 			m_defaultRefPlane = EditorGUILayoutSlider( "Default Ref Plane", m_defaultRefPlane, 0, 1 );
 			EditorGUI.EndDisabledGroup();
-			//EditorGUIUtility.labelWidth = m_textLabelWidth;
+			
 
 			if( m_arrayIndexPort.Visible && !m_arrayIndexPort.IsConnected )
 			{
-				m_arrayIndexPort.FloatInternalData = EditorGUILayoutFloatField( "Array Index", m_arrayIndexPort.FloatInternalData );
+				m_arrayIndexPort.FloatInternalData = EditorGUILayoutFloatField( 
+#if !WB_LANGUAGE_CHINESE
+"Array Index"
+#else
+"数组索引"
+#endif
+, m_arrayIndexPort.FloatInternalData );
 			}
 
-			//float cached = EditorGUIUtility.labelWidth;
-			//EditorGUIUtility.labelWidth = 70;
-			m_clipEnds = EditorGUILayoutToggle( "Clip Edges", m_clipEnds );
-			//EditorGUIUtility.labelWidth = -1;
-			//EditorGUIUtility.labelWidth = 100;
-			//EditorGUILayout.BeginHorizontal();
-			//EditorGUI.BeginDisabledGroup( !m_clipEnds );
-			//m_tilling = EditorGUILayout.Vector2Field( string.Empty, m_tilling );
-			//EditorGUI.EndDisabledGroup();
-			//EditorGUILayout.EndHorizontal();
-			//EditorGUIUtility.labelWidth = cached;
+			
+			
+			m_clipEnds = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Clip Edges"
+#else
+"夹边"
+#endif
+, m_clipEnds );
+			
+			
+			
+			
+			
+			
+			
+			
 
 			EditorGUI.BeginChangeCheck();
-			m_useCurvature = EditorGUILayoutToggle( "Clip Silhouette", m_useCurvature );
+			m_useCurvature = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Clip Silhouette"
+#else
+"剪裁轮廓"
+#endif
+, m_useCurvature );
 			if ( EditorGUI.EndChangeCheck() )
 			{
 				UpdateCurvaturePort();
@@ -206,10 +326,31 @@ namespace AmplifyShaderEditor
 			m_CurvatureVector = EditorGUILayoutVector2Field( string.Empty, m_CurvatureVector );
 			EditorGUI.EndDisabledGroup();
 
-			EditorGUILayout.HelpBox( "WARNING:\nTex must be connected to a Texture Object for this node to work\n\nMin and Max samples:\nControl the minimum and maximum number of layers extruded\n\nSidewall Steps:\nThe number of interpolations done to smooth the extrusion result on the side of the layer extrusions, min is used at steep angles while max is used at orthogonal angles\n\n"+
-				"Ref Plane:\nReference plane lets you adjust the starting reference height, 0 = deepen ground, 1 = raise ground, any value above 0 might cause distortions at higher angles\n\n"+
-				"Clip Edges:\nThis will clip the ends of your uvs to give a more 3D look at the edges. It'll use the tilling given by your Heightmap input.\n\n"+
-				"Clip Silhouette:\nTurning this on allows you to use the UV coordinates to clip the effect curvature in U or V axis, useful for cylinders, works best with 'Clip Edges' turned OFF", MessageType.None );
+			EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"WARNING:\nTex must be connected to a Texture Object for this node to work\n\nMin and Max samples:\nControl the minimum and maximum number of layers extruded\n\nSidewall Steps:\nThe number of interpolations done to smooth the extrusion result on the side of the layer extrusions, min is used at steep angles while max is used at orthogonal angles\n\n"
+#else
+"警告：\nEx必须连接到纹理对象才能使此节点工作\n\n最小和最大采样数：\n控制挤出的最小和最大层数\n\n脱蜡步骤：\n为平滑层挤出侧的挤出结果而进行的插值次数，min用于陡角，Max用于正交角\n"
+#endif
++ 
+#if !WB_LANGUAGE_CHINESE
+"Ref Plane:\nReference plane lets you adjust the starting reference height, 0 = deepen ground, 1 = raise ground, any value above 0 might cause distortions at higher angles\n\n"
+#else
+"参考平面：\n参考平面允许您调整起始参考高度，0=加深地面，1=升高地面，任何大于0的值都可能导致更高角度的扭曲\n\n"
+#endif
++ 
+#if !WB_LANGUAGE_CHINESE
+"Clip Edges:\nThis will clip the ends of your uvs to give a more 3D look at the edges. It'll use the tilling given by your Heightmap input.\n\n"
+#else
+"剪切边缘：\n这将剪切您的作品的末端，以提供更3D的边缘外观。它将使用您的高度图输入给出的耕作。\n\n"
+#endif
++ 
+#if !WB_LANGUAGE_CHINESE
+"Clip Silhouette:\nTurning this on allows you to use the UV coordinates to clip the effect curvature in U or V axis, useful for cylinders, works best with 'Clip Edges' turned OFF"
+#else
+"剪裁轮廓：\n启用此选项后，您可以使用UV坐标在U或V轴上剪裁效果曲率，这对圆柱体很有用，在关闭“剪裁边缘”的情况下效果最佳"
+#endif
+, MessageType.None );
 		}
 
 		private void UpdateIndexPort()
@@ -276,8 +417,8 @@ namespace AmplifyShaderEditor
 				else
 				{
 					viewDirTan = GeneratorUtils.GenerateViewDirection( ref dataCollector, UniqueId, ViewSpace.Tangent );
-					//dataCollector.AddToInput( UniqueId, SurfaceInputs.VIEW_DIR, m_currentPrecisionType );
-					//viewDirTan = Constants.InputVarStr + "." + UIUtils.GetInputValueFromType( SurfaceInputs.VIEW_DIR );
+					
+					
 				}
 			}
 			else
@@ -285,12 +426,12 @@ namespace AmplifyShaderEditor
 				viewDirTan = m_viewdirTanPort.GeneratePortInstructions( ref dataCollector );
 			}
 
-			// min/max samples
+			
 			string minSamples = m_minSamplesPort.IsConnected ? m_minSamplesPort.GeneratePortInstructions( ref dataCollector ) : m_inlineMinSamples.GetValueOrProperty( false );
 			string maxSamples = m_maxSamplesPort.IsConnected ? m_maxSamplesPort.GeneratePortInstructions( ref dataCollector ) : m_inlineMaxSamples.GetValueOrProperty( false );
 			string sidewallSteps = m_sidewallStepsPort.IsConnected ? m_sidewallStepsPort.GeneratePortInstructions( ref dataCollector ) : m_sidewallSteps.ToString();
 
-			//generate world normal
+			
 			string normalWorld = string.Empty;
 			if ( dataCollector.IsTemplate )
 			{
@@ -327,8 +468,8 @@ namespace AmplifyShaderEditor
 
 			string localVarName = "OffsetPOM" + OutputId;
 			string textCoordsST = string.Empty;
-			//string textureSTType = dataCollector.IsSRP ? "float4 " : "uniform float4 ";
-			//dataCollector.AddToUniforms( UniqueId, textureSTType + texture +"_ST;");
+			
+			
 			if( m_texCoordsHelper == null )
 			{
 				m_texCoordsHelper = CreateInstance<Vector4Node>();
@@ -349,7 +490,7 @@ namespace AmplifyShaderEditor
 			m_texCoordsHelper.ResetOutputLocals();
 			m_texCoordsHelper.SetRawPropertyName( texture + "_ST" );
 			textCoordsST = m_texCoordsHelper.GenerateShaderForOutput( 0, ref dataCollector, false );
-			//////
+			
 
 			string textureArgs = string.Empty;
 			if( outsideGraph.SamplingMacros || m_texPort.DataType == WirePortDataType.SAMPLER2DARRAY )
@@ -376,7 +517,7 @@ namespace AmplifyShaderEditor
 			{
 				textureArgs = texture;
 			}
-			//string functionResult = dataCollector.AddFunctions( m_functionHeader, m_functionBody, ( (m_pomTexType == POMTexTypes.TextureArray) ? "UNITY_PASS_TEX2DARRAY(" + texture + ")": texture), textcoords, dx, dy, normalWorld, worldViewDir, viewDirTan, m_minSamples, m_maxSamples, scale, refPlane, texture+"_ST.xy", curvature, arrayIndex );
+			
 			string functionResult = dataCollector.AddFunctions( m_functionHeader, m_functionBody, textureArgs, textcoords, dx, dy, normalWorld, worldViewDir, viewDirTan, minSamples, maxSamples, sidewallSteps, scale, refPlane, textCoordsST + ".xy", curvature, arrayIndex );
 
 			dataCollector.AddLocalVariable( UniqueId, CurrentPrecisionType, m_pomUVPort.DataType, localVarName, functionResult );
@@ -415,8 +556,8 @@ namespace AmplifyShaderEditor
 			
 			IOUtils.AddFunctionLine( ref m_functionBody, "float3 result = 0;" );
 			IOUtils.AddFunctionLine( ref m_functionBody, "int stepIndex = 0;" );
-			//IOUtils.AddFunctionLine( ref m_functionBody, "int numSteps = ( int )( minSamples + dot( viewWorld, normalWorld ) * ( maxSamples - minSamples ) );" );
-			//IOUtils.AddFunctionLine( ref m_functionBody, "int numSteps = ( int )lerp( maxSamples, minSamples, length( fwidth( uvs ) ) * 10 );" );
+			
+			
 			IOUtils.AddFunctionLine( ref m_functionBody, "int numSteps = ( int )lerp( (float)maxSamples, (float)minSamples, saturate( dot( normalWorld, viewWorld ) ) );" );
 			IOUtils.AddFunctionLine( ref m_functionBody, "float layerHeight = 1.0 / numSteps;" );
 			IOUtils.AddFunctionLine( ref m_functionBody, "float2 plane = parallax * ( viewDirTan.xy / viewDirTan.z );" );
@@ -559,8 +700,8 @@ namespace AmplifyShaderEditor
 		{
 			base.ReadFromString( ref nodeParams );
 			m_selectedChannelInt = Convert.ToInt32( GetCurrentParam( ref nodeParams ) );
-			//m_minSamples = Convert.ToInt32( GetCurrentParam( ref nodeParams ) );
-			//m_maxSamples = Convert.ToInt32( GetCurrentParam( ref nodeParams ) );
+			
+			
 			if( UIUtils.CurrentShaderVersion() < 15406 )
 			{
 				m_inlineMinSamples.IntValue = Convert.ToInt32( GetCurrentParam( ref nodeParams ) );
@@ -593,18 +734,18 @@ namespace AmplifyShaderEditor
 
 			if( UIUtils.CurrentShaderVersion() > 13103 )
 			{
-				//if( UIUtils.CurrentShaderVersion() < 15307 )
-				//{
-				//	GetCurrentParam( ref nodeParams );
-				//	//bool arrayIndexVisible = false;
-				//	//arrayIndexVisible = Convert.ToBoolean( GetCurrentParam( ref nodeParams ) );
-				//	//m_pomTexType = arrayIndexVisible ? POMTexTypes.TextureArray : POMTexTypes.Texture2D;
-				//}
-				//else
-				//{
-				//	GetCurrentParam( ref nodeParams );
-				//	//m_pomTexType = (POMTexTypes)Enum.Parse( typeof(POMTexTypes), GetCurrentParam( ref nodeParams ) );
-				//}
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				if( UIUtils.CurrentShaderVersion() <= 18201 )
 				{
 					GetCurrentParam( ref nodeParams );
@@ -613,7 +754,7 @@ namespace AmplifyShaderEditor
 			}
 
 			UpdateSampler();
-			//GeneratePOMfunction( string.Empty );
+			
 			UpdateCurvaturePort();
 		}
 
@@ -621,8 +762,8 @@ namespace AmplifyShaderEditor
 		{
 			base.WriteToString( ref nodeInfo, ref connectionsInfo );
 			IOUtils.AddFieldValueToString( ref nodeInfo, m_selectedChannelInt );
-			//IOUtils.AddFieldValueToString( ref nodeInfo, m_minSamples );
-			//IOUtils.AddFieldValueToString( ref nodeInfo, m_maxSamples );
+			
+			
 			m_inlineMinSamples.WriteToString( ref nodeInfo );
 			m_inlineMaxSamples.WriteToString( ref nodeInfo );
 			IOUtils.AddFieldValueToString( ref nodeInfo, m_sidewallSteps );
@@ -632,14 +773,14 @@ namespace AmplifyShaderEditor
 			IOUtils.AddFieldValueToString( ref nodeInfo, m_tilling.x.ToString() + IOUtils.VECTOR_SEPARATOR + m_tilling.y.ToString() );
 			IOUtils.AddFieldValueToString( ref nodeInfo, m_useCurvature );
 			IOUtils.AddFieldValueToString( ref nodeInfo, IOUtils.Vector2ToString( m_CurvatureVector ) );
-			//IOUtils.AddFieldValueToString( ref nodeInfo, m_useTextureArray );
-			//IOUtils.AddFieldValueToString( ref nodeInfo, true );
+			
+			
 		}
 
 		public override void Destroy()
 		{
 			base.Destroy();
-			//Not calling m_texCoordsHelper.Destroy() on purpose so UIUtils does not incorrectly unregister stuff
+			
 			if( m_texCoordsHelper != null )
 			{
 				DestroyImmediate( m_texCoordsHelper );

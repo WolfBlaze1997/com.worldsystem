@@ -1,11 +1,29 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Position From Transform", "Matrix Operators", "Gets the position vector from a transformation matrix" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Position From Transform"
+#else
+"位置转换"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Matrix Operators"
+#else
+"矩阵运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Gets the position vector from a transformation matrix"
+#else
+"从变换矩阵中获取位置向量"
+#endif
+)]
 	public sealed class PosFromTransformMatrix : ParentNode
 	{
 		protected override void CommonInit( int uniqueId )

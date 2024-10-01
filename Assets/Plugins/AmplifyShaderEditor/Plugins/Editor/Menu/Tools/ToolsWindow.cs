@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -14,7 +14,7 @@ namespace AmplifyShaderEditor
 		Live,
 		OpenSourceCode,
 		CleanUnusedNodes,
-		//SelectShader,
+		
 		New,
 		Open,
 		Save,
@@ -61,11 +61,11 @@ namespace AmplifyShaderEditor
 	[Serializable]
 	public sealed class ToolsWindow : MenuParent
 	{
-		private static readonly Color RightIconsColorOff = new Color( 1f, 1f, 1f, 0.8f );
-		private static readonly Color LeftIconsColorOff = new Color( 1f, 1f, 1f, 0.5f );
+		private readonly static Color RightIconsColorOff = new Color( 1f, 1f, 1f, 0.8f );
+		private readonly static Color LeftIconsColorOff = new Color( 1f, 1f, 1f, 0.5f );
 
-		private static readonly Color RightIconsColorOn = new Color( 1f, 1f, 1f, 1.0f );
-		private static readonly Color LeftIconsColorOn = new Color( 1f, 1f, 1f, 0.8f );
+		private readonly static Color RightIconsColorOn = new Color( 1f, 1f, 1f, 1.0f );
+		private readonly static Color LeftIconsColorOn = new Color( 1f, 1f, 1f, 0.8f );
 
 		private const float TabY = 9;
 		private const float TabX = 5;
@@ -78,30 +78,30 @@ namespace AmplifyShaderEditor
 
 
 		public ToolsMenuButton.ToolButtonPressed ToolButtonPressedEvt;
-		//private GUIStyle m_toolbarButtonStyle;
+		
 		private GUIStyle m_toggleStyle;
 		private GUIStyle m_borderStyle;
 
-		// left
+		
 		private ToolsMenuButton m_updateButton;
 		private ToolsMenuButton m_liveButton;
 		private ToolsMenuButton m_openSourceCodeButton;
 
-		//middle right
+		
 		private ToolsMenuButton m_cleanUnusedNodesButton;
 		private ToolsMenuButton m_focusOnMasterNodeButton;
 		private ToolsMenuButton m_focusOnSelectionButton;
 
-		// right
+		
 		private ToolsMenuButton m_shareButton;
 		private ToolsMenuButton m_takeScreenshotButton;
 		private ToolsMenuButton m_showInfoWindowButton;
 
-		// hidden
+		
 		private ToolsMenuButton m_showTipsWindowButton;
 		private ToolsMenuButton m_showConsoleWindowButton;
 
-		//Used for collision detection to invalidate inputs on graph area
+		
 		private Rect m_areaLeft = new Rect( 0, 0, 140, 40 );
 		private Rect m_areaRight = new Rect( 0, 0, 75, 40 );
 		private Rect m_boxRect;
@@ -110,7 +110,7 @@ namespace AmplifyShaderEditor
 		public const double InactivityRefreshTime = 0.25;
 		private int m_currentSelected = 0;
 
-		//Search Bar
+		
 		private const string SearchBarId = "ASE_SEARCH_BAR";
 		private bool m_searchBarVisible = false;
 		private bool m_selectSearchBarTextfield = false;
@@ -120,59 +120,125 @@ namespace AmplifyShaderEditor
 		private string m_searchBarValue = string.Empty;
 		private List<ParentNode> m_searchResultNodes = new List<ParentNode>();
 
-		// width and height are between [0,1] and represent a percentage of the total screen area
+		
 		public ToolsWindow( AmplifyShaderEditorWindow parentWindow ) : base( parentWindow, 0, 0, 0, 64, "Tools", MenuAnchor.TOP_LEFT, MenuAutoSize.NONE )
 		{
-			m_updateButton = new ToolsMenuButton( m_parentWindow, ToolButtonType.Update, 0, 0, -1, -1, IOUtils.UpdateOutdatedGUID, string.Empty, "Create and apply shader to material.", 5 );
+			m_updateButton = new ToolsMenuButton( m_parentWindow, ToolButtonType.Update, 0, 0, -1, -1, IOUtils.UpdateOutdatedGUID, string.Empty, 
+#if !WB_LANGUAGE_CHINESE
+"Create and apply shader to material."
+#else
+"创建着色器并将其应用于材质。"
+#endif
+, 5 );
 			m_updateButton.ToolButtonPressedEvt += OnButtonPressedEvent;
 			m_updateButton.AddState( IOUtils.UpdateOFFGUID );
 			m_updateButton.AddState( IOUtils.UpdateUpToDatedGUID );
 
-			m_liveButton = new ToolsMenuButton( m_parentWindow, ToolButtonType.Live, 0, 0, -1, -1, IOUtils.LiveOffGUID, string.Empty, "Automatically saves shader when canvas is changed.", 50 );
+			m_liveButton = new ToolsMenuButton( m_parentWindow, ToolButtonType.Live, 0, 0, -1, -1, IOUtils.LiveOffGUID, string.Empty, 
+#if !WB_LANGUAGE_CHINESE
+"Automatically saves shader when canvas is changed."
+#else
+"画布更改时自动保存着色器。"
+#endif
+, 50 );
 			m_liveButton.ToolButtonPressedEvt += OnButtonPressedEvent;
 			m_liveButton.AddState( IOUtils.LiveOnGUID );
 			m_liveButton.AddState( IOUtils.LivePendingGUID );
 
-			//ToolsMenuButton cleanUnusedNodesButton = new ToolsMenuButton( m_parentWindow, ToolButtonType.CleanUnusedNodes, 0, 0, -1, -1, IOUtils.CleanupOFFGUID, string.Empty, "Remove all nodes not connected to the master node.", 77 );
-			//cleanUnusedNodesButton.ToolButtonPressedEvt += OnButtonPressedEvent;
-			//cleanUnusedNodesButton.AddState( IOUtils.CleanUpOnGUID );
-			//m_list[ ( int ) ToolButtonType.CleanUnusedNodes ] = cleanUnusedNodesButton;
+			
+			
+			
+			
 
-			m_openSourceCodeButton = new ToolsMenuButton( m_parentWindow, ToolButtonType.OpenSourceCode, 0, 0, -1, -1, IOUtils.OpenSourceCodeOFFGUID, string.Empty, "Open shader file in your default shader editor.", 80, false );
+			m_openSourceCodeButton = new ToolsMenuButton( m_parentWindow, ToolButtonType.OpenSourceCode, 0, 0, -1, -1, IOUtils.OpenSourceCodeOFFGUID, string.Empty, 
+#if !WB_LANGUAGE_CHINESE
+"Open shader file in your default shader editor."
+#else
+"在默认着色器编辑器中打开着色器文件。"
+#endif
+, 80, false );
 			m_openSourceCodeButton.ToolButtonPressedEvt += OnButtonPressedEvent;
 			m_openSourceCodeButton.AddState( IOUtils.OpenSourceCodeONGUID );
 
 
-			// middle right
-			m_cleanUnusedNodesButton = new ToolsMenuButton( m_parentWindow, ToolButtonType.CleanUnusedNodes, 0, 0, -1, -1, IOUtils.CleanupOFFGUID, string.Empty, "Remove all nodes not connected to the master node.", 77 );
+			
+			m_cleanUnusedNodesButton = new ToolsMenuButton( m_parentWindow, ToolButtonType.CleanUnusedNodes, 0, 0, -1, -1, IOUtils.CleanupOFFGUID, string.Empty, 
+#if !WB_LANGUAGE_CHINESE
+"Remove all nodes not connected to the master node."
+#else
+"删除所有未连接到主节点的节点。"
+#endif
+, 77 );
 			m_cleanUnusedNodesButton.ToolButtonPressedEvt += OnButtonPressedEvent;
 			m_cleanUnusedNodesButton.AddState( IOUtils.CleanUpOnGUID );
 
-			m_focusOnMasterNodeButton = new ToolsMenuButton( m_parentWindow, ToolButtonType.FocusOnMasterNode, 0, 0, -1, -1, IOUtils.FocusNodeGUID, string.Empty, "Focus on active master node.", -1, false );
+			m_focusOnMasterNodeButton = new ToolsMenuButton( m_parentWindow, ToolButtonType.FocusOnMasterNode, 0, 0, -1, -1, IOUtils.FocusNodeGUID, string.Empty, 
+#if !WB_LANGUAGE_CHINESE
+"Focus on active master node."
+#else
+"关注活动主节点。"
+#endif
+, -1, false );
 			m_focusOnMasterNodeButton.ToolButtonPressedEvt += OnButtonPressedEvent;
 
-			m_focusOnSelectionButton = new ToolsMenuButton( m_parentWindow, ToolButtonType.FocusOnSelection, 0, 0, -1, -1, IOUtils.FitViewGUID, string.Empty, "Focus on selection or fit to screen if none selected." );
+			m_focusOnSelectionButton = new ToolsMenuButton( m_parentWindow, ToolButtonType.FocusOnSelection, 0, 0, -1, -1, IOUtils.FitViewGUID, string.Empty, 
+#if !WB_LANGUAGE_CHINESE
+"Focus on selection or fit to screen if none selected."
+#else
+"专注于选择，如果没有选择，则适合屏幕。"
+#endif
+);
 			m_focusOnSelectionButton.ToolButtonPressedEvt += OnButtonPressedEvent;
 
 
-			// right
-			m_shareButton = new ToolsMenuButton( m_parentWindow, ToolButtonType.Share, 0, 0, -1, -1, IOUtils.ShareOFFGUID, string.Empty, "Share selection", 100 );
+			
+			m_shareButton = new ToolsMenuButton( m_parentWindow, ToolButtonType.Share, 0, 0, -1, -1, IOUtils.ShareOFFGUID, string.Empty, 
+#if !WB_LANGUAGE_CHINESE
+"Share selection"
+#else
+"股份选择"
+#endif
+, 100 );
 			m_shareButton.ToolButtonPressedEvt += OnButtonPressedEvent;
 			m_shareButton.AddState( IOUtils.ShareONGUID );
 
-			m_takeScreenshotButton = new ToolsMenuButton( m_parentWindow, ToolButtonType.TakeScreenshot, 0, 0, -1, -1, IOUtils.TakeScreenshotOFFGUID, string.Empty, "Take ScreenShot (WINDOWS ONLY).", 100 );
+			m_takeScreenshotButton = new ToolsMenuButton( m_parentWindow, ToolButtonType.TakeScreenshot, 0, 0, -1, -1, IOUtils.TakeScreenshotOFFGUID, string.Empty, 
+#if !WB_LANGUAGE_CHINESE
+"Take ScreenShot (WINDOWS ONLY)."
+#else
+"拍摄屏幕截图（仅限WINDOWS）。"
+#endif
+, 100 );
 			m_takeScreenshotButton.ToolButtonPressedEvt += OnButtonPressedEvent;
 			m_takeScreenshotButton.AddState( IOUtils.TakeScreenshotONGUID );
 
-			m_showInfoWindowButton = new ToolsMenuButton( m_parentWindow, ToolButtonType.ShowInfoWindow, 0, 0, -1, -1, IOUtils.ShowInfoWindowGUID, string.Empty, "Open Helper Window." );
+			m_showInfoWindowButton = new ToolsMenuButton( m_parentWindow, ToolButtonType.ShowInfoWindow, 0, 0, -1, -1, IOUtils.ShowInfoWindowGUID, string.Empty, 
+#if !WB_LANGUAGE_CHINESE
+"Open Helper Window."
+#else
+"打开助手窗口。"
+#endif
+);
 			m_showInfoWindowButton.ToolButtonPressedEvt += OnButtonPressedEvent;
 
 
-			// hidden
-			m_showTipsWindowButton = new ToolsMenuButton( m_parentWindow, ToolButtonType.ShowTipsWindow, 0, 0, -1, -1, IOUtils.ShowTipsWindowGUID, string.Empty, "Open Quick Tips!" );
+			
+			m_showTipsWindowButton = new ToolsMenuButton( m_parentWindow, ToolButtonType.ShowTipsWindow, 0, 0, -1, -1, IOUtils.ShowTipsWindowGUID, string.Empty, 
+#if !WB_LANGUAGE_CHINESE
+"Open Quick Tips!"
+#else
+"打开快速提示！"
+#endif
+);
 			m_showTipsWindowButton.ToolButtonPressedEvt += OnButtonPressedEvent;
 
-			m_showConsoleWindowButton = new ToolsMenuButton( m_parentWindow, ToolButtonType.ShowConsole, 0, 0, -1, -1, IOUtils.ShowConsoleWindowGUID, string.Empty, "Show internal console", 74 );
+			m_showConsoleWindowButton = new ToolsMenuButton( m_parentWindow, ToolButtonType.ShowConsole, 0, 0, -1, -1, IOUtils.ShowConsoleWindowGUID, string.Empty, 
+#if !WB_LANGUAGE_CHINESE
+"Show internal console"
+#else
+"显示内部控制台"
+#endif
+, 74 );
 			m_showConsoleWindowButton.ToolButtonPressedEvt += OnButtonPressedEvent;
 			m_showConsoleWindowButton.AddState( IOUtils.ShowConsoleWindowGUID );
 
@@ -187,11 +253,11 @@ namespace AmplifyShaderEditor
 		override public void Destroy()
 		{
 			base.Destroy();
-			//for ( int i = 0; i < m_list.Length; i++ )
-			//{
-			//	m_list[ i ].Destroy();
-			//}
-			//m_list = null;
+			
+			
+			
+			
+			
 
 			m_searchResultNodes.Clear();
 			m_searchResultNodes = null;
@@ -244,22 +310,22 @@ namespace AmplifyShaderEditor
 			m_areaLeft.x = m_transformedArea.x + TabX;
 			m_areaRight.x = m_transformedArea.x + m_transformedArea.width - 75 - TabX;
 
-			//if ( m_toolbarButtonStyle == null )
-			//{
-			//	m_toolbarButtonStyle = new GUIStyle( UIUtils.Button );
-			//	m_toolbarButtonStyle.fixedWidth = 100;
-			//}
+			
+			
+			
+			
+			
 
 			if ( m_toggleStyle == null )
 			{
 				m_toggleStyle = UIUtils.Toggle;
 			}
 
-			//for ( int i = 0; i < m_list.Length; i++ )
-			//{
-			//	GUI.color = m_list[ i ].IsInside( mousePosition ) ? LeftIconsColorOn : LeftIconsColorOff;
-			//	m_list[ i ].Draw( TabX + m_transformedArea.x + m_list[ i ].ButtonSpacing, TabY );
-			//}
+			
+			
+			
+			
+			
 			GUI.color = m_updateButton.IsInside( mousePosition ) ? LeftIconsColorOn : LeftIconsColorOff;
 			m_updateButton.Draw( TabX + m_transformedArea.x + m_updateButton.ButtonSpacing, TabY );
 
@@ -347,10 +413,10 @@ namespace AmplifyShaderEditor
 			{
 				m_selectSearchBarTextfield = false;
 				EditorGUI.FocusTextInControl( SearchBarId );
-				//GUI.FocusControl( SearchBarId );
+				
 			}
 
-			//if ( Event.current.control && Event.current.isKey && Event.current.keyCode == KeyCode.F && Event.current.type == EventType.KeyDown )
+			
 			if( m_parentWindow.CurrentCommandName.Equals("Find") )
 			{
 				if ( !m_searchBarVisible )
@@ -382,11 +448,11 @@ namespace AmplifyShaderEditor
 			m_showInfoWindowButton.Draw( m_transformedArea.x + m_transformedArea.width - 25 - TabX, TabY );
 
 
-			//GUI.color = m_showTipsWindowButton.IsInside( mousePosition ) ? RightIconsColorOn : RightIconsColorOff;
-			//m_showTipsWindowButton.Draw( m_transformedArea.x + m_transformedArea.width - 190 - TabX, TabY );
+			
+			
 
-			//GUI.color = m_showConsoleWindowButton.IsInside( mousePosition ) ? RightIconsColorOn : RightIconsColorOff;
-			//m_showConsoleWindowButton.Draw( m_transformedArea.x + m_transformedArea.width - 195 - TabX, TabY );
+			
+			
 
 			GUI.color = bufferedColor;
 
@@ -480,7 +546,7 @@ namespace AmplifyShaderEditor
 				}
 				break;
 				case ToolButtonType.CleanUnusedNodes:
-				//case eToolButtonType.SelectShader:
+				
 				{
 					m_cleanUnusedNodesButton.SetStateOnButton( state, tooltip );
 				}
@@ -550,7 +616,7 @@ namespace AmplifyShaderEditor
 				}
 				break;
 				case ToolButtonType.CleanUnusedNodes:
-				//case eToolButtonType.SelectShader:
+				
 				{
 					m_cleanUnusedNodesButton.SetStateOnButton( state );
 				}
@@ -600,8 +666,8 @@ namespace AmplifyShaderEditor
 			m_borderRect.height = graphAreaHeight;
 
 			int extra = m_searchBarVisible ? (int)m_searchBarSize.width + 20: 0;
-			//m_boxRect.xMax -= ( paletteWindow.IsMaximized ? 195 : 230 ) + extra;
-			//m_boxRect.xMin += nodeParametersWindow.IsMaximized ? 95 : 145;
+			
+			
 
 			UIUtils.ToolbarMainTitle.padding.right = ( paletteWindow.IsMaximized ? 195 : 230 ) + extra;
 			UIUtils.ToolbarMainTitle.padding.left = nodeParametersWindow.IsMaximized ? 110 : 145;

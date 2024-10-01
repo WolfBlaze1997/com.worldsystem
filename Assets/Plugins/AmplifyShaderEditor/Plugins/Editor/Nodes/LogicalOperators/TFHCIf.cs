@@ -1,8 +1,8 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
-//
-// Custom Node If
-// Donated by The Four Headed Cat - @fourheadedcat
+
+
+
+
+
 
 using UnityEngine;
 using System;
@@ -10,7 +10,31 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "If [Community]", "Logical Operators", "Compare A with B. If A is greater than B output the value of A > B port. If A is equal to B output the value of A == B port. If A is lower than B output the value of A < B port. Equal Threshold parameter will be used to check A == B adding and subtracting this value to A.", null, KeyCode.None, true, false, null, null, "The Four Headed Cat - @fourheadedcat" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"If [Community]"
+#else
+"如果[社区]"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Logical Operators"
+#else
+"逻辑运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Compare A with B. If A is greater than B output the value of A > B port. If A is equal to B output the value of A == B port. If A is lower than B output the value of A < B port. Equal Threshold parameter will be used to check A == B adding and subtracting this value to A."
+#else
+"将A与B进行比较。如果A大于B，则输出A>B端口的值。如果A等于B，则输入A==B端口的数值。如果A小于B，则显示A<B端口的价值。equal Threshold参数将用于检查A==B与A的加减关系。"
+#endif
+, null, KeyCode.None, true, false, null, null, 
+#if !WB_LANGUAGE_CHINESE
+"The Four Headed Cat - @fourheadedcat"
+#else
+"四头猫-@fourheaddcat"
+#endif
+)]
 	public sealed class TFHCIf : ParentNode
 	{
 		private WirePortDataType m_inputMainDataType = WirePortDataType.FLOAT;
@@ -24,7 +48,13 @@ namespace AmplifyShaderEditor
 			AddInputPort( WirePortDataType.FLOAT, false, "A > B" );
 			AddInputPort( WirePortDataType.FLOAT, false, "A == B" );
 			AddInputPort( WirePortDataType.FLOAT, false, "A < B" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Equal Threshold" );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Equal Threshold"
+#else
+"相等阈值"
+#endif
+);
 			AddOutputPort( WirePortDataType.FLOAT, Constants.EmptyPortValue );
 			m_textLabelWidth = 110;
 			m_useInternalPortData = true;
@@ -118,15 +148,15 @@ namespace AmplifyShaderEditor
 			string r3 = m_inputPorts[ 4 ].GenerateShaderForOutput( ref dataCollector, m_outputMainDataType, ignoreLocalvar, true );
 			string tr = m_inputPorts[ 5 ].GenerateShaderForOutput( ref dataCollector, m_inputMainDataType, ignoreLocalvar, true );
 
-			// No Equal Threshold parameter
-			//(a > b ? r1 : a == b ? r2 : r3 )      
-			//string strout = " ( " + a + " > " + b  + " ? " + r1 + " : " + a + " == " + b + " ? " + r2 + " : " +  r3 + " ) ";
+			
+			
+			
 
-			// With Equal Threshold parameter
-			// ( a - tr > b ? r1 : a - tr <= b && a + tr >= b ? r2 : r3 )
+			
+			
 			string strout = " ( " + a + " - " + tr + " > " + b + " ? " + r1 + " : " + a + " - " + tr + " <= " + b + " && " + a + " + " + tr + " >= " + b + " ? " + r2 + " : " + r3 + " ) ";
 
-			//Debug.Log( strout );
+			
 			return CreateOutputLocalVariable( 0, strout, ref dataCollector );
 		}
 	}

@@ -194,9 +194,9 @@ public static class WindowHelper
 		dockArea.RemoveTab( wnd );
 	}
 
-	/// <summary>
-	/// Docks the second window to the first window at the given position
-	/// </summary>
+	
+	
+	
 	public static void Dock( this EditorWindow wnd, EditorWindow other, DockPosition position )
 	{
 		var mousePosition = GetFakeMousePosition( wnd, position );
@@ -212,11 +212,11 @@ public static class WindowHelper
 	}
 
 
-	/// <summary>
-	/// Adds the the second window as a tab at the end of the first window tab list
-	/// </summary>
-	/// <param name="existingWindow"></param>
-	/// <param name="newWindow"></param>
+	
+	
+	
+	
+	
 	public static void AddTab( this EditorWindow existingWindow, EditorWindow newWindow )
 	{
 		var parent = new R_EditorWindow( existingWindow );
@@ -230,8 +230,8 @@ public static class WindowHelper
 	{
 		Vector2 mousePosition = Vector2.zero;
 
-		// The 20 is required to make the docking work.
-		// Smaller values might not work when faking the mouse position.
+		
+		
 		switch ( position )
 		{
 			case DockPosition.Left:

@@ -32,7 +32,7 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		public bool ReorderOnChange = false;
 
-		// Sampler Nodes registry
+		
 		[SerializeField]
 		private List<T> m_nodes;
 

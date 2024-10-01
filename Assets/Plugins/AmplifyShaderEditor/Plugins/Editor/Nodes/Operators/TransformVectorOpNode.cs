@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -17,7 +17,25 @@ namespace AmplifyShaderEditor
 	}
 
 	[Serializable]
-	[NodeAttributes( "Transform Vector", "Math Operators", "Transforma a vector into another", null, KeyCode.None, false )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Transform Vector"
+#else
+"变换矢量"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Transforma a vector into another"
+#else
+"将一个向量转换为另一个向量"
+#endif
+, null, KeyCode.None, false )]
 	public sealed class TransformVectorOpNode : ParentNode
 	{
 		[SerializeField]
@@ -52,10 +70,10 @@ namespace AmplifyShaderEditor
 		public override string GenerateShaderForOutput( int outputId,  ref MasterNodeDataCollector dataCollector, bool ignoreLocalvar )
 		{
 
-			//if ( !InputPorts[ 0 ].IsConnected )
-			//{
-			//	return UIUtils.NoConnection( this );
-			//}
+			
+			
+			
+			
 
 			string value = m_inputPorts[ 0 ].GeneratePortInstructions( ref dataCollector );
 			
@@ -74,15 +92,15 @@ namespace AmplifyShaderEditor
 						{
 							return value;
 						}
-						//case eCoordinateSpaces.Local:
-						//{
-						//}
-						//case eCoordinateSpaces.World:
-						//{
-						//}
-						//case eCoordinateSpaces.View:
-						//{
-						//}
+						
+						
+						
+						
+						
+						
+						
+						
+						
 					}
 				}
 				break;
@@ -114,9 +132,9 @@ namespace AmplifyShaderEditor
 				{
 					switch ( m_destination )
 					{
-						//case eCoordinateSpaces.Tangent:
-						//{
-						//}
+						
+						
+						
 						case CoordinateSpaces.Local:
 						{
 							return "mul( _World2Object , " + value + " )";

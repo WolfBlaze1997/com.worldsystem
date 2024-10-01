@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,13 @@ namespace AmplifyShaderEditor
 	[Serializable]
 	public class TemplateAdditionalParentHelper : TemplateModuleParent
 	{
-		private string NativeFoldoutStr = "Native";
+		private string NativeFoldoutStr = 
+#if !WB_LANGUAGE_CHINESE
+"Native"
+#else
+"原住民"
+#endif
+;
 
 		protected string m_helpBoxMessage = string.Empty;
 		private const float ShaderKeywordButtonLayoutWidth = 15;
@@ -67,7 +73,7 @@ namespace AmplifyShaderEditor
 		{
 			EditorGUILayout.Separator();
 
-			// Add keyword
+			
 			if( GUILayout.Button( string.Empty, UIUtils.PlusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 			{
 				m_additionalItems.Add( string.Empty );
@@ -75,7 +81,7 @@ namespace AmplifyShaderEditor
 				m_isDirty = true;
 			}
 
-			//Remove keyword
+			
 			if( GUILayout.Button( string.Empty, UIUtils.MinusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 			{
 				if( m_additionalItems.Count > 0 )
@@ -121,7 +127,7 @@ namespace AmplifyShaderEditor
 						m_isDirty = true;
 					}
 
-					// Add new port
+					
 					if( m_currentOwner.GUILayoutButton( string.Empty, UIUtils.PlusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 					{
 						m_additionalItems.Insert( i + 1, string.Empty );
@@ -129,7 +135,7 @@ namespace AmplifyShaderEditor
 						m_isDirty = true;
 					}
 
-					//Remove port
+					
 					if( m_currentOwner.GUILayoutButton( string.Empty, UIUtils.MinusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 					{
 						markedToDelete = i;

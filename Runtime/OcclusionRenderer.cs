@@ -10,6 +10,8 @@ namespace WorldSystem.Runtime
     public partial class OcclusionRenderer
     {
         
+        #region Gizmos相关
+        
 #if UNITY_EDITOR
         protected override void DrawGizmosSelected()
         {
@@ -76,12 +78,14 @@ namespace WorldSystem.Runtime
             }
         }
 #endif
+        #endregion
         
     }
     
     [ExecuteAlways]
     public partial class OcclusionRenderer : BaseModule
     {
+        
         #region 字段
         [LabelText("范围半径")][ReadOnly]
         public float effectRadius;
@@ -260,11 +264,7 @@ namespace WorldSystem.Runtime
         /// <param name="rendererDataList"></param>
         /// <param name="newData"></param>
         /// <returns></returns>
-        private int AddRendererDataToList(
-            UniversalRenderPipelineAsset asset,
-            ScriptableRendererData[] rendererDataList,
-            ScriptableRendererData newData
-        )
+        private int AddRendererDataToList(UniversalRenderPipelineAsset asset, ScriptableRendererData[] rendererDataList, ScriptableRendererData newData)
         {
             List<ScriptableRendererData> datas = new List<ScriptableRendererData>(rendererDataList);
             datas.Add(newData);
@@ -307,6 +307,7 @@ namespace WorldSystem.Runtime
         }
         
         #endregion
+        
         
     }
 }

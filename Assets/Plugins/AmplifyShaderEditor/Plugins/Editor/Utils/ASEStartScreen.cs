@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -21,36 +21,96 @@ namespace AmplifyShaderEditor
 			window.Show();
 		}
 
-		private static readonly string ChangeLogGUID = "580cccd3e608b7f4cac35ea46d62d429";
-		private static readonly string ResourcesGUID = "c0a0a980c9ba86345bc15411db88d34f";
-		private static readonly string BuiltInGUID = "e00e6f90ab8233e46a41c5e33917c642";
-		private static readonly string UniversalGUID = "a9d68dd8913f05d4d9ce75e7b40c6044";
-		private static readonly string HighDefinitionGUID = "d1c0b77896049554fa4b635531caf741";
+		private readonly static string ChangeLogGUID = "580cccd3e608b7f4cac35ea46d62d429";
+		private readonly static string ResourcesGUID = "c0a0a980c9ba86345bc15411db88d34f";
+		private readonly static string BuiltInGUID = "e00e6f90ab8233e46a41c5e33917c642";
+		private readonly static string UniversalGUID = "a9d68dd8913f05d4d9ce75e7b40c6044";
+		private readonly static string HighDefinitionGUID = "d1c0b77896049554fa4b635531caf741";
 
-		private static readonly string IconGUID = "2c6536772776dd84f872779990273bfc";
+		private readonly static string IconGUID = "2c6536772776dd84f872779990273bfc";
 
-		public static readonly string ChangelogURL = "https://amplify.pt/Banner/ASEchangelog.json";
+		public readonly static string ChangelogURL = "https://amplify.pt/Banner/ASEchangelog.json";
 
-		private static readonly string ManualURL = "http://wiki.amplify.pt/index.php?title=Unity_Products:Amplify_Shader_Editor/Manual";
-		private static readonly string BasicURL = "http://wiki.amplify.pt/index.php?title=Unity_Products:Amplify_Shader_Editor/Tutorials#Official_-_Basics";
-		private static readonly string BeginnerURL = "http://wiki.amplify.pt/index.php?title=Unity_Products:Amplify_Shader_Editor/Tutorials#Official_-_Beginner_Series";
-		private static readonly string NodesURL = "http://wiki.amplify.pt/index.php?title=Unity_Products:Amplify_Shader_Editor/Nodes";
-		private static readonly string SRPURL = "http://wiki.amplify.pt/index.php?title=Unity_Products:Amplify_Shader_Editor/Scriptable_Rendering_Pipeline";
-		private static readonly string FunctionsURL = "http://wiki.amplify.pt/index.php?title=Unity_Products:Amplify_Shader_Editor/Manual#Shader_Functions";
-		private static readonly string TemplatesURL = "http://wiki.amplify.pt/index.php?title=Unity_Products:Amplify_Shader_Editor/Templates";
-		private static readonly string APIURL = "http://wiki.amplify.pt/index.php?title=Unity_Products:Amplify_Shader_Editor/API";
+		private readonly static string ManualURL = "http://wiki.amplify.pt/index.php?title=Unity_Products:Amplify_Shader_Editor/Manual";
+		private readonly static string BasicURL = "http://wiki.amplify.pt/index.php?title=Unity_Products:Amplify_Shader_Editor/Tutorials#Official_-_Basics";
+		private readonly static string BeginnerURL = "http://wiki.amplify.pt/index.php?title=Unity_Products:Amplify_Shader_Editor/Tutorials#Official_-_Beginner_Series";
+		private readonly static string NodesURL = "http://wiki.amplify.pt/index.php?title=Unity_Products:Amplify_Shader_Editor/Nodes";
+		private readonly static string SRPURL = "http://wiki.amplify.pt/index.php?title=Unity_Products:Amplify_Shader_Editor/Scriptable_Rendering_Pipeline";
+		private readonly static string FunctionsURL = "http://wiki.amplify.pt/index.php?title=Unity_Products:Amplify_Shader_Editor/Manual#Shader_Functions";
+		private readonly static string TemplatesURL = "http://wiki.amplify.pt/index.php?title=Unity_Products:Amplify_Shader_Editor/Templates";
+		private readonly static string APIURL = "http://wiki.amplify.pt/index.php?title=Unity_Products:Amplify_Shader_Editor/API";
 
-		private static readonly string DiscordURL = "https://discordapp.com/invite/EdrVAP5";
-		private static readonly string ForumURL = "https://forum.unity.com/threads/best-tool-asset-store-award-amplify-shader-editor-node-based-shader-creation-tool.430959/";
+		private readonly static string DiscordURL = "https://discordapp.com/invite/EdrVAP5";
+		private readonly static string ForumURL = "https://forum.unity.com/threads/best-tool-asset-store-award-amplify-shader-editor-node-based-shader-creation-tool.430959/";
 
-		private static readonly string SiteURL = "http://amplify.pt/download/";
-		private static readonly string StoreURL = "https://assetstore.unity.com/packages/tools/visual-scripting/amplify-shader-editor-68570";
+		private readonly static string SiteURL = "http://amplify.pt/download/";
+		private readonly static string StoreURL = "https://assetstore.unity.com/packages/tools/visual-scripting/amplify-shader-editor-68570";
 
-		private static readonly GUIContent SamplesTitle = new GUIContent( "Shader Samples", "Import samples according to you project rendering pipeline" );
-		private static readonly GUIContent ResourcesTitle = new GUIContent( "Learning Resources", "Check the online wiki for various topics about how to use ASE with node examples and explanations" );
-		private static readonly GUIContent CommunityTitle = new GUIContent( "Community", "Need help? Reach us through our discord server or the official support Unity forum" );
-		private static readonly GUIContent UpdateTitle = new GUIContent( "Latest Update", "Check the lastest additions, improvements and bug fixes done to ASE" );
-		private static readonly GUIContent ASETitle = new GUIContent( "Amplify Shader Editor", "Are you using the latest version? Now you know" );
+		private readonly static GUIContent SamplesTitle = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Shader Samples"
+#else
+"着色器示例"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Import samples according to you project rendering pipeline"
+#else
+"根据您的项目渲染管道导入示例"
+#endif
+);
+		private readonly static GUIContent ResourcesTitle = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Learning Resources"
+#else
+"学习资源"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Check the online wiki for various topics about how to use ASE with node examples and explanations"
+#else
+"查看在线维基，了解如何使用ASE以及节点示例和解释的各种主题"
+#endif
+);
+		private readonly static GUIContent CommunityTitle = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Community"
+#else
+"社区"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Need help? Reach us through our discord server or the official support Unity forum"
+#else
+"需要帮助？通过我们的不和谐服务器或官方支持Unity论坛联系我们"
+#endif
+);
+		private readonly static GUIContent UpdateTitle = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Latest Update"
+#else
+"最新更新"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Check the lastest additions, improvements and bug fixes done to ASE"
+#else
+"查看ASE的最新添加、改进和错误修复"
+#endif
+);
+		private readonly static GUIContent ASETitle = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Amplify Shader Editor"
+#else
+"放大着色器编辑器"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Are you using the latest version? Now you know"
+#else
+"您使用的是最新版本吗？现在你知道了"
+#endif
+);
 
 		private const string OnlineVersionWarning = "Please enable \"Allow downloads over HTTP*\" in Player Settings to access latest version information via Start Screen.";
 
@@ -128,29 +188,107 @@ namespace AmplifyShaderEditor
 				RenderTexture.active = cache;
 				textIcon = rt;
 
-				Manualbutton = new GUIContent( " Manual", textIcon );
-				Basicbutton = new GUIContent( " Basic use tutorials", textIcon );
-				Beginnerbutton = new GUIContent( " Beginner Series", textIcon );
-				Nodesbutton = new GUIContent( " Node List", textIcon );
-				SRPusebutton = new GUIContent( " SRP HDRP/URP use", textIcon );
-				Functionsbutton = new GUIContent( " Shader Functions", textIcon );
-				Templatesbutton = new GUIContent( " Shader Templates", textIcon );
-				APIbutton = new GUIContent( " Node API", textIcon );
+				Manualbutton = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+" Manual"
+#else
+"手册"
+#endif
+, textIcon );
+				Basicbutton = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+" Basic use tutorials"
+#else
+"基本使用教程"
+#endif
+, textIcon );
+				Beginnerbutton = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+" Beginner Series"
+#else
+"初学者系列"
+#endif
+, textIcon );
+				Nodesbutton = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+" Node List"
+#else
+"节点列表"
+#endif
+, textIcon );
+				SRPusebutton = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+" SRP HDRP/URP use"
+#else
+"SRP HDRP/URP使用"
+#endif
+, textIcon );
+				Functionsbutton = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+" Shader Functions"
+#else
+"着色器功能"
+#endif
+, textIcon );
+				Templatesbutton = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+" Shader Templates"
+#else
+"着色器模板"
+#endif
+, textIcon );
+				APIbutton = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+" Node API"
+#else
+"节点API"
+#endif
+, textIcon );
 			}
 
 			if( packageIcon == null )
 			{
 				packageIcon = EditorGUIUtility.IconContent( "BuildSettings.Editor.Small" ).image;
-				HDRPbutton = new GUIContent( " HDRP Samples", packageIcon );
-				URPbutton = new GUIContent( " URP Samples", packageIcon );
-				BuiltInbutton = new GUIContent( " Built-In Samples", packageIcon );
+				HDRPbutton = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+" HDRP Samples"
+#else
+"HDRP样品"
+#endif
+, packageIcon );
+				URPbutton = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+" URP Samples"
+#else
+"URP样品"
+#endif
+, packageIcon );
+				BuiltInbutton = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+" Built-In Samples"
+#else
+"内置样品"
+#endif
+, packageIcon );
 			}
 
 			if( webIcon == null )
 			{
 				webIcon = EditorGUIUtility.IconContent( "BuildSettings.Web.Small" ).image;
-				DiscordButton = new GUIContent( " Discord", webIcon );
-				ForumButton = new GUIContent( " Unity Forum", webIcon );
+				DiscordButton = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+" Discord"
+#else
+"不和谐"
+#endif
+, webIcon );
+				ForumButton = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+" Unity Forum"
+#else
+"团结论坛"
+#endif
+, webIcon );
 			}
 
 			if( m_changeLog == null )
@@ -161,7 +299,7 @@ namespace AmplifyShaderEditor
 				{
 					int oldestReleaseIndex = changelog.text.LastIndexOf( string.Format( "v{0}.{1}.{2}", VersionInfo.Major, VersionInfo.Minor, VersionInfo.Release ) );
 
-					lastUpdate = changelog.text.Substring( 0, changelog.text.IndexOf( "\nv", oldestReleaseIndex + 25 ) );// + "\n...";
+					lastUpdate = changelog.text.Substring( 0, changelog.text.IndexOf( "\nv", oldestReleaseIndex + 25 ) );
 					lastUpdate = lastUpdate.Replace( "* ", "\u2022 " );
 				}
 				m_changeLog = new ChangeLogInfo( VersionInfo.FullNumber, lastUpdate );
@@ -250,7 +388,7 @@ namespace AmplifyShaderEditor
 
 			if( m_linkStyle == null )
 			{
-				var inv = AssetDatabase.LoadAssetAtPath<Texture2D>( AssetDatabase.GUIDToAssetPath( "1004d06b4b28f5943abdf2313a22790a" ) ); // find a better solution for transparent buttons
+				var inv = AssetDatabase.LoadAssetAtPath<Texture2D>( AssetDatabase.GUIDToAssetPath( "1004d06b4b28f5943abdf2313a22790a" ) ); 
 				m_linkStyle = new GUIStyle();
 				m_linkStyle.normal.textColor = new Color( 0.2980392f, 0.4901961f, 1f );
 				m_linkStyle.hover.textColor = Color.white;
@@ -263,7 +401,7 @@ namespace AmplifyShaderEditor
 
 			EditorGUILayout.BeginHorizontal( GUIStyle.none, GUILayout.ExpandWidth( true ) );
 			{
-				// left column
+				
 				EditorGUILayout.BeginVertical( GUILayout.Width( 175 ) );
 				{
 					GUILayout.Label( SamplesTitle, m_labelStyle );
@@ -310,7 +448,7 @@ namespace AmplifyShaderEditor
 				}
 				EditorGUILayout.EndVertical();
 
-				// right column
+				
 				EditorGUILayout.BeginVertical( GUILayout.Width( 650 - 175 - 9 ), GUILayout.ExpandHeight( true ) );
 				{
 					GUILayout.Label( CommunityTitle, m_labelStyle );
@@ -355,10 +493,22 @@ namespace AmplifyShaderEditor
 
 						EditorGUILayout.BeginHorizontal();
 						GUILayout.Label( "Download links:" );
-						if( GUILayout.Button( "Amplify", m_linkStyle ) )
+						if( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Amplify"
+#else
+"放大"
+#endif
+, m_linkStyle ) )
 							Application.OpenURL( SiteURL );
 						GUILayout.Label( "-" );
-						if( GUILayout.Button( "Asset Store", m_linkStyle ) )
+						if( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Asset Store"
+#else
+"资产存储"
+#endif
+, m_linkStyle ) )
 							Application.OpenURL( StoreURL );
 						EditorGUILayout.EndHorizontal();
 						GUILayout.Space( 7 );
@@ -434,7 +584,7 @@ namespace AmplifyShaderEditor
 					}
 					default:
 					{
-						// no action
+						
 						break;
 					}
 

@@ -1,16 +1,40 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Remainder", "Math Operators", "Remainder between two int variables",tags:"modulo fmod" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Remainder"
+#else
+"剩余"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Remainder between two int variables"
+#else
+"两个int变量之间的余数"
+#endif
+,tags: 
+#if !WB_LANGUAGE_CHINESE
+"modulo fmod"
+#else
+"模fmod"
+#endif
+)]
 	public sealed class SimpleRemainderNode : DynamicTypeNode
 	{
 		private const string VertexFragRemainder = "( {0} % {1} )";
-		//private const string SurfaceRemainder = "fmod( {0} , {1} )";
+		
 		private const string RemainderCalculationInt = "( {0} - {1} * ({0}/{1}))";
 		private const string RemainderCalculationFloat = "( {0} - {1} * floor({0}/{1}))";
 

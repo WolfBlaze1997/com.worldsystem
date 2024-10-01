@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -35,7 +35,7 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private string m_internalDataPropertyLabel = string.Empty;
 
-		// this will only is important on master node
+		
 		[SerializeField]
 		private MasterNodePortCategory m_category = MasterNodePortCategory.Fragment;
 
@@ -55,9 +55,9 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private bool m_drawInternalData = false;
 
-		//[SerializeField]
-		//private RenderTexture m_inputPreview = null;
-		//[SerializeField]
+		
+		
+		
 		private RenderTexture m_inputPreviewTexture = null;
 		private Material m_inputPreviewMaterial = null;
 		private Shader m_inputPreviewShader = null;
@@ -312,7 +312,7 @@ namespace AmplifyShaderEditor
 				case WirePortDataType.FLOAT:
 				{
 					if( forceDecimal && m_previewInternalFloat == (int)m_previewInternalFloat )
-						m_internalData = m_previewInternalFloat.ToString("0.0##############"); // to make sure integer values like 0 or 1 are generated as 0.0 and 1.0
+						m_internalData = m_previewInternalFloat.ToString("0.0##############"); 
 					else
 						m_internalData = m_previewInternalFloat.ToString();
 					m_internalDataWrapper = string.Empty;
@@ -382,7 +382,7 @@ namespace AmplifyShaderEditor
 			}
 		}
 
-		//This gets the 3x3 matrix inside of the 4x4
+		
 		private string Matrix3x3WrappedData()
 		{
 			string tempInternal = string.Empty;
@@ -417,8 +417,8 @@ namespace AmplifyShaderEditor
 			return m_internalData;
 		}
 
-		//TODO: Replace GenerateShaderForOutput(...) calls to this one
-		// This is a new similar method to GenerateShaderForOutput(...) which always autocasts
+		
+		
 		public string GeneratePortInstructions( ref MasterNodeDataCollector dataCollector )
 		{
 			InputPort linkPort = ExternalLink;
@@ -850,7 +850,7 @@ namespace AmplifyShaderEditor
 		public override WirePortDataType DataType
 		{
 			get { return base.DataType; }
-			// must be set to update internal data. do not delete
+			
 			set
 			{
 				m_internalDataUpdated = false;
@@ -1189,14 +1189,14 @@ namespace AmplifyShaderEditor
 			if( (object)m_node == null )
 			{
 				m_node = container.GetNode( NodeId );
-				//m_node = UIUtils.GetNode( NodeId );
+				
 			}
 
 			if( ExternalReferences.Count>0 )
 			{
 				m_node.PreviewMaterial.SetTexture( m_cachedPropertyId, container.GetNode( ExternalReferences[ 0 ].NodeId ).GetOutputPortByUniqueId( ExternalReferences[ 0 ].PortId ).OutputPreviewTexture );
 			}
-			//m_node.PreviewMaterial.SetTexture( m_cachedPropertyId, GetOutputConnection( 0 ).OutputPreviewTexture );
+			
 		}
 
 		private void SetPortPreviewShader( Shader portShader )
@@ -1228,7 +1228,7 @@ namespace AmplifyShaderEditor
 				case WirePortDataType.FLOAT:
 				{
 					SetPortPreviewShader( UIUtils.FloatShader );
-					//Debug.Log( m_previewInternalFloat );
+					
 					InputPreviewMaterial.SetFloat( CachedFloatPropertyID, m_previewInternalFloat );
 				}
 				break;
@@ -1236,7 +1236,7 @@ namespace AmplifyShaderEditor
 				{
 					SetPortPreviewShader( UIUtils.Vector2Shader );
 
-					Vector2 v2 = m_previewInternalVec2;// Vector2InternalData;
+					Vector2 v2 = m_previewInternalVec2;
 					InputPreviewMaterial.SetVector( CachedVectorPropertyID, new Vector4( v2.x, v2.y, 0, 0 ) );
 				}
 				break;
@@ -1244,7 +1244,7 @@ namespace AmplifyShaderEditor
 				{
 					SetPortPreviewShader( UIUtils.Vector3Shader );
 
-					Vector3 v3 = m_previewInternalVec3;// Vector3InternalData;
+					Vector3 v3 = m_previewInternalVec3;
 					InputPreviewMaterial.SetVector( CachedVectorPropertyID, new Vector4( v3.x, v3.y, v3.z, 0 ) );
 				}
 				break;
@@ -1291,16 +1291,16 @@ namespace AmplifyShaderEditor
 
 			PreparePortCacheID();
 
-			//if( (object)m_node == null )
-			//	m_node = UIUtils.GetNode( NodeId );
+			
+			
 
 			if( (object)m_node == null )
 			{
 				m_node = container.GetNode( NodeId );
-				//m_node = UIUtils.GetNode( NodeId );
+				
 			}
-			//m_propertyName = "_A";
-			//Debug.Log( m_propertyName );
+			
+			
 			m_node.PreviewMaterial.SetTexture( m_propertyName, m_inputPreviewTexture );
 		}
 
@@ -1336,9 +1336,9 @@ namespace AmplifyShaderEditor
 		public override void Destroy()
 		{
 			base.Destroy();
-			//if ( m_inputPreview != null )
-			//	UnityEngine.ScriptableObject.DestroyImmediate( m_inputPreview );
-			//m_inputPreview = null;
+			
+			
+			
 
 			if( m_inputPreviewTexture != null )
 			{
@@ -1361,7 +1361,7 @@ namespace AmplifyShaderEditor
 			get
 			{
 				if( m_inputPreviewShader == null )
-					m_inputPreviewShader = AssetDatabase.LoadAssetAtPath<Shader>( AssetDatabase.GUIDToAssetPath( "d9ca47581ac157145bff6f72ac5dd73e" ) ); //ranged float
+					m_inputPreviewShader = AssetDatabase.LoadAssetAtPath<Shader>( AssetDatabase.GUIDToAssetPath( "d9ca47581ac157145bff6f72ac5dd73e" ) ); 
 
 				if( m_inputPreviewShader == null )
 					m_inputPreviewShader = Shader.Find( "Unlit/Colored Transparent" );
@@ -1383,10 +1383,10 @@ namespace AmplifyShaderEditor
 
 				return m_inputPreviewMaterial;
 			}
-			//set
-			//{
-			//	m_inputPreviewMaterial = value;
-			//}
+			
+			
+			
+			
 		}
 
 		public override string Name
@@ -1444,16 +1444,16 @@ namespace AmplifyShaderEditor
 			}
 		}
 
-		//public RenderTexture InputPreviewTexture
-		//{
-		//	get
-		//	{
-		//		if( IsConnected )
-		//			return GetOutputConnection( 0 ).OutputPreviewTexture;
-		//		else
-		//			return m_inputPreviewTexture;
-		//	}
-		//}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 		public RenderTexture InputPreviewTexture( ParentGraph container )
 		{

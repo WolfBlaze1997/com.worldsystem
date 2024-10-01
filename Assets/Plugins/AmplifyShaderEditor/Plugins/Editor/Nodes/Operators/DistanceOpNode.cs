@@ -1,11 +1,29 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Distance", "Vector Operators", "Euclidean distance between two points" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Distance"
+#else
+"距离"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vector Operators"
+#else
+"矢量运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Euclidean distance between two points"
+#else
+"两点之间的欧几里德距离"
+#endif
+)]
 	public sealed class DistanceOpNode : DynamicTypeNode
 	{
 		protected override void CommonInit( int uniqueId )

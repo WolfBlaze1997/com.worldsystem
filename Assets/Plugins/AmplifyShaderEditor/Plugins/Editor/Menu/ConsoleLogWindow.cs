@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System.Collections.Generic;
 using UnityEditor;
@@ -28,12 +28,24 @@ namespace AmplifyShaderEditor
 		public const int MAXWIDTH = 500;
 		public const float FADETIME = 7;
 
-		private readonly GUIContent m_boxToggleContent = new GUIContent( "\u2261", "Toggle Message Box" );
-		private readonly GUIContent m_clearContent = new GUIContent( "\u00D7", "Clear Messages" );
+		private readonly GUIContent m_boxToggleContent = new GUIContent( "\u2261", 
+#if !WB_LANGUAGE_CHINESE
+"Toggle Message Box"
+#else
+"切换消息框"
+#endif
+);
+		private readonly GUIContent m_clearContent = new GUIContent( "\u00D7", 
+#if !WB_LANGUAGE_CHINESE
+"Clear Messages"
+#else
+"清除消息"
+#endif
+);
 
 		protected AmplifyShaderEditorWindow m_parentWindow = null;
 		
-		// needs to be serialized
+		
 		private Vector2 m_currentScrollPos;
 
 		int lastCall = -1;
@@ -143,7 +155,7 @@ namespace AmplifyShaderEditor
 			} 
 			else
 			{
-				// draw toaster
+				
 				int count = messages.Count;
 				Rect rect = toolbarArea;
 				rect.xMin -= 200;
@@ -217,7 +229,7 @@ namespace AmplifyShaderEditor
 					}
 				}
 			}
-			//GUI.color = cached;
+			
 			
 			if( needsRepaint )
 				m_parentWindow.MarkToRepaint();
@@ -251,7 +263,7 @@ namespace AmplifyShaderEditor
 			}
 
 			style.normal.textColor = new Color( 1, 1, 1, 0.5f );
-			//GUI.color = cached;
+			
 			button.x -= button.width + 2;
 
 			if( maximize && GUI.Button( button, m_clearContent, style ) )

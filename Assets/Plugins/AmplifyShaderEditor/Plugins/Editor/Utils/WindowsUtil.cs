@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 #if UNITY_EDITOR_WIN
 
@@ -10,10 +10,10 @@ using System.Text;
 
 public class WindowsUtil
 {
-	public const int GWL_STYLE = -16;              //hex constant for style changing
-	public const int WS_BORDER = 0x00800000;       //window with border
-	public const int WS_CAPTION = 0x00C00000;      //window with a title bar with border
-	public const int WS_SYSMENU = 0x00080000;      //window with no borders etc.
+	public const int GWL_STYLE = -16;              
+	public const int WS_BORDER = 0x00800000;       
+	public const int WS_CAPTION = 0x00C00000;      
+	public const int WS_SYSMENU = 0x00080000;      
 	public const int WS_MAXIMIZE = 0x01000000;
 	public const int WS_MAXIMIZEBOX = 0x00010000;
 	public const int WS_MINIMIZE = 0x20000000;
@@ -59,7 +59,7 @@ public class WindowsUtil
 	[DllImport( "user32.dll", SetLastError = true )]
 	public static extern IntPtr FindWindowEx( string lpClassName, string lpWindowName );
 
-	// Find window by Caption only. Note you must pass IntPtr.Zero as the first parameter.
+	
 	[DllImport( "user32.dll", EntryPoint = "FindWindow", SetLastError = true )]
 	public static extern IntPtr FindWindowByCaptionEx( IntPtr ZeroOnly, string lpWindowName );
 

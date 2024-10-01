@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -8,7 +8,25 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Component Mask", "Vector Operators", "Mask certain channels from vectors/color components", null, KeyCode.K )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Component Mask"
+#else
+"组件掩码"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vector Operators"
+#else
+"矢量运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Mask certain channels from vectors/color components"
+#else
+"从矢量/颜色分量中屏蔽某些通道"
+#endif
+, null, KeyCode.K )]
 	public sealed class ComponentMaskNode : ParentNode
 	{
 		private const string OutputLocalVarName = "componentMask";

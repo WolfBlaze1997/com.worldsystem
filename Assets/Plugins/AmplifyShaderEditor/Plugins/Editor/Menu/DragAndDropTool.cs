@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEditor;
 using UnityEngine;
@@ -40,7 +40,7 @@ namespace AmplifyShaderEditor
                         }
                     }
                 }break;
-                //case EventType.DragExited:DragAndDrop.PrepareStartDrag();break;
+                
             }
         }
     }

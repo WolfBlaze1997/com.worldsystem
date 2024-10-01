@@ -1,12 +1,36 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Reciprocal", "Math Operators", "Reciprocal of scalars and vectors", tags: "rcp recip reciprocal" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Reciprocal"
+#else
+"互惠互利"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Reciprocal of scalars and vectors"
+#else
+"标量和向量的倒数"
+#endif
+, tags: 
+#if !WB_LANGUAGE_CHINESE
+"rcp recip reciprocal"
+#else
+"rcp互惠"
+#endif
+)]
 	public sealed class ReciprocalOpNode : ParentNode
 	{
 		protected override void CommonInit( int uniqueId )

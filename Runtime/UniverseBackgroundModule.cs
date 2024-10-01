@@ -1,12 +1,9 @@
 ﻿using System;
 using Sirenix.OdinInspector;
-using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.Serialization;
 
 namespace WorldSystem.Runtime
 {
@@ -15,16 +12,24 @@ namespace WorldSystem.Runtime
     [ExecuteAlways]
     public class UniverseBackgroundModule : BaseModule
     {
+        
         #region 字段
         
         public enum Scale
         {
-            Full,
-            Half,
-            Quarter
+            Full, Half, Quarter
         }
-
-
+        
+        public enum AsyncUpdateRate
+        {
+            Fps60 = 60,Fps50 = 50,Fps40 = 40,Fps30 = 30,Fps20 = 20,Fps10 = 10
+        }
+        
+        public enum TargetFps
+        {
+            TargetFpsUnLimit = -1,TargetFps240 = 240,TargetFps180 = 180,TargetFps144 = 144,TargetFps120 = 120,TargetFps90 = 90,TargetFps60 = 60,TargetFps30 = 30
+        }
+        
         [Serializable]
         public class Property
         {
@@ -37,106 +42,70 @@ namespace WorldSystem.Runtime
             [FoldoutGroup("配置")] [LabelText("背景材质")] [ReadOnly][ShowIf("@WorldManager.Instance?.universeBackgroundModule?.hideFlags == HideFlags.None")]
             public Material backgroundMaterial;
             
-            [FoldoutGroup("配置")] [LabelText("TAA着色器")]
-            [ReadOnly] [PropertyOrder(-20)]
+            [FoldoutGroup("配置")] [LabelText("TAA着色器")] [ReadOnly] [PropertyOrder(-20)]
             [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            public Shader TaaShader;
-
-            [FoldoutGroup("配置")] [LabelText("TAA材质")]
-            [ReadOnly] [PropertyOrder(-20)]
+            public Shader taaShader;
+            
+            [FoldoutGroup("配置")] [LabelText("TAA材质")] [ReadOnly] [PropertyOrder(-20)]
             [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            public Material TaaMaterial;
+            public Material taaMaterial;
             
-            [FoldoutGroup("配置")] [LabelText("修正延迟着色器")]
-            [ReadOnly] [PropertyOrder(-20)]
+            [FoldoutGroup("配置")] [LabelText("修正延迟着色器")] [ReadOnly] [PropertyOrder(-20)]
             [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            public Shader VolumeCloud_FixupLate_Shader;
-
-            [FoldoutGroup("配置")] [LabelText("修正延迟材质")]
-            [ReadOnly] [PropertyOrder(-20)]
+            public Shader volumeCloudFixupLateShader;
+            
+            [FoldoutGroup("配置")] [LabelText("修正延迟材质")] [ReadOnly] [PropertyOrder(-20)]
             [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            public Material VolumeCloud_FixupLate_Material;
+            public Material volumeCloudFixupLateMaterial;
             
-            [FoldoutGroup("配置")] [LabelText("修正延迟块移着色器")]
-            [ReadOnly] [PropertyOrder(-20)]
+            [FoldoutGroup("配置")] [LabelText("修正延迟块移着色器")] [ReadOnly] [PropertyOrder(-20)]
             [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            public Shader VolumeCloud_FixupLateBlit_Shader;
-
-            [FoldoutGroup("配置")] [LabelText("修正延迟块移材质")]
-            [ReadOnly] [PropertyOrder(-20)]
+            public Shader volumeCloudFixupLateBlitShader;
+            
+            [FoldoutGroup("配置")] [LabelText("修正延迟块移材质")] [ReadOnly] [PropertyOrder(-20)]
             [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            public Material VolumeCloud_FixupLateBlit_Material;
+            public Material volumeCloudFixupLateBlitMaterial;
             
-            // [FoldoutGroup("配置")] [LabelText("修正分裂着色器")]
-            // [ReadOnly] [PropertyOrder(-20)]
-            // [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            // public Shader VolumeCloud_FixupSplit_Shader;
-            //
-            // [FoldoutGroup("配置")] [LabelText("修正分裂移材质")]
-            // [ReadOnly] [PropertyOrder(-20)]
-            // [ShowIf("@WorldManager.Instance?.volumeCloudOptimizeModule?.hideFlags == HideFlags.None")]
-            // public Material VolumeCloud_FixupSplit_Material;
+            [LabelText("分辨率选项")] [GUIColor(0, 1, 0)] [PropertyOrder(-10)]
+            public Scale renderResolutionOptions = Scale.Full;
             
+            [LabelText("    TAA降噪减弱")] [PropertyRange(0, 1)] [GUIColor(0f, 0.7f, 0f)] [PropertyOrder(-10)]
+            [ShowIf("@renderResolutionOptions != Scale.Full")]
+            public float renderTemporalAAFactor;
             
-            [LabelText("分辨率选项")] 
-            [GUIColor(0, 1, 0)] [PropertyOrder(-10)]
-            public Scale _Render_ResolutionOptions = Scale.Full;
+            [LabelText("目标帧率")] [GUIColor(0.7f, 0.7f, 1f)]
+            public TargetFps renderTargetFps = TargetFps.TargetFps120;
             
-            [LabelText("    TAA降噪减弱")] [PropertyRange(0, 1)]
-            [GUIColor(0f, 0.7f, 0f)] [PropertyOrder(-10)]
-            [ShowIf("@_Render_ResolutionOptions != Scale.Full")]
-            public float _Render_TemporalAAFactor = 0f;
+            [LabelText("使用异步分帧渲染")] [GUIColor(0.7f, 0.7f, 1f)]
+            public bool renderUseAsyncRender = true;
             
-            [LabelText("目标帧率")]
-            [GUIColor(0.7f, 0.7f, 1f)]
-            public TargetFps _Render_TargetFps = TargetFps.TargetFps120;
+            [LabelText("    异步更新率(fps/s)")] [GUIColor(0.7f, 0.7f, 1f)] [ShowIf("renderUseAsyncRender")]
+            public AsyncUpdateRate renderAsyncUpdateRate = AsyncUpdateRate.Fps20;
             
-            [LabelText("使用异步分帧渲染")]
-            [GUIColor(0.7f, 0.7f, 1f)]
-            public bool _Render_UseAsyncRender = true;
-            
-            // [LabelText("    分帧")]
-            // [GUIColor(0.7f, 0.7f, 1f)][PropertyRange(2,8)]
-            // public int _Render_SplitFrameNumber = 2;
-            
-            [LabelText("    异步更新率(fps/s)")]
-            [GUIColor(0.7f, 0.7f, 1f)]
-            [ShowIf("_Render_UseAsyncRender")]
-            public AsyncUpdateRate _Render_AsyncUpdateRate = AsyncUpdateRate.Fps20;
-            
-            [LabelText("    扩大的视野")]
-            [GUIColor(0.7f, 0.7f, 1f)]
-            [ShowIf("_Render_UseAsyncRender")]
-            public float _Render_AsyncFOV = 80;
+            [LabelText("    扩大的视野")] [GUIColor(0.7f, 0.7f, 1f)] [ShowIf("renderUseAsyncRender")]
+            public float renderAsyncFOV = 80;
         }
+        
         [HideLabel]
         public Property property = new();
-        [Serializable]
-        public enum AsyncUpdateRate
-        {
-            Fps60 = 60,Fps50 = 50,Fps40 = 40,Fps30 = 30,Fps20 = 20,Fps10 = 10
-        }
-        [Serializable]
-        public enum TargetFps
-        {
-            TargetFpsUnLimit = -1,TargetFps240 = 240,TargetFps180 = 180,TargetFps144 = 144,TargetFps120 = 120,TargetFps90 = 90,TargetFps60 = 60,TargetFps30 = 30
-        }
         
         #endregion
 
+        
 
         #region 安装参数
 
         private void SetupstaticProperty()
         {
-            Shader.SetGlobalFloat(_TAA_BLEND_FACTOR, property._Render_TemporalAAFactor);
+            Shader.SetGlobalFloat(_TAA_BLEND_FACTOR, property.renderTemporalAAFactor);
         }
         
-
         #endregion
         
 
+        
         #region 事件函数
+        
         private void OnEnable()
         {
 #if UNITY_EDITOR
@@ -144,21 +113,8 @@ namespace WorldSystem.Runtime
             if (property.backgroundShader == null)
                 property.backgroundShader =
                     AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/Skybox/BackgroundShader.shader");
-            // if(property.TaaShader == null) 
-            //     property.TaaShader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/ShaderLibrary/TemporalAA.shader");
-            
-            // if (property.VolumeCloud_FixupLate_Shader == null)
-            //     property.VolumeCloud_FixupLate_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/FixupLate.shader");
-            // if (property.VolumeCloud_FixupLateBlit_Shader == null)
-            //     property.VolumeCloud_FixupLateBlit_Shader = AssetDatabase.LoadAssetAtPath<Shader>("Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/FixupLateBlit.shader");
 #endif
             if (property.backgroundMaterial == null) property.backgroundMaterial = CoreUtils.CreateEngineMaterial(property.backgroundShader);
-            // if (property.TaaMaterial == null) property.TaaMaterial = CoreUtils.CreateEngineMaterial(property.TaaShader);
-            
-            // if (property.VolumeCloud_FixupLate_Material == null)
-            //     property.VolumeCloud_FixupLate_Material = CoreUtils.CreateEngineMaterial(property.VolumeCloud_FixupLate_Shader);
-            // if (property.VolumeCloud_FixupLateBlit_Material == null)
-            //     property.VolumeCloud_FixupLateBlit_Material = CoreUtils.CreateEngineMaterial(property.VolumeCloud_FixupLateBlit_Shader);
             
             OnValidate();
         }
@@ -172,30 +128,23 @@ namespace WorldSystem.Runtime
             if (property.backgroundMaterial != null)
                 CoreUtils.Destroy(property.backgroundMaterial);
             
-            if(property.VolumeCloud_FixupLate_Shader != null)
-                Resources.UnloadAsset(property.VolumeCloud_FixupLate_Shader);
-            if (property.VolumeCloud_FixupLate_Material != null)
-                CoreUtils.Destroy(property.VolumeCloud_FixupLate_Material);
-            if(property.VolumeCloud_FixupLateBlit_Shader != null)
-                Resources.UnloadAsset(property.VolumeCloud_FixupLateBlit_Shader);
-            if (property.VolumeCloud_FixupLateBlit_Material != null)
-                CoreUtils.Destroy(property.VolumeCloud_FixupLateBlit_Material);
+            if(property.volumeCloudFixupLateShader != null)
+                Resources.UnloadAsset(property.volumeCloudFixupLateShader);
+            if (property.volumeCloudFixupLateMaterial != null)
+                CoreUtils.Destroy(property.volumeCloudFixupLateMaterial);
+            if(property.volumeCloudFixupLateBlitShader != null)
+                Resources.UnloadAsset(property.volumeCloudFixupLateBlitShader);
+            if (property.volumeCloudFixupLateBlitMaterial != null)
+                CoreUtils.Destroy(property.volumeCloudFixupLateBlitMaterial);
             
-            // if (property.VolumeCloud_FixupSplit_Shader != null)
-            //     Resources.UnloadAsset(property.VolumeCloud_FixupSplit_Shader);
-            // if (property.VolumeCloud_FixupSplit_Material != null)
-            //     CoreUtils.Destroy(property.VolumeCloud_FixupSplit_Material);
-            // property.VolumeCloud_FixupSplit_Shader = null;
-            // property.VolumeCloud_FixupSplit_Material = null;
-            
-            property.VolumeCloud_FixupLate_Shader = null;
-            property.VolumeCloud_FixupLate_Material = null;
-            property.VolumeCloud_FixupLateBlit_Shader = null;
-            property.VolumeCloud_FixupLateBlit_Material = null;
+            property.volumeCloudFixupLateShader = null;
+            property.volumeCloudFixupLateMaterial = null;
+            property.volumeCloudFixupLateBlitShader = null;
+            property.volumeCloudFixupLateBlitMaterial = null;
             PreviousRT?.Release();
             PreviousRT = null;
-            skyRT?.Release();
-            skyRT = null;
+            SkyRT?.Release();
+            SkyRT = null;
             property.skyMesh = null;
             property.backgroundShader = null;
             property.backgroundMaterial = null;
@@ -207,91 +156,69 @@ namespace WorldSystem.Runtime
         {
             SetupstaticProperty();
 
-            if (property._Render_ResolutionOptions != Scale.Full)
+            if (property.renderResolutionOptions != Scale.Full)
             {
 #if UNITY_EDITOR
-                if (property.TaaShader == null)
-                    property.TaaShader =
+                if (property.taaShader == null)
+                    property.taaShader =
                         AssetDatabase.LoadAssetAtPath<Shader>(
                             "Packages/com.worldsystem/Shader/ShaderLibrary/TemporalAA.shader");
 #endif
-                if (property.TaaMaterial == null)
-                    property.TaaMaterial = CoreUtils.CreateEngineMaterial(property.TaaShader);
+                if (property.taaMaterial == null)
+                    property.taaMaterial = CoreUtils.CreateEngineMaterial(property.taaShader);
             }
             else
             {
-                if(property.TaaShader != null)
-                    Resources.UnloadAsset(property.TaaShader);
-                if(property.TaaMaterial != null)
-                    CoreUtils.Destroy(property.TaaMaterial);
-                property.TaaShader = null;
-                property.TaaMaterial = null;
+                if(property.taaShader != null)
+                    Resources.UnloadAsset(property.taaShader);
+                if(property.taaMaterial != null)
+                    CoreUtils.Destroy(property.taaMaterial);
+                property.taaShader = null;
+                property.taaMaterial = null;
                 PreviousRT?.Release();
                 PreviousRT = null;
                 TaaRT1?.Release();
                 TaaRT1 = null;
             }
 
-            if (property._Render_UseAsyncRender)
+            if (property.renderUseAsyncRender)
             {
 #if UNITY_EDITOR
-                if (property.VolumeCloud_FixupLate_Shader == null)
-                    property.VolumeCloud_FixupLate_Shader =
+                if (property.volumeCloudFixupLateShader == null)
+                    property.volumeCloudFixupLateShader =
                         AssetDatabase.LoadAssetAtPath<Shader>(
                             "Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/FixupLate.shader");
-                if (property.VolumeCloud_FixupLateBlit_Shader == null)
-                    property.VolumeCloud_FixupLateBlit_Shader =
+                if (property.volumeCloudFixupLateBlitShader == null)
+                    property.volumeCloudFixupLateBlitShader =
                         AssetDatabase.LoadAssetAtPath<Shader>(
                             "Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/FixupLateBlit.shader");
 #endif
-                if (property.VolumeCloud_FixupLate_Material == null)
-                    property.VolumeCloud_FixupLate_Material =
-                        CoreUtils.CreateEngineMaterial(property.VolumeCloud_FixupLate_Shader);
-                if (property.VolumeCloud_FixupLateBlit_Material == null)
-                    property.VolumeCloud_FixupLateBlit_Material =
-                        CoreUtils.CreateEngineMaterial(property.VolumeCloud_FixupLateBlit_Shader);
+                if (property.volumeCloudFixupLateMaterial == null)
+                    property.volumeCloudFixupLateMaterial =
+                        CoreUtils.CreateEngineMaterial(property.volumeCloudFixupLateShader);
+                if (property.volumeCloudFixupLateBlitMaterial == null)
+                    property.volumeCloudFixupLateBlitMaterial =
+                        CoreUtils.CreateEngineMaterial(property.volumeCloudFixupLateBlitShader);
             }
             else
             {
-                splitFrameRT?.Release();
-                splitFrameRT = null;
-                if (property.VolumeCloud_FixupLate_Shader != null)
-                    Resources.UnloadAsset(property.VolumeCloud_FixupLate_Shader);
-                if (property.VolumeCloud_FixupLate_Material != null)
-                    CoreUtils.Destroy(property.VolumeCloud_FixupLate_Material);
-                if (property.VolumeCloud_FixupLateBlit_Shader != null)
-                    Resources.UnloadAsset(property.VolumeCloud_FixupLateBlit_Shader);
-                if (property.VolumeCloud_FixupLateBlit_Material != null)
-                    CoreUtils.Destroy(property.VolumeCloud_FixupLateBlit_Material);
-                property.VolumeCloud_FixupLate_Shader = null;
-                property.VolumeCloud_FixupLate_Material = null;
-                property.VolumeCloud_FixupLateBlit_Shader = null;
-                property.VolumeCloud_FixupLateBlit_Material = null;
+                SplitFrameRT?.Release();
+                SplitFrameRT = null;
+                if (property.volumeCloudFixupLateShader != null)
+                    Resources.UnloadAsset(property.volumeCloudFixupLateShader);
+                if (property.volumeCloudFixupLateMaterial != null)
+                    CoreUtils.Destroy(property.volumeCloudFixupLateMaterial);
+                if (property.volumeCloudFixupLateBlitShader != null)
+                    Resources.UnloadAsset(property.volumeCloudFixupLateBlitShader);
+                if (property.volumeCloudFixupLateBlitMaterial != null)
+                    CoreUtils.Destroy(property.volumeCloudFixupLateBlitMaterial);
+                property.volumeCloudFixupLateShader = null;
+                property.volumeCloudFixupLateMaterial = null;
+                property.volumeCloudFixupLateBlitShader = null;
+                property.volumeCloudFixupLateBlitMaterial = null;
             }
-
-
-            // if (property._Render_SplitFrameNumber != 2)
-            // {
-            //     if (property.VolumeCloud_FixupSplit_Shader == null)
-            //         property.VolumeCloud_FixupSplit_Shader =
-            //             AssetDatabase.LoadAssetAtPath<Shader>(
-            //                 "Packages/com.worldsystem/Shader/VolumeClouds_V1_1_20240604/FixupSplit.shader");
-            //     if (property.VolumeCloud_FixupSplit_Material == null)
-            //         property.VolumeCloud_FixupSplit_Material =
-            //             CoreUtils.CreateEngineMaterial(property.VolumeCloud_FixupSplit_Shader);
-            // }
-            // else
-            // {
-            //     if (property.VolumeCloud_FixupSplit_Shader != null)
-            //         Resources.UnloadAsset(property.VolumeCloud_FixupSplit_Shader);
-            //     if (property.VolumeCloud_FixupSplit_Material != null)
-            //         CoreUtils.Destroy(property.VolumeCloud_FixupSplit_Material);
-            //     property.VolumeCloud_FixupSplit_Shader = null;
-            //     property.VolumeCloud_FixupSplit_Material = null;
-            // }
             
-
-            Application.targetFrameRate = (int)property._Render_TargetFps;
+            Application.targetFrameRate = (int)property.renderTargetFps;
             
         }
 
@@ -304,8 +231,34 @@ namespace WorldSystem.Runtime
         
         #endregion
 
+        
 
         #region 渲染函数
+        
+        public RTHandle SkyRT;
+        public RTHandle SplitFrameRT;
+        public RTHandle TaaRT1;
+        public RTHandle PreviousRT;
+        
+        private Matrix4x4 _viewProjection;
+        private Matrix4x4 _prevViewProjection;
+        private Matrix4x4 _inverseViewProjection;
+        private Matrix4x4 _viewProjectionPerFrame;
+        private Matrix4x4 _prevViewProjectionPerFrame;
+        private Matrix4x4 _inverseViewProjectionPerFrame;
+        
+        private static readonly int _PrevViewProjM = Shader.PropertyToID("_PrevViewProjM");
+        private static readonly int _ViewProjM = Shader.PropertyToID("_ViewProjM");
+        private static readonly int _InverseViewProjM = Shader.PropertyToID("_InverseViewProjM");
+        private static readonly int _PrevViewProjM_PerFrame = Shader.PropertyToID("_PrevViewProjM_PerFrame");
+        private static readonly int _ViewProjM_PerFrame = Shader.PropertyToID("_ViewProjM_PerFrame");
+        private static readonly int _InverseViewProjM_PerFrame = Shader.PropertyToID("_InverseViewProjM_PerFrame");
+        private static readonly int _CURRENT_TAA_FRAME = Shader.PropertyToID("_CURRENT_TAA_FRAME");
+        private static readonly int _PREVIOUS_TAA_CLOUD_RESULTS = Shader.PropertyToID("_PREVIOUS_TAA_CLOUD_RESULTS");
+        private static readonly int _TAA_BLEND_FACTOR = Shader.PropertyToID("_TAA_BLEND_FACTOR");
+        private static readonly int _FOVScale = Shader.PropertyToID("_FOVScale");
+        private static readonly int _FixupLateTarget = Shader.PropertyToID("_FixupLateTarget");
+        
         public RTHandle RenderBackground(CommandBuffer cmd, ref RenderingData renderingData, RTHandle dstRT)
         {
             cmd.SetRenderTarget(dstRT);
@@ -316,63 +269,49 @@ namespace WorldSystem.Runtime
             
             return dstRT;
         }
-        public RTHandle skyRT;
-        public RTHandle splitFrameRT;
         
         public void SetupTaaMatrices(CommandBuffer cmd,Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix)
         {
             //设置TAA需要的矩阵信息
-            if(viewProjection != Matrix4x4.identity)
-                prevViewProjection = viewProjection;
+            if(_viewProjection != Matrix4x4.identity)
+                _prevViewProjection = _viewProjection;
             else
-                prevViewProjection = Matrix4x4.identity;
-            viewProjection = projectionMatrix * viewMatrix;
+                _prevViewProjection = Matrix4x4.identity;
+            _viewProjection = projectionMatrix * viewMatrix;
             
-            inverseViewProjection = viewProjection.inverse;
+            _inverseViewProjection = _viewProjection.inverse;
             
-            cmd.SetGlobalMatrix(_PrevViewProjM, prevViewProjection);
-            cmd.SetGlobalMatrix(_ViewProjM, viewProjection);
-            cmd.SetGlobalMatrix(_InverseViewProjM, inverseViewProjection);
+            cmd.SetGlobalMatrix(_PrevViewProjM, _prevViewProjection);
+            cmd.SetGlobalMatrix(_ViewProjM, _viewProjection);
+            cmd.SetGlobalMatrix(_InverseViewProjM, _inverseViewProjection);
         }
-        private readonly int _PrevViewProjM = Shader.PropertyToID("_PrevViewProjM");
-        private readonly int _ViewProjM = Shader.PropertyToID("_ViewProjM");
-        private readonly int _InverseViewProjM = Shader.PropertyToID("_InverseViewProjM");
-        private Matrix4x4 viewProjection;
-        private Matrix4x4 prevViewProjection;
-        private Matrix4x4 inverseViewProjection;
         
         public void SetupTaaMatrices_PerFrame(CommandBuffer cmd,Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix)
         {
             //设置TAA需要的矩阵信息
-            if(viewProjection_PerFrame != Matrix4x4.identity)
-                prevViewProjection_PerFrame = viewProjection_PerFrame;
+            if(_viewProjectionPerFrame != Matrix4x4.identity)
+                _prevViewProjectionPerFrame = _viewProjectionPerFrame;
             else
-                prevViewProjection_PerFrame = Matrix4x4.identity;
+                _prevViewProjectionPerFrame = Matrix4x4.identity;
 
-            viewProjection_PerFrame = projectionMatrix * viewMatrix;
+            _viewProjectionPerFrame = projectionMatrix * viewMatrix;
             
-            inverseViewProjection_PerFrame = viewProjection_PerFrame.inverse;
+            _inverseViewProjectionPerFrame = _viewProjectionPerFrame.inverse;
             
-            cmd.SetGlobalMatrix(_PrevViewProjM_PerFrame, prevViewProjection_PerFrame);
-            cmd.SetGlobalMatrix(_ViewProjM_PerFrame, viewProjection_PerFrame);
-            cmd.SetGlobalMatrix(_InverseViewProjM_PerFrame, inverseViewProjection_PerFrame);
+            cmd.SetGlobalMatrix(_PrevViewProjM_PerFrame, _prevViewProjectionPerFrame);
+            cmd.SetGlobalMatrix(_ViewProjM_PerFrame, _viewProjectionPerFrame);
+            cmd.SetGlobalMatrix(_InverseViewProjM_PerFrame, _inverseViewProjectionPerFrame);
         }
-        private readonly int _PrevViewProjM_PerFrame = Shader.PropertyToID("_PrevViewProjM_PerFrame");
-        private readonly int _ViewProjM_PerFrame = Shader.PropertyToID("_ViewProjM_PerFrame");
-        private readonly int _InverseViewProjM_PerFrame = Shader.PropertyToID("_InverseViewProjM_PerFrame");
-        private Matrix4x4 viewProjection_PerFrame;
-        private Matrix4x4 prevViewProjection_PerFrame;
-        private Matrix4x4 inverseViewProjection_PerFrame;
         
-        public RTHandle RenderUpScaleAndTaa_1(CommandBuffer cmd,ref RenderingData renderingData, RTHandle currentRT, Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix, int splitFrameCount)
+        public RTHandle RenderUpScaleAndTaa(CommandBuffer cmd,ref RenderingData renderingData, RTHandle currentRT, Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix, int splitFrameCount)
         {
-            if (property._Render_ResolutionOptions == Scale.Full) 
+            if (property.renderResolutionOptions == Scale.Full) 
                 return currentRT;
 
             var TaaDescriptor = new RenderTextureDescriptor(renderingData.cameraData.cameraTargetDescriptor.width,
                 renderingData.cameraData.cameraTargetDescriptor.height, currentRT.rt.descriptor.colorFormat);
             
-            if (property._Render_UseAsyncRender)
+            if (property.renderUseAsyncRender)
             {
                 float width = renderingData.cameraData.cameraTargetDescriptor.width / 2f;
                 cmd.EnableScissorRect(new Rect(splitFrameCount * width, 0, width, renderingData.cameraData.cameraTargetDescriptor.height));
@@ -394,19 +333,12 @@ namespace WorldSystem.Runtime
             
             RenderingUtils.ReAllocateIfNeeded(ref TaaRT1, TaaDescriptor, name: "TaaRT1");
             cmd.SetRenderTarget(TaaRT1);
-            Blitter.BlitTexture(cmd, new Vector4(1,1,0,0), property.TaaMaterial, 0);
+            Blitter.BlitTexture(cmd, new Vector4(1,1,0,0), property.taaMaterial, 0);
             
             cmd.CopyTexture(TaaRT1, PreviousRT);
             
             return TaaRT1;
         }
-
-        private static int _CURRENT_TAA_FRAME = Shader.PropertyToID("_CURRENT_TAA_FRAME");
-        private static int _PREVIOUS_TAA_CLOUD_RESULTS = Shader.PropertyToID("_PREVIOUS_TAA_CLOUD_RESULTS");
-        private static int _TAA_BLEND_FACTOR = Shader.PropertyToID("_TAA_BLEND_FACTOR");
-        public RTHandle TaaRT1;
-        public RTHandle PreviousRT;
-
         
         public RTHandle RenderFixupLate(CommandBuffer cmd, RTHandle activeRT)
         {
@@ -414,48 +346,23 @@ namespace WorldSystem.Runtime
             cmd.CopyTexture(activeRT,TemporaryRT);
             cmd.SetGlobalTexture("_ActiveTarget",TemporaryRT);
             cmd.SetRenderTarget(activeRT);
-            Blitter.BlitTexture(cmd,new Vector4(1,1,0,0),property.VolumeCloud_FixupLate_Material,0);
+            Blitter.BlitTexture(cmd,new Vector4(1,1,0,0),property.volumeCloudFixupLateMaterial,0);
             RenderTexture.ReleaseTemporary(TemporaryRT);
             return activeRT;
         }
         
-        
-        
-        // public RTHandle RenderFixupSplit(CommandBuffer cmd, RTHandle activeRT, Matrix4x4 previousViewMatrix,Matrix4x4 currentViewMatrix, Matrix4x4 projectionMatrix)
-        // {
-        //     SetupSplitFixupMatrices(cmd, previousViewMatrix, currentViewMatrix,projectionMatrix);
-        //     RenderTexture TemporaryRT =  RenderTexture.GetTemporary(activeRT.rt.descriptor);
-        //     cmd.CopyTexture(activeRT,TemporaryRT);
-        //     cmd.SetGlobalTexture("_ActiveTarget_FixupSplit",TemporaryRT);
-        //     cmd.SetRenderTarget(activeRT);
-        //     Blitter.BlitTexture(cmd,new Vector4(1,1,0,0),property.VolumeCloud_FixupSplit_Material,0);
-        //     RenderTexture.ReleaseTemporary(TemporaryRT);
-        //     return activeRT;
-        // }
-        // public void SetupSplitFixupMatrices(CommandBuffer cmd,Matrix4x4 previousViewMatrix,Matrix4x4 currentViewMatrix, Matrix4x4 projectionMatrix)
-        // {
-        //     cmd.SetGlobalMatrix(_PrevViewProjM_SplitFixup, previousViewMatrix * projectionMatrix);
-        //     Matrix4x4 ViewProjM = currentViewMatrix * projectionMatrix;
-        //     cmd.SetGlobalMatrix(_ViewProjM_SplitFixup, ViewProjM);
-        //     cmd.SetGlobalMatrix(_InverseViewProjM_SplitFixup, ViewProjM.inverse);
-        // }
-        // private readonly int _PrevViewProjM_SplitFixup = Shader.PropertyToID("_PrevViewProjM_SplitFixup");
-        // private readonly int _ViewProjM_SplitFixup = Shader.PropertyToID("_ViewProjM_SplitFixup");
-        // private readonly int _InverseViewProjM_SplitFixup = Shader.PropertyToID("_InverseViewProjM_SplitFixup");
-
-        
         public void RenderFixupLateBlit(CommandBuffer cmd, ref RenderingData renderingData, RTHandle SrcRT, RTHandle DstRT)
         {
             var dataCamera = renderingData.cameraData.camera;
-            var frustumHeight1 = 2.0f * dataCamera.farClipPlane * Mathf.Tan(property._Render_AsyncFOV * 0.5f * Mathf.Deg2Rad);
+            var frustumHeight1 = 2.0f * dataCamera.farClipPlane * Mathf.Tan(property.renderAsyncFOV * 0.5f * Mathf.Deg2Rad);
             var frustumHeight2 = 2.0f * dataCamera.farClipPlane * Mathf.Tan(dataCamera.fieldOfView * 0.5f * Mathf.Deg2Rad);
-            cmd.SetGlobalFloat(FOVScale, frustumHeight2 / frustumHeight1);
-            cmd.SetGlobalTexture(FixupLateTarget,SrcRT);
-            Blitter.BlitCameraTexture(cmd, SrcRT, DstRT,property.VolumeCloud_FixupLateBlit_Material,0);
+            cmd.SetGlobalFloat(_FOVScale, frustumHeight2 / frustumHeight1);
+            cmd.SetGlobalTexture(_FixupLateTarget,SrcRT);
+            Blitter.BlitCameraTexture(cmd, SrcRT, DstRT,property.volumeCloudFixupLateBlitMaterial,0);
         }
-        private static readonly int FOVScale = Shader.PropertyToID("_FOVScale");
-        private static readonly int FixupLateTarget = Shader.PropertyToID("_FixupLateTarget");
+        
 
         #endregion
+        
     }
 }

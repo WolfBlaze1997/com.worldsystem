@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using System.Collections.Generic;
@@ -27,12 +27,18 @@ namespace AmplifyShaderEditor
 		public delegate void OnPaletteNodeCreate( System.Type type, string name, AmplifyShaderFunction function );
 		public event OnPaletteNodeCreate OnPaletteNodeCreateEvt;
 
-		private string m_searchFilterStr = "Search";
+		private string m_searchFilterStr = 
+#if !WB_LANGUAGE_CHINESE
+"Search"
+#else
+"搜索"
+#endif
+;
 		protected string m_searchFilterControl = "SHADERNAMETEXTFIELDCONTROLNAME";
 		protected bool m_focusOnSearch = false;
 		protected bool m_defaultCategoryVisible = false;
 
-		//protected List<ContextMenuItem> m_allItems;
+		
 		protected List<ContextMenuItem> m_currentItems;
 		protected Dictionary<string, PaletteFilterData> m_currentCategories;
 		private bool m_forceUpdate = true;
@@ -55,7 +61,7 @@ namespace AmplifyShaderEditor
 		{
 			m_searchFilter = string.Empty;
 			m_currentCategories = new Dictionary<string, PaletteFilterData>();
-			//m_allItems = items;
+			
 			m_currentItems = new List<ContextMenuItem>();
 		}
 
@@ -107,8 +113,8 @@ namespace AmplifyShaderEditor
 				if( currenEvent.type == EventType.KeyDown )
 				{
 					KeyCode key = currenEvent.keyCode;
-					//if ( key == KeyCode.Return || key == KeyCode.KeypadEnter )
-					//	OnEnterPressed();
+					
+					
 
 					if( ( currenEvent.keyCode == KeyCode.KeypadEnter || currenEvent.keyCode == KeyCode.Return ) && currenEvent.type == EventType.KeyDown )
 					{
@@ -162,24 +168,24 @@ namespace AmplifyShaderEditor
 				bool usingSearchFilter = ( m_searchFilter.Length == 0 );
 				m_currScrollBarDims.x = m_transformedArea.width;
 				m_currScrollBarDims.y = m_transformedArea.height - 2 - 16 - 2 - 7 * m_initialSeparatorAmount - 2;
-				m_currentScrollPos = EditorGUILayout.BeginScrollView( m_currentScrollPos/*, GUILayout.Width( 242 ), GUILayout.Height( 250 - 2 - 16 - 2 - 7 - 2) */);
+				m_currentScrollPos = EditorGUILayout.BeginScrollView( m_currentScrollPos);
 				{
 					if( m_forceUpdate )
 					{
 						m_forceUpdate = false;
 
-						//m_currentItems.Clear();
+						
 						m_currentCategories.Clear();
 
 						if( usingSearchFilter )
 						{
 							for( int i = 0; i < allItems.Count; i++ )
 							{
-								//m_currentItems.Add( allItems[ i ] );
+								
 								if( !m_currentCategories.ContainsKey( allItems[ i ].Category ) )
 								{
 									m_currentCategories.Add( allItems[ i ].Category, new PaletteFilterData( m_defaultCategoryVisible ) );
-									//m_currentCategories[ allItems[ i ].Category ].HasCommunityData = allItems[ i ].NodeAttributes.FromCommunity || m_currentCategories[ allItems[ i ].Category ].HasCommunityData;
+									
 								}
 								m_currentCategories[ allItems[ i ].Category ].Contents.Add( allItems[ i ] );
 							}
@@ -202,11 +208,11 @@ namespace AmplifyShaderEditor
 
 								if( searchList.Length == matchesFound )
 								{
-									//m_currentItems.Add( allItems[ i ] );
+									
 									if( !m_currentCategories.ContainsKey( allItems[ i ].Category ) )
 									{
 										m_currentCategories.Add( allItems[ i ].Category, new PaletteFilterData( m_defaultCategoryVisible ) );
-										//m_currentCategories[ allItems[ i ].Category ].HasCommunityData = allItems[ i ].NodeAttributes.FromCommunity || m_currentCategories[ allItems[ i ].Category ].HasCommunityData;
+										
 									}
 									m_currentCategories[ allItems[ i ].Category ].Contents.Add( allItems[ i ] );
 								}
@@ -218,7 +224,7 @@ namespace AmplifyShaderEditor
 							categoryEnumerator.Current.Value.Contents.Sort( ( x, y ) => x.CompareTo( y, usingSearchFilter ) );
 						}
 
-						//sort current list respecting categories
+						
 						m_currentItems.Clear();
 						foreach( var item in m_currentCategories )
 						{
@@ -231,7 +237,7 @@ namespace AmplifyShaderEditor
 
 					string watching = string.Empty;
 
-					// unselect the main search field so it can focus list elements next
+					
 					if( ( currenEvent.keyCode == KeyCode.DownArrow || currenEvent.keyCode == KeyCode.UpArrow ) && m_searchFilter.Length > 0 )
 					{
 						if( GUI.GetNameOfFocusedControl().Equals( m_searchFilterControl + m_resizable ) )
@@ -292,44 +298,44 @@ namespace AmplifyShaderEditor
 						{
 							for( int i = 0; i < current.Value.Contents.Count; i++ )
 							{
-								//if ( !IsItemVisible( currPos ) )
-								//{
-								//	// Invisible
-								//	GUILayout.Space( ItemSize );
-								//}
-								//else
+								
+								
+								
+								
+								
+								
 								{
 									currPos += ItemSize;
-									// Visible
+									
 									EditorGUILayout.BeginHorizontal();
 									GUILayout.Space( 16 );
-									//if ( m_isMouseInside )
-									//{
-									//	//GUI.SetNextControlName( current.Value.Contents[ i ].ItemUIContent.text );
-									//	if ( CheckButton( current.Value.Contents[ i ].ItemUIContent, m_buttonStyle, mouseButtonId ) )
-									//	{
-									//		int controlID = GUIUtility.GetControlID( FocusType.Passive );
-									//		GUIUtility.hotControl = controlID;
-									//		OnPaletteNodeCreateEvt( current.Value.Contents[ i ].NodeType, current.Value.Contents[ i ].Name, current.Value.Contents[ i ].Function );
-									//	}
-									//}
-									//else
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
 									{
 										Rect thisRect = EditorGUILayout.GetControlRect( false, 16f, EditorStyles.label );
-										//if ( m_resizable )
+										
 										{
 											if( GUI.RepeatButton( thisRect, string.Empty, EditorStyles.label ) )
 											{
 												int controlID = GUIUtility.GetControlID( FocusType.Passive );
 												GUIUtility.hotControl = controlID;
 												OnPaletteNodeCreateEvt( current.Value.Contents[ i ].NodeType, current.Value.Contents[ i ].Name, current.Value.Contents[ i ].Function );
-												//unfocus to make it focus the next text field correctly
+												
 												GUI.FocusControl( null );
 											}
 										}
 										GUI.SetNextControlName( current.Value.Contents[ i ].ItemUIContent.text + m_resizable );
-										//EditorGUI.SelectableLabel( thisRect, current.Value.Contents[ i ].ItemUIContent.text, EditorStyles.label );
-										//float cache = EditorGUIUtility.labelWidth;
+										
+										
 										EditorGUIUtility.labelWidth = thisRect.width;
 										EditorGUI.Toggle( thisRect, current.Value.Contents[ i ].ItemUIContent.text, false, EditorStyles.label );
 										EditorGUIUtility.labelWidth = cache;
@@ -342,15 +348,15 @@ namespace AmplifyShaderEditor
 												m_currentScrollPos.y = currPos - m_currScrollBarDims.y + 2;
 											else if( boundTop )
 												m_currentScrollPos.y = currPos - 18;
-											//else if ( boundBottom && !downDirection )
-											//	m_currentScrollPos.y = currPos - m_currScrollBarDims.y + 2;
-											//else if ( boundTop && downDirection )
-											//	m_currentScrollPos.y = currPos - 18;
+											
+											
+											
+											
 										}
 									}
 									EditorGUILayout.EndHorizontal();
 								}
-								//currPos += ItemSize;
+								
 							}
 						}
 					}
@@ -387,7 +393,7 @@ namespace AmplifyShaderEditor
 			string InitialCategoriesFormat = "[[#{0}|{0}]]<br>\n";
 			string InitialCategories = string.Empty;
 			string CurrentCategoryFormat = "\n== {0} ==\n\n";
-			//string NodesFootFormat = "[[Unity Products:Amplify Shader Editor/{0} | Learn More]] -\n[[#Top|Back to Categories]]\n";
+			
 			string NodesFootFormatSep = "[[#Top|Back to Top]]\n----\n";
 			string OverallFoot = "[[Category:Nodes]]";
 
@@ -407,13 +413,13 @@ namespace AmplifyShaderEditor
 				"|}}\n";
 			string NodeInfoEndFormat = "</div>\n";
 
-			//string NodeInfoBeginFormat = "<span style=\"color:#c00;display:block;\">This page is under construction!</span>\n\n";
-			//string nodeInfoBodyFormat = "<img style=\"float:left; margin-right:10px;\" src=\"http://amplify.pt/Nodes/{0}.jpg\">\n[[Unity Products:Amplify Shader Editor/{1}|'''{2}''']]\n\n{3}";
-			//string NodeInfoEndFormat = "\n\n[[Unity_Products:Amplify_Shader_Editor/Nodes | Back to Node List ]]\n[[Category:Nodes]][[Category:{0}]]\n\n\n";
+			
+			
+			
 
-			//string NodeInfoBeginFormat = "{| cellpadding=\"10\"\n";
-			//string nodeInfoBodyFormat = "|- style=\"vertical-align:top;\"\n| http://amplify.pt/Nodes/{0}.jpg\n| [[Unity Products:Amplify Shader Editor/{1} | <span style=\"font-size: 120%;\"><span id=\"{2}\"></span>'''{2}'''<span> ]] <br> {3}\n";
-			//string NodeInfoEndFormat = "|}\n";
+			
+			
+			
 
 			string nodesInfo = string.Empty;
 			BuildFullList( true );
@@ -431,7 +437,7 @@ namespace AmplifyShaderEditor
 					{
 						if( ( fromCommunity && current.Value.Contents[ i ].NodeAttributes.FromCommunity ) 
 							|| !fromCommunity
-							//|| ( !fromCommunity && !current.Value.Contents[ i ].NodeAttributes.FromCommunity ) 
+							
 							)
 						{
 							string nodeFullName = current.Value.Contents[ i ].Name;
@@ -447,14 +453,14 @@ namespace AmplifyShaderEditor
 								communityText = "<small class=\"cardauthor\">( originally by "+ current.Value.Contents[ i ].NodeAttributes.Community + " )</small> ";
 
 							string nodeInfoBody = string.Format( nodeInfoBodyFormat, pictureFilename, pageFilename, nodeFullName, nodeDescription, communityText );
-							//string nodeInfoFoot = string.Format( NodesFootFormat, pageFilename );
+							
 
 							nodesInfo += ( NodeInfoBeginFormat + nodeInfoBody + NodeInfoEndFormat );
-							//nodesInfo += ( NodeInfoBeginFormat + nodeInfoBody + string.Format( NodeInfoEndFormat, current.Key ) );
-							//if ( i != ( count - 1 ) )
-							//{
-							//	nodesInfo += NodesFootFormatSep;
-							//}
+							
+							
+							
+							
+							
 						}
 					}
 					nodesInfo += NodesFootFormatSep;
@@ -467,7 +473,7 @@ namespace AmplifyShaderEditor
 			{
 				System.IO.Directory.CreateDirectory( pathname );
 			}
-			// Save file
+			
 			string nodesPathname = pathname + ( fromCommunity ? "AvailableNodesFromCommunity.txt" : "AvailableNodes.txt" );
 			Debug.Log( " Creating nodes file at " + nodesPathname );
 			IOUtils.SaveTextfileToDisk( finalText, nodesPathname, false );
@@ -499,7 +505,7 @@ namespace AmplifyShaderEditor
 
 		public Dictionary<string, PaletteFilterData> BuildFullList( bool forceAllNodes = false )
 		{
-			//Only need to build if search filter is active and list is set according to it
+			
 			if( m_searchFilter.Length > 0 || !m_isActive || m_currentCategories.Count == 0 )
 			{
 				m_currentItems.Clear();
@@ -517,7 +523,7 @@ namespace AmplifyShaderEditor
 						if( !m_currentCategories.ContainsKey( allItems[ i ].Category ) )
 						{
 							m_currentCategories.Add( allItems[ i ].Category, new PaletteFilterData( m_defaultCategoryVisible ) );
-							//m_currentCategories[ allItems[ i ].Category ].HasCommunityData = allItems[ i ].NodeAttributes.FromCommunity || m_currentCategories[ allItems[ i ].Category ].HasCommunityData;
+							
 						}
 						m_currentCategories[ allItems[ i ].Category ].Contents.Add( allItems[ i ] );
 					}
@@ -529,7 +535,7 @@ namespace AmplifyShaderEditor
 					categoryEnumerator.Current.Value.Contents.Sort( ( x, y ) => x.CompareTo( y, false ) );
 				}
 
-				//mark to force update and take search filter into account
+				
 				m_forceUpdate = true;
 			}
 			return m_currentCategories;
@@ -550,7 +556,7 @@ namespace AmplifyShaderEditor
 		{
 			base.Destroy();
 
-			//m_allItems = null;
+			
 
 			m_currentItems.Clear();
 			m_currentItems = null;
@@ -563,10 +569,10 @@ namespace AmplifyShaderEditor
 			m_foldoutStyle = null;
 		}
 
-		//public void Clear() {
-		//	m_allItems.Clear();
-		//	m_allItems = new List<ContextMenuItem>();
-		//}
+		
+		
+		
+		
 
 		public bool ForceUpdate { get { return m_forceUpdate; } set { m_forceUpdate = value; } }
 	}

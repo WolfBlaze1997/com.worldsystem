@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -8,7 +8,31 @@ using UnityEditor;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Vertex TexCoord", "Vertex Data", "Vertex texture coordinates, can be used in both local vertex offset and fragment outputs", tags: "uv" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Vertex TexCoord"
+#else
+"顶点TexCoord"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vertex Data"
+#else
+"顶点数据"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Vertex texture coordinates, can be used in both local vertex offset and fragment outputs"
+#else
+"顶点纹理坐标，可用于局部顶点偏移和片段输出"
+#endif
+, tags: 
+#if !WB_LANGUAGE_CHINESE
+"uv"
+#else
+"紫外线"
+#endif
+)]
 	public sealed class TexCoordVertexDataNode : VertexDataNode
 	{
 		[SerializeField]
@@ -140,13 +164,13 @@ namespace AmplifyShaderEditor
 			return GetOutputVectorItem( 0, outputId, texcoords );
 		}
 
-		/// <summary>
-		/// Generates UV properties and uniforms and returns the varible name to use in the fragment shader
-		/// </summary>
-		/// <param name="dataCollector"></param>
-		/// <param name="uniqueId"></param>
-		/// <param name="index"></param>
-		/// <returns>frag variable name</returns>
+		
+		
+		
+		
+		
+		
+		
 		static public string GenerateFragUVs( ref MasterNodeDataCollector dataCollector, int uniqueId, int index, string propertyName = null, WirePortDataType size = WirePortDataType.FLOAT2 )
 		{
 			string dummyPropUV = "_texcoord" + ( index > 0 ? ( index + 1 ).ToString() : "" );

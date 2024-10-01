@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using System;
@@ -8,7 +8,25 @@ using UnityEditor;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Layered Blend", "Miscellaneous", "Mix all channels through interpolation factors", null, KeyCode.None, true )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Layered Blend"
+#else
+"分层混合"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Mix all channels through interpolation factors"
+#else
+"通过插值因子混合所有通道"
+#endif
+, null, KeyCode.None, true )]
 	public sealed class LayeredBlendNode : WeightedAvgNode
 	{
 		protected override void CommonInit( int uniqueId )

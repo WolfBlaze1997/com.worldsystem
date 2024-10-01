@@ -1,0 +1,1122 @@
+[
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 1,
+    "pinyin": "HSa",
+    "flag": "",
+    "chinese": "【一般数学】",
+    "english": "一般数学",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 2,
+    "pinyin": "HSa",
+    "flag": "",
+    "chinese": "乘加",
+    "english": "mad",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 3,
+    "pinyin": "HSa",
+    "flag": "",
+    "chinese": "倒数",
+    "english": "rcp",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 4,
+    "pinyin": "HSa",
+    "flag": "",
+    "chinese": "开方",
+    "english": "sqrt",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 5,
+    "pinyin": "HSa",
+    "flag": "",
+    "chinese": "平方根倒数",
+    "english": "rsqrt",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 6,
+    "pinyin": "HSa",
+    "flag": "",
+    "chinese": "符号",
+    "english": "sign",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 7,
+    "pinyin": "HSa",
+    "flag": "",
+    "chinese": "最大值",
+    "english": "max",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 8,
+    "pinyin": "HSa",
+    "flag": "",
+    "chinese": "最小值",
+    "english": "min",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 9,
+    "pinyin": "HSa",
+    "flag": "",
+    "chinese": "绝对值",
+    "english": "abs",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 1,
+    "pinyin": "HSaa",
+    "flag": "",
+    "chinese": "浮点余数",
+    "english": "fmod",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 2,
+    "pinyin": "HSaa",
+    "flag": "",
+    "chinese": "指数",
+    "english": "exp",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 3,
+    "pinyin": "HSaa",
+    "flag": "",
+    "chinese": "指数2",
+    "english": "exp2",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 4,
+    "pinyin": "HSaa",
+    "flag": "",
+    "chinese": "权/指数",
+    "english": "pow",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 5,
+    "pinyin": "HSaa",
+    "flag": "",
+    "chinese": "对数",
+    "english": "log",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 6,
+    "pinyin": "HSaa",
+    "flag": "",
+    "chinese": "对数10",
+    "english": "log10",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 7,
+    "pinyin": "HSaa",
+    "flag": "",
+    "chinese": "尾数指数",
+    "english": "frexp",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 8,
+    "pinyin": "HSaa",
+    "flag": "",
+    "chinese": "合并尾数指数",
+    "english": "ldexp",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 9,
+    "pinyin": "HSaa",
+    "flag": "",
+    "chinese": "饱和",
+    "english": "saturate",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 1,
+    "pinyin": "HSaaa",
+    "flag": "",
+    "chinese": "限制",
+    "english": "clamp",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 2,
+    "pinyin": "HSaaa",
+    "flag": "",
+    "chinese": "线性插值",
+    "english": "lerp",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 3,
+    "pinyin": "HSaaa",
+    "flag": "",
+    "chinese": "步长",
+    "english": "step",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 4,
+    "pinyin": "HSaaa",
+    "flag": "",
+    "chinese": "平滑步长",
+    "english": "smoothstep",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 5,
+    "pinyin": "HSaaa",
+    "flag": "",
+    "chinese": "向上取整",
+    "english": "ceil",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 6,
+    "pinyin": "HSaaa",
+    "flag": "",
+    "chinese": "向下取整",
+    "english": "floor",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 7,
+    "pinyin": "HSaaa",
+    "flag": "",
+    "chinese": "舍入取整",
+    "english": "round",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 8,
+    "pinyin": "HSaaa",
+    "flag": "",
+    "chinese": "整数/截断",
+    "english": "trunc",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 9,
+    "pinyin": "HSaaa",
+    "flag": "",
+    "chinese": "小数",
+    "english": "frac",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 1,
+    "pinyin": "HSaaaa",
+    "flag": "",
+    "chinese": "拆分",
+    "english": "modf",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 2,
+    "pinyin": "HSaaaa",
+    "flag": "",
+    "chinese": "噪音/干扰",
+    "english": "noise",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 3,
+    "pinyin": "HSaaaa",
+    "flag": "",
+    "chinese": "剪辑",
+    "english": "clip",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 4,
+    "pinyin": "HSaaaa",
+    "flag": "",
+    "chinese": "照明",
+    "english": "lit",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 5,
+    "pinyin": "HSaaaa",
+    "flag": "",
+    "chinese": "【向量矩阵数学】",
+    "english": "向量矩阵数学",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 6,
+    "pinyin": "HSaaaa",
+    "flag": "",
+    "chinese": "点乘",
+    "english": "dot",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 7,
+    "pinyin": "HSaaaa",
+    "flag": "",
+    "chinese": "叉乘",
+    "english": "cross",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 8,
+    "pinyin": "HSaaaa",
+    "flag": "",
+    "chinese": "矩阵乘法",
+    "english": "mul",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 9,
+    "pinyin": "HSaaaa",
+    "flag": "",
+    "chinese": "规格化",
+    "english": "normalize",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 1,
+    "pinyin": "HSaaaaa",
+    "flag": "",
+    "chinese": "距离",
+    "english": "distance",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 2,
+    "pinyin": "HSaaaaa",
+    "flag": "",
+    "chinese": "长度",
+    "english": "length",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 3,
+    "pinyin": "HSaaaaa",
+    "flag": "",
+    "chinese": "反射",
+    "english": "reflect",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 4,
+    "pinyin": "HSaaaaa",
+    "flag": "",
+    "chinese": "折射",
+    "english": "refract",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 5,
+    "pinyin": "HSaaaaa",
+    "flag": "",
+    "chinese": "面向前",
+    "english": "faceforward",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 6,
+    "pinyin": "HSaaaaa",
+    "flag": "",
+    "chinese": "距离向量",
+    "english": "dst",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 7,
+    "pinyin": "HSaaaaa",
+    "flag": "",
+    "chinese": "行列式",
+    "english": "determinant",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 8,
+    "pinyin": "HSaaaaa",
+    "flag": "",
+    "chinese": "转置",
+    "english": "transpose",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 9,
+    "pinyin": "HSaaaaa",
+    "flag": "",
+    "chinese": "【三角函数】",
+    "english": "三角函数",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 1,
+    "pinyin": "HSaaaaaa",
+    "flag": "",
+    "chinese": "角度",
+    "english": "degrees",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 2,
+    "pinyin": "HSaaaaaa",
+    "flag": "",
+    "chinese": "弧度",
+    "english": "radians",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 3,
+    "pinyin": "HSaaaaaa",
+    "flag": "",
+    "chinese": "正弦",
+    "english": "sin",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 4,
+    "pinyin": "HSaaaaaa",
+    "flag": "",
+    "chinese": "正弦余弦",
+    "english": "sincos",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 5,
+    "pinyin": "HSaaaaaa",
+    "flag": "",
+    "chinese": "双曲正弦",
+    "english": "sinh",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 6,
+    "pinyin": "HSaaaaaa",
+    "flag": "",
+    "chinese": "余弦",
+    "english": "cos",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 7,
+    "pinyin": "HSaaaaaa",
+    "flag": "",
+    "chinese": "正切",
+    "english": "tan",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 8,
+    "pinyin": "HSaaaaaa",
+    "flag": "",
+    "chinese": "双曲正切",
+    "english": "tanh",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 9,
+    "pinyin": "HSaaaaaa",
+    "flag": "",
+    "chinese": "反余弦",
+    "english": "acos",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 1,
+    "pinyin": "HSaaaaaaa",
+    "flag": "",
+    "chinese": "反正切",
+    "english": "atan",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 2,
+    "pinyin": "HSaaaaaaa",
+    "flag": "",
+    "chinese": "反正切2",
+    "english": "atan2",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 3,
+    "pinyin": "HSaaaaaaa",
+    "flag": "",
+    "chinese": "【值转换】",
+    "english": "值转换",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 4,
+    "pinyin": "HSaaaaaaa",
+    "flag": "",
+    "chinese": "作为double",
+    "english": "asdouble",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 5,
+    "pinyin": "HSaaaaaaa",
+    "flag": "",
+    "chinese": "作为float",
+    "english": "asfloat",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 6,
+    "pinyin": "HSaaaaaaa",
+    "flag": "",
+    "chinese": "作为int",
+    "english": "asint",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 7,
+    "pinyin": "HSaaaaaaa",
+    "flag": "",
+    "chinese": "作为uint",
+    "english": "asuint",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 8,
+    "pinyin": "HSaaaaaaa",
+    "flag": "",
+    "chinese": "全部",
+    "english": "all",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 9,
+    "pinyin": "HSaaaaaaa",
+    "flag": "",
+    "chinese": "任何",
+    "english": "any",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 1,
+    "pinyin": "HSaaaaaaaa",
+    "flag": "",
+    "chinese": "是否有限",
+    "english": "isfinite",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 2,
+    "pinyin": "HSaaaaaaaa",
+    "flag": "",
+    "chinese": "是否无穷",
+    "english": "isinf",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 3,
+    "pinyin": "HSaaaaaaaa",
+    "flag": "",
+    "chinese": "【导数(梯度/变化率)】",
+    "english": "导数(梯度/变化率)",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 4,
+    "pinyin": "HSaaaaaaaa",
+    "flag": "",
+    "chinese": "导数x",
+    "english": "ddx",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 5,
+    "pinyin": "HSaaaaaaaa",
+    "flag": "",
+    "chinese": "导数x低精度",
+    "english": "ddx_coarse",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 6,
+    "pinyin": "HSaaaaaaaa",
+    "flag": "",
+    "chinese": "导数x高精度",
+    "english": "ddx_fine",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 7,
+    "pinyin": "HSaaaaaaaa",
+    "flag": "",
+    "chinese": "导数y",
+    "english": "ddy",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 8,
+    "pinyin": "HSaaaaaaaa",
+    "flag": "",
+    "chinese": "导数y低精度",
+    "english": "ddy_coarse",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 9,
+    "pinyin": "HSaaaaaaaa",
+    "flag": "",
+    "chinese": "导数y高精度",
+    "english": "ddy_fine",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 1,
+    "pinyin": "HSaaaaaaaaa",
+    "flag": "",
+    "chinese": "F宽度",
+    "english": "fwidth",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 2,
+    "pinyin": "HSaaaaaaaaa",
+    "flag": "",
+    "chinese": "【二进制数学】",
+    "english": "二进制数学",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 3,
+    "pinyin": "HSaaaaaaaaa",
+    "flag": "",
+    "chinese": "反转位",
+    "english": "reversebits",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 4,
+    "pinyin": "HSaaaaaaaaa",
+    "flag": "",
+    "chinese": "位计数",
+    "english": "countbits",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 5,
+    "pinyin": "HSaaaaaaaaa",
+    "flag": "",
+    "chinese": "第一高置位",
+    "english": "firstbithigh",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 6,
+    "pinyin": "HSaaaaaaaaa",
+    "flag": "",
+    "chinese": "第一低置位",
+    "english": "firstbitlow",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 7,
+    "pinyin": "HSaaaaaaaaa",
+    "flag": "",
+    "chinese": "【原子计算】",
+    "english": "原子计算",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 8,
+    "pinyin": "HSaaaaaaaaa",
+    "flag": "",
+    "chinese": "连锁加",
+    "english": "InterlockedAdd",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 9,
+    "pinyin": "HSaaaaaaaaa",
+    "flag": "",
+    "chinese": "连锁和",
+    "english": "InterlockedAnd",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 1,
+    "pinyin": "HSaaaaaaaaaa",
+    "flag": "",
+    "chinese": "连锁比较交换",
+    "english": "InterlockedCompareExchange",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 2,
+    "pinyin": "HSaaaaaaaaaa",
+    "flag": "",
+    "chinese": "连锁比较",
+    "english": "InterlockedCompareStore",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 3,
+    "pinyin": "HSaaaaaaaaaa",
+    "flag": "",
+    "chinese": "连锁交换",
+    "english": "InterlockedExchange",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 4,
+    "pinyin": "HSaaaaaaaaaa",
+    "flag": "",
+    "chinese": "连锁最大值",
+    "english": "InterlockedMax",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 5,
+    "pinyin": "HSaaaaaaaaaa",
+    "flag": "",
+    "chinese": "连锁最小值",
+    "english": "InterlockedMin",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 6,
+    "pinyin": "HSaaaaaaaaaa",
+    "flag": "",
+    "chinese": "连锁或",
+    "english": "InterlockedOr",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 7,
+    "pinyin": "HSaaaaaaaaaa",
+    "flag": "",
+    "chinese": "连锁异或",
+    "english": "InterlockedXor",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 8,
+    "pinyin": "HSaaaaaaaaaa",
+    "flag": "",
+    "chinese": "【纹理or缓冲区对象函数】",
+    "english": "纹理or缓冲区对象函数",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 9,
+    "pinyin": "HSaaaaaaaaaa",
+    "flag": "",
+    "chinese": "采样纹理",
+    "english": "Sample",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 1,
+    "pinyin": "HSaaaaaaaaaaa",
+    "flag": "",
+    "chinese": "偏移偏",
+    "english": "SampleBias",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 2,
+    "pinyin": "HSaaaaaaaaaaa",
+    "flag": "",
+    "chinese": "lod采样",
+    "english": "SampleLevel",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 3,
+    "pinyin": "HSaaaaaaaaaaa",
+    "flag": "",
+    "chinese": "采样比较等级零",
+    "english": "SampleCmpLevelZero",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 4,
+    "pinyin": "HSaaaaaaaaaaa",
+    "flag": "",
+    "chinese": "比较采样",
+    "english": "SampleCmp",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 5,
+    "pinyin": "HSaaaaaaaaaaa",
+    "flag": "",
+    "chinese": "梯度采样",
+    "english": "SampleGrad",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 6,
+    "pinyin": "HSaaaaaaaaaaa",
+    "flag": "",
+    "chinese": "加载",
+    "english": "Load",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 7,
+    "pinyin": "HSaaaaaaaaaaa",
+    "flag": "",
+    "chinese": "收集",
+    "english": "Gather",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 8,
+    "pinyin": "HSaaaaaaaaaaa",
+    "flag": "",
+    "chinese": "收集R通道",
+    "english": "GatherRed",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 9,
+    "pinyin": "HSaaaaaaaaaaa",
+    "flag": "",
+    "chinese": "收集G通道",
+    "english": "GatherGreen",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 1,
+    "pinyin": "HSaaaaaaaaaaaa",
+    "flag": "",
+    "chinese": "收集B通道",
+    "english": "GatherBlue",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 2,
+    "pinyin": "HSaaaaaaaaaaaa",
+    "flag": "",
+    "chinese": "收集A通道",
+    "english": "GatherAlpha",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 3,
+    "pinyin": "HSaaaaaaaaaaaa",
+    "flag": "",
+    "chinese": "收集比较",
+    "english": "GatherCmp",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 4,
+    "pinyin": "HSaaaaaaaaaaaa",
+    "flag": "",
+    "chinese": "获取尺寸",
+    "english": "GetDimensions",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 5,
+    "pinyin": "HSaaaaaaaaaaaa",
+    "flag": "",
+    "chinese": "获取指定样本的位置",
+    "english": "GetSamplePosition",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 6,
+    "pinyin": "HSaaaaaaaaaaaa",
+    "flag": "",
+    "chinese": "计算细节等级",
+    "english": "CalculateLevelOfDetail",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 7,
+    "pinyin": "HSaaaaaaaaaaaa",
+    "flag": "",
+    "chinese": "计算细节等级未压缩",
+    "english": "CalculateLevelOfDetailUnclamped",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 8,
+    "pinyin": "HSaaaaaaaaaaaa",
+    "flag": "",
+    "chinese": "【URP不支持/作用未知的函数】",
+    "english": "URP不支持/作用未知的函数",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 9,
+    "pinyin": "HSaaaaaaaaaaaa",
+    "flag": "",
+    "chinese": "是否非数",
+    "english": "isnan",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 1,
+    "pinyin": "HSaaaaaaaaaaaaa",
+    "flag": "",
+    "chinese": "终止",
+    "english": "abort",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 2,
+    "pinyin": "HSaaaaaaaaaaaaa",
+    "flag": "",
+    "chinese": "错误",
+    "english": "errorf",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 3,
+    "pinyin": "HSaaaaaaaaaaaaa",
+    "flag": "",
+    "chinese": "消息",
+    "english": "printf",
+    "phonetic": ""
+  },
+  {
+    "priority": 0,
+    "type": 2,
+    "num": 4,
+    "pinyin": "HSaaaaaaaaaaaaa",
+    "flag": "",
+    "chinese": "检查通道完全映射",
+    "english": "CheckAccessFullyMapped",
+    "phonetic": ""
+  }
+]

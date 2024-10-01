@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Determinant", "Matrix Operators", "Scalar determinant of a square matrix" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Determinant"
+#else
+"行列式"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Matrix Operators"
+#else
+"矩阵运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Scalar determinant of a square matrix"
+#else
+"方阵的标量行列式"
+#endif
+)]
 	public sealed class DeterminantOpNode : SingleInputOp
 	{
 		protected override void CommonInit( int uniqueId )

@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Tan", "Trigonometry Operators", "Tangent of scalars and vectors" ,tags: "tangent")]
+	[NodeAttributes( "Tan",            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Trigonometry Operators"
+#else
+"三角运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Tangent of scalars and vectors"
+#else
+"标量和向量的切线"
+#endif
+,tags: 
+#if !WB_LANGUAGE_CHINESE
+"tangent"
+#else
+"切线"
+#endif
+)]
 	public sealed class TanOpNode : SingleInputOp
 	{
 		protected override void CommonInit( int uniqueId )

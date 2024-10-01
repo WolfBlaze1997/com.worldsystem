@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -8,14 +8,44 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Switch by Pipeline", "Functions", "Executes branch according to current pipeline", NodeAvailabilityFlags = (int)NodeAvailability.ShaderFunction )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Switch by Pipeline"
+#else
+"按管道切换"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Functions"
+#else
+"功能"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Executes branch according to current pipeline"
+#else
+"根据当前管道执行分支"
+#endif
+, NodeAvailabilityFlags = (int)NodeAvailability.ShaderFunction )]
 	public sealed class FunctionSwitchByPipeline : ParentNode
 	{
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT, false, "BiRP Surface", -1, MasterNodePortCategory.Fragment, 0 );
-			AddInputPort( WirePortDataType.FLOAT, false, "BiRP VertFrag", -1, MasterNodePortCategory.Fragment, 3 );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"BiRP Surface"
+#else
+"BiRP表面"
+#endif
+, -1, MasterNodePortCategory.Fragment, 0 );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"BiRP VertFrag"
+#else
+"BiRP垂直碎片"
+#endif
+, -1, MasterNodePortCategory.Fragment, 3 );
 			AddInputPort( WirePortDataType.FLOAT, false, "URP", -1, MasterNodePortCategory.Fragment, 1 );
 			AddInputPort( WirePortDataType.FLOAT, false, "HDRP", -1, MasterNodePortCategory.Fragment, 2 );
 			AddOutputPort( WirePortDataType.FLOAT, Constants.EmptyPortValue );

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.Collections.Generic;
@@ -84,14 +84,14 @@ namespace AmplifyShaderEditor
 			CustomNodeOutputData currOutputData = new CustomNodeOutputData( outputName, output );
 
 
-			// Get existing input nodes so we can test for duplicates
+			
 			Dictionary<string, InputPort> existingPorts = InputPortsDict;
 
-			// Create dictionary to prevent duplicates when dealing with expresssions with multiple occurences of an input 
+			
 			Dictionary<string, string> inputDuplicatePrevention = new Dictionary<string, string>();
 
 
-			// Get all inputs on the expression and save their info  
+			
 			int[] indexes = output.AllIndexesOf( Constants.CNIP );
 			for ( int i = 0; i < indexes.Length; i++ )
 			{

@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Sign", "Math Operators", "Sign of scalar or each vector component" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Sign"
+#else
+"签名"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Sign of scalar or each vector component"
+#else
+"标量或每个向量分量的符号"
+#endif
+)]
 	public sealed class SignOpNode : SingleInputOp
 	{
 		protected override void CommonInit( int uniqueId )

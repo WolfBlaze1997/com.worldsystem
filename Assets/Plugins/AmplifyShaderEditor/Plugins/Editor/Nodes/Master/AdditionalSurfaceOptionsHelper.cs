@@ -9,7 +9,13 @@ namespace AmplifyShaderEditor
 	[Serializable]
 	public class AdditionalSurfaceOptionsHelper
 	{
-		private const string AdditionalOptionsStr = " Additional Surface Options";
+		private const string AdditionalOptionsStr = 
+#if !WB_LANGUAGE_CHINESE
+" Additional Surface Options"
+#else
+"其他曲面选项"
+#endif
+;
 		
 
 		private const float ShaderKeywordButtonLayoutWidth = 15;
@@ -30,14 +36,14 @@ namespace AmplifyShaderEditor
 		{
 			EditorGUILayout.Separator();
 
-			// Add tag
+			
 			if( GUILayout.Button( string.Empty, UIUtils.PlusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 			{
 				m_availableOptions.Add( string.Empty );
 				EditorGUI.FocusTextInControl( null );
 			}
 
-			//Remove tag
+			
 			if( GUILayout.Button( string.Empty, UIUtils.MinusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 			{
 				if( m_availableOptions.Count > 0 )
@@ -55,7 +61,13 @@ namespace AmplifyShaderEditor
 
 			if( itemCount == 0 )
 			{
-				EditorGUILayout.HelpBox( "Your list is Empty!\nUse the plus button to add one.", MessageType.Info );
+				EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"Your list is Empty!\nUse the plus button to add one."
+#else
+"您的列表为空！\n使用加号按钮添加一个。"
+#endif
+, MessageType.Info );
 			}
 
 			int markedToDelete = -1;
@@ -66,7 +78,7 @@ namespace AmplifyShaderEditor
 				EditorGUI.indentLevel += 1;
 				EditorGUIUtility.labelWidth = 62;
 				EditorGUILayout.BeginHorizontal();
-				//Option
+				
 				EditorGUI.BeginChangeCheck();
 				m_availableOptions[ i ] = EditorGUILayout.TextField( "["+i+"] -", m_availableOptions[ i ] );
 				if( EditorGUI.EndChangeCheck() )
@@ -77,14 +89,14 @@ namespace AmplifyShaderEditor
 				EditorGUIUtility.labelWidth = originalLabelWidth;
 				
 				{
-					// Add new port
+					
 					if( m_currentOwner.GUILayoutButton( string.Empty, UIUtils.PlusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 					{
 						m_availableOptions.Insert( i + 1, string.Empty );
 						EditorGUI.FocusTextInControl( null );
 					}
 
-					//Remove port
+					
 					if( m_currentOwner.GUILayoutButton( string.Empty, UIUtils.MinusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 					{
 						markedToDelete = i;

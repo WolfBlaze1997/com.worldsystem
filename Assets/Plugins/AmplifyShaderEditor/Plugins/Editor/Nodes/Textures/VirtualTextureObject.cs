@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -31,11 +31,41 @@ namespace AmplifyShaderEditor
 	}
 
 	[Serializable]
-	[NodeAttributes( "Virtual Texture Object", "Textures", "Represents a Virtual Texture Asset", SortOrderPriority = 1 )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Virtual Texture Object"
+#else
+"虚拟纹理对象"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Textures"
+#else
+"纹理"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Represents a Virtual Texture Asset"
+#else
+"表示虚拟纹理资源"
+#endif
+, SortOrderPriority = 1 )]
 	public class VirtualTextureObject : TexturePropertyNode
 	{
-		protected const string VirtualPresetStr = "Layout Preset";
-		protected const string VirtualChannelStr = "Virtual Layer";
+		protected const string VirtualPresetStr = 
+#if !WB_LANGUAGE_CHINESE
+"Layout Preset"
+#else
+"布局预设"
+#endif
+;
+		protected const string VirtualChannelStr = 
+#if !WB_LANGUAGE_CHINESE
+"Virtual Layer"
+#else
+"虚拟层"
+#endif
+;
 
 		private const string VirtualTextureObjectInfo = "Can only be used alongside a Texture Sample node by connecting to its Tex Input Port.\n" +
 														"\nProperty name must match the value set on your Virtual Texture.\n" +
@@ -206,7 +236,7 @@ namespace AmplifyShaderEditor
 		{
 			base.ReadFromString( ref nodeParams );
 			string defaultTextureGUID = GetCurrentParam( ref nodeParams );
-			//m_defaultValue = AssetDatabase.LoadAssetAtPath<Texture>( textureName );
+			
 			if( UIUtils.CurrentShaderVersion() > 14101 )
 			{
 				m_defaultValue = AssetDatabase.LoadAssetAtPath<Texture>( AssetDatabase.GUIDToAssetPath( defaultTextureGUID ) );
@@ -225,9 +255,9 @@ namespace AmplifyShaderEditor
 			ChangeChannels();
 			m_virtualChannel = GetChannel( m_selectedChannelInt );
 
-			//m_forceNodeUpdate = true;
+			
 
-			//ConfigFromObject( m_defaultValue );
+			
 			if( m_materialValue == null )
 			{
 				ConfigFromObject( m_defaultValue );
@@ -245,7 +275,7 @@ namespace AmplifyShaderEditor
 		public override void WriteToString( ref string nodeInfo, ref string connectionsInfo )
 		{
 			base.WriteToString( ref nodeInfo, ref connectionsInfo );
-			//IOUtils.AddFieldValueToString( ref nodeInfo, ( m_defaultValue != null ) ? AssetDatabase.GetAssetPath( m_defaultValue ) : Constants.NoStringValue );
+			
 			IOUtils.AddFieldValueToString( ref nodeInfo, ( m_defaultValue != null ) ? AssetDatabase.AssetPathToGUID( AssetDatabase.GetAssetPath( m_defaultValue ) ) : Constants.NoStringValue );
 			IOUtils.AddFieldValueToString( ref nodeInfo, ( m_materialValue != null ) ? AssetDatabase.AssetPathToGUID( AssetDatabase.GetAssetPath( m_materialValue ) ) : Constants.NoStringValue );
 
@@ -258,31 +288,31 @@ namespace AmplifyShaderEditor
 
 		public override void WriteAdditionalToString( ref string nodeInfo, ref string connectionsInfo ) { }
 
-		//public override string PropertyName
-		//{
-		//	get
-		//	{
-		//		string propertyName = string.Empty;
-		//		switch ( m_virtualChannel )
-		//		{
-		//			default:
-		//			case VirtualChannel.Albedo:
-		//			case VirtualChannel.Base:
-		//				propertyName = "_MainTex";
-		//				break;
-		//			case VirtualChannel.Normal:
-		//				propertyName = "_BumpMap";
-		//				break;
-		//			case VirtualChannel.SpecMet:
-		//				propertyName = "_MetallicGlossMap";
-		//				break;
-		//			case VirtualChannel.Occlusion:
-		//				propertyName = "_OcclusionMap";
-		//				break;
-		//		}
-		//		return propertyName;
-		//	}
-		//}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 		public override void Destroy()
 		{

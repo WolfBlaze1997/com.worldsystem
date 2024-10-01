@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -8,18 +8,60 @@ using UnityEditor;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Reflection Probe" , "Miscellaneous" , "Provides access to the nearest Reflection Probe to the object. Only available on URP." )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Reflection Probe"
+#else
+"反射探头"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Provides access to the nearest Reflection Probe to the object. Only available on URP."
+#else
+"提供对距离对象最近的反射探测器的访问。仅在URP上可用。"
+#endif
+)]
 	public class ReflectionProbeNode : ParentNode
 	{
 		private const string ReflectionProbeStr = "SHADERGRAPH_REFLECTION_PROBE({0},{1},{2})";
-		private const string InfoTransformSpace = "Both View Dir and Normal vectors are set in Object Space";
-		public const string NodeErrorMsg = "Only valid on URP";
+		private const string InfoTransformSpace = 
+#if !WB_LANGUAGE_CHINESE
+"Both View Dir and Normal vectors are set in Object Space"
+#else
+"视图方向和法线矢量都在对象空间中设置"
+#endif
+;
+		public const string NodeErrorMsg = 
+#if !WB_LANGUAGE_CHINESE
+"Only valid on URP"
+#else
+"仅在URP上有效"
+#endif
+;
 		public const string ErrorOnCompilationMsg = "Attempting to use URP specific node on incorrect SRP or Builtin RP.";
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT3 , false , "View Dir" );
-			AddInputPort( WirePortDataType.FLOAT3 , false , "Normal" );
+			AddInputPort( WirePortDataType.FLOAT3 , false , 
+#if !WB_LANGUAGE_CHINESE
+"View Dir"
+#else
+"查看目录"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT3 , false , 
+#if !WB_LANGUAGE_CHINESE
+"Normal"
+#else
+"正常"
+#endif
+);
 			AddInputPort( WirePortDataType.FLOAT , false , "LOD" );
 			AddOutputPort( WirePortDataType.FLOAT3 , "Out" );
 			m_autoWrapProperties = true;

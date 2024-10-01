@@ -1,14 +1,38 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
-//
-// Custom Node Remap
-// Donated by The Four Headed Cat - @fourheadedcat
+
+
+
+
+
 using UnityEngine;
 using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Remap", "Math Operators", "Remap value from old min - max range to new min - max range", null, KeyCode.None, true, false, null, null, "The Four Headed Cat - @fourheadedcat" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Remap"
+#else
+"重新映射"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Remap value from old min - max range to new min - max range"
+#else
+"将值从旧的最小-最大范围重新映射到新的最小-最高范围"
+#endif
+, null, KeyCode.None, true, false, null, null, 
+#if !WB_LANGUAGE_CHINESE
+"The Four Headed Cat - @fourheadedcat"
+#else
+"四头猫-@fourheaddcat"
+#endif
+)]
 	public sealed class TFHCRemapNode : DynamicTypeNode
 	{
 
@@ -17,15 +41,33 @@ namespace AmplifyShaderEditor
 			base.CommonInit( uniqueId );
 			m_inputPorts[ 0 ].Name = Constants.EmptyPortValue;
 			m_inputPorts[ 1 ].Name = "Min Old";
-			AddInputPort( WirePortDataType.FLOAT, false, "Max Old" );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Max Old"
+#else
+"Max老"
+#endif
+);
 			m_inputPorts[ 2 ].FloatInternalData = 1;
 			m_inputPorts[ 2 ].Vector2InternalData = Vector2.one;
 			m_inputPorts[ 2 ].Vector3InternalData = Vector3.one;
 			m_inputPorts[ 2 ].Vector4InternalData = Vector4.one;
 			m_inputPorts[ 2 ].ColorInternalData = Color.white;
 
-			AddInputPort( WirePortDataType.FLOAT, false, "Min New" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Max New" );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Min New"
+#else
+"最小新"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Max New"
+#else
+"Max新"
+#endif
+);
 			m_inputPorts[ 4 ].FloatInternalData = 1;
 			m_inputPorts[ 4 ].Vector2InternalData = Vector2.one;
 			m_inputPorts[ 4 ].Vector3InternalData = Vector3.one;

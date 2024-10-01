@@ -1,12 +1,36 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Reflect", "Vector Operators", "Reflection vector given an incidence vector and a normal vector", tags: "refl reflect reflection" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Reflect"
+#else
+"反思"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vector Operators"
+#else
+"矢量运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Reflection vector given an incidence vector and a normal vector"
+#else
+"给定入射向量和法向量的反射向量"
+#endif
+, tags: 
+#if !WB_LANGUAGE_CHINESE
+"refl reflect reflection"
+#else
+"反射反射"
+#endif
+)]
 	public sealed class ReflectOpNode : DynamicTypeNode
 	{
 		protected override void CommonInit( int uniqueId )

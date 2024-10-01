@@ -1,0 +1,1912 @@
+[
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'fu'jia'jie'gou'hua'huan'chong'qu'",
+    "flag": "(K)",
+    "chinese": "附加结构化缓冲区",
+    "english": "AppendStructuredBuffer",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'hun'he'zhuang'tai'",
+    "flag": "(K)",
+    "chinese": "混合状态",
+    "english": "BlendState",
+    "phonetic": ""
+  },
+  {
+    "priority": 10039,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'huan'chong'qu'",
+    "flag": "(K)",
+    "chinese": "缓冲区",
+    "english": "Buffer",
+    "phonetic": "/ˈbʌfə(r)"
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'zi'jie'di'zhi'huan'chong'qu'",
+    "flag": "(K)",
+    "chinese": "字节地址缓冲区",
+    "english": "ByteAddressBuffer",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'bian'yi'zhe'se'qi'",
+    "flag": "(K)",
+    "chinese": "编译着色器",
+    "english": "CompileShader",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'ji'suan'zhe'se'qi'",
+    "flag": "(K)",
+    "chinese": "计算着色器",
+    "english": "ComputeShader",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'xiao'hao'jie'gou'huan'chong'qu'",
+    "flag": "(K)",
+    "chinese": "消耗结构缓冲区",
+    "english": "ConsumeStructuredBuffer",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'shen'du'meng'ban'zhuang'tai'",
+    "flag": "(K)",
+    "chinese": "深度蒙版状态",
+    "english": "DepthStencilState",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'shen'du'meng'ban'shi'tu'",
+    "flag": "(K)",
+    "chinese": "深度蒙版视图",
+    "english": "DepthStencilView",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'yu'zhe'se'qi'",
+    "flag": "(K)",
+    "chinese": "域着色器",
+    "english": "DomainShader",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'ji'he'zhe'se'qi'",
+    "flag": "(K)",
+    "chinese": "几何着色器",
+    "english": "GeometryShader",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'qiao'zhe'se'qi'",
+    "flag": "(K)",
+    "chinese": "壳着色器",
+    "english": "Hullshader",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'shu'ru'bu'ding'",
+    "flag": "(K)",
+    "chinese": "输入补丁",
+    "english": "InputPatch",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'xian'liu'",
+    "flag": "(K)",
+    "chinese": "线流",
+    "english": "LineStream",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'shu'chu'bu'ding'",
+    "flag": "(K)",
+    "chinese": "输出补丁",
+    "english": "OutputPatch",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'xiang'su'zhe'se'qi'",
+    "flag": "(K)",
+    "chinese": "像素着色器",
+    "english": "PixelShader",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'dian'liu'",
+    "flag": "(K)",
+    "chinese": "点流",
+    "english": "PointStream",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'du'xie'huan'chong'qu'",
+    "flag": "(K)",
+    "chinese": "读写缓冲区",
+    "english": "RWBuffer",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'du'xie'jie'gou'huan'chong'qu'",
+    "flag": "(K)",
+    "chinese": "读写结构缓冲区",
+    "english": "RWStructuredBuffer",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'guang'zha'qi'zhuang'tai'",
+    "flag": "(K)",
+    "chinese": "光栅器状态",
+    "english": "RasterizerState",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'xuan'ran'mu'biao'shi'tu'",
+    "flag": "(K)",
+    "chinese": "渲染目标视图",
+    "english": "RenderTargetView",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'cai'yang'qi'bi'jiao'zhuang'tai'",
+    "flag": "(K)",
+    "chinese": "采样器比较状态",
+    "english": "SamplerComparisonState",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'jie'gou'huan'chong'qu'",
+    "flag": "(K)",
+    "chinese": "结构缓冲区",
+    "english": "StructuredBuffer",
+    "phonetic": ""
+  },
+  {
+    "priority": 10029,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'cha'zhi'ji'cun'qi'",
+    "flag": "(K)",
+    "chinese": "插值寄存器",
+    "english": "TEXCOORD",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'san'jiao'liu'",
+    "flag": "(K)",
+    "chinese": "三角流",
+    "english": "TriangleStream",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'ding'dian'zhe'se'qi'",
+    "flag": "(K)",
+    "chinese": "顶点着色器",
+    "english": "VertexShader",
+    "phonetic": ""
+  },
+  {
+    "priority": 10033,
+    "type": 1,
+    "num": 1,
+    "pinyin": "'chou'xiang'",
+    "flag": "(K)",
+    "chinese": "抽象",
+    "english": "abstract",
+    "phonetic": "/æbstrækt"
+  },
+  {
+    "priority": 10837,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'jia'",
+    "flag": "(K)",
+    "chinese": "加",
+    "english": "add",
+    "phonetic": "/æd"
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'bie'ming'",
+    "flag": "(K)",
+    "chinese": "别名",
+    "english": "alias",
+    "phonetic": "/ˈeɪliəs"
+  },
+  {
+    "priority": 10007,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'yun'xu'",
+    "flag": "(K)",
+    "chinese": "允许",
+    "english": "allows",
+    "phonetic": "/əˈlaʊz"
+  },
+  {
+    "priority": 10513,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'qie'",
+    "flag": "(K)",
+    "chinese": "且",
+    "english": "and",
+    "phonetic": "/ənd "
+  },
+  {
+    "priority": 10075,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'can'shu'",
+    "flag": "(K)",
+    "chinese": "参数",
+    "english": "args",
+    "phonetic": "/aoz"
+  },
+  {
+    "priority": 10533,
+    "type": 1,
+    "num": 1,
+    "pinyin": "'zuo'wei'",
+    "flag": "(K)",
+    "chinese": "作为",
+    "english": "as",
+    "phonetic": "/æz"
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'sheng'xu'",
+    "flag": "(K)",
+    "chinese": "升序",
+    "english": "ascending",
+    "phonetic": "/əˈsendɪŋ"
+  },
+  {
+    "priority": 10085,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'yi'bu'",
+    "flag": "(K)",
+    "chinese": "异步",
+    "english": "async",
+    "phonetic": "/əsɪŋk"
+  },
+  {
+    "priority": 10166,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'deng'dai'",
+    "flag": "(K)",
+    "chinese": "等待",
+    "english": "await",
+    "phonetic": "/əˈweɪt"
+  },
+  {
+    "priority": 11663,
+    "type": 1,
+    "num": 1,
+    "pinyin": "'ji'lei'",
+    "flag": "(K)",
+    "chinese": "基类",
+    "english": "base",
+    "phonetic": "/beɪs"
+  },
+  {
+    "priority": 13543,
+    "type": 1,
+    "num": 1,
+    "pinyin": "'bu'er'",
+    "flag": "(K)",
+    "chinese": "布尔",
+    "english": "bool",
+    "phonetic": "/bu:l"
+  },
+  {
+    "priority": 11707,
+    "type": 1,
+    "num": 1,
+    "pinyin": "'zhong'zhi'",
+    "flag": "(K)",
+    "chinese": "终止",
+    "english": "break",
+    "phonetic": "/breɪk"
+  },
+  {
+    "priority": 10138,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'yi'ju'",
+    "flag": "(K)",
+    "chinese": "依据",
+    "english": "by",
+    "phonetic": "/baɪ"
+  },
+  {
+    "priority": 10035,
+    "type": 1,
+    "num": 1,
+    "pinyin": "'zi'jie'",
+    "flag": "(K)",
+    "chinese": "字节",
+    "english": "byte",
+    "phonetic": "/baɪt"
+  },
+  {
+    "priority": 12476,
+    "type": 1,
+    "num": 1,
+    "pinyin": "'an'li'",
+    "flag": "(K)",
+    "chinese": "案例",
+    "english": "case",
+    "phonetic": "/keɪs"
+  },
+  {
+    "priority": 10213,
+    "type": 1,
+    "num": 1,
+    "pinyin": "'bu'huo'",
+    "flag": "(K)",
+    "chinese": "捕获",
+    "english": "catch",
+    "phonetic": "/kætʃ"
+  },
+  {
+    "priority": 10001,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'chang'liang'huan'chong'qu'",
+    "flag": "(K)",
+    "chinese": "常量缓冲区",
+    "english": "cbuffer",
+    "phonetic": ""
+  },
+  {
+    "priority": 10013,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'zhi'xin'",
+    "flag": "(K)",
+    "chinese": "质心",
+    "english": "centroid",
+    "phonetic": ""
+  },
+  {
+    "priority": 10045,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'zi'fu'",
+    "flag": "(K)",
+    "chinese": "字符",
+    "english": "char",
+    "phonetic": "/tʃɑː"
+  },
+  {
+    "priority": 10002,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'jian'cha'",
+    "flag": "(K)",
+    "chinese": "检查",
+    "english": "checked",
+    "phonetic": "/tʃekt"
+  },
+  {
+    "priority": 11140,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'lei'",
+    "flag": "(K)",
+    "chinese": "类",
+    "english": "class",
+    "phonetic": "/klɑːs"
+  },
+  {
+    "priority": 10029,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'bian'yi'",
+    "flag": "(K)",
+    "chinese": "编译",
+    "english": "compile",
+    "phonetic": "/kəmˈpaɪl"
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'bian'yi'pian'duan'",
+    "flag": "(K)",
+    "chinese": "编译片段",
+    "english": "compile_fragment",
+    "phonetic": ""
+  },
+  {
+    "priority": 11475,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'chang'liang'",
+    "flag": "(K)",
+    "chinese": "常量",
+    "english": "const",
+    "phonetic": "/'kɒnst"
+  },
+  {
+    "priority": 10066,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'ji'xu'",
+    "flag": "(K)",
+    "chinese": "继续",
+    "english": "continue",
+    "phonetic": "/kənˈtɪnju"
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'shi'jin'zhi'",
+    "flag": "(K)",
+    "chinese": "十进制",
+    "english": "decimal",
+    "phonetic": "/desɪml"
+  },
+  {
+    "priority": 10378,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'mo'ren'",
+    "flag": "(K)",
+    "chinese": "默认",
+    "english": "default",
+    "phonetic": "/dɪˈfɔːlt"
+  },
+  {
+    "priority": 10165,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'ding'yi'",
+    "flag": "(K)",
+    "chinese": "定义",
+    "english": "define",
+    "phonetic": "/dɪˈfaɪn"
+  },
+  {
+    "priority": 10063,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'shi'fou'ding'yi'",
+    "flag": "(K)",
+    "chinese": "是否定义",
+    "english": "defined",
+    "phonetic": "/dɪˈfaɪnd"
+  },
+  {
+    "priority": 10034,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'wei'tuo'",
+    "flag": "(K)",
+    "chinese": "委托",
+    "english": "delegate",
+    "phonetic": "/ˈdelɪɡət"
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'jiang'xu'",
+    "flag": "(K)",
+    "chinese": "降序",
+    "english": "descending",
+    "phonetic": "/dɪˈsendɪŋ"
+  },
+  {
+    "priority": 10001,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'diu'qi'",
+    "flag": "(K)",
+    "chinese": "丢弃",
+    "english": "discard",
+    "phonetic": "/dɪˈskɑːd"
+  },
+  {
+    "priority": 10052,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'zhi'xing'",
+    "flag": "(K)",
+    "chinese": "执行",
+    "english": "do",
+    "phonetic": "/də"
+  },
+  {
+    "priority": 10095,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'shuang'jing'du'",
+    "flag": "(K)",
+    "chinese": "双精度",
+    "english": "double",
+    "phonetic": "/ˈdʌbl"
+  },
+  {
+    "priority": 10023,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'dong'tai'",
+    "flag": "(K)",
+    "chinese": "动态",
+    "english": "dynamic",
+    "phonetic": "/daɪˈnæmɪk"
+  },
+  {
+    "priority": 14640,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'fou'ze'",
+    "flag": "(K)",
+    "chinese": "否则",
+    "english": "else",
+    "phonetic": "/els"
+  },
+  {
+    "priority": 10475,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'mei'ju'",
+    "flag": "(K)",
+    "chinese": "枚举",
+    "english": "enum",
+    "phonetic": "/eimen"
+  },
+  {
+    "priority": 10213,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'xiang'deng'",
+    "flag": "(K)",
+    "chinese": "相等",
+    "english": "equals",
+    "phonetic": "/ˈiːkwəlz"
+  },
+  {
+    "priority": 10176,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'shi'jian'",
+    "flag": "(K)",
+    "chinese": "事件",
+    "english": "event",
+    "phonetic": "/ɪˈvent"
+  },
+  {
+    "priority": 10008,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'xian'shi'",
+    "flag": "(K)",
+    "chinese": "显式",
+    "english": "explicit",
+    "phonetic": "/ɪkˈsplɪsɪt"
+  },
+  {
+    "priority": 10005,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'dao'chu'",
+    "flag": "(K)",
+    "chinese": "导出",
+    "english": "export",
+    "phonetic": "/ɪkˈspɔːt"
+  },
+  {
+    "priority": 10017,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'wai'bu'",
+    "flag": "(K)",
+    "chinese": "外部",
+    "english": "extern",
+    "phonetic": "/ˈekstɜːn"
+  },
+  {
+    "priority": 14181,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'jia'",
+    "flag": "(K)",
+    "chinese": "假",
+    "english": "false",
+    "phonetic": "/fɔːls"
+  },
+  {
+    "priority": 10290,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'wen'jian'",
+    "flag": "(K)",
+    "chinese": "文件",
+    "english": "file",
+    "phonetic": "/faɪl"
+  },
+  {
+    "priority": 10031,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'zui'zhong'",
+    "flag": "(K)",
+    "chinese": "最终",
+    "english": "finally",
+    "phonetic": "/ˈfaɪnəli"
+  },
+  {
+    "priority": 10012,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'gu'ding'",
+    "flag": "(K)",
+    "chinese": "固定",
+    "english": "fixed",
+    "phonetic": "/fɪkst"
+  },
+  {
+    "priority": 12582,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'dan'jing'du'",
+    "flag": "(K)",
+    "chinese": "单精度",
+    "english": "float",
+    "phonetic": "/fləʊt"
+  },
+  {
+    "priority": 11693,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'xun'huan'",
+    "flag": "(K)",
+    "chinese": "循环",
+    "english": "for",
+    "phonetic": "/fɔː"
+  },
+  {
+    "priority": 10334,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'bian'li'",
+    "flag": "(K)",
+    "chinese": "遍历",
+    "english": "foreach",
+    "phonetic": "/fɔːrqi"
+  },
+  {
+    "priority": 10295,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'lai'zi'",
+    "flag": "(K)",
+    "chinese": "来自",
+    "english": "from",
+    "phonetic": "/frəm"
+  },
+  {
+    "priority": 11661,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'huo'qu'",
+    "flag": "(K)",
+    "chinese": "获取",
+    "english": "get",
+    "phonetic": "/ɡet"
+  },
+  {
+    "priority": 10092,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'quan'ju'",
+    "flag": "(K)",
+    "chinese": "全局",
+    "english": "global",
+    "phonetic": "/ˈɡləʊbl"
+  },
+  {
+    "priority": 10001,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'tiao'zhuan'",
+    "flag": "(K)",
+    "chinese": "跳转",
+    "english": "goto",
+    "phonetic": ""
+  },
+  {
+    "priority": 10282,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'zu'",
+    "flag": "(K)",
+    "chinese": "组",
+    "english": "group",
+    "phonetic": "/ɡruːp"
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'zu'gong'xiang'",
+    "flag": "(K)",
+    "chinese": "组共享",
+    "english": "groupshared",
+    "phonetic": ""
+  },
+  {
+    "priority": 10052,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'ban'jing'du'",
+    "flag": "(K)",
+    "chinese": "半精度",
+    "english": "half",
+    "phonetic": "/hɑːf"
+  },
+  {
+    "priority": 24852,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'ru'guo'",
+    "flag": "(K)",
+    "chinese": "如果",
+    "english": "if",
+    "phonetic": "/ɪf"
+  },
+  {
+    "priority": 10032,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'ru'guo'ding'yi'",
+    "flag": "(K)",
+    "chinese": "如果定义",
+    "english": "ifdef",
+    "phonetic": ""
+  },
+  {
+    "priority": 10002,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'ru'guo'wei'ding'yi'",
+    "flag": "(K)",
+    "chinese": "如果未定义",
+    "english": "ifndef",
+    "phonetic": ""
+  },
+  {
+    "priority": 10009,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'yin'shi'",
+    "flag": "(K)",
+    "chinese": "隐式",
+    "english": "implicit",
+    "phonetic": "/ɪmˈplɪsɪt"
+  },
+  {
+    "priority": 10902,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'zai'",
+    "flag": "(K)",
+    "chinese": "在",
+    "english": "in",
+    "phonetic": ""
+  },
+  {
+    "priority": 10058,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'bao'han'",
+    "flag": "(K)",
+    "chinese": "包含",
+    "english": "include",
+    "phonetic": "/ɪnˈkluːd"
+  },
+  {
+    "priority": 10093,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'chu'shi'hua'",
+    "flag": "(K)",
+    "chinese": "初始化",
+    "english": "init",
+    "phonetic": "/ɪ'nɪt"
+  },
+  {
+    "priority": 10024,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'nei'lian'",
+    "flag": "(K)",
+    "chinese": "内联",
+    "english": "inline",
+    "phonetic": ""
+  },
+  {
+    "priority": 10020,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'shu'ru'shu'chu'",
+    "flag": "(K)",
+    "chinese": "输入输出",
+    "english": "inout",
+    "phonetic": ""
+  },
+  {
+    "priority": 16611,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'zheng'shu'",
+    "flag": "(K)",
+    "chinese": "整数",
+    "english": "int",
+    "phonetic": ""
+  },
+  {
+    "priority": 10025,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'jie'kou'",
+    "flag": "(K)",
+    "chinese": "接口",
+    "english": "interface",
+    "phonetic": "/ˈɪntəfeɪs"
+  },
+  {
+    "priority": 10392,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'nei'bu'",
+    "flag": "(K)",
+    "chinese": "内部",
+    "english": "internal",
+    "phonetic": "/ɪnˈtɜːnl"
+  },
+  {
+    "priority": 10041,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'dao'",
+    "flag": "(K)",
+    "chinese": "到",
+    "english": "into",
+    "phonetic": ""
+  },
+  {
+    "priority": 10844,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'shi'",
+    "flag": "(K)",
+    "chinese": "是",
+    "english": "is",
+    "phonetic": "/is"
+  },
+  {
+    "priority": 10023,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'lian'jie'",
+    "flag": "(K)",
+    "chinese": "连接",
+    "english": "join",
+    "phonetic": "/dʒɔɪn"
+  },
+  {
+    "priority": 10002,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'rang'",
+    "flag": "(K)",
+    "chinese": "让",
+    "english": "let",
+    "phonetic": "/let"
+  },
+  {
+    "priority": 10065,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'xian'",
+    "flag": "(K)",
+    "chinese": "线",
+    "english": "line",
+    "phonetic": "/laɪn"
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'xian'xing'",
+    "flag": "(K)",
+    "chinese": "线性",
+    "english": "lineadj",
+    "phonetic": ""
+  },
+  {
+    "priority": 10090,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'xian'xing'",
+    "flag": "(K)",
+    "chinese": "线性",
+    "english": "linear",
+    "phonetic": "/ˈlɪniə"
+  },
+  {
+    "priority": 10008,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'suo'ding'",
+    "flag": "(K)",
+    "chinese": "锁定",
+    "english": "lock",
+    "phonetic": "/lɒk"
+  },
+  {
+    "priority": 10019,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'zhang'zheng'shu'",
+    "flag": "(K)",
+    "chinese": "长整数",
+    "english": "long",
+    "phonetic": "/lɒŋ"
+  },
+  {
+    "priority": 10004,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'tuo'guan'",
+    "flag": "(K)",
+    "chinese": "托管",
+    "english": "managed",
+    "phonetic": "/ˈmænɪdʒd"
+  },
+  {
+    "priority": 10196,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'ju'zhen'",
+    "flag": "(K)",
+    "chinese": "矩阵",
+    "english": "matrix",
+    "phonetic": "/ˈmeɪtrɪks"
+  },
+  {
+    "priority": 10084,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'ming'zi'",
+    "flag": "(K)",
+    "chinese": "名字",
+    "english": "nameof",
+    "phonetic": ""
+  },
+  {
+    "priority": 10723,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'ming'ming'kong'jian'",
+    "flag": "(K)",
+    "chinese": "命名空间",
+    "english": "namespace",
+    "phonetic": "/neɪm/speɪs"
+  },
+  {
+    "priority": 14240,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'xin'",
+    "flag": "(K)",
+    "chinese": "新",
+    "english": "new",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'ping'tai'zheng'shu'",
+    "flag": "(K)",
+    "chinese": "平台整数",
+    "english": "nint",
+    "phonetic": ""
+  },
+  {
+    "priority": 10006,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'bu'cha'zhi'",
+    "flag": "(K)",
+    "chinese": "不插值",
+    "english": "nointerpolation",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'bu'tou'shi'",
+    "flag": "(K)",
+    "chinese": "不透视",
+    "english": "noperspective",
+    "phonetic": ""
+  },
+  {
+    "priority": 10373,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'fei'",
+    "flag": "(K)",
+    "chinese": "非",
+    "english": "not",
+    "phonetic": ""
+  },
+  {
+    "priority": 10001,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'fei'kong'",
+    "flag": "(K)",
+    "chinese": "非空",
+    "english": "notnull",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'ping'tai'wu'fu'hao'zheng'shu'",
+    "flag": "(K)",
+    "chinese": "平台无符号整数",
+    "english": "nuint",
+    "phonetic": ""
+  },
+  {
+    "priority": 15053,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'kong'",
+    "flag": "(K)",
+    "chinese": "空",
+    "english": "null",
+    "phonetic": "/nʌl"
+  },
+  {
+    "priority": 10636,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'dui'xiang'",
+    "flag": "(K)",
+    "chinese": "对象",
+    "english": "object",
+    "phonetic": "/ˈɒbdʒɪkt"
+  },
+  {
+    "priority": 10444,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'zai'",
+    "flag": "(K)",
+    "chinese": "在",
+    "english": "on",
+    "phonetic": ""
+  },
+  {
+    "priority": 10030,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'yun'suan'fu'",
+    "flag": "(K)",
+    "chinese": "运算符",
+    "english": "operator",
+    "phonetic": "/ˈɒpəreɪtə"
+  },
+  {
+    "priority": 10269,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'huo'",
+    "flag": "(K)",
+    "chinese": "或",
+    "english": "or",
+    "phonetic": ""
+  },
+  {
+    "priority": 10011,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'pai'xu'",
+    "flag": "(K)",
+    "chinese": "排序",
+    "english": "orderby",
+    "phonetic": ""
+  },
+  {
+    "priority": 10373,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'shu'chu'",
+    "flag": "(K)",
+    "chinese": "输出",
+    "english": "out",
+    "phonetic": ""
+  },
+  {
+    "priority": 12255,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'zhong'zai'",
+    "flag": "(K)",
+    "chinese": "重载",
+    "english": "override",
+    "phonetic": "/əʊvəˈraɪd"
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'da'bao'pian'yi'",
+    "flag": "(K)",
+    "chinese": "打包偏移",
+    "english": "packoffset",
+    "phonetic": ""
+  },
+  {
+    "priority": 10082,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'can'shu'",
+    "flag": "(K)",
+    "chinese": "参数",
+    "english": "params",
+    "phonetic": "/paruns"
+  },
+  {
+    "priority": 10058,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'bu'fen'",
+    "flag": "(K)",
+    "chinese": "部分",
+    "english": "partial",
+    "phonetic": "/ˈpɑːʃl"
+  },
+  {
+    "priority": 10118,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'tong'dao'",
+    "flag": "(K)",
+    "chinese": "通道",
+    "english": "pass",
+    "phonetic": "/pɑːs"
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'xiang'su'pian'duan'",
+    "flag": "(K)",
+    "chinese": "像素片段",
+    "english": "pixelfragment",
+    "phonetic": ""
+  },
+  {
+    "priority": 10034,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'dian'",
+    "flag": "(K)",
+    "chinese": "点",
+    "english": "point",
+    "phonetic": "/pɔɪnt"
+  },
+  {
+    "priority": 10110,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'za'zhu'",
+    "flag": "(K)",
+    "chinese": "杂注",
+    "english": "pragma",
+    "phonetic": "/parunman"
+  },
+  {
+    "priority": 10001,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'jing'que'",
+    "flag": "(K)",
+    "chinese": "精确",
+    "english": "precise",
+    "phonetic": "/prɪˈsaɪs"
+  },
+  {
+    "priority": 14962,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'si'you'",
+    "flag": "(K)",
+    "chinese": "私有",
+    "english": "private",
+    "phonetic": "/ˈpraɪvət"
+  },
+  {
+    "priority": 11028,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'shou'bao'hu'",
+    "flag": "(K)",
+    "chinese": "受保护",
+    "english": "protected",
+    "phonetic": "/prəˈtektɪd"
+  },
+  {
+    "priority": 20887,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'gong'gong'",
+    "flag": "(K)",
+    "chinese": "公共",
+    "english": "public",
+    "phonetic": "/ˈpʌblɪk"
+  },
+  {
+    "priority": 11526,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'zhi'du'",
+    "flag": "(K)",
+    "chinese": "只读",
+    "english": "readonly",
+    "phonetic": "/riɑˈdɔnli"
+  },
+  {
+    "priority": 10001,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'ji'lu'",
+    "flag": "(K)",
+    "chinese": "记录",
+    "english": "record",
+    "phonetic": "/rekɔːd"
+  },
+  {
+    "priority": 14873,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'yin'yong'",
+    "flag": "(K)",
+    "chinese": "引用",
+    "english": "ref",
+    "phonetic": "/ref"
+  },
+  {
+    "priority": 10017,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'zhu'ce'",
+    "flag": "(K)",
+    "chinese": "注册",
+    "english": "register",
+    "phonetic": "/redʒɪstə"
+  },
+  {
+    "priority": 10109,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'yi'chu'",
+    "flag": "(K)",
+    "chinese": "移除",
+    "english": "remove",
+    "phonetic": "/rɪˈmuːv"
+  },
+  {
+    "priority": 10017,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'bi'xu'",
+    "flag": "(K)",
+    "chinese": "必需",
+    "english": "required",
+    "phonetic": "/rɪˈkwaɪəd"
+  },
+  {
+    "priority": 16023,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'fan'hui'",
+    "flag": "(K)",
+    "chinese": "返回",
+    "english": "return",
+    "phonetic": "/rɪˈtɜːn"
+  },
+  {
+    "priority": 10029,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'cai'yang'",
+    "flag": "(K)",
+    "chinese": "采样",
+    "english": "sample",
+    "phonetic": "/sɑːmpl"
+  },
+  {
+    "priority": 10093,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'cai'yang'qi'",
+    "flag": "(K)",
+    "chinese": "采样器",
+    "english": "sampler",
+    "phonetic": "/sɑːmplə"
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'you'fu'hao'zi'jie'",
+    "flag": "(K)",
+    "chinese": "有符号字节",
+    "english": "sbyte",
+    "phonetic": ""
+  },
+  {
+    "priority": 10001,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'zuo'yong'yu'",
+    "flag": "(K)",
+    "chinese": "作用域",
+    "english": "scoped",
+    "phonetic": "/skəʊpt"
+  },
+  {
+    "priority": 10344,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'mi'feng'",
+    "flag": "(K)",
+    "chinese": "密封",
+    "english": "sealed",
+    "phonetic": "/siːld"
+  },
+  {
+    "priority": 10071,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'xuan'ze'",
+    "flag": "(K)",
+    "chinese": "选择",
+    "english": "select",
+    "phonetic": "/sɪˈlekt"
+  },
+  {
+    "priority": 10849,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'she'zhi'",
+    "flag": "(K)",
+    "chinese": "设置",
+    "english": "set",
+    "phonetic": "/set"
+  },
+  {
+    "priority": 10021,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'gong'xiang'",
+    "flag": "(K)",
+    "chinese": "共享",
+    "english": "shared",
+    "phonetic": "/ʃeəd"
+  },
+  {
+    "priority": 10005,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'duan'zheng'shu'",
+    "flag": "(K)",
+    "chinese": "短整数",
+    "english": "short",
+    "phonetic": "/ʃɔːt"
+  },
+  {
+    "priority": 10016,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'da'xiao'",
+    "flag": "(K)",
+    "chinese": "大小",
+    "english": "sizeof",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'zhan'fen'pei'",
+    "flag": "(K)",
+    "chinese": "栈分配",
+    "english": "stackalloc",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'zhuang'tai'kuai'",
+    "flag": "(K)",
+    "chinese": "状态块",
+    "english": "stateblock",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'zhuang'tai'kuai'zhuang'tai'",
+    "flag": "(K)",
+    "chinese": "状态块状态",
+    "english": "stateblock_state",
+    "phonetic": ""
+  },
+  {
+    "priority": 13690,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'jing'tai'",
+    "flag": "(K)",
+    "chinese": "静态",
+    "english": "static",
+    "phonetic": "/stætɪk"
+  },
+  {
+    "priority": 21683,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'zi'fu'chuan'",
+    "flag": "(K)",
+    "chinese": "字符串",
+    "english": "string",
+    "phonetic": "/strɪŋ"
+  },
+  {
+    "priority": 10053,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'jie'gou'",
+    "flag": "(K)",
+    "chinese": "结构",
+    "english": "struct",
+    "phonetic": "/strʌkt"
+  },
+  {
+    "priority": 10479,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'kai'guan'",
+    "flag": "(K)",
+    "chinese": "开关",
+    "english": "switch",
+    "phonetic": "/swɪtʃ"
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'wen'li'huan'chong'qu'",
+    "flag": "(K)",
+    "chinese": "纹理缓冲区",
+    "english": "tbuffer",
+    "phonetic": ""
+  },
+  {
+    "priority": 10029,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'wen'li'zuo'biao'",
+    "flag": "(K)",
+    "chinese": "纹理坐标",
+    "english": "texcoord",
+    "phonetic": ""
+  },
+  {
+    "priority": 10383,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'wen'li'",
+    "flag": "(K)",
+    "chinese": "纹理",
+    "english": "texture",
+    "phonetic": "/ˈtekstʃə"
+  },
+  {
+    "priority": 11523,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'zhei'",
+    "flag": "(K)",
+    "chinese": "这",
+    "english": "this",
+    "phonetic": "/ðɪs"
+  },
+  {
+    "priority": 10049,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'pao'",
+    "flag": "(K)",
+    "chinese": "抛",
+    "english": "throw",
+    "phonetic": "/θrəʊ"
+  },
+  {
+    "priority": 10003,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'san'jiao'xing'",
+    "flag": "(K)",
+    "chinese": "三角形",
+    "english": "triangle",
+    "phonetic": "/ˈtraɪæŋɡl"
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'san'jiao'xing'de'",
+    "flag": "(K)",
+    "chinese": "三角形的",
+    "english": "triangleadj",
+    "phonetic": ""
+  },
+  {
+    "priority": 13620,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'zhen'",
+    "flag": "(K)",
+    "chinese": "真",
+    "english": "true",
+    "phonetic": "/truː"
+  },
+  {
+    "priority": 10233,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'chang'shi'",
+    "flag": "(K)",
+    "chinese": "尝试",
+    "english": "try",
+    "phonetic": "/traɪ"
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'lei'xing'ding'yi'",
+    "flag": "(K)",
+    "chinese": "类型定义",
+    "english": "typedef",
+    "phonetic": ""
+  },
+  {
+    "priority": 10429,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'lei'xing'",
+    "flag": "(K)",
+    "chinese": "类型",
+    "english": "typeof",
+    "phonetic": ""
+  },
+  {
+    "priority": 10125,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'wu'fu'hao'zheng'shu'",
+    "flag": "(K)",
+    "chinese": "无符号整数",
+    "english": "uint",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'wu'fu'hao'zhang'zheng'shu'",
+    "flag": "(K)",
+    "chinese": "无符号长整数",
+    "english": "ulong",
+    "phonetic": ""
+  },
+  {
+    "priority": 10001,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'bu'jian'cha'",
+    "flag": "(K)",
+    "chinese": "不检查",
+    "english": "unchecked",
+    "phonetic": ""
+  },
+  {
+    "priority": 10015,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'qu'xiao'ding'yi'",
+    "flag": "(K)",
+    "chinese": "取消定义",
+    "english": "undef",
+    "phonetic": ""
+  },
+  {
+    "priority": 10038,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'tong'yi'",
+    "flag": "(K)",
+    "chinese": "统一",
+    "english": "uniform",
+    "phonetic": ""
+  },
+  {
+    "priority": 10004,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'fei'tuo'guan'",
+    "flag": "(K)",
+    "chinese": "非托管",
+    "english": "unmanaged",
+    "phonetic": ""
+  },
+  {
+    "priority": 10005,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'bu'an'quan'",
+    "flag": "(K)",
+    "chinese": "不安全",
+    "english": "unsafe",
+    "phonetic": ""
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'wu'fu'hao'",
+    "flag": "(K)",
+    "chinese": "无符号",
+    "english": "unsigned",
+    "phonetic": ""
+  },
+  {
+    "priority": 10004,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'wu'fu'hao'duan'zheng'shu'",
+    "flag": "(K)",
+    "chinese": "无符号短整数",
+    "english": "ushort",
+    "phonetic": ""
+  },
+  {
+    "priority": 12415,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'shi'yong'",
+    "flag": "(K)",
+    "chinese": "使用",
+    "english": "using",
+    "phonetic": "/ˈjuːzɪŋ"
+  },
+  {
+    "priority": 12742,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'zhi'",
+    "flag": "(K)",
+    "chinese": "值",
+    "english": "value",
+    "phonetic": "/ˈvæljuː"
+  },
+  {
+    "priority": 11777,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'bian'liang'",
+    "flag": "(K)",
+    "chinese": "变量",
+    "english": "var",
+    "phonetic": "/var"
+  },
+  {
+    "priority": 10162,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'shi'liang'",
+    "flag": "(K)",
+    "chinese": "矢量",
+    "english": "vector",
+    "phonetic": "/vektə"
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'ding'dian'pian'duan'",
+    "flag": "(K)",
+    "chinese": "顶点片段",
+    "english": "vertexfragment",
+    "phonetic": ""
+  },
+  {
+    "priority": 10247,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'xu'",
+    "flag": "(K)",
+    "chinese": "虚",
+    "english": "virtual",
+    "phonetic": "/vɜːtʃuəl"
+  },
+  {
+    "priority": 14932,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'wu'xiao'",
+    "flag": "(K)",
+    "chinese": "无效",
+    "english": "void",
+    "phonetic": "/vɔɪd"
+  },
+  {
+    "priority": 10000,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'yi'bian'",
+    "flag": "(K)",
+    "chinese": "易变",
+    "english": "volatile",
+    "phonetic": "/ˈvɒlətaɪl"
+  },
+  {
+    "priority": 10254,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'dang'",
+    "flag": "(K)",
+    "chinese": "当",
+    "english": "when",
+    "phonetic": "/wen"
+  },
+  {
+    "priority": 10041,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'yue'shu'",
+    "flag": "(K)",
+    "chinese": "约束",
+    "english": "where",
+    "phonetic": "/weə"
+  },
+  {
+    "priority": 10088,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'dang'",
+    "flag": "(K)",
+    "chinese": "当",
+    "english": "while",
+    "phonetic": "/waɪl"
+  },
+  {
+    "priority": 10256,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'ju'you'",
+    "flag": "(K)",
+    "chinese": "具有",
+    "english": "with",
+    "phonetic": "/wɪð"
+  },
+  {
+    "priority": 10019,
+    "type": 1,
+    "num": 0,
+    "pinyin": "'chan'chu'",
+    "flag": "(K)",
+    "chinese": "产出",
+    "english": "yield",
+    "phonetic": "/jiːld"
+  }
+]

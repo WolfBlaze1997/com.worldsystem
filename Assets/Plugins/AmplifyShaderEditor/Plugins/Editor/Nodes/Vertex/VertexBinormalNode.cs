@@ -1,8 +1,8 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
-//
-// Custom Node Vertex Binormal World
-// Donated by Community Member Kebrus
+
+
+
+
+
 
 using UnityEngine;
 using System;
@@ -10,7 +10,31 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "World Bitangent", "Surface Data", "Per pixel world bitangent vector", null, KeyCode.None, true, false, null, null, "kebrus" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"World Bitangent"
+#else
+"世界比特币"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Surface Data"
+#else
+"地表数据"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Per pixel world bitangent vector"
+#else
+"每像素世界位变化矢量"
+#endif
+, null, KeyCode.None, true, false, null, null, 
+#if !WB_LANGUAGE_CHINESE
+"kebrus"
+#else
+"克卜鲁斯"
+#endif
+)]
 	public sealed class VertexBinormalNode : ParentNode
 	{
 		protected override void CommonInit( int uniqueId )

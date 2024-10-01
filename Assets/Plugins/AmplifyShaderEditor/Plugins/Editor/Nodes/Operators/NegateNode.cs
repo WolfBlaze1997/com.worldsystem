@@ -3,7 +3,25 @@ using System;
 namespace AmplifyShaderEditor
 {
     [Serializable]
-    [NodeAttributes( "Negate", "Math Operators", "Negate or invert an input value" )]
+    [NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Negate"
+#else
+"否定"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Negate or invert an input value"
+#else
+"否定或反转输入值"
+#endif
+)]
     public sealed class NegateNode : ParentNode
     {
         protected override void CommonInit( int uniqueId )

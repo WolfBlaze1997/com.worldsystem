@@ -1,20 +1,50 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Encode Depth Normal", "Miscellaneous", "Encodes both Depth and Normal values into a Float4 value" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Encode Depth Normal"
+#else
+"编码深度正常"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Encodes both Depth and Normal values into a Float4 value"
+#else
+"将“深度”和“法线”值编码为Float4值"
+#endif
+)]
 	public sealed class EncodeDepthNormalNode : ParentNode
 	{
 		private const string EncodeDepthNormalFunc = "EncodeDepthNormal( {0}, {1} )";
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT, false, "Depth" );
-			AddInputPort( WirePortDataType.FLOAT3, false, "Normal" );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Depth"
+#else
+"深度"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"Normal"
+#else
+"正常"
+#endif
+);
 			AddOutputPort( WirePortDataType.FLOAT4, Constants.EmptyPortValue );
 		}
 

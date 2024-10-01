@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -7,7 +7,25 @@ using UnityEngine;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Decode Lightmap", "Miscellaneous", "Decodes color from Unity lightmap (RGBM or dLDR depending on platform)" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Decode Lightmap"
+#else
+"解码光照图"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Decodes color from Unity lightmap (RGBM or dLDR depending on platform)"
+#else
+"从Unity光照图解码颜色（RGBM或dLDR，具体取决于平台）"
+#endif
+)]
 	public sealed class DecodeLightmapHlpNode : ParentNode
 	{
 		private const string m_funcStandard = "DecodeLightmap({0})";
@@ -34,8 +52,20 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT4, false, "Value" );
-			AddInputPort( WirePortDataType.FLOAT4, false, "Instructions" );
+			AddInputPort( WirePortDataType.FLOAT4, false, 
+#if !WB_LANGUAGE_CHINESE
+"Value"
+#else
+"价值观"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT4, false, 
+#if !WB_LANGUAGE_CHINESE
+"Instructions"
+#else
+"使用说明"
+#endif
+);
 
 			AddOutputPort( WirePortDataType.FLOAT3, Constants.EmptyPortValue );
 

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 using System;
 using UnityEngine;
 using UnityEditor;
@@ -11,7 +11,19 @@ namespace AmplifyShaderEditor
 	{
 		private const string ColorMaskOp = "ColorMask ";
 		private const string ColorMaskOff = "ColorMask RGBA";
-		private GUIContent ColorMaskContent = new GUIContent( "Color Mask", "Sets color channel writing mask, turning all off makes the object completely invisible\nDefault: RGBA" );
+		private GUIContent ColorMaskContent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Color Mask"
+#else
+"彩色口罩"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Sets color channel writing mask, turning all off makes the object completely invisible\nDefault: RGBA"
+#else
+"设置颜色通道写入掩码，关闭所有选项将使对象完全不可见\n默认值：RGBA"
+#endif
+);
 		private readonly char[] m_colorMaskChar = { 'R', 'G', 'B', 'A' };
 
 		private GUIStyle m_leftToggleColorMask;
@@ -100,7 +112,13 @@ namespace AmplifyShaderEditor
 			}
 
 			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField( "Color Mask"+ m_target, GUILayout.Width( EditorGUIUtility.labelWidth - 3 ) );
+			EditorGUILayout.LabelField( 
+#if !WB_LANGUAGE_CHINESE
+"Color Mask"
+#else
+"彩色口罩"
+#endif
++ m_target, GUILayout.Width( EditorGUIUtility.labelWidth - 3 ) );
 
 			m_colorMask[ 0 ] = owner.GUILayoutToggle( m_colorMask[ 0 ], "R", m_leftToggleColorMask );
 			m_colorMask[ 1 ] = owner.GUILayoutToggle( m_colorMask[ 1 ], "G", m_middleToggleColorMask );

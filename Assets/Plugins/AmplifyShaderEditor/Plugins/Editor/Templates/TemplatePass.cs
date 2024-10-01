@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 #define CUSTOM_OPTIONS_AVAILABLE
 using UnityEngine;
 using System;
@@ -106,7 +106,7 @@ namespace AmplifyShaderEditor
 			{
 				idManager.RegisterId( m_customOptionsContainer.Index, uniquePrefix + m_customOptionsContainer.Body, m_customOptionsContainer.Body, true );
 			}
-			//m_customOptionsContainer.CopyPortOptionsFrom( subShader.CustomOptionsContainer, m_passNameContainer.Data );
+			
 #endif
 			m_modules = new TemplateModulesData( m_customOptionsContainer,idManager, m_templateProperties, uniquePrefix + "Module", offsetIdx, passInfo.Data, false );
 
@@ -114,8 +114,8 @@ namespace AmplifyShaderEditor
 			{
 				m_modules.PassTag.StartIdx = passInfo.GlobalStartIdx;
 				m_templateProperties.AddId( passInfo.Data, m_modules.PassTag.Id, passInfo.LocalStartIdx, false );
-				//m_modules.PassTag.StartIdx -= m_templateProperties.PropertyDict[ m_modules.PassTag.Id ].Indentation.Length;
-				//m_templateProperties.PropertyDict[ m_modules.PassTag.Id ].UseIndentationAtStart = false;
+				
+				
 				idManager.RegisterId( m_modules.PassTag.StartIdx, m_modules.UniquePrefix + m_modules.PassTag.Id, string.Empty );
 			}
 			m_modules.SetPassUniqueNameIfUndefined( m_passNameContainer.Data );
@@ -134,7 +134,7 @@ namespace AmplifyShaderEditor
 				TemplateHelperFunctions.CheckUnityBuiltinGlobalMacros( passInfo.Data, ref m_availableShaderGlobals, ref ownDuplicatesDict, subshaderIdx, passIdx );
 			}
 
-			// Vertex and Interpolator data
+			
 			FetchVertexAndInterpData( template, subShader.Modules, offsetIdx, passInfo.Data );
 			if( m_vertexDataContainer != null )
 				idManager.RegisterId( m_vertexDataContainer.VertexDataStartIdx, uniquePrefix + m_vertexDataContainer.VertexDataId, m_vertexDataContainer.VertexDataId );
@@ -142,7 +142,7 @@ namespace AmplifyShaderEditor
 			if( m_interpolatorDataContainer != null )
 				idManager.RegisterId( m_interpolatorDataContainer.InterpDataStartIdx, uniquePrefix + m_interpolatorDataContainer.InterpDataId, m_interpolatorDataContainer.InterpDataId );
 
-			//Fetch function code areas
+			
 			FetchCodeAreas( offsetIdx, TemplatesManager.TemplateVertexCodeBeginArea, MasterNodePortCategory.Vertex, passInfo.Data );
 			if( m_vertexFunctionData != null )
 				idManager.RegisterId( m_vertexFunctionData.Position, uniquePrefix + m_vertexFunctionData.Id, m_vertexFunctionData.Id );
@@ -151,7 +151,7 @@ namespace AmplifyShaderEditor
 			if( m_fragmentFunctionData != null )
 				idManager.RegisterId( m_fragmentFunctionData.Position, uniquePrefix + m_fragmentFunctionData.Id, m_fragmentFunctionData.Id );
 
-			//Fetching inputs, must be do
+			
 			if( m_fragmentFunctionData != null )
 				FetchInputs( offsetIdx, MasterNodePortCategory.Fragment, passInfo.Data );
 
@@ -170,7 +170,7 @@ namespace AmplifyShaderEditor
 
 			TemplateHelperFunctions.FetchInlineVars( passInfo.Data, ref idManager );			
 
-			//Fetch local variables must be done after fetching code areas as it needs them to see is variable is on vertex or fragment
+			
 			TemplateHelperFunctions.FetchLocalVars( passInfo.Data, ref m_localVarsList, m_vertexFunctionData, m_fragmentFunctionData );
 
 			int localVarCount = m_localVarsList.Count;
@@ -193,33 +193,33 @@ namespace AmplifyShaderEditor
 					idManager.RegisterId( m_inputDataList[ i ].TagGlobalStartIdx, uniquePrefix + m_inputDataList[ i ].TagId, m_inputDataList[ i ].TagId );
 			}
 
-			//int passEndIndex = passInfo.Data.LastIndexOf( "}" );
-			//if( passEndIndex > 0 )
-			//{
-			//	int identationIndex = -1;
-			//	for( int i = passEndIndex; i >= 0; i-- )
-			//	{
-			//		if( passInfo.Data[ i ] == TemplatesManager.TemplateNewLine )
-			//		{
-			//			identationIndex = i + 1;
-			//			break;
-			//		}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 
-			//		if( i == 0 )
-			//		{
-			//			identationIndex = 0;
-			//		}
-			//	}
+			
+			
+			
+			
+			
 
-			//	if( identationIndex > -1 )
-			//	{
-			//		int length = passEndIndex - identationIndex;
-			//		string indentation = ( length > 0 ) ? passInfo.Data.Substring( identationIndex, length ) : string.Empty;
-			//		TemplateProperty templateProperty = new TemplateProperty( TemplatesManager.TemplateEndPassTag, indentation, false );
-			//		m_templateProperties.AddId( templateProperty );
-			//		idManager.RegisterId( offsetIdx + passEndIndex, uniquePrefix + TemplatesManager.TemplateEndPassTag, string.Empty );
-			//	}
-			//}
+			
+			
+			
+			
+			
+			
+			
+			
+			
 
 			ownDuplicatesDict.Clear();
 			ownDuplicatesDict = null;
@@ -315,7 +315,7 @@ namespace AmplifyShaderEditor
 
 		void FetchTessellationData( TemplateMultiPass template, TemplateModulesData subShaderModule, int offsetIdx, string body )
 		{
-			// Tessellation VControl Tag
+			
 			try
 			{
 				int vcontrolcodeBegin = body.IndexOf( TemplatesManager.TemplateTessVControlTag );
@@ -333,7 +333,7 @@ namespace AmplifyShaderEditor
 				Debug.LogException( e );
 			}
 
-			// Tessellation Control Data
+			
 			try
 			{
 				int controlCodeBegin = body.IndexOf( TemplatesManager.TemplateTessControlCodeArea );
@@ -361,7 +361,7 @@ namespace AmplifyShaderEditor
 				Debug.LogException( e );
 			}
 
-			// Tessellation Domain Data
+			
 			try
 			{
 				int domainCodeBegin = body.IndexOf( TemplatesManager.TemplateTessDomainCodeArea );
@@ -393,7 +393,7 @@ namespace AmplifyShaderEditor
 
 		void FetchVertexAndInterpData(TemplateMultiPass template, TemplateModulesData subShaderModule, int offsetIdx, string body )
 		{
-			// Vertex Data
+			
 			try
 			{
 				int vertexDataTagBegin = body.IndexOf( TemplatesManager.TemplateVertexDataTag );
@@ -418,7 +418,7 @@ namespace AmplifyShaderEditor
 				Debug.LogException( e );
 			}
 
-			// Available interpolators
+			
 			try
 			{
 				int interpDataBegin = body.IndexOf( TemplatesManager.TemplateInterpolatorBeginTag );

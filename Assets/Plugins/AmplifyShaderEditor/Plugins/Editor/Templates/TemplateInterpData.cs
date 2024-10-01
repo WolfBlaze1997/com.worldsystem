@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ namespace AmplifyShaderEditor
 		public bool IsFull = false;
 		public int Usage = 0;
 		public string Name;
-		//https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-struct
+		
 		public bool NoInterpolation;
 		public bool Sample;
 
@@ -84,7 +84,7 @@ namespace AmplifyShaderEditor
 				}
 			}
 
-			//did not found enough channels to fill request
+			
 			if ( channelsRequired > 0 )
 				return null;
 
@@ -98,7 +98,7 @@ namespace AmplifyShaderEditor
 
 			if ( type == WirePortDataType.COLOR || type == WirePortDataType.FLOAT4 )
 			{
-				// Automatically lock all channels
+				
 				for ( int i = firstChannel; i < ( firstChannel + channelsRequired ); i++ )
 				{
 					AvailableChannels[ i ] = false;

@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: FogShader
+  m_Shader: {fileID: -6465566751694194690, guid: 9a2eec2b48b9a8e428dc16b62d5a3af3,
+    type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _FOGTYPE_EXP2
+  - _HEIGHTFOGTYPE_EXP
+  - _NOISEAFFECT_BOTH
+  - _USEDISTANCEFOG_ON
+  - _USEHEIGHTFOG_ON
+  - _USENOISE_ON
+  - _USESKYBOXHEIGHTFOG_ON
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _FOGTYPE: 2
+    - _HEIGHTFOGTYPE: 1
+    - _NOISEAFFECT: 2
+    - _USEDISTANCEFOG: 1
+    - _USEHEIGHTFOG: 1
+    - _USENOISE: 1
+    - _USERADIALDISTANCE: 0
+    - _USESKYBOXHEIGHTFOG: 1
+    - _USESUNLIGHT: 0
+    m_Colors: []
+  m_BuildTextureStacks: []

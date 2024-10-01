@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -9,7 +9,25 @@ namespace AmplifyShaderEditor
 {
 
 	[Serializable]
-	[NodeAttributes( "Grab Screen Color" , "Camera And Screen" , "Grabed pixel color value from screen" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Grab Screen Color"
+#else
+"抓取屏幕颜色"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Camera And Screen"
+#else
+"摄像头和屏幕"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Grabed pixel color value from screen"
+#else
+"从屏幕抓取像素颜色值"
+#endif
+)]
 	public sealed class ScreenColorNode : PropertyNode
 	{
 		private readonly string[] ASEDeclareMacro =
@@ -56,11 +74,11 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private bool m_isURP2D = false;
 
-		//SRP specific code
+		
 		private const string OpaqueTextureDefine = "REQUIRE_OPAQUE_TEXTURE 1";
 		private const string FetchVarName = "fetchOpaqueVal";
 
-		//private string LWFetchOpaqueTexture = "SAMPLE_TEXTURE2D( _CameraOpaqueTexture, sampler_CameraOpaqueTexture, {0})";
+		
 
 		private string LWFetchOpaqueTexture = "float4( SHADERGRAPH_SAMPLE_SCENE_COLOR( {0} ), 1.0 )";
 
@@ -285,12 +303,24 @@ namespace AmplifyShaderEditor
 				EditorGUI.BeginDisabledGroup( m_containerGraph.IsSRP );
 				{
 					EditorGUI.BeginChangeCheck();
-					m_useCustomGrab = EditorGUILayoutToggle( "Custom Grab Pass", m_useCustomGrab );
+					m_useCustomGrab = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Custom Grab Pass"
+#else
+"自定义抓包通行证"
+#endif
+, m_useCustomGrab );
 					EditorGUI.BeginDisabledGroup( !m_useCustomGrab );
 					DrawMainPropertyBlockNoPrecision();
 					EditorGUI.EndDisabledGroup();
 
-					m_normalize = EditorGUILayoutToggle( "Normalize", m_normalize );
+					m_normalize = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Normalize"
+#else
+"正常化"
+#endif
+, m_normalize );
 					if( EditorGUI.EndChangeCheck() )
 					{
 						UpdatePort();
@@ -321,7 +351,13 @@ namespace AmplifyShaderEditor
 				EditorGUI.BeginDisabledGroup( m_containerGraph.IsSRP );
 				{
 					EditorGUI.BeginChangeCheck();
-					m_normalize = EditorGUILayoutToggle( "Normalize", m_normalize );
+					m_normalize = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Normalize"
+#else
+"正常化"
+#endif
+, m_normalize );
 					if( EditorGUI.EndChangeCheck() )
 					{
 						UpdatePort();
@@ -333,13 +369,25 @@ namespace AmplifyShaderEditor
 			ShowAutoRegister();
 			if( ContainerGraph.IsHDRP || ContainerGraph.ParentWindow.IsShaderFunctionWindow )
 			{
-				m_exposure = EditorGUILayoutToggle( "Exposure", m_exposure );
+				m_exposure = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"Exposure"
+#else
+"暴露"
+#endif
+, m_exposure );
 			}
 
 #if UNITY_2021_1_OR_NEWER
 			if( ( ContainerGraph.IsLWRP || ContainerGraph.ParentWindow.IsShaderFunctionWindow ) && ASEPackageManagerHelper.CurrentHDRPBaseline >= ASESRPBaseline.ASE_SRP_11 )
 			{
-				m_isURP2D = EditorGUILayoutToggle( "2D Renderer" , m_isURP2D);
+				m_isURP2D = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"2D Renderer"
+#else
+"2D渲染器"
+#endif
+, m_isURP2D);
 				if( m_isURP2D )
 				{
 					EditorGUILayout.HelpBox( URP2DHelpBox , MessageType.Info );
@@ -360,7 +408,13 @@ namespace AmplifyShaderEditor
 		{
 			if( !m_isEditing && ContainerGraph.LodLevel <= ParentGraph.NodeLOD.LOD3 )
 			{
-				GUI.Label( titlePos, "Grab Screen Color", UIUtils.GetCustomStyle( CustomStyle.NodeTitle ) );
+				GUI.Label( titlePos, 
+#if !WB_LANGUAGE_CHINESE
+"Grab Screen Color"
+#else
+"抓取屏幕颜色"
+#endif
+, UIUtils.GetCustomStyle( CustomStyle.NodeTitle ) );
 			}
 
 			if( m_useCustomGrab || SoftValidReference )
@@ -372,7 +426,7 @@ namespace AmplifyShaderEditor
 			if( ContainerGraph.LodLevel <= ParentGraph.NodeLOD.LOD3 )
 			{
 				SetAdditonalTitleTextOnCallback( GrabTextureDefault, ( instance, newSubTitle ) => instance.AdditonalTitleContent.text = string.Format( Constants.SubTitleVarNameFormatStr, newSubTitle ) );
-				//GUI.Label( titlePos, PropertyInspectorName, UIUtils.GetCustomStyle( CustomStyle.NodeTitle ) );
+				
 			}
 		}
 
@@ -429,7 +483,7 @@ namespace AmplifyShaderEditor
 				base.GenerateShaderForOutput( outputId, ref dataCollector, ignoreLocalVar );
 				string propertyName = CurrentPropertyReference;
 				OnPropertyNameChanged();
-				//bool emptyName = string.IsNullOrEmpty( m_propertyInspectorName ) || propertyName == GrabTextureDefault;
+				
 				bool emptyName = string.IsNullOrEmpty( m_propertyInspectorName ) || !m_useCustomGrab;
 				dataCollector.AddGrabPass( emptyName ? string.Empty : propertyName );
 				valueName = SetFetchedData( ref dataCollector, ignoreLocalVar );
@@ -452,7 +506,7 @@ namespace AmplifyShaderEditor
 
 			bool isProjecting = m_normalize;
 
-			if( !m_inputPorts[ 0 ].IsConnected ) // to generate proper screen pos by itself
+			if( !m_inputPorts[ 0 ].IsConnected ) 
 				isProjecting = true;
 
 			if( ignoreLocalVar )
@@ -685,11 +739,11 @@ namespace AmplifyShaderEditor
 		{
 			if( SoftValidReference )
 			{
-				//if ( m_referenceNode.IsConnected )
-				//{
-				//	dataType = string.Empty;
-				//	dataName = string.Empty;
-				//}
+				
+				
+				
+				
+				
 
 				return m_referenceNode.GetUniformData( out dataType, out dataName, ref fullValue );
 			}

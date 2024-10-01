@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -18,7 +18,13 @@ namespace AmplifyShaderEditor
 			public string Selection;
 			public Int64 Timestamp;
 		}
-		private const string CustomOptionsLabel = " Custom Options";
+		private const string CustomOptionsLabel = 
+#if !WB_LANGUAGE_CHINESE
+" Custom Options"
+#else
+"自定义选项"
+#endif
+;
 
 		private bool m_isSubShader = false;
 
@@ -127,8 +133,8 @@ namespace AmplifyShaderEditor
 								owner.ContainerGraph.ParentWindow.TemplatesManagerInstance.SetOptionsValue( optionId, true );
 							}
 
-							// this prevents options from showing up when loading by checking if they were hidden by another option
-							// it works on the assumption that an option that may possible hide this one is checked first
+							
+							
 							if( !isRefreshing )
 								item.IsVisible = true;
 							else if( item.WasVisible )
@@ -300,7 +306,7 @@ namespace AmplifyShaderEditor
 							break;
 						}
 
-						//Debug.Log( "DEFINE " + validActions[ i ].ActionData );
+						
 						if( validActions[ i ].AllPasses )
 						{
 							string actionData = validActions[ i ].ActionData;
@@ -363,7 +369,7 @@ namespace AmplifyShaderEditor
 					break;
 					case AseOptionsActionType.RemoveDefine:
 					{
-						//Debug.Log( "UNDEFINE " + validActions[ i ].ActionData );
+						
 						if( validActions[ i ].AllPasses )
 						{
 							string actionData = validActions[ i ].ActionData;
@@ -529,9 +535,9 @@ namespace AmplifyShaderEditor
 					case AseOptionsActionType.ExcludePass:
 					{
 						string optionId = validActions[ i ].ActionData + "Pass";
-						//bool flag = isRefreshing ? owner.ContainerGraph.ParentWindow.TemplatesManagerInstance.SetOptionsValue( optionId, false ) : false;
-						//if( !flag )
-						//	owner.SetPassVisible( validActions[ i ].ActionData, false );
+						
+						
+						
 						owner.ContainerGraph.ParentWindow.TemplatesManagerInstance.SetOptionsValue( optionId , false ) ;
 						owner.SetPassVisible( validActions[ i ].ActionData , false );
 					}
@@ -550,9 +556,9 @@ namespace AmplifyShaderEditor
 					break;
 					case AseOptionsActionType.SetPropertyOnPass:
 					{
-						//Debug.Log( "PASSPROP " + validActions[ i ].ActionData );
-						//Refresh happens on hotcode reload and shader load and in those situation
-						// The property own serialization handles its setup
+						
+						
+						
 						if( isRefreshing )
 							continue;
 
@@ -576,8 +582,8 @@ namespace AmplifyShaderEditor
 					break;
 					case AseOptionsActionType.SetPropertyOnSubShader:
 					{
-						//Refresh happens on hotcode reload and shader load and in those situation
-						// The property own serialization handles its setup
+						
+						
 						if( isRefreshing )
 							continue;
 
@@ -586,14 +592,14 @@ namespace AmplifyShaderEditor
 					break;
 					case AseOptionsActionType.SetShaderProperty:
 					{
-						//This action is only check when shader is compiled over 
-						//the TemplateMultiPassMasterNode via the on CheckPropertyChangesOnOptions() method
+						
+						
 					}
 					break;
 					case AseOptionsActionType.ExcludeAllPassesBut:
 					{
-						//This action is only check when shader is compiled over 
-						//the TemplateMultiPassMasterNode via the on CheckExcludeAllPassOptions() method
+						
+						
 					}
 					break;
 					case AseOptionsActionType.SetMaterialProperty:
@@ -685,25 +691,25 @@ namespace AmplifyShaderEditor
 						{
 							TemplateOptionPortItem item = new TemplateOptionPortItem( owner, customOptionsContainer.Options[ i ] );
 							m_passCustomOptionsPorts.Add( item );
-							//if( m_isSubShader )
-							//{
-							//	if( string.IsNullOrEmpty( customOptionsContainer.Options[ i ].Id ) )
-							//	{
-							//		//No pass name selected. inject on all passes
-							//		TemplateOptionPortItem item = new TemplateOptionPortItem( owner, customOptionsContainer.Options[ i ] );
-							//		m_passCustomOptionsPorts.Add( item );
-							//	}
-							//	else if( customOptionsContainer.Options[ i ].Id.Equals( owner.PassName ) )
-							//	{
-							//		TemplateOptionPortItem item = new TemplateOptionPortItem( owner, customOptionsContainer.Options[ i ] );
-							//		m_passCustomOptionsPorts.Add( item );
-							//	}
-							//}
-							//else
-							//{
-							//	TemplateOptionPortItem item = new TemplateOptionPortItem( owner, customOptionsContainer.Options[ i ] );
-							//	m_passCustomOptionsPorts.Add( item );
-							//}
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
 						}
 						break;
 						case AseOptionsType.Field:
@@ -761,14 +767,14 @@ namespace AmplifyShaderEditor
 				return;
 
 			
-			//for( int i = 0; i < m_passCustomOptionsPorts.Count; i++ )
-			//{
-			//	if( string.IsNullOrEmpty( m_passCustomOptionsPorts[ i ].Options.Id ) ||
-			//		masterNode.PassUniqueName.Equals( m_passCustomOptionsPorts[ i ].Options.Id ) )
-			//	{
-			//		m_passCustomOptionsPorts[ i ].FillDataCollector( masterNode, ref dataCollector );
-			//	}
-			//}
+			
+			
+			
+			
+			
+			
+			
+			
 			
 			for( int i = 0; i < m_passCustomOptionsPorts.Count; i++ )
 			{	
@@ -856,11 +862,11 @@ namespace AmplifyShaderEditor
 
 		public void Refresh()
 		{
-			//int count = m_passCustomOptionsUI.Count;
-			//for( int i = 0; i < count; i++ )
-			//{
-			//	m_passCustomOptionsUI[ i ].Refresh();
-			//}
+			
+			
+			
+			
+			
 			List<TemplateOptionUIItem> sortedList = m_passCustomOptionsUI.OrderBy( item => item.LastClickedTimestamp ).ToList();
 			int count = sortedList.Count;
 			for( int i = 0 ; i < count ; i++ )

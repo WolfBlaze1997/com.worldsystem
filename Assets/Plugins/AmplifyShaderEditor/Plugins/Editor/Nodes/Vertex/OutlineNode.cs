@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
@@ -8,7 +8,25 @@ using UnityEditor;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Outline", "Miscellaneous", "Uses vertices to simulate an outline around the object" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Outline"
+#else
+"大纲"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Uses vertices to simulate an outline around the object"
+#else
+"使用顶点模拟对象周围的轮廓"
+#endif
+)]
 	public sealed class OutlineNode : ParentNode
 	{
 		enum OutlineAlphaModes
@@ -19,10 +37,22 @@ namespace AmplifyShaderEditor
 			AlphaPremultiplied
 		};
 
-		private const string CullModePortNameStr = "Cull Mode";
+		private const string CullModePortNameStr = 
+#if !WB_LANGUAGE_CHINESE
+"Cull Mode"
+#else
+"Cull模式"
+#endif
+;
 		private const string AlphaModePortNameStr = "Alpha";
 		private const string MaskedModePortNamStr = "Opacity Mask";
-		private const string OutlineAlphaModeStr = "Alpha Mode";
+		private const string OutlineAlphaModeStr = 
+#if !WB_LANGUAGE_CHINESE
+"Alpha Mode"
+#else
+"阿尔法模式"
+#endif
+;
 		private const string OpacityMaskClipValueStr = "Mask Clip Value";
 		private const string FragmentErrorMessage = "Outline node should only be connected to vertex ports.";
 
@@ -66,9 +96,27 @@ namespace AmplifyShaderEditor
 			m_colorMaskHelper.HideInlineButton();
 			AddOutputPort( WirePortDataType.FLOAT3, "Out" );
 
-			AddInputPort( WirePortDataType.FLOAT3, false, "Color", -1, MasterNodePortCategory.Fragment, 0 );
-			AddInputPort( WirePortDataType.FLOAT, false, "Alpha", -1, MasterNodePortCategory.Fragment, 2 );
-			AddInputPort( WirePortDataType.FLOAT, false, "Width", -1, MasterNodePortCategory.Fragment, 1 );
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"Color"
+#else
+"颜色"
+#endif
+, -1, MasterNodePortCategory.Fragment, 0 );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Alpha"
+#else
+"阿尔法"
+#endif
+, -1, MasterNodePortCategory.Fragment, 2 );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Width"
+#else
+"宽度"
+#endif
+, -1, MasterNodePortCategory.Fragment, 1 );
 			GetInputPortByUniqueId( 2 ).Visible = false;
 			m_textLabelWidth = 115;
 			m_hasLeftDropdown = true;
@@ -156,7 +204,13 @@ namespace AmplifyShaderEditor
 			NodeUtils.DrawPropertyGroup( ref m_propertiesFoldout, Constants.ParameterLabelStr, () =>
 			{
 				EditorGUI.BeginChangeCheck();
-				m_currentSelectedMode = EditorGUILayoutIntPopup( "Type", m_currentSelectedMode, AvailableOutlineModes, AvailableOutlineValues );
+				m_currentSelectedMode = EditorGUILayoutIntPopup( 
+#if !WB_LANGUAGE_CHINESE
+"Type"
+#else
+"类型"
+#endif
+, m_currentSelectedMode, AvailableOutlineModes, AvailableOutlineValues );
 				if( EditorGUI.EndChangeCheck() )
 				{
 					SetAdditonalTitleText( string.Format( Constants.SubTitleTypeFormatStr, AvailableOutlineModes[ m_currentSelectedMode ] ) );
@@ -187,14 +241,20 @@ namespace AmplifyShaderEditor
 				m_zWriteMode = EditorGUILayoutPopup( ZBufferOpHelper.ZWriteModeStr, m_zWriteMode, ZBufferOpHelper.ZWriteModeValues );
 				m_zTestMode = EditorGUILayoutPopup( ZBufferOpHelper.ZTestModeStr, m_zTestMode, ZBufferOpHelper.ZTestModeLabels );
 				m_colorMaskHelper.Draw( this );
-				m_noFog = EditorGUILayoutToggle( "No Fog", m_noFog );
+				m_noFog = EditorGUILayoutToggle( 
+#if !WB_LANGUAGE_CHINESE
+"No Fog"
+#else
+"无雾"
+#endif
+, m_noFog );
 
 			} );
 		}
 
 		void UpdatePorts()
 		{
-			if( m_currentSelectedMode == 2 ) //custom mode
+			if( m_currentSelectedMode == 2 ) 
 			{
 				GetInputPortByUniqueId( 1 ).ChangeProperties( "Offset", WirePortDataType.FLOAT3, false );
 			}
@@ -242,24 +302,24 @@ namespace AmplifyShaderEditor
 			InputPort alphaPort = GetInputPortByUniqueId( 2 );
 			InputPort vertexPort = GetInputPortByUniqueId( 1 );
 
-			//if( vertexPort.IsConnected )
-			//{
-			//	outlineDataCollector.PortCategory = MasterNodePortCategory.Vertex;
-			//	string outlineWidth = vertexPort.GenerateShaderForOutput( ref outlineDataCollector, vertexPort.DataType, true, true );
-			//	outlineDataCollector.AddToVertexLocalVariables( UniqueId, PrecisionType.Float, vertexPort.DataType, "outlineVar", outlineWidth );
+			
+			
+			
+			
+			
 
-			//	outlineDataCollector.AddVertexInstruction( outlineDataCollector.SpecialLocalVariables, UniqueId, false );
-			//	outlineDataCollector.ClearSpecialLocalVariables();
+			
+			
 
-			//	outlineDataCollector.AddVertexInstruction( outlineDataCollector.VertexLocalVariables, UniqueId, false );
-			//	outlineDataCollector.ClearVertexLocalVariables();
+			
+			
 
-			//	// need to check whether this breaks other outputs or not
-			//	UIUtils.CurrentWindow.OutsideGraph.ResetNodesLocalVariables();
-			//}
+			
+			
+			
 
 			outlineDataCollector.PortCategory = MasterNodePortCategory.Fragment;
-			string outlineColor = colorPort.GeneratePortInstructions( ref outlineDataCollector );// "\to.Emission = " + colorPort.GeneratePortInstructions( ref outlineDataCollector ) + ";";
+			string outlineColor = colorPort.GeneratePortInstructions( ref outlineDataCollector );
 			string alphaValue = alphaPort.Visible ? alphaPort.GeneratePortInstructions( ref outlineDataCollector ) : string.Empty;
 
 
@@ -309,8 +369,8 @@ namespace AmplifyShaderEditor
 			if( outlineDataCollector.UsingWorldNormal )
 				outlineDataCollector.AddInstructions( ( addTabs ? "\n\t\t\t" : "" ) + "o.Normal = float3(0,0,-1);" );
 
-			//Moved vertex port code generation from ln.227 to this after fragment ones 
-			//to correctly include vertex instructions generated by them 
+			
+			
 			UIUtils.CurrentWindow.OutsideGraph.ResetNodesLocalVariables();
 			outlineDataCollector.PortCategory = MasterNodePortCategory.Vertex;
 			string outlineWidth = vertexPort.GenerateShaderForOutput( ref outlineDataCollector, vertexPort.DataType, true, true );
@@ -326,15 +386,15 @@ namespace AmplifyShaderEditor
 
 			outlineDataCollector.AddASEMacros();
 
-			// need to check whether this breaks other outputs or not
+			
 			UIUtils.CurrentWindow.OutsideGraph.ResetNodesLocalVariables();
 
 			if( masterNode != null )
 			{
 				masterNode.CheckSamplingMacrosFlag();
-				//masterNode.AdditionalIncludes.AddToDataCollector( ref outlineDataCollector );
-				//masterNode.AdditionalPragmas.AddToDataCollector( ref outlineDataCollector );
-				//masterNode.AdditionalDefines.AddToDataCollector( ref outlineDataCollector );
+				
+				
+				
 				if( !masterNode.CustomShadowCaster )
 					masterNode.AdditionalDirectives.AddAllToDataCollector( ref outlineDataCollector );
 			}

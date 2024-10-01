@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -7,7 +7,25 @@ using UnityEngine;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "World Position", "Surface Data", "World space position" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"World Position"
+#else
+"世界地位"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Surface Data"
+#else
+"地表数据"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"World space position"
+#else
+"世界空间位置"
+#endif
+)]
 	public sealed class WorldPosInputsNode : SurfaceShaderINParentNode
 	{
 		protected override void CommonInit( int uniqueId )

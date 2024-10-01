@@ -1,10 +1,28 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 namespace AmplifyShaderEditor
 {
 	[System.Serializable]
-	[NodeAttributes( "Object To World Matrix", "Matrix Transform", "Current model matrix" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Object To World Matrix"
+#else
+"对象到世界矩阵"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Matrix Transform"
+#else
+"矩阵变换"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Current model matrix"
+#else
+"当前模型矩阵"
+#endif
+)]
 	public sealed class ObjectToWorldMatrixNode : ConstantShaderVariable
 	{
 		protected override void CommonInit( int uniqueId )

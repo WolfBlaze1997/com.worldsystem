@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -35,8 +35,20 @@ public static class MaterialPropertyHandlerEx
 
 internal class ASEMaterialInspector : ShaderGUI
 {
-	private const string CopyButtonStr = "Copy Values";
-	private const string PasteButtonStr = "Paste Values";
+	private const string CopyButtonStr = 
+#if !WB_LANGUAGE_CHINESE
+"Copy Values"
+#else
+"复制值"
+#endif
+;
+	private const string PasteButtonStr = 
+#if !WB_LANGUAGE_CHINESE
+"Paste Values"
+#else
+"粘贴值"
+#endif
+;
 	private const string PreviewModelPref = "ASEMI_PREVIEWMODEL";
 
 	private static MaterialEditor m_instance = null;
@@ -50,7 +62,7 @@ internal class ASEMaterialInspector : ShaderGUI
 	private int m_selectedMesh = 0;
 
 
-	// Reflection Fields
+	
 
 	private FieldInfo m_previewDirDefault = null;
 
@@ -117,7 +129,7 @@ internal class ASEMaterialInspector : ShaderGUI
 		{
 			mat.SetInt( IOUtils.DefaultASEDirtyCheckId, 0 );
 			UIUtils.ForceUpdateFromMaterial();
-			//Event.current.Use();
+			
 		}
 
 		if( materialEditor.isVisible )
@@ -125,7 +137,13 @@ internal class ASEMaterialInspector : ShaderGUI
 			GUILayout.BeginVertical();
 			{
 				GUILayout.Space( 3 );
-				if( GUILayout.Button( "Open in Shader Editor" ) )
+				if( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Open in Shader Editor"
+#else
+"在着色器编辑器中打开"
+#endif
+) )
 				{
 					ASEPackageManagerHelper.SetupLateMaterial( mat );
 				}
@@ -318,9 +336,9 @@ internal class ASEMaterialInspector : ShaderGUI
 			GUILayout.EndVertical();
 		}
 		EditorGUI.BeginChangeCheck();
-		//base.OnGUI( materialEditor, properties );
+		
 
-		// Draw custom properties instead of calling BASE to use single line texture properties
+		
 		materialEditor.SetDefaultGUIWidths();
 
 		if( m_infoField == null )
@@ -342,34 +360,34 @@ internal class ASEMaterialInspector : ShaderGUI
 		{
 			if( ( properties[ i ].flags & ( MaterialProperty.PropFlags.HideInInspector | MaterialProperty.PropFlags.PerRendererData ) ) == MaterialProperty.PropFlags.None )
 			{
-				// Removed no scale offset one line texture property for consistency :( sad face
-				//if( ( properties[ i ].flags & MaterialProperty.PropFlags.NoScaleOffset ) == MaterialProperty.PropFlags.NoScaleOffset )
-				//{
-				//	object obj = MaterialPropertyHandlerEx.GetHandler( mat.shader, properties[ i ].name );
-				//	if( obj != null )
-				//	{
-				//		float height = MaterialPropertyHandlerEx.GetPropertyHeight( obj, properties[ i ], properties[ i ].displayName, materialEditor );
-				//		//Rect rect = (Rect)materialEditor.GetType().InvokeMember( "GetPropertyRect", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.InvokeMethod, null, materialEditor, new object[] { properties[ i ], properties[ i ].displayName, true } );
-				//		Rect rect = EditorGUILayout.GetControlRect( true, height, EditorStyles.layerMaskField );
-				//		MaterialPropertyHandlerEx.OnGUI( obj, ref rect, properties[ i ], new GUIContent( properties[ i ].displayName ), materialEditor );
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 
-				//		if( MaterialPropertyHandlerEx.PropertyDrawer( obj ) != null )
-				//			continue;
+				
+				
 
-				//		rect = EditorGUILayout.GetControlRect( true, height, EditorStyles.layerMaskField );
-				//		materialEditor.TexturePropertyMiniThumbnail( rect, properties[ i ], properties[ i ].displayName, string.Empty );
-				//	}
-				//	else
-				//	{
-				//		materialEditor.TexturePropertySingleLine( new GUIContent( properties[ i ].displayName ), properties[ i ] );
-				//	}
-				//}
-				//else
-				//{
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 					float propertyHeight = materialEditor.GetPropertyHeight( properties[ i ], properties[ i ].displayName );
 					Rect controlRect = EditorGUILayout.GetControlRect( true, propertyHeight, EditorStyles.layerMaskField, new GUILayoutOption[ 0 ] );
 					materialEditor.ShaderProperty( controlRect, properties[ i ], properties[ i ].displayName );
-				//}
+				
 			}
 		}
 

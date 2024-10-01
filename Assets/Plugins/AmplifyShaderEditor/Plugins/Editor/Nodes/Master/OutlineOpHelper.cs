@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 using UnityEngine;
 using UnityEditor;
 using System;
@@ -71,23 +71,23 @@ namespace AmplifyShaderEditor
 														"ENDCG",
 														"\n"};
 
-		//private const string OutlineInstancedHeader = "#pragma multi_compile_instancing";
+		
 
-		//private readonly string[] OutlineBodyInstancedBegin = {
-		//												"UNITY_INSTANCING_CBUFFER_START({0})",
-		//												"\tUNITY_DEFINE_INSTANCED_PROP( half4, _ASEOutlineColor )",
-		//												"\tUNITY_DEFINE_INSTANCED_PROP(half, _ASEOutlineWidth)",
-		//												"UNITY_INSTANCING_CBUFFER_END",
-		//												"void outlineVertexDataFunc( inout appdata_full v, out Input o )",
-		//												"{",
-		//												"\tUNITY_INITIALIZE_OUTPUT( Input, o );"};
+		
+		
+		
+		
+		
+		
+		
+		
 
-		//private readonly string[] OutlineBodyInstancedEnd = {
-		//												"}",
-		//												"inline half4 LightingOutline( SurfaceOutput s, half3 lightDir, half atten ) { return half4 ( 0,0,0, s.Alpha); }",
-		//												"void outlineSurf( Input i, inout SurfaceOutput o ) { o.Emission = UNITY_ACCESS_INSTANCED_PROP( _ASEOutlineColor ).rgb; o.Alpha = 1; }",
-		//												"ENDCG",
-		//												"\n"};
+		
+		
+		
+		
+		
+		
 
 		private const string WidthVariableAccessInstanced = "UNITY_ACCESS_INSTANCED_PROP( _ASEOutlineWidth )";
 
@@ -96,7 +96,13 @@ namespace AmplifyShaderEditor
 		private const string OutlineVertexCustomMode = "\tv.vertex.xyz += {0};";
 
 		private const string OutlineColorLabel = "Color";
-		private const string OutlineWidthLabel = "Width";
+		private const string OutlineWidthLabel = 
+#if !WB_LANGUAGE_CHINESE
+"Width"
+#else
+"宽度"
+#endif
+;
 
 		private const string ColorPropertyName = "_ASEOutlineColor";
 		private const string WidthPropertyName = "_ASEOutlineWidth";
@@ -109,9 +115,21 @@ namespace AmplifyShaderEditor
 		private const string ColorPropertyDec = "_ASEOutlineColor( \"Outline Color\", Color ) = ({0})";
 		private const string OutlinePropertyDec = "_ASEOutlineWidth( \"Outline Width\", Float ) = {0}";
 
-		private const string ModePropertyStr = "Mode";
+		private const string ModePropertyStr = 
+#if !WB_LANGUAGE_CHINESE
+"Mode"
+#else
+"模式"
+#endif
+;
 
-		private const string NoFogStr = "No Fog";
+		private const string NoFogStr = 
+#if !WB_LANGUAGE_CHINESE
+"No Fog"
+#else
+"无雾"
+#endif
+;
 
 		private const string BillboardInstructionFormat = "\t{0};";
 
@@ -153,7 +171,7 @@ namespace AmplifyShaderEditor
 		private string m_grabPasses = string.Empty;
 		private Dictionary<string, string> m_localFunctions;
 
-		//private OutlineMode m_customMode = OutlineMode.VertexOffset;
+		
 		private int m_offsetMode = 0;
 		private bool m_customNoFog = true;
 
@@ -305,7 +323,7 @@ namespace AmplifyShaderEditor
 
 			body.Add( "Cull " + m_cullMode );
 			
-			//Color Mask
+			
 			{
 				int count = 0;
 				string colorMask = string.Empty;
@@ -355,10 +373,10 @@ namespace AmplifyShaderEditor
 				AddMultibodyString( m_pragmas, body );
 			}
 			AddMultibodyString( m_standardAdditionalDirectives, body );
-			//if( instanced )
-			//{
-			//	body.Add( OutlineInstancedHeader );
-			//}
+			
+			
+			
+			
 
 			if( customOutline )
 			{
@@ -391,31 +409,31 @@ namespace AmplifyShaderEditor
 
 			if( instanced )
 			{
-				//for( int i = 0; i < OutlineBodyInstancedBegin.Length; i++ )
-				//{
-				//	body.Add( ( i == 0 ) ? string.Format( OutlineBodyInstancedBegin[ i ], shaderName ) : OutlineBodyInstancedBegin[ i ] );
-				//}
-
-				//if( (object)billboardInfo != null )
-				//{
-				//	for( int j = 0; j < billboardInfo.Length; j++ )
-				//	{
-				//		body.Add( string.Format( BillboardInstructionFormat, billboardInfo[ j ] ) );
-				//	}
-				//}
-
-				//switch( outlineMode )
-				//{
-				//	case 0: body.Add( string.Format( OutlineVertexOffsetMode, WidthVariableAccessInstanced ) ); break;
-				//	case 1: body.Add( string.Format( OutlineVertexScaleMode, WidthVariableAccessInstanced ) ); break;
-				//	case 2: body.Add( string.Format( OutlineVertexCustomMode, WidthVariableAccessInstanced ) ); break;
-				//}
-				//for( int i = 0; i < OutlineBodyInstancedEnd.Length; i++ )
-				//{
-				//	body.Add( OutlineBodyInstancedEnd[ i ] );
-				//}
 				
-				//Instanced block name must differ from used on main shader so it won't throw a duplicate name error
+				
+				
+				
+
+				
+				
+				
+				
+				
+				
+				
+
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				shaderName = shaderName+ "Outline";
 				bool openCBuffer = true;
 				if( customOutline )
@@ -455,7 +473,7 @@ namespace AmplifyShaderEditor
 
 				body.Add( IOUtils.InstancedPropertiesEnd );
 
-				//Functions
+				
 				if( customOutline && !isShadowCaster )
 					body.Add( Functions );
 
@@ -546,7 +564,7 @@ namespace AmplifyShaderEditor
 				if( !dataCollector.UsingCustomOutlineWidth )
 					body.Add( precision == PrecisionType.Float ? OutlineDefaultUniformWidth.Replace( "half", "float" ) : OutlineDefaultUniformWidth );
 
-				//Functions
+				
 				if( customOutline && !isShadowCaster )
 					body.Add( Functions );
 
@@ -676,7 +694,7 @@ namespace AmplifyShaderEditor
 		public Dictionary<string, string> LocalFunctions { get { return m_localFunctions; } set { m_localFunctions = value; } }
 		public bool DirtyInput { get { return m_dirtyInput; } set { m_dirtyInput = value; } }
 
-		//public OutlineMode CustomMode { get { return m_customMode; } set { m_customMode = value; } }
+		
 		public int OffsetMode { get { return m_offsetMode; } set { m_offsetMode = value; } }
 		public bool CustomNoFog { get { return m_customNoFog; } set { m_customNoFog = value; } }
 	}

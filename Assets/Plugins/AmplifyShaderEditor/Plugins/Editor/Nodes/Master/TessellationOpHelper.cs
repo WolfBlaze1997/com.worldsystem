@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.Collections.Generic;
@@ -11,23 +11,29 @@ namespace AmplifyShaderEditor
 	[Serializable]
 	public sealed class TessellationOpHelper
 	{
-		public const string TessellationPortStr = "Tessellation";
+		public const string TessellationPortStr = 
+#if !WB_LANGUAGE_CHINESE
+"Tessellation"
+#else
+"镶嵌"
+#endif
+;
 
 
 		public const string TessSurfParam = "tessellate:tessFunction";
 		public const string TessInclude = "Tessellation.cginc";
-		//public const string CustomAppData = "\t\tstruct appdata\n" +
-		//									"\t\t{\n" +
-		//									"\t\t\tfloat4 vertex : POSITION;\n" +
-		//									"\t\t\tfloat4 tangent : TANGENT;\n" +
-		//									"\t\t\tfloat3 normal : NORMAL;\n" +
-		//									"\t\t\tfloat4 texcoord : TEXCOORD0;\n" +
-		//									"\t\t\tfloat4 texcoord1 : TEXCOORD1;\n" +
-		//									"\t\t\tfloat4 texcoord2 : TEXCOORD2;\n" +
-		//									"\t\t\tfloat4 texcoord3 : TEXCOORD3;\n" +
-		//									"\t\t\tfixed4 color : COLOR;\n" +
-		//									"\t\t\tUNITY_VERTEX_INPUT_INSTANCE_ID\n" +
-		//									"\t\t};\n\n";
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 
 
@@ -35,10 +41,46 @@ namespace AmplifyShaderEditor
 		private const string TessMinUniformName = "_TessMin";
 		private const string TessMaxUniformName = "_TessMax";
 
-		//private GUIContent EnableTessContent = new GUIContent( "Tessellation", "Activates the use of tessellation which subdivides polygons to increase geometry detail using a set of rules\nDefault: OFF" );
-		private GUIContent TessFactorContent = new GUIContent( "Tess", "Tessellation factor\nDefault: 4" );
-		private GUIContent TessMinDistanceContent = new GUIContent( "Min", "Minimum tessellation distance\nDefault: 10" );
-		private GUIContent TessMaxDistanceContent = new GUIContent( "Max", "Maximum tessellation distance\nDefault: 25" );
+		
+		private GUIContent TessFactorContent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Tess"
+#else
+"苔丝"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Tessellation factor\nDefault: 4"
+#else
+"细分因子\n默认值：4"
+#endif
+);
+		private GUIContent TessMinDistanceContent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Min"
+#else
+"分钟"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Minimum tessellation distance\nDefault: 10"
+#else
+"最小镶嵌距离\n默认值：10"
+#endif
+);
+		private GUIContent TessMaxDistanceContent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Max"
+#else
+"马克斯"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Maximum tessellation distance\nDefault: 25"
+#else
+"最大镶嵌距离\n默认值：25"
+#endif
+);
 
 
 		private readonly int[] TesselationTypeValues = { 0, 1, 2, 3 };
@@ -52,18 +94,30 @@ namespace AmplifyShaderEditor
 		private const string TessFunctionOpen = "\t\tfloat4 tessFunction( {0} v0, {0} v1, {0} v2 )\n\t\t{{\n";
 		private const string TessFunctionClose = "\t\t}\n";
 
-		// Custom function
+		
 		private const string CustomFunctionBody = "\t\t\treturn {0};\n";
 
-		// Distance based function
+		
 		private const string DistBasedTessFunctionBody = "\t\t\treturn UnityDistanceBasedTess( v0.vertex, v1.vertex, v2.vertex, _TessMin, _TessMax, _TessValue );\n";
 
-		// Fixed amount function
+		
 		private const string FixedAmountTessFunctionOpen = "\t\tfloat4 tessFunction( )\n\t\t{\n";
 		private const string FixedAmountTessFunctionBody = "\t\t\treturn _TessValue;\n";
 
-		// Edge Length
-		private GUIContent EdgeLengthContent = new GUIContent( "Edge Length", "Tessellation levels ccomputed based on triangle edge length on the screen\nDefault: 4" );
+		
+		private GUIContent EdgeLengthContent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Edge Length"
+#else
+"边缘长度"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Tessellation levels ccomputed based on triangle edge length on the screen\nDefault: 4"
+#else
+"根据屏幕上的三角形边长计算细分级别\n默认值：4"
+#endif
+);
 		private const string EdgeLengthTessProperty = "_EdgeLength ( \"Edge length\", Range( 2, 50 ) ) = {0}";
 		private const string EdgeLengthTessUniformName = "_EdgeLength";
 
@@ -73,11 +127,47 @@ namespace AmplifyShaderEditor
 
 		private const string EdgeLengthTessMaxDispProperty = "_TessMaxDisp( \"Max Displacement\", Float ) = {0}";
 		private const string EdgeLengthTessMaxDispUniformName = "_TessMaxDisp";
-		private GUIContent EdgeLengthTessMaxDisplacementContent = new GUIContent( "Max Disp.", "Max Displacement" );
+		private GUIContent EdgeLengthTessMaxDisplacementContent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Max Disp."
+#else
+"最大配置。"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Max Displacement"
+#else
+"最大位移量"
+#endif
+);
 
-		// Phong
-		private GUIContent PhongEnableContent = new GUIContent( "Phong", "Modifies positions of the subdivided faces so that the resulting surface follows the mesh normals a bit\nDefault: OFF" );
-		private GUIContent PhongStrengthContent = new GUIContent( "Strength", "Strength\nDefault: 0.5" );
+		
+		private GUIContent PhongEnableContent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Phong"
+#else
+"蓬"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Modifies positions of the subdivided faces so that the resulting surface follows the mesh normals a bit\nDefault: OFF"
+#else
+"修改细分面的位置，使生成的曲面稍微遵循网格法线\n默认值：OFF"
+#endif
+);
+		private GUIContent PhongStrengthContent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Strength"
+#else
+"实力"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Strength\nDefault: 0.5"
+#else
+"强度\n默认值：0.5"
+#endif
+);
 		public const string PhongStrengthParam = "tessphong:_TessPhongStrength";
 
 		private const string PhongStrengthProperty = "_TessPhongStrength( \"Phong Tess Strength\", Range( 0, 1 ) ) = {0}";
@@ -86,7 +176,7 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private bool m_enabled = false;
 
-		//private bool m_expanded = false;
+		
 
 		[SerializeField]
 		private int m_tessType = 2;
@@ -125,7 +215,7 @@ namespace AmplifyShaderEditor
 
 		private int m_masterNodeIndexPort = 0;
 		private int m_vertexOffsetIndexPort = 0;
-		//private int m_orderIndex = 1000;
+		
 
 		public void Draw( UndoParentNode owner,  GUIStyle toolbarstyle, Material mat, bool connectedInput )
 		{
@@ -352,19 +442,19 @@ namespace AmplifyShaderEditor
 					if( !m_hasCustomFunction )
 					{
 
-						//Tess
+						
 						uniforms += "\t\tuniform " + UIUtils.PrecisionWirePortToCgType( PrecisionType.Float, WirePortDataType.FLOAT ) + " " + TessUniformName + ";\n";
 
-						//Min
+						
 						uniforms += "\t\tuniform " + UIUtils.PrecisionWirePortToCgType( PrecisionType.Float, WirePortDataType.FLOAT ) + " " + TessMinUniformName + ";\n";
 
-						//Max
+						
 						uniforms += "\t\tuniform " + UIUtils.PrecisionWirePortToCgType( PrecisionType.Float, WirePortDataType.FLOAT ) + " " + TessMaxUniformName + ";\n";
 					}
 				}
 				break;
 				case 1:
-				//Tess
+				
 				if( !m_hasCustomFunction )
 				{
 					uniforms += "\t\tuniform " + UIUtils.PrecisionWirePortToCgType( PrecisionType.Float, WirePortDataType.FLOAT ) + " " + TessUniformName + ";\n";
@@ -403,15 +493,15 @@ namespace AmplifyShaderEditor
 					dataCollector.AddToIncludes( -1, TessellationOpHelper.TessInclude );
 					if ( !m_hasCustomFunction )
 					{
-						//Tess
+						
 						dataCollector.AddToProperties( -1, string.Format( TessProperty, m_tessFactor ), orderIndex++ );
 						dataCollector.AddToUniforms( -1, "uniform " + UIUtils.PrecisionWirePortToCgType( PrecisionType.Float, WirePortDataType.FLOAT ) + " " + TessUniformName + ";" );
 
-						//Min
+						
 						dataCollector.AddToProperties( -1, string.Format( TessMinProperty, m_tessMinDistance ), orderIndex++ );
 						dataCollector.AddToUniforms( -1, "uniform " + UIUtils.PrecisionWirePortToCgType( PrecisionType.Float, WirePortDataType.FLOAT ) + " " + TessMinUniformName + ";" );
 
-						//Max
+						
 						dataCollector.AddToProperties( -1, string.Format( TessMaxProperty, m_tessMaxDistance ), orderIndex++ );
 						dataCollector.AddToUniforms( -1, "uniform " + UIUtils.PrecisionWirePortToCgType( PrecisionType.Float, WirePortDataType.FLOAT ) + " " + TessMaxUniformName + ";" );
 					}
@@ -419,7 +509,7 @@ namespace AmplifyShaderEditor
 				break;
 				case 1:
 				{
-					//Tess
+					
 					if ( !m_hasCustomFunction )
 					{
 						dataCollector.AddToProperties( -1, string.Format( TessProperty, m_tessFactor ), orderIndex++ );
@@ -431,7 +521,7 @@ namespace AmplifyShaderEditor
 				{
 					dataCollector.AddToIncludes( -1, TessellationOpHelper.TessInclude );
 
-					//Tess
+					
 					if ( !m_hasCustomFunction )
 					{
 						dataCollector.AddToProperties( -1, string.Format( EdgeLengthTessProperty, m_tessFactor ), orderIndex++ );
@@ -445,11 +535,11 @@ namespace AmplifyShaderEditor
 
 					if ( !m_hasCustomFunction )
 					{
-						//Tess
+						
 						dataCollector.AddToProperties( -1, string.Format( EdgeLengthTessProperty, m_tessFactor ), orderIndex++ );
 						dataCollector.AddToUniforms( -1, "uniform " + UIUtils.PrecisionWirePortToCgType( PrecisionType.Float, WirePortDataType.FLOAT ) + " " + EdgeLengthTessUniformName + ";" );
 
-						//Max Displacement
+						
 						dataCollector.AddToProperties( -1, string.Format( EdgeLengthTessMaxDispProperty, m_tessMaxDistance ), orderIndex++ );
 						dataCollector.AddToUniforms( -1, "uniform " + UIUtils.PrecisionWirePortToCgType( PrecisionType.Float, WirePortDataType.FLOAT ) + " " + EdgeLengthTessMaxDispUniformName + ";" );
 					}
@@ -464,7 +554,7 @@ namespace AmplifyShaderEditor
 			}
 		}
 
-		//ToDo: Optimize material property fetches to use Id instead of string 
+		
 		public void UpdateFromMaterial( Material mat )
 		{
 			if ( m_enabled )

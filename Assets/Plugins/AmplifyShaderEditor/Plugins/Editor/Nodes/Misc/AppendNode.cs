@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -8,10 +8,40 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "[Old]Append", "Vector Operators", "Append channels to create a new component",null,KeyCode.V,true,true,"Append",typeof(DynamicAppendNode))]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"[Old]Append"
+#else
+"[旧]附录"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vector Operators"
+#else
+"矢量运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Append channels to create a new component"
+#else
+"附加通道以创建新组件"
+#endif
+,null,KeyCode.V,true,true, 
+#if !WB_LANGUAGE_CHINESE
+"Append"
+#else
+"附录"
+#endif
+,typeof(DynamicAppendNode))]
 	public sealed class AppendNode : ParentNode
 	{
-		private const string OutputTypeStr = "Output type";
+		private const string OutputTypeStr = 
+#if !WB_LANGUAGE_CHINESE
+"Output type"
+#else
+"输出类型"
+#endif
+;
 
 		[SerializeField]
 		private WirePortDataType m_selectedOutputType = WirePortDataType.FLOAT4;

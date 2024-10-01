@@ -1,18 +1,42 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using System;
-//using System.Collections.Generic;
-//using UnityEditor;
+
+
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "If", "Logical Operators", "Conditional comparison between A with B.",tags:"branch" )]
+	[NodeAttributes( "If",            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Logical Operators"
+#else
+"逻辑运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Conditional comparison between A with B."
+#else
+"A与B之间的条件比较。"
+#endif
+,tags: 
+#if !WB_LANGUAGE_CHINESE
+"branch"
+#else
+"分支"
+#endif
+)]
 	public sealed class ConditionalIfNode : ParentNode
 	{
-		private const string UseUnityBranchesStr = "Dynamic Branching";
+		private const string UseUnityBranchesStr = 
+#if !WB_LANGUAGE_CHINESE
+"Dynamic Branching"
+#else
+"动态分支"
+#endif
+;
 		private const string UnityBranchStr = "UNITY_BRANCH ";
 
 		private readonly string[] IfOps = { "if( {0} > {1} )",
@@ -22,7 +46,7 @@ namespace AmplifyShaderEditor
 											"if( {0} <= {1} )",
 											"if( {0} != {1} )" };
 
-		//private WirePortDataType m_inputMainDataType = WirePortDataType.FLOAT;
+		
 		private WirePortDataType m_outputMainDataType = WirePortDataType.FLOAT;
 		private string[] m_results = { string.Empty, string.Empty, string.Empty };
 
@@ -44,7 +68,7 @@ namespace AmplifyShaderEditor
 			m_inputPorts[ 0 ].AutoDrawInternalData = true;
 			m_inputPorts[ 1 ].AutoDrawInternalData = true;
 			m_textLabelWidth = 131;
-			//m_useInternalPortData = true;
+			
 			m_autoWrapProperties = true;
 			m_previewShaderGUID = "f6fb4d46bddf29e45a8a3ddfed75d0c0";
 		}
@@ -77,21 +101,21 @@ namespace AmplifyShaderEditor
 			UpdateConnection( portId );
 		}
 
-		//void TestMainInputDataType()
-		//{
-		//	WirePortDataType newType = WirePortDataType.FLOAT;
-		//	if ( m_inputPorts[ 0 ].IsConnected && UIUtils.GetPriority( m_inputPorts[ 0 ].DataType ) > UIUtils.GetPriority( newType ) )
-		//	{
-		//		newType = m_inputPorts[ 0 ].DataType;
-		//	}
+		
+		
+		
+		
+		
+		
+		
 
-		//	if ( m_inputPorts[ 1 ].IsConnected && ( UIUtils.GetPriority( m_inputPorts[ 1 ].DataType ) > UIUtils.GetPriority( newType ) ) )
-		//	{
-		//		newType = m_inputPorts[ 1 ].DataType;
-		//	}
+		
+		
+		
+		
 
-		//	m_inputMainDataType = newType;
-		//}
+		
+		
 
 		void TestMainOutputDataType()
 		{
@@ -116,12 +140,12 @@ namespace AmplifyShaderEditor
 			m_inputPorts[ portId ].MatchPortToConnection();
 			switch( portId )
 			{
-				//case 0:
-				//case 1:
-				//{
-				//	TestMainInputDataType();
-				//}
-				//break;
+				
+				
+				
+				
+				
+				
 				case 2:
 				case 3:
 				case 4:
@@ -196,11 +220,11 @@ namespace AmplifyShaderEditor
 			if ( m_useUnityBranch && !( lequal && gequal ) && !( !greater && !midCon && !lesser ) )
 				dataCollector.AddLocalVariable( UniqueId, UnityBranchStr, true );
 
-			if( lequal && gequal ) // all equal
+			if( lequal && gequal ) 
 			{
 				dataCollector.AddLocalVariable( UniqueId, string.Format( "{0} = {1};", localVarName, m_results[ 1 ] ), true );
 			}
-			else if( !lequal && gequal ) // greater or equal
+			else if( !lequal && gequal ) 
 			{
 				dataCollector.AddLocalVariable( UniqueId, string.Format( IfOps[ 3 ], AValue, BValue ), true );
 				dataCollector.AddLocalVariable( UniqueId, string.Format( "\t{0} = {1};", localVarName, m_results[ 0 ] ), true );
@@ -211,7 +235,7 @@ namespace AmplifyShaderEditor
 					dataCollector.AddLocalVariable( UniqueId, string.Format( "\t{0} = {1};", localVarName, m_results[ 2 ] ), true );
 				}
 			}
-			else if( lequal && !gequal )// lesser or equal
+			else if( lequal && !gequal )
 			{
 				dataCollector.AddLocalVariable( UniqueId, string.Format( IfOps[ 4 ], AValue, BValue ), true );
 				dataCollector.AddLocalVariable( UniqueId, string.Format( "\t{0} = {1};", localVarName, m_results[ 2 ] ), true );
@@ -222,12 +246,12 @@ namespace AmplifyShaderEditor
 					dataCollector.AddLocalVariable( UniqueId, string.Format( "\t{0} = {1};", localVarName, m_results[ 0 ] ), true );
 				}
 			}
-			else if( nequal )// not equal
+			else if( nequal )
 			{
 				dataCollector.AddLocalVariable( UniqueId, string.Format( IfOps[ 5 ], AValue, BValue ), true );
 				dataCollector.AddLocalVariable( UniqueId, string.Format( "\t{0} = {1};", localVarName, m_results[ 0 ] ), true );
 			}
-			else if( equal )// equal
+			else if( equal )
 			{
 				dataCollector.AddLocalVariable( UniqueId, string.Format( IfOps[ 1 ], AValue, BValue ), true );
 				dataCollector.AddLocalVariable( UniqueId, string.Format( "\t{0} = {1};", localVarName, m_results[ 1 ] ), true );
@@ -238,21 +262,21 @@ namespace AmplifyShaderEditor
 					dataCollector.AddLocalVariable( UniqueId, string.Format( "\t{0} = {1};", localVarName, m_results[ 0 ] ), true );
 				}
 			}
-			else if( lesser && !midCon && !greater ) // lesser
+			else if( lesser && !midCon && !greater ) 
 			{
 				dataCollector.AddLocalVariable( UniqueId, string.Format( IfOps[ 2 ], AValue, BValue ), true );
 				dataCollector.AddLocalVariable( UniqueId, string.Format( "\t{0} = {1};", localVarName, m_results[ 2 ] ), true );
 			}
-			else if( greater && !midCon && !lesser ) // greater
+			else if( greater && !midCon && !lesser ) 
 			{
 				dataCollector.AddLocalVariable( UniqueId, string.Format( IfOps[ 0 ], AValue, BValue ), true );
 				dataCollector.AddLocalVariable( UniqueId, string.Format( "\t{0} = {1};", localVarName, m_results[ 0 ] ), true );
 			}
-			else if( !greater && !midCon && !lesser ) // none
+			else if( !greater && !midCon && !lesser ) 
 			{
-				//dataCollector.AddLocalVariable( UniqueId, localVarDec );
+				
 			}
-			else // all different
+			else 
 			{
 				bool ifStarted = false;
 				if( greater )

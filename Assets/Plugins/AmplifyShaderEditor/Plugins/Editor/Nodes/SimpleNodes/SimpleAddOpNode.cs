@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -8,7 +8,25 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Add", "Math Operators", "Addition of two or more values ( A + B + .. )", null, KeyCode.A )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Add"
+#else
+"添加"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Addition of two or more values ( A + B + .. )"
+#else
+"添加两个或多个值（A+B+..）"
+#endif
+, null, KeyCode.A )]
 	public sealed class SimpleAddOpNode : DynamicTypeNode
 	{
 		private int m_cachedPropertyId = -1;

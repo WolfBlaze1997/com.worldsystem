@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 #if UNITY_2019_3_OR_NEWER
 using UnityEditor;
@@ -84,4 +84,4 @@ namespace AmplifyShaderEditor
 		}
 	}
 }
-#endif //UNITY_2019_3_OR_NEWER
+#endif 

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.IO;
@@ -457,50 +457,31 @@ namespace AmplifyShaderEditor
 
 	public static class TemplateHelperFunctions
 	{
-		/*
-		struct DirectionalLightData
-		{
-			uint lightLayers;
-			float3 positionRWS;
-			float3 color;
-			int cookieIndex;
-			float volumetricDimmer;
-			float3 right;
-			float3 up;
-			float3 forward;
-			int tileCookie;
-			int shadowIndex;
-			int contactShadowIndex;
-			float4 shadowMaskSelector;
-			int nonLightmappedOnly;
-			float diffuseScale;
-			float specularScale;
-		}; 
-		*/
+		
 		public static string HDLightInfoFormat = "_DirectionalLightDatas[{0}].{1}";
 
 		public static string[] VectorSwizzle = { "x", "y", "z", "w" };
 		public static string[] ColorSwizzle = { "r", "g", "b", "a" };
 
-		public static readonly Dictionary<string, CustomTemplatePropertyUIEnum> CustomTemplatePropertyUI = new Dictionary<string, CustomTemplatePropertyUIEnum>
+		public readonly static Dictionary<string, CustomTemplatePropertyUIEnum> CustomTemplatePropertyUI = new Dictionary<string, CustomTemplatePropertyUIEnum>
 		{
 			{ "None", CustomTemplatePropertyUIEnum.None},
 			{ "HDPBR", CustomTemplatePropertyUIEnum.HDPBR}
 		};
 
-		public static readonly Dictionary<string, InvisibleOptionsEnum> InvisibleOptions = new Dictionary<string, InvisibleOptionsEnum>()
+		public readonly static Dictionary<string, InvisibleOptionsEnum> InvisibleOptions = new Dictionary<string, InvisibleOptionsEnum>()
 		{
 			{ "SyncP", InvisibleOptionsEnum.SyncProperties }
 		};
 
-		public static readonly Dictionary<string, TemplateSpecialTags> StringToReservedTags = new Dictionary<string, TemplateSpecialTags>()
+		public readonly static Dictionary<string, TemplateSpecialTags> StringToReservedTags = new Dictionary<string, TemplateSpecialTags>()
 		{
 			{ TemplateSpecialTags.RenderType.ToString(), TemplateSpecialTags.RenderType},
 			{ TemplateSpecialTags.Queue.ToString(), TemplateSpecialTags.Queue},
 			{ TemplateSpecialTags.DisableBatching.ToString(), TemplateSpecialTags.DisableBatching},
 		};
 
-		public static readonly Dictionary<string, DisableBatching> StringToDisableBatching = new Dictionary<string, DisableBatching>
+		public readonly static Dictionary<string, DisableBatching> StringToDisableBatching = new Dictionary<string, DisableBatching>
 		{
 			{"true",DisableBatching.True},
 			{"True",DisableBatching.True},
@@ -510,7 +491,7 @@ namespace AmplifyShaderEditor
 			{"LODFading",DisableBatching.LODFading}
 		};
 
-		public static readonly Dictionary<string, RenderType> StringToRenderType = new Dictionary<string, RenderType>
+		public readonly static Dictionary<string, RenderType> StringToRenderType = new Dictionary<string, RenderType>
 		{
 			{"Opaque",RenderType.Opaque},
 			{"Transparent",RenderType.Transparent},
@@ -524,7 +505,7 @@ namespace AmplifyShaderEditor
 			{"GrassBillboard",RenderType.GrassBillboard}
 		};
 
-		public static readonly Dictionary<string, RenderQueue> StringToRenderQueue = new Dictionary<string, RenderQueue>
+		public readonly static Dictionary<string, RenderQueue> StringToRenderQueue = new Dictionary<string, RenderQueue>
 		{
 			{"Background",RenderQueue.Background },
 			{"Geometry",RenderQueue.Geometry },
@@ -533,7 +514,7 @@ namespace AmplifyShaderEditor
 			{"Overlay",RenderQueue.Overlay }
 		};
 
-		public static readonly Dictionary<string, WirePortDataType> PropertyToWireType = new Dictionary<string, WirePortDataType>
+		public readonly static Dictionary<string, WirePortDataType> PropertyToWireType = new Dictionary<string, WirePortDataType>
 		{
 			{"Float",WirePortDataType.FLOAT},
 			{"Range",WirePortDataType.FLOAT},
@@ -546,7 +527,7 @@ namespace AmplifyShaderEditor
 			{"2DArray",WirePortDataType.SAMPLER2DARRAY},
 		};
 
-		public static readonly Dictionary<WirePortDataType, int> DataTypeChannelUsage = new Dictionary<WirePortDataType, int>
+		public readonly static Dictionary<WirePortDataType, int> DataTypeChannelUsage = new Dictionary<WirePortDataType, int>
 		{
 			{WirePortDataType.OBJECT,0 },
 			{WirePortDataType.FLOAT,1 },
@@ -567,7 +548,7 @@ namespace AmplifyShaderEditor
 			{WirePortDataType.SAMPLERSTATE,0 }
 		};
 
-		public static readonly Dictionary<int, WirePortDataType> ChannelToDataType = new Dictionary<int, WirePortDataType>
+		public readonly static Dictionary<int, WirePortDataType> ChannelToDataType = new Dictionary<int, WirePortDataType>
 		{
 			{1,WirePortDataType.FLOAT},
 			{2,WirePortDataType.FLOAT2},
@@ -575,7 +556,7 @@ namespace AmplifyShaderEditor
 			{4,WirePortDataType.FLOAT4}
 		};
 
-		public static readonly Dictionary<TemplateSemantics, string> SemanticsDefaultName = new Dictionary<TemplateSemantics, string>
+		public readonly static Dictionary<TemplateSemantics, string> SemanticsDefaultName = new Dictionary<TemplateSemantics, string>
 		{
 			{TemplateSemantics.COLOR			,"ase_color"},
 			{TemplateSemantics.NORMAL			,"ase_normal"},
@@ -605,7 +586,7 @@ namespace AmplifyShaderEditor
 			{TemplateSemantics.TEXCOORD15		,"ase_tex_coord15"},
 		};
 
-		public static readonly Dictionary<int, TemplateInfoOnSematics> IntToInfo = new Dictionary<int, TemplateInfoOnSematics>
+		public readonly static Dictionary<int, TemplateInfoOnSematics> IntToInfo = new Dictionary<int, TemplateInfoOnSematics>
 		{
 			{0,TemplateInfoOnSematics.TEXTURE_COORDINATES0 },
 			{1,TemplateInfoOnSematics.TEXTURE_COORDINATES1 },
@@ -617,7 +598,7 @@ namespace AmplifyShaderEditor
 			{7,TemplateInfoOnSematics.TEXTURE_COORDINATES7 },
 		};
 
-		public static readonly Dictionary<string, TemplateInfoOnSematics> ShortcutToInfo = new Dictionary<string, TemplateInfoOnSematics>
+		public readonly static Dictionary<string, TemplateInfoOnSematics> ShortcutToInfo = new Dictionary<string, TemplateInfoOnSematics>
 		{
 			{"p"    ,TemplateInfoOnSematics.POSITION },
 			{"sp"   ,TemplateInfoOnSematics.CLIP_POS },
@@ -644,7 +625,7 @@ namespace AmplifyShaderEditor
 			{"sc"   ,TemplateInfoOnSematics.SHADOWCOORDS}
 		};
 
-		public static readonly Dictionary<TemplateInfoOnSematics, string> InfoToDefineFrag = new Dictionary<TemplateInfoOnSematics, string>
+		public readonly static Dictionary<TemplateInfoOnSematics, string> InfoToDefineFrag = new Dictionary<TemplateInfoOnSematics, string>
 		{
 			{TemplateInfoOnSematics.POSITION ,"ASE_NEEDS_FRAG_POSITION"},
 			{TemplateInfoOnSematics.CLIP_POS ,"ASE_NEEDS_FRAG_CLIP_POS"},
@@ -671,7 +652,7 @@ namespace AmplifyShaderEditor
 			{TemplateInfoOnSematics.SHADOWCOORDS,"ASE_NEEDS_FRAG_SHADOWCOORDS"}
 		};
 
-		public static readonly Dictionary<TemplateInfoOnSematics, string> InfoToDefineVertex = new Dictionary<TemplateInfoOnSematics, string>
+		public readonly static Dictionary<TemplateInfoOnSematics, string> InfoToDefineVertex = new Dictionary<TemplateInfoOnSematics, string>
 		{
 			{TemplateInfoOnSematics.POSITION ,"ASE_NEEDS_VERT_POSITION"},
 			{TemplateInfoOnSematics.CLIP_POS ,"ASE_NEEDS_VERT_CLIP_POS"},
@@ -698,7 +679,7 @@ namespace AmplifyShaderEditor
 			{TemplateInfoOnSematics.SHADOWCOORDS,"ASE_NEEDS_VERT_SHADOWCOORDS"}
 		};
 
-		public static readonly Dictionary<TemplateInfoOnSematics, string> InfoToLocalVar = new Dictionary<TemplateInfoOnSematics, string>
+		public readonly static Dictionary<TemplateInfoOnSematics, string> InfoToLocalVar = new Dictionary<TemplateInfoOnSematics, string>
 		{
 			{TemplateInfoOnSematics.POSITION,GeneratorUtils.VertexPosition4Str },
 			{TemplateInfoOnSematics.CLIP_POS,GeneratorUtils.ClipPositionStr },
@@ -722,7 +703,7 @@ namespace AmplifyShaderEditor
 		};
 
 
-		public static readonly Dictionary<TemplateInfoOnSematics, WirePortDataType> InfoToWirePortType = new Dictionary<TemplateInfoOnSematics, WirePortDataType>
+		public readonly static Dictionary<TemplateInfoOnSematics, WirePortDataType> InfoToWirePortType = new Dictionary<TemplateInfoOnSematics, WirePortDataType>
 		{
 			{TemplateInfoOnSematics.POSITION,WirePortDataType.FLOAT4 },
 			{TemplateInfoOnSematics.CLIP_POS,WirePortDataType.FLOAT4 },
@@ -744,7 +725,7 @@ namespace AmplifyShaderEditor
 			{TemplateInfoOnSematics.VFACE, WirePortDataType.FLOAT},
 			{TemplateInfoOnSematics.SHADOWCOORDS, WirePortDataType.FLOAT4},
 		};
-		public static readonly Dictionary<int, TemplateInfoOnSematics> IntToUVChannelInfo = new Dictionary<int, TemplateInfoOnSematics>
+		public readonly static Dictionary<int, TemplateInfoOnSematics> IntToUVChannelInfo = new Dictionary<int, TemplateInfoOnSematics>
 		{
 			{0,TemplateInfoOnSematics.TEXTURE_COORDINATES0 },
 			{1,TemplateInfoOnSematics.TEXTURE_COORDINATES1 },
@@ -756,7 +737,7 @@ namespace AmplifyShaderEditor
 			{7,TemplateInfoOnSematics.TEXTURE_COORDINATES7 }
 		};
 
-		public static readonly Dictionary<int, TemplateSemantics> IntToSemantic = new Dictionary<int, TemplateSemantics>
+		public readonly static Dictionary<int, TemplateSemantics> IntToSemantic = new Dictionary<int, TemplateSemantics>
 		{
 			{ 0,TemplateSemantics.TEXCOORD0 },
 			{ 1,TemplateSemantics.TEXCOORD1 },
@@ -776,7 +757,7 @@ namespace AmplifyShaderEditor
 			{ 15,TemplateSemantics.TEXCOORD15 }
 		};
 
-		public static readonly Dictionary<TemplateSemantics, int> SemanticToInt = new Dictionary<TemplateSemantics, int>
+		public readonly static Dictionary<TemplateSemantics, int> SemanticToInt = new Dictionary<TemplateSemantics, int>
 		{
 			{ TemplateSemantics.TEXCOORD0,0 },
 			{ TemplateSemantics.TEXCOORD1,1 },
@@ -796,7 +777,7 @@ namespace AmplifyShaderEditor
 			{ TemplateSemantics.TEXCOORD15,15 },
 		};
 
-		public static readonly Dictionary<string, TemplateSemantics> ShortcutToSemantic = new Dictionary<string, TemplateSemantics>
+		public readonly static Dictionary<string, TemplateSemantics> ShortcutToSemantic = new Dictionary<string, TemplateSemantics>
 		{
 			{ "p"   ,TemplateSemantics.POSITION },
 			{ "sp"  ,TemplateSemantics.SV_POSITION },
@@ -821,7 +802,7 @@ namespace AmplifyShaderEditor
 			{ "tc15" ,TemplateSemantics.TEXCOORD15 }
 		};
 
-		public static readonly Dictionary<string, WirePortDataType> CgToWirePortType = new Dictionary<string, WirePortDataType>()
+		public readonly static Dictionary<string, WirePortDataType> CgToWirePortType = new Dictionary<string, WirePortDataType>()
 		{
 			{"float"            ,WirePortDataType.FLOAT},
 			{"float2"           ,WirePortDataType.FLOAT2},
@@ -852,7 +833,7 @@ namespace AmplifyShaderEditor
 			{"SamplerState"     ,WirePortDataType.SAMPLERSTATE}
 		};
 
-		public static readonly Dictionary<string, int> AvailableInterpolators = new Dictionary<string, int>()
+		public readonly static Dictionary<string, int> AvailableInterpolators = new Dictionary<string, int>()
 		{
 			{"2.0",8 },
 			{"2.5",8 },
@@ -864,10 +845,10 @@ namespace AmplifyShaderEditor
 			{"5.0",16}
 		};
 
-		public static readonly string[] AvailableShaderModels =
+		public readonly static string[] AvailableShaderModels =
 		{ "2.0", "2.5", "3.0", "3.5", "4.0", "4.5", "4.6", "5.0" };
 
-		public static readonly Dictionary<string, int> ShaderModelToArrayIdx = new Dictionary<string, int>()
+		public readonly static Dictionary<string, int> ShaderModelToArrayIdx = new Dictionary<string, int>()
 		{
 			{"2.0",0},
 			{"2.5",1},
@@ -879,8 +860,8 @@ namespace AmplifyShaderEditor
 			{"5.0",7}
 		};
 
-		public static readonly string HDPBRTag = "UNITY_MATERIAL_LIT";
-		public static readonly Dictionary<string, TemplateSRPType> TagToRenderPipeline = new Dictionary<string, TemplateSRPType>()
+		public readonly static string HDPBRTag = "UNITY_MATERIAL_LIT";
+		public readonly static Dictionary<string, TemplateSRPType> TagToRenderPipeline = new Dictionary<string, TemplateSRPType>()
 		{
 			{ "UniversalPipeline",TemplateSRPType.URP },
 			{ "LightweightPipeline",TemplateSRPType.URP },
@@ -924,76 +905,76 @@ namespace AmplifyShaderEditor
 
 		public static string ShaderModelPattern = @"#pragma\s+target\s+([0-9]*[.]*[0-9]*)";
 
-		public static readonly string LocalVarPattern = @"\/\*ase_local_var[:]*(\w*)\*\/\s*(\w*)\s+(\w*)";
+		public readonly static string LocalVarPattern = @"\/\*ase_local_var[:]*(\w*)\*\/\s*(\w*)\s+(\w*)";
 
-		public static readonly string InlinePattern = @"\/\*ase_inline_begin\*\/(.*?)\/\*ase_inline_end\*\/";
+		public readonly static string InlinePattern = @"\/\*ase_inline_begin\*\/(.*?)\/\*ase_inline_end\*\/";
 
-		public static readonly string SRPConditionPattern = @"\/\*ase_srp_cond_begin:([==|!=|>=|<=|>|<]*)(\d*)\*\/(?s)(.*?)\s\/\*ase_srp_cond_end\*\/";
+		public readonly static string SRPConditionPattern = @"\/\*ase_srp_cond_begin:([==|!=|>=|<=|>|<]*)(\d*)\*\/(?s)(.*?)\s\/\*ase_srp_cond_end\*\/";
 
-		public static readonly string SubShaderLODPattern = @"\sLOD\s+(\d+)";
+		public readonly static string SubShaderLODPattern = @"\sLOD\s+(\d+)";
 
-		public static readonly string PassNamePattern = "Name\\s+\\\"([\\w\\+\\-\\*\\/\\(\\) ]*)\\\"";
+		public readonly static string PassNamePattern = "Name\\s+\\\"([\\w\\+\\-\\*\\/\\(\\) ]*)\\\"";
 
-		public static readonly string TagsPattern = "\"(\\w+)\"\\s*=\\s*\"(\\w+\\+*\\w*)\"";
-		public static readonly string ZTestPattern = @"^\s*ZTest\s+(\[*\w+\]*)";
-		public static readonly string ZWritePattern = @"^\s*ZWrite\s+(\[*\w+\]*)";
-		//public static readonly string ZOffsetPattern = @"\s*Offset\s+([-+]?[0-9]*\.?[0-9]+)\s*,\s*([-+]?[0-9]*\.?[0-9]+)";
-		public static readonly string ZOffsetPattern = @"^\s*Offset\s+([-+]?[0-9]*\.?[0-9]+|\[*\w+\]*)\s*,\s*([-+]?[0-9]*\.?[0-9]+|\[*\w+\]*)\s*";
-		public static readonly string VertexDataPattern = @"([a-z0-9D_]+|samplerCUBE|sampler2DArray)\s+(\w+)\s*:\s*([A-Z0-9_]+);";
-		public static readonly string InterpRangePattern = @"ase_interp\((\d\.{0,1}\w{0,4}),(\d*)\)";
-		//public static readonly string PropertiesPatternB = "(\\w*)\\s*\\(\\s*\"([\\w ]*)\"\\s*\\,\\s*(\\w*)\\s*.*\\)";
-		//public static readonly string PropertiesPatternC = "^\\s*(\\w*)\\s*\\(\\s*\"([\\w\\(\\)\\+\\-\\\\* ]*)\"\\s*\\,\\s*(\\w*)\\s*.*\\)";
-		//public static readonly string PropertiesPatternD = "(\\/\\/\\s*)*(\\w*)\\s*\\(\\s*%\"([\\w\\(\\)\\+\\-\\\\* ]*)\"\\s*\\,\\s*(\\w*)\\s*.*\\)";
-		//public static readonly string PropertiesPatternE = "(\\/\\/\\s*)*(\\w*)\\s*\\(\\s*\"([\\w\\(\\)\\+\\-\\\\* ]*)\"\\s*\\,\\s*(\\w*)\\s*.*\\)\\s*=\\s*[\\w,()\" {}]*";
-		//public static readonly string PropertiesPatternF = "^(\\/\\/)*\\s*(\\[[\\[\\]\\w\\s\\(\\)\\_\\,]*\\])*\\s*(\\w*)\\s*\\(\\s*\"([\\w\\(\\)\\+\\-\\\\* ]*)\"\\s*\\,\\s*(\\w*)\\s*.*\\)\\s*=\\s*[\\w,()\" {}]*";
-		//public static readonly string PropertiesPatternG = "^(\\s*)(\\[[\\[\\]\\w\\s\\(\\)\\_\\,]*\\])*\\s*(\\w*)\\s*\\(\\s*\"([\\w\\(\\)\\+\\-\\\\* ]*)\"\\s*\\,\\s*(\\w*)\\s*.*\\)\\s*=\\s*[\\w,()\" {}]*";
-		//public static readonly string PropertiesPatternH = @"^(\s*)(\[[\[\]\w\s\(\)_,\.]*\])*[\s\/]*(\w*)\s*\(\s*""([\w\(\)\+\-\\* ]*)""\s*\,\s*(\w*)\s*.*\)\s*=\s*[\w,()"" {}\.]*";
-		public static readonly string PropertiesPatternI = @"^(\s*)(\[[\[\]\w\s\(\)_,\.]*\])*[\s\/]*(\w*)\s*\(\s*""([\w\(\)\+\-\\* ]*)""\s*\,\s*(\w*)\s*.*\)\s*=\s*[\w,()"" {}\.]*";
-		public static readonly string CullModePattern = @"^\s*Cull\s+(\[*\w+\]*)";
+		public readonly static string TagsPattern = "\"(\\w+)\"\\s*=\\s*\"(\\w+\\+*\\w*)\"";
+		public readonly static string ZTestPattern = @"^\s*ZTest\s+(\[*\w+\]*)";
+		public readonly static string ZWritePattern = @"^\s*ZWrite\s+(\[*\w+\]*)";
+		
+		public readonly static string ZOffsetPattern = @"^\s*Offset\s+([-+]?[0-9]*\.?[0-9]+|\[*\w+\]*)\s*,\s*([-+]?[0-9]*\.?[0-9]+|\[*\w+\]*)\s*";
+		public readonly static string VertexDataPattern = @"([a-z0-9D_]+|samplerCUBE|sampler2DArray)\s+(\w+)\s*:\s*([A-Z0-9_]+);";
+		public readonly static string InterpRangePattern = @"ase_interp\((\d\.{0,1}\w{0,4}),(\d*)\)";
+		
+		
+		
+		
+		
+		
+		
+		public readonly static string PropertiesPatternI = @"^(\s*)(\[[\[\]\w\s\(\)_,\.]*\])*[\s\/]*(\w*)\s*\(\s*""([\w\(\)\+\-\\* ]*)""\s*\,\s*(\w*)\s*.*\)\s*=\s*[\w,()"" {}\.]*";
+		public readonly static string CullModePattern = @"^\s*Cull\s+(\[*\w+\]*)";
 
-		public static readonly string ColorMaskPatternFirst = @"\bColorMask\s+([\d\w\[\]]+)(\s+0)*";
+		public readonly static string ColorMaskPatternFirst = @"\bColorMask\s+([\d\w\[\]]+)(\s+0)*";
 
-		public static readonly string ColorMaskPattern = @"\bColorMask\s+([\d\w\[\]]+)(\s+0)";
-		public static readonly string ColorMask1Pattern = @"\bColorMask\s+([\d\w\[\]]+)(\s+1)";
-		public static readonly string ColorMask2Pattern = @"\bColorMask\s+([\d\w\[\]]+)(\s+2)";
-		public static readonly string ColorMask3Pattern = @"\bColorMask\s+([\d\w\[\]]+)(\s+3)";
-		//public static readonly string BlendModePattern = @"\s*Blend\s+(\w+)\s+(\w+)(?:[\s,]+(\w+)\s+(\w+)|)";
-		//public static readonly string BlendModePattern = @"\s*Blend\s+(\[*\w+\]*)\s+(\[*\w+\]*)(?:[\s,]+(\[*\w+\]*)\s+(\[*\w+\]*)|)";
-		//public static readonly string BlendModePattern = @"^\s*Blend\s+(?:(?=\d)|(\[*\w+\]*)\s+(\[*\w+\]*)(?:[\s,]+(\[*\w+\]*)\s+(\[*\w+\]*)|))";
-		public static readonly string BlendModePatternFirst = @"\bBlend([ \t]+0)*[ \t]+(?:Off|(\[*\w+\]*)[ \t]+(\[*\w+\]*)(?:(?=[ \t]+Blend)|(?:[ \t,]+(\[*\w+\]*)[ \t]+(\[*\w+\]*)|)))";
-		public static readonly string BlendModePattern = @"\bBlend([ \t]+0)[ \t]+(?:Off|(\[*\w+\]*)[ \t]+(\[*\w+\]*)(?:(?=[ \t]+Blend)|(?:[ \t,]+(\[*\w+\]*)[ \t]+(\[*\w+\]*)|)))";
-		public static readonly string BlendModePattern1 = @"\bBlend([ \t]+1)[ \t]+(?:Off|(\[*\w+\]*)[ \t]+(\[*\w+\]*)(?:(?=[ \t]+Blend)|(?:[ \t,]+(\[*\w+\]*)[ \t]+(\[*\w+\]*)|)))";
-		public static readonly string BlendModePattern2 = @"\bBlend([ \t]+2)[ \t]+(?:Off|(\[*\w+\]*)[ \t]+(\[*\w+\]*)(?:(?=[ \t]+Blend)|(?:[ \t,]+(\[*\w+\]*)[ \t]+(\[*\w+\]*)|)))";
-		public static readonly string BlendModePattern3 = @"\bBlend([ \t]+3)[ \t]+(?:Off|(\[*\w+\]*)[ \t]+(\[*\w+\]*)(?:(?=[ \t]+Blend)|(?:[ \t,]+(\[*\w+\]*)[ \t]+(\[*\w+\]*)|)))";
-		//public static readonly string BlendOpPattern = @"\s*BlendOp\s+(\w+)[\s,]*(?:(\w+)|)";
-		//public static readonly string BlendOpPattern = @"\s*BlendOp\s+(\[*\w+\]*)[\s,]*(?:(\[*\w+\]*)|)";
-		//public static readonly string BlendOpPattern = @"^\s*BlendOp\s+(?:(?=\d)|(\[*\w+\]*)[\s,]*(?:(\[*\w+\]*)|))";
-		public static readonly string BlendOpPatternFirst = @"\bBlendOp([ \t]+0)*[ \t]+(\[*\w+\]*)(?:(?=[ \t]+Blend)|[ \t,]*(?:(\[*\w+\]*)|))";
-		public static readonly string BlendOpPattern = @"\bBlendOp([ \t]+0)[ \t]+(\[*\w+\]*)(?:(?=[ \t]+Blend)|[ \t,]*(?:(\[*\w+\]*)|))";
-		public static readonly string BlendOpPattern1 = @"\bBlendOp([ \t]+1)[ \t]+(\[*\w+\]*)(?:(?=[ \t]+Blend)|[ \t,]*(?:(\[*\w+\]*)|))";
-		public static readonly string BlendOpPattern2 = @"\bBlendOp([ \t]+2)[ \t]+(\[*\w+\]*)(?:(?=[ \t]+Blend)|[ \t,]*(?:(\[*\w+\]*)|))";
-		public static readonly string BlendOpPattern3 = @"\bBlendOp([ \t]+3)[ \t]+(\[*\w+\]*)(?:(?=[ \t]+Blend)|[ \t,]*(?:(\[*\w+\]*)|))";
-		public static readonly string StencilOpGlobalPattern = @"Stencil\s*{([\w\W\s]*)}";
-		public static readonly string StencilOpLinePattern = @"(\w+)\s*(\[*\w+\]*)";
+		public readonly static string ColorMaskPattern = @"\bColorMask\s+([\d\w\[\]]+)(\s+0)";
+		public readonly static string ColorMask1Pattern = @"\bColorMask\s+([\d\w\[\]]+)(\s+1)";
+		public readonly static string ColorMask2Pattern = @"\bColorMask\s+([\d\w\[\]]+)(\s+2)";
+		public readonly static string ColorMask3Pattern = @"\bColorMask\s+([\d\w\[\]]+)(\s+3)";
+		
+		
+		
+		public readonly static string BlendModePatternFirst = @"\bBlend([ \t]+0)*[ \t]+(?:Off|(\[*\w+\]*)[ \t]+(\[*\w+\]*)(?:(?=[ \t]+Blend)|(?:[ \t,]+(\[*\w+\]*)[ \t]+(\[*\w+\]*)|)))";
+		public readonly static string BlendModePattern = @"\bBlend([ \t]+0)[ \t]+(?:Off|(\[*\w+\]*)[ \t]+(\[*\w+\]*)(?:(?=[ \t]+Blend)|(?:[ \t,]+(\[*\w+\]*)[ \t]+(\[*\w+\]*)|)))";
+		public readonly static string BlendModePattern1 = @"\bBlend([ \t]+1)[ \t]+(?:Off|(\[*\w+\]*)[ \t]+(\[*\w+\]*)(?:(?=[ \t]+Blend)|(?:[ \t,]+(\[*\w+\]*)[ \t]+(\[*\w+\]*)|)))";
+		public readonly static string BlendModePattern2 = @"\bBlend([ \t]+2)[ \t]+(?:Off|(\[*\w+\]*)[ \t]+(\[*\w+\]*)(?:(?=[ \t]+Blend)|(?:[ \t,]+(\[*\w+\]*)[ \t]+(\[*\w+\]*)|)))";
+		public readonly static string BlendModePattern3 = @"\bBlend([ \t]+3)[ \t]+(?:Off|(\[*\w+\]*)[ \t]+(\[*\w+\]*)(?:(?=[ \t]+Blend)|(?:[ \t,]+(\[*\w+\]*)[ \t]+(\[*\w+\]*)|)))";
+		
+		
+		
+		public readonly static string BlendOpPatternFirst = @"\bBlendOp([ \t]+0)*[ \t]+(\[*\w+\]*)(?:(?=[ \t]+Blend)|[ \t,]*(?:(\[*\w+\]*)|))";
+		public readonly static string BlendOpPattern = @"\bBlendOp([ \t]+0)[ \t]+(\[*\w+\]*)(?:(?=[ \t]+Blend)|[ \t,]*(?:(\[*\w+\]*)|))";
+		public readonly static string BlendOpPattern1 = @"\bBlendOp([ \t]+1)[ \t]+(\[*\w+\]*)(?:(?=[ \t]+Blend)|[ \t,]*(?:(\[*\w+\]*)|))";
+		public readonly static string BlendOpPattern2 = @"\bBlendOp([ \t]+2)[ \t]+(\[*\w+\]*)(?:(?=[ \t]+Blend)|[ \t,]*(?:(\[*\w+\]*)|))";
+		public readonly static string BlendOpPattern3 = @"\bBlendOp([ \t]+3)[ \t]+(\[*\w+\]*)(?:(?=[ \t]+Blend)|[ \t,]*(?:(\[*\w+\]*)|))";
+		public readonly static string StencilOpGlobalPattern = @"Stencil\s*{([\w\W\s]*)}";
+		public readonly static string StencilOpLinePattern = @"(\w+)\s*(\[*\w+\]*)";
 
-		public static readonly string ShaderGlobalsOverallPattern = @"(?:\/\*ase_pragma\*\/|[\}\#])[\#\&\|\!\<\>\(\)\=\w\s\;\/\*\.\\""]*\/\*ase_globals\*\/";
-		public static readonly string ShaderGlobalsMultilinePattern = @"^\s*(?:uniform\s*)*(\w*)\s*(\w*);$";
+		public readonly static string ShaderGlobalsOverallPattern = @"(?:\/\*ase_pragma\*\/|[\}\#])[\#\&\|\!\<\>\(\)\=\w\s\;\/\*\.\\""]*\/\*ase_globals\*\/";
+		public readonly static string ShaderGlobalsMultilinePattern = @"^\s*(?:uniform\s*)*(\w*)\s*(\w*);$";
 
-		public static readonly string TexSemantic = "float4 {0} : TEXCOORD{1};";
-		public static readonly string TexFullSemantic = "float4 {0} : {1};";
-		public static readonly string InterpFullSemantic = "{0} {1} : {2};";
-		public static readonly string BaseInterpolatorName = "ase_texcoord";
-		public static readonly string TexUVFullSemantic = "float4 ase_texcoord{0} : TEXCOORD{0};";
-		public static readonly string InterpMacro = "{0}({1})";
+		public readonly static string TexSemantic = "float4 {0} : TEXCOORD{1};";
+		public readonly static string TexFullSemantic = "float4 {0} : {1};";
+		public readonly static string InterpFullSemantic = "{0} {1} : {2};";
+		public readonly static string BaseInterpolatorName = "ase_texcoord";
+		public readonly static string TexUVFullSemantic = "float4 ase_texcoord{0} : TEXCOORD{0};";
+		public readonly static string InterpMacro = "{0}({1})";
 
-		public static readonly string InterpolatorDecl = Constants.VertexShaderOutputStr + ".{0} = " + Constants.VertexShaderInputStr + ".{0};";
-		public static readonly string TemplateVariableDecl = "{0} = {1};";
-		public static readonly string TemplateVarFormat = "{0}.{1}";
+		public readonly static string InterpolatorDecl = Constants.VertexShaderOutputStr + ".{0} = " + Constants.VertexShaderInputStr + ".{0};";
+		public readonly static string TemplateVariableDecl = "{0} = {1};";
+		public readonly static string TemplateVarFormat = "{0}.{1}";
 
-		//public static readonly string StructsRemoval = @"struct\s+\w+\s+{[\s\w;\/\*]+};";
-		public static readonly string StructsRemoval = @"struct\s+\w+\s+{[\#\&\|\!\<\>\s\w\(\).;:=,\/\*]+};";
+		
+		public readonly static string StructsRemoval = @"struct\s+\w+\s+{[\#\&\|\!\<\>\s\w\(\).;:=,\/\*]+};";
 
-		public static readonly string SRPBatcherFindTag = @"CBUFFER_START\s*\(\s*UnityPerMaterial\s*\)\s*\n(\s*)";
+		public readonly static string SRPBatcherFindTag = @"CBUFFER_START\s*\(\s*UnityPerMaterial\s*\)\s*\n(\s*)";
 
 		public static string ReplaceAt( this string body, string oldStr, string newStr, int startIndex )
 		{
@@ -1066,7 +1047,7 @@ namespace AmplifyShaderEditor
 
 		public static void CreatePragmaIncludeList( string data, TemplateIncludePragmaContainter includePragmaContainer )
 		{
-			// this finds the topmost position for including directives
+			
 			int topIndex = -1;
 			foreach( Match match in Regex.Matches( data, GlobalTOPDirectivesPattern, RegexOptions.Singleline ) )
 			{
@@ -1163,7 +1144,7 @@ namespace AmplifyShaderEditor
 			int typeIdx = (int)TemplateShaderGlobalsIdx.Type;
 			int nameIdx = (int)TemplateShaderGlobalsIdx.Name;
 			
-			// removes structs
+			
 			propertyData = Regex.Replace( propertyData, StructsRemoval, "" );
 			MatchCollection matchCollection = Regex.Matches( propertyData, ShaderGlobalsOverallPattern );
 			string value = ( matchCollection.Count > 0 ) ? matchCollection[ 0 ].Groups[ 0 ].Value : propertyData;
@@ -1382,7 +1363,7 @@ namespace AmplifyShaderEditor
 		{
 			colorMaskObj.DataCheck = TemplateDataCheck.Invalid;
 			Match match = Regex.Match( colorMaskData, pattern );
-			//if( match.Groups.Count == 3 /*&& !match.Groups[ 2 ].Success*/ ) // second group is the colormask MRT which isn't implemented yet
+			
 			{
 				string property = string.Empty;
 				if( match.Groups[ 1 ].Success && IsInlineProperty( match.Groups[ 1 ].Value, ref property ) )
@@ -1499,9 +1480,9 @@ namespace AmplifyShaderEditor
 			blendDataObj.ValidBlendMode = true;
 			string property = string.Empty;
 			bool noMatches = true;
-			// TODO: OPTIMIZE REGEX EXPRESSIONS TO NOT CATCH EMPTY GROUPS
+			
 			Match match = Regex.Match( blendModeData, pattern );
-			//Debug.Log( blendModeData + " | " + match.Groups.Count + "|" + match.Groups[ 0 ].Value + " " + match.Groups[ 0 ].Success + " " + match.Groups[ 1 ].Success + " " + match.Groups[ 2 ].Success + " " + match.Groups[ 3 ].Success + " " + match.Groups[ 4 ].Success + " " + match.Groups[ 5 ].Success );
+			
 			{
 				if( match.Groups.Count <= 4 && match.Groups.Count >= 3 )
 				{
@@ -1631,7 +1612,7 @@ namespace AmplifyShaderEditor
 			bool noMatches = true;
 			blendDataObj.ValidBlendOp = true;
 			string property = string.Empty;
-			// TODO: OPTIMIZE REGEX EXPRESSIONS TO NOT CATCH EMPTY GROUPS 
+			
 			Match match = Regex.Match( blendOpData, pattern );
 			{
 				if( match.Groups.Count == 3 )
@@ -1748,22 +1729,22 @@ namespace AmplifyShaderEditor
 
 						if ( passed )
 						{
-							// @diogo: test passed? include conditional text
+							
 							body = body.Replace( signature, content );
 						}
 						else
 						{
-							// @diogo: test failed? exclude conditional text
+							
 							body = body.Replace( signature, string.Empty );
 						}
 					}
 					else
 					{
-						// @diogo: fell here? ignore SRP conditional
+						
 						body = body.Replace( signature, string.Empty );
 					}
 
-					// @diogo: mark as processed to prevent duplicates
+					
 					processedSignatures.Add( signature );
 				}
 			}
@@ -2047,7 +2028,7 @@ namespace AmplifyShaderEditor
 			if( rangeMatch.Groups.Count > 0 )
 			{
 				interpDataObj = new TemplateInterpData();
-				// Get range of available interpolators
+				
 				int minVal = 0;
 				int maxVal = 0;
 				try
@@ -2065,9 +2046,9 @@ namespace AmplifyShaderEditor
 					}
 					if( minVal > maxVal )
 					{
-						//int aux = minVal;
-						//minVal = maxVal;
-						//maxVal = aux;
+						
+						
+						
 						maxVal = minVal;
 					}
 
@@ -2088,7 +2069,7 @@ namespace AmplifyShaderEditor
 				interpDataList = new List<TemplateVertexData>();
 				interpDataDict = new Dictionary<TemplateSemantics, TemplateVertexData>();
 
-				//Get Current interpolators
+				
 				int parametersBeginIdx = fullLine.IndexOf( ":" ) + 1;
 				int parametersEnd = fullLine.IndexOf( TemplatesManager.TemplateEndOfLine );
 				string parametersBody = fullLine.Substring( parametersBeginIdx, parametersEnd - parametersBeginIdx );
@@ -2110,10 +2091,10 @@ namespace AmplifyShaderEditor
 						}
 
 						TemplateVertexData templateVertexData = new TemplateVertexData( semantics, dataType, varName );
-						//interpDataList.Add( templateVertexData );
+						
 						interpDataDict.Add( semantics, templateVertexData );
 						interpDataObj.RawInterpolators.Add( templateVertexData );
-						//Check if they are also on the free channels list and update their names
+						
 						interpDataObj.ReplaceNameOnInterpolator( semantics, varName );
 					}
 				}
@@ -2129,7 +2110,7 @@ namespace AmplifyShaderEditor
 				}
 
 				Dictionary<string, TemplateVertexData> auxDict = new Dictionary<string, TemplateVertexData>();
-				// Get info for available interpolators
+				
 				string[] paramsArray = parametersBody.Split( IOUtils.FIELD_SEPARATOR );
 				if( paramsArray.Length > 0 )
 				{
@@ -2156,10 +2137,10 @@ namespace AmplifyShaderEditor
 										else
 										{
 											templateInterpData = new TemplateVertexData( interpDataDict[ semantic ] );
-											//if( swizzleInfoArr.Length > 1 )
-											//{
-											//	templateInterpData.DataSwizzle = "." + swizzleInfoArr[ 1 ];
-											//}
+											
+											
+											
+											
 											templateInterpData.DataInfo = ShortcutToInfo[ multiComponent[ 0 ] ];
 											templateInterpData.Available = true;
 											interpDataList.Add( templateInterpData );
@@ -2191,11 +2172,7 @@ namespace AmplifyShaderEditor
 					}
 				}
 
-				/*TODO: 
-				1) Remove interpDataList.Add( templateVertexData ); from initial foreach 
-				2) When looping though each foreach array element, create a new TemplateVertexData
-				from the one containted on the interpDataDict and add it to interpDataList
-				*/
+				
 				for( int i = 0; i < interpDataList.Count; i++ )
 				{
 					interpDataList[ i ].BuildVar();
@@ -2423,7 +2400,7 @@ namespace AmplifyShaderEditor
 			}
 			return true;
 		}
-		// Lightweight <-> Default functions
+		
 		public static string WorldSpaceViewDir( MasterNodeDataCollector dataCollector, string worldPosVec3, bool normalize )
 		{
 			string value = string.Empty;
@@ -2468,13 +2445,13 @@ namespace AmplifyShaderEditor
 			return false;
 		}
 
-	//	public static readonly string FetchDefaultDepthFormat = "UNITY_SAMPLE_DEPTH(tex2Dproj(_CameraDepthTexture,UNITY_PROJ_COORD( {0} )))";
-		public static readonly string FetchDefaultDepthFormat = "SAMPLE_DEPTH_TEXTURE( _CameraDepthTexture, {0}.xy )";
-		public static readonly string FetchDefaultDepthFormatVertex = "SAMPLE_DEPTH_TEXTURE_LOD( _CameraDepthTexture, float4( {0}.xy, 0, 0 ) )";
+	
+		public readonly static string FetchDefaultDepthFormat = "SAMPLE_DEPTH_TEXTURE( _CameraDepthTexture, {0}.xy )";
+		public readonly static string FetchDefaultDepthFormatVertex = "SAMPLE_DEPTH_TEXTURE_LOD( _CameraDepthTexture, float4( {0}.xy, 0, 0 ) )";
 
-		public static readonly string FetchLWDepthFormat = "SHADERGRAPH_SAMPLE_SCENE_DEPTH( {0}.xy )";
-		public static readonly string FetchLWDepthFormatVertex = "SHADERGRAPH_SAMPLE_SCENE_DEPTH_LOD( {0}.xy )";
-		public static readonly string FetchHDDepthFormat = "SampleCameraDepth( {0}.xy )";
+		public readonly static string FetchLWDepthFormat = "SHADERGRAPH_SAMPLE_SCENE_DEPTH( {0}.xy )";
+		public readonly static string FetchLWDepthFormatVertex = "SHADERGRAPH_SAMPLE_SCENE_DEPTH_LOD( {0}.xy )";
+		public readonly static string FetchHDDepthFormat = "SampleCameraDepth( {0}.xy )";
 
 		public static string CreateDepthFetch( MasterNodeDataCollector dataCollector, string screenPos )
 		{
@@ -2555,7 +2532,7 @@ namespace AmplifyShaderEditor
 			}
 			else
 			{
-				//Excluded
+				
 				Match excludePlatformsMatch = Regex.Match( shaderBody , PragmaExcludeRendersPattern );
 				if( excludePlatformsMatch.Success )
 				{
@@ -2574,7 +2551,7 @@ namespace AmplifyShaderEditor
 						Debug.LogException( e );
 					}
 				}
-				else //Only Renders
+				else 
 				{
 					Match onlyRendersPlatformsMatch = Regex.Match( shaderBody , PragmaOnlyRendersPattern );
 					if( onlyRendersPlatformsMatch.Success )

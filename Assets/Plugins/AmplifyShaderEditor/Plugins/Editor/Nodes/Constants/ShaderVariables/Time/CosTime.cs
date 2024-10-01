@@ -1,11 +1,29 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Cos Time", "Time", "Cosine of time" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Cos Time"
+#else
+"因为时间"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Time"
+#else
+"时间"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Cosine of time"
+#else
+"时间的余韵"
+#endif
+)]
 	public sealed class CosTime : ConstVecShaderVariable
 	{
 		private readonly string[] SRPTime =

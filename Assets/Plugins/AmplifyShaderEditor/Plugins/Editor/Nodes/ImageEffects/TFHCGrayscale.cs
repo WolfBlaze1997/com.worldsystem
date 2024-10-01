@@ -1,8 +1,8 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
-//
-// Custom Node Grayscale
-// Donated by The Four Headed Cat - @fourheadedcat
+
+
+
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -11,10 +11,46 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Grayscale", "Image Effects", "Convert image colors to grayscale", null, KeyCode.None, true, false, null, null, "The Four Headed Cat - @fourheadedcat", tags:"luminance" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Grayscale"
+#else
+"灰度"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Image Effects"
+#else
+"图像效果"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Convert image colors to grayscale"
+#else
+"将图像颜色转换为灰度"
+#endif
+, null, KeyCode.None, true, false, null, null, 
+#if !WB_LANGUAGE_CHINESE
+"The Four Headed Cat - @fourheadedcat"
+#else
+"四头猫-@fourheaddcat"
+#endif
+, tags: 
+#if !WB_LANGUAGE_CHINESE
+"luminance"
+#else
+"亮度"
+#endif
+)]
 	public sealed class TFHCGrayscale : ParentNode
 	{
-		private const string GrayscaleStyleStr = "Grayscale Style";
+		private const string GrayscaleStyleStr = 
+#if !WB_LANGUAGE_CHINESE
+"Grayscale Style"
+#else
+"灰度风格"
+#endif
+;
 
 		[SerializeField]
 		private int m_grayscaleStyle;
@@ -80,7 +116,13 @@ namespace AmplifyShaderEditor
 			{
 				UpdateFromSelected();
 			}
-			EditorGUILayout.HelpBox( "Grayscale Old:\n\n - In: Image to convert.\n - Grayscale Style: Select the grayscale style.\n\n - Out: Grayscale version of the image.", MessageType.None );
+			EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"Grayscale Old:\n\n - In: Image to convert.\n - Grayscale Style: Select the grayscale style.\n\n - Out: Grayscale version of the image."
+#else
+"灰度旧：\n\n-输入：要转换的图像。\n-灰度样式：选择灰度样式。\n\n-输出：图像的灰度版本。"
+#endif
+, MessageType.None );
 		}
 
 		public override void ReadFromString( ref string[] nodeParams )

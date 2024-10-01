@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -82,10 +82,10 @@ namespace AmplifyShaderEditor
 
 			m_lastKeyPressed = KeyCode.None;
 
-			// Fetch all available nodes by their attributes
+			
 			try
 			{
-				//IEnumerable<System.Type> availableTypes = AppDomain.CurrentDomain.GetAssemblies().ToList().SelectMany( type => type.GetTypes() );
+				
 				var mainAssembly = Assembly.GetExecutingAssembly();
 				Type[] availableTypes = IOUtils.GetTypesInNamespace( mainAssembly, "AmplifyShaderEditor" );
 
@@ -100,7 +100,7 @@ namespace AmplifyShaderEditor
 				}
 				catch( Exception )
 				{
-					// quiet catch because we don't care if it fails to find the assembly, we'll just skip it
+					
 				}
 
 				Type[] asmdefTypes = IOUtils.GetAssemblyTypesArray();
@@ -117,8 +117,8 @@ namespace AmplifyShaderEditor
 						{
 							if( attribute.Available && !attribute.Deprecated )
 							{
-								//if ( !UIUtils.CurrentWindow.IsShaderFunctionWindow && attribute.AvailableInFunctionsOnly )
-								//	continue;
+								
+								
 
 								if( !UIUtils.HasColorCategory( attribute.Category ) )
 								{
@@ -136,10 +136,10 @@ namespace AmplifyShaderEditor
 											UIUtils.AddColorCategory( attribute.Category , Constants.DefaultCategoryColor );
 										}
 									}
-									//else
-									//{
-									//	UIUtils.AddColorCategory( attribute.Category, Constants.DefaultCategoryColor );
-									//}
+									
+									
+									
+									
 								}
 
 								if( attribute.CastType != null && attribute.CastType.Length > 0 && type != null )
@@ -206,7 +206,7 @@ namespace AmplifyShaderEditor
 				}
 			}
 
-			//Sort out the final list by name
+			
 			m_items.Sort( ( x, y ) => x.Category.CompareTo( y.Category ) );
 			m_itemFunctions.Sort( ( x, y ) => x.Category.CompareTo( y.Category ) );
 			return true;
@@ -263,13 +263,13 @@ namespace AmplifyShaderEditor
 					title.Append( " " );
 				}
 
-				// if current is a number and previous is a letter we space it (ie: Rotation2D = Rotation 2D)
+				
 				if( lastIsLetter && char.IsNumber( text, i ) )
 				{
 					title.Append( " " );
 				}
 
-				// if previous is upper, current is upper and the next two following are lower then we space it (ie: UVDistortion = UV Distortion)
+				
 				if( i < text.Length - 1 )
 				{
 					bool nextIsLower = char.IsLower( text, i + 1 ) && char.IsLetter( text, i + 1 );

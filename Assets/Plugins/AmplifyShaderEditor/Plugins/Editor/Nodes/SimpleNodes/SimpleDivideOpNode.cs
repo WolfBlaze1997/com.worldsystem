@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using System;
@@ -7,7 +7,25 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Divide", "Math Operators", "Division of two values ( A / B )", null, KeyCode.D )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Divide"
+#else
+"分割"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Division of two values ( A / B )"
+#else
+"两个值的划分（A/B）"
+#endif
+, null, KeyCode.D )]
 	public sealed class SimpleDivideOpNode : DynamicTypeNode
 	{
 		protected override void CommonInit( int uniqueId )

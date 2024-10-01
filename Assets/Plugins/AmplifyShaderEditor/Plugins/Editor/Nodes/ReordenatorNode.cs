@@ -43,10 +43,10 @@ namespace AmplifyShaderEditor
 			UIUtils.UnregisterPropertyNode( this );
 		}
 
-		//public List<ParentNode> PropertyList
-		//{
-		//	get { return m_propertyList; }
-		//}
+		
+		
+		
+		
 
 		public int PropertyListCount
 		{
@@ -61,7 +61,7 @@ namespace AmplifyShaderEditor
 
 		public int RecursiveSetOrderOffset( int offset, bool lockit, int order = -1 )
 		{
-			//Debug.Log( Locked + " " + PropertyName );
+			
 
 			if ( Locked )
 				return offset;
@@ -89,7 +89,7 @@ namespace AmplifyShaderEditor
 					{
 						PropertyNode pnode = m_propertyList[ i ] as PropertyNode;
 						{
-							pnode.OrderIndexOffset = currentOffset - pnode.RawOrderIndex;// + ( HasTitle ? 1 : 0 );
+							pnode.OrderIndexOffset = currentOffset - pnode.RawOrderIndex;
 						}
 						currentOffset++;
 					}

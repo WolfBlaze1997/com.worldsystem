@@ -1,10 +1,28 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 namespace AmplifyShaderEditor
 {
 	[System.Serializable]
-	[NodeAttributes( "Vertex Bitangent", "Vertex Data", "Calculated bitangent vector in object space, can be used in both local vertex offset and fragment outputs. Already has tangent sign and object transform into account" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Vertex Bitangent"
+#else
+"顶点位变化"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vertex Data"
+#else
+"顶点数据"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Calculated bitangent vector in object space, can be used in both local vertex offset and fragment outputs. Already has tangent sign and object transform into account"
+#else
+"在对象空间中计算出的位移向量，可用于局部顶点偏移和片段输出。已经考虑了切线符号和对象变换"
+#endif
+)]
 	public sealed class BitangentVertexDataNode : ParentNode
 	{
 		protected override void CommonInit( int uniqueId )

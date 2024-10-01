@@ -149,7 +149,7 @@ namespace AmplifyShaderEditor
 			CheckSpecialTag();
 		}
 
-		//Used on Template based shaders loading
+		
 		public CustomTagData( string data, int id )
 		{
 			TagId = id;
@@ -193,13 +193,13 @@ namespace AmplifyShaderEditor
 					break;
 				}
 			}
-			else /*if( UIUtils.CurrentShaderVersion() < 15600 )*/
+			else 
 			{
 				CheckSpecialTag();
 			}
 		}
 
-		//Used on Standard Surface shaders loading
+		
 		public CustomTagData( string data )
 		{
 			string[] arr = data.Split( IOUtils.VALUE_SEPARATOR );
@@ -274,8 +274,8 @@ namespace AmplifyShaderEditor
 					break;
 					case TemplateSpecialTags.RenderType:
 					{
-						//if( m_renderType != RenderType.Custom )
-						//	TagValue = m_renderType.ToString();
+						
+						
 					}
 					break;
 					case TemplateSpecialTags.Queue:
@@ -301,8 +301,8 @@ namespace AmplifyShaderEditor
 			set
 			{
 				m_renderType = value;
-				//if( m_renderType != RenderType.Custom )
-				//	TagValue = value.ToString();
+				
+				
 			}
 		}
 
@@ -323,9 +323,27 @@ namespace AmplifyShaderEditor
 	[Serializable]
 	public class CustomTagsHelper
 	{
-		private const string CustomTagsStr = " Custom SubShader Tags";
-		private const string TagNameStr = "Name";
-		private const string TagValueStr = "Value";
+		private const string CustomTagsStr = 
+#if !WB_LANGUAGE_CHINESE
+" Custom SubShader Tags"
+#else
+"自定义子着色器标签"
+#endif
+;
+		private const string TagNameStr = 
+#if !WB_LANGUAGE_CHINESE
+"Name"
+#else
+"姓名"
+#endif
+;
+		private const string TagValueStr = 
+#if !WB_LANGUAGE_CHINESE
+"Value"
+#else
+"价值观"
+#endif
+;
 
 		private const float ShaderKeywordButtonLayoutWidth = 15;
 		private ParentNode m_currentOwner;
@@ -345,14 +363,14 @@ namespace AmplifyShaderEditor
 		{
 			EditorGUILayout.Separator();
 
-			// Add tag
+			
 			if( GUILayout.Button( string.Empty, UIUtils.PlusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 			{
 				m_availableTags.Add( new CustomTagData() );
 				EditorGUI.FocusTextInControl( null );
 			}
 
-			//Remove tag
+			
 			if( GUILayout.Button( string.Empty, UIUtils.MinusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 			{
 				if( m_availableTags.Count > 0 )
@@ -370,7 +388,13 @@ namespace AmplifyShaderEditor
 
 			if( itemCount == 0 )
 			{
-				EditorGUILayout.HelpBox( "Your list is Empty!\nUse the plus button to add one.", MessageType.Info );
+				EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"Your list is Empty!\nUse the plus button to add one."
+#else
+"您的列表为空！\n使用加号按钮添加一个。"
+#endif
+, MessageType.Info );
 			}
 
 			int markedToDelete = -1;
@@ -382,7 +406,7 @@ namespace AmplifyShaderEditor
 				{
 					EditorGUI.indentLevel += 1;
 					EditorGUIUtility.labelWidth = 70;
-					//Tag Name
+					
 					EditorGUI.BeginChangeCheck();
 					m_availableTags[ i ].TagName = EditorGUILayout.TextField( TagNameStr, m_availableTags[ i ].TagName );
 					if( EditorGUI.EndChangeCheck() )
@@ -390,7 +414,7 @@ namespace AmplifyShaderEditor
 						m_availableTags[ i ].TagName = UIUtils.RemoveShaderInvalidCharacters( m_availableTags[ i ].TagName );
 					}
 
-					//Tag Value
+					
 					EditorGUI.BeginChangeCheck();
 					m_availableTags[ i ].TagValue = EditorGUILayout.TextField( TagValueStr, m_availableTags[ i ].TagValue );
 					if( EditorGUI.EndChangeCheck() )
@@ -403,14 +427,14 @@ namespace AmplifyShaderEditor
 					EditorGUILayout.BeginHorizontal();
 					{
 						GUILayout.Label( " " );
-						// Add new port
+						
 						if( m_currentOwner.GUILayoutButton( string.Empty, UIUtils.PlusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 						{
 							m_availableTags.Insert( i + 1, new CustomTagData() );
 							EditorGUI.FocusTextInControl( null );
 						}
 
-						//Remove port
+						
 						if( m_currentOwner.GUILayoutButton( string.Empty, UIUtils.MinusStyle, GUILayout.Width( ShaderKeywordButtonLayoutWidth ) ) )
 						{
 							markedToDelete = i;

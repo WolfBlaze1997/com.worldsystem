@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using System.IO;
@@ -27,7 +27,7 @@ namespace AmplifyShaderEditor
 
 	public class Worker
 	{
-		public static readonly object locker = new object();
+		public readonly static object locker = new object();
 		public void DoWork()
 		{
 			while( IOUtils.ActiveThread )
@@ -38,11 +38,11 @@ namespace AmplifyShaderEditor
 					lock( locker )
 					{
 						IOUtils.SaveInThreadShaderBody = string.Format( IOUtils.ShaderCopywriteMessage, VersionInfo.StaticToString() ) + IOUtils.SaveInThreadShaderBody;
-						// Add checksum 
+						
 						string checksum = IOUtils.CreateChecksum( IOUtils.SaveInThreadShaderBody );
 						IOUtils.SaveInThreadShaderBody += IOUtils.CHECKSUM + IOUtils.VALUE_SEPARATOR + checksum;
 
-						// Write to disk
+						
 						StreamWriter fileWriter = new StreamWriter( IOUtils.SaveInThreadPathName );
 						try
 						{
@@ -70,25 +70,25 @@ namespace AmplifyShaderEditor
 		public static OnShaderAction OnShaderSavedEvent;
 		public static OnShaderAction OnShaderTypeChangedEvent;
 
-		public static readonly string ShaderCopywriteMessage = "// Made with Amplify Shader Editor v{0}\n// Available at the Unity Asset Store - http://u3d.as/y3X \n";
-		public static readonly string GrabPassEmpty = "\t\tGrabPass{ }\n";
-		public static readonly string GrabPassBegin = "\t\tGrabPass{ \"";
-		public static readonly string GrabPassEnd = "\" }\n";
-		public static readonly string PropertiesBegin = "\tProperties\n\t{\n";
-		public static readonly string PropertiesEnd = "\t}\n";
-		public static readonly string PropertiesElement = "\t\t{0}\n";
-		public static readonly string PropertiesElementsRaw = "{0}\n";
+		public readonly static string ShaderCopywriteMessage = "// Made with Amplify Shader Editor v{0}\n// Available at the Unity Asset Store - http://u3d.as/y3X \n";
+		public readonly static string GrabPassEmpty = "\t\tGrabPass{ }\n";
+		public readonly static string GrabPassBegin = "\t\tGrabPass{ \"";
+		public readonly static string GrabPassEnd = "\" }\n";
+		public readonly static string PropertiesBegin = "\tProperties\n\t{\n";
+		public readonly static string PropertiesEnd = "\t}\n";
+		public readonly static string PropertiesElement = "\t\t{0}\n";
+		public readonly static string PropertiesElementsRaw = "{0}\n";
 
-		public static readonly string PragmaTargetHeader = "\t\t#pragma target {0}\n";
-		public static readonly string InstancedPropertiesHeader = "multi_compile_instancing";
-		public static readonly string VirtualTexturePragmaHeader = "multi_compile _ _VT_SINGLE_MODE";
+		public readonly static string PragmaTargetHeader = "\t\t#pragma target {0}\n";
+		public readonly static string InstancedPropertiesHeader = "multi_compile_instancing";
+		public readonly static string VirtualTexturePragmaHeader = "multi_compile _ _VT_SINGLE_MODE";
 
-		public static readonly string InstancedPropertiesBegin = "UNITY_INSTANCING_CBUFFER_START({0})";
-		public static readonly string InstancedPropertiesEnd = "UNITY_INSTANCING_CBUFFER_END";
-		public static readonly string InstancedPropertiesElement = "UNITY_DEFINE_INSTANCED_PROP({0}, {1})";
-		public static readonly string InstancedPropertiesData = "UNITY_ACCESS_INSTANCED_PROP({0})";
+		public readonly static string InstancedPropertiesBegin = "UNITY_INSTANCING_CBUFFER_START({0})";
+		public readonly static string InstancedPropertiesEnd = "UNITY_INSTANCING_CBUFFER_END";
+		public readonly static string InstancedPropertiesElement = "UNITY_DEFINE_INSTANCED_PROP({0}, {1})";
+		public readonly static string InstancedPropertiesData = "UNITY_ACCESS_INSTANCED_PROP({0})";
 
-		public static readonly string DotsInstancedPropertiesData = "\tUNITY_DOTS_INSTANCED_PROP({0}, {1})";
+		public readonly static string DotsInstancedPropertiesData = "\tUNITY_DOTS_INSTANCED_PROP({0}, {1})";
 		public static string DotsInstancedDefinesData
 		{ 
 			get
@@ -108,54 +108,54 @@ namespace AmplifyShaderEditor
 			}
 		}
 
-		public static readonly string LWSRPInstancedPropertiesBegin = "UNITY_INSTANCING_BUFFER_START({0})";
-		public static readonly string LWSRPInstancedPropertiesEnd = "UNITY_INSTANCING_BUFFER_END({0})";
-		public static readonly string LWSRPInstancedPropertiesElement = "UNITY_DEFINE_INSTANCED_PROP({0}, {1})";
-		public static readonly string LWSRPInstancedPropertiesData = "UNITY_ACCESS_INSTANCED_PROP({0},{1})";
+		public readonly static string LWSRPInstancedPropertiesBegin = "UNITY_INSTANCING_BUFFER_START({0})";
+		public readonly static string LWSRPInstancedPropertiesEnd = "UNITY_INSTANCING_BUFFER_END({0})";
+		public readonly static string LWSRPInstancedPropertiesElement = "UNITY_DEFINE_INSTANCED_PROP({0}, {1})";
+		public readonly static string LWSRPInstancedPropertiesData = "UNITY_ACCESS_INSTANCED_PROP({0},{1})";
 
-		public static readonly string SRPCBufferPropertiesBegin = "CBUFFER_START( UnityPerMaterial )";//"CBUFFER_START({0})";
-		public static readonly string SRPCBufferPropertiesEnd = "CBUFFER_END";
+		public readonly static string SRPCBufferPropertiesBegin = "CBUFFER_START( UnityPerMaterial )";
+		public readonly static string SRPCBufferPropertiesEnd = "CBUFFER_END";
 
 
-		public static readonly string InstancedPropertiesBeginTabs = "\t\t" + InstancedPropertiesBegin + "\n";
-		public static readonly string InstancedPropertiesEndTabs = "\t\t" + InstancedPropertiesEnd + "\n";
-		public static readonly string InstancedPropertiesElementTabs = "\t\t\t" + InstancedPropertiesElement + "\n";
+		public readonly static string InstancedPropertiesBeginTabs = "\t\t" + InstancedPropertiesBegin + "\n";
+		public readonly static string InstancedPropertiesEndTabs = "\t\t" + InstancedPropertiesEnd + "\n";
+		public readonly static string InstancedPropertiesElementTabs = "\t\t\t" + InstancedPropertiesElement + "\n";
 
-		public static readonly string MetaBegin = "defaultTextures:";
-		public static readonly string MetaEnd = "userData:";
-		public static readonly string ShaderBodyBegin = "/*ASEBEGIN";
-		public static readonly string ShaderBodyEnd = "ASEEND*/";
-		//public static readonly float CurrentVersionFlt = 0.4f;
-		//public static readonly string CurrentVersionStr = "Version=" + CurrentVersionFlt;
+		public readonly static string MetaBegin = "defaultTextures:";
+		public readonly static string MetaEnd = "userData:";
+		public readonly static string ShaderBodyBegin = "/*ASEBEGIN";
+		public readonly static string ShaderBodyEnd = "ASEEND*/";
+		
+		
 
-		public static readonly string CHECKSUM = "//CHKSM";
-		public static readonly string LAST_OPENED_OBJ_ID = "ASELASTOPENOBJID";
+		public readonly static string CHECKSUM = "//CHKSM";
+		public readonly static string LAST_OPENED_OBJ_ID = "ASELASTOPENOBJID";
 
-		public static readonly string MAT_CLIPBOARD_ID = "ASEMATCLIPBRDID";
-		public static readonly char FIELD_SEPARATOR = ';';
-		public static readonly char VALUE_SEPARATOR = '=';
-		public static readonly char LINE_TERMINATOR = '\n';
-		public static readonly char VECTOR_SEPARATOR = ',';
-		public static readonly char FLOAT_SEPARATOR = '.';
-		public static readonly char CLIPBOARD_DATA_SEPARATOR = '|';
-		public static readonly char MATRIX_DATA_SEPARATOR = '|';
+		public readonly static string MAT_CLIPBOARD_ID = "ASEMATCLIPBRDID";
+		public readonly static char FIELD_SEPARATOR = ';';
+		public readonly static char VALUE_SEPARATOR = '=';
+		public readonly static char LINE_TERMINATOR = '\n';
+		public readonly static char VECTOR_SEPARATOR = ',';
+		public readonly static char FLOAT_SEPARATOR = '.';
+		public readonly static char CLIPBOARD_DATA_SEPARATOR = '|';
+		public readonly static char MATRIX_DATA_SEPARATOR = '|';
 		public readonly static string NO_TEXTURES = "<None>";
-		public static readonly string SaveShaderStr = "Please enter shader name to save";
-		public static readonly string FloatifyStr = ".0";
+		public readonly static string SaveShaderStr = "Please enter shader name to save";
+		public readonly static string FloatifyStr = ".0";
 
-		// Node parameter names
+		
 		public const string NodeParam = "Node";
 		public const string NodePosition = "Position";
 		public const string NodeId = "Id";
 		public const string NodeType = "Type";
 		public const string WireConnectionParam = "WireConnection";
 
-		public static readonly uint NodeTypeId = 1;
+		public readonly static uint NodeTypeId = 1;
 
-		public static readonly int InNodeId = 1;
-		public static readonly int InPortId = 2;
-		public static readonly int OutNodeId = 3;
-		public static readonly int OutPortId = 4;
+		public readonly static int InNodeId = 1;
+		public readonly static int InPortId = 2;
+		public readonly static int OutNodeId = 3;
+		public readonly static int OutPortId = 4;
 
 		public readonly static string DefaultASEDirtyCheckName = "__dirty";
 		public readonly static string DefaultASEDirtyCheckProperty = "[HideInInspector] " + DefaultASEDirtyCheckName + "( \"\", Int ) = 1";
@@ -167,16 +167,16 @@ namespace AmplifyShaderEditor
 
 		public readonly static string ChromaticAberrationProperty = "_ChromaticAberration";
 
-		//public static readonly string ASEFolderGUID = "daca988099666ec40aaa2cde22bb4935";
-		//public static string ASEResourcesPath = "/Plugins/EditorResources/";
-		//public static string ASEFolderPath;
+		
+		
+		
 
-		//public static bool IsShaderFunctionWindow = false;
+		
 
 
 		public static int DefaultASEDirtyCheckId;
 
-		// this is to be used in combination with AssetDatabase.GetAssetPath, both of these include the Assets/ path so we need to remove from one of them 
+		
 		public static string dataPath;
 
 
@@ -222,10 +222,10 @@ namespace AmplifyShaderEditor
 			{"AmplifyShaderEditor.VirtualTexturePropertyNode", "AmplifyShaderEditor.VirtualTextureObject"}
 		};
 
-		private static readonly string AmplifyShaderEditorDefineSymbol = "AMPLIFY_SHADER_EDITOR";
+		private readonly static string AmplifyShaderEditorDefineSymbol = "AMPLIFY_SHADER_EDITOR";
 
-		/////////////////////////////////////////////////////////////////////////////
-		// THREAD IO UTILS
+		
+		
 		public static bool SaveInThreadFlag = false;
 		public static string SaveInThreadShaderBody;
 		public static string SaveInThreadPathName;
@@ -345,9 +345,9 @@ namespace AmplifyShaderEditor
 				Asset loadedAsset = Provider.GetAssetByPath( FileUtil.GetProjectRelativePath( pathName ) );
 				if( loadedAsset != null )
 				{
-					//Task statusTask = Provider.Status( loadedAsset );
-					//statusTask.Wait();
-					//if( Provider.CheckoutIsValid( statusTask.assetList[ 0 ] ) )
+					
+					
+					
 					{
 						Task checkoutTask = Provider.Checkout( loadedAsset , CheckoutMode.Both );
 						checkoutTask.Wait();
@@ -378,7 +378,7 @@ namespace AmplifyShaderEditor
 			}
 		}
 
-		////////////////////////////////////////////////////////////////////////////
+		
 		public static void SetAmplifyDefineSymbolOnBuildTargetGroup( BuildTargetGroup targetGroup )
 		{
 		#if UNITY_2021_2_OR_NEWER
@@ -436,8 +436,8 @@ namespace AmplifyShaderEditor
 			}
 		}
 
-		//Adding this attribute so scripting defining symbol can be registered right away so custom nodes using ASE ( under that symbol ) can be caught 
-		// the first time ASE opens
+		
+		
 		[InitializeOnLoadMethod]
 		public static void Init()
 		{
@@ -446,19 +446,19 @@ namespace AmplifyShaderEditor
 				Initialized = true;
 				if( EditorPrefs.GetBool( Preferences.PrefDefineSymbol , true ) )
 					SetAmplifyDefineSymbolOnBuildTargetGroup( EditorUserBuildSettings.selectedBuildTargetGroup );
-				//Array BuildTargetGroupValues = Enum.GetValues( typeof(  BuildTargetGroup ));
-				//for ( int i = 0; i < BuildTargetGroupValues.Length; i++ )
-				//{
-				//	if( i != 0 && i != 15 && i != 16 )
-				//		SetAmplifyDefineSymbolOnBuildTargetGroup( ( BuildTargetGroup ) BuildTargetGroupValues.GetValue( i ) );
-				//}
+				
+				
+				
+				
+				
+				
 
 				DefaultASEDirtyCheckId = Shader.PropertyToID( DefaultASEDirtyCheckName );
 				dataPath = Application.dataPath.Remove( Application.dataPath.Length - 6 );
 
 
-				//ASEFolderPath = AssetDatabase.GUIDToAssetPath( ASEFolderGUID );
-				//ASEResourcesPath = ASEFolderPath + ASEResourcesPath;
+				
+				
 			}
 		}
 
@@ -550,11 +550,11 @@ namespace AmplifyShaderEditor
 			fullPathname = EditorUtility.SaveFilePanelInProject( "Select Shader to save" , defaultName , "shader" , SaveShaderStr , currDatapath );
 			if( !String.IsNullOrEmpty( fullPathname ) )
 			{
-				shaderName = fullPathname.Remove( fullPathname.Length - 7 ); // -7 remove .shader extension
+				shaderName = fullPathname.Remove( fullPathname.Length - 7 ); 
 				string[] subStr = shaderName.Split( '/' );
 				if( subStr.Length > 0 )
 				{
-					shaderName = subStr[ subStr.Length - 1 ]; // Remove pathname 
+					shaderName = subStr[ subStr.Length - 1 ]; 
 				}
 			}
 			else
@@ -598,12 +598,12 @@ namespace AmplifyShaderEditor
 			if( addAdditionalInfo )
 			{
 				shaderBody = string.Format( ShaderCopywriteMessage, VersionInfo.StaticToString() ) + shaderBody;
-				// Add checksum 
+				
 				string checksum = CreateChecksum( shaderBody );
 				shaderBody += CHECKSUM + VALUE_SEPARATOR + checksum;
 			}
 
-			// Write to disk
+			
 			StreamWriter fileWriter = new StreamWriter( pathName );
 			try
 			{
@@ -779,7 +779,7 @@ namespace AmplifyShaderEditor
 		public static string GetUVChannelDeclaration( string uvName , int channelId , int set )
 		{
 			string uvSetStr = ( set == 0 ) ? "uv" : "uv" + Constants.AvailableUVSetsStr[ set ];
-			return "float2 " + uvSetStr + uvName /*+ " : TEXCOORD" + channelId*/;
+			return "float2 " + uvSetStr + uvName ;
 		}
 
 		public static string GetUVChannelName( string uvName , int set )
@@ -794,9 +794,9 @@ namespace AmplifyShaderEditor
 			return uvSetStr;
 		}
 
-		//Floatify adds a .0 to the number as soon operarions with floats require that
-		// if  value % 1 != 0 it has decimal numbers
-		// The regex checks if number is something like 4e+07 which cannot be "floatified"
+		
+		
+		
 		private const string CheckFloatifyPatt = "[eE][+-]";
 		public static string Floatify( float value )
 		{
@@ -951,50 +951,50 @@ namespace AmplifyShaderEditor
 			File.WriteAllBytes( pathname , pngData );
 		}
 
-		//public static void SaveObjToList( string newObj )
-		//{
-		//	Debug.Log( UIUtils.CurrentWindow.Lastpath );
-		//	UIUtils.CurrentWindow.Lastpath = newObj;
-		//	string lastOpenedObj = EditorPrefs.GetString( IOUtils.LAST_OPENED_OBJ_ID );
-		//	string[] allLocations = lastOpenedObj.Split( ':' );
+		
+		
+		
+		
+		
+		
 
-		//	string lastLocation = allLocations[ allLocations.Length - 1 ];
+		
 
-		//	string resave = string.Empty;
-		//	for ( int i = 0; i < allLocations.Length; i++ )
-		//	{
-		//		if ( string.IsNullOrEmpty( allLocations[ i ] ) )
-		//			continue;
+		
+		
+		
+		
+		
 
-		//		resave += allLocations[ i ];
-		//		resave += ":";
-		//	}
+		
+		
+		
 
-		//	resave += newObj;
-		//	EditorPrefs.SetString( IOUtils.LAST_OPENED_OBJ_ID, resave );
-		//}
+		
+		
+		
 
-		//public static void DeleteObjFromList( string newObj )
-		//{
-		//	string lastOpenedObj = EditorPrefs.GetString( IOUtils.LAST_OPENED_OBJ_ID );
-		//	string[] allLocations = lastOpenedObj.Split( ':' );
+		
+		
+		
+		
 
-		//	string resave = string.Empty;
-		//	for ( int i = 0; i < allLocations.Length; i++ )
-		//	{
-		//		if ( string.IsNullOrEmpty( allLocations[ i ] ) || newObj.Equals( allLocations[ i ] ) )
-		//			continue;
+		
+		
+		
+		
+		
 
-		//		resave += allLocations[ i ];
-		//		if ( i < allLocations.Length - 1 )
-		//			resave += ":";
-		//	}
+		
+		
+		
+		
 
-		//	EditorPrefs.SetString( IOUtils.LAST_OPENED_OBJ_ID, resave );
-		//}
+		
+		
 
-		// Polynomial: 0xedb88320
-		static readonly uint[] crc32_tab = {
+		
+		readonly static uint[] crc32_tab = {
 			0x00000000, 0x77073096, 0xee0e612c, 0x990951ba, 0x076dc419, 0x706af48f,
 			0xe963a535, 0x9e6495a3, 0x0edb8832, 0x79dcb8a4, 0xe0d5e91e, 0x97d2d988,
 			0x09b64c2b, 0x7eb17cbd, 0xe7b82d07, 0x90bf1d91, 0x1db71064, 0x6ab020f2,

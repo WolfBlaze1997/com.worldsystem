@@ -1,12 +1,30 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Round", "Math Operators", "Rounded value of scalars or vectors" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Round"
+#else
+"圆形"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Rounded value of scalars or vectors"
+#else
+"标量或向量的四舍五入值"
+#endif
+)]
 	public sealed class RoundOpNode : SingleInputOp
 	{
 		protected override void CommonInit( int uniqueId )

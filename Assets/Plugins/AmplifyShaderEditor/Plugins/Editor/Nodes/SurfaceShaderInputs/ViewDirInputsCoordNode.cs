@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 using System;
 using UnityEngine;
 using UnityEditor;
@@ -13,12 +13,48 @@ namespace AmplifyShaderEditor
 	}
 
 	[Serializable]
-	[NodeAttributes( "View Dir", "Camera And Screen", "View direction vector, you can select between <b>World</b> space or <b>Tangent</b> space", tags: "camera vector" )]	
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"View Dir"
+#else
+"查看目录"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Camera And Screen"
+#else
+"摄像头和屏幕"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"View direction vector, you can select between <b>World</b> space or <b>Tangent</b> space"
+#else
+"查看方向向量，您可以在<b>世界</b>空间或<b>切线</b>太空之间进行选择"
+#endif
+, tags: 
+#if !WB_LANGUAGE_CHINESE
+"camera vector"
+#else
+"摄影机矢量"
+#endif
+)]	
 	public sealed class ViewDirInputsCoordNode : SurfaceShaderINParentNode
 	{
-		private const string SpaceStr = "Space";
+		private const string SpaceStr = 
+#if !WB_LANGUAGE_CHINESE
+"Space"
+#else
+"空间"
+#endif
+;
 		private const string WorldDirVarStr = "worldViewDir";
-		private const string NormalizeOptionStr = "Safe Normalize";
+		private const string NormalizeOptionStr = 
+#if !WB_LANGUAGE_CHINESE
+"Safe Normalize"
+#else
+"安全正常化"
+#endif
+;
 
 		[SerializeField]
 		private bool m_safeNormalize = false;
@@ -60,7 +96,7 @@ namespace AmplifyShaderEditor
 
 		public override void DrawProperties()
 		{
-			//base.DrawProperties();
+			
 			EditorGUI.BeginChangeCheck();
 			m_viewDirSpace = (ViewSpace)EditorGUILayoutEnumPopup( SpaceStr, m_viewDirSpace );
 			if( EditorGUI.EndChangeCheck() )
@@ -68,7 +104,13 @@ namespace AmplifyShaderEditor
 				UpdateTitle();
 			}
 			m_safeNormalize = EditorGUILayoutToggle( NormalizeOptionStr, m_safeNormalize );
-			EditorGUILayout.HelpBox( "Having safe normalize ON makes sure your view vector is not zero even if you are using your shader with no cameras.", MessageType.None );
+			EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"Having safe normalize ON makes sure your view vector is not zero even if you are using your shader with no cameras."
+#else
+"启用安全归一化可确保即使在没有相机的情况下使用着色器，您的视图向量也不会为零。"
+#endif
+, MessageType.None );
 		}
 
 		public override void SetPreviewInputs()
@@ -120,7 +162,7 @@ namespace AmplifyShaderEditor
 					{
 						dataCollector.AddToInput( UniqueId, SurfaceInputs.VIEW_DIR, PrecisionType.Float );
 						return GetOutputVectorItem( 0, outputId, m_currentInputValueStr );
-						//return base.GenerateShaderForOutput( outputId, ref dataCollector, ignoreLocalVar );
+						
 					}
 				}
 				else

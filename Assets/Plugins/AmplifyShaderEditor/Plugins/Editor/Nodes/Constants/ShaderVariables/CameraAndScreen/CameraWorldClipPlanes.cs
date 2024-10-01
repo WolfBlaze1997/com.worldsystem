@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -18,17 +18,47 @@ namespace AmplifyShaderEditor
 	}
 
 	[Serializable]
-	[NodeAttributes( "Clip Planes", "Camera And Screen", "Camera World Clip Planes" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Clip Planes"
+#else
+"夹式飞机"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Camera And Screen"
+#else
+"摄像头和屏幕"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Camera World Clip Planes"
+#else
+"相机世界剪辑飞机"
+#endif
+)]
 	public sealed class CameraWorldClipPlanes : ShaderVariablesNode
 	{
 		[SerializeField]
 		private BuiltInShaderClipPlanesTypes m_selectedType = BuiltInShaderClipPlanesTypes.Left;
 		
-		private const string LabelStr = "Plane";
+		private const string LabelStr = 
+#if !WB_LANGUAGE_CHINESE
+"Plane"
+#else
+"飞机"
+#endif
+;
 
-		private const string ValueStr = "unity_CameraWorldClipPlanes";//L,R,B,T,N,F
+		private const string ValueStr = 
+#if !WB_LANGUAGE_CHINESE
+"unity_CameraWorldClipPlanes"
+#else
+"单位_ CameraWorldClipPlanes"
+#endif
+;
 
-		private const string ValueHDRPStr = "_FrustumPlanes";// L,R,T,B,N,F
+		private const string ValueHDRPStr = "_FrustumPlanes";
 
 		private UpperLeftWidgetHelper m_upperLeftWidget = new UpperLeftWidgetHelper();
 		private int m_planeId;

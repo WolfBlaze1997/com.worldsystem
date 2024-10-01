@@ -25,16 +25,64 @@ namespace AmplifyShaderEditor
 	[Serializable]
 	class ZBufferOpHelper
 	{
-		public static readonly string DepthParametersStr = " Depth";
-		public static readonly string ZWriteModeStr = "ZWrite Mode";
-		public static readonly string ZTestModeStr = "ZTest Mode";
-		public static readonly string OffsetStr = "Offset";
-		public static readonly string OffsetFactorStr = "Factor";
-		public static readonly string OffsetUnitsStr = "Units";
-		private const string ExtraDepthPassStr = "Extra Depth Pass";
-		private const string DepthZTestStr = "Depth ZTest";
+		public readonly static string DepthParametersStr = 
+#if !WB_LANGUAGE_CHINESE
+" Depth"
+#else
+"深度"
+#endif
+;
+		public readonly static string ZWriteModeStr = 
+#if !WB_LANGUAGE_CHINESE
+"ZWrite Mode"
+#else
+"ZWrite模式"
+#endif
+;
+		public readonly static string ZTestModeStr = 
+#if !WB_LANGUAGE_CHINESE
+"ZTest Mode"
+#else
+"ZT测试模式"
+#endif
+;
+		public readonly static string OffsetStr = 
+#if !WB_LANGUAGE_CHINESE
+"Offset"
+#else
+"抵消"
+#endif
+;
+		public readonly static string OffsetFactorStr = 
+#if !WB_LANGUAGE_CHINESE
+"Factor"
+#else
+"因素"
+#endif
+;
+		public readonly static string OffsetUnitsStr = 
+#if !WB_LANGUAGE_CHINESE
+"Units"
+#else
+"单位"
+#endif
+;
+		private const string ExtraDepthPassStr = 
+#if !WB_LANGUAGE_CHINESE
+"Extra Depth Pass"
+#else
+"额外深度通道"
+#endif
+;
+		private const string DepthZTestStr = 
+#if !WB_LANGUAGE_CHINESE
+"Depth ZTest"
+#else
+"深度ZTest"
+#endif
+;
 
-		public static readonly string[] ZTestModeLabels =
+		public readonly static string[] ZTestModeLabels =
 		{
 			"<Default>",
 			"Less",
@@ -46,7 +94,7 @@ namespace AmplifyShaderEditor
 			"Always"
 		};
 
-		public static readonly string[] ZTestModeValues =
+		public readonly static string[] ZTestModeValues =
 		{
 			"<Default>",
 			"Less",
@@ -58,14 +106,14 @@ namespace AmplifyShaderEditor
 			"Always"
 		};
 
-		public static readonly string[] ZWriteModeValues =
+		public readonly static string[] ZWriteModeValues =
 		{
 			"<Default>",
 			"On",
 			"Off"
 		};
 
-		public static readonly Dictionary<ZTestMode, int> ZTestModeDict = new Dictionary<ZTestMode, int>
+		public readonly static Dictionary<ZTestMode, int> ZTestModeDict = new Dictionary<ZTestMode, int>
 		{
 			{ZTestMode.Less,1 },
 			{ZTestMode.Greater,2},
@@ -76,7 +124,7 @@ namespace AmplifyShaderEditor
 			{ZTestMode.Always,7}
 		};
 
-		public static readonly Dictionary<ZWriteMode, int> ZWriteModeDict = new Dictionary<ZWriteMode, int>
+		public readonly static Dictionary<ZWriteMode, int> ZWriteModeDict = new Dictionary<ZWriteMode, int>
 		{
 			{ ZWriteMode.On,1},
 			{ ZWriteMode.Off,2}
@@ -158,15 +206,21 @@ namespace AmplifyShaderEditor
 
 				EditorGUI.indentLevel++;
 				if( !customBlendAvailable )
-					EditorGUILayout.HelpBox( "Depth Writing is only available for Opaque or Custom blend modes", MessageType.Warning );
+					EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"Depth Writing is only available for Opaque or Custom blend modes"
+#else
+"深度书写仅适用于不透明或自定义混合模式"
+#endif
+, MessageType.Warning );
 
 				EditorGUILayout.Separator();
 				EditorGUI.BeginDisabledGroup( !customBlendAvailable );
 
 				m_zWriteMode.EnumTypePopup( ref owner, ZWriteModeStr, ZWriteModeValues );
 				m_zTestMode.EnumTypePopup( ref owner, ZTestModeStr, ZTestModeLabels );
-				//m_zWriteMode = owner.EditorGUILayoutPopup( ZWriteModeStr, m_zWriteMode, ZWriteModeValues );
-				//m_zTestMode = owner.EditorGUILayoutPopup( ZTestModeStr, m_zTestMode, ZTestModeLabels );
+				
+				
 				m_offsetEnabled = owner.EditorGUILayoutToggle( OffsetStr, m_offsetEnabled );
 				if( m_offsetEnabled )
 				{

@@ -1,8 +1,8 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
-//
-// Custom Node Pixelate UV
-// Donated by The Four Headed Cat - @fourheadedcat
+
+
+
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -11,15 +11,51 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Pixelate UV", "UV Coordinates", "Pixelate Texture Modifying UV.", null, KeyCode.None, true, false, null, null, "The Four Headed Cat - @fourheadedcat" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Pixelate UV"
+#else
+"紫外像素"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"UV Coordinates"
+#else
+"UV坐标"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Pixelate Texture Modifying UV."
+#else
+"像素纹理修改UV。"
+#endif
+, null, KeyCode.None, true, false, null, null, 
+#if !WB_LANGUAGE_CHINESE
+"The Four Headed Cat - @fourheadedcat"
+#else
+"四头猫-@fourheaddcat"
+#endif
+)]
 	public sealed class TFHCPixelate : ParentNode
 	{
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
 			AddInputPort( WirePortDataType.FLOAT2, true, "UV" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Pixels X" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Pixels Y" );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Pixels X"
+#else
+"像素X"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Pixels Y"
+#else
+"像素Y"
+#endif
+);
 			AddOutputPort( WirePortDataType.FLOAT2, "Out" );
 			m_useInternalPortData = true;
 			m_previewShaderGUID = "e2f7e3c513ed18340868b8cbd0d85cfb";
@@ -28,7 +64,13 @@ namespace AmplifyShaderEditor
 		public override void DrawProperties()
 		{
 			base.DrawProperties ();
-			EditorGUILayout.HelpBox ("Pixelate UV.\n\n  - UV is the Texture Coordinates to pixelate.\n  - Pixels X is the number of horizontal pixels\n  - Pixels Y is the number of vertical pixels.", MessageType.None);
+			EditorGUILayout.HelpBox ( 
+#if !WB_LANGUAGE_CHINESE
+"Pixelate UV.\n\n  - UV is the Texture Coordinates to pixelate.\n  - Pixels X is the number of horizontal pixels\n  - Pixels Y is the number of vertical pixels."
+#else
+"Pixelate UV。\n\n-UV是像素化的纹理坐标。\n-像素X是水平像素数\n-像素Y是垂直像素数。"
+#endif
+, MessageType.None);
 
 		}
 

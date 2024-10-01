@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -8,13 +8,43 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Debug Switch", "Logical Operators", "Hard Switch between any of its input ports" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Debug Switch"
+#else
+"调试开关"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Logical Operators"
+#else
+"逻辑运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Hard Switch between any of its input ports"
+#else
+"在其任何输入端口之间进行硬切换"
+#endif
+)]
 	public class SwitchNode : ParentNode
 	{
-		private const string Info = "This is a Debug node which only generates the source for the selected port. This means that no properties are generated for other ports and information might be lost.";
+		private const string Info = 
+#if !WB_LANGUAGE_CHINESE
+"This is a Debug node which only generates the source for the selected port. This means that no properties are generated for other ports and information might be lost."
+#else
+"这是一个调试节点，它只为所选端口生成源。这意味着不会为其他端口生成属性，信息可能会丢失。"
+#endif
+;
 		private const string InputPortName = "In ";
 
-		private const string CurrSelectedStr = "Current";
+		private const string CurrSelectedStr = 
+#if !WB_LANGUAGE_CHINESE
+"Current"
+#else
+"当前"
+#endif
+;
 		private const string MaxAmountStr = "Max Amount";
 		private const int MaxAllowedAmount = 8;
 
@@ -94,11 +124,11 @@ namespace AmplifyShaderEditor
 			}
 		}
 
-		//void UpdateOutput()
-		//{
-		//	m_outputPorts[ 0 ].ChangeProperties( m_inputPorts[ m_currentSelectedInput ].Name, m_inputPorts[ m_currentSelectedInput ].DataType, false );
-		//	m_sizeIsDirty = true;
-		//}
+		
+		
+		
+		
+		
 
 		public override void OnNodeLayout( DrawInfo drawInfo )
 		{
@@ -108,7 +138,7 @@ namespace AmplifyShaderEditor
 			m_varRect.width = 50 * drawInfo.InvertedZoom;
 			m_varRect.height = 16 * drawInfo.InvertedZoom;
 			m_varRect.x = m_remainingBox.xMax - m_varRect.width;
-			//m_varRect.x += m_remainingBox.width * 0.5f - m_varRect.width * 0.5f;
+			
 			m_varRect.y += 1 * drawInfo.InvertedZoom;
 
 			m_imgRect = m_varRect;

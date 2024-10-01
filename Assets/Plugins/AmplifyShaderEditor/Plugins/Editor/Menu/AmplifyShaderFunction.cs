@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -37,22 +37,28 @@ public class AmplifyShaderFunction : ScriptableObject
 
 	[SerializeField]
 	private AdditionalIncludesHelper m_additionalIncludes = new AdditionalIncludesHelper();
-	//public AdditionalIncludesHelper AdditionalIncludes
-	//{
-	//	get { return m_additionalIncludes; }
-	//	set { m_additionalIncludes = value; }
-	//}
+	
+	
+	
+	
+	
 
 	[SerializeField]
 	private AdditionalPragmasHelper m_additionalPragmas = new AdditionalPragmasHelper();
-	//public AdditionalPragmasHelper AdditionalPragmas
-	//{
-	//	get { return m_additionalPragmas; }
-	//	set { m_additionalPragmas = value; }
-	//}
+	
+	
+	
+	
+	
 
 	[SerializeField]
-	private TemplateAdditionalDirectivesHelper m_additionalDirectives = new TemplateAdditionalDirectivesHelper( " Additional Directives" );
+	private TemplateAdditionalDirectivesHelper m_additionalDirectives = new TemplateAdditionalDirectivesHelper( 
+#if !WB_LANGUAGE_CHINESE
+" Additional Directives"
+#else
+"附加指令"
+#endif
+);
 	public TemplateAdditionalDirectivesHelper AdditionalDirectives
 	{
 		get { return m_additionalDirectives; }
@@ -99,14 +105,20 @@ public class AmplifyShaderFunction : ScriptableObject
 			if( m_nodeCategory == FunctionNodeCategories.Custom )
 			{
 				if( string.IsNullOrEmpty( m_customNodeCategory ) )
-					return "Functions";
+					return 
+#if !WB_LANGUAGE_CHINESE
+"Functions"
+#else
+"功能"
+#endif
+;
 				else
 					return m_customNodeCategory;
 			}
 			else
 			{
 				return UIUtils.CategoryPresets[ (int)m_nodeCategory ];
-				//return new SerializedObject( this ).FindProperty( "m_nodeCategory" ).enumDisplayNames[ (int)m_nodeCategory ];
+				
 			}
 		}
 	}
@@ -155,9 +167,9 @@ public class AmplifyShaderFunction : ScriptableObject
 
 	public void ResetDirectivesOrigin()
 	{
-		//if( UIUtils.CurrentShaderVersion() < 16807 )
-		// Although the correct version was 1.6.7 rev 07 this issue was only detected on v1.7.1. rev 00
-		// So to avoid potential incorrect saves over shader functions, I decided to broaden up the version range
+		
+		
+		
 		if( UIUtils.CurrentShaderVersion() < 17101 )
 		{
 			m_additionalDirectives.ResetDirectivesOrigin();

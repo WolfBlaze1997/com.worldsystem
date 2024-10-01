@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -7,13 +7,31 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Linear To Gamma", "Image Effects", "Converts color from linear space to gamma space" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Linear To Gamma"
+#else
+"线性到Gamma"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Image Effects"
+#else
+"图像效果"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Converts color from linear space to gamma space"
+#else
+"将颜色从线性空间转换到gamma空间"
+#endif
+)]
 	public sealed class LinearToGammaNode : HelperParentNode
 	{
-		//[SerializeField]
-		//private bool m_exact = false;
+		
+		
 
-		//private readonly static GUIContent LGExactContent = new GUIContent( "Exact Conversion", "Uses a precise version of the conversion, it's more expensive and often not needed." );
+		
 
 		public readonly static string[] ModeListStr = { "Fast Linear to sRGB", "Exact Linear to sRGB" };
 		public readonly static int[] ModeListInt = { 0, 1 };
@@ -48,12 +66,24 @@ namespace AmplifyShaderEditor
 			if( ContainerGraph.IsSRP )
 			{
 				m_selectedMode = EditorGUILayoutIntPopup( "Mode", m_selectedMode, ModeListStrLW, ModeListIntLW );
-				EditorGUILayout.HelpBox( "Fast Linear: fast approximation from Linear to sRGB\n\nExact Linear: a more expensive but exact calculation from Linear to sRGB.\n\nLinear 2.0: crude approximation from Linear to Gamma using a power of 1/2.0 gamma value\n\nLinear 2.2: an approximation from Linear to Gamma using a power of 1/2.2 gamma value", MessageType.None );
+				EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"Fast Linear: fast approximation from Linear to sRGB\n\nExact Linear: a more expensive but exact calculation from Linear to sRGB.\n\nLinear 2.0: crude approximation from Linear to Gamma using a power of 1/2.0 gamma value\n\nLinear 2.2: an approximation from Linear to Gamma using a power of 1/2.2 gamma value"
+#else
+"快速线性：从线性到sRGB的快速近似\n\n精确线性：从直线到sRGB更昂贵但更精确的计算。\n\n线性2.0：使用1/2.0的伽马值幂从线性到伽马的粗略近似\n线性2.2：使用1/2.2的伽马值的幂从线性近似到伽马"
+#endif
+, MessageType.None );
 			}
 			else
 			{
 				m_selectedMode = EditorGUILayoutIntPopup( "Mode", m_selectedMode, ModeListStr, ModeListInt );
-				EditorGUILayout.HelpBox( "Fast Linear: fast approximation from Linear to sRGB\n\nExact Linear: a more expensive but exact calculation from Linear to sRGB.", MessageType.None );
+				EditorGUILayout.HelpBox( 
+#if !WB_LANGUAGE_CHINESE
+"Fast Linear: fast approximation from Linear to sRGB\n\nExact Linear: a more expensive but exact calculation from Linear to sRGB."
+#else
+"快速线性：从线性到sRGB的快速近似\n\n精确线性：从直线到sRGB更昂贵但更精确的计算。"
+#endif
+, MessageType.None );
 			}
 		}
 

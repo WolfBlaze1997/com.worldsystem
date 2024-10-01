@@ -1,10 +1,28 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 namespace AmplifyShaderEditor
 {
 	[System.Serializable]
-	[NodeAttributes( "ATan2", "Trigonometry Operators", "Arctangent of y/x",tags: "arctangent2" )]
+	[NodeAttributes( "ATan2",            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Trigonometry Operators"
+#else
+"三角运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Arctangent of y/x"
+#else
+"y/x的反正切"
+#endif
+,tags: 
+#if !WB_LANGUAGE_CHINESE
+"arctangent2"
+#else
+"圆弧切线2"
+#endif
+)]
 	public sealed class ATan2OpNode : DynamicTypeNode
 	{
 		protected override void CommonInit( int uniqueId )

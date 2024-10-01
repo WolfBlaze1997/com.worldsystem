@@ -1,10 +1,28 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 namespace AmplifyShaderEditor
 {
 	[System.Serializable]
-	[NodeAttributes( "Vertex Tangent Sign", "Vertex Data", "Vertex tangent sign in object space, return the W value of tangent vector that contains only the sign of the tangent" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Vertex Tangent Sign"
+#else
+"顶点切线符号"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Vertex Data"
+#else
+"顶点数据"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Vertex tangent sign in object space, return the W value of tangent vector that contains only the sign of the tangent"
+#else
+"对象空间中的顶点切线符号，返回仅包含切线符号的切线向量的W值"
+#endif
+)]
 	public sealed class TangentSignVertexDataNode : ParentNode
 	{
 		protected override void CommonInit( int uniqueId )

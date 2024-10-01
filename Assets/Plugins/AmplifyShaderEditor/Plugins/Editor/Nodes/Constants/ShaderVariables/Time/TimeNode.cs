@@ -1,11 +1,29 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Time Parameters", "Time", "Time since level load" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Time Parameters"
+#else
+"时间参数"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Time"
+#else
+"时间"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Time since level load"
+#else
+"自水平加载以来的时间"
+#endif
+)]
 	public sealed class TimeNode : ConstVecShaderVariable
 	{
 		private readonly string[] SRPTime =

@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEditor;
 using UnityEngine;
@@ -16,18 +16,66 @@ namespace AmplifyShaderEditor
 
 	public sealed class PortLegendInfo : EditorWindow
 	{
-		private const string NoASEWindowWarning = "Please Open the ASE to get access to shortcut info";
+		private const string NoASEWindowWarning = 
+#if !WB_LANGUAGE_CHINESE
+"Please Open the ASE to get access to shortcut info"
+#else
+"请打开ASE以获取快捷方式信息"
+#endif
+;
 		private const float PixelSeparator = 5;
-		private const string EditorShortcutsTitle = "Editor Shortcuts";
-		private const string MenuShortcutsTitle = "Menu Shortcuts";
-		private const string NodesShortcutsTitle = "Nodes Shortcuts";
+		private const string EditorShortcutsTitle = 
+#if !WB_LANGUAGE_CHINESE
+"Editor Shortcuts"
+#else
+"编辑器快捷方式"
+#endif
+;
+		private const string MenuShortcutsTitle = 
+#if !WB_LANGUAGE_CHINESE
+"Menu Shortcuts"
+#else
+"菜单快捷方式"
+#endif
+;
+		private const string NodesShortcutsTitle = 
+#if !WB_LANGUAGE_CHINESE
+"Nodes Shortcuts"
+#else
+"节点快捷方式"
+#endif
+;
 		private const string PortShortcutsTitle = "Port Shortcuts";
-		private const string PortLegendTitle = "Port Legend";
-		private const string NodesDescTitle = "Node Info";
-		private const string CompatibleAssetsTitle = "Compatible Assets";
+		private const string PortLegendTitle = 
+#if !WB_LANGUAGE_CHINESE
+"Port Legend"
+#else
+"港口传奇"
+#endif
+;
+		private const string NodesDescTitle = 
+#if !WB_LANGUAGE_CHINESE
+"Node Info"
+#else
+"节点信息"
+#endif
+;
+		private const string CompatibleAssetsTitle = 
+#if !WB_LANGUAGE_CHINESE
+"Compatible Assets"
+#else
+"兼容资产"
+#endif
+;
 
 		private const string KeyboardUsageTemplate = "[{0}] - {1}";
-		private const string m_lockedStr = "Locked Port";
+		private const string m_lockedStr = 
+#if !WB_LANGUAGE_CHINESE
+"Locked Port"
+#else
+"锁定端口"
+#endif
+;
 
 		private const float WindowSizeX = 350;
 		private const float WindowSizeY = 300;
@@ -55,7 +103,19 @@ namespace AmplifyShaderEditor
 
 		private GUIStyle m_nodeInfoFoldoutStyle;
 
-		private GUIContent m_content = new GUIContent( "Helper", "Shows helper info for ASE users" );
+		private GUIContent m_content = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Helper"
+#else
+"帮手"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Shows helper info for ASE users"
+#else
+"显示ASE用户的助手信息"
+#endif
+);
 		private bool m_init = true;
 
 		private List<ShortcutItem> m_editorShortcuts = null;
@@ -179,7 +239,13 @@ namespace AmplifyShaderEditor
 			m_availableArea = new Rect( WindowPosX, WindowPosY, position.width - 2 * WindowPosX, position.height - 2 * WindowPosY );
 			GUILayout.BeginArea( m_availableArea );
 			{
-				if ( GUILayout.Button( "Wiki Page" ) )
+				if ( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Wiki Page"
+#else
+"Wiki页面"
+#endif
+) )
 				{
 					Application.OpenURL( Constants.HelpURL );
 				}
@@ -388,7 +454,7 @@ namespace AmplifyShaderEditor
 			{
 				if ( m_nodeDescriptionsInfo == null )
 				{
-					//fetch node info
+					
 					m_nodeDescriptionsInfo = new List<NodeDescriptionInfo>();
 					Dictionary<string, PaletteFilterData> nodeData = window.CurrentPaletteWindow.BuildFullList();
 					var enumerator = nodeData.GetEnumerator();
@@ -410,7 +476,7 @@ namespace AmplifyShaderEditor
 					}
 				}
 
-				//draw
+				
 				{
 					GUILayout.Space( 5 );
 					int count = m_nodeDescriptionsInfo.Count;

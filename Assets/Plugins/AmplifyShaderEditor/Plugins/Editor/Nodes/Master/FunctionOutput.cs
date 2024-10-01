@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -9,7 +9,25 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Function Output", "Functions", "Function Output adds an output port to the shader function, it's port type is determined automatically.", NodeAvailabilityFlags = (int)NodeAvailability.ShaderFunction )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Function Output"
+#else
+"函数输出"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Functions"
+#else
+"功能"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Function Output adds an output port to the shader function, it's port type is determined automatically."
+#else
+"Function Output为着色器函数添加了一个输出端口，其端口类型会自动确定。"
+#endif
+, NodeAvailabilityFlags = (int)NodeAvailability.ShaderFunction )]
 	public sealed class FunctionOutput : OutputNode
 	{
 		public FunctionOutput() : base() { CommonInit(); }
@@ -19,7 +37,13 @@ namespace AmplifyShaderEditor
 		private bool m_previewNode = false;
 
 		[SerializeField]
-		private string m_outputName = "Output";
+		private string m_outputName = 
+#if !WB_LANGUAGE_CHINESE
+"Output"
+#else
+"输出"
+#endif
+;
 
 		[SerializeField]
 		private int m_orderIndex = -1;
@@ -27,7 +51,7 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private AmplifyShaderFunction m_function;
 
-		//Title editing 
+		
 		[SerializeField]
 		private string m_uniqueName;
 
@@ -60,7 +84,7 @@ namespace AmplifyShaderEditor
 
 		public override void SetupNodeCategories()
 		{
-			//base.SetupNodeCategories();
+			
 			ContainerGraph.ResetNodesData();
 			MasterNode masterNode = ContainerGraph.ParentWindow.CurrentGraph.CurrentMasterNode;
 			if( masterNode != null )
@@ -118,7 +142,13 @@ namespace AmplifyShaderEditor
 		{
 			base.DrawProperties();
 			EditorGUI.BeginChangeCheck();
-			m_outputName = EditorGUILayoutTextField( "Name", m_outputName );
+			m_outputName = EditorGUILayoutTextField( 
+#if !WB_LANGUAGE_CHINESE
+"Name"
+#else
+"姓名"
+#endif
+, m_outputName );
 
 			if( EditorGUI.EndChangeCheck() )
 			{
@@ -127,7 +157,13 @@ namespace AmplifyShaderEditor
 			}
 
 			EditorGUI.BeginDisabledGroup( m_previewNode );
-			if( GUILayout.Button( "Set as Preview" ) )
+			if( GUILayout.Button( 
+#if !WB_LANGUAGE_CHINESE
+"Set as Preview"
+#else
+"设置为预览"
+#endif
+) )
 			{
 				List<FunctionOutput> allOutputs = UIUtils.FunctionOutputList();
 
@@ -202,7 +238,7 @@ namespace AmplifyShaderEditor
 		
 		public override void OnNodeLayout( DrawInfo drawInfo )
 		{
-			// RUN LAYOUT CHANGES AFTER TITLES CHANGE
+			
 			base.OnNodeLayout( drawInfo );
 			m_titleClickArea = m_titlePos;
 			m_titleClickArea.height = Constants.NODE_HEADER_HEIGHT;
@@ -215,7 +251,7 @@ namespace AmplifyShaderEditor
 			if( !m_isVisible )
 				return;
 
-			// Fixed Title ( only renders when not editing )
+			
 			if( m_showTitleWhenNotEditing && !m_isEditing && !m_startEditing && ContainerGraph.LodLevel <= ParentGraph.NodeLOD.LOD3 )
 			{
 				GUI.Label( m_titleClickArea, m_content, UIUtils.GetCustomStyle( CustomStyle.NodeTitle ) );

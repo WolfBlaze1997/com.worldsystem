@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -14,7 +14,13 @@ namespace AmplifyShaderEditor
 
 		public TemplateCullModeModule() : base("Cull Mode"){ }
 
-        private static readonly string CullModeStr = "Cull Mode";
+        private readonly static string CullModeStr = 
+#if !WB_LANGUAGE_CHINESE
+"Cull Mode"
+#else
+"Cull模式"
+#endif
+;
 
 		[SerializeField]
 		private CullMode m_cullMode = CullMode.Back;
@@ -56,7 +62,7 @@ namespace AmplifyShaderEditor
 		public override void Draw( UndoParentNode owner, bool style = true )
 		{
 			EditorGUI.BeginChangeCheck();
-			//m_cullMode = (CullMode)owner.EditorGUILayoutEnumPopup( CullModeStr, m_cullMode );
+			
 			m_inlineCullMode.CustomDrawer( ref owner, ( x ) => { m_cullMode = (CullMode)owner.EditorGUILayoutEnumPopup( CullModeStr, m_cullMode ); }, CullModeStr );
 			if( EditorGUI.EndChangeCheck() )
 			{
@@ -96,14 +102,14 @@ namespace AmplifyShaderEditor
 			IOUtils.AddFieldValueToString( ref nodeInfo, m_validData );
 			if( m_validData )
 			{
-				//IOUtils.AddFieldValueToString( ref nodeInfo, m_cullMode );
+				
 				m_inlineCullMode.WriteToString( ref nodeInfo );
 			}
 		}
 
 		public override string GenerateShaderData( bool isSubShader )
 		{
-			//return CullModeFormatStr + m_cullMode.ToString();
+			
 			return CullModeFormatStr + m_inlineCullMode.GetValueOrProperty( m_cullMode.ToString());
 		}
 		

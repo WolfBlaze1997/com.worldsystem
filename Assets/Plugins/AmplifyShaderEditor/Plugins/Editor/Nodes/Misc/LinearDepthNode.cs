@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -8,7 +8,25 @@ using UnityEditor;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Linear Depth", "Miscellaneous", "Converts depth values given on logarithmic space to linear" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Linear Depth"
+#else
+"线性深度"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Miscellaneous"
+#else
+"其他"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Converts depth values given on logarithmic space to linear"
+#else
+"将对数空间上给出的深度值转换为线性"
+#endif
+)]
 	public sealed class LinearDepthNode : ParentNode
 	{
 		private readonly string[] LinearModeLabels = { "Eye Space", "0-1 Space" };
@@ -20,7 +38,13 @@ namespace AmplifyShaderEditor
 		private const string Linear01FuncSRPFormat = "Linear01Depth({0},_ZBufferParams)";
 
 		private const string LinerValName = "depthToLinear";
-		private const string ViewSpaceLabel = "View Space";
+		private const string ViewSpaceLabel = 
+#if !WB_LANGUAGE_CHINESE
+"View Space"
+#else
+"查看空间"
+#endif
+;
 
 		
 		private UpperLeftWidgetHelper m_upperLeftWidget = new UpperLeftWidgetHelper();

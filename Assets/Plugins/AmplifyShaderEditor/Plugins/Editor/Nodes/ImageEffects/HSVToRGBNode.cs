@@ -3,17 +3,35 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "HSV to RGB", "Image Effects", "Converts from HSV to RGB color space" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"HSV to RGB"
+#else
+"HSV到RGB"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Image Effects"
+#else
+"图像效果"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Converts from HSV to RGB color space"
+#else
+"从HSV转换到RGB颜色空间"
+#endif
+)]
 	public sealed class HSVToRGBNode : ParentNode
 	{
-		public static readonly string HSVToRGBHeader = "HSVToRGB( {0}3({1},{2},{3}) )";
-		public static readonly string[] HSVToRGBFunction = {	"{0}3 HSVToRGB( {0}3 c )\n",
+		public readonly static string HSVToRGBHeader = "HSVToRGB( {0}3({1},{2},{3}) )";
+		public readonly static string[] HSVToRGBFunction = {	"{0}3 HSVToRGB( {0}3 c )\n",
 																"{\n",
 																"\t{0}4 K = {0}4( 1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0 );\n",
 																"\t{0}3 p = abs( frac( c.xxx + K.xyz ) * 6.0 - K.www );\n",
 																"\treturn c.z * lerp( K.xxx, saturate( p - K.xxx ), c.y );\n",
 																"}\n"};
-		public static readonly bool[] HSVToRGBFlags = {	true,
+		public readonly static bool[] HSVToRGBFlags = {	true,
 														false,
 														true,
 														true,
@@ -23,9 +41,27 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT, false, "Hue" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Saturation" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Value" );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Hue"
+#else
+"色调"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Saturation"
+#else
+"饱和"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Value"
+#else
+"价值观"
+#endif
+);
 			AddOutputColorPorts( "RGB", false );
 			m_previewShaderGUID = "fab445eb945d63047822a7a6b81b959d";
 			m_useInternalPortData = true;
@@ -43,7 +79,7 @@ namespace AmplifyShaderEditor
 		{
 			if( !dataCollector.HasFunction( HSVToRGBHeader ) )
 			{
-				//Hack to be used util indent is properly used
+				
 				int currIndent = UIUtils.ShaderIndentLevel;
 				if( dataCollector.MasterNodeCategory == AvailableShaderTypes.Template )
 				{

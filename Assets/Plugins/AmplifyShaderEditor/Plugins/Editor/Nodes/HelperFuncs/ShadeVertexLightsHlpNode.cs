@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using System;
 using UnityEngine;
@@ -7,13 +7,43 @@ using UnityEditor;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Shade Vertex Lights", "Lighting", "Computes illumination from four per-vertex lights and ambient, given object space position & normal" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Shade Vertex Lights"
+#else
+"对顶点灯光进行着色"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Lighting"
+#else
+"照明"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Computes illumination from four per-vertex lights and ambient, given object space position & normal"
+#else
+"在给定对象空间位置和法线的情况下，从四个顶点灯光和环境光计算照度"
+#endif
+)]
 	public sealed class ShadeVertexLightsHlpNode : ParentNode
 	{
-		private const string HelperMessage = "Shade Vertex Lights node only outputs correct results on\nTemplate Vertex/Frag shaders with their LightMode set to Vertex.";
+		private const string HelperMessage = 
+#if !WB_LANGUAGE_CHINESE
+"Shade Vertex Lights node only outputs correct results on\nTemplate Vertex/Frag shaders with their LightMode set to Vertex."
+#else
+"“对顶点灯光进行着色”节点仅在“LightMode”设置为“顶点”的“Template Vertex/Frag”着色器上输出正确的结果。"
+#endif
+;
 		private const string ShadeVertexLightFunc = "ShadeVertexLightsFull({0},{1},{2},{3})";
 		private const string LightCount = "Light Count";
-		private const string IsSpotlight = "Is Spotlight";
+		private const string IsSpotlight = 
+#if !WB_LANGUAGE_CHINESE
+"Is Spotlight"
+#else
+"是聚光灯"
+#endif
+;
 		private const int MinLightCount = 0;
 		private const int MaxLightCount = 8;
 		[SerializeField]
@@ -28,11 +58,23 @@ namespace AmplifyShaderEditor
 		protected override void CommonInit( int uniqueId )
 		{
 			base.CommonInit( uniqueId );
-			AddInputPort( WirePortDataType.FLOAT4, false, "Vertex Position" );
-			AddInputPort( WirePortDataType.FLOAT3, false, "Vertex Normal" );
+			AddInputPort( WirePortDataType.FLOAT4, false, 
+#if !WB_LANGUAGE_CHINESE
+"Vertex Position"
+#else
+"顶点位置"
+#endif
+);
+			AddInputPort( WirePortDataType.FLOAT3, false, 
+#if !WB_LANGUAGE_CHINESE
+"Vertex Normal"
+#else
+"顶点法线"
+#endif
+);
 			AddOutputPort( WirePortDataType.FLOAT3, Constants.EmptyPortValue );
 			m_useInternalPortData = true;
-			//m_autoWrapProperties = true;
+			
 			m_textLabelWidth = 90;
 			m_previewShaderGUID = "3b6075034a85ad047be2d31dd213fb4f";
 		}

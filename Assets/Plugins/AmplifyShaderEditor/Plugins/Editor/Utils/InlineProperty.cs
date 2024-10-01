@@ -281,15 +281,15 @@ namespace AmplifyShaderEditor
 		{
 			if ( Preferences.GlobalForceTemplateInlineProperties && !string.IsNullOrEmpty( m_nodePropertyName ) )
 			{
-				// @diogo: exception path => ignore param and revert to template default
+				
 				m_nodeId = UIUtils.GetFloatIntNodeIdByName( m_nodePropertyName );
 
-				// @diogo: by defaulting to template we are signaling the inline property is active
+				
 				m_active = true;
 			}
 			else
 			{
-				// @diogo: normal path
+				
 				if ( int.TryParse( param, out int nodeId ) )
 				{
 					m_nodeId = Convert.ToInt32( param );

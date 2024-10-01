@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using System;
@@ -7,7 +7,25 @@ using System;
 namespace AmplifyShaderEditor
 {
 	[Serializable]
-	[NodeAttributes( "Lerp", "Math Operators", "Linear interpolation of two scalars or vectors based on a weight", null, KeyCode.L )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Lerp"
+#else
+"勒普"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Math Operators"
+#else
+"数学运算符"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Linear interpolation of two scalars or vectors based on a weight"
+#else
+"基于权重的两个标量或向量的线性插值"
+#endif
+, null, KeyCode.L )]
 	public sealed class LerpOp : ParentNode
 	{
 		private const string LertOpFormat = "lerp( {0} , {1} , {2})";
@@ -21,7 +39,13 @@ namespace AmplifyShaderEditor
 			m_textLabelWidth = 55;
 			AddInputPort( WirePortDataType.FLOAT, false, "A" );
 			AddInputPort( WirePortDataType.FLOAT, false, "B" );
-			AddInputPort( WirePortDataType.FLOAT, false, "Alpha" );
+			AddInputPort( WirePortDataType.FLOAT, false, 
+#if !WB_LANGUAGE_CHINESE
+"Alpha"
+#else
+"阿尔法"
+#endif
+);
 			AddOutputPort( WirePortDataType.FLOAT,Constants.EmptyPortValue);
 			m_useInternalPortData = true;
 			m_previewShaderGUID = "34d9c4cdcf1fadb49af2de3f90bbc57d";
@@ -75,16 +99,16 @@ namespace AmplifyShaderEditor
 			m_outputPorts[ 0 ].ChangeType( m_mainDataType, false );
 		}
 
-		//void UpdateDisconnection( int portId )
-		//{
-		//	int otherPortId = ( portId + 1 ) % 2;
-		//	if ( m_inputPorts[ otherPortId ].IsConnected )
-		//	{
-		//		m_mainDataType = m_inputPorts[ otherPortId ].DataType;
-		//		m_inputPorts[ portId ].ChangeType( m_mainDataType, false );
-		//		m_outputPorts[ 0 ].ChangeType( m_mainDataType, false );
-		//	}
-		//}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 		public override string GenerateShaderForOutput( int outputId, ref MasterNodeDataCollector dataCollector, bool ignoreLocalVar )
 		{
@@ -105,12 +129,12 @@ namespace AmplifyShaderEditor
 			return m_outputPorts[ 0 ].LocalValue( dataCollector.PortCategory );
 		}
 
-		//public override void RefreshExternalReferences()
-		//{
-		//	if ( m_inputPorts[ 2 ].DataType != WirePortDataType.FLOAT )
-		//	{
-		//		m_inputPorts[ 2 ].ChangeType( WirePortDataType.FLOAT, false );
-		//	}
-		//}
+		
+		
+		
+		
+		
+		
+		
 	}
 }

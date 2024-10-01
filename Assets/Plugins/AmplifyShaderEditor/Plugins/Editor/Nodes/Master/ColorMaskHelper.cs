@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 using System;
 using UnityEngine;
 using UnityEditor;
@@ -9,7 +9,19 @@ namespace AmplifyShaderEditor
 	[Serializable]
 	class ColorMaskHelper
 	{
-		private GUIContent ColorMaskContent = new GUIContent( "Color Mask", "Sets color channel writing mask, turning all off makes the object completely invisible\nDefault: RGBA" );
+		private GUIContent ColorMaskContent = new GUIContent( 
+#if !WB_LANGUAGE_CHINESE
+"Color Mask"
+#else
+"彩色口罩"
+#endif
+, 
+#if !WB_LANGUAGE_CHINESE
+"Sets color channel writing mask, turning all off makes the object completely invisible\nDefault: RGBA"
+#else
+"设置颜色通道写入掩码，关闭所有选项将使对象完全不可见\n默认值：RGBA"
+#endif
+);
 		private readonly char[] m_colorMaskChar = { 'R', 'G', 'B', 'A' };
 
 		private GUIStyle m_leftToggleColorMask;

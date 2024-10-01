@@ -1,5 +1,5 @@
-// Amplify Shader Editor - Visual Shader Editing Tool
-// Copyright (c) Amplify Creations, Lda <info@amplify.pt>
+
+
 
 using UnityEngine;
 using UnityEditor;
@@ -14,10 +14,34 @@ namespace AmplifyShaderEditor
 	}
 
 	[Serializable]
-	[NodeAttributes( "Projection Matrices", "Camera And Screen", "Camera's Projection/Inverse Projection matrix" )]
+	[NodeAttributes( 
+#if !WB_LANGUAGE_CHINESE
+"Projection Matrices"
+#else
+"投影矩阵"
+#endif
+,            /*<!C>*/
+#if !WB_LANGUAGE_CHINESE
+"Camera And Screen"
+#else
+"摄像头和屏幕"
+#endif
+/*<C!>*/, 
+#if !WB_LANGUAGE_CHINESE
+"Camera's Projection/Inverse Projection matrix"
+#else
+"相机投影/逆投影矩阵"
+#endif
+)]
 	public sealed class CameraProjectionNode : ShaderVariablesNode
 	{
-		private const string _projMatrixLabelStr = "Projection Matrix";
+		private const string _projMatrixLabelStr = 
+#if !WB_LANGUAGE_CHINESE
+"Projection Matrix"
+#else
+"投影矩阵"
+#endif
+;
 		private readonly string[] _projMatrixValuesStr = {  "Camera Projection",
 															"Inverse Camera Projection"};
 

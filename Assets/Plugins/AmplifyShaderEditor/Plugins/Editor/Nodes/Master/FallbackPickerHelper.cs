@@ -9,7 +9,13 @@ namespace AmplifyShaderEditor
 	{
 		private const string FallbackFormat = "Fallback \"{0}\"";
 		private const string FallbackOff = "Fallback Off";
-		private const string FallbackShaderStr = "Fallback";
+		private const string FallbackShaderStr = 
+#if !WB_LANGUAGE_CHINESE
+"Fallback"
+#else
+"退路"
+#endif
+;
 		private const string ShaderPoputContext = "CONTEXT/ShaderPopup";
 
 		private Material m_dummyMaterial;
