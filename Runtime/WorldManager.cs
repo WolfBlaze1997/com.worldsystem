@@ -84,49 +84,6 @@ namespace WorldSystem.Runtime
         
         
         [PropertyOrder(-100)]
-        [ShowIf("starModuleToggle")]
-        [HorizontalGroup("昼夜与天气/Split02")]
-        [VerticalGroup("昼夜与天气/Split02/01")]
-        [Button(ButtonSizes.Large, Name = "星星模块"), GUIColor(0.3f, 1f, 0.3f)]
-        private void StarModuleToggle_Off()
-        {
-            starModuleToggle = false;
-            OnValidate();
-        }
-        [PropertyOrder(-100)]
-        [HideIf("starModuleToggle")]
-        [VerticalGroup("昼夜与天气/Split02/01")]
-        [Button(ButtonSizes.Large, Name = "星星模块"), GUIColor(0.5f, 0.2f, 0.2f)]
-        private void StarModuleToggle_On()
-        {
-            UniverseBackgroundModuleToggle_On();
-            starModuleToggle = true;
-            OnValidate();
-        }
-
-        
-        [PropertyOrder(-100)]
-        [ShowIf("celestialBodyManagerToggle")]
-        [VerticalGroup("昼夜与天气/Split02/02")]
-        [Button(ButtonSizes.Large, Name = "天体模块"), GUIColor(0.3f, 1f, 0.3f)]
-        private void CelestialBodyModuleToggle_Off()
-        {
-            celestialBodyManagerToggle = false;
-            OnValidate();
-        }
-        [PropertyOrder(-100)]
-        [HideIf("celestialBodyManagerToggle")]
-        [VerticalGroup("昼夜与天气/Split02/02")]
-        [Button(ButtonSizes.Large, Name = "天体模块"), GUIColor(0.5f, 0.2f, 0.2f)]
-        private void CelestialBodyModuleToggle_On()
-        {
-            UniverseBackgroundModuleToggle_On();
-            celestialBodyManagerToggle = true;
-            OnValidate();
-        }
-
-        
-        [PropertyOrder(-100)]
         [ShowIf("atmosphereModuleToggle")]
         [VerticalGroup("昼夜与天气/Split02/03")]
         [Button(ButtonSizes.Large, Name = "大气模块"), GUIColor(0.3f, 1f, 0.3f)]
@@ -154,6 +111,9 @@ namespace WorldSystem.Runtime
         private void VolumeCloudOptimizeModuleToggle_Off()
         {
             volumeCloudOptimizeModuleToggle = false;
+            starModuleToggle = false;
+            celestialBodyManagerToggle = false;
+
             OnValidate();
         }
         [PropertyOrder(-100)]
@@ -166,6 +126,52 @@ namespace WorldSystem.Runtime
             volumeCloudOptimizeModuleToggle = true;
             OnValidate();
         }
+        
+        
+        [PropertyOrder(-100)]
+        [ShowIf("starModuleToggle")]
+        [HorizontalGroup("昼夜与天气/Split02")]
+        [VerticalGroup("昼夜与天气/Split02/01")]
+        [Button(ButtonSizes.Large, Name = "星星模块"), GUIColor(0.3f, 1f, 0.3f)]
+        private void StarModuleToggle_Off()
+        {
+            starModuleToggle = false;
+            OnValidate();
+        }
+        [PropertyOrder(-100)]
+        [HideIf("starModuleToggle")]
+        [VerticalGroup("昼夜与天气/Split02/01")]
+        [Button(ButtonSizes.Large, Name = "星星模块"), GUIColor(0.5f, 0.2f, 0.2f)]
+        private void StarModuleToggle_On()
+        {
+            UniverseBackgroundModuleToggle_On();
+            starModuleToggle = true;
+            volumeCloudOptimizeModuleToggle = true;
+            OnValidate();
+        }
+
+        
+        [PropertyOrder(-100)]
+        [ShowIf("celestialBodyManagerToggle")]
+        [VerticalGroup("昼夜与天气/Split02/02")]
+        [Button(ButtonSizes.Large, Name = "天体模块"), GUIColor(0.3f, 1f, 0.3f)]
+        private void CelestialBodyModuleToggle_Off()
+        {
+            celestialBodyManagerToggle = false;
+            OnValidate();
+        }
+        [PropertyOrder(-100)]
+        [HideIf("celestialBodyManagerToggle")]
+        [VerticalGroup("昼夜与天气/Split02/02")]
+        [Button(ButtonSizes.Large, Name = "天体模块"), GUIColor(0.5f, 0.2f, 0.2f)]
+        private void CelestialBodyModuleToggle_On()
+        {
+            UniverseBackgroundModuleToggle_On();
+            celestialBodyManagerToggle = true;
+            volumeCloudOptimizeModuleToggle = true;
+            OnValidate();
+        }
+
         
         [PropertyOrder(-100)]
         [ShowIf("windZoneModuleToggle")]
@@ -333,7 +339,7 @@ namespace WorldSystem.Runtime
         
 #if UNITY_EDITOR
         
-        [PropertyOrder(-100)] [ReadOnly]
+        [PropertyOrder(-100)] [DisableIf("@true")]
         [ShowIf("baiduInputMethodPhraseToggle")]
         [FoldoutGroup("实用工具")]
         [HorizontalGroup("实用工具/Split03",0.195f)]
@@ -344,7 +350,7 @@ namespace WorldSystem.Runtime
             // baiduInputMethodPhraseToggle = false;
             // OnValidate();
         }
-        [PropertyOrder(-100)] [ReadOnly]
+        [PropertyOrder(-100)] [DisableIf("@true")]
         [HideIf("baiduInputMethodPhraseToggle")]
         [VerticalGroup("实用工具/Split03/04")]
         [Button(ButtonSizes.Large, Name = "百度输入法短语"), GUIColor(0.5f, 0.2f, 0.2f)]
@@ -354,7 +360,7 @@ namespace WorldSystem.Runtime
             // OnValidate();
         }
         
-        [PropertyOrder(-100)] [ReadOnly]
+        [PropertyOrder(-100)] [DisableIf("@true")]
         [ShowIf("packageManagerToggle")]
         [HorizontalGroup("实用工具/Split03",0.195f)]
         [VerticalGroup("实用工具/Split03/02")]
@@ -364,7 +370,7 @@ namespace WorldSystem.Runtime
             // packageManagerToggle = false;
             // OnValidate();
         }
-        [PropertyOrder(-100)] [ReadOnly]
+        [PropertyOrder(-100)] [DisableIf("@true")]
         [HideIf("packageManagerToggle")]
         [VerticalGroup("实用工具/Split03/02")]
         [Button(ButtonSizes.Large, Name = "包管理器模块"), GUIColor(0.5f, 0.2f, 0.2f)]
@@ -726,9 +732,9 @@ namespace WorldSystem.Runtime
                 Instance.weatherEffectModule.rainEffect.update = _update;
             if(Instance.weatherEffectModule?.rainSpatterEffect is not null)
                 Instance.weatherEffectModule.rainSpatterEffect.update = _update;
-            if(Instance.weatherEffectModule.snowEffect is not null)
+            if(Instance.weatherEffectModule?.snowEffect is not null)
                 Instance.weatherEffectModule.snowEffect.update = _update;
-            if(Instance.weatherEffectModule.lightningEffect is not null)
+            if(Instance.weatherEffectModule?.lightningEffect is not null)
                 Instance.weatherEffectModule.lightningEffect.update = _update;
             if (Instance.weatherListModule is not null)
                 Instance.weatherListModule.update = _update;

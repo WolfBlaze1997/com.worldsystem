@@ -522,11 +522,11 @@ namespace WorldSystem.Runtime
         
         private void UpdateLightProperties()
         {
-            if (!property.useLight || property.lightComponent is null)
-                return;
-            
             float lightAngle = direction.y * 180f;
             property.executeCoeff = math.remap( -180f, 180f,0f,1f,lightAngle);
+            
+            if (!property.useLight || property.lightComponent is null)
+                return;
             
             property.lightComponent.color =  property.lightingColorMaskExecute;
             property.lightComponent.intensity =  property.intensityCurveExecute;

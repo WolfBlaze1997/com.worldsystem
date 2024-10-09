@@ -539,6 +539,9 @@ namespace WorldSystem.Runtime
 #if UNITY_EDITOR
         private static void UpdateDynamicDisplayProperty_CelestialBodyManager(WeatherDefine variable)
         {
+            if(WorldManager.Instance.celestialBodyManager == null)
+                return;
+            
             for (var i = 0; i < variable.celestialBodyList.Count; i++)
             {
                 variable.celestialBodyList[i].executeCoeff = WorldManager.Instance.celestialBodyManager.property.celestialBodyList[i].property.executeCoeff;
@@ -2067,7 +2070,7 @@ namespace WorldSystem.Runtime
 #if UNITY_EDITOR
         
         //请总是对一类效果制作开关
-        [ShowIf("@postprocessAdjustProperty._UseColorAdjust")]
+        [ShowIf("@postprocessAdjustProperty.useColorAdjust")]
         [HorizontalGroup("昼夜与天气/后处理调整模块/Split", 0.25f)]
         [VerticalGroup("昼夜与天气/后处理调整模块/Split/01")]
         [Button(ButtonSizes.Medium, Name = "颜色调整"), GUIColor(0.5f, 0.5f, 1f)]
@@ -2076,7 +2079,7 @@ namespace WorldSystem.Runtime
             postprocessAdjustProperty.useColorAdjust = false;
             WorldManager.Instance.postprocessAdjustModule?.ColorAdjust_Off();
         }
-        [HideIf("@postprocessAdjustProperty._UseColorAdjust")]
+        [HideIf("@postprocessAdjustProperty.useColorAdjust")]
         [VerticalGroup("昼夜与天气/后处理调整模块/Split/01")]
         [Button(ButtonSizes.Medium, Name = "颜色调整"), GUIColor(0.5f, 0.2f, 0.2f)]
         public void ToggleFunction_On()

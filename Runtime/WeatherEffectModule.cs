@@ -244,7 +244,12 @@ namespace WorldSystem.Runtime
             property.lightningEnable = false;
             property.useOcclusion = false;
             OnValidate();
-            
+            snowEffect = null;
+            rainEffect = null;
+            rainSpatterEffect = null;
+            lightningEffect = null;
+            occlusionRenderer = null;
+
             mainCamera = null;
         }
         

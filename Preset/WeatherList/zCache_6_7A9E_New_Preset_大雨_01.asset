@@ -18,8 +18,8 @@ MonoBehaviour:
   sustainedTimeCache: 4
   varyingTimeCache: 4
   backgroundProperty:
-    skyMesh: {fileID: 0}
-    backgroundShader: {fileID: 0}
+    skyMesh: {fileID: 4300000, guid: 3ec8d1078f11f6147bb9cb75cf18150d, type: 2}
+    backgroundShader: {fileID: 4800000, guid: 67f4e0ff7e5a88441ae4f52664bb1c79, type: 3}
     backgroundMaterial: {fileID: 0}
     taaShader: {fileID: 4800000, guid: b9197ee2061afb84cb58c1d854bea3ca, type: 3}
     taaMaterial: {fileID: 0}
@@ -50,7 +50,7 @@ MonoBehaviour:
     inclination: 0
   celestialBodyList:
   - type: 0
-    executeCoeff: 0.5936903
+    executeCoeff: 0.9292564
     objectColor:
       serializedVersion: 2
       key0: {r: 0, g: 0, b: 0, a: 1}
@@ -81,7 +81,7 @@ MonoBehaviour:
       m_ColorSpace: -1
       m_NumColorKeys: 5
       m_NumAlphaKeys: 2
-    objectColorExecute: {r: 8.470379, g: 3.3962607, b: 0.21708778, a: 1}
+    objectColorExecute: {r: 22.045479, g: 19.858473, b: 18.316393, a: 1}
     geocentricTheory: {fileID: 0}
     skyObjectMesh: {fileID: 0}
     shader: {fileID: 4800000, guid: 4375f0d845556cc48ace0ae72d7a7fce, type: 3}
@@ -128,10 +128,10 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    angularDiameterDegreesExecute: 3.815648
+    angularDiameterDegreesExecute: 2.1087823
     texture: {fileID: 2800000, guid: c508a5444c3ef8046b47fc6105ff6703, type: 3}
     sortOrder: 5
-    orbitOffsetP: 355.8
+    orbitOffsetP: 350
     orientationOffset: 0
     inclinationOffset: 0
     positionIsStatic: 0
@@ -261,7 +261,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    colorTemperatureCurveExecute: 2157.9004
+    colorTemperatureCurveExecute: 5948.409
     intensityCurve:
       serializedVersion: 2
       m_Curve:
@@ -336,7 +336,7 @@ MonoBehaviour:
     lensFlareData: {fileID: 11400000, guid: d0f179920b791ff479b5fed24e80b74b, type: 2}
     lensFlare: {fileID: 0}
   - type: 1
-    executeCoeff: 0.9336657
+    executeCoeff: 0.03274231
     objectColor:
       serializedVersion: 2
       key0: {r: 0, g: 0, b: 0, a: 1}
@@ -367,7 +367,7 @@ MonoBehaviour:
       m_ColorSpace: -1
       m_NumColorKeys: 4
       m_NumAlphaKeys: 2
-    objectColorExecute: {r: 6.1256437, g: 6.6333675, b: 7.4457264, a: 1}
+    objectColorExecute: {r: 0, g: 0, b: 0, a: 1}
     geocentricTheory: {fileID: 0}
     skyObjectMesh: {fileID: 0}
     shader: {fileID: 4800000, guid: 4375f0d845556cc48ace0ae72d7a7fce, type: 3}
@@ -414,7 +414,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    angularDiameterDegreesExecute: 4.3835545
+    angularDiameterDegreesExecute: 0
     texture: {fileID: 2800000, guid: 77dcb98de76bfe246b49722abd85eff7, type: 3}
     sortOrder: 4
     orbitOffsetP: 0
@@ -495,7 +495,7 @@ MonoBehaviour:
       m_ColorSpace: 0
       m_NumColorKeys: 4
       m_NumAlphaKeys: 2
-    lightingColorMaskExecute: {r: 0.9294118, g: 0.9294118, b: 0.9294118, a: 1}
+    lightingColorMaskExecute: {r: 0, g: 0, b: 0, a: 1}
     colorTemperatureCurve:
       serializedVersion: 2
       m_Curve:
@@ -547,7 +547,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    colorTemperatureCurveExecute: 8505.59
+    colorTemperatureCurveExecute: 6000
     intensityCurve:
       serializedVersion: 2
       m_Curve:
@@ -653,15 +653,16 @@ MonoBehaviour:
       equatorColor: {r: 0.024999999, g: 0.024999999, b: 0.04, a: 0.29803923}
       groundColor: {r: 0.008235294, g: 0.008235294, b: 0.011764706, a: 0.35686275}
     currentAtmosphereColor:
-      skyColor: {r: 0.07941175, g: 0.058823537, b: 0.15, a: 0.5019608}
-      equatorColor: {r: 0.5028866, g: 0.41788515, b: 0.37626222, a: 1}
-      groundColor: {r: 0.055384617, g: 0.055384617, b: 0.08, a: 0.6509804}
+      skyColor: {r: 0.098246, g: 0.18393573, b: 0.5915, a: 0.43794775}
+      equatorColor: {r: 0.60224724, g: 0.71460676, b: 0.8, a: 0.6}
+      groundColor: {r: 0.067708634, g: 0.06310267, b: 0.08189623, a: 0.9073333}
     currentCloudiness: 0
     currentPrecipitation: 0
   cloudProperty:
-    volumeCloudBaseTexShader: {fileID: 0}
+    volumeCloudBaseTexShader: {fileID: 4800000, guid: 97d206b1e14db664391cac55c77549be,
+      type: 3}
     volumeCloudBaseTexMaterial: {fileID: 0}
-    renderMaxRenderDistance: 20000
+    renderMaxRenderDistance: 17602
     modelingAmountCloudAmount: 1
     modelingAmountUseFarOverlay: 0
     modelingAmountOverlayStartDistance: 20000
@@ -674,13 +675,14 @@ MonoBehaviour:
     modelingShapeBaseGain: 1
     modelingShapeBaseFreq: 2
     modelingShapeBaseScale: 5
-    motionBaseDynamicVector: {x: 0.0065287733, y: 0.37403315}
+    motionBaseDynamicVector: {x: 0.0037274759, y: 0.21354693}
     motionBaseDirection: 0
     motionBaseSpeed: 0.25
     motionBaseUseDirectionRandom: 1
     motionBaseDirectionRandomRange: 60
     motionBaseDirectionRandomFreq: 12
-    volumeCloudMainShader: {fileID: 0}
+    volumeCloudMainShader: {fileID: 4800000, guid: 432b92588026cab47a32165d32858d5d,
+      type: 3}
     volumeCloudMainMaterial: {fileID: 0}
     volumeCloudAddCloudMaskToDepthShader: {fileID: 0}
     volumeCloudAddCloudMaskToDepthMaterial: {fileID: 0}
@@ -696,7 +698,7 @@ MonoBehaviour:
     modelingShapeDetailScale: {x: 7, y: 7, z: 7}
     motionBaseUseDynamicCloud: 1
     motionBaseWindSpeedCoeff: 0.8
-    motionDetailDynamicVector: {x: 0.026115093, y: 0, z: 1.4961326}
+    motionDetailDynamicVector: {x: 0.022364855, y: 0, z: 1.2812816}
     motionDetailDirection: {x: 0, y: 0}
     motionDetailSpeed: 1
     motionDetailUseRandomDirection: 1
@@ -773,7 +775,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    lightingExtinctionCoeffExecute: 42.22223
+    lightingExtinctionCoeffExecute: 20
     lightingDensityInfluence: 1
     lightingHeightDensityInfluence: 1
     lightingCheapAmbient: 1
@@ -797,7 +799,7 @@ MonoBehaviour:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0
+        value: 0.056231737
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -806,7 +808,7 @@ MonoBehaviour:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.7
-        value: 0
+        value: 0.056231737
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -815,7 +817,7 @@ MonoBehaviour:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.78998977
-        value: 0.2583218
+        value: 0.3145535
         inSlope: 6.5544667
         outSlope: 6.5544667
         tangentMode: 0
@@ -824,7 +826,7 @@ MonoBehaviour:
         outWeight: 0.060387436
       - serializedVersion: 3
         time: 0.85853344
-        value: 0.49103975
+        value: 0.5472715
         inSlope: 0.34444147
         outSlope: 0.34444147
         tangentMode: 0
@@ -833,7 +835,7 @@ MonoBehaviour:
         outWeight: 0.28151315
       - serializedVersion: 3
         time: 1
-        value: 0.50450635
+        value: 0.5607381
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -977,7 +979,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    WindSpeedCurve_Execute: 1.8704506
+    WindSpeedCurve_Execute: 1.9809114
     directionVaryingFreq: 12
     SpeedVaryingFreq: 3
     minSpeed: 0.5
@@ -1058,7 +1060,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    particleBrightExecute: 0.4827271
+    particleBrightExecute: 0.991849
     rainEnable: 1
     rainSpatterEnable: 1
     snowEnable: 0
@@ -1093,7 +1095,7 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     lightningLifetimeArray:
-    - 0.42267323
+    - -Infinity
     - -Infinity
     lightningLightStrength: 10
     lightningLength: 2000
@@ -1105,7 +1107,7 @@ MonoBehaviour:
     globalMoist: 1.518
     raindropsGradientMap: {fileID: 2800000, guid: e89949843abf7004e84edac7b109710b,
       type: 3}
-    raindropsTiling: 20
+    raindropsTiling: 10
     raindropsSplashSpeed: 0.3
     raindropsSize: 0.5
     accumulatedWaterMask: {fileID: 2800000, guid: a2cf78be182d9e04885921107bcd90b8,
@@ -1530,7 +1532,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    fogIntensityExecute: 0.8331811
+    fogIntensityExecute: 0.8154968
     fogColor:
       serializedVersion: 2
       key0: {r: 0.023529414, g: 0.023529414, b: 0.03137255, a: 1}
@@ -1561,7 +1563,7 @@ MonoBehaviour:
       m_ColorSpace: 0
       m_NumColorKeys: 7
       m_NumAlphaKeys: 2
-    fogColorExecute: {r: 0.2509804, g: 0.23529413, b: 0.22352943, a: 1}
+    fogColorExecute: {r: 0.35686275, g: 0.40000004, b: 0.5372549, a: 1}
     fogLightningColor:
       serializedVersion: 2
       key0: {r: 0.14736842, g: 0.14736842, b: 0.2, a: 1}
@@ -1592,7 +1594,7 @@ MonoBehaviour:
       m_ColorSpace: 0
       m_NumColorKeys: 7
       m_NumAlphaKeys: 2
-    fogLightningColorExecute: {r: 0.2509804, g: 0.23529413, b: 0.22352943, a: 1}
+    fogLightningColorExecute: {r: 0.5294118, g: 0.5803922, b: 0.7686275, a: 1}
     useSunLight: 1
     sunIntensity:
       serializedVersion: 2
@@ -1699,7 +1701,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    distanceFogOffsetExecute: 21.298811
+    distanceFogOffsetExecute: 18.421919
     fogType: 3
     sceneStart: 10
     sceneEnd: 100
@@ -1754,7 +1756,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    fogDensityExecute: 0.23108384
+    fogDensityExecute: 0.13420764
     useSkyboxHeightFog: 1
     skyboxFogOffset:
       serializedVersion: 2
@@ -1807,7 +1809,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    skyboxFogOffsetExecute: -0.080075
+    skyboxFogOffsetExecute: -0.010241598
     skyboxFogHardness: 0.5
     skyboxFogIntensity:
       serializedVersion: 2
@@ -1860,7 +1862,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    skyboxFogIntensityExecute: 0.6797
+    skyboxFogIntensityExecute: 0.9590336
     skyboxFill: 0
     useHeightFog: 1
     height:
@@ -1914,7 +1916,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    heightExecute: 2.1578028
+    heightExecute: 2.020183
     heightDensity:
       serializedVersion: 2
       m_Curve:
@@ -1966,7 +1968,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    heightDensityExecute: 0.040880468
+    heightDensityExecute: 0.03475185
     heightFogType: 2
     useNoise: 1
     noiseAffect: 2
@@ -2093,7 +2095,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    lightingScatterFalloffIntensityExecute: 2.2616892
+    lightingScatterFalloffIntensityExecute: 3.8828511
     lightingScatterSaturation: 0.5
     lightingScatterMaxRayDistance: 0.36
     lightingScatterOccOverDistanceAmount: 0
@@ -2136,7 +2138,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    exposeCurveExecute: 1.4238425
+    exposeCurveExecute: 1.7628562
     contrastCurve:
       serializedVersion: 2
       m_Curve:
@@ -2170,7 +2172,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    contrastCurveExecute: -8.761574
+    contrastCurveExecute: -5.371437
     colorFilter:
       serializedVersion: 2
       key0: {r: 0.8039216, g: 0.88562095, b: 1, a: 1}
@@ -2201,7 +2203,7 @@ MonoBehaviour:
       m_ColorSpace: 0
       m_NumColorKeys: 3
       m_NumAlphaKeys: 2
-    colorFilterExecute: {r: 0.9182989, g: 0.9146417, b: 0.9422509, a: 1}
+    colorFilterExecute: {r: 0.9772849, g: 0.92960805, b: 0.91246885, a: 1}
     hueShift: 0
     saturationCurve:
       serializedVersion: 2
@@ -2236,4 +2238,4 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    saturationCurveExecute: -5.046297
+    saturationCurveExecute: 8.514252

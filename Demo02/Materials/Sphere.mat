@@ -34,7 +34,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Sphere
-  m_Shader: {fileID: 4800000, guid: 7e8696ce126519244a2a499f7cacba9f, type: 3}
+  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -43,7 +43,8 @@ Material:
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap: {}
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -182,7 +183,7 @@ Material:
     - _MainWaterWaveSpeed: 0
     - _MainWaterWaveStrength: 0.05
     - _MainWaveTiling: 3
-    - _Metallic: 1
+    - _Metallic: 0
     - _Metallic0: 0
     - _Metallic01: 2
     - _MoistAccumulatedwaterCoeff: 1
@@ -205,7 +206,7 @@ Material:
     - _ReceiveShadows: 1
     - _Roughness1: 0
     - _ScreenReflection: 0
-    - _Smoothness: 0.886
+    - _Smoothness: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1

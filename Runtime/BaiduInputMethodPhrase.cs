@@ -9,6 +9,7 @@ using Pinyin4net;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 using WorldSystem.Language;
 using File = System.IO.File;
 using Formatting = Unity.Plastic.Newtonsoft.Json.Formatting;
@@ -118,7 +119,7 @@ namespace WorldSystem.Runtime
                     }
                 }
                 
-                if (!string.IsNullOrEmpty(chinese) && type != PhraseType.NoteFunc)
+                if (!string.IsNullOrEmpty(chinese) && type != PhraseType.NoteFunc && pinyin != null)
                 {
                     pinyin = ToPinyin(Regex.Replace(chinese, @"\s*\(.*?\)\s*", ""));
                 }
@@ -193,30 +194,64 @@ namespace WorldSystem.Runtime
             
         }
 
-        [TableList(ShowIndexLabels = true, HideToolbar = false, DrawScrollView = true)] [LabelText("关键字列表")]
-        public List<Phrase> keywordPhraseList = new List<Phrase>();
+        [FoldoutGroup("单词短语")] [FoldoutGroup("单词短语/配置")] [LabelText("优先值搜寻文件夹")]
+        public List<DefaultAsset> foldersPriority;
         
-        [TableList(ShowIndexLabels = true, HideToolbar = false, DrawScrollView = true)] [LabelText("单词列表")]
-        public List<Phrase> wordPhraseList = new List<Phrase>();
+        [ShowInInspector] [FoldoutGroup("单词短语/配置")] [LabelText("优先值搜寻目标")]
+        private List<TextAsset> _priorityTextAsset = new List<TextAsset>();
         
-        [TableList(ShowIndexLabels = true, HideToolbar = false, DrawScrollView = true)] [LabelText("函数API&笔记列表")]
-        public List<Phrase> noteFuncPhraseList = new List<Phrase>();
-        
-        [ShowInInspector][TableList(ShowIndexLabels = true, HideToolbar = false, DrawScrollView = true)] [LabelText("短语列表")][ReadOnly]
+        [ShowInInspector][TableList(ShowIndexLabels = true, HideToolbar = false, DrawScrollView = true)] [FoldoutGroup("单词短语/已完成短语")][LabelText("短语列表")][ReadOnly]
         private List<Phrase> _phraseList = new List<Phrase>();
         
-        private readonly List<TextAsset> _textAsset = new List<TextAsset>();
-
-        [Button("添加新元素", ButtonSizes.Large)]
-        private void AddNewToWordPhraseList()
+        [TableList(ShowIndexLabels = true, HideToolbar = false, DrawScrollView = true)] [FoldoutGroup("单词短语/已完成短语")] [LabelText("关键字列表")] [Searchable]
+        public List<Phrase> keywordPhraseList = new List<Phrase>();
+        
+        [TableList(ShowIndexLabels = true, HideToolbar = false, DrawScrollView = true)] [FoldoutGroup("单词短语/已完成短语")] [LabelText("函数API&笔记列表")] [Searchable]
+        public List<Phrase> noteFuncPhraseList = new List<Phrase>();
+        
+        [TableList(ShowIndexLabels = true, HideToolbar = false, DrawScrollView = true)] [FoldoutGroup("单词短语/已完成短语")] [LabelText("单词列表")] [Searchable]
+        public List<Phrase> wordPhraseList = new List<Phrase>();
+        
+        [TableList(ShowIndexLabels = true, HideToolbar = false, DrawScrollView = true)] [FoldoutGroup("单词短语")] [LabelText("单词列表(添加)")] [Searchable] [ShowInInspector]
+        private List<Phrase> _wordPhraseAddList = new List<Phrase>();
+        
+        // [Button("单词列表添加新元素", ButtonSizes.Large)] [FoldoutGroup("单词短语")]
+        // private void AddNewToWordPhraseList()
+        // {
+        //     wordPhraseList.Add(new Phrase());
+        // }
+        
+        [Button("刷新短语列表", ButtonSizes.Large)] [FoldoutGroup("单词短语")] 
+        private void KeywordRefreshPhraseList()
         {
-            wordPhraseList.Add(new Phrase());
+            foreach (var variable in keywordPhraseList)
+            {
+                variable.type = Phrase.PhraseType.Keyword;
+                variable.Translation();
+            }
+            
+            foreach (var variable in wordPhraseList)
+            {
+                variable.type = Phrase.PhraseType.Word;
+                variable.Translation();
+            }
+
+            foreach (var variable in noteFuncPhraseList)
+            {
+                variable.type = Phrase.PhraseType.NoteFunc;
+                variable.Translation();
+            }
+            
+            foreach (var variable in _wordPhraseAddList)
+            {
+                variable.type = Phrase.PhraseType.Word;
+                variable.Translation();
+            }
         }
         
-        [Button("获取短语优先级")]
+        [Button("查找短语优先级(全部)", ButtonSizes.Large)] [ButtonGroup("单词短语/00")] 
         private void FindKeywordPriority()
         {
-            _textAsset.Clear();
             foreach (var variable in keywordPhraseList)
             {
                 variable.priority = 10000;
@@ -225,13 +260,34 @@ namespace WorldSystem.Runtime
             {
                 variable.priority = 10;
             }
+            foreach (var variable in _wordPhraseAddList)
+            {
+                variable.priority = 10;
+            }
             foreach (var variable in noteFuncPhraseList)
             {
                 variable.priority = 0;
             }
-            string path = Application.dataPath.Replace("Assets", "");
-            FindCsFilesInDirectory(path);
-            foreach (var variable in _textAsset)
+            
+            
+            if (foldersPriority == null || foldersPriority.Count == 0)
+            {
+                Debug.LogError("请在检查器中分配一个文件夹。");
+                return;
+            }
+            // 清空现有列表
+            _priorityTextAsset.Clear();
+            foreach (var folder in foldersPriority)
+            {
+                // 获取文件夹路径
+                string folderPath = AssetDatabase.GetAssetPath(folder);
+                // Debug.Log(folderPath);
+                // 递归遍历文件夹
+                FindCsFilesInDirectoryToPriorityTextAsset(folderPath);
+            }
+            
+            
+            foreach (var variable in _priorityTextAsset)
             {
                 string text = variable.text;
 
@@ -246,43 +302,122 @@ namespace WorldSystem.Runtime
                     MatchCollection matchCollection = Regex.Matches(text, $@"{variable1.english}", RegexOptions.IgnoreCase);
                     variable1.priority += matchCollection.Count;
                 }
+                
+                foreach (var variable1 in _wordPhraseAddList)
+                {
+                    MatchCollection matchCollection = Regex.Matches(text, $@"{variable1.english}", RegexOptions.IgnoreCase);
+                    variable1.priority += matchCollection.Count;
+                }
             }
-            
             
             Debug.Log("获取短语优先级成功!");
         }
         
-        [Button("刷新关键字列表")]
-        private void KeywordRefreshPhraseList()
+        [Button("查找短语优先级(添加)", ButtonSizes.Large)] [ButtonGroup("单词短语/00")] 
+        private void FindKeywordPriorityAppend()
         {
-            foreach (var variable in keywordPhraseList)
+            foreach (var variable in _wordPhraseAddList)
             {
-                variable.type = Phrase.PhraseType.Keyword;
-                variable.Translation();
+                variable.priority = 10;
             }
-            // keywordPhraseList.Sort((p1, p2) => p2.priority.CompareTo(p1.priority));
-            keywordPhraseList = keywordPhraseList.OrderBy(p => p.english, StringComparer.Ordinal).ToList();
             
-            foreach (var variable in wordPhraseList)
+            if (foldersPriority == null || foldersPriority.Count == 0)
             {
-                variable.type = Phrase.PhraseType.Word;
-                variable.Translation();
+                Debug.LogError("请在检查器中分配一个文件夹。");
+                return;
             }
-            // wordPhraseList.Sort((p1, p2) => p2.priority.CompareTo(p1.priority));
-            wordPhraseList = wordPhraseList.OrderBy(p => p.english, StringComparer.Ordinal).ToList();
-
-            foreach (var variable in noteFuncPhraseList)
-            {
-                variable.type = Phrase.PhraseType.NoteFunc;
-                variable.Translation();
-            }
-            noteFuncPhraseList = noteFuncPhraseList.OrderBy(p => p.pinyin, StringComparer.Ordinal).ToList();
             
+            // 清空现有列表
+            _priorityTextAsset.Clear();
+            foreach (var folder in foldersPriority)
+            {
+                // 获取文件夹路径
+                string folderPath = AssetDatabase.GetAssetPath(folder);
+                // Debug.Log(folderPath);
+                // 递归遍历文件夹
+                FindCsFilesInDirectoryToPriorityTextAsset(folderPath);
+            }
+            
+            foreach (var variable in _priorityTextAsset)
+            {
+                string text = variable.text;
+                
+                foreach (var variable1 in _wordPhraseAddList)
+                {
+                    MatchCollection matchCollection = Regex.Matches(text, $@"{variable1.english}", RegexOptions.IgnoreCase);
+                    variable1.priority += matchCollection.Count;
+                }
+            }
+            
+            Debug.Log("获取短语优先级成功!");
         }
+        
+        private void FindCsFilesInDirectoryToPriorityTextAsset(string path)
+        {
+            // 获取目录中的所有文件
+            string[] files = Directory.GetFiles(path);
+            // Debug.Log(files[0]);
 
-        [Button("应用到短语列表")]
+            foreach (string file in files)
+            {
+                if (file.EndsWith(".cs") || file.EndsWith(".shader") || file.EndsWith(".hlsl"))
+                {
+                    // 获取相对路径以加载 TextAsset
+                    string relativePath = file.Replace(Application.dataPath.Replace("Assets", ""), "").Replace("\\", "/");
+                    TextAsset csFile = AssetDatabase.LoadAssetAtPath<TextAsset>(relativePath);
+                    // 如果成功加载为 TextAsset，则添加到列表中
+                    if (csFile != null)
+                    {
+                        if (!_priorityTextAsset.Contains(csFile))
+                        {
+                            _priorityTextAsset.Add(csFile);
+                        }
+                    }
+                }
+            }
+            // 获取所有子文件夹并递归处理
+            string[] directories = Directory.GetDirectories(path);
+            foreach (string directory in directories)
+            {
+                FindCsFilesInDirectoryToPriorityTextAsset(directory); // 递归查找子文件夹中的 .cs 文件
+            }
+        }
+        
+        
+        
+        [Button("排序短语(优先级)", ButtonSizes.Large)] [ButtonGroup("单词短语/01")] 
+        private void SortByPriorityPhraseList()
+        {
+            keywordPhraseList = keywordPhraseList.OrderByDescending(p => p.priority).ToList();
+            wordPhraseList = wordPhraseList.OrderByDescending(p => p.priority).ToList();
+            noteFuncPhraseList = noteFuncPhraseList.OrderBy(p => p.pinyin, StringComparer.Ordinal).ToList();
+        }
+        [Button("排序短语(English)", ButtonSizes.Large)] [ButtonGroup("单词短语/01")]
+        private void SortByEnglishPhraseList()
+        {
+            keywordPhraseList = keywordPhraseList.OrderBy(p => p.english, StringComparer.Ordinal).ToList();
+            wordPhraseList = wordPhraseList.OrderBy(p => p.english, StringComparer.Ordinal).ToList();
+            noteFuncPhraseList = noteFuncPhraseList.OrderBy(p => p.pinyin, StringComparer.Ordinal).ToList();
+        }
+        [Button("排序短语(拼音)", ButtonSizes.Large)] [ButtonGroup("单词短语/01")]
+        private void SortByPinyinPhraseList()
+        {
+            keywordPhraseList = keywordPhraseList.OrderBy(p => p.pinyin, StringComparer.Ordinal).ToList();
+            wordPhraseList = wordPhraseList.OrderBy(p => p.pinyin, StringComparer.Ordinal).ToList();
+            noteFuncPhraseList = noteFuncPhraseList.OrderBy(p => p.pinyin, StringComparer.Ordinal).ToList();
+        }
+        
+        [Button("应用到短语列表", ButtonSizes.Large)] [FoldoutGroup("单词短语")]
         private void ApplyToPhraseList()
         {
+            foreach (var addPhrase in _wordPhraseAddList)
+            {
+                if (!wordPhraseList.Contains(addPhrase))
+                {
+                    wordPhraseList.Add(addPhrase);
+                }
+            }
+            _wordPhraseAddList.Clear();
             
             _phraseList.Clear();
             foreach (var variable in keywordPhraseList)
@@ -333,10 +468,12 @@ namespace WorldSystem.Runtime
                 }
                 _phraseList[i].num = num;
             }
-            
+
+            _phraseList = _phraseList.Where(o => o.num <= 9).ToList();
+            OnValidate();
         }
         
-        [Button("创建短语文件")]
+        [Button("创建短语文件", ButtonSizes.Large)] [FoldoutGroup("单词短语")]
         private void CreatePhraseFile()
         {
             string PhraseText = "";
@@ -353,7 +490,54 @@ namespace WorldSystem.Runtime
             } 
         }
         
-        private void FindCsFilesInDirectory(string path)
+        [Button("清除无效短语", ButtonSizes.Large)] [FoldoutGroup("单词短语")]
+        private void ClearInvalidPhrase()
+        {
+            for (var index = 0; index < wordPhraseList.Count; index++)
+            {
+                if (string.IsNullOrEmpty(wordPhraseList[index].chinese))
+                {
+                    wordPhraseList.RemoveAt(index);
+                }
+            }
+        }
+
+        
+        [FoldoutGroup("收集单词")] [LabelText("文件夹")] [ShowInInspector]
+        private List<DefaultAsset> folders;
+        
+        [FoldoutGroup("收集单词")] [LabelText("收集脚本")] [ShowInInspector]
+        private List<TextAsset> wordTextList = new List<TextAsset>();
+        
+        [FoldoutGroup("收集单词")] [LabelText("函数字符串")] [ShowInInspector]
+        private List<string> functionStr = new List<string>();
+         
+        [FoldoutGroup("收集单词")] [LabelText("函数单词")] [ShowInInspector]
+        private List<Phrase> functionWordStrList = new List<Phrase>();
+        
+        [FoldoutGroup("收集单词")][Button("查找脚本文件", ButtonSizes.Large)]
+        public void CollectWordFindCsFiles()
+        {
+            if (folders == null)
+            {
+                Debug.LogError("请在检查器中分配一个文件夹。");
+                return;
+            }
+            // 清空现有列表
+            wordTextList.Clear();
+            foreach (var folder in folders)
+            {
+                // 获取文件夹路径
+                string folderPath = AssetDatabase.GetAssetPath(folder);
+                // 递归遍历文件夹
+                FindCsFilesInDirectoryToWordTextList(folderPath);
+            }
+            
+            // 打印结果
+            Debug.Log("收集 " + wordTextList.Count + " 个文件!");
+        }
+        
+        private void FindCsFilesInDirectoryToWordTextList(string path)
         {
             // 获取目录中的所有文件
             string[] files = Directory.GetFiles(path);
@@ -369,7 +553,10 @@ namespace WorldSystem.Runtime
                     // 如果成功加载为 TextAsset，则添加到列表中
                     if (csFile != null)
                     {
-                        _textAsset.Add(csFile);
+                        if (!wordTextList.Contains(csFile))
+                        {
+                            wordTextList.Add(csFile);
+                        }
                     }
                 }
             }
@@ -377,9 +564,106 @@ namespace WorldSystem.Runtime
             string[] directories = Directory.GetDirectories(path);
             foreach (string directory in directories)
             {
-                FindCsFilesInDirectory(directory); // 递归查找子文件夹中的 .cs 文件
+                FindCsFilesInDirectoryToWordTextList(directory); // 递归查找子文件夹中的 .cs 文件
             }
         }
+        
+        [FoldoutGroup("收集单词")] [Button("查找函数字符串", ButtonSizes.Large)]
+        public void FindFunctionString()
+        {
+            foreach (var variable in wordTextList)
+            {
+                string text = variable.text;
+                
+                MatchCollection matches = Regex.Matches(text, @"(\w+)\(.*?\)");
+                foreach (Match match in matches)
+                {
+                    string functionName = match.Groups[1].Value;
+                    if (!functionStr.Contains(functionName))
+                    {
+                        functionStr.Add(functionName);
+                    }
+                }
+            }
+            Debug.Log("查找函数字符串完成!");
+            
+            foreach (var funStr in functionStr)
+            {
+                List<string> words = Regex.Matches(funStr, @"[A-Z][a-z]*")
+                    .Cast<Match>()
+                    .Select(m => m.Value)
+                    .Where(w => w.Length >= 4)
+                    .ToList();
+                foreach (string variable in words)
+                {
+                    Phrase phrase = new Phrase() { english = variable };
+                    if (!functionWordStrList.Contains(phrase))
+                    {
+                        functionWordStrList.Add(phrase);
+                    }
+                }
+            }
+            Debug.Log("查找函数单词完成!");
+            
+            foreach (var variable in wordTextList)
+            {
+                string text = variable.text;
+
+                foreach (var phrase in functionWordStrList)
+                {
+                    MatchCollection matches = Regex.Matches(text, phrase.english);
+                    phrase.priority += matches.Count;
+                }
+            }
+            Debug.Log("查找函数字符串优先级完成!");
+            
+            // functionWordStrList.Sort((p1, p2) => p2.priority.CompareTo(p1.priority));
+            functionWordStrList = new List<Phrase>(functionWordStrList.OrderByDescending(o => o.priority));
+        }
+
+        [FoldoutGroup("收集单词")] [Button("清除函数单词列表", ButtonSizes.Large)]
+        public void ClearFunctionWordList()
+        {
+            functionStr.Clear();
+            functionWordStrList.Clear();
+        }
+
+        [FoldoutGroup("收集单词")] [Button("应用到单词列表", ButtonSizes.Large)]
+        public void ApplyToWordList()
+        {
+            foreach (var functionWord in functionWordStrList)
+            {
+                if (functionWord.priority < 5)
+                {
+                    continue;
+                }
+                bool isContains = false;
+                foreach (var phrase in wordPhraseList)
+                {
+                    if (phrase.english == functionWord.english)
+                    {
+                        isContains = true;
+                        break;
+                    }
+                }
+                foreach (var phrase in keywordPhraseList)
+                {
+                    if (string.Equals(phrase.english, functionWord.english, StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        isContains = true;
+                        break;
+                    }
+                }
+                
+                if (!isContains)
+                {
+                    wordPhraseList.Add(functionWord);
+                }
+            }
+            Debug.Log("应用到单词列表完成!");
+            
+        }
+        
         
         
         #region 事件函数

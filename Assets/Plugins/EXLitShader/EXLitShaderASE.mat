@@ -12,8 +12,11 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - EFFECT_HUE_VARIATION
+  - _CLEARCOAT
+  - _DETAIL_4MULTI
   - _OCCLUSION
-  - _PARALLAXMAP_OFF
+  - _PARALLAXMAP
   - _SAMPLE_COMMON
   - _SHADER_PBR
   - _USE_PARALLAXMAP_PARALLAX
@@ -177,11 +180,11 @@ Material:
     - _ScaleOrRotate: 0.332
     - _SubsurfaceIndirect: 0.25
     m_Colors:
-    - ClearCoatGroup0: {r: 0, g: 0, b: 0, a: 0}
-    - DetailGroup0: {r: 0, g: 0, b: 0, a: 0}
+    - ClearCoatGroup0: {r: 0, g: 1, b: 0, a: 0}
+    - DetailGroup0: {r: 0, g: 3, b: 0, a: 0}
     - HoudiniVATGroup0: {r: 0, g: 0, b: 0, a: 0}
-    - HueVariationGroup0: {r: 0, g: 0, b: 0, a: 0}
-    - ParallaxGroup0: {r: 0, g: 0, b: 0, a: 0}
+    - HueVariationGroup0: {r: 0, g: 1, b: 0, a: 0}
+    - ParallaxGroup0: {r: 0, g: 1, b: 0, a: 0}
     - RenderStateGroup2: {r: 0, g: 0, b: 0, a: 0}
     - ShaderModelGroup1: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}

@@ -70,10 +70,10 @@ namespace WorldSystem.Language
             [ShowIf("@searchMode == SearchMode.ArrayListOrDictionary")]
             public const string ArrayListOrDictionaryRegex = "{VariableName}" + BracketsMatch;
 
-            [LabelText("正则搜索选项")] [DisableIf("isBuiltin")]
+            [LabelText("正则搜索选项")] [DisableIf("isBuiltin")] [EnumPaging]
             public RegexOptions regexOp;
 
-            [LabelText("搜索模式")] [DisableIf("isBuiltin")]
+            [LabelText("搜索模式")] [DisableIf("isBuiltin")] [EnumPaging]
             public SearchMode searchMode;
 
             [LabelText("使用广播")] [DisableIf("isBuiltin")]
@@ -286,14 +286,14 @@ namespace WorldSystem.Language
         [LabelText("广播词条")] [HorizontalGroup("搜索器/01")]
         public List<string> broadcastList = new List<string>();
 
-        [ShowInInspector] [LabelText("词条")] [FoldoutGroup("汉化字典")]
+        [ShowInInspector] [LabelText("词条")] [FoldoutGroup("汉化字典")] [Searchable]
         public Dictionary<string, string> SinicizationDictionary = new Dictionary<string, string>();
 
-        [ShowInInspector] [LabelText("未汉化的词条")] [FoldoutGroup("汉化字典")]
+        [ShowInInspector] [LabelText("未汉化的词条")] [FoldoutGroup("汉化字典")] [Searchable]
         public Dictionary<string, string> EmptyDictionary = new Dictionary<string, string>();
 
         [HideLabel] [TextArea(4, 10)] [FoldoutGroup("汉化字典")]
-        public string textBox;
+        public string textBox = "我正在进行汉化工作, 这是Unity中的XXXX插件的词条, 请考虑使用环境和上下文翻译为最佳的中文, 不适合翻译的词条不进行汉化, 注意格式, 不要更改原来英文的字符, 使用代码块提交给我, 不要使用大括号, 最后的语句需要加上逗号, 这样我复制起来方便一些";
         
         [HideInInspector]
         public string appIdSerialize = ""; 
@@ -321,7 +321,10 @@ namespace WorldSystem.Language
                 SecretKey = secretKeySerialize;
             
             universalFunction = UniversalTranslationFunction.Instance;
-            EditorUtility.SetDirty(universalFunction);
+            if (universalFunction != null)
+            {
+                EditorUtility.SetDirty(universalFunction);
+            }
 
             if (SinicizationDictionary.Count > 0)
             {
@@ -606,7 +609,8 @@ namespace WorldSystem.Language
         {
             universalFunction = UniversalTranslationFunction.Instance;
             string path = GetAssetAbsolutePath(this).Replace(this.name + ".asset", "Dictionary.json");
-            if (SinicizationDictionary == null && !File.Exists(path))
+            // if (SinicizationDictionary == null && !File.Exists(path))
+            if (!File.Exists(path))
             {
                 File.WriteAllText(path, JsonConvert.SerializeObject(SinicizationDictionary));
             }
